@@ -204,6 +204,32 @@ class Base extends Controller {
     public function oauth() {
         $wechat = new TPWechat(C('gallery'));
         $wechat->valid();
+//        $wechat->valid();
+//        $wechat->getRev();
+
+//        $data = $weObj->getRevData();
+//        $type = $weObj->getRevType();
+//        $ToUserName = $weObj->getRevTo();
+//        $FromUserName = $weObj->getRevFrom();
+//
+//        if ($type == TPWechat::MSGTYPE_EVENT) {
+//            $event = $weObj->getRevEvent();
+//            if ($event['event'] == TPWechat::EVENT_ENTER_AGENT ) {
+//                //$weObj->text("你好2！来自星星的：".$FromUserName."\n你发送的".$type."类型信息：\n原始信息如下：\n".var_export($data,true))->reply();
+//                //简单写入数据
+//                //$wechatUser = M('WechatUser')->where('userid='.$FromUserName)->find();
+//                $userData = array(
+//                    'userid' => $FromUserName,
+//                    'msgtype' => '',
+//                    'event' => 'EVENT_ENTER_AGENT',
+//                    'agentid' => '',
+//                    'create_time' => time()
+//                );
+//
+//                M('WechatLog')->add($userData);
+//            }
+//
+//        }
     }
 
     /**

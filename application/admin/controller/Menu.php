@@ -69,8 +69,8 @@ class Menu extends Admin
     public function add(){
         $MenuModel = new MenuModel();
         unset($_POST['id']);    //过滤ID空值
-        $MenuModel->data($_POST);
-        $result = $MenuModel->validate(true)->save();
+//        $MenuModel->data($_POST);
+        $result = $MenuModel->validate(true)->save($_POST);
 
         if($result){
             session('ADMIN_MENU_LIST',null);
@@ -93,7 +93,7 @@ class Menu extends Admin
         if($result){
             return $this->success("更新成功",cookie('__forward__'));
         }else{
-            return $this->error($MenuModel->getError());
+            return $this->get_update_error_msg($MenuModel->getError());
         }
     }
 

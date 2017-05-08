@@ -463,8 +463,8 @@ class Admin extends Controller {
         }else{
             return $this->error($msg);
         }
-    }
 
+    }
     /**
      * 获取本周时间
      */

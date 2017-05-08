@@ -20,7 +20,6 @@ use think\Log;
  */
 class Index extends Controller {
     public function index(){
-
         return $this->fetch();
     }
 
@@ -48,7 +47,7 @@ class Index extends Controller {
                 $this->redirect(session('url'));
                 session('url','');
             }else{
-                $this->redirect("Structure/index");
+                $this->redirect("Activity/index");
             }
         } else {
             // 用户不存在通讯录默认为游客，跳转到url;

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -30,12 +30,12 @@ return [
     
     /* 企业配置 */
     'party' => array(
-        'login' => 'http://xxxx/home/index/login',
-        'token' => '',
-        'encodingaeskey' => '',
-        'appid' => '',
-        'appsecret' => '',
-        'agentid' => 
+        'login' => 'http://xspb.0571ztnet.com/home/index/login',
+        'token' => 'N3mIjNX',
+        'encodingaeskey' => 'RxanruTaFxW7X5r5Cx2xRrI91dhRgNUx77KM3paUfS7',
+        'appid' => 'wxc98739d457b9dad6',
+        'appsecret' => 'xjE71dUqVMv7Q_FpCx_4AuWcLYr77PRRrDH8lrn1oi9yYJtG1dztCUXQ1lGmXkk-',
+        'agentid' => 1
     ),
     
 

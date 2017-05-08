@@ -1,0 +1,474 @@
+{extend name="base/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/static/datepicker/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="/static/iCheck/custom.css">
+<link rel="stylesheet" href="/admin/css/chosen/chosen.css">
+<style>
+    textarea{
+        resize:none;
+    }
+    .imggroup{
+        position: relative;
+    }
+    .imgbox{
+        height: 100px;
+        width: 200px;
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+    .imgfile{
+        height: 100px;
+        width: 200px;
+        position: absolute;
+        top:0;
+        opacity: 0;
+    }
+    .plus{
+        height: 100px;
+        width: 200px;
+        font-size: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: rgba(204, 204, 204, 0.51);
+    }
+    .plus:hover{
+        font-size: 150px;
+    }
+</style>
+{/block}
+
+{block name="page-header"}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>{if condition="$msg.type eq 1"}上级政策{elseif condition="$msg.type eq 4"/}活动招募{else/}志愿发布{/if}管理</h2>
+        <ol class="breadcrumb">
+            <li>
+                {if condition="$msg.type eq 1"}<a href="{:Url('Notice/index')}">上级政策</a>{elseif condition="$msg.type eq 4"/}
+                <a href="{:Url('Notice/recruit')}"></a>活动招募{else/}<a href="{:Url('Notice/volunteer')}">志愿发布</a>{/if}
+            </li>
+            <li class="active">
+                <strong>编辑</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+{/block}
+
+{block name="main"}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{eq name="msg.type" value="1"}编辑通知{else/}编辑活动{/eq}</h5>
+                    <div class="ibox-tools">
+                        <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form id="form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>类型:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <select class="form-control" name="type" disabled>
+                                    {if condition="$msg.type eq 1"}
+                                    <option value="1">上级政策</option>
+                                    {else/}
+                                    <option value="4">活动通知</option>
+                                    {/if}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>封面图片:</label>
+                            </div>
+                            <div class="col-lg-5" >
+                                <div class="imggroup">
+                                    <img src="{$msg.front_cover|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
+                                    <input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">
+                                    <input type="hidden" name="front_cover" class="img"  value="{$msg.front_cover}" required="">
+                                </div>
+                                <b>推荐尺寸：500*400px</b>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-lg-1 text-right control-label">-->
+                                <!--<label>轮播图片:</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-3">-->
+                                <!--<div class="imggroup imgfileGroup">-->
+                                    <!--<img src="{$msg.carousel_images1|get_cover='path'}" alt='图片' class='thumbnail imgbox'>-->
+                                    <!--<input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">-->
+                                    <!--<input type="hidden" name="carousel_images1" class="img"  value="{$msg.carousel_images1||default=''}" required="">-->
+                                <!--</div>-->
+                                <!--<b>推荐尺寸：700*360px</b>-->
+                            <!--</div>-->
+                            <!--{eq name="$msg.carousel_images2" value=""}-->
+                            <!--<div class="col-lg-3">-->
+                                <!--<div class="plus" n="1">+</div>-->
+                                <!--<div class="imggroup imgfileGroup plusimg" style="display: none">-->
+                                    <!--<img src="{$carousel_pic2|get_cover='path'}" alt='图片' class='thumbnail imgbox'>-->
+                                    <!--<input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">-->
+                                    <!--<input type="hidden" name="carousel_images2" class="img"  value="{$carousel_pic2}" required="">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-3">-->
+                                <!--<div class=" plus plus2" style="display: none" >+</div>-->
+                                <!--<div class="imggroup imgfileGroup plusimg" style="display: none">-->
+                                    <!--<img src="{$carousel_pic3|get_cover='path'}" alt='图片' class='thumbnail imgbox'>-->
+                                    <!--<input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">-->
+                                    <!--<input type="hidden" name="carousel_images3" class="img"  value="{$carousel_pic3}" required="">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--{else/}-->
+                            <!--<div class="col-lg-3">-->
+                                <!--<div class="imggroup imgfileGroup plusimg">-->
+                                    <!--<img src="{$msg.carousel_images2|get_cover='path'}" alt='图片' class='thumbnail imgbox'>-->
+                                    <!--<input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">-->
+                                    <!--<input type="hidden" name="carousel_images2" class="img"  value="{$msg.carousel_images2}" required="">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-3">-->
+                                <!--{eq name="$msg.carousel_images3" value=""}-->
+                                <!--<div class=" plus plus2" n="2" >+</div>-->
+                                <!--<div class="imggroup imgfileGroup plusimg" style="display: none">-->
+                                    <!--<img src="{$carousel_pic3|get_cover='path'}" alt='图片' class='thumbnail imgbox'>-->
+                                    <!--<input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">-->
+                                    <!--<input type="hidden" name="carousel_images3" class="img"  value="{$carousel_pic3}" required="">-->
+                                <!--</div>-->
+                                <!--{else/}-->
+                                <!--<div class="imggroup imgfileGroup plusimg" n="3">-->
+                                    <!--<img src="{$msg.carousel_images3|get_cover='path'}" alt='图片' class='thumbnail imgbox'>-->
+                                    <!--<input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">-->
+                                    <!--<input type="hidden" name="carousel_images3" class="img"  value="{$msg.carousel_images3}" required="">-->
+                                <!--</div>-->
+                                <!--{/eq}-->
+                            <!--</div>-->
+                            <!--{/eq}-->
+                            <!--<div class="clear"></div>-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>名称:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入名称" class="form-control form_title" name="title" value="{$msg.title}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>主题:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入主题" class="form-control form_title" name="topic" value="{$msg.topic}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>简介:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class=" float-e-margins">
+                                    <div class="ibox-content no-padding borders">
+                                        <textarea  class="text form-control form_title" name="description">{$msg.description}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 control-label">
+                                <label>内容:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class=" float-e-margins">
+                                    <div class="ibox-content no-padding borders">
+                                        <script id="container" name="content" type="text/plain">{$msg.content}</script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-lg-1 text-right control-label">-->
+                                <!--<label>主办方:</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-11">-->
+                                <!--<input type="text" placeholder="请输入主办方" class="form-control form_title" name="sponsor" value="{$msg.sponsor}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-lg-1 text-right control-label">-->
+                                <!--<label>联系电话:</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-11">-->
+                                <!--<input type="text" placeholder="请输入联系电话" class="form-control form_title" name="telephone" value="{$msg.telephone}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-lg-1 text-right control-label">-->
+                                <!--<label>花费:</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-11">-->
+                                <!--<input type="text" placeholder="请输入花费" class="form-control form_title" name="cost" value="{$msg.cost}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>活动时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                    <div class="date">
+                                        <input type="text" class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d '}"/>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>地址:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="{$msg.address}">
+                            </div>
+                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-lg-1 text-right control-label">-->
+                                <!--<label>发布人:</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-11">-->
+                                <!--<input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <input type="hidden" name="id" value="{$msg.id}">
+                        <div class="form-group">
+                            <div class="col-lg-11 col-lg-offset-1">
+                                <button class="btn btn-primary submit-btn post-add" type="button" target-form="form-horizontal" >发布</button>
+                                <a class="btn btn-default" href="javascript:window.history.go(-1);">返回</a>
+                            </div>
+                        </div>
+                        <div class="selblo"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/static/uploadify/jquery.uploadify.min.js"></script>
+<script src="/static/iCheck/icheck.min.js"></script>
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
+
+<script>
+    $(function(){
+        //导航高亮
+        var type = $("select[name='type']").val();
+        if(type == 1){
+            highlight_subnav("{:Url('Notice/index')}");
+        }else{
+            highlight_subnav("{:Url('Notice/recruit')}");
+        }
+
+        //上传图片
+        var plus = $('.plus');
+        var imgnum  = $('[n]' ).attr('n');
+        plus.on('click',function(){
+            var it = $(this);
+            it.hide().next().fadeIn();
+            imgnum = 3;
+            if(!it.hasClass('plus2')){
+                plus.eq(1).fadeIn();
+                imgnum = 2
+            }
+        });
+        $(document).ready(function () {
+            $(".imgfile").on("change",function(){
+                var size = ($(this)[0].files[0].size / 1024).toFixed(2);
+                var imgBox = $(this);
+                if(size <= 2048){
+                    var img = $(this)[0].files[0];
+                    var formData = new FormData();
+                    var pic=$(this);
+                    formData.append("picture",img);
+                    $.ajax({
+                        type:"post",
+                        url:"{:Url('File/uploadPicture')}",
+                        data: formData,
+                        processData : false,
+                        contentType : false,
+                        success:function(m){
+                            var msg = $.parseJSON(m);
+                            var path = msg.data.path;
+                            if(msg['code'] == 1){
+                                imgBox.siblings(".img").val(msg.data["id"]);
+                                //显示图片缩略图
+                                pic.parent().find("img" ).attr({src:path});
+                            } else
+                            {
+                                warning( { msg: msg[ 'msg' ] } );
+                                return;
+                            }
+                        }
+                    });
+                } else {
+                    warning({msg:"您选择的图片超过2mb，请重新选择"});
+                    return;
+                }
+            });
+        });
+        //百度编辑器
+        var ue = UE.getEditor('container',{
+            initialFrameHeight:400
+        });
+
+        $(".post-add").on("click",function(){
+            /*重组轮播图，删除多余字符串（i是键值，1表示几位开始*/
+            var carousel_images1 = $("input[name='carousel_images1']").val();
+            var carousel_images2 = $("input[name='carousel_images2']").val();
+            var carousel_images3 = $("input[name='carousel_images3']").val();
+            var it=$(this);
+            if(imgnum == 1){
+                var carousel_images = [carousel_images1];
+            }else if(imgnum == 2){
+                carousel_images = [carousel_images1,carousel_images2];
+            }else{
+                carousel_images = [carousel_images1,carousel_images2,carousel_images3];
+            }
+            var data = {
+                id:$("input[name='id']").val(),
+                type:$("select[name='type']").val(),
+                front_cover:$("input[name='front_cover']").val(),
+//                list_image:$("input[name='list_image']").val(),
+//                carousel_images:carousel_images,
+                title:$("input[name='title']").val(),
+                topic:$("input[name='topic']").val(),
+                description:$("textarea[name='description']").val(),
+                content:ue.getContent(),
+//                sponsor:$("input[name='sponsor']").val(),
+//                telephone:$("input[name='telephone']").val(),
+//                cost:$("input[name='cost']").val(),
+                start_time:$("input[name='start_time']").val(),
+//                end_time:$("input[name='end_time']").val(),
+//                date:$("input[name='date']").val(),
+                address:$("input[name='address']").val(),
+//                publisher:$("input[name='publisher']").val(),
+                status:1,
+            };
+            $.ajax({
+                type:"post",
+                url:$("#form").attr("action"),
+                data:data,
+                success:function(data){
+                    if(data.code == 1){
+                        if (data.url) {
+                            updateAlert(data.msg + ' 页面即将自动跳转~','success');
+                        }else{
+                            updateAlert(data.msg ,'success');
+                        }
+                        it.prop('disabled','true');
+                        it.next('button').prop('disabled','true');
+                        setTimeout(function(){
+                            if (data.url) {
+                                location.href=data.url;
+                            } else {
+                                location.reload();
+                            }
+                            it.removeAttr('disabled');
+                            it.next('button').removeAttr('disabled')
+                        },2000);
+                    } else {
+                        updateAlert(data.msg, 'error');
+                        it.attr('disabled','true');
+                        it.next('button').prop('disabled','true');
+                        setTimeout(function(){
+                            it.removeAttr('disabled');
+                            it.next('button').removeAttr('disabled')
+                        },2000);
+                    }
+                }
+            });
+            return false;
+        });
+
+    })
+</script>
+
+
+<!--时间日历-->
+<script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        //    时间日历
+        $( ".datetimepicker" ).datetimepicker( {
+            language:  'cn',
+            format: 'yyyy-mm-dd ',
+            minView: "month",
+            forceParse: false,
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: 1,
+            minuteStep: 5
+
+        });
+        //    单选按钮
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+    })
+
+</script>
+<script src="/admin/js/chosen.jquery.js"></script>
+<script>
+    $(function(){
+        //下拉框
+        $("select").chosen({
+            no_results_text: "没有找到该选项",
+            allow_single_de: true,
+            width:'100%',
+            max_selected_options:'100'
+        });
+        var selgp = $(".selgp");
+        var selgp2 = $(".selgp2");
+        selHeight(selgp);
+        selHeight(selgp2);
+        function selHeight(e){
+            e.find('ul').on('click',function(){
+                var results = $(this ).next().find('.chosen-results' );
+                var h= results.height();
+                h=h-100;
+                $('.selblo' ).animate({'height':h+'px'},100);
+                //切出页面
+                var hiddenProperty = 'hidden' in document ? 'hidden' :
+                        'webkitHidden' in document ? 'webkitHidden' :
+                                null;
+                var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+                var onVisibilityChange = function(){
+                    if (!document[hiddenProperty]) {
+                        //selgp.find('.search-field').find('input').on('blur');
+                    }else{
+                        e.find('.search-field').find('input').off('blur');
+                    }
+                };
+                $(document).on(visibilityChangeEvent, onVisibilityChange);
+            });
+            e.find('.search-field').find('input').on('blur',function(){
+                setTimeout(function(){
+                    $('.selblo' ).animate({'height':'0'});
+                },100)
+            });
+        }
+    })
+</script>
+{/block}

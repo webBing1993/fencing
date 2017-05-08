@@ -24,7 +24,6 @@
         "toplan/phpsms": "~1.6.0",
         "qiniu/php-sdk": "^7.0",
         "phpmailer/phpmailer": "~5.2",
-        "overtrue/wechat": "~3.1",
         "endroid/qrcode": "*"
     },
     "extra": {

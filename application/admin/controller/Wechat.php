@@ -86,61 +86,51 @@ class Wechat extends Admin
         if($Wechat->errCode != 40001) {
             return $this->error("同步出错");
         }
+
         /* 同步部门 */
         $list = $Wechat->getDepartment();
-//        /* 同步最顶级部门下面的用户 */
+
+        /* 同步最顶级部门下面的用户 */
         foreach ($list['department'] as $key=>$value) {
             $users = $Wechat->getUserListInfo($list['department'][$key]['id']);
-//            $user =  $users['userlist'][0];
             foreach ($users['userlist'] as $user) {
                 $user['department'] = json_encode($user['department']);
-                if(isset($user['extattr'])){
-                    foreach ($user['extattr']['attrs'] as $value) {
-                        switch ($value['name']) {
-                            case "学历":
-                                $user['education'] = $value['value'];
-                                break;
-                            case "所属单位":
-                                $user['unit'] = $value['value'];
-                                break;
-                            case "出生年月":
-                                $user['birthday'] = $value['value'];
-//                                if (!empty($value['value'])) {
-//                                    $user['age'] = date("Y", time()) - substr($value['value'], 0, 4);
-//                                } else {
-//                                    $user['age'] = null;
-//                                }
-                                break;
-                            case "民族":
-                                $user['nation'] = $value['value'];
-                                break;
-                            case "入党时间":
-                                $user['partytime'] = $value['value'];
-                                break;
-                            case "组织关系":
-                                $user['relation'] = $value['value'];
-                                break;
-                            case "参加工作时间":
-                                $user['worktime'] = $value['value'];
-                                break;
-                            default:
-                                break;
-                        }
+                foreach ($user['extattr']['attrs'] as $value) {
+                    switch ($value['name']){
+                        case "出生日期":
+                            $user['birthday'] = $value['value'];
+                            if(!empty($value['value'])) {
+                                $user['age'] = date("Y",time()) - substr($value['value'],0,4);
+                            }else{
+                                $user['age'] = null;
+                            }
+                            break;
+                        case "所属支部":
+                            $user['branch'] = $value['value'];
+                            break;
+                        case "学历":
+                            $user['education'] = $value['value'];
+                            break;
+                        case "入党时间":
+                            $user['partytime'] = $value['value'];
+                            break;
+                        default:
+                            break;
                     }
-                    $user['extattr'] = json_encode($user['extattr']);
                 }
+                $user['extattr'] = json_encode($user['extattr']);
                 if(WechatUser::get(['userid'=>$user['userid']])) {
-//                    unset($user['extattr']);
                     WechatUser::where(['userid'=>$user['userid']])->update($user);
                 } else {
                     WechatUser::create($user);
                 }
             }
-
         }
         $data = "用户数:".count($users['userlist'])."!";
+
         return $this->success("同步成功", '', $data);
     }
+
     /**
      * 同步部门
      */
@@ -170,12 +160,12 @@ class Wechat extends Admin
                     WechatDepartmentUser::create($data);
                 }
                 
-//                if($value['id'] != 1) {
-//                    $data1 = ['departmentid' => 1, 'userid' => $user['userid']];     //当部门补位1时补全用户
-//                    if(empty(WechatDepartmentUser::where($data1)->find())){
-//                        WechatDepartmentUser::create($data1);
-//                    }
-//                }
+                if($value['id'] != 1) {
+                    $data1 = ['departmentid' => 1, 'userid' => $user['userid']];     //当部门补位1时补全用户
+                    if(empty(WechatDepartmentUser::where($data1)->find())){
+                        WechatDepartmentUser::create($data1);
+                    }
+                }
             }
         }
 
