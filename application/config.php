@@ -34,7 +34,7 @@ return [
         'token' => 'N3mIjNX',
         'encodingaeskey' => 'RxanruTaFxW7X5r5Cx2xRrI91dhRgNUx77KM3paUfS7',
         'appid' => 'wxf51b69e5175edfb8',
-        'appsecret' => '8dfw1BxesXXMnuLozb6h29e1seYfiqfZA6iMUTOMd6RxC_g8Gdtc8bzJOrtktKa',
+        'appsecret' => 'i8dfw1BxesXXMnuLozb6h29e1seYfiqfZA6iMUTOMd6RxC_g8Gdtc8bzJOrtktKa',
         'agentid' => 1
     ),
     
