@@ -1,0 +1,106 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
+<link rel="stylesheet" href="/home/css/redcollection/film.css">
+{/block}
+
+{block name="body"}
+<div class="search">
+	<span class="fa fa-search"></span>
+	<input type="text" placeholder="输入电影名称">
+</div>
+<div class="results">
+</div>
+<div class="banner swiper-container">
+	<div class="swiper-wrapper">
+		{volist name="carousel" id="car"}
+		<div class="swiper-slide">
+			<a href="{:Url('Redcollection/filmdetail?id='.$car['id'])}" class="list">
+				<img src="{$car.carousel_image|get_cover='path'}" alt="红色电影推荐" class="banner-img">
+				<div class="banner-bg"></div>
+				<div class="banner-info limit">{$car.title}</div>
+			</a>
+		</div>
+		{/volist}
+	</div>
+	<div class="swiper-pagination"></div>
+</div>
+<div class="lists-title">最新上映</div>
+<div class="lists">
+	{volist name="new" id="ne"}
+	<a href="{:Url('Redcollection/filmdetail?id='.$ne['id'])}" class="list">
+		<img src="{$ne.front_cover|get_cover='path'}" alt="红色电影" class="list-img">
+		<div class="list-title limit">{$ne.title}</div>
+		<div class="list-summary limit">{$ne.introduction}</div>
+	</a>
+	{/volist}
+</div>
+<div class="lists-title clear listsline">
+	经典热播
+	<a href="{:Url('Redcollection/morefilm')}" class="fr">更多>></a>
+</div>
+<div class="lists">
+	{volist name="classic" id="cla"}
+	<a href="{:Url('Redcollection/filmdetail?id='.$cla['id'])}" class="list">
+		<img src="{$cla.front_cover|get_cover='path'}" alt="红色电影" class="list-img">
+		<div class="list-title limit">{$cla.title}</div>
+		<div class="list-summary limit">{$cla.introduction}</div>
+	</a>
+	{/volist}
+</div>
+{/block}
+
+{block name="script"}
+<script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
+<script>
+//模块标题
+$('title').text('红色电影');
+$(function(){
+	//搜索
+	var search = $('.search>input');
+	var lock = false;
+	search.on('compositionstart',function(){
+		lock = true;
+	});
+	search.on('compositionend',function(){
+		lock = false;
+	});
+	search.on('input',function(){
+		var this_ = this;
+		if(!lock){
+			var val = $(this_ ).val();
+			var html = '';
+			$.ajax({
+				type:"post",
+				url: "{:Url('Redcollection/filmserch')}",
+				data:{
+					val:val
+				},
+				beforeSend: function(XMLHttpRequest){},
+				success:function(data){
+					var result = data.data;
+					var url = '';
+					if(!data.data){
+						html +=
+								'<div class="result limit">无搜索结果</div>'
+					}
+					for(var obj in result){
+						html+= '<a href=\"/home/Redcollection/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
+					}
+					$('.results' ).html(html);
+				}
+			});
+		}
+	});
+	//轮播
+	var mySwiper = new Swiper('.swiper-container', {
+		autoplay: 3000,
+		loop:true,
+		pagination : '.swiper-pagination',
+		paginationType : 'bullets',
+		autoplayDisableOnInteraction:false
+	});
+});
+</script>
+{/block}

@@ -86,19 +86,19 @@ class Feedback extends Base {
             $model = $opinionModel->create($data);
             if($model) {
                 $map['status'] = 0;
-                $count = $opinionModel->where($map)->count();
-                $content = "您有".$count."条[意见反馈]审核消息，请点击【反馈审核】及时查看。";
-                $Wechat = new TPQYWechat(Config::get('party'));
-                $message = array(
-                    "totag" => 3,
-                    "msgtype" => 'text',
-                    "agentid" => 13,
-                    "text" => array(
-                        "content" => $content
-                    ),
-                    "safe" => "0"
-                );
-                $Wechat->sendMessage($message);  //审核通过，向用户推送提示
+//                $count = $opinionModel->where($map)->count();
+//                $content = "您有".$count."条[意见反馈]审核消息，请点击【反馈审核】及时查看。";
+//                $Wechat = new TPQYWechat(Config::get('party'));
+//                $message = array(
+//                    "totag" => 3,
+//                    "msgtype" => 'text',
+//                    "agentid" => 13,
+//                    "text" => array(
+//                        "content" => $content
+//                    ),
+//                    "safe" => "0"
+//                );
+//                $Wechat->sendMessage($message);  //审核通过，向用户推送提示
                 return $this->success("提交成功");
             }else{
                 return $this->error("提交失败");

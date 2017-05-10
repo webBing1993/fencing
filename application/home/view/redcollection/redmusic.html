@@ -1,0 +1,91 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/redcollection/music.css">
+{/block}
+
+{block name="body"}
+<div class="lists">
+	{volist name="list" id="vo"}
+	<a href="{:Url('Redcollection/musicdetail?id='.$vo['id'])}" class="list">
+		<img src="{$vo.front_cover|get_cover='path'}" alt="红色歌曲" class="music-img">
+		<div class="content">
+			<div class="title limit_">{$vo.title}</div>
+			<div class="note clear">
+				<span class="scan fl">{$vo.views}</span>
+				<span class="fr">{$vo.create_time|time_format='Y-m-d'}</span>
+			</div>
+		</div>
+	</a>
+	{/volist}
+</div>
+<div class="tip"></div>
+<div class="loading hide">
+	<div class="typing_loader"></div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+$('title' ).text('歌曲推荐');
+$(function(){
+	var len = $(".list" ).length;
+	if(len >= 8){
+		$('.tip' ).text('上拉加载更多');
+	}
+	//上拉加载更多
+	loadScroll();
+});
+function loadScroll(){
+	$(window ).off("scroll" ).on("scroll",function(){
+		var dh = $(document).height();
+		var end = $(window).height() + $(window ).scrollTop();
+		var len = $(".list" ).length;
+		var tip = $(".tip");
+		var loading = $('.loading');
+//		var id ='musicid';
+		if(dh == end){
+			$.ajax({
+				type:"post",
+				url:"{:Url('Redcollection/moremusic')}",
+				data:{
+					length:len
+				},
+				success:function(data){
+					if(data.code == 1){
+						addList(data);
+						var dataLen =data.data.length;
+						if(data.data.length == 8){
+							tip.text('上拉加载更多');
+						}
+					}else{
+						tip.text('没有更多了');
+						$(window ).off("scroll");
+					}
+				}
+			})
+		}
+	})
+}
+function addList(data){
+	var html = '';
+	var lists = data.data;
+	var len = lists.length;
+	for(var i = 0; i< len;i++){
+		var list = lists[i];
+		html +=
+				'<a href=\"/home/Redcollection/musicdetail?id='+list.id+'\" class="list middle">'+
+					'<img src='+list.path+' alt="红色歌曲" class="music-img">'+
+						'<div class="content">'+
+							'<div class="title limit_">'+list.title+'</div>'+
+							'<div class="note clear">'+
+								'<span class="scan fl">'+list.views+'</span>'+
+								'<span class="fr">'+list.time+'</span>'+
+							'</div>'+
+						'</div>'+
+				'</a>';
+	}
+	$(".lists" ).append(html);
+}
+</script>
+{/block}

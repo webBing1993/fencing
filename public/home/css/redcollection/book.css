@@ -1,0 +1,149 @@
+body {
+  overflow-x: hidden;
+}
+.banner {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 48vw;
+}
+.banner .banner-img {
+  width: 100%;
+  height: 100%;
+}
+.banner .search {
+  position: absolute;
+  bottom: 5vw;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  text-align: center;
+}
+.banner .search .fa {
+  position: absolute;
+  top: 8px;
+  left: 17vw;
+  color: #9a9a9a;
+}
+.banner .search input {
+  width: 70vw;
+  height: 100%;
+  padding-left: 8vw;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+.banner .search .results .result {
+  display: inline-block;
+  width: 70vw;
+  height: 40px;
+  margin: 0 auto;
+  padding-left: 15px;
+  background: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid #ffffff;
+  color: #666666;
+  line-height: 40px;
+  text-align: left;
+}
+.tabs {
+  width: 100vw;
+  height: 44px;
+  padding: 8px 0;
+  background: #f4f4f4;
+}
+.tabs .tab {
+  display: inline-block;
+  width: 49vw;
+  height: 100%;
+  color: #666666;
+  font-size: 1.6rem;
+  line-height: 28px;
+  text-align: center;
+}
+.tabs .tab:first-child {
+  border-right: 1px solid #d3d6d8;
+}
+.tabs .active {
+  color: #46cc75;
+}
+.listbox {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 64vw;
+}
+.listbox .books {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 99vw;
+}
+.listbox .books .list {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 100vw;
+  height: 32vw;
+  padding: 3vw 4vw;
+  border-bottom: 1px solid #f7f7f7;
+}
+.listbox .books .list img {
+  display: inline-block;
+  width: 19vw;
+  height: 26vw;
+  margin-right: 7vw;
+}
+.listbox .books .list .content {
+  display: inline-block;
+  width: 60vw;
+  height: 26vw;
+}
+.listbox .books .list .content span {
+  display: block;
+  width: 100%;
+  color: #666666;
+  line-height: 7vw;
+}
+.listbox .books .list .content .title {
+  color: #363f7b;
+  font-size: 1.5rem;
+  line-height: 9vw;
+}
+.listbox .books .list .fa {
+  position: absolute;
+  top: 15vw;
+  width: 3vw;
+  color: #999999;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 4vw;
+}
+.listbox .words {
+  position: absolute;
+  top: 0;
+  left: 100vw;
+  width: 99vw;
+}
+.listbox .words .list {
+  display: inline-block;
+  width: 99vw;
+  height: 14vw;
+  padding: 0 4vw;
+  overflow: hidden;
+  border-bottom: 1px solid #f7f7f7;
+  color: #666666;
+  font-size: 1.5rem;
+  line-height: 14vw;
+}
+.listbox .words .list .title {
+  display: inline-block;
+  width: 88vw;
+}
+.listbox .words .list .fa {
+  color: #999999;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 13vw;
+}

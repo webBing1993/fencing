@@ -1,0 +1,387 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/structure/structure.css">
+<link rel="stylesheet" href="/home/css/structure/chart.css">
+<style>
+	.service{
+		overflow-x: hidden;
+		overflow-y: hidden;
+	}
+</style>
+{/block}
+
+{block name="body"}
+<div class="banner">
+	<img src="/home/images/structure/1.jpg" alt="组织架构banner" class="banner-img">
+</div>
+<div class="tabs">
+	<span class="tab active">小镇党委</span>
+	<span class="tab">服务中心</span>
+	<span class="tab">VR</span>
+</div>
+<div class="listbox">
+	<div class="town box active">
+		<!--小镇党委-->
+		<div class="box_ or">
+			<div class="lists">
+				<!--第一层-->
+				<div class="list clear">
+					<div class="party1">
+						<div class="tri"></div>
+						<div class="name1">单建党支部</div>
+					</div>
+					<!--第二层-->
+					<div class="down detail1">
+						<a class="name2 limit" href="{:Url('Structure/detail')}">浙江中测新图地理信息技术有限公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">浙江正元地理信息有限责任公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">浙江南方测绘科技有限公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">浙江房联科技有限公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">浙江中海达空间信息技术有限公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">浙江国遥地理信息技术有限公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">杭州经纬信息技术股份有限公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">浙江天下图地理信息技术有限公司党支部</a>
+						<!--<a class="name2 limit" href="{:Url('Structure/detail')}">浙江圣周信息科技有限公司党支部</a>-->
+					</div>
+					<!--/第二层-->
+				</div>
+				<!--/第一层-->
+
+				<!--第一层-->
+				<div class="list clear">
+					<div class="party1">
+						<div class="tri"></div>
+						<div class="name1">企业联合党支部</div>
+					</div>
+					<!--第二层-->
+					<div class="down detail1">
+						<a class="name2 limit" href="{:Url('Structure/detail')}">地信梦工场联合党支部</a>
+					</div>
+					<!--/第二层-->
+				</div>
+				<!--/第一层-->
+				<!--第一层-->
+				<div class="list clear">
+					<div class="party1">
+						<div class="tri"></div>
+						<div class="name1">党群服务中心党支部</div>
+					</div>
+					<!--第二层-->
+					<div class="down detail1">
+						<a class="name2 limit" href="{:Url('Structure/detail')}">地信小镇党群服务中心党支部</a>
+					</div>
+					<!--/第二层-->
+				</div>
+				<!--/第一层-->
+			</div>
+		</div>
+		<div class="box_ summary">
+			<p>
+				根据《中共湖州莫干山高新技术产业开发区工作委员会关于设立高新区管委会机关党委、高新区企业党委、高新区地理信息小镇党委的通知》（莫高委发〔2016〕1号）文件精神，于2016年10月批准成立高新区地理信息小镇党委。地理信息小镇党委下设党支部10个，党员103名，其中预备党员2名。党委委员会设委员5名，其中书记1名，副书记1名。
+			</p>
+		</div>
+		<!--/小镇党委-->
+	</div>
+	<!--第二层-->
+	<div class="service box pd">
+		<!--数据统计-->
+		<div class="list1 clear">
+			<div class="title">党组织分布</div>
+			<div class="pie" id="pie1"></div>
+			<span class="pie2"></span>
+			<div class="pie fr" id="pie2"></div>
+		</div>
+		<div class="list1">
+			<div class="title">党员关注比例</div>
+			<div class="pie" id="pie3" ></div>
+		</div>
+		<div class="list1">
+			<div class="title">年龄分布</div>
+			<div class="bar">
+				<canvas id="bar1"  height="200"></canvas>
+			</div>
+		</div>
+		<div class="list1">
+			<div class="title">男女比例</div>
+			<div class="cir">
+				<span class="m">男</span>
+				<div id="cir1"></div>
+				<span class="f">女</span>
+				<div id="cir2"></div>
+			</div>
+
+		</div>
+		<div class="list1">
+			<div class="title">学历分布</div>
+			<div class="bar">
+				<canvas id="bar2" height="250"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="vr box hidden">
+		<a href="http://720yun.com/t/e3cjO5mvuO2?pano_id=2107800">
+			<div class="title">德清地理信息小镇党群服务中心全景展示</div>
+			<img src="/home/images/structure/vr.jpg" alt="vr封面">
+		</a>
+	</div>
+</div>
+
+{/block}
+
+{block name="script"}
+<script src="/home/js/reset.js"></script>
+<script src="/static/flot/jquery.flot.js"></script>
+<script src="/static/flot/jquery.flot.tooltip.min.js"></script>
+<script src="/static/flot/jquery.flot.pie.js"></script>
+<script src="/static/flot/Chart.min.js"></script>
+<script src="/static/flot/radialIndicator.js"></script>
+<script>
+	showChart();
+	function showChart() {
+		//大饼图数据：data1、data2、data3，条形图数据：data4、data5，环形图数据：data6
+		//党组织总数量表
+		var data1 = [{
+			label: "机关单位数量",
+			data: 10,
+			color: "#e8e8e8"
+		}, {
+			label: "村（社区）数量",
+			data: 10,
+			color: "#d3d3d3"
+		}, {
+			label: "非公企业数量",
+			data: 10,
+			color: "rgba(98, 197, 210, 0.68)"
+		}, {
+			label: "社会组织数量",
+			data: 10,
+			color: "#5FB8C5"
+		}];
+		//	党组织总人数表
+		var data2 = [{
+			label: "机关单位人数",
+			data: 10,
+			color: "#e8e8e8"
+		}, {
+			label: "村（社区）人数",
+			data: 10,
+			color: "#d3d3d3"
+		}, {
+			label: "非公企业人数",
+			data: 10,
+			color: "#A2DBB3"
+		}, {
+			label: "社会组织人数",
+			data: 10,
+			color: "rgb(148, 204, 163)"
+		}];
+		//	党员总人数表
+		var data3 = [{
+			label: "关注人数",
+			data: 10,
+			color: "#5FB8C5"
+		},{
+			label: "未关注人数",
+			data: 10,
+			color: "#d3d3d3"
+		}];
+		// 平均年龄表
+		var data4 = {
+			labels: ["20岁以下", "20-30岁", "30-40岁", "40-50岁", "50岁以上"],
+			datasets: [
+				{
+					label: "平均年龄",
+					fillColor: "rgba(26,179,148,0.5)",
+					strokeColor: "rgba(26,179,148,0.8)",
+					highlightFill: "rgba(26,179,148,0.75)",
+					highlightStroke: "rgba(26,179,148,1)",
+					data: [10,10, 10, 10, 10]
+				}
+			]
+		};
+		// 学历表
+		var data5 = {
+			labels: ["初中以下", "初中", "高中", "中专", "大专","本科","硕士","硕士以上"],
+			datasets: [
+				{
+					label: "平均年龄",
+					fillColor: "rgba(26,179,148,0.5)",
+					strokeColor: "rgba(26,179,148,0.8)",
+					highlightFill: "rgba(26,179,148,0.75)",
+					highlightStroke: "rgba(26,179,148,1)",
+					data: [10, 10, 10,10,10,10,10,10]
+				}
+			]
+
+		};
+		//男女比例
+		var data6 = {
+			male:10,
+			female:10
+		};
+		//大饼图
+		var plotObj1 = $.plot($("#pie1"), data1, {
+			series: {
+				pie: {
+					show: true
+				}
+			},
+			grid: {
+				hoverable: true
+			},
+			tooltip: true,
+			tooltipOpts: {
+				content: "<span class='tit'>%s</span>：<span class='num'></span>人 , <span style='color:#5FB8C5'>%p.0%</span>",
+				shifts: {
+					x: 20,
+					y: 0
+				},
+				defaultTheme: false
+			}
+		});
+		var plotObj2 = $.plot($("#pie2"), data2, {
+			series: {
+				pie: {
+					show: true
+				}
+			},
+			grid: {
+				hoverable: true
+			},
+			tooltip: true,
+			tooltipOpts: {
+				content: "<span class='tit'>%s</span>: <span class='num'>%s</span>人, <span style='color:rgb(148, 204, 163)'>%p.0%</span>",
+				shifts: {
+					x: 20,
+					y: 0
+				},
+				defaultTheme: false
+			}
+		});
+		var plotObj3 = $.plot($("#pie3"), data3, {
+			series: {
+				pie: {
+					show: true
+				}
+			},
+			grid: {
+				hoverable: true
+			},
+			tooltip: true,
+			tooltipOpts: {
+				content: "<span class='tit'>%s</span>: <span class='num'></span>人, <span style='color:#5FB8C5'>%p.0%</span>",
+				shifts: {
+					x: 20,
+					y: 0
+				},
+				defaultTheme: false
+			}
+		});
+		//条形图
+		var bar1 = {
+			scaleBeginAtZero: true,
+			scaleShowGridLines: true,
+			scaleGridLineColor: "rgba(0,0,0,.05)",
+			scaleGridLineWidth: 1,
+			barShowStroke: true,
+			barStrokeWidth: 2,
+			barValueSpacing: 5,
+			barDatasetSpacing: 1,
+			responsive: true
+		};
+		var ctx1 = document.getElementById("bar1").getContext("2d");
+		var myNewChart1 = new Chart(ctx1).Bar(data4, bar1);
+		var ctx2 = document.getElementById("bar2").getContext("2d");
+		var myNewChart2 = new Chart(ctx2).Bar(data5, bar1);
+		//	环形图
+		$('#cir1').radialIndicator({
+			barColor: '#A2DBB3',
+			barWidth: 10,
+			initValue: data6.male,//男百分比
+			roundCorner : true,
+			percentage: true
+		});
+		$('#cir2').radialIndicator({
+			barColor: '#5EB8C5',
+			barWidth: 10,
+			initValue: data6.female,//女百分比
+			roundCorner : true,
+			percentage: true
+		});
+		//修改提示信息
+		$('.pie').on('plothover',function(){
+			var datas=[{
+				label: "机关单位数量",
+				data: 10
+			}, {
+				label: "村（社区）数量",
+				data: 10
+			}, {
+				label: "非公企业数量",
+				data: 10
+			}, {
+				label: "社会组织数量",
+				data: 10
+			},{
+				label: "机关单位人数",
+				data: 10
+			}, {
+				label: "村（社区）人数",
+				data: 10
+			}, {
+				label: "非公企业人数",
+				data: 10
+			}, {
+				label: "社会组织人数",
+				data: 10
+			},{
+				label: "关注人数",
+				data: 10
+			},{
+				label: "未关注人数",
+				data: 10
+			}];
+			var len = datas.length;
+			var tip = $('#flotTip');
+			var tit = tip.find('.tit' ).text();
+			for(var i = 0 ;i< len ; i++){
+				if( tit == datas[i].label ){
+					tip.find('.num' ).text(datas[i].data);
+					return;
+				}
+			}
+		})
+	}
+
+
+$('title' ).text('组织架构');
+$(function(){
+	//tab值记录
+	tabRecord('.tab' ,'.box');
+	//组织架构切换
+	slide();
+	//tab切换
+	tabSwitch('.tab' ,'.box');
+	$('.name2' ).each(function(){
+		var t = $(this ).text();
+		var href = '/home/structure/detail?party='+t+'';
+		$(this ).attr('href', href);
+	})
+
+});
+function slide(){
+	$('.lists .party1' ).on('click',function(){
+		var it = $(this);
+		var detail = it.next('.detail1' );
+		if(detail.hasClass('down')){
+			detail.slideDown();
+			it.find('.tri').removeClass('toup').addClass('todown');
+		}else{
+			detail.slideUp();
+			it.find('.tri').removeClass('todown').addClass('toup');
+		}
+		detail.toggleClass('down');
+	});
+}
+</script>
+{/block}

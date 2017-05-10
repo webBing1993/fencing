@@ -1,0 +1,27 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/redcollection/worddetail.css">
+{/block}
+
+{block name="body"}
+<div class="title limit">{$remark.title}</div>
+<div class="lists">
+	{volist name="remark.content" id="re"}
+	<div class="list">
+		<div class="content">
+			{$re.remark}
+		</div>
+		<div class="author">----{$re.title}</div>
+	</div>
+	{/volist}
+</div>
+{/block}
+
+{block name="script"}
+<script>
+//模块标题
+$('title').text('经典语录');
+sessionStorage.setItem("redliterature", "1");
+</script>
+{/block}

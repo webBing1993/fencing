@@ -1,0 +1,166 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/volunteer/orderdetail.css">
+{/block}
+{block name="body"}
+<div class="content">
+	<div class="title">{$info.title}</div>
+	<div class="time">{$info.create_time|time_format='Y-m-d'}</div>
+	<img src="{$info.list_image|get_cover='path'}" alt="服务订单图">
+	<div class="summary">
+		{$info.content}
+	</div>
+	<div class="lists">
+		<div class="list clear">
+			<span class="fl tag">所属单位：</span>
+			<span class="fl">{$info.unit}</span>
+		</div>
+		<div class="list clear">
+			<span class="fl tag">认领人数：</span>
+			<span class="fl"><span class="addnum">{$info.receive_number}</span>/{$info.demand_number}</span>
+		</div>
+		<div class="list clear">
+			<span class="fl tag">联系人：</span>
+			<span class="fl">{$info.contacts}</span>
+		</div>
+		<div class="list clear">
+			<span class="fl tag">联系方式：</span>
+			<span class="fl"><a href="tel:{$info.telephone}">{$info.telephone}</a> </span>
+		</div>
+	</div>
+	{eq name="visit" value="0"}
+		{eq name="$info.status" value="2"}
+			<!--不可报名状态：名满-->
+			{eq name="$info.be" value="1"}
+			<div class="get no">已领取</div>
+			{else/}
+			<div class="get no">我要报名</div>
+			<div class="gettext">（当前招募人数已满，下次早点来哦）</div>
+			{/eq}
+			<!--/不可报名状态-->
+		{else/}
+			<!--可报名状态-->
+			{eq name="$info.be" value="0"}
+			<div class="get yes">我要报名</div>
+			<!--/可报名状态-->
+			{else/}
+			<!--不可报名状态：已领-->
+			<div class="get no">已领取</div>
+			<!--/不可报名状态-->
+			{/eq}
+		{/eq}
+	{/eq}
+</div>
+<div class="enroll">
+	<div class="title">报名名单</div>
+	<div class="lists">
+		{volist name="namelist" id="name"}
+		<div class="list">
+			<img src="{$name.avatar}" alt="头像">
+			<span class="name limit">{$name.name}</span>
+			<span class="publish limit">{$name.unit}</span>
+			<span class="time limit">{$name.create_time|time_format='Y-m-d'}</span>
+		</div>
+		{/volist}
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+$('title' ).text('服务订单');
+$(function(){
+	//报名
+	$('.yes' ).off('click').on('click',function(){
+		var id = {$info.id};
+		var this_ = $(this);
+		this_.css('background','#9a9a9a');
+		this_.text('已领取');
+		$.ajax({
+			type:"post",
+			url:"{:Url('Volunteer/enroll')}",
+			data:{
+				type:1,
+				id:id
+			},
+			success:function(data){
+				var n = $('.addnum');
+				var m =data.data;
+				var html =
+						'<div class="list">'+
+						'<img src='+m.avatar+' alt="头像">'+
+						'<span class="name limit">'+m.name+'</span>'+
+						'<span class="publish limit">'+m.unit+'</span>'+
+						'<span class="time limit">'+m.time+'</span>'+
+						'</div>';
+				$('.enroll .lists' ).append(html);
+				n.text(parseInt(n.text())+1)
+			}
+		})
+	});
+	//样式
+	$('.content .list' ).each(function(){
+		var this_ = $(this);
+		var h = this_.find('span' ).eq(1 ).height();
+		if(h>40){
+			this_.find('span' ).eq(1 ).css({'line-height':24+'px','margin-top': 10 + 'px'});
+		}
+	})
+});
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script>
+	//---微信接口JS-SDK的调用
+	wx.config({
+		debug: false,
+		appId: '{$jsSign.appid}', // 必填，公众号的唯一标识
+		timestamp: {$jsSign['timestamp']}, // 必填，生成签名的时间戳，切记时间戳是整数型，别加引号
+		nonceStr: '{$jsSign.noncestr}', // 必填，生成签名的随机串
+		signature: '{$jsSign.signature}', // 必填，签名，见附录1
+		jsApiList: [
+			'checkJsApi',
+			'chooseImage',
+			'previewImage',
+			'uploadImage',
+			'downloadImage',
+			'onMenuShareTimeline',
+			'onMenuShareAppMessage',
+		]
+	});
+
+	wx.ready(function () {
+		//分享到朋友圈
+		wx.onMenuShareTimeline({
+			title: '{$info.title}',
+			link: "{$info.link}",
+			imgUrl: '{$info.share_image}',
+			success: function () {
+				// 用户确认分享后执行的回调函数
+			},
+			cancel: function () {
+				// 用户取消分享后执行的回调函数
+			}
+		});
+		//分享给朋友
+		wx.onMenuShareAppMessage({
+			title: '{$info.title}', // 分享标题
+			desc: '{$info.desc}', // 分享描述
+			link: '{$info.link}', // 分享链接
+			imgUrl: '{$info.share_image}', // 分享图标
+			type: '', // 分享类型,music、video或link，不填默认为link
+			dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			success: function () {
+				// 用户确认分享后执行的回调函数
+			},
+			cancel: function () {
+				// 用户取消分享后执行的回调函数
+			}
+		});
+
+	});
+	wx.error(function (res) {
+		alert('wx.error: '+JSON.stringify(res));
+	});
+</script>
+{/block}

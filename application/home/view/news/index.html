@@ -1,0 +1,106 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/news/news.css">
+{/block}
+
+{block name="body"}
+<div class="banner">
+	<img src="/home/images/volunteer/banner.jpg" alt="服务团队banner" class="banner-img">
+</div>
+<!--新闻列表-->
+<div class="lists">
+	{volist name="list" id="vo"}
+	<a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
+		<div class="fr lr">
+			<div class="title limit_">{$vo.title}</div>
+			<div class="clear">
+				<span class="fl">{$vo.create_time|time_format='Y-m-d'}</span>
+				<span class="fr">详情</span>
+			</div>
+		</div>
+	</a>
+	{/volist}
+</div>
+<div class="tip"></div>
+<div class="loading hidden">
+	<div class="typing_loader"></div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+$(function(){
+	//模块标题
+	$('title').text('第一聚焦');
+	//reset
+	var txt;
+	var len = $(".list" ).length;
+	if(len == 0){
+		$('body' ).html('<div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>');
+	}else if(len >= 9){
+		$('.tip' ).text('上拉加载更多');
+	}
+	//上拉加载
+	loadScroll();
+});
+function loadScroll(){
+	$(window ).off("scroll" ).on("scroll",function(){
+		var dh = $(document).height();
+		var end = $(window).height() + $(window ).scrollTop();
+		var len = $(".list" ).length;
+		var tip = $(".tip");
+		var loading = $('.loading');
+		if(dh == end){
+			$.ajax({
+				type:"post",
+				url:"{:Url('News/listmore')}",
+				data:{
+					length:len
+				},
+				beforeSend: function(XMLHttpRequest){
+					tip.hide();
+					loading.toggleClass('hidden');
+				},
+				success:function(data){
+					loading.toggleClass('hidden');
+					tip.show();
+					if(data.code == 1){
+						addNews(data);
+						var dataLen =data.data.length;
+						if(data.data.length == 5){
+							tip.text('上拉加载更多');
+						}
+					}else{
+						tip.text('没有更多了');
+						$(window ).off("scroll");
+					}
+				}
+			})
+		}
+	})
+}
+function addNews(data){
+	var html = '';
+	var lists = data.data;
+	var len = lists.length;
+	for(var i = 0; i< len;i++){
+		var list = lists[i];
+		html +=
+				'<a class="list clear" href="/home/news/detail/id/'+list.id+'.html">'+
+//				'<div class="fl">'+
+//				'<img src="'+ list.src+'" alt="图片">'+
+//				'</div>'+
+				'<div class="fr lr">'+
+				'<div class="title">'+list.title+'</div>'+
+				'<div class="clear">'+
+				'<span class="fl">'+ list.time+'</span>'+
+				'<span class="fr">详情</span>'+
+				'</div>'+
+				'</div>'+
+				'</a>'
+	}
+	$(".lists" ).append(html);
+}
+</script>
+{/block}
