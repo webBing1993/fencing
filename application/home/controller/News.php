@@ -17,21 +17,13 @@ use app\home\model\News as NewsModel;
 
 /**
  * Class News
- * @package 新闻动态/第一聚焦
+ * @package 文件资料
  */
 class News extends Base {
     /**
      * 主页
      */
     public function index(){
-        //首页轮播推荐
-        $map1 = array(
-            'status' => array('egt',0),
-            'recommend' => 1
-        );
-        $recom = NewsModel::where($map1)->order('id desc')->limit(3)->select();
-        $this->assign('recommend',$recom);
-
         //列表
         $map2 = array(
             'status' => array('egt',0),
