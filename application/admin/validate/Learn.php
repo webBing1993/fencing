@@ -14,6 +14,7 @@ use think\Validate;
 class Learn extends Validate {
     protected $rule = [
         'front_cover' => 'require',
+        'list_image' => 'require',
         'title' => 'require',
         'content' => 'require',
         'publisher' => 'require',
@@ -22,6 +23,7 @@ class Learn extends Validate {
 
     protected $message = [
         'front_cover' => '封面图片不能为空',
+        'list_image' => '列表图片不能为空',
         'title' =>  '标题不能为空',
         'content'  =>  '内容不能为空',
         'publisher' => '发布者不能为空',

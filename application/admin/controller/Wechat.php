@@ -89,36 +89,37 @@ class Wechat extends Admin
 
         /* 同步部门 */
         $list = $Wechat->getDepartment();
-
         /* 同步最顶级部门下面的用户 */
+        $num = 0;
         foreach ($list['department'] as $key=>$value) {
             $users = $Wechat->getUserListInfo($list['department'][$key]['id']);
             foreach ($users['userlist'] as $user) {
+                $num++;
                 $user['department'] = json_encode($user['department']);
-                foreach ($user['extattr']['attrs'] as $value) {
-                    switch ($value['name']){
-                        case "出生日期":
-                            $user['birthday'] = $value['value'];
-                            if(!empty($value['value'])) {
-                                $user['age'] = date("Y",time()) - substr($value['value'],0,4);
-                            }else{
-                                $user['age'] = null;
-                            }
-                            break;
-                        case "所属支部":
-                            $user['branch'] = $value['value'];
-                            break;
-                        case "学历":
-                            $user['education'] = $value['value'];
-                            break;
-                        case "入党时间":
-                            $user['partytime'] = $value['value'];
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                $user['extattr'] = json_encode($user['extattr']);
+//                foreach ($user['extattr']['attrs'] as $value) {
+//                    switch ($value['name']){
+//                        case "出生日期":
+//                            $user['birthday'] = $value['value'];
+//                            if(!empty($value['value'])) {
+//                                $user['age'] = date("Y",time()) - substr($value['value'],0,4);
+//                            }else{
+//                                $user['age'] = null;
+//                            }
+//                            break;
+//                        case "所属支部":
+//                            $user['branch'] = $value['value'];
+//                            break;
+//                        case "学历":
+//                            $user['education'] = $value['value'];
+//                            break;
+//                        case "入党时间":
+//                            $user['partytime'] = $value['value'];
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                }
+//                $user['extattr'] = json_encode($user['extattr']);
                 if(WechatUser::get(['userid'=>$user['userid']])) {
                     WechatUser::where(['userid'=>$user['userid']])->update($user);
                 } else {
@@ -126,8 +127,7 @@ class Wechat extends Admin
                 }
             }
         }
-        $data = "用户数:".count($users['userlist'])."!";
-
+        $data = "用户数:".$num."!";
         return $this->success("同步成功", '', $data);
     }
 
@@ -139,7 +139,6 @@ class Wechat extends Admin
         if($Wechat->errCode != 40001) {
             return $this->error("同步出错");
         }
-
         /* 同步部门 */
         $list = $Wechat->getDepartment();
         foreach ($list['department'] as $key=>$value) {
@@ -182,7 +181,7 @@ class Wechat extends Admin
         if($Wechat->errCode != 40001) {
             return $this->error("同步出错");
         }
-
+        
         /* 同步标签 */
         WechatTag::where('1=1')->delete();
         $tags = $Wechat->getTagList();
@@ -192,6 +191,7 @@ class Wechat extends Admin
             } else {
                 WechatTag::create($tag);
             }
+
         }
 
         /* 同步标签-用户关系表 */

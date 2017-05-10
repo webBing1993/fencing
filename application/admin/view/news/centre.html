@@ -57,11 +57,11 @@
                                 <td>{$vo.title|msubstr=0,20}</td>
                                 <td>{$vo.publisher}</td>
                                 <td>{$vo->user->nickname}</td>
-                                <td>{$vo.create_time|time_format='Y-m-d'}</td>
+                                <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
                                 <td>{$vo.recommend_text}</td>
                                 <td>{$vo.status_text}</td>
                                 <td>
-                                    <a href="{:Url('News/edit?id='.$vo['id'])}">修改</a>
+                                    <a href="{:Url('News/edit?type=2&id='.$vo['id'])}">修改</a>
                                     &emsp;<a href="{:Url('News/del?id='.$vo['id'])}" class="confirm ajax-del">删除</a>
                                 </td>
                             </tr>

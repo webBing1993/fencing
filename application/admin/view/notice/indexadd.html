@@ -93,7 +93,7 @@
 
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>封面图片:</label>
+                                <label>顶部Banner:</label>
                             </div>
                             <div class="col-lg-5">
                                 <div class="imggroup">
@@ -110,27 +110,45 @@
                                 <label>标题:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入名称" class="form-control form_title" name="title" value="">
+                                <input type="text" placeholder="请输入标题" class="form-control form_title" name="title" value="">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
-                                <label>主题:</label>
+                                <label>开始时间:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入主题" class="form-control form_title" name="topic" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>简介:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <div class=" float-e-margins">
-                                    <div class="ibox-content no-padding borders">
-                                        <textarea  class="text form-control form_title" name="description"></textarea>
-                                    </div>
+                                <div class="date">
+                                    <input type="text" class="form-control datetimepicker" name="start_time"  value=""/>
                                 </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>结束时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="date">
+                                    <input type="text" class="form-control datetimepicker" name="end_time"  value=""/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>地址:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>联系方式:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入联系方式" class="form-control form_title" name="tel" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -145,34 +163,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" id="timeRange">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>活动时间:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                    <div class="date">
-                                        <input type="text" class="form-control datetimepicker" name="start_time"  value=""/>
-                                    </div>
-
-                            </div>
-                        </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>地址:</label>
+                                <label>发布人:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="">
+                                <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="">
                             </div>
                         </div>
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-lg-1 text-right control-label">-->
-                                <!--<label>发布人:</label>-->
-                            <!--</div>-->
-                            <!--<div class="col-lg-11">-->
-                                <!--<input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="">-->
-                            <!--</div>-->
-                        <!--</div>-->
-
                         <div class="form-group">
                             <div class="col-lg-11 col-lg-offset-1">
                                 <button class="btn btn-primary submit-btn post-add" type="button" target-form="form-horizontal">发布</button>
@@ -259,31 +257,18 @@
         });
         $(".post-add").off('click').on("click",function(){
             var it = $(this);
-            var carousel_images1 = $("input[name='carousel_images1']").val();
-            var carousel_images2 = $("input[name='carousel_images2']").val();
-            var carousel_images3 = $("input[name='carousel_images3']").val();
-
-            if(imgnum == 1){
-                var carousel_images = [carousel_images1];
-            }else if(imgnum == 2){
-                carousel_images = [carousel_images1,carousel_images2];
-            }else{
-                carousel_images = [carousel_images1,carousel_images2,carousel_images3];
-            }
 
             var data = {
                 type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
-                //carousel_images:carousel_images,
                 title:$("input[name='title']").val(),
-                topic:$("input[name='topic']").val(),
-                description:$("textarea[name='description']").val(),
+                telephone:$("input[name='tel']").val(),
                 content:ue.getContent(),
                 start_time:$("input[name='start_time']").val(),
-                //date:$("input[name='date']").val(),
+                end_time:$("input[name='end_time']").val(),
                 address:$("input[name='address']").val(),
-                //publisher:$("input[name='publisher']").val(),
-                status:1,
+                publisher:$("input[name='publisher']").val(),
+                status:0,
             };
             $.ajax({
                 type:"post",
@@ -329,8 +314,8 @@
         //    时间日历
         $( ".datetimepicker" ).datetimepicker( {
             language:  'cn',
-            format: 'yyyy-mm-dd',
-            minView: "month",
+            format: 'yyyy-mm-dd hh:ii',
+            minView: "hour",
             forceParse: false,
             todayBtn: true,
             autoclose: true,

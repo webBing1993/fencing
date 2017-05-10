@@ -34,7 +34,7 @@ class Notice extends Admin {
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(0=>"待审核",1=>"已发布",2=>"审核不通过",3=>"草稿"),
+            'status' => array(0=>"已发布",1=>"已发布"),
         ));
 
         $this->assign('list',$list);
@@ -52,7 +52,7 @@ class Notice extends Admin {
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(0=>"待审核",1=>"已发布",2=>"审核不通过",3=>"草稿"),
+            'status' => array(0=>"已发布",1=>"已发布"),
         ));
 
         $this->assign('list',$list);
@@ -71,7 +71,7 @@ class Notice extends Admin {
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(0=>"待审核",1=>"已发布",2=>"审核不通过",3=>"草稿"),
+            'status' => array(0=>"已发布",1=>"已发布"),
         ));
 
         $this->assign('list',$list);
@@ -90,7 +90,7 @@ class Notice extends Admin {
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(0=>"待审核",1=>"已发布",2=>"审核不通过",3=>"草稿"),
+            'status' => array(0=>"已发布",1=>"已发布"),
         ));
 
         $this->assign('list',$list);
@@ -109,7 +109,7 @@ class Notice extends Admin {
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(0=>"待审核",1=>"已发布",2=>"审核不通过",3=>"草稿"),
+            'status' => array(0=>"已发布",1=>"已发布"),
         ));
 
         $this->assign('list',$list);
@@ -123,11 +123,13 @@ class Notice extends Admin {
     public function indexadd(){
         if(IS_POST) {
             $data = input('post.');
+            if (empty($data['start_time']) || empty($data['end_time'])){
+                return $this->error('请输入时间字段');
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             $noticeModel = new NoticeModel();
-//            $data['carousel_images'] = json_encode($data['carousel_images']);  //将数组转为字符串存入数据库，用到时解码
             $data['start_time'] = strtotime($data['start_time']);
-//            $data['end_time'] = strtotime($data['end_time']);
+            $data['end_time'] = strtotime($data['end_time']);
             $id = $noticeModel->validate('Notice.act')->save($data);
             if($id){
                 if($data['type'] == 1){
@@ -140,7 +142,6 @@ class Notice extends Admin {
             }
         }else {
             $this->default_pic();
-
             $type = input('type');
             $this->assign('type',$type);
             return $this->fetch();
@@ -153,11 +154,13 @@ class Notice extends Admin {
     public function indexedit(){
         if(IS_POST) {
             $data = input('post.');
+            if (empty($data['start_time']) || empty($data['end_time'])){
+                return $this->error('请输入时间字段');
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             $noticeModel = new NoticeModel();
-//            $data['carousel_images'] = json_encode($data['carousel_images']);  //将数组转为字符串存入数据库，用到时解码
             $data['start_time'] = strtotime($data['start_time']);
-//            $data['end_time'] = strtotime($data['end_time']);
+            $data['end_time'] = strtotime($data['end_time']);
             $id = $noticeModel->validate('Notice.act')->save($data,['id'=>input('id')]);
             if($id){
                 if($data['type'] == 1){
@@ -166,7 +169,7 @@ class Notice extends Admin {
                     return $this->success("修改活动招募成功",Url('Notice/recruit'));
                 }
             }else{
-                return $this->error($noticeModel->getError());
+                return $this->get_update_error_msg($noticeModel->getError());
             }
         }else{
             $this->default_pic();
@@ -189,7 +192,6 @@ class Notice extends Admin {
                 unset($data['id']);
             }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-//            $data['meet_time'] = strtotime($data['meet_time']);
             $model = $noticeModel->validate('Notice.other')->save($data);
             if($model){
                if ($data['type'] == 3){
@@ -220,7 +222,6 @@ class Notice extends Admin {
         if(IS_POST) {
             $data = input('post.');
             $noticeModel = new NoticeModel();
-//            $data['meet_time'] = strtotime($data['meet_time']);
             $model = $noticeModel->validate('Notice.other')->save($data,['id'=> input('id')]);
             if($model){
                 if ($data['type'] == 3){
@@ -259,67 +260,8 @@ class Notice extends Admin {
         }
     }
     /*
-     * 创意组织生活
-     *  type:6
+     * 推送 列表
      */
-    public function regular(){
-        $map = array(
-            'type' => 6,
-            'status' => array('egt',0),
-        );
-        $list = $this->lists('Notice',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"待审核",1=>"已发布",2=>"审核不通过",3=>"草稿"),
-        ));
-        $this->assign('list',$list);
-
-        return $this->fetch();
-    }
-    /*
-     * 创意组织生活  添加 修改
-     */
-    public function regularadd(){
-        $id = input('param.id');
-        if($id){
-            // 修改
-            if(IS_POST){
-                $data = input('post.');
-                $noticeModel = new NoticeModel();
-                $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-                $model = $noticeModel->validate('Learn')->where(['id' => $id])->update($data);
-                if($model){
-                    return $this->success('修改成功',Url("Notice/regular"));
-                }else{
-                    return $this->error($noticeModel->getError());
-                }
-            }else{
-                $msg = NoticeModel::where(['id' => $id,'status' => 1])->find();
-                $this->assign('msg',$msg);
-                return $this->fetch();
-            }
-        }else{
-            // 添加
-            if(IS_POST){
-                $data = input('post.');
-                if(empty($data['id'])) {
-                    unset($data['id']);
-                }
-                $noticeModel = new NoticeModel();
-                $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-                $model = $noticeModel->validate('Learn')->save($data);
-                if($model){
-                    return $this->success('新增成功!',Url("Notice/regular"));
-                }else{
-                    return $this->error($noticeModel->getError());
-                }
-            }else{
-                $this->default_pic();
-                $this->assign('msg','');
-                return $this->fetch();
-            }
-        }
-    }
-
     public function pushlist() {
         if(IS_POST){
             $id = input('id');
@@ -328,17 +270,17 @@ class Notice extends Admin {
             $info = array(
                 'id' => array('neq',$id),
                 'create_time' => array('egt',$t),
-                'status' => 1,
+                'status' => 0,
             );
             $infoes = NoticeModel::where($info)->select();
             int_to_string($infoes,array(
-                'type' => array(1=>"上级政策",2=>"会议情况",3=>"党课情况",4=>"活动招募",5=>"活动情况",6=>"创意组织生活"),
+                'type' => array(1=>"相关通知",2=>"会议情况",3=>"党课情况",4=>"活动通知",5=>"活动情况"),
             ));
             return $this->success($infoes);
         }else{
             //消息列表
             $map = array(
-                'class' => 2,
+                'class' => 2,  // 支部活动
                 'status' => array('egt',-1),
             );
             $list = $this->lists('Push',$map);
@@ -355,11 +297,11 @@ class Notice extends Admin {
             $t = $this->week_time();    //获取本周一时间
             $info = array(
                 'create_time' => array('egt',$t),
-                'status' => 1,
+                'status' => 0,
             );
             $infoes = NoticeModel::where($info)->select();
             int_to_string($infoes,array(
-                'type' => array(1=>"上级政策",2=>"会议情况",3=>"党课情况",4=>"活动招募",5=>"活动情况",6=>"创意组织生活"),
+                'type' => array(1=>"相关通知",2=>"会议情况",3=>"党课情况",4=>"活动通知",5=>"活动情况"),
             ));
             $this->assign('info',$infoes);
             return $this->fetch();
@@ -378,40 +320,37 @@ class Notice extends Admin {
         }else{
             //主图文信息
             $focus1 = NoticeModel::where('id',$arr1)->find();
+            NoticeModel::where('id',$arr1)->update(['status' => 1]);
             $title1 = $focus1['title'];
             $str1 = strip_tags($focus1['content']);
             $des1 = mb_substr($str1,0,100);
             $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
             switch ($focus1['type']) {
                 case 1:
-                    $url1 = "http://dqpb.0571ztnet.com/home/notice/relevant/id/".$focus1['id'].".html";
-                    $pre1 = "【上级政策】";
+                    $url1 = "http://tzpb.0571ztnet.com/home/notice/relevant/id/".$focus1['id'].".html";
+                    $pre1 = "【相关通知】";
                     break;
                 case 2:
-                    $url1 = "http://dqpb.0571ztnet.com/home/notice/meet/id/".$focus1['id'].".html";
+                    $url1 = "http://tzpb.0571ztnet.com/home/notice/meet/id/".$focus1['id'].".html";
                     $pre1 = "【会议情况】";
                     break;
                 case 3:
-                    $url1 = "http://dqpb.0571ztnet.com/home/notice/party/id/".$focus1['id'].".html";
+                    $url1 = "http://tzpb.0571ztnet.com/home/notice/party/id/".$focus1['id'].".html";
                     $pre1 = "【党课情况】";
                     break;
                 case 4:
-                    $url1 = "http://dqpb.0571ztnet.com/home/notice/recruit/id/".$focus1['id'].".html";
-                    $pre1 = "【活动招募】";
+                    $url1 = "http://tzpb.0571ztnet.com/home/notice/recruit/id/".$focus1['id'].".html";
+                    $pre1 = "【活动通知】";
                     break;
                 case 5:
-                    $url1 = "http://dqpb.0571ztnet.com/home/notice/activity/id/".$focus1['id'].".html";
+                    $url1 = "http://tzpb.0571ztnet.com/home/notice/activity/id/".$focus1['id'].".html";
                     $pre1 = "【活动情况】";
-                    break;
-                case 6:
-                    $url1 = "http://dqpb.0571ztnet.com/home/notice/regular/id/".$focus1['id'].".html";
-                    $pre1 = "【创业组织生活】";
                     break;
                 default:
                     break;
             }
             $img1 = Picture::get($focus1['front_cover']);
-            $path1 = "http://dqpb.0571ztnet.com".$img1['path'];
+            $path1 = "http://tzpb.0571ztnet.com".$img1['path'];
             $information1 = array(
                 "title" => $pre1.$title1,
                 "description" => $content1,
@@ -426,40 +365,37 @@ class Notice extends Admin {
             $information2 = array();
             foreach ($arr2 as $key=>$value){
                 $focus = NoticeModel::where('id',$value)->find();
+                NoticeModel::where('id',$value)->update(['status' => 1]);
                 $title = $focus['title'];
                 $str = strip_tags($focus['content']);
                 $des = mb_substr($str,0,100);
                 $content = str_replace("&nbsp;","",$des);  //空格符替换成空
                 switch ($focus['type']) {
                     case 1:
-                        $url = "http://dqpb.0571ztnet.com/home/notice/relevant/id/".$focus['id'].".html";
-                        $pre = "【上级政策】";
+                        $url = "http://tzpb.0571ztnet.com/home/notice/relevant/id/".$focus['id'].".html";
+                        $pre = "【相关通知】";
                         break;
                     case 2:
-                        $url = "http://dqpb.0571ztnet.com/home/notice/meet/id/".$focus['id'].".html";
+                        $url = "http://tzpb.0571ztnet.com/home/notice/meet/id/".$focus['id'].".html";
                         $pre = "【会议情况】";
                         break;
                     case 3:
-                        $url = "http://dqpb.0571ztnet.com/home/notice/party/id/".$focus['id'].".html";
+                        $url = "http://tzpb.0571ztnet.com/home/notice/party/id/".$focus['id'].".html";
                         $pre = "【党课情况】";
                         break;
                     case 4:
-                        $url = "http://dqpb.0571ztnet.com/home/notice/recruit/id/".$focus['id'].".html";
-                        $pre = "【活动招募】";
+                        $url = "http://tzpb.0571ztnet.com/home/notice/recruit/id/".$focus['id'].".html";
+                        $pre = "【活动通知】";
                         break;
                     case 5:
-                        $url = "http://dqpb.0571ztnet.com/home/notice/activity/id/".$focus['id'].".html";
+                        $url = "http://tzpb.0571ztnet.com/home/notice/activity/id/".$focus['id'].".html";
                         $pre = "【活动情况】";
-                        break;
-                    case 6:
-                        $url = "http://dqpb.0571ztnet.com/home/notice/regular/id/".$focus['id'].".html";
-                        $pre = "【创业组织生活】";
                         break;
                     default:
                         break;
                 }
                 $img = Picture::get($focus['front_cover']);
-                $path = "http://dqpb.0571ztnet.com".$img['path'];
+                $path = "http://tzpb.0571ztnet.com".$img['path'];
                 $info = array(
                     "title" => $pre.$title,
                     "description" => $content,
@@ -489,7 +425,6 @@ class Notice extends Admin {
         //发送给服务号
         $Wechat = new TPQYWechat(Config::get('party'));
         $message = array(
-//            'totag' => "18", //审核标签用户
             "touser" => "18768112486",
 //            "touser" => "@all",   //发送给全体，@all
             "msgtype" => 'news',

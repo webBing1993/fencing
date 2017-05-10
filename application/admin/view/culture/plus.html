@@ -35,20 +35,25 @@
     .plus:hover{
         font-size: 150px;
     }
+    .plus2{
+        display: none;
+    }
+    .plusimg{
+        display: none;
+    }
 </style>
 {/block}
 
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>{if condition="$msg.type eq 1"}相关通知{elseif condition="$msg.type eq 4"/}活动通知{/if}管理</h2>
+        <h2>文明创建</h2>
         <ol class="breadcrumb">
             <li>
-                {if condition="$msg.type eq 1"}<a href="{:Url('Notice/index')}">相关通知</a>{elseif condition="$msg.type eq 4"/}
-                <a href="{:Url('Notice/recruit')}">活动通知</a>{/if}
+                <a href="{:Url('Culture/activity')}">志愿发布</a>
             </li>
             <li class="active">
-                <strong>编辑</strong>
+                <strong>{empty name="$msg"}新增{else/}编辑{/empty}</strong>
             </li>
         </ol>
     </div>
@@ -59,17 +64,17 @@
 {/block}
 
 {block name="main"}
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInRight ">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>{eq name="msg.type" value="1"}编辑通知{else/}编辑活动{/eq}</h5>
+                    <h5>{empty name="$msg"}新增{else/}编辑{/empty}页面</h5>
                     <div class="ibox-tools">
                         <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
                     </div>
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content all">
                     <form id="form" class="form-horizontal" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
@@ -77,19 +82,31 @@
                             </div>
                             <div class="col-lg-11">
                                 <select class="form-control" name="type" disabled>
-                                    {if condition="$msg.type eq 1"}
-                                    <option value="1">相关通知</option>
-                                    {else/}
-                                    <option value="4">活动通知</option>
-                                    {/if}
+                                    <option value="2">志愿发布</option>
                                 </select>
                             </div>
                         </div>
+                        {empty name="msg"}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>顶部Banner:</label>
                             </div>
-                            <div class="col-lg-5" >
+                            <div class="col-lg-5">
+                                <div class="imggroup">
+                                    <img src="{$front_pic|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
+                                    <input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">
+                                    <input type="hidden" name="front_cover" class="img"  value="{$front_pic}" required="">
+                                </div>
+                                <b>推荐尺寸：500*400px</b>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        {else/}
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>顶部Banner:</label>
+                            </div>
+                            <div class="col-lg-5">
                                 <div class="imggroup">
                                     <img src="{$msg.front_cover|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
                                     <input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">
@@ -99,22 +116,25 @@
                             </div>
                             <div class="clear"></div>
                         </div>
+                        {/empty}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>标题:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入名称" class="form-control form_title" name="title" value="{$msg.title}">
+                                <input type="text" placeholder="请输入标题" class="form-control form_title" name="title" value="{$msg.title || default = ''}">
                             </div>
                         </div>
+                        {empty name="msg"}
                         <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
                                 <label>开始时间:</label>
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
+                                    <input type="text" class="form-control datetimepicker" name="start_time"  value=""/>
                                 </div>
+
                             </div>
                         </div>
                         <div class="form-group" id="timeRange">
@@ -123,16 +143,41 @@
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" class="form-control datetimepicker " name="end_time"  value="{$msg.end_time|time_format='Y-m-d H:i'}"/>
+                                    <input type="text" class="form-control datetimepicker" name="end_time"  value=""/>
                                 </div>
+
                             </div>
                         </div>
+                        {else/}
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>开始时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="date">
+                                    <input type="text" class="form-control datetimepicker" name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>结束时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="date">
+                                    <input type="text" class="form-control datetimepicker" name="end_time"  value="{$msg.end_time|time_format='Y-m-d H:i'}"/>
+                                </div>
+
+                            </div>
+                        </div>
+                        {/empty}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>地址:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="{$msg.address}">
+                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="{$msg.address || default = ''}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -140,7 +185,7 @@
                                 <label>联系方式:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入联系方式" class="form-control form_title" name="telephone" value="{$msg.telephone}">
+                                <input type="text" placeholder="请输入联系方式" class="form-control form_title" name="tel" value="{$msg.telephone || default = ''}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -150,7 +195,7 @@
                             <div class="col-lg-11">
                                 <div class=" float-e-margins">
                                     <div class="ibox-content no-padding borders">
-                                        <script id="container" name="content" type="text/plain">{$msg.content}</script>
+                                        <script id="container" name="content" type="text/plain">{$msg.content || default = ''}</script>
                                     </div>
                                 </div>
                             </div>
@@ -160,13 +205,13 @@
                                 <label>发布人:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher}">
+                                <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher || default=''}">
+                                <input type="hidden" name="id"  value="{$msg.id || default=''}" required="">
                             </div>
                         </div>
-                        <input type="hidden" name="id" value="{$msg.id}">
                         <div class="form-group">
                             <div class="col-lg-11 col-lg-offset-1">
-                                <button class="btn btn-primary submit-btn post-add" type="button" target-form="form-horizontal" >发布</button>
+                                <button class="btn btn-primary submit-btn post-add" type="button" target-form="form-horizontal">发布</button>
                                 <a class="btn btn-default" href="javascript:window.history.go(-1);">返回</a>
                             </div>
                         </div>
@@ -184,20 +229,16 @@
 <script src="/static/iCheck/icheck.min.js"></script>
 <script src="/static/ueditor/ueditor.config.js"></script>
 <script src="/static/ueditor/ueditor.all.min.js"></script>
-
+<script src="/admin/js/chosen.jquery.js"></script>
+<!--时间日历-->
+<script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
 <script>
-    $(function(){
-        //导航高亮
-        var type = $("select[name='type']").val();
-        if(type == 1){
-            highlight_subnav("{:Url('Notice/index')}");
-        }else{
-            highlight_subnav("{:Url('Notice/recruit')}");
-        }
-
-        //上传图片
+    //导航高亮
+    highlight_subnav("{:Url('Culture/activity')}");
+    //上传图片
+    $(document ).ready(function () {
         var plus = $('.plus');
-        var imgnum  = $('[n]' ).attr('n');
+        var imgnum = 1;
         plus.on('click',function(){
             var it = $(this);
             it.hide().next().fadeIn();
@@ -207,56 +248,55 @@
                 imgnum = 2
             }
         });
-        $(document).ready(function () {
-            $(".imgfile").on("change",function(){
-                var size = ($(this)[0].files[0].size / 1024).toFixed(2);
-                var imgBox = $(this);
-                if(size <= 2048){
-                    var img = $(this)[0].files[0];
-                    var formData = new FormData();
-                    var pic=$(this);
-                    formData.append("picture",img);
-                    $.ajax({
-                        type:"post",
-                        url:"{:Url('File/uploadPicture')}",
-                        data: formData,
-                        processData : false,
-                        contentType : false,
-                        success:function(m){
-                            var msg = $.parseJSON(m);
-                            var path = msg.data.path;
-                            if(msg['code'] == 1){
-                                imgBox.siblings(".img").val(msg.data["id"]);
-                                //显示图片缩略图
-                                pic.parent().find("img" ).attr({src:path});
-                            } else
-                            {
-                                warning( { msg: msg[ 'msg' ] } );
-                                return;
-                            }
+        $(".imgfile").on("change",function(){
+            var size = ($(this)[0].files[0].size / 1024).toFixed(2);
+            var imgBox = $(this);
+            if(size <= 2048){
+                var img = $(this)[0].files[0];
+                var formData = new FormData();
+                var pic=$(this);
+                formData.append("picture",img);
+                $.ajax({
+                    type:"post",
+                    url:"{:Url('File/uploadPicture')}",
+                    data:formData,
+                    processData : false,
+                    contentType : false,
+                    success:function(m){
+                        var msg = $.parseJSON(m);
+                        var path = msg.data.path;
+
+                        if(msg['code'] == 1){
+                            imgBox.siblings(".img").val(msg.data["id"]);
+                            //显示图片缩略图
+                            pic.parent().find("img" ).attr({src:path});
+                        } else {
+                            warning({msg:msg['msg']});
+                            return;
                         }
-                    });
-                } else {
-                    warning({msg:"您选择的图片超过2mb，请重新选择"});
-                    return;
-                }
-            });
+                    }
+                });
+
+            } else {
+                warning({msg:"您选择的图片超过2mb，请重新选择"});
+                return;
+            }
+
+
         });
-        //百度编辑器
         var ue = UE.getEditor('container',{
             initialFrameHeight:400
         });
+        $(".post-add").off('click').on("click",function(){
+            var it = $(this);
 
-        $(".post-add").on("click",function(){
-            /*重组轮播图，删除多余字符串（i是键值，1表示几位开始*/
-            var it=$(this);
             var data = {
                 id:$("input[name='id']").val(),
                 type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
+                telephone:$("input[name='tel']").val(),
                 content:ue.getContent(),
-                telephone:$("input[name='telephone']").val(),
                 start_time:$("input[name='start_time']").val(),
                 end_time:$("input[name='end_time']").val(),
                 address:$("input[name='address']").val(),
@@ -268,6 +308,7 @@
                 url:$("#form").attr("action"),
                 data:data,
                 success:function(data){
+                    console.log(data);
                     if(data.code == 1){
                         if (data.url) {
                             updateAlert(data.msg + ' 页面即将自动跳转~','success');
@@ -287,7 +328,7 @@
                         },2000);
                     } else {
                         updateAlert(data.msg, 'error');
-                        it.attr('disabled','true');
+                        it.prop('disabled','true');
                         it.next('button').prop('disabled','true');
                         setTimeout(function(){
                             it.removeAttr('disabled');
@@ -299,14 +340,9 @@
             return false;
         });
 
-    })
+    });
 </script>
-
-
-<!--时间日历-->
-<script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript">
-
+<script>
     $(function(){
         //    时间日历
         $( ".datetimepicker" ).datetimepicker( {
@@ -325,14 +361,7 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green'
         });
-
-    })
-
-</script>
-<script src="/admin/js/chosen.jquery.js"></script>
-<script>
-    $(function(){
-        //下拉框
+        //下拉菜单
         $("select").chosen({
             no_results_text: "没有找到该选项",
             allow_single_de: true,
@@ -370,5 +399,9 @@
             });
         }
     })
+
 </script>
+
+
+
 {/block}

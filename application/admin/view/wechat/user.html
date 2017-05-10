@@ -126,6 +126,9 @@
                 url: "{:Url('Wechat/synchronizeUser')}",
                 success: function (response) {
                     swal(response.msg, response.data);
+                    $('.confirm').one('click',function(){
+                        window.location.reload();
+                    });
                     l.ladda('stop');
                 },
                 error: function (err) {

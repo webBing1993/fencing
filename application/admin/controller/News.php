@@ -30,8 +30,7 @@ class News extends Admin {
         );
         $list = $this->lists('News',$map);
         int_to_string($list,array(
-            'status' => array(1 =>"已发布",2=>"已发布"),
-            'recommend' => array( 1=>"推荐" , 0=>"不推荐")
+            'status' => array(0 =>"已发布",1=>"已发布"),
         ));
 
         $this->assign('list',$list);
@@ -49,7 +48,7 @@ class News extends Admin {
         );
         $list = $this->lists('News',$map);
         int_to_string($list,array(
-            'status' => array(1 =>"已发布",2=>"已发布"),
+            'status' => array(0 =>"已发布",1=>"已发布"),
             'recommend' => array( 1=>"推荐" , 0=>"不推荐")
         ));
 
@@ -69,11 +68,20 @@ class News extends Admin {
                 unset($data['id']);
             }
             $newModel = new NewsModel();
-            $info = $newModel->validate('news')->save($data);
-            if($info) {
-                return $this->success("新增成功",Url('News/index'));
+            if ($data['type'] == 1){  // 工作部署
+                $info = $newModel->validate('news.act')->save($data);
             }else{
-                return $this->error($newModel->getError());
+                // 中心组学习
+                $info = $newModel->validate('news.other')->save($data);
+            }
+            if($info) {
+                if ($data['type'] == 1){
+                    return $this->success("新增成功",Url('News/index'));
+                }else{
+                    return $this->success("新增成功",Url('News/centre'));
+                }
+            }else{
+                return $this->get_update_error_msg($newModel->getError());
             }
         }else{
             $this->default_pic();
@@ -91,18 +99,27 @@ class News extends Admin {
             $data = input('post.');
             $data['create_time'] = time();
             $newModel = new NewsModel();
-            $info = $newModel->validate('news')->save($data,['id'=>input('id')]);
+            if ($data['type'] == 1){  // 工作部署
+                $info = $newModel->validate('news.act')->save($data,['id'=>$data['id']]);
+            }else{
+                $info = $newModel->validate('news.other')->save($data,['id'=>$data['id']]);
+            }
             if($info){
-                return $this->success("修改成功",Url("News/index"));
+                if ($data['type'] == 1){
+                    return $this->success("修改成功",Url("News/index"));
+                }else{
+                    return $this->success("修改成功",Url('News/centre'));
+                }
             }else{
                 return $this->get_update_error_msg($newModel->getError());
             }
         }else{
             $this->default_pic();
-            $id = input('id');
+            $id = input('id/d');
+            $type = input('type/d');
             $msg = NewsModel::get($id);
             $this->assign('msg',$msg);
-            
+            $this->assign('type',$type);
             return $this->fetch();
         }
     }
@@ -132,19 +149,25 @@ class News extends Admin {
             $info = array(
                 'id' => array('neq',$id),
                 'create_time' => array('egt',$t),
-                'status' => 1
+                'status' => 0
             );
             $infoes = NewsModel::where($info)->select();
+            foreach($infoes as $value){
+                if ($value['type'] == 1){
+                    $value['title'] = '【工作部署】'.$value['title'];
+                }else{
+                    $value['title'] = '【中心组学习】'.$value['title'];
+                }
+            }
             return $this->success($infoes);
         }else{
             //新闻消息列表
             $map = array(
-                'class' => 1,
+                'class' => 3,  // 党委动态
                 'status' => array('egt',-1)
             );
             $list=$this->lists('Push',$map);
             int_to_string($list,array(
-//                'type' => array(1=>'企业号推送',2=>'订阅号推送'),
                 'status' => array(-1=>'<span style=\'color: red\'>不通过</span>',0=>"<span style='color:#dd0'>待审核</span>",1=>"<span style='color: green'>通过</span>")
             ));
             //数据重组
@@ -161,9 +184,16 @@ class News extends Admin {
             $t = $this->week_time();
             $info = array(
                 'create_time' => array('egt',$t),
-                'status' => 1
+                'status' => 0
             );
             $infoes = NewsModel::where($info)->select();
+            foreach($infoes as $value){
+                if ($value['type'] == 1){
+                    $value['title'] = '【工作部署】'.$value['title'];
+                }else{
+                    $value['title'] = '【中心组学习】'.$value['title'];
+                }
+            }
             $this->assign('info',$infoes);
             return $this->fetch();
         }

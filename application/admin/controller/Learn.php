@@ -24,14 +24,14 @@ class Learn extends Admin {
      */
     public function index(){
         $map = array(
-            'status' => 0,
-            'type'=> array('in',[1,2,3])
+            'status' => array('egt',0),
+            'type'=> array('in',[1,2])
         );
         $list = $this->lists('Learn',$map);
         int_to_string($list,array(
-            'status' => array(0=>"已发布"),
+            'status' => array(0=>"已发布",1=>"已发布"),
             'recommend' => array(0=>"否",1=>"是"),
-            'type' => array(1=>"视频课程",2=>"文章课程",3=>"音乐课程")
+            'type' => array(1=>"视频课程",2=>"文章课程")
         ));
         $this->assign('list',$list);
 
@@ -54,10 +54,6 @@ class Learn extends Admin {
             }elseif($data['type'] == 2){
                 if($data['list_image'] == ""){
                     return $this->error("请上传文章顶部图片");
-                }
-            }else{
-                if($data['music_path'] == ""){
-                    return $this->error("请上传音乐文件");
                 }
             }
             $learnModel = new LearnModel();
@@ -90,10 +86,6 @@ class Learn extends Admin {
                 if($data['list_image'] == ""){
                     return $this->error("请上传文章顶部图片");
                 }
-            }else{
-                if($data['music_path'] == ""){
-                    return $this->error("请上传音乐文件");
-                }
             }
             $learnModel = new LearnModel();
             $model = $learnModel->validate('Learn')->save($data,['id'=>input('id')]);
@@ -107,7 +99,7 @@ class Learn extends Admin {
             //根据id获取课程
             $id = input('id');
             if(empty($id)){
-                return $this->error(1);
+                return $this->error("系统错误,不存在该条数据!");
             }else{
                 $msg = LearnModel::get($id);
                 $this->assign('msg',$msg);
@@ -129,131 +121,6 @@ class Learn extends Admin {
             return $this->error("删除失败");
         }
     }
-    /*
-     * 学习资料
-     */
-    public function study(){
-        $map = array(
-            'status' => 0,
-            'type' => 4
-        );
-        $list = $this->lists('Learn',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"已发布"),
-            'recommend' => array(0=>"否",1=>"是"),
-            'type' => array(4=>"专题讨论")
-        ));
-        $this->assign('list',$list);
-
-        return $this->fetch();
-    }
-    /*
-     * 专题 添加 修改
-     */
-    public function studyadd(){
-        $id = input('id');
-        if($id){
-            // 修改
-           if(IS_POST){
-                $data = input('post.');
-               $learnModel = new LearnModel();
-               $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-               $model = $learnModel->validate('Learn')->where(['id' => $id])->update($data);
-               if($model){
-                   return $this->success('修改成功',Url("Learn/workshop"));
-               }else{
-                   return $this->error($learnModel->getError());
-               }
-           }else{
-               $msg = LearnModel::where(['id' => $id,'status' => 0])->find();
-               $this->assign('msg',$msg);
-               return $this->fetch();
-           }
-        }else{
-            // 添加
-            if(IS_POST){
-                $data = input('post.');
-                if(empty($data['id'])) {
-                    unset($data['id']);
-                }
-                $learnModel = new LearnModel();
-                $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-                $model = $learnModel->validate('Learn')->save($data);
-                if($model){
-                    return $this->success('新增成功!',Url("Learn/workshop"));
-                }else{
-                    return $this->error($learnModel->getError());
-                }
-            }else{
-                $this->default_pic();
-                $this->assign('msg','');
-                return $this->fetch();
-            }
-        }
-
-    }
-    /*
-     * 工作动态
-     */
-    public function work(){
-        $map = array(
-            'status' => 0,
-            'type' => 5
-        );
-        $list = $this->lists('Learn',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"已发布"),
-            'recommend' => array(0=>"否",1=>"是"),
-            'type' => array(5=>"党性体验")
-        ));
-        $this->assign('list',$list);
-        return $this->fetch();
-    }
-    /*
-     * 党性体验  添加  修改
-     */
-    public function workadd(){
-        $id = input('id');
-        if($id){
-           // 修改
-            if(IS_POST){
-                $data = input('post.');
-                $learnModel = new LearnModel();
-                $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-                $model = $learnModel->validate('Learn')->where(['id' => $id])->update($data);
-                if($model){
-                    return $this->success('修改成功',Url("Learn/experience"));
-                }else{
-                    return $this->error($learnModel->getError());
-                }
-            }else{
-                $msg = LearnModel::where(['id' => $id,'status' => 0])->find();
-                $this->assign('msg',$msg);
-                return $this->fetch();
-            }
-        }else{
-            // 添加
-            if(IS_POST){
-                $data = input('post.');
-                if(empty($data['id'])) {
-                    unset($data['id']);
-                }
-                $learnModel = new LearnModel();
-                $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-                $model = $learnModel->validate('Learn')->save($data);
-                if($model){
-                    return $this->success('新增成功!',Url("Learn/experience"));
-                }else{
-                    return $this->error($learnModel->getError());
-                }
-            }else{
-                $this->default_pic();
-                $this->assign('msg','');
-                return $this->fetch();
-            }
-        }
-    }
-
     /**
      * 推送列表
      */
@@ -265,18 +132,18 @@ class Learn extends Admin {
             $info = array(
                 'id' => array('neq',$id),
                 'create_time' => array('egt',$t),
-                'type' => array('in',[1,2,3,4,5]),
+                'type' => array('in',[1,2]),
                 'status' => 0,
             );
             $infoes = LearnModel::where($info)->select();
             int_to_string($infoes,array(
-                'type' => array(1=>"视频课程",2=>"文章课程",3=>"音乐课程",4=>"专题讨论",5=>"党性体验"),
+                'type' => array(1=>"视频课程",2=>"文章课程"),
             ));
             return $this->success($infoes);
         }else{
             //消息列表
             $map = array(
-                'class' => 3,
+                'class' => 1, // 两学一做
                 'status' => array('egt',-1),
             );
             $list = $this->lists('Push',$map);
@@ -293,12 +160,12 @@ class Learn extends Admin {
             $t = $this->week_time();    //获取本周一时间
             $info = array(
                 'create_time' => array('egt',$t),
-                'type' => array('in',[1,2,3,4,5]),
+                'type' => array('in',[1,2]),
                 'status' => 0,
             );
             $infoes = LearnModel::where($info)->select();
             int_to_string($infoes,array(
-                'type' => array(1=>"视频课程",2=>"文章课程",3=>"音乐课程",4=>"专题讨论",5=>"党性体验"),
+                'type' => array(1=>"视频课程",2=>"文章课程"),
             ));
             $this->assign('info',$infoes);
             return $this->fetch();
@@ -317,32 +184,24 @@ class Learn extends Admin {
         }else{
             //主图文信息
             $focus1 = LearnModel::where('id',$arr1)->find();
+            LearnModel::where('id',$arr1)->update(['status' => 1]);
             $title1 = $focus1['title'];
             $str1 = strip_tags($focus1['content']);
             $des1 = mb_substr($str1,0,100);
             $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
+            $pre1 = "【两学一做】";
             switch ($focus1['type']) {
-                case 1:  // 视频 
-                    $pre1 = "【两学一做】";
-                    $url1 = "http://dqpb.0571ztnet.com/home/learn/video/id/".$focus1['id'].".html";
+                case 1:  // 视频
+                    $url1 = "http://tzpb.0571ztnet.com/home/learn/video/id/".$focus1['id'].".html";
                     break;
-                case 2:  // 图文 
-                    $pre1 = "【两学一做】";
-                    $url1 = "http://dqpb.0571ztnet.com/home/learn/article/id/".$focus1['id'].".html";
-                    break;
-                case 4:  // 专题讨论
-                    $pre1 = "【专题讨论】";
-                    $url1 = "http://dqpb.0571ztnet.com/home/topic/detail/id/".$focus1['id'].".html";
-                    break;
-                case 5:  // 党性体验
-                    $pre1 = "【党性体验】";
-                    $url1 = "http://dqpb.0571ztnet.com/home/topic/detail/id/".$focus1['id'].".html";
+                case 2:  // 图文
+                    $url1 = "http://tzpb.0571ztnet.com/home/learn/article/id/".$focus1['id'].".html";
                     break;
                 default:
                     break;
             }
             $img1 = Picture::get($focus1['front_cover']);
-            $path1 = "http://dqpb.0571ztnet.com".$img1['path'];
+            $path1 = "http://tzpb.0571ztnet.com".$img1['path'];
             $information1 = array(
                 "title" => $pre1.$title1,
                 "description" => $content1,
@@ -357,32 +216,24 @@ class Learn extends Admin {
             $information2 = array();
             foreach ($arr2 as $key=>$value){
                 $focus = LearnModel::where('id',$value)->find();
+                LearnModel::where('id',$value)->update(['status'=>1]);
                 $title = $focus['title'];
                 $str = strip_tags($focus['content']);
                 $des = mb_substr($str,0,100);
                 $content = str_replace("&nbsp;","",$des);  //空格符替换成空
+                $pre = "【两学一做】";
                 switch ($focus['type']) {
                     case 1:
-                        $pre = "【两学一做】";
-                        $url = "http://dqpb.0571ztnet.com/home/learn/video/id/".$focus['id'].".html";
+                        $url = "http://tzpb.0571ztnet.com/home/learn/video/id/".$focus['id'].".html";
                         break;
                     case 2:
-                        $pre = "【两学一做】";
-                        $url = "http://dqpb.0571ztnet.com/home/learn/article/id/".$focus['id'].".html";
-                        break;
-                    case 4:
-                        $pre = "【专题讨论】";
-                        $url = "http://dqpb.0571ztnet.com/home/topic/detail/id/".$focus['id'].".html";
-                        break;
-                    case 5:
-                        $pre = "【党性体验】";
-                        $url = "http://dqpb.0571ztnet.com/home/topic/detail/id/".$focus['id'].".html";
+                        $url = "http://tzpb.0571ztnet.com/home/learn/article/id/".$focus['id'].".html";
                         break;
                     default:
                         break;
                 }
                 $img = Picture::get($focus['front_cover']);
-                $path = "http://dqpb.0571ztnet.com".$img['path'];
+                $path = "http://tzpb.0571ztnet.com".$img['path'];
                 $info = array(
                     "title" => $pre.$title,
                     "description" => $content,
@@ -412,8 +263,7 @@ class Learn extends Admin {
         //发送给服务号
         $Wechat = new TPQYWechat(Config::get('party'));
         $message = array(
-//            'totag' => "18", //审核标签用户
-            "touser" => "15036667391",
+            "touser" => "17557289172",
 //            "touser" => "@all",   //发送给全体，@all
             "msgtype" => 'news',
             "agentid" => 27,
@@ -421,12 +271,11 @@ class Learn extends Admin {
             "safe" => "0"
         );
         $msg = $Wechat->sendMessage($message);
-
         if ($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
             $data['status'] = 1;
-            $data['class'] = 3;
+            $data['class'] = 1;  // 两学一做
             //保存到推送列表
             $s = Push::create($data);
             if ($s){
