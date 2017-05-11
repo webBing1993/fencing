@@ -12,7 +12,7 @@ use think\Model;
 class News extends Base {
     public $insert = [
         'views' => 0,
-        'collect' => 0,
+        'likes' => 0,
         'comments' => 0,
         'create_time' => NOW_TIME,
     ];
