@@ -7,6 +7,10 @@
  */
 namespace app\admin\controller;
 use app\admin\model\Culture as CultureModel;
+use app\admin\model\Picture;
+use com\wechat\TPQYWechat;
+use think\Config;
+use app\admin\model\Push;
 /*
   *  文明创建  控制器
    */
@@ -207,7 +211,7 @@ class Culture extends Admin{
         }else{
             //消息列表
             $map = array(
-                'class' => 2,  // 支部活动
+                'class' => 4,  // 文明创建
                 'status' => array('egt',-1),
             );
             $list = $this->lists('Push',$map);
@@ -237,6 +241,99 @@ class Culture extends Admin{
             }
             $this->assign('info',$infoes);
             return $this->fetch();
+        }
+    }
+    /*
+     * 推送
+     */
+    public function push(){
+        $data = input('post.');
+        $arr1 = $data['focus_main'];      //主图文id
+        isset($data['focus_vice']) ? $arr2 = $data['focus_vice'] : $arr2 = "";  //副图文id
+        if($arr1 == -1){
+            return $this->error('请选择主图文');
+        }else{
+            //主图文信息
+            $info1 = CultureModel::where('id',$arr1)->find();
+        }
+        $update['status'] = '1';
+        $title1 = $info1['title'];
+        CultureModel::where(['id'=>$arr1])->update($update); // 更新推送后的状态
+        $str1 = strip_tags($info1['content']);
+        $des1 = mb_substr($str1,0,40);
+        $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
+        $url1 = "http://tzpb.0571ztnet.com/home/news/detail/id/".$info1['id'].".html";
+        $image1 = Picture::get($info1['front_cover']);
+        $path1 = "http://tzpb.0571ztnet.com".$image1['path'];
+        $information1 = array(
+            'title' => $title1,
+            'description' => $content1,
+            'url'  => $url1,
+            'picurl' => $path1
+        );
+        $information = array();
+        if(!empty($arr2)){
+            //副图文信息
+            $information2 = array();
+            foreach($arr2 as $key=>$value){
+                CultureModel::where(['id'=>$value])->update($update); // 更新推送后的状态
+                $info2 = CultureModel::where('id',$value)->find();
+                $title2 = $info2['title'];
+                $str2 = strip_tags($info2['content']);
+                $des2 = mb_substr($str2,0,40);
+                $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
+                $url2 = "http://tzpb.0571ztnet.com/home/news/detail/id/".$info2['id'].".html";
+                $image2 = Picture::get($info2['front_cover']);
+                $path2 = "http://tzpb.0571ztnet.com".$image2['path'];
+                $information2[] = array(
+                    "title" =>$title2,
+                    "description" => $content2,
+                    "url" => $url2,
+                    "picurl" => $path2,
+                );
+            }
+            //数组合并,主图文放在首位
+            foreach($information2 as $key=>$value){
+                $information[0] = $information1;
+                $information[$key+1] = $value;
+            }
+        }else{
+            $information[0] = $information1;
+        }
+        //重组成article数据
+        $send = array();
+        $re[] = $information;
+        foreach($re as $key => $value){
+            $key = "articles";
+            $send[$key] = $value;
+        }
+
+        //发送给企业号
+        $Wechat = new TPQYWechat(Config::get('party'));
+        $message = array(
+//            "touser" => "15036667391",
+            "totag" => "4",  // 审核组
+            "msgtype" => 'news',
+            "agentid" => 11,  // 消息审核
+            "news" => $send,
+            "safe" => "0"
+        );
+        $msg = $Wechat->sendMessage($message);  // 推送至审核
+
+        if($msg['errcode'] == 0){
+            $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
+            $data['create_user'] = session('user_auth.username');
+            $data['class'] = 4;  // 文明创建
+            $data['status'] = 0;
+            //保存到推送列表
+            $result = Push::create($data);
+            if($result){
+                return $this->success('发送成功');
+            }else{
+                return $this->error('发送失败');
+            }
+        }else{
+            return $this->error('发送失败');
         }
     }
 }

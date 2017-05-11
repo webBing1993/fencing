@@ -438,7 +438,7 @@ class Notice extends Admin {
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
             $data['status'] = 1;
-            $data['class'] = 2;
+            $data['class'] = 2;  // 支部活动
             //保存到推送列表
             $s = Push::create($data);
             if ($s){

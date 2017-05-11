@@ -168,7 +168,7 @@ class News extends Admin {
             );
             $list=$this->lists('Push',$map);
             int_to_string($list,array(
-                'status' => array(-1=>'<span style=\'color: red\'>不通过</span>',0=>"<span style='color:#dd0'>待审核</span>",1=>"<span style='color: green'>通过</span>")
+                'status' => array(-1 => '不通过', 0 => '未审核', 1=> '已发送')
             ));
             //数据重组
             foreach($list as $value){
@@ -211,15 +211,15 @@ class News extends Admin {
             //主图文信息
             $info1 = NewsModel::where('id',$arr1)->find();
         }
-        $update['status'] = '2';
+        $update['status'] = '1';
         $title1 = $info1['title'];
         NewsModel::where(['id'=>$arr1])->update($update); // 更新推送后的状态
         $str1 = strip_tags($info1['content']);
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-        $url1 = "http://dqpb.0571ztnet.com/home/review/detail/id/".$info1['id'].".html";
+        $url1 = "http://tzpb.0571ztnet.com/home/news/detail/id/".$info1['id'].".html";
         $image1 = Picture::get($info1['front_cover']);
-        $path1 = "http://dqpb.0571ztnet.com".$image1['path'];
+        $path1 = "http://tzpb.0571ztnet.com".$image1['path'];
         $information1 = array(
             'title' => $title1,
             'description' => $content1,
@@ -237,9 +237,9 @@ class News extends Admin {
                 $str2 = strip_tags($info2['content']);
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
-                $url2 = "http://dqpb.0571ztnet.com/review/news/detail/id/".$info2['id'].".html";
+                $url2 = "http://tzpb.0571ztnet.com/home/news/detail/id/".$info2['id'].".html";
                 $image2 = Picture::get($info2['front_cover']);
-                $path2 = "http://dqpb.0571ztnet.com".$image2['path'];
+                $path2 = "http://tzpb.0571ztnet.com".$image2['path'];
                 $information2[] = array(
                     "title" =>$title2,
                     "description" => $content2,
@@ -278,7 +278,7 @@ class News extends Admin {
         if($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
-            $data['class'] = 1;
+            $data['class'] = 3;  // 省委动态
             $data['status'] = 0;
             //保存到推送列表
             $result = Push::create($data);
