@@ -7,7 +7,7 @@
 
 {block name="body"}
 <div class="banner">
-	<img src="/home/images/feedback/feedback.jpg" alt="建言献策banner图">
+	<img src="/home/images/feedback/1.jpg" alt="建言献策banner图">
 </div>
 <div class="lists">
 	{volist name="list" id="vo"}
@@ -30,9 +30,9 @@
 				<span class="fr message" onclick="tosend(this,{$vo.id})"></span>
 				<span class="fr goodnum">{$vo.likes}</span>
 				{eq name="vo.is_like" value="1"}
-				<span class="fr good_" onclick="isGood(this,{$vo.id},null,null,4)"></span>
+				<span class="fr good_" onclick="isGood(this,{$vo.id},null,null,13)"></span>
 				{else/}
-				<span class="fr good" onclick="isGood(this,{$vo.id},null,null,4)"></span>
+				<span class="fr good" onclick="isGood(this,{$vo.id},null,null,13)"></span>
 				{/eq}
 			</div>
 			<ul class="comments">
@@ -64,6 +64,7 @@
 <script src="/home/js/reset.js"></script>
 <script src="/static/viewer/viewer-jquery.min.js"></script>
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//模块标题
 	$('title' ).text('建言献策');
@@ -93,16 +94,15 @@ var isGood = function(e,id,comment_id,userid,cla){
 	$(e ).prev('.goodnum').text(n);
 	$.ajax({
 		type:"post",
-		url:"{:Url('News/like')}",
+		url:"{:Url('Base/like')}",
 		data:{
-			type:1,
-			id:id,
+			type:cla,
+			aid:id,
 			comment_id:comment_id,
-			user_id:userid,
-			class:cla,
+			user_id:userid
 		},
 		success:function(data){
-
+			console.log('点赞成功');
 		}
 	})
 };
@@ -115,7 +115,8 @@ var send = function(e){
 			type:"post",
 			url:"{:Url('News/comment')}",
 			data:{
-				opinion_id:$('.send' ).attr('data-tab'),
+				type : 13,
+				aid:$('.send' ).attr('data-tab'),
 				content:it.val()
 			},
 			success:function(msg){
@@ -152,7 +153,8 @@ function loadScroll(){
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		if(dh == end){
+		if(dh == end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('Feedback/more')}",
@@ -176,6 +178,7 @@ function loadScroll(){
 						tip.text('没有更多了');
 						$(window ).off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}

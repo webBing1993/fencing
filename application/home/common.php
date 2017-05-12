@@ -152,3 +152,24 @@ function get_header($userid){
 
     return $header;
 }
+/**
+ * 获取用户姓名
+ * @param varchar $userid
+ */
+function get_name($userid){
+    if(empty($userid)){
+        return false;
+    }
+    $map = array(
+        'status' => array('egt',0),
+        'userid' => $userid,
+    );
+    $user = \app\home\model\WechatUser::where($map)->find();
+    if(empty($user['name'])){
+        $name = "未定义";
+    }else{
+        $name = $user['name'];
+    }
+
+    return $name;
+}

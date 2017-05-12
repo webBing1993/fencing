@@ -27,7 +27,7 @@ class Feedback extends Base {
     public function index() {
         $userId = session('userId');
         $map = array(
-            'status' => array('eq',1),
+            'status' => array('eq',0),
         );
         $optionModel = new Opinion();
         $list = $optionModel->where($map)->order('id desc')->limit(7)->select();
@@ -38,22 +38,20 @@ class Feedback extends Base {
             ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
             //获取相关意见反馈评论
             $map1 = array(
-                'opinion_id' => $value['id'],
-                'type' => 4,
-                'status' => array('egt',0)
+                'aid' => $value['id'],
+                'status' => 0,
+                'type' => 13,
             );
             $comment = Comment::where($map1)->select();
             foreach ($comment as $k => $val){
-                $val['username'] = $val->user->name;
+                $val['username'] = get_name($val['uid']);
             }
             $value['comment'] = $comment;
-
             //是否点赞
             $map2 = array(
-                'opinion_id' => $value['id'],
-                'create_user' => $userId,
+                'aid' => $value['id'],
                 'status' => 0,
-                'type' => 1,
+                'type' => 13,
             );
             $msg = Like::where($map2)->find();
             if($msg) {
@@ -63,7 +61,6 @@ class Feedback extends Base {
             }
         }
         $this->assign('list',$list);
-
         return $this->fetch();
     }
 
@@ -86,19 +83,6 @@ class Feedback extends Base {
             $model = $opinionModel->create($data);
             if($model) {
                 $map['status'] = 0;
-//                $count = $opinionModel->where($map)->count();
-//                $content = "您有".$count."条[意见反馈]审核消息，请点击【反馈审核】及时查看。";
-//                $Wechat = new TPQYWechat(Config::get('party'));
-//                $message = array(
-//                    "totag" => 3,
-//                    "msgtype" => 'text',
-//                    "agentid" => 13,
-//                    "text" => array(
-//                        "content" => $content
-//                    ),
-//                    "safe" => "0"
-//                );
-//                $Wechat->sendMessage($message);  //审核通过，向用户推送提示
                 return $this->success("提交成功");
             }else{
                 return $this->error("提交失败");
@@ -114,7 +98,7 @@ class Feedback extends Base {
     public function more(){
         $len = input('length');
         $map = array(
-            'status' => array('eq',1)
+            'status' => array('eq',0)
         );
         $list = Opinion::where($map)->order('id desc')->limit($len,7)->select();
         foreach($list as $value){
@@ -130,22 +114,21 @@ class Feedback extends Base {
             ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
             //获取相关意见反馈评论
             $map1 = array(
-                'opinion_id' => $value['id'],
-                'type' => 4,
-                'status' => array('egt',0)
+                'aid' => $value['id'],
+                'status' => 0,
+                'type' => 13,
             );
             $comment = Comment::where($map1)->select();
             foreach ($comment as $k => $val){
-                $val['username'] = $val->user->name;
+                $val['username'] = get_name($val['uid']);
             }
             $value['comment'] = $comment;
 
             //是否点赞
             $map2 = array(
-                'opinion_id' => $value['id'],
-                'create_user' => session('userId'),
+                'aid' => $value['id'],
                 'status' => 0,
-                'type' => 1,
+                'type' => 13,
             );
             $msg = Like::where($map2)->find();
             if($msg) {
