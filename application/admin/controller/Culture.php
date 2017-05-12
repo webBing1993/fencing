@@ -259,6 +259,11 @@ class Culture extends Admin{
         $update['status'] = '1';
         $title1 = $info1['title'];
         CultureModel::where(['id'=>$arr1])->update($update); // 更新推送后的状态
+        if ($info1['type'] == 2){
+            $pre = '【志愿发布】';
+        }else{
+            $pre = '【志愿情况】';
+        }
         $str1 = strip_tags($info1['content']);
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
@@ -266,7 +271,7 @@ class Culture extends Admin{
         $image1 = Picture::get($info1['front_cover']);
         $path1 = "http://tzpb.0571ztnet.com".$image1['path'];
         $information1 = array(
-            'title' => $title1,
+            'title' => $pre . $title1,
             'description' => $content1,
             'url'  => $url1,
             'picurl' => $path1
@@ -280,13 +285,18 @@ class Culture extends Admin{
                 $info2 = CultureModel::where('id',$value)->find();
                 $title2 = $info2['title'];
                 $str2 = strip_tags($info2['content']);
+                if ($info2['type'] == 2){
+                    $pre1 = '【志愿发布】';
+                }else{
+                    $pre1 = '【志愿情况】';
+                }
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
                 $url2 = "http://tzpb.0571ztnet.com/home/news/detail/id/".$info2['id'].".html";
                 $image2 = Picture::get($info2['front_cover']);
                 $path2 = "http://tzpb.0571ztnet.com".$image2['path'];
                 $information2[] = array(
-                    "title" =>$title2,
+                    "title" => $pre1 .$title2,
                     "description" => $content2,
                     "url" => $url2,
                     "picurl" => $path2,
@@ -324,7 +334,7 @@ class Culture extends Admin{
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
             $data['class'] = 4;  // 文明创建
-            $data['status'] = 0;
+            $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);
             if($result){

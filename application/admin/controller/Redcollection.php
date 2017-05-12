@@ -7,14 +7,10 @@
  */
 
 namespace app\admin\controller;
-use app\admin\model\Picture;
-use app\admin\model\Push;
 use app\admin\model\Redfilm;
 use app\admin\model\Redbook;
 use app\admin\model\Redmusic;
 use app\admin\model\Redremark;
-use com\wechat\TPQYWechat;
-use think\Config;
 
 /**
  * Class Redcollection

@@ -13,13 +13,13 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>党委动态</h2>
+        <h2>企业文化</h2>
         <ol class="breadcrumb">
             <li class="active">
                 推送管理
             </li>
             <li>
-                <strong><a href="{:Url('News/pushlist')}">推送列表</a></strong>
+                <strong><a href="{:Url('Company/pushlist')}">推送列表</a></strong>
             </li>
         </ol>
     </div>
@@ -45,19 +45,6 @@
                                         <form class="form-horizontal" id="form" method="post" action="push.html">
                                             <p class="tt">消息推送(只可推送本周的信息)</p>
                                             <div class="form-group">
-                                                <!--<div class="row">-->
-                                                    <!--<div class="col-lg-2 col-sm-2 no-padding text-right" style="text-align:center;line-height:30px;">-->
-                                                        <!--<label>类型:</label>-->
-                                                    <!--</div>-->
-                                                    <!--<div class="col-lg-10 col-sm-10" style="padding-right:35px;">-->
-                                                        <!--<label class="i-checks">-->
-                                                            <!--<input type="radio"  value="1" checked="" name="type">企业号(每天30次)-->
-                                                        <!--</label>-->
-                                                        <!--<label class="i-checks">-->
-                                                            <!--<input type="radio" value="2"  name="type">订阅号(每天1次)-->
-                                                        <!--</label>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
                                                 <div class="row">
                                                     <div class="col-lg-2 col-sm-2 no-padding text-right" style="text-align:center;line-height:30px;margin-bottom: 10px">
                                                         <label>主图文:</label>
@@ -140,7 +127,7 @@
 <script src="/admin/js/chosen.jquery.js"></script>
 <script>
     $(function(){
-        highlight_subnav("{:Url('News/pushlist')}");
+        highlight_subnav("{:Url('Company/pushlist')}");
 
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
@@ -160,7 +147,7 @@
         }
         $.ajax({
             type:"post",
-            url:"{:Url('News/pushlist')}",
+            url:"{:Url('Company/pushlist')}",
             data:{id:id},
             success:function(data){
                 var html = "";
@@ -222,7 +209,6 @@
     $(".post-put").off('click').on("click",function(){
         var it=$(this);
         var data = {
-            type: $("input[name='type']:checked" ).val(),
             focus_main: $("select[name='focus_main']").val(),
             focus_vice: $("select[name='focus_vice']").val(),
         };

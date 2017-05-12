@@ -9,12 +9,8 @@
 namespace app\admin\controller;
 
 use app\admin\model\Notice as NoticeModel;
-use app\admin\model\NoticeSend;
 use app\admin\model\Picture;
 use app\admin\model\Push;
-use app\admin\model\WechatDepartment;
-use app\admin\model\WechatTag;
-use app\admin\model\WechatUser;
 use com\wechat\TPQYWechat;
 use think\Config;
 

@@ -10,7 +10,6 @@ namespace app\admin\controller;
 use think\Controller;
 use app\admin\model\Picture;
 use app\admin\model\Push;
-use app\admin\model\PushReview;
 use com\wechat\TPQYWechat;
 use app\admin\model\News as NewsModel;
 use think\Config;
@@ -174,10 +173,6 @@ class News extends Admin {
             foreach($list as $value){
                 $msg = NewsModel::where('id',$value['focus_main'])->find();
                 $value['title'] = $msg['title'];
-                //审核信息
-                $review = PushReview::where('push_id',$value['id'])->find();
-                $value['review_name'] = $review['username'];
-                $value['review_time'] = $review['review_time'];
             }
             $this->assign('list',$list);
             //主图文本周内的新闻消息
@@ -217,11 +212,16 @@ class News extends Admin {
         $str1 = strip_tags($info1['content']);
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
+        if ($info1['type'] == 1){
+            $pre = '【工作部署】';
+        }else{
+            $pre = '【中心组学习】';
+        }
         $url1 = "http://tzpb.0571ztnet.com/home/news/detail/id/".$info1['id'].".html";
         $image1 = Picture::get($info1['front_cover']);
         $path1 = "http://tzpb.0571ztnet.com".$image1['path'];
         $information1 = array(
-            'title' => $title1,
+            'title' => $pre.$title1,
             'description' => $content1,
             'url'  => $url1,
             'picurl' => $path1
@@ -237,11 +237,16 @@ class News extends Admin {
                 $str2 = strip_tags($info2['content']);
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
+                if ($info2['type'] == 1){
+                    $pre1 = '【工作部署】';
+                }else{
+                    $pre1 = '【中心组学习】';
+                }
                 $url2 = "http://tzpb.0571ztnet.com/home/news/detail/id/".$info2['id'].".html";
                 $image2 = Picture::get($info2['front_cover']);
                 $path2 = "http://tzpb.0571ztnet.com".$image2['path'];
                 $information2[] = array(
-                    "title" =>$title2,
+                    "title" =>$pre1.$title2,
                     "description" => $content2,
                     "url" => $url2,
                     "picurl" => $path2,
@@ -279,7 +284,7 @@ class News extends Admin {
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
             $data['class'] = 3;  // 省委动态
-            $data['status'] = 0;
+            $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);
             if($result){
