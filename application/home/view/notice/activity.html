@@ -2,68 +2,59 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/common/detail.css">
-<style>
-	.scrollDiy{
-		position: absolute;
-		top:0;
-		bottom:0;
-		overflow-y: scroll;
-		/* 增加该属性，可以增加弹性 */
-		-webkit-overflow-scrolling: touch;
-		width:100%;
-	}
-</style>
 {/block}
-<!--css一处 scrollDiy标签一对 tofixed()注释  scrollNow 跟scrollDiy滚动绑定-->
+
 {block name="body"}
-<div class="scrollDiy">
-	<div class="article">
-		<div class="title limit_">{$new.title}</div>
-		<div class="note clear">
-			<span class="fl">{$new.publisher}</span>
-			<span class="fr">{$new.create_time|time_format="Y-m-d"}</span>
-		</div>
-		<div class="content">
-			{$new.content}
-			<div class="note">
-				<span class="read">{$new.views}</span>
-				{eq name="visit" value="0"}
-				{eq name="new.is_like" value="1"}
-				<span class="isgood good_" onclick="isGood(this,6,{$new.id})">{$new.likes}</span>
-				{else/}
-				<span class="isgood good" onclick="isGood(this,6,{$new.id})">{$new.likes}</span>
-				{/eq}
-				{/eq}
-			</div>
+<!--新增-->
+<div class="title" style="margin:10px auto;width:90%;text-align: center">
+	<span style="color:#333;font-size:16px;">{$activity['title']}</span>
+</div>
+<div class="note">{$activity.create_time|time_format="Y-m-d"}</div>
+<!--新增-->
+<div class="article">
+	<div class="content">
+		{volist name="$activity.images" id="img"}
+		<img src="{$img}" alt="笔记图片" class="img" style="width:100%;">
+		{/volist}
+        <div style="text-indent:2em;">{$activity.content}</div>
+		<div class="note">
+			<span class="read">{$activity.views}</span>
+			{eq name="visit" value="0"}
+			{eq name="activity.is_like" value="1"}
+			<span class="isgood good_" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+			{else/}
+			<span class="isgood good" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+			{/eq}
+			{/eq}
 		</div>
 	</div>
-	<div class="comment">
-		<div class="sum">共<span>{$new.comments}</span>条评论</div>
-		<div class="lists">
-			{volist name="comment" id="co"}
-			<div class="list clear">
-				<div class="fl">
-					<img src="{$co.header}" alt="用户" class="user">
-				</div>
-				<div class="fl mid">
-					<div class="name limit">{$co.nickname}</div>
-					<div class="content" >{$co.content}</div>
-					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
-				</div>
-				{eq name="visit" value="0"}
-				{eq name="co.is_like" value="1"}
-				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-				{else/}
-				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-				{/eq}
-				{/eq}
+</div>
+<div class="comment">
+	<div class="sum">共<span>{$activity.comments}</span>条评论</div>
+	<div class="lists">
+		{volist name="comment" id="co"}
+		<div class="list clear">
+			<div class="fl">
+				<img src="{$co.header}" alt="用户" class="user">
 			</div>
-			{/volist}
+			<div class="fl mid">
+				<div class="name limit">{$co.nickname}</div>
+				<div class="content" >{$co.content}</div>
+				<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+			</div>
+			{eq name="visit" value="0"}
+			{eq name="co.is_like" value="1"}
+			<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+			{else/}
+			<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+			{/eq}
+			{/eq}
 		</div>
-		<div class="tip"></div>
-		<div class="loading hidden">
-			<div class="typing_loader"></div>
-		</div>
+		{/volist}
+	</div>
+	<div class="tip"></div>
+	<div class="loading hidden">
+		<div class="typing_loader"></div>
 	</div>
 </div>
 {eq name="visit" value="0"}
@@ -71,7 +62,7 @@
 	<div class="myword fl">
 		<input type="text" placeholder="说说你的感想！">
 	</div>
-	<div class="send fr" onclick="send(this,6,{$new['id']})">发送</div>
+	<div class="send fr" onclick="send(this,2,{$activity['id']})">发送</div>
 </div>
 {/eq}
 
@@ -80,10 +71,9 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//模块标题
-	$('title' ).text('第一聚焦');
+	$('title' ).text('支部活动');
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 7){
@@ -91,10 +81,20 @@ $(function(){
 	}
 	//上拉加载评论
 	loadScroll();
-//	//ios fix兼容
-//	tofixed();
+	//ios fix兼容
+	tofixed();
 	//ue限定
 	ueLimit();
+	//初始图片
+	var src1 = $('.content .img:nth-child(1)' ).attr('src');
+	var src2 = $('.content .img:nth-child(2)' ).attr('src');
+	if(src1 != undefined){
+		if(src1 == ''){
+			$('.img').remove();
+		}else if(src1 != '' && src2 == ''){
+			$('.content .img').eq(1).remove();
+		}
+	}
 });
 /**
  * 点赞
@@ -126,7 +126,7 @@ var isGood = function(e,type,id){
  */
 var send = function(e,type,id){
 	var it = $(e ).prev().find('input');
-	if(it.val() != '' && it.val().length > 4){
+	if(it.val() != ''&& it.val().length > 4){
 		$.ajax({
 			type:"post",
 			url:"{:Url('Base/comment')}",
@@ -142,8 +142,8 @@ var send = function(e,type,id){
 					showConfirmButton:false
 				});
 			},
-			success:function(msg){
-				var data = msg.data;
+			success:function(data){
+				var data = data.data;
 				var userid = "'"+data.create_user+"'";
 				var html = '';
 				html += '<div class="list clear">'+
@@ -172,6 +172,25 @@ var send = function(e,type,id){
 		});
 	}else{
 		wAlert('您的评论少于5个字');
+	}
+};
+var wAlert = window.alert;
+window.alert = function (message) {
+	try {
+		var iframe = document.createElement("IFRAME");
+		iframe.style.display = "none";
+		iframe.setAttribute("src", 'data:text/plain,');
+		document.documentElement.appendChild(iframe);
+		var alertFrame = window.frames[0];
+		var iwindow = alertFrame.window;
+		if (iwindow == undefined) {
+			iwindow = alertFrame.contentWindow;
+		}
+		iwindow.alert(message);
+		iframe.parentNode.removeChild(iframe);
+	}
+	catch (exc) {
+		return wAlert(message);
 	}
 };
 var tofixed = function(){
@@ -205,40 +224,20 @@ var tofixed = function(){
 		})
 	}
 };
-var wAlert = window.alert;
-window.alert = function (message) {
-	try {
-		var iframe = document.createElement("IFRAME");
-		iframe.style.display = "none";
-		iframe.setAttribute("src", 'data:text/plain,');
-		document.documentElement.appendChild(iframe);
-		var alertFrame = window.frames[0];
-		var iwindow = alertFrame.window;
-		if (iwindow == undefined) {
-			iwindow = alertFrame.contentWindow;
-		}
-		iwindow.alert(message);
-		iframe.parentNode.removeChild(iframe);
-	}
-	catch (exc) {
-		return wAlert(message);
-	}
-};
 function loadScroll(){
-	$('.scrollDiy').off("scroll" ).on("scroll",function(){
-		var dh = $('.article').height() + $('.comment').height();
-		var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
+	$(window ).off("scroll" ).on("scroll",function(){
+		var dh = $(document).height();
+		var end = $(window).height() + $(window ).scrollTop();
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		var id = {$new['id']};
-		if(dh <= end && scrollNow){
-			scrollNow = false;//请求执行中
+		var id = {$activity['id']};
+		if(dh == end){
 			$.ajax({
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
 				data:{
-					type:6,
+					type:2,
 					aid:id,
 					length:len
 				},
@@ -257,9 +256,8 @@ function loadScroll(){
 						}
 					}else{
 						tip.text('没有更多了');
-						$('.scrollDiy' ).off("scroll");
+						$(window ).off("scroll");
 					}
-					scrollNow = true;//请求结束
 				}
 			})
 		}
@@ -283,9 +281,9 @@ function addComment(data){
 				'<div class="time">'+ list.time+'</div>'+
 				'</div>';
 		if(list.is_like == 0){
-			html+='<div class="fr isgood good" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
+			html+='<div class="fr isgood good" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
 		}else{
-			html+='<div class="fr isgood good_" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
+			html+='<div class="fr isgood good_" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
 		}
 		html+=
 				'</div>';
@@ -301,5 +299,59 @@ function ueLimit(){
 		}
 	});
 }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script>
+	//---微信接口JS-SDK的调用
+	wx.config({
+		debug: false,
+		appId: '{$jsSign.appid}', // 必填，公众号的唯一标识
+		timestamp: {$jsSign['timestamp']}, // 必填，生成签名的时间戳，切记时间戳是整数型，别加引号
+		nonceStr: '{$jsSign.noncestr}', // 必填，生成签名的随机串
+		signature: '{$jsSign.signature}', // 必填，签名，见附录1
+		jsApiList: [
+			'checkJsApi',
+			'chooseImage',
+			'previewImage',
+			'uploadImage',
+			'downloadImage',
+			'onMenuShareTimeline',
+			'onMenuShareAppMessage',
+		]
+	});
+
+	wx.ready(function () {
+		//分享到朋友圈
+		wx.onMenuShareTimeline({
+			title: '{$activity.title}',
+			link: "{$activity.link}",
+			imgUrl: '{$activity.share_image}',
+			success: function () {
+				// 用户确认分享后执行的回调函数
+			},
+			cancel: function () {
+				// 用户取消分享后执行的回调函数
+			}
+		});
+		//分享给朋友
+		wx.onMenuShareAppMessage({
+			title: '{$activity.title}', // 分享标题
+			desc: '{$activity.desc}', // 分享描述
+			link: '{$activity.link}', // 分享链接
+			imgUrl: '{$activity.share_image}', // 分享图标
+			type: '', // 分享类型,music、video或link，不填默认为link
+			dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			success: function () {
+				// 用户确认分享后执行的回调函数
+			},
+			cancel: function () {
+				// 用户取消分享后执行的回调函数
+			}
+		});
+
+	});
+	wx.error(function (res) {
+		alert('wx.error: '+JSON.stringify(res));
+	});
 </script>
 {/block}

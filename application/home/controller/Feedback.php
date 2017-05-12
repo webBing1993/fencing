@@ -18,7 +18,7 @@ use think\Db;
 /**
  * Class Feedback
  * @package app\home\controller
- * 意见反馈
+ * 党员之声
  */
 class Feedback extends Base {
     /**

@@ -2,24 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: stiff <1570004138@163.com>
- * Date: 2017/5/12
- * Time: 10:50
+ * Date: 2017/5/10
+ * Time: 16:08
  */
 namespace app\home\controller;
 
-class Civilization extends Base{
+class Dynamic extends Base{
     /**
-     * 文明创建
+     * 党委动态
      */
     public function index(){
-        $this ->assign('relevant',0);
-        $this ->assign('party',0);
         return $this ->fetch();
     }
     /**
-     * 志愿发布更多列表
+     * 党委动态详情页
      */
-    public function relevantlist(){
+    public function detail(){
         return $this ->fetch();
     }
 }

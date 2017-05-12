@@ -1,0 +1,20 @@
+{extend name="public/pure"}
+{block name="style"}
+<title>游客模式</title>
+<link rel="stylesheet" href="/home/css/tourist/erweima.css">
+{/block}
+{block name="body"}
+    <div id="qrcode"></div>
+    <img src="/home/images/tourist/22.png" alt="">
+{/block}
+{block name="script"}
+<script src="/static/jq-qrcode/jquery.qrcode.min.js"></script>
+<script>
+    jQuery('#qrcode').qrcode({width: document.body.clientWidth-20,height: document.body.clientWidth-20,text: 'http://mgspb.0574ztnet.com/home/work/tourist'});
+    $('body').height(window.screen.availHeight);
+    $('#qrcode').width(document.body.clientWidth-20);
+    $('img').width(document.body.clientWidth*0.2);
+    $('img').height(document.body.clientWidth*0.2);
+    $('img').show();
+</script>
+{/block}

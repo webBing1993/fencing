@@ -1,0 +1,113 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/notice/relevantlist.css">
+{/block}
+
+{block name="body"}
+{eq name="show" value="0"}
+<div class="default">
+	<img src="/home/images/notice/nomessage.png" alt="暂无消息">
+</div>
+{else/}
+<div class="lists">
+	<!--两种状态：ing进行中，over已结束-->
+	{volist name="list" id="vo"}
+	<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list">
+		<div class="title limit">{$vo.title}</div>
+		<div class="content limit_">{$vo.description}</div>
+		<div class="note clear">
+			{eq name="$vo.is" value="1"}
+			<span class="fl over">已结束</span>
+			{else/}
+			<span class="fl ing">进行中</span>
+			{/eq}
+			<span class="time fr">{$vo.create_time|time_format="Y-m-d"}</span>
+		</div>
+	</a>
+	{/volist}
+</div>
+<div class="tip"></div>
+<div class="loading hidden">
+	<div class="typing_loader"></div>
+</div>
+{/eq}
+{/block}
+
+{block name="script"}
+<script>
+$(function(){
+	//模块标题
+	$('title' ).text('支部活动');
+	//reset
+	var txt;
+	var len = $(".list" ).length;
+	if(len >= 7){
+		$('.tip' ).text('上拉加载更多');
+	}
+	//上拉加载
+	loadScroll();
+	//列表页：ue图片过滤
+	$('.limit_ img' ).replaceWith('[图片]');
+});
+function loadScroll(){
+	$(window ).off("scroll" ).on("scroll",function(){
+		var dh = $(document).height();
+		var end = $(window).height() + $(window ).scrollTop();
+		var len = $(".list" ).length;
+		var tip = $(".tip");
+		var loading = $('.loading');
+		if(dh == end){
+			$.ajax({
+				type:"post",
+				url:"{:Url('Notice/recruitmore')}",
+				data:{
+					length:len
+				},
+				beforeSend: function(XMLHttpRequest){
+					tip.hide();
+					loading.toggleClass('hidden');
+				},
+				success:function(data){
+					loading.toggleClass('hidden');
+					tip.show();
+					if(data.code == 1){
+						addMeets(data);
+						var dataLen =data.data.length;
+						if(data.data.length == 5){
+							tip.text('上拉加载更多');
+						}
+					}else{
+						tip.text('没有更多了');
+						$(window ).off("scroll");
+					}
+				}
+			})
+		}
+	})
+}
+function addMeets(data){
+	var html = '';
+	var meets = data.data;
+	var len = meets.length;
+	for(var i = 0; i< len;i++){
+		var meet = meets[i];
+		html +=
+				'<a href="/home/notice/recruit/id/'+ meet.id+'.html" class="list">'+
+				'<div class="title limit">'+meet.title+'</div>'+
+				'<div class="content limit_">'+meet.content+'</div>'+
+				'<div class="note clear">';
+		if(meet.state == 0){
+			html +=	'<span class="fl ing">进行中</span>'
+		}else{
+			html +=	'<span class="fl over">已结束</span>'
+		}
+		html +=
+				'<span class="time fr">'+meet.time+'</span>'+
+				'</div>'+
+				'</a>'
+	}
+	$(".lists" ).append(html);
+}
+</script>
+{/block}

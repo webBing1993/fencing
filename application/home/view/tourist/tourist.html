@@ -1,0 +1,82 @@
+{extend name="public/pure"}
+{block name="style"}
+<title>游客模式</title>
+<link rel="stylesheet" href="/home/css/tourist/tourist.css">
+{/block}
+{block name="body"}
+    <img src="/home/images/tourist/1.png" class="title1" />
+    <img src="/home/images/tourist/2.png" class="title2" />
+    <div class="password">
+        <input type="password" id="password" placeholder="请输入访问密码" maxlength="9">
+    </div>
+    <div class="btn">登&emsp;录</div>
+    <img src="/home/images/tourist/4.png" class="title" />
+{/block}
+{block name="script"}
+<script>
+    $('.password').width($('.password').width()-15);
+    var a=$(window).height() - $('body').height()-50;
+    if(a> $('.title').height()){
+        $('.title').css({'position':'fixed'}).show();
+    }else{
+        $('.title').show();
+    }
+    //验证密码
+    $('.btn').click(function(){
+        if(!$('#password').val()){
+            alert('请输入访问密码');
+        }else if($('#password').val()=='dqdxxzdj'||'123456'){
+            window.location.href='index';
+        }else{
+            alert('访问密码错误，请重新输入!');
+        }
+    });
+
+    $('#password').keyup(function(){
+        if(!$(this).val().length){
+            $('.btn').css({'opacity':'.5'});
+        }else{
+            $('.btn').css({'opacity':'1'});
+        }
+    });
+    //修改alert样式
+    var wAlert = window.alert;
+    window.alert = function (message) {
+        try {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            var alertFrame = window.frames[0];
+            var iwindow = alertFrame.window;
+            if (iwindow == undefined) {
+                iwindow = alertFrame.contentWindow;
+            }
+            iwindow.alert(message);
+            iframe.parentNode.removeChild(iframe);
+        }
+        catch (exc) {
+            return wAlert(message);
+        }
+    };
+    var wConfirm = window.confirm;
+    window.confirm = function (message) {
+        try {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            var alertFrame = window.frames[0];
+            var iwindow = alertFrame.window;
+            if (iwindow == undefined) {
+                iwindow = alertFrame.contentWindow;
+            }
+            iwindow.confirm(message);
+            iframe.parentNode.removeChild(iframe);
+        }
+        catch (exc) {
+            return wConfirm(message);
+        }
+    }
+</script>
+{/block}
