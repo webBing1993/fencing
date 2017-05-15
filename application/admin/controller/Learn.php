@@ -12,7 +12,6 @@ use app\admin\model\Picture;
 use app\admin\model\Push;
 use com\wechat\TPQYWechat;
 use think\Config;
-use think\Url;
 
 /**
  * Class Learn
@@ -192,16 +191,16 @@ class Learn extends Admin {
             $pre1 = "【两学一做】";
             switch ($focus1['type']) {
                 case 1:  // 视频
-                    $url1 = "http://tzpb.0571ztnet.com/home/learn/video/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/learn/video/id/".$focus1['id'].".html";
                     break;
                 case 2:  // 图文
-                    $url1 = "http://tzpb.0571ztnet.com/home/learn/article/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/learn/article/id/".$focus1['id'].".html";
                     break;
                 default:
                     break;
             }
             $img1 = Picture::get($focus1['front_cover']);
-            $path1 = "http://tzpb.0571ztnet.com".$img1['path'];
+            $path1 = hostUrl.$img1['path'];
             $information1 = array(
                 "title" => $pre1.$title1,
                 "description" => $content1,
@@ -224,16 +223,16 @@ class Learn extends Admin {
                 $pre = "【两学一做】";
                 switch ($focus['type']) {
                     case 1:
-                        $url = "http://tzpb.0571ztnet.com/home/learn/video/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/learn/video/id/".$focus['id'].".html";
                         break;
                     case 2:
-                        $url = "http://tzpb.0571ztnet.com/home/learn/article/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/learn/article/id/".$focus['id'].".html";
                         break;
                     default:
                         break;
                 }
                 $img = Picture::get($focus['front_cover']);
-                $path = "http://tzpb.0571ztnet.com".$img['path'];
+                $path = hostUrl.$img['path'];
                 $info = array(
                     "title" => $pre.$title,
                     "description" => $content,
@@ -266,7 +265,7 @@ class Learn extends Admin {
             "touser" => "17557289172",
 //            "touser" => "@all",   //发送给全体，@all
             "msgtype" => 'news',
-            "agentid" => 27,
+            "agentid" => agentId,
             "news" => $send,
             "safe" => "0"
         );

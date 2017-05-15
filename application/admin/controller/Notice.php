@@ -323,30 +323,30 @@ class Notice extends Admin {
             $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
             switch ($focus1['type']) {
                 case 1:
-                    $url1 = "http://tzpb.0571ztnet.com/home/notice/relevant/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/notice/relevant/id/".$focus1['id'].".html";
                     $pre1 = "【相关通知】";
                     break;
                 case 2:
-                    $url1 = "http://tzpb.0571ztnet.com/home/notice/meet/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/notice/meet/id/".$focus1['id'].".html";
                     $pre1 = "【会议情况】";
                     break;
                 case 3:
-                    $url1 = "http://tzpb.0571ztnet.com/home/notice/party/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/notice/party/id/".$focus1['id'].".html";
                     $pre1 = "【党课情况】";
                     break;
                 case 4:
-                    $url1 = "http://tzpb.0571ztnet.com/home/notice/recruit/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/notice/recruit/id/".$focus1['id'].".html";
                     $pre1 = "【活动通知】";
                     break;
                 case 5:
-                    $url1 = "http://tzpb.0571ztnet.com/home/notice/activity/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/notice/activity/id/".$focus1['id'].".html";
                     $pre1 = "【活动情况】";
                     break;
                 default:
                     break;
             }
             $img1 = Picture::get($focus1['front_cover']);
-            $path1 = "http://tzpb.0571ztnet.com".$img1['path'];
+            $path1 = hostUrl.$img1['path'];
             $information1 = array(
                 "title" => $pre1.$title1,
                 "description" => $content1,
@@ -368,30 +368,30 @@ class Notice extends Admin {
                 $content = str_replace("&nbsp;","",$des);  //空格符替换成空
                 switch ($focus['type']) {
                     case 1:
-                        $url = "http://tzpb.0571ztnet.com/home/notice/relevant/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/notice/relevant/id/".$focus['id'].".html";
                         $pre = "【相关通知】";
                         break;
                     case 2:
-                        $url = "http://tzpb.0571ztnet.com/home/notice/meet/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/notice/meet/id/".$focus['id'].".html";
                         $pre = "【会议情况】";
                         break;
                     case 3:
-                        $url = "http://tzpb.0571ztnet.com/home/notice/party/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/notice/party/id/".$focus['id'].".html";
                         $pre = "【党课情况】";
                         break;
                     case 4:
-                        $url = "http://tzpb.0571ztnet.com/home/notice/recruit/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/notice/recruit/id/".$focus['id'].".html";
                         $pre = "【活动通知】";
                         break;
                     case 5:
-                        $url = "http://tzpb.0571ztnet.com/home/notice/activity/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/notice/activity/id/".$focus['id'].".html";
                         $pre = "【活动情况】";
                         break;
                     default:
                         break;
                 }
                 $img = Picture::get($focus['front_cover']);
-                $path = "http://tzpb.0571ztnet.com".$img['path'];
+                $path = hostUrl.$img['path'];
                 $info = array(
                     "title" => $pre.$title,
                     "description" => $content,
@@ -424,7 +424,7 @@ class Notice extends Admin {
             "touser" => "18768112486",
 //            "touser" => "@all",   //发送给全体，@all
             "msgtype" => 'news',
-            "agentid" => 17,
+            "agentid" => agentId,
             "news" => $send,
             "safe" => "0"
         );

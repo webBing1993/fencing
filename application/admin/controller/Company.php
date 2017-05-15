@@ -140,9 +140,9 @@ class Company extends Admin{
         $str1 = strip_tags($info1['content']);
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-        $url1 = "http://tzpb.0571ztnet.com/home/company/detail/id/".$info1['id'].".html";
+        $url1 = hostUrl."/home/company/detail/id/".$info1['id'].".html";
         $image1 = Picture::get($info1['front_cover']);
-        $path1 = "http://tzpb.0571ztnet.com".$image1['path'];
+        $path1 = hostUrl.$image1['path'];
         $information1 = array(
             'title' => '【企业文化】'.$title1,
             'description' => $content1,
@@ -160,9 +160,9 @@ class Company extends Admin{
                 $str2 = strip_tags($info2['content']);
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
-                $url2 = "http://tzpb.0571ztnet.com/home/company/detail/id/".$info2['id'].".html";
+                $url2 = hostUrl."/home/company/detail/id/".$info2['id'].".html";
                 $image2 = Picture::get($info2['front_cover']);
-                $path2 = "http://tzpb.0571ztnet.com".$image2['path'];
+                $path2 = hostUrl.$image2['path'];
                 $information2[] = array(
                     "title" =>'【企业文化】'.$title2,
                     "description" => $content2,
@@ -192,7 +192,7 @@ class Company extends Admin{
 //            "touser" => "15036667391",
             "totag" => "4",  // 审核组
             "msgtype" => 'news',
-            "agentid" => 11,  // 消息审核
+            "agentid" => agentId,
             "news" => $send,
             "safe" => "0"
         );
