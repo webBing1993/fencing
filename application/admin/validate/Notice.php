@@ -15,6 +15,7 @@ class Notice extends Validate {
     protected $rule = [
         'front_cover' => 'require',
         'title' => 'require|max:150',
+        'description' => 'require',
         'start_time' => 'require',
         'end_time' => 'require',
         'address' => 'require',
@@ -33,10 +34,11 @@ class Notice extends Validate {
         'telephone.require' => '联系电话不能为空',
         'address.require' => '地址不能为空',
         'publisher.require' => '发布人不能为空',
+        'description.require' => '简介不能为空'
     ];
 
     protected $scene = [
-        'act' => ['front_cover','title','content','start_time','end_time','address','telephone','publisher'],
+        'act' => ['front_cover','title','description','content','start_time','end_time','address','telephone','publisher'],
         'other' => ['front_cover','title','content','publisher'],
     ];
 

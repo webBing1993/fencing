@@ -107,6 +107,18 @@
                                 <input type="text" placeholder="请输入名称" class="form-control form_title" name="title" value="{$msg.title}">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>简介:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class=" float-e-margins">
+                                    <div class="ibox-content no-padding borders">
+                                        <textarea  class="text form-control form_title" name="description">{$msg.description}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
                                 <label>开始时间:</label>
@@ -260,6 +272,7 @@
                 start_time:$("input[name='start_time']").val(),
                 end_time:$("input[name='end_time']").val(),
                 address:$("input[name='address']").val(),
+                description:$("textarea[name='description']").val(),
                 publisher:$("input[name='publisher']").val(),
                 status:0,
             };
