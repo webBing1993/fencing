@@ -16,9 +16,9 @@
 		</div>
 	</div>
 	<div class="message">
-		<div><span class="limit">{$list.topic}</span></div>
-		<div><span class="limit">{$list.start_time|time_format="Y-m-d"}</span></div>
+		<div><span class="limit">{$list.start_time|time_format="Y-m-d H:i"}--{$list.end_time|time_format="Y-m-d H:i"}</span></div>
 		<div><span class="limit">{$list.address}</span></div>
+		<div><span class="limit">{$list.telephone}</span></div>
 	</div>
 	<div class="article">{$list.content}</div>
 	<div class="comment">

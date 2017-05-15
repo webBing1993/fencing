@@ -33,13 +33,15 @@
                     <div class="list" data-tab="{$vo.id}">
                         <div class="title">{$vo.title}</div>
                         {volist name="vo->Option" id="value" key="k"}
-                        <label>{if condition="($k eq 1) AND ($value neq ' ')"}A{elseif condition="($k eq 2) AND ($value neq ' ')"}B{elseif condition="($k eq 3 )AND ($value neq ' ')"}C{elseif condition="($k eq 4 )AND ($value neq ' ')"/}D{/if}.{$value|substr=###,'2'}</label>
+                        <label>{if condition="($k eq 1) AND ($value neq ' ') AND ($value neq '-')"}A{elseif condition="($k eq 2) AND ($value neq ' ') AND ($value neq '-')"}B{elseif condition="($k eq 3 )AND ($value neq ' ') AND ($value neq '-')"}C{elseif condition="($k eq 4 ) AND ($value neq ' ') AND ($value neq '-')"/}D{/if}.{$value|substr=###,'2'}</label>
                         {/volist}
                         <div class="number">{$n} / 3</div>
                     </div>
                     {/volist}
                 </div>
+                {eq name='visit' value="0"}
                 <div class="submit" data-toggle="modal" data-target="#modal">确认提交</div>
+                {/eq}
                 <!--模态框-->
                 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -62,7 +64,7 @@
                 <div class="list" data-tab="题号">
                     <div class="title" >{$vo.title}</div>
                     {volist name="vo->Option" id="value" key="k"}
-                    <label {eq name="vo.right" value="$k" }class="checked" {/eq}>{if condition="($k eq 1) AND ($value neq ' ')"}A{elseif condition="($k eq 2) AND ($value neq ' ')"}B{elseif condition="($k eq 3 )AND ($value neq ' ')"}C{elseif condition="($k eq 4 )AND ($value neq ' ')"/}D{/if}.{$value|substr=###,'2'}</label>
+                    <label {eq name="vo.right" value="$k" }class="checked" {/eq}>{if condition="($k eq 1) AND ($value neq ' ') AND ($value neq '-') "}A{elseif condition="($k eq 2) AND ($value neq ' ') AND ($value neq '-')"}B{elseif condition="($k eq 3 )AND ($value neq ' ') AND ($value neq '-')"}C{elseif condition="($k eq 4 )AND ($value neq ' ') AND ($value neq '-')"/}D{/if}.{$value|substr=###,'2'}</label>
                     {/volist}
                     <div class="note">
                         <span class="true">正确答案：<i>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</i></span>
@@ -88,7 +90,7 @@
                         <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list">
                             <div class="tab">视频</div>
                             {/eq}
-                            <img src="{$vo.list_image|get_cover='path'}" alt="图片" class="img">
+                            <img src="{$vo.front_cover|get_cover='path'}" alt="图片" class="img">
                             <div class="title limit">{$vo.title}</div>
                             <span class="study">{$vo.views}人阅读过</span>
                         </a>
@@ -122,7 +124,7 @@
        //两学一做上拉加载
         if(c == 3){
             var len = ntc.eq(c-1 ).find('.notice:last .list').length;
-            if(len >= 5){
+            if(len >= 3){
                 $('.tip' ).text('上拉加载更多');
             }
             loadScroll(c);
@@ -188,7 +190,7 @@
                         loading.toggleClass('hidden');
                         tip.show();
                         if(data.code == 1){
-                            addLists(data,type);
+                            addCourse(data,type);
                             var dataLen =data.data.length;
                             if(data.data.length == 5){
                                 tip.text('上拉加载更多');

@@ -16,7 +16,7 @@
 </div>
 <div class="tabs clear">
 	<div class="tab"><span>三会一课</span></div>
-	<div class="tab"><span>固定活动</span></div>
+	<div class="tab"><span>组织活动</span></div>
 </div>
 <!--切换列表-->
 <div class="content">
@@ -44,8 +44,8 @@
 			<div class="tab clear" >
 				<span class="fl">情况报道</span>
 			</div>
-			{volist name="party" id="pa"}
-			<a href="{:Url('Notice/party?id='.$pa['id'])}" class="list clear">
+			{volist name="meet" id="pa"}
+			<a href="{:Url('Notice/meet?id='.$pa['id'])}" class="list clear">
 				<div class="fl">
 					<img src="{$pa['front_cover']|get_cover='path'}" alt="图片">
 				</div>

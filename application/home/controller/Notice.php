@@ -31,67 +31,36 @@ class Notice extends Base {
     public function index(){
         $this->anonymous(); //判断是否是游客
         $this->default_pic();
-        
-        $userId = session('userId');
         //相关通知 type = 1
         $map1 = array(
             'type' => 1,
-            'status' => array('eq',1)
+            'status' => array('egt',0)
         );
         $list1 = NoticeModel::where($map1)->order('id desc')->limit(2)->select();
         $this->assign('relevant',$list1);
-
-        //会议情况 type = 2
+        //情况报道  type = 2
         $map2 = array(
             'type' => 2,
-            'status' => array('eq',1)
+            'status' => array('egt',0)
         );
-        $list2 = NoticeModel::where($map2)->order('id desc')->limit(2)->select();
+        $list2 = NoticeModel::where($map2)->order('id desc')->limit(5)->select();
         $this->assign('meet',$list2);
 
-        //党课情况 type = 3
-        $map3 = array(
-            'type' => 3,
-            'status' => array('eq',1)
-        );
-        $list3 = NoticeModel::where($map3)->order('id desc')->limit(5)->select();
-        $this->assign('party',$list3);
-
-        //活动招募 type = 4
+        //活动通知  type = 3
         $map4 = array(
-            'type' => 4,
-            'status' => array('eq',1)
+            'type' => 3,
+            'status' => array('egt',0)
         );
         $list4 = NoticeModel::where($map4)->order('id desc')->limit(2)->select();
         $this->assign('recruit',$list4);
 
-        //活动情况 type = 5
+        //活动情况 type = 4
         $map5 = array(
-            'type' => 5,
-            'status' => array('eq',1)
+            'type' => 4,
+            'status' => array('egt',0)
         );
         $list5 = NoticeModel::where($map5)->order('id desc')->limit(5)->select();
         $this->assign('activity',$list5);
-
-        //创意组织生活 type = 6
-        $map6 = array(
-            'type' => 6,
-            'status' => array('eq',1)
-        );
-        $list6 = NoticeModel::where($map6)->order('id desc')->limit(2)->select();
-        $this->assign('regular',$list6);
-
-        //是否具备我的发布权限,具备为1，无则为0
-        $map = array(
-            'userid' => $userId,
-            'tagid' => 5, //权限标签id
-        );
-        $info = WechatUserTag::where($map)->find();
-        if($info) {
-            $this->assign('is',1);
-        }else{
-            $this->assign('is',0);
-        }
         return $this->fetch();
     }
 

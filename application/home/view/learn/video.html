@@ -31,6 +31,8 @@
 			{else/}
 			<span class="isgood good" onclick="isGood(this,1,{$video.id})">{$video.likes}</span>
 			{/eq}
+			{else/}
+			<span class="isgood good">{$video.likes}</span>
 			{/eq}
 		</div>
 	</div>
@@ -54,6 +56,8 @@
 			{else/}
 			<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
 			{/eq}
+			{else/}
+			<div class="fr isgood good">{$co.likes}</div>
 			{/eq}
 		</div>
 		{/volist}
