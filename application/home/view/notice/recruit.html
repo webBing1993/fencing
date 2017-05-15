@@ -12,8 +12,8 @@
 	<div class="top">
 		<div class="title limit_" style="text-align: center">{$list.title}</div>
 		<div class="note">
-			<span class="fl">{$info.publisher}</span>
-			{$info.create_time|time_format='Y-m-d'}
+			<span class="fl">{$list.publisher}</span>
+			{$list.create_time|time_format='Y-m-d'}
 		</div>
 	</div>
 	<div class="message">
@@ -23,12 +23,12 @@
 	</div>
 	<div class="article">{$list.content}</div>
 	<div class="note">
-		<span class="read">{$activity.views}</span>
+		<span class="read">{$list.views}</span>
 		{eq name="visit" value="0"}
-		{eq name="activity.is_like" value="1"}
-		<span class="isgood good_" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+		{eq name="list.is_like" value="1"}
+		<span class="isgood good_" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
 		{else/}
-		<span class="isgood good" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+		<span class="isgood good" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
 		{/eq}
 		{/eq}
 	</div>
