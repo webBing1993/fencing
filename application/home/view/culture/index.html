@@ -9,12 +9,14 @@
     <div class="banners">
         <div class="swiper-container">
             <div class="imgs swiper-wrapper">
-                <div class="banner swiper-slide">
-                    <a href="">
-                        <img src="/home/images/notice/5.jpg" alt="">
-                        <div class="title_ limit">阿斯蒂芬撒旦法撒旦法阿斯蒂芬</div>
-                    </a>
-                </div>
+                {volist name="banner" id="vo"}
+                    <div class="banner swiper-slide">
+                        <a href="">
+                            <img src="{$vo.front_cover|get_cover='path'}" alt="">
+                            <div class="title_ limit">{$vo.title}</div>
+                        </a>
+                    </div>
+                {/volist}
             </div>
         </div>
     </div>
@@ -23,40 +25,40 @@
         <div class="notices">
             <!--志愿发布-->
             <div class="notice">
-                <a href="{:Url('Civilization/relevantlist')}" class="tab clear">
+                <a href="{:Url('Culture/volunlist')}" class="tab clear">
                     <span class="fl">志愿发布</span>
                     <span class="fr">更多</span>
                 </a>
-
-                <a href="" class="list">
-                    <div class="title limit">测试</div>
-                    <div class="content limit_">手动阀啥地方</div>
-                    <div class="clear time">
-                        <span class="fl">2017-05-10</span>
-                        <span class="fr fa fa-angle-right"></span>
-                    </div>
-                </a>
-
+                {volist name="volun" id="vo"}
+                    <a href="{:Url('Culture/publish',['id'=>$vo.id])}" class="list">
+                        <div class="title limit">{$vo.title}</div>
+                        <div class="content limit_">{$vo.content}</div>
+                        <div class="clear time">
+                            <span class="fl">{$vo.create_time|date="Y-m-d",###}</span>
+                            <span class="fr fa fa-angle-right"></span>
+                        </div>
+                    </a>
+                {/volist}
             </div>
             <!--志愿情况-->
             <div class="notice party">
                 <div class="tab clear" >
                     <span class="fl">志愿情况</span>
                 </div>
-
-                <a href="" class="list clear">
-                    <div class="fl">
-                        <img src="" alt="图片">
-                    </div>
-                    <div class="fr right">
-                        <div class="title limit_">测试</div>
-                        <div class="clear time">
-                            <span class="fl">2017-10-9</span>
-                            <span class="fr fa fa-angle-right"></span>
+                {volist name="volun_details" id="vo"}
+                    <a href="" class="list clear">
+                        <div class="fl">
+                            <img src="{$vo.front_cover|get_cover='path'}"alt="图片">
                         </div>
-                    </div>
-                </a>
-
+                        <div class="fr right">
+                            <div class="title limit_">{$vo.title}</div>
+                            <div class="clear time">
+                                <span class="fl">{$vo.create_time|date="Y-m-d",###}</span>
+                                <span class="fr fa fa-angle-right"></span>
+                            </div>
+                        </div>
+                    </a>
+                {/volist}
             </div>
         </div>
     </div>
@@ -70,6 +72,7 @@
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script src="/home/js/reset.js"></script>
 <script>
+    var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     $(function(){
         //轮播
         var mySwiper = new Swiper('.swiper-container', {
@@ -82,6 +85,7 @@
         if(len >= 5){
             $('.tip' ).text('上拉加载更多');
         }
+        loadScroll();
     });
     function loadScroll(){
         $(window ).off("scroll" ).on("scroll",function(){
@@ -92,8 +96,8 @@
             var tip = $(".tip");
             var loading = $('.loading');
             var url;
-            url = "{:Url('')}";
-            if(dh == end){
+            url = "{:Url('Civilization/more')}";
+            if(dh == end && scrollNow){
                 $.ajax({
                     type:"post",
                     url: url,
@@ -105,10 +109,11 @@
                         loading.toggleClass('hidden');
                     },
                     success:function(data){
+                        console.log(data);
                         loading.toggleClass('hidden');
                         tip.show();
                         if(data.code == 1){
-                            addLists(data,type);
+                            addLists(data);
                             var dataLen =data.data.length;
                             if(data.data.length == 5){
                                 tip.text('上拉加载更多');
@@ -117,6 +122,7 @@
                             tip.text('没有更多了');
                             $(window ).off("scroll");
                         }
+                        scrollNow = true;//请求结束
                     }
                 })
             }
@@ -129,7 +135,7 @@
         for(var i = 0; i< len;i++){
             var list = lists[i];
             html +=
-                    '<a href='+ list.id+'.html" class="list clear">'+
+                    '<a href="'+'" class="list clear">'+
                     '<div class="fl">'+
                     '<img src="'+list.path+'" alt="图片">'+
                     '</div>'+

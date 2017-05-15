@@ -98,8 +98,7 @@ var isGood = function(e,id,comment_id,userid,cla){
 		data:{
 			type:cla,
 			aid:id,
-			comment_id:comment_id,
-			user_id:userid
+			comment_id:comment_id
 		},
 		success:function(data){
 			console.log('点赞成功');
@@ -113,7 +112,7 @@ var send = function(e){
 	if(it.val() != ''){
 		$.ajax({
 			type:"post",
-			url:"{:Url('News/comment')}",
+			url:"{:Url('Base/comment')}",
 			data:{
 				type : 13,
 				aid:$('.send' ).attr('data-tab'),

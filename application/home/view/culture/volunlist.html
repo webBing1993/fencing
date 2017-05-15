@@ -13,7 +13,7 @@
 <div class="lists">
 	<!--两种状态：ing进行中，over已结束-->
 	{volist name="list" id="vo"}
-	<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list">
+	<a href="{:Url('Culture/publish',['id'=>$vo.id])}" class="list">
 		<div class="title limit">{$vo.title}</div>
 		<div class="content limit_">{$vo.description}</div>
 		<div class="note clear">
@@ -36,9 +36,10 @@
 
 {block name="script"}
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//模块标题
-	$('title' ).text('支部活动');
+	$('title' ).text('志愿发布');
 	//reset
 	var txt;
 	var len = $(".list" ).length;
@@ -57,10 +58,10 @@ function loadScroll(){
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		if(dh == end){
+		if(dh == end && scrollNow){
 			$.ajax({
 				type:"post",
-				url:"{:Url('')}",
+				url:"{:Url('Culture/plus')}",
 				data:{
 					length:len
 				},
@@ -81,6 +82,7 @@ function loadScroll(){
 						tip.text('没有更多了');
 						$(window ).off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}
@@ -93,7 +95,7 @@ function addMeets(data){
 	for(var i = 0; i< len;i++){
 		var meet = meets[i];
 		html +=
-				'<a href="/home/notice/recruit/id/'+ meet.id+'.html" class="list">'+
+				'<a href="/home/culture/publish/id/'+ meet.id+'.html" class="list">'+
 				'<div class="title limit">'+meet.title+'</div>'+
 				'<div class="content limit_">'+meet.content+'</div>'+
 				'<div class="note clear">';
