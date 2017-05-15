@@ -270,10 +270,14 @@ function addComment(data){
 				'<div class="content" >'+ list.content+'</div>'+
 				'<div class="time">'+ list.time+'</div>'+
 				'</div>';
-		if(list.is_like == 0){
-			html+='<div class="fr isgood good" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
-		}else{
-			html+='<div class="fr isgood good_" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+		if ({$visit} == 0){
+			if(list.is_like == 0){
+				html+='<div class="fr isgood good" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+			}else{
+				html+='<div class="fr isgood good_" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+			}
+		}else {
+			html+='<div class="fr isgood good">'+list.likes+'</div>'
 		}
 		html+=
 				'</div>';
