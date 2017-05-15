@@ -50,10 +50,6 @@ class Learn extends Admin {
                 if($data['video_path'] == "" && $data['net_path'] == ""){
                     return $this->error("请上传视频文件或网址，如文件过大，请耐心等待..");
                 }
-            }elseif($data['type'] == 2){
-                if($data['list_image'] == ""){
-                    return $this->error("请上传文章顶部图片");
-                }
             }
             $learnModel = new LearnModel();
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
@@ -80,10 +76,6 @@ class Learn extends Admin {
             if($data['type'] == 1){
                 if($data['video_path'] == "" && $data['net_path'] == ""){
                     return $this->error("请上传视频文件或网址，如文件过大，请耐心等待..");
-                }
-            }elseif($data['type'] == 2){
-                if($data['list_image'] == ""){
-                    return $this->error("请上传文章顶部图片");
                 }
             }
             $learnModel = new LearnModel();

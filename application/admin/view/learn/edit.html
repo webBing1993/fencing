@@ -115,26 +115,11 @@
                                 <b>推荐尺寸：500*400px</b>
                             </div>
                             <div class="clear"></div>
-                            <div class="col-lg-1 text-right control-label">
-                                <label>列表图片:</label>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="imggroup">
-                                    {eq name="$msg" value=""}
-                                    <img src="{$list_pic|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
-                                    {else/}
-                                    <img src="{$msg.list_image|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
-                                    {/eq}
-                                    <input type="file" class="imgfile"  accept="image/jpg, image/png, image/gif, image/jpeg">
-                                    <input type="hidden" name="list_image" class="img"  value="{$msg.list_image||default=$list_pic}" required="">
-                                </div>
-                                <b>推荐尺寸：700*260px</b>
-                            </div>
                         </div>
                         <div class="one">
                             <div class="form-group">
                                 <div class="col-lg-1 text-right control-label">
-                                    <label>视频音频:</label>
+                                    <label>视频:</label>
                                 </div>
                                 <div class="col-lg-3">
                                     <select name="videoway" id="videoway"  class="form-control" >
@@ -470,7 +455,6 @@
                 id:$("input[name='id']").val(),
                 type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
-                list_image:$("input[name='list_image']").val(),
                 video_path:$("input[name='video_path']").val(),
                 net_path:$("input[name='net_path']").val(),
                 title:$("input[name='title']").val(),
