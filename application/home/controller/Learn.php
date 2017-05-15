@@ -153,7 +153,8 @@ class Learn extends Base{
                             $re[$key]['right'] = $rights[$key];
                         }
                         $this->assign('question',$re);
-                        return $this->fetch('scan');
+                        $this->assign('check',1);//1为答过题
+                        return $this->fetch();
                     }
                 }
             }
