@@ -9,7 +9,10 @@
 <div class="title" style="margin:10px auto;width:90%;text-align: center">
 	<span style="color:#333;font-size:16px;">{$activity['title']}</span>
 </div>
-<div class="note">{$activity.create_time|time_format="Y-m-d"}</div>
+<div class="note">
+	<span class="fl">{$info.publisher}</span>
+	{$info.create_time|time_format='Y-m-d'}
+</div>
 <!--新增-->
 <div class="article">
 	<div class="content">
