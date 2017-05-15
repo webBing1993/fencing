@@ -41,10 +41,10 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>{if condition="$msg.type eq 1"}相关通知{elseif condition="$msg.type eq 4"/}活动通知{/if}管理</h2>
+        <h2>支部活动</h2>
         <ol class="breadcrumb">
             <li>
-                {if condition="$msg.type eq 1"}<a href="{:Url('Notice/index')}">相关通知</a>{elseif condition="$msg.type eq 4"/}
+                {if condition="$msg.type eq 1"}<a href="{:Url('Notice/index')}">相关通知</a>{elseif condition="$msg.type eq 3"/}
                 <a href="{:Url('Notice/recruit')}">活动通知</a>{/if}
             </li>
             <li class="active">
@@ -80,7 +80,7 @@
                                     {if condition="$msg.type eq 1"}
                                     <option value="1">相关通知</option>
                                     {else/}
-                                    <option value="4">活动通知</option>
+                                    <option value="3">活动通知</option>
                                     {/if}
                                 </select>
                             </div>

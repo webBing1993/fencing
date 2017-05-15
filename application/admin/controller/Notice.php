@@ -38,7 +38,7 @@ class Notice extends Admin {
     }
 
     /**
-     * 会议情况
+     * 情况 报道
      * type: 2
      */
     public function meet(){
@@ -57,10 +57,10 @@ class Notice extends Admin {
     }
 
     /**
-     * 党课情况
+     * 活动通知
      * type: 3
      */
-    public function lecture(){
+    public function recruit(){
         $map = array(
             'type' => 3,
             'status' => array('egt',0),
@@ -76,31 +76,12 @@ class Notice extends Admin {
     }
 
     /**
-     * 活动招募
-     * type: 4
-     */
-    public function recruit(){
-        $map = array(
-            'type' => 4,
-            'status' => array('egt',0),
-        );
-        $list = $this->lists('Notice',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"已发布",1=>"已发布"),
-        ));
-
-        $this->assign('list',$list);
-
-        return $this->fetch();
-    }
-
-    /**
      * 活动情况
-     * type: 5
+     * type: 4
      */
     public function activity(){
         $map = array(
-            'type' => 5,
+            'type' => 4,
             'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
@@ -162,7 +143,7 @@ class Notice extends Admin {
                 if($data['type'] == 1){
                     return $this->success("修改相关通知成功",Url('Notice/index'));
                 }else{
-                    return $this->success("修改活动招募成功",Url('Notice/recruit'));
+                    return $this->success("修改活动通知成功",Url('Notice/recruit'));
                 }
             }else{
                 return $this->get_update_error_msg($noticeModel->getError());
@@ -190,12 +171,10 @@ class Notice extends Admin {
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             $model = $noticeModel->validate('Notice.other')->save($data);
             if($model){
-               if ($data['type'] == 3){
-                  return $this->success('新增党课情况成功',Url('Notice/lecture'));
-               }else if($data['type'] == 5){
+               if ($data['type'] == 2){
+                  return $this->success('新增情况报道成功',Url('Notice/meet'));
+               }else if($data['type'] == 4){
                    return $this->success('新增活动情况成功',Url('Notice/activity'));
-               }else{
-                   return $this->success('新增会议情况成功',Url('Notice/meet'));
                }
             }else{
                  return $this->error($noticeModel->getError());
@@ -220,12 +199,10 @@ class Notice extends Admin {
             $noticeModel = new NoticeModel();
             $model = $noticeModel->validate('Notice.other')->save($data,['id'=> input('id')]);
             if($model){
-                if ($data['type'] == 3){
-                    return $this->success('修改党课情况成功',Url('Notice/lecture'));
-                }else if($data['type'] == 5){
+                if ($data['type'] == 2){
+                    return $this->success('修改情况报道成功',Url('Notice/meet'));
+                }else if($data['type'] == 4){
                     return $this->success('修复活动情况成功',Url('Notice/activity'));
-                }else{
-                    return $this->success('修改会议情况成功',Url('Notice/meet'));
                 }
             }else{
                 return $this->get_update_error_msg($noticeModel->getError());
@@ -270,7 +247,7 @@ class Notice extends Admin {
             );
             $infoes = NoticeModel::where($info)->select();
             int_to_string($infoes,array(
-                'type' => array(1=>"相关通知",2=>"会议情况",3=>"党课情况",4=>"活动通知",5=>"活动情况"),
+                'type' => array(1=>"相关通知",2=>"情况报道",3=>"活动通知",4=>"活动情况"),
             ));
             return $this->success($infoes);
         }else{
@@ -297,7 +274,7 @@ class Notice extends Admin {
             );
             $infoes = NoticeModel::where($info)->select();
             int_to_string($infoes,array(
-                'type' => array(1=>"相关通知",2=>"会议情况",3=>"党课情况",4=>"活动通知",5=>"活动情况"),
+                'type' => array(1=>"相关通知",2=>"情况报道",3=>"活动通知",4=>"活动情况"),
             ));
             $this->assign('info',$infoes);
             return $this->fetch();
@@ -328,17 +305,13 @@ class Notice extends Admin {
                     break;
                 case 2:
                     $url1 = hostUrl."/home/notice/meet/id/".$focus1['id'].".html";
-                    $pre1 = "【会议情况】";
+                    $pre1 = "【情况报道】";
                     break;
                 case 3:
-                    $url1 = hostUrl."/home/notice/party/id/".$focus1['id'].".html";
-                    $pre1 = "【党课情况】";
-                    break;
-                case 4:
                     $url1 = hostUrl."/home/notice/recruit/id/".$focus1['id'].".html";
                     $pre1 = "【活动通知】";
                     break;
-                case 5:
+                case 4:
                     $url1 = hostUrl."/home/notice/activity/id/".$focus1['id'].".html";
                     $pre1 = "【活动情况】";
                     break;
@@ -373,17 +346,13 @@ class Notice extends Admin {
                         break;
                     case 2:
                         $url = hostUrl."/home/notice/meet/id/".$focus['id'].".html";
-                        $pre = "【会议情况】";
+                        $pre = "【情况报道】";
                         break;
                     case 3:
-                        $url = hostUrl."/home/notice/party/id/".$focus['id'].".html";
-                        $pre = "【党课情况】";
-                        break;
-                    case 4:
                         $url = hostUrl."/home/notice/recruit/id/".$focus['id'].".html";
                         $pre = "【活动通知】";
                         break;
-                    case 5:
+                    case 4:
                         $url = hostUrl."/home/notice/activity/id/".$focus['id'].".html";
                         $pre = "【活动情况】";
                         break;
