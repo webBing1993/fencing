@@ -12,7 +12,8 @@
 	<div class="top">
 		<div class="title limit_" style="text-align: center">{$list.title}</div>
 		<div class="note">
-			<span class="read">{$list.views}</span>
+			<span class="fl">{$info.publisher}</span>
+			{$info.create_time|time_format='Y-m-d'}
 		</div>
 	</div>
 	<div class="message">
@@ -21,6 +22,16 @@
 		<div class="time">{$list.address}</div>
 	</div>
 	<div class="article">{$list.content}</div>
+	<div class="note">
+		<span class="read">{$activity.views}</span>
+		{eq name="visit" value="0"}
+		{eq name="activity.is_like" value="1"}
+		<span class="isgood good_" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+		{else/}
+		<span class="isgood good" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+		{/eq}
+		{/eq}
+	</div>
 	<div class="comment">
 		<div class="sum">共<span>{$list.comments}</span>条评论</div>
 		<div class="lists">
