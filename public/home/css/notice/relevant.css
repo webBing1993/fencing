@@ -3,8 +3,9 @@
   color: #333333;
 }
 .note {
-  font-size: 1.2rem;
   color: #999999;
+  font-size: 12px;
+  text-align: right;
 }
 .article p {
   width: 100%;
@@ -40,12 +41,12 @@
   margin-top: 15px;
   margin-bottom: 10px;
 }
-.content .top .note span {
-  height: 40px;
-  display: inline-block;
-  margin-right: 10px;
-  line-height: 40px;
-}
+/*.content .top .note span {*/
+  /*height: 40px;*/
+  /*display: inline-block;*/
+  /*margin-right: 10px;*/
+  /*line-height: 40px;*/
+/*}*/
 .content .top .read {
   background: url('/home/images/detail/scan_.png') 0 12px no-repeat;
   background-size: 15px 15px;
@@ -238,4 +239,39 @@
   position: relative;
   top: 17px;
   left: calc( 50vw - 20px );
+}
+
+.article  .note {
+  color: #999999;
+  font-size: 14px;
+  height: 40px;
+}
+.article  .note span {
+  height: 40px;
+  display: inline-block;
+  margin-right: 10px;
+  line-height: 40px;
+}
+.article  .note_ span{
+  margin-right: 0;
+}
+.article  .note .read {
+  background: url('/home/images/detail/scan_.png') 0 12px no-repeat;
+  background-size: 15px 15px;
+  padding-left: 18px;
+  float:right;
+}
+.article  .note .good {
+  background: url('/home/images/detail/good.png') 0 12px no-repeat;
+  background-size: 15px 15px;
+  padding-left: 18px;
+  float:right;
+}
+.article .note .good_ {
+  animation: shake 300ms ease;
+  -webkit-animation: shake 300ms ease;
+  background: url('/home/images/detail/good_.png') 0 12px no-repeat;
+  background-size: 15px 15px;
+  padding-left: 18px;
+  float:right;
 }

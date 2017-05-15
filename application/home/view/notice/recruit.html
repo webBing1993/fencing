@@ -22,15 +22,17 @@
 		<div class="time">{$list.address}</div>
 	</div>
 	<div class="article">{$list.content}</div>
-	<div class="note">
-		<span class="read">{$list.views}</span>
-		{eq name="visit" value="0"}
-		{eq name="list.is_like" value="1"}
-		<span class="isgood good_" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
-		{else/}
-		<span class="isgood good" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
-		{/eq}
-		{/eq}
+	<div class="article">
+		<div class="note">
+			{eq name="visit" value="0"}
+			{eq name="list.is_like" value="1"}
+			<span class="isgood good_" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
+			{else/}
+			<span class="isgood good" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
+			{/eq}
+			{/eq}
+			<span class="read">{$list.views}</span>
+		</div>
 	</div>
 	<div class="comment">
 		<div class="sum">共<span>{$list.comments}</span>条评论</div>
