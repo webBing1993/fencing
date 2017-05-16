@@ -20,6 +20,6 @@ class WishReceive extends Model {
      * 获取订单信息
      */
     public function order() {
-        return $this->hasOne('VolunteerRecruit','id','rid');
+        return $this->hasOne('Wish','id','rid');
     }
 }

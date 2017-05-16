@@ -94,7 +94,19 @@ use app\admin\model\WishReceive;
              }
          }
      }
-
+     /**
+      * 领取列表
+      */
+     public function receive() {
+         $id = input('id');
+         $map = array(
+             'rid' => $id,
+             'status' => array('egt',0),
+         );
+         $list = $this->lists('WishReceive',$map);
+         $this->assign('list',$list);
+         return $this->fetch();
+     }
      /**
       * 心愿 删除
       */
