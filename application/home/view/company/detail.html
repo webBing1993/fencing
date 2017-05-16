@@ -2,74 +2,88 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/common/detail.css">
+<style>
+	.scrollDiy{
+		position: absolute;
+		top:0;
+		bottom:0;
+		overflow-y: scroll;
+		/* 增加该属性，可以增加弹性 */
+		-webkit-overflow-scrolling: touch;
+		width:100%;
+	}
+</style>
 {/block}
 
 {block name="body"}
-<div class="banner special">
-	<img src="{$detail.front_cover|get_cover='path'}" alt="banner" class="banner-img">
-	{eq name="visit" value="0"}
-	{eq name="detail.is_like" value="1"}
-	<span class="isgood good_" onclick="isGood(this,7,{$detail.id})">{$detail.likes}</span>
-	{else/}
-	<span class="isgood good" onclick="isGood(this,7,{$detail.id})">{$detail.likes}</span>
-	{/eq}
-	{/eq}
-	<span id="addnum"><em>+1</em></span>
-</div>
-<div class="article special">
-	<div class="title limit_">{$detail.title}</div>
-	<div class="note">
-		<span class="fl">老王</span>
-		<span>{$detail.create_time|date="Y-m-d",###}</span>
+<div class="scrollDiy">
+	<div class="banner special">
+		<img src="{$detail.front_cover|get_cover='path'}" alt="banner" class="banner-img">
+		{eq name="visit" value="0"}
+		{eq name="detail.is_like" value="1"}
+		<span class="isgood good_" onclick="isGood(this,15,{$detail.id})">{$detail.likes}</span>
+		{else/}
+		<span class="isgood good" onclick="isGood(this,15,{$detail.id})">{$detail.likes}</span>
+		{/eq}
+		{/eq}
+		<span id="addnum"><em>+1</em></span>
 	</div>
-	<div class="content">
-		<div class="uecontent">
-			{$detail.content}
-		</div>
+	<div class="article special">
+		<div class="title limit_">{$detail.title}</div>
 		<div class="note">
-			<span class="read">{$detail.views}</span>
+			<span class="fl">老王</span>
+			<span>{$detail.create_time|date="Y-m-d",###}</span>
+		</div>
+		<div class="content">
+			<div class="uecontent">
+				{$detail.content}
+			</div>
+			<div class="note">
+				<span class="read">{$detail.views}</span>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="comment">
-	<div class="sum">共<span>{$detail.comments}</span>条评论</div>
-	<div class="lists">
-		{volist name="comment" id="co"}
-		<div class="list clear">
-			<div class="fl">
-				<img src="{$co.header}" alt="用户" class="user">
+	<div class="comment">
+		<div class="sum">共<span>{$detail.comments}</span>条评论</div>
+		<div class="lists">
+			{volist name="comment" id="co"}
+			<div class="list clear">
+				<div class="fl">
+					<img src="{$co.header}" alt="用户" class="user">
+				</div>
+				<div class="fl mid">
+					<div class="name limit">{$co.nickname}</div>
+					<div class="content" >{$co.content}</div>
+					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+				</div>
+				{eq name="visit" value="0"}
+				{eq name="co.is_like" value="1"}
+				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{else/}
+				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{/eq}
+				{/eq}
 			</div>
-			<div class="fl mid">
-				<div class="name limit">{$co.nickname}</div>
-				<div class="content" >{$co.content}</div>
-				<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
-			</div>
-			{eq name="visit" value="0"}
-			{eq name="co.is_like" value="1"}
-			<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{else/}
-			<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{/eq}
-			{/eq}
+			{/volist}
 		</div>
-		{/volist}
+		<div class="tip"></div>
+		<div class="loading hidden">
+			<div class="typing_loader"></div>
+		</div>
 	</div>
-	<div class="tip"></div>
-	<div class="loading hidden">
-		<div class="typing_loader"></div>
+	<div class="bottom clear">
+		<div class="myword fl">
+			<input type="text" placeholder="说说你的感想！">
+		</div>
+		<div class="send fr" onclick="send(this,15,{$detail.id})">发送</div>
 	</div>
-</div>
-<div class="bottom clear">
-	<div class="myword fl">
-		<input type="text" placeholder="说说你的感想！">
-	</div>
-	<div class="send fr" onclick="send(this,7,{$detail.id})">发送</div>
 </div>
 {/block}
 
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	var len = $(".list" ).length;
 	if(len >= 7){
@@ -78,7 +92,7 @@ $(function(){
 		loadScroll();
 	}
 	//ios fix兼容
-	tofixed();
+//	tofixed();
 });
 //点赞
 function isGood(e,type,id){
@@ -143,7 +157,7 @@ function send(e,type,id){
 						'<div class="fr isgood good" onclick="isGood(this,0,'+data.id+')">'+data.likes+'</div>'+
 						'</div>'+
 						'</div>';
-				$('.lists' ).append(html);
+				$('.lists' ).prepend(html);
 				it.val('');
 				var sum = $('.sum span' );
 				sum.text(parseInt(sum.text())+1);
@@ -182,19 +196,20 @@ window.alert = function (message) {
 };
 //加载更多
 function loadScroll(){
-	$(window ).off("scroll" ).on("scroll",function(){
-		var dh = $(document).height();
-		var end = $(window).height() + $(window ).scrollTop();
+	$('.scrollDiy').off("scroll" ).on("scroll",function(){
+		var dh = $('.article').height() + $('.comment').height() + $('.scrollDiy>.banner').height() ;
+		var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
 		var id = {$detail['id']};
-		if(dh == end){
+		if(dh <= end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
 				data:{
-					type:7,
+					type:15,
 					aid:id,
 					length:len
 				},
@@ -213,8 +228,9 @@ function loadScroll(){
 						}
 					}else{
 						tip.text('没有更多了');
-						$(window ).off("scroll");
+						$('.scrollDiy').off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}
@@ -253,8 +269,6 @@ function addComment(data){
 //  Class style
 //
 //--------------------------------------------------------------------------
-//模块标题
-$('title' ).text('品牌特色');
 
 function tofixed(){
 	var u = navigator.userAgent;

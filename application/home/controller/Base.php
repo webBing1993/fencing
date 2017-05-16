@@ -23,7 +23,7 @@ use app\home\model\Answers;
 class Base extends Controller {
     public function _initialize(){
 //        session('userId','visitor');
-        session('userId','testL1an');
+        session('userId','ymz_15700004138');
 //        session('header','/home/images/vistor.jpg');
 //        session('nickname','游客');
         if(!empty($_SERVER['REQUEST_URI'])){
@@ -152,6 +152,7 @@ class Base extends Controller {
      * 12 VolunteerTeam
      * 13 opinion
      * 14 culture
+     * 15 company
      */
     public function like(){
         $uid = session('userId'); //点赞人
@@ -202,6 +203,9 @@ class Base extends Controller {
                 break;
             case 14:
                 $table = "culture";
+                break;
+            case 15:
+                $table = "company";
                 break;
             default:
                 return $this->error("无该数据表");
@@ -317,6 +321,7 @@ class Base extends Controller {
      * 12 VolunteerTeam
      * 13 opinion
      * 14 culture
+     * 15 company
      */
     public function comment(){
         if(IS_POST){
@@ -365,6 +370,9 @@ class Base extends Controller {
                     break;
                 case 14:
                     $table = "culture";
+                    break;
+                case 15:
+                    $table = "company";
                     break;
                 default:
                     return $this->error("无该数据表");

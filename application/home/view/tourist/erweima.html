@@ -10,7 +10,8 @@
 {block name="script"}
 <script src="/static/jq-qrcode/jquery.qrcode.min.js"></script>
 <script>
-    jQuery('#qrcode').qrcode({width: document.body.clientWidth-20,height: document.body.clientWidth-20,text: 'http://mgspb.0574ztnet.com/home/work/tourist'});
+
+    jQuery('#qrcode').qrcode({width: document.body.clientWidth-20,height: document.body.clientWidth-20,text: '{$url}/home/tourist/tourist/str/{$md5}'});
     $('body').height(window.screen.availHeight);
     $('#qrcode').width(document.body.clientWidth-20);
     $('img').width(document.body.clientWidth*0.2);

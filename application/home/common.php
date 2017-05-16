@@ -173,3 +173,32 @@ function get_name($userid){
 
     return $name;
 }
+/**
+ * 游客模式检查加密token
+ * $str md5加密字符串 1通过 2失败
+ */
+function check_md5_token($str){
+    $date = date('Y/m/d',time());
+    $token = 'ct!zi&uhg9&b$*nw4m9^a51e%ps^*m7h';
+    $result = md5($date.$token);
+    if($str === $result){
+        return '1';
+    }else{
+        return '0';
+    }
+}
+
+/**
+ *获取加密的md5字符串
+ * $str 为时间 2017/05/01
+ */
+ function get_md5_token($str){
+     $date = $date = date('Y/m/d',time());
+     if($date == $str){
+         $token = 'ct!zi&uhg9&b$*nw4m9^a51e%ps^*m7h';
+         $result = md5($date.$token);
+         return $result;
+     }else{
+         return '参数错误';
+     }
+ }

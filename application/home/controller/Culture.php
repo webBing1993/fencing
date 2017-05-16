@@ -191,6 +191,10 @@ class Culture extends Base{
                 $volun_detail['is_like'] = 0;
             }
             $this ->assign('list',$volun_detail);
+            //js分享数据
+            $volun_detail['link'] = Request::instance()->url(true);
+            $volun_detail['share_image'] = Request::instance()->domain() . get_cover($volun_detail['front_cover'])['path'];
+            $this ->assign('list',$volun_detail);
             //获取 评论
             $commentModel = new Comment();
             $comment = $commentModel->getComment(14,$id,$userId);
