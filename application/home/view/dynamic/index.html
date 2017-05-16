@@ -9,12 +9,14 @@
     <div class="banners">
         <div class="swiper-container">
             <div class="imgs swiper-wrapper">
+                {volist name="lists" id="ls"}
                 <div class="banner swiper-slide">
-                    <a href="">
-                        <img src="/home/images/notice/5.jpg" alt="">
-                        <div class="title_ limit">阿斯蒂芬撒旦法撒旦法阿斯蒂芬</div>
+                    <a href="{:Url('Dynamic/detail?id='.$ls.id)}">
+                        <img src="{$ls.front_cover|get_cover='path'}" alt="">
+                        <div class="title_ limit">{$ls.title}</div>
                     </a>
                 </div>
+                {/volist}
             </div>
         </div>
     </div>
@@ -28,36 +30,36 @@
         <!--中心组学习-->
         <div class="notices hidden">
             <div class="notice party">
-
-                <a href="" class="list clear">
+                {volist name="list2" id="loo"}
+                <a href="{:Url('Dynamic/detail?id='.$ls.id)}" class="list clear">
                     <div class="fl">
-                        <img src="" alt="图片">
+                        <img src="{$loo.front_cover|get_cover='path'}" alt="图片">
                     </div>
                     <div class="fr right">
-                        <div class="title limit_">的发生的撒旦法是</div>
+                        <div class="title limit_">{$loo.title}</div>
                         <div class="clear time">
-                            <span class="fl">一支部</span>
-                            <span class="fr">2017-12-06</span>
+                            <span class="fl">{$loo.publisher}</span>
+                            <span class="fr">{$loo.create_time|time_format='Y-m-d'}</span>
                         </div>
                     </div>
                 </a>
-
+                {/volist}
             </div>
         </div>
         <!--工作部署-->
         <div class="notices hidden">
             <div class="notice activity">
-
-                <a href="" class="list clear">
+                {volist name="list1" id="lo"}
+                <a href="{:Url('Dynamic/detail?id='.$lo.id)}" class="list clear">
                     <div class="fr right">
-                        <div class="title limit_">的发生的撒旦法是</div>
+                        <div class="title limit_">{$lo.title}</div>
                         <div class="clear time">
-                            <span class="fl">一支部</span>
-                            <span class="fr">2017-12-06</span>
+                            <span class="fl">{$lo.publisher}</span>
+                            <span class="fr">{$lo.create_time|time_format='Y-m-d'}</span>
                         </div>
                     </div>
                 </a>
-
+                {/volist}
             </div>
         </div>
     </div>
