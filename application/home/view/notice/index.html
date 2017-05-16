@@ -139,8 +139,13 @@ $(function(){
 		var len = ntc.eq(eq ).find('.notice:last .list').length;
 		if(len >= 5){
 			$('.tip' ).text('上拉加载更多');
+			loadScroll(eq+1);
+		}else{
+			$('.tip').hide();
+			$(window ).off("scroll" );
+
 		}
-		loadScroll(eq+1);
+
 		//使用示例
 		setCookie("type",eq+11);
 	});
