@@ -271,8 +271,7 @@ class News extends Admin {
         //发送给企业号
         $Wechat = new TPQYWechat(Config::get('party'));
         $message = array(
-//            "touser" => "15036667391",
-            "totag" => "4",  // 审核组
+            "touser" => toUser,
             "msgtype" => 'news',
             "agentid" => agentId,  // 消息审核
             "news" => $send,

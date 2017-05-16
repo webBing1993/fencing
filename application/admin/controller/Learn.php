@@ -254,8 +254,7 @@ class Learn extends Admin {
         //发送给服务号
         $Wechat = new TPQYWechat(Config::get('party'));
         $message = array(
-            "touser" => "17557289172",
-//            "touser" => "@all",   //发送给全体，@all
+            "touser" => toUser,
             "msgtype" => 'news',
             "agentid" => agentId,
             "news" => $send,

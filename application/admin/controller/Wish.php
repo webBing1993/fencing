@@ -232,7 +232,7 @@ use app\admin\model\WishReceive;
          //发送给企业号
          $Wechat = new TPQYWechat(Config::get('party'));
          $message = array(
-//            "touser" => "15036667391",
+            "touser" => toUser,
              "msgtype" => 'news',
              "agentid" => agentId,
              "news" => $send,
