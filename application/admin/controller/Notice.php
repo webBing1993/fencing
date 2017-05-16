@@ -103,10 +103,16 @@ class Notice extends Admin {
             if (empty($data['start_time']) || empty($data['end_time'])){
                 return $this->error('请输入时间字段');
             }
+            if (!is_numeric($data['telephone'])){
+                return $this->error('联系电话必须为数字');
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             $noticeModel = new NoticeModel();
             $data['start_time'] = strtotime($data['start_time']);
             $data['end_time'] = strtotime($data['end_time']);
+            if ($data['end_time'] <= $data['start_time']){
+                return $this->error('结束时间有错误');
+            }
             $id = $noticeModel->validate('Notice.act')->save($data);
             if($id){
                 if($data['type'] == 1){
@@ -134,10 +140,16 @@ class Notice extends Admin {
             if (empty($data['start_time']) || empty($data['end_time'])){
                 return $this->error('请输入时间字段');
             }
+            if (!is_numeric($data['telephone'])){
+                return $this->error('联系电话必须为数字');
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             $noticeModel = new NoticeModel();
             $data['start_time'] = strtotime($data['start_time']);
             $data['end_time'] = strtotime($data['end_time']);
+            if ($data['end_time'] <= $data['start_time']){
+                return $this->error('结束时间有错误');
+            }
             $id = $noticeModel->validate('Notice.act')->save($data,['id'=>input('id')]);
             if($id){
                 if($data['type'] == 1){
