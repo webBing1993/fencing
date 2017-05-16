@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Lxx<779219930@qq.com>
  * Date: 2017/2/8
- * Time: 15:35
+ * Time: 15:36
  */
 
 namespace app\home\model;
@@ -11,13 +11,9 @@ namespace app\home\model;
 
 use think\Model;
 
-class VolunteerRecruit extends Model {
+class WishReceive extends Model {
     protected $insert = [
         'create_time' => NOW_TIME,
-        'status' => 0,
+        'status' => 1,
     ];
-
-    public function user() {
-        return $this->hasOne('WechatUser','userid','userid');
-    }
 }

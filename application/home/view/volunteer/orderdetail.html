@@ -8,17 +8,18 @@
 	<div class="title">{$info.title}</div>
 	<div class="time">{$info.create_time|time_format='Y-m-d'}</div>
 	<img src="{$info.list_image|get_cover='path'}" alt="服务订单图">
-	<div class="summary">
-		{$info.content}
-	</div>
 	<div class="lists">
 		<div class="list clear">
-			<span class="fl tag">所属单位：</span>
-			<span class="fl">{$info.unit}</span>
+			<span class="fl tag">招募内容：</span>
+			<span class="fl">{$info.content}</span>
 		</div>
 		<div class="list clear">
-			<span class="fl tag">认领人数：</span>
-			<span class="fl"><span class="addnum">{$info.receive_number}</span>/{$info.demand_number}</span>
+			<span class="fl tag">时&emsp;间：</span>
+			<span class="fl">{$info.time|time_format='Y-m-d H:i'}</span>
+		</div>
+		<div class="list clear">
+			<span class="fl tag">地&emsp;点：</span>
+			<span class="fl">{$info.address}</span>
 		</div>
 		<div class="list clear">
 			<span class="fl tag">联系人：</span>
@@ -28,28 +29,36 @@
 			<span class="fl tag">联系方式：</span>
 			<span class="fl"><a href="tel:{$info.telephone}">{$info.telephone}</a> </span>
 		</div>
+		<div class="list clear">
+			<span class="fl tag">招募人数：</span>
+			<span class="fl">{$info.demand_number}人</span>
+		</div>
+		<div class="list clear">
+			<span class="fl tag">当前报名：</span>
+			<span class="fl"><span class="addnum">{$info.receive_number}</span>人</span>
+		</div>
 	</div>
 	{eq name="visit" value="0"}
-		{eq name="$info.status" value="2"}
-			<!--不可报名状态：名满-->
-			{eq name="$info.be" value="1"}
-			<div class="get no">已领取</div>
-			{else/}
-			<div class="get no">我要报名</div>
-			<div class="gettext">（当前招募人数已满，下次早点来哦）</div>
-			{/eq}
-			<!--/不可报名状态-->
-		{else/}
-			<!--可报名状态-->
-			{eq name="$info.be" value="0"}
-			<div class="get yes">我要报名</div>
-			<!--/可报名状态-->
-			{else/}
-			<!--不可报名状态：已领-->
-			<div class="get no">已领取</div>
-			<!--/不可报名状态-->
-			{/eq}
-		{/eq}
+	{eq name="$info.status" value="2"}
+	<!--不可报名状态：名满-->
+	{eq name="$info.be" value="1"}
+	<div class="get no">已领取</div>
+	{else/}
+	<div class="get no">我要报名</div>
+	<div class="gettext">（当前招募人数已满，下次早点来哦）</div>
+	{/eq}
+	<!--/不可报名状态-->
+	{else/}
+	<!--可报名状态-->
+	{eq name="$info.be" value="0"}
+	<div class="get yes">我要报名</div>
+	<!--/可报名状态-->
+	{else/}
+	<!--不可报名状态：已领-->
+	<div class="get no">已领取</div>
+	<!--/不可报名状态-->
+	{/eq}
+	{/eq}
 	{/eq}
 </div>
 <div class="enroll">
@@ -69,45 +78,45 @@
 
 {block name="script"}
 <script>
-$('title' ).text('服务订单');
-$(function(){
-	//报名
-	$('.yes' ).off('click').on('click',function(){
-		var id = {$info.id};
-		var this_ = $(this);
-		this_.css('background','#9a9a9a');
-		this_.text('已领取');
-		$.ajax({
-			type:"post",
-			url:"{:Url('Volunteer/enroll')}",
-			data:{
-				type:1,
-				id:id
-			},
-			success:function(data){
-				var n = $('.addnum');
-				var m =data.data;
-				var html =
-						'<div class="list">'+
-						'<img src='+m.avatar+' alt="头像">'+
-						'<span class="name limit">'+m.name+'</span>'+
-						'<span class="publish limit">'+m.unit+'</span>'+
-						'<span class="time limit">'+m.time+'</span>'+
-						'</div>';
-				$('.enroll .lists' ).append(html);
-				n.text(parseInt(n.text())+1)
+	$('title' ).text('心愿认领');
+	$(function(){
+		//报名
+		$('.yes' ).off('click').on('click',function(){
+			var id = {$info.id};
+			var this_ = $(this);
+			this_.css('background','#9a9a9a');
+			this_.text('已领取');
+			$.ajax({
+				type:"post",
+				url:"{:Url('Volunteer/enroll')}",
+				data:{
+					id: id
+				},
+				success:function(data){
+					console.log(data);
+					var n = $('.addnum');
+					var m =data.data;
+					var html =
+							'<div class="list">'+
+							'<img src='+m.avatar+' alt="头像">'+
+							'<span class="name limit">'+m.name+'</span>'+
+							'<span class="publish limit">'+m.department+'</span>'+
+							'<span class="time limit">'+m.time+'</span>'+
+							'</div>';
+					$('.enroll .lists' ).append(html);
+					n.text(parseInt(n.text())+1)
+				}
+			})
+		});
+		//样式
+		$('.content .list' ).each(function(){
+			var this_ = $(this);
+			var h = this_.find('span' ).eq(1 ).height();
+			if(h>40){
+				this_.find('span' ).eq(1 ).css({'line-height':24+'px','margin-top': 10 + 'px'});
 			}
 		})
 	});
-	//样式
-	$('.content .list' ).each(function(){
-		var this_ = $(this);
-		var h = this_.find('span' ).eq(1 ).height();
-		if(h>40){
-			this_.find('span' ).eq(1 ).css({'line-height':24+'px','margin-top': 10 + 'px'});
-		}
-	})
-});
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 <script>

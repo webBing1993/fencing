@@ -6,11 +6,10 @@
  * Time: 13:21
  */
 namespace app\home\controller;
+use app\admin\model\WechatDepartment;
 use app\home\model\Picture;
-use app\home\model\VolunteerOrder;
-use app\home\model\VolunteerOrderReceive;
-use app\home\model\VolunteerRecruit;
-use app\home\model\VolunteerRecruitReceive;
+use app\home\model\Wish;
+use app\home\model\WishReceive;
 use app\home\model\WechatUser;
 
 class Volunteer extends Base{
@@ -18,9 +17,9 @@ class Volunteer extends Base{
      * 心愿认领订单
      */
     public function order(){
-        $orderModel = new VolunteerOrder();
+        $orderModel = new Wish();
         $map = array(
-            'status' => array('egt',1)
+            'status' => array('egt',0)
         );
         $list = $orderModel->where($map)->order('create_time desc')->limit(7)->select();
         $this->assign('list',$list);
@@ -34,9 +33,9 @@ class Volunteer extends Base{
     public function ordermore() {
         $len = input('length');
         $map =  array(
-            'status' => array('egt',1)
+            'status' => array('egt',0)
         );
-        $orderModel = new VolunteerOrder();
+        $orderModel = new Wish();
         $list = $orderModel->where($map)->order('create_time desc')->limit($len,5)->select();
         foreach ($list as $value) {
             $img = Picture::get($value['list_image']);
@@ -59,7 +58,7 @@ class Volunteer extends Base{
 
         $userId = session('userId');
         $id = input('id');
-        $orderModel = new VolunteerOrder();
+        $orderModel = new Wish();
         $info = $orderModel->get($id);
         //分享图片及链接及描述
         $image = Picture::where('id',$info['list_image'])->find();
@@ -68,11 +67,11 @@ class Volunteer extends Base{
         $info['desc'] = str_replace('&nbsp;','',strip_tags($info['content']));
         //获取用户是否报名
         $map = array(
-            'oid' => $id,
+            'rid' => $id,
             'userid' => $userId,
             'status' => 1,
         );
-        $user = VolunteerOrderReceive::where($map)->find();
+        $user = WishReceive::where($map)->find();
         if($user) {
             $info['be'] = 1;    //已报名
         }else{
@@ -82,15 +81,16 @@ class Volunteer extends Base{
 
         //名单
         $map1 = array(
-            'oid' => $id,
+            'rid' => $id,
             'status' => array('eq',1),
         );
-        $namelist = VolunteerOrderReceive::where($map1)->select();
+        $namelist = WishReceive::where($map1)->select();
         foreach ($namelist as $value) {
             $msg = WechatUser::where('userid',$value['userid'])->find();
             $value['avatar'] = $msg['avatar'];
             $value['name'] = $msg['name'];
-            $value['unit'] = $msg['unit'];
+            $Obj = WechatDepartment::where('id',json_decode($msg['unit']))->find();
+            $value['unit'] = $Obj['name'];
         }
         $this->assign('namelist',$namelist);
 
@@ -103,27 +103,17 @@ class Volunteer extends Base{
      */
     public function enroll() {
         $userId = session('userId');
-        $type = input('type');
         $id = input('id');
         $user = WechatUser::where('userid',$userId)->find();
         if($userId == 'visitor') {
             return $this->error("游客无法参与报名！");
         }elseif($user) {
-            if($type == 1) {
-                $model1 = new VolunteerOrder();
-                $model2 = new VolunteerOrderReceive();
-                $map = array(
-                    'oid' => $id,
-                    'userid' => $userId,
-                );
-            }else {
-                $model1 = new VolunteerRecruit();
-                $model2 = new VolunteerRecruitReceive();
-                $map = array(
-                    'rid' => $id,
-                    'userid' => $userId,
-                );
-            }
+            $model1 = new Wish();
+            $model2 = new WishReceive();
+            $map = array(
+                'rid' => $id,
+                'userid' => $userId,
+            );
             $father = $model1->get($id);
             //如何人数满则不能报名，改变状态为2
             if($father['status'] == 2) {
@@ -143,8 +133,12 @@ class Volunteer extends Base{
                         }
                         //返回用户信息
                         $rec = $model2->where($map)->find();
-                        $data = WechatUser::where('userid',$rec['userid'])->field('avatar,name,unit')->find();
+                        $data = WechatUser::where('userid',$rec['userid'])->field('avatar,name,department')->find();
                         $data['time'] = date("Y-m-d",$rec['create_time']);
+                        foreach(json_decode($data['department']) as $val){
+                            $Obj = WechatDepartment::where(['id' =>$val])->find();
+                            $data['department'] = $Obj['name'];
+                        }
                         return $this->success("领取成功","",$data);
                     }else {
                         return $this->error("领取失败");
