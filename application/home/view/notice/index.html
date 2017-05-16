@@ -195,7 +195,8 @@ function loadScroll(type){
 				type:"post",
 				url: "{:Url('Notice/activitymore')}",
 				data:{
-					length:len
+					length:len,
+					type:type
 				},
 				beforeSend: function(XMLHttpRequest){
 					tip.hide();
@@ -236,7 +237,7 @@ function addLists(data,t){
 	for(var i = 0; i< len;i++){
 		var list = lists[i];
 		html +=
-				'<a href="/home/notice/'+type+'/id/'+ list.id+'.html" class="list clear">'+
+				'<a href="/home/notice/activity/id/'+ list.id+'.html" class="list clear">'+
 				'<div class="fl">'+
 				'<img src="'+list.path+'" alt="图片">'+
 				'</div>'+

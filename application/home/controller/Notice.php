@@ -253,7 +253,7 @@ class Notice extends Base {
         if ($type == 1){
             // 情况报道
             $map = array(
-                'type' => 2,
+                'type' => 2,  // 情况报道
                 'status' => array('egt',0)
             );
         }else{
