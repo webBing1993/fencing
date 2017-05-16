@@ -110,6 +110,7 @@
 
 {block name="script"}
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//模块标题
 	$('title').text('支部活动');
@@ -180,20 +181,23 @@ $(function(){
 		},500)
 	});
 });
-function loadScroll(type){
+function loadScroll(a){
 	$(window ).off("scroll" ).on("scroll",function(){
 		var ntc = $('.notices');
 		var dh = $(document).height();
 		var end = $(window).height() + $(window ).scrollTop();
-		var len = ntc.eq(type-1).find('.notice:last .list').length;
+		var len = ntc.eq(a-1).find('.notice:last .list').length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		if(dh == end){
+		var type = a;
+		if(dh == end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url: "{:Url('Notice/activitymore')}",
 				data:{
-					length:len
+					length : len,
+					type : type //1.三会一课 2.组织活动
 				},
 				beforeSend: function(XMLHttpRequest){
 					tip.hide();
@@ -212,6 +216,7 @@ function loadScroll(type){
 						tip.text('没有更多了');
 						$(window ).off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}
@@ -226,14 +231,11 @@ function addLists(data,t){
 		type = 'party'
 	}else if( t == 2){
 		type = 'activity';
-	}else{
-		type = 'situation';
 	}
-
 	for(var i = 0; i< len;i++){
 		var list = lists[i];
 		html +=
-				'<a href="/home/notice/'+type+'/id/'+ list.id+'.html" class="list clear">'+
+				'<a href="/home/notice/activity/id/'+ list.id+'.html" class="list clear">'+
 				'<div class="fl">'+
 				'<img src="'+list.path+'" alt="图片">'+
 				'</div>'+

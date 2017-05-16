@@ -249,10 +249,20 @@ class Notice extends Base {
      */
     public function activitymore(){
         $len = input("length");
-        $map = array(
-            'type' => 5,
-            'status' => array('eq',1)
-        );
+        $type = input('type/d');
+        if ($type == 1){
+            // 情况报道
+            $map = array(
+                'type' => 2,
+                'status' => array('egt',0)
+            );
+        }else{
+            // 活动情况
+            $map = array(
+                'type' => 4,
+                'status' => array('egt',0)
+            );
+        }
         $list = NoticeModel::where($map)->order('id desc')->limit($len,7)->select();
         foreach($list as $value){
             $img = Picture::get($value['front_cover']);
@@ -263,118 +273,6 @@ class Notice extends Base {
             return $this->success("加载成功","",$list);
         }else{
             return $this->error("加载失败");
-        }
-    }
-
-
-    /**
-     * 通知发布
-     */
-    public function publish(){
-        $noticeModel = new NoticeModel();
-        if(IS_POST) {
-            $data = input('post.');
-            $data['start_time'] = strtotime($data['start_time']);
-            $data['end_time'] = strtotime($data['end_time']);
-            $data['userid'] = session('userId');
-            if($data['id']) {
-                 // 修改
-                $model = $noticeModel->save($data,['id' => $data['id']]);
-            }else {
-                 //  添加
-                unset($data['id']);
-                $a = array('1'=>'a','2'=>'b','3'=>'c','4'=>'d','5'=>'e','6'=>'f','7'=>'g','8'=>'h','9'=>'i','10'=>'j','11'=>'k','12'=>'l','13'=>'m','14'=>'n','15'=>'o',
-                    '16'=>'p','17'=>'q','18'=>'r','19'=>'s','20'=>'t','21'=>'u','22'=>'v','23'=>'w','24'=>'x','25'=>'y','26'=>'z');
-                $data['front_cover'] = array_rand($a,1);
-                $data['create_time'] = time();
-                $data['create_user'] = session('userId');
-                $model = $noticeModel->create($data);
-            }
-            if($model && $data['status'] == 0) { // 去审核
-                $map['status'] = 0;
-                $count = $noticeModel->where($map)->count();
-                $content = "您有".$count."条[支部活动]审核消息，请点击【文章审核】及时查看。";
-                $Wechat = new TPQYWechat(Config::get('party'));
-                $message = array(
-                    "totag" => 4,  // 审核
-                    "msgtype" => 'text',
-                    "agentid" => 11,  // 消息审核
-                    "text" => array(
-                        "content" => $content
-                    ),
-                    "safe" => "0"
-                );
-                $Wechat->sendMessage($message);  //审核通过，向用户推送提示
-                return $this->success("编辑成功");
-            }else{
-                return $this->error("编辑失败");
-            }
-        }else{
-
-            $id = input('id') ? input('id') : "";
-            $notice = $noticeModel->where('id',$id)->find();
-            $this->assign('pub',$notice);
-            
-            return $this->fetch();
-        }
-    }
-    
-    /**
-     * 上传笔记
-     */
-    public function notes(){
-        $noticeModel = new NoticeModel();
-        $userId = session('userId');
-        if(IS_POST) {
-            $data = input('post.');
-            $data['userid'] = $userId;
-            if(isset($data['images'])) {
-                $data['images'] = json_encode($data['images']);
-            }
-            if($data['id']) {
-                // 修改
-                $model = $noticeModel->save($data,['id' => $data['id']]);
-            }else {
-                // 添加
-                unset($data['id']);
-                $a = array('1'=>'a','2'=>'b','3'=>'c','4'=>'d','5'=>'e','6'=>'f','7'=>'g','8'=>'h','9'=>'i','10'=>'j','11'=>'k','12'=>'l','13'=>'m','14'=>'n','15'=>'o',
-                    '16'=>'p','17'=>'q','18'=>'r','19'=>'s','20'=>'t','21'=>'u','22'=>'v','23'=>'w','24'=>'x','25'=>'y','26'=>'z');
-                $data['front_cover'] = array_rand($a,1);
-                $data['create_time'] = time();
-                $data['create_user'] = session('userId');
-                $model = NoticeModel::create($data);
-            }
-            if($model && $data['status'] == 0) { //  待审核
-                $map['status'] = 0; //  待审核
-                $count = $noticeModel->where($map)->count();
-                $content = "您有".$count."条[支部活动]审核消息，请点击【文章审核】进行查看。";
-                $Wechat = new TPQYWechat(Config::get('Party'));
-                $message = array(
-                    "totag" => 4, //  审核
-                    "msgtype" => 'text',
-                    "agentid" => 11, // 消息审核
-                    "text" => array(
-                        "content" => $content
-                    ),
-                    "safe" => "0"
-                );
-                $Wechat->sendMessage($message);  //审核通过，向用户推送提示
-                return $this->success("提交成功");
-            }else{
-                return $this->success("保存成功");
-
-            }
-        }else{
-            $id = input('id') ? input('id') : "";
-            if($id != null){
-                $this->assign('class',1); // 修改
-                $notice = $noticeModel->where('id',$id)->find();
-                $notice['images'] = json_decode($notice['images']);
-                $this->assign('note',$notice);
-            }else{
-                $this->assign('class',0); // 添加
-            }
-            return $this->fetch();
         }
     }
 }
