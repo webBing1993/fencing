@@ -12,16 +12,32 @@
     </div>
     <!--tab-->
     <div class="tabs clear">
-        <div class="tab"><span>党史学习</span></div>
-        <div class="tab"><span>每日一课</span></div>
         <div class="tab"><span>两学一做</span></div>
+        <div class="tab"><span>每日一课</span></div>
+        <div class="tab"><span>党史学习</span></div>
     </div>
     <!--切换列表-->
     <div class="content">
-        <!--党史学习-->
+        <!--两学一做-->
         <div class="notices hidden">
-            <div class="notice party">
-                第一个
+            <div class="notice regularmore">
+                <!--课程列表-->
+                <div class="lists">
+                    <!--图文课程-->
+                    {volist name="list2" id="vo"}
+                    {eq name="vo.type" value="2"}
+                    <a href="{:Url('Learn/article?id='.$vo['id'])}" class="list">
+                        <div class="tab">图文</div>
+                        {else/}
+                        <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list">
+                            <div class="tab">视频</div>
+                            {/eq}
+                            <img src="{$vo.front_cover|get_cover='path'}" alt="图片" class="img">
+                            <div class="title limit">{$vo.title}</div>
+                            <span class="study">{$vo.views}人阅读过</span>
+                        </a>
+                        {/volist}
+                </div>
             </div>
         </div>
         <!--每日一课-->
@@ -76,26 +92,12 @@
             </div>
             {/eq}
         </div>
-        <!--两学一做-->
+        <!--党史学习-->
         <div class="notices hidden">
-            <div class="notice regularmore">
-                <!--课程列表-->
-                <div class="lists">
-                    <!--图文课程-->
-                    {volist name="list2" id="vo"}
-                    {eq name="vo.type" value="2"}
-                    <a href="{:Url('Learn/article?id='.$vo['id'])}" class="list">
-                        <div class="tab">图文</div>
-                        {else/}
-                        <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list">
-                            <div class="tab">视频</div>
-                            {/eq}
-                            <img src="{$vo.front_cover|get_cover='path'}" alt="图片" class="img">
-                            <div class="title limit">{$vo.title}</div>
-                            <span class="study">{$vo.views}人阅读过</span>
-                        </a>
-                        {/volist}
-                </div>
+            <div class="notice party">
+                <a href="{:Url('Learn/dangshi')}">
+                    <img src="/home/images/learn/learn.png" alt="" width="100%">
+                </a>
             </div>
         </div>
     </div>
@@ -124,7 +126,7 @@
         $('.tabs>.tab').eq(c-1).find('span').addClass('active');
         ntc.eq(c-1).removeClass('hidden');
        //两学一做上拉加载
-        if(c == 3){
+        if(c == 1){
             var len = ntc.eq(c-1 ).find('.notice:last .list').length;
             if(len >= 3){
                 $('.tip' ).text('上拉加载更多');
@@ -141,7 +143,7 @@
             $(this ).find('span' ).addClass('active');
             ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
             ntc.eq(eq).removeClass('hidden');
-            if(eq == 2){
+            if(eq == 0){
                 var len = ntc.eq(eq ).find('.notice:last .list').length;
                 if(len >= 5){
                     $('.tip' ).text('上拉加载更多');
