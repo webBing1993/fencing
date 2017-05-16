@@ -11,7 +11,7 @@
             <div class="imgs swiper-wrapper">
                 {volist name="banner" id="vo"}
                     <div class="banner swiper-slide">
-                        <a href="">
+                        <a href="{:Url('Culture/detail',[ 'id' =>$vo.id])}">
                             <img src="{$vo.front_cover|get_cover='path'}" alt="">
                             <div class="title_ limit">{$vo.title}</div>
                         </a>
@@ -46,9 +46,9 @@
                     <span class="fl">志愿情况</span>
                 </div>
                 {volist name="volun_details" id="vo"}
-                    <a href="" class="list clear">
+                    <a href="{:Url('Culture/detail',[ 'id' =>$vo.id])}" class="list clear">
                         <div class="fl">
-                            <img src="{$vo.front_cover|get_cover='path'}"alt="图片">
+                            <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
                         </div>
                         <div class="fr right">
                             <div class="title limit_">{$vo.title}</div>

@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<link rel="stylesheet" href="/home/css/civilization/relevant.css">
+<link rel="stylesheet" href="/home/css/common/detail.css">
 <style>
 	.scrollDiy{
 		position: absolute;
@@ -16,51 +16,60 @@
 {/block}
 
 {block name="body"}
+<!--新增-->
 <div class="scrollDiy">
-	<div class="banner">
-		<img src="{$list.front_cover|get_cover='path'}" alt="支部活动banner" class="banner-img">
+	<div class="title" style="margin:10px auto;width:90%;text-align: center">
+		<span style="color:#333;font-size:16px;">{$list['title']}</span>
 	</div>
-	<div class="content">
-		<div class="top">
-			<div class="title limit_" style="text-align:center;">{$list.title}</div>
+	<div class="note">
+		<span class="fl">{$list.publisher}</span>
+		{$list.create_time|time_format='Y-m-d'}
+	</div>
+	<!--新增-->
+	<div class="article">
+		<div class="content">
+			{volist name="$list.images" id="img"}
+			<img src="{$img}" alt="笔记图片" class="img" style="width:100%;">
+			{/volist}
+			<div style="text-indent:2em;">{$list.content}</div>
 			<div class="note">
 				<span class="read">{$list.views}</span>
-				<span class="fr">{$list.start_time|date="Y-m-d",###}</span>
+				{eq name="visit" value="0"}
+				{eq name="list.is_like" value="1"}
+				<span class="isgood good_" onclick="isGood(this,14,{$list.id})">{$list.likes}</span>
+				{else/}
+				<span class="isgood good" onclick="isGood(this,14,{$list.id})">{$list.likes}</span>
+				{/eq}
+				{/eq}
 			</div>
 		</div>
-		<div class="message">
-			<div><span class="limit">{$list.start_time|date="Y-m-d h:i",###}</span></div>
-			<div><span class="limit">{$list.address}</span></div>
-			<div><span class="limit">{$list.telephone}</span></div>
-		</div>
-		<div class="article">{$list.content}</div>
-		<div class="comment">
-			<div class="sum">共<span>{$list.comments}</span>条评论</div>
-			<div class="lists">
-				{volist name="comment" id="co"}
-				<div class="list clear">
-					<div class="fl">
-						<img src="{$co.header}" alt="用户" class="user">
-					</div>
-					<div class="fl mid">
-						<div class="name limit">{$co.nickname}</div>
-						<div class="content" >{$co.content}</div>
-						<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
-					</div>
-					{eq name="visit" value="0"}
-					{eq name="co.is_like" value="1"}
-					<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-					{else/}
-					<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-					{/eq}
-					{/eq}
+	</div>
+	<div class="comment">
+		<div class="sum">共<span>{$list.comments}</span>条评论</div>
+		<div class="lists">
+			{volist name="comment" id="co"}
+			<div class="list clear">
+				<div class="fl">
+					<img src="{$co.header}" alt="用户" class="user">
 				</div>
-				{/volist}
+				<div class="fl mid">
+					<div class="name limit">{$co.nickname}</div>
+					<div class="content" >{$co.content}</div>
+					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+				</div>
+				{eq name="visit" value="0"}
+				{eq name="co.is_like" value="1"}
+				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{else/}
+				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{/eq}
+				{/eq}
 			</div>
-			<div class="tip"></div>
-			<div class="loading hidden">
-				<div class="typing_loader"></div>
-			</div>
+			{/volist}
+		</div>
+		<div class="tip"></div>
+		<div class="loading hidden">
+			<div class="typing_loader"></div>
 		</div>
 	</div>
 	{eq name="visit" value="0"}
@@ -68,7 +77,7 @@
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！">
 		</div>
-		<div class="send fr"  onclick="send(this,14,{$list['id']})">发送</div>
+		<div class="send fr" onclick="send(this,14,{$list['id']})">发送</div>
 	</div>
 	{/eq}
 </div>
@@ -80,7 +89,7 @@
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//模块标题
-	$('title' ).text('志愿发布');
+	$('title' ).text('支部活动');
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 7){
@@ -92,13 +101,29 @@ $(function(){
 //	tofixed();
 	//ue限定
 	ueLimit();
+	//初始图片
+	var src1 = $('.content .img:nth-child(1)' ).attr('src');
+	var src2 = $('.content .img:nth-child(2)' ).attr('src');
+	if(src1 != undefined){
+		if(src1 == ''){
+			$('.img').remove();
+		}else if(src1 != '' && src2 == ''){
+			$('.content .img').eq(1).remove();
+		}
+	}
 });
-function isGood(e,type,id){
+/**
+ * 点赞
+ * @param e
+ */
+var isGood = function(e,type,id){
 	//样式变化，移到suc
 	var n = $(e ).text();
 	$(e).toggleClass('good' ).toggleClass('good_');
 	$(e ).hasClass('good')?n--:n++;
 	$(e ).text(n);
+	//type：1文章，2评论
+//	var type = $(e ).hasClass('fr')?2:1;
 	$.ajax({
 		type:"post",
 		url:"{:Url('Base/like')}",
@@ -110,17 +135,21 @@ function isGood(e,type,id){
 
 		}
 	})
-}
-function send(e,type,id){
+};
+/**
+ * 发送评论
+ * @param e
+ */
+var send = function(e,type,id){
 	var it = $(e ).prev().find('input');
 	if(it.val() != ''&& it.val().length > 4){
 		$.ajax({
 			type:"post",
 			url:"{:Url('Base/comment')}",
 			data:{
-				type : type,
-				aid : id,
-				content : it.val()
+				type:type,
+				aid:id,
+				content:it.val()
 			},
 			beforeSend:function(){
 				swal({
@@ -160,8 +189,7 @@ function send(e,type,id){
 	}else{
 		wAlert('您的评论少于5个字');
 	}
-}
-
+};
 var wAlert = window.alert;
 window.alert = function (message) {
 	try {
@@ -259,7 +287,7 @@ function addComment(data){
 	var len = lists.length;
 	for(var i = 0; i< len;i++){
 		var list = lists[i];
-		var userid = "'"+data.create_user+"'";
+		var userid = "'"+list.create_user+"'";
 		html += '<div class="list clear">'+
 				'<div class="fl">'+
 				'<img src="'+list.header+'" alt="用户" class="user">'+
@@ -313,7 +341,7 @@ function ueLimit(){
 		//分享到朋友圈
 		wx.onMenuShareTimeline({
 			title: '{$list.title}',
-			link: '{$list.link}',
+			link: "{$list.link}",
 			imgUrl: '{$list.share_image}',
 			success: function () {
 				// 用户确认分享后执行的回调函数
