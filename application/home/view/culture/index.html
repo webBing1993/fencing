@@ -98,6 +98,7 @@
             var url;
             url = "{:Url('Civilization/more')}";
             if(dh == end && scrollNow){
+                scrollNow = false;//请求执行中
                 $.ajax({
                     type:"post",
                     url: url,

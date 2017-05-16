@@ -59,6 +59,7 @@ function loadScroll(){
 		var tip = $(".tip");
 		var loading = $('.loading');
 		if(dh == end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('Culture/plus')}",

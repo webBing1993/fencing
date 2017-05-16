@@ -110,7 +110,7 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-
+    var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     var c =  parseInt(window.location.href.split("index/c/")[1]);
     $(function(){
         //模块标题
@@ -180,7 +180,8 @@
             if(type == 1){
                 url = "{:Url('Learn/indexmore')}";
             }
-            if(dh == end){
+            if(dh == end && scrollNow){
+                scrollNow = false;//请求执行中
                 $.ajax({
                     type:"post",
                     url: url,
@@ -204,6 +205,7 @@
                             tip.text('没有更多了');
                             $(window ).off("scroll");
                         }
+                        scrollNow = true;//请求结束
                     }
                 })
             }

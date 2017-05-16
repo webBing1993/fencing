@@ -181,23 +181,21 @@ $(function(){
 		},500)
 	});
 });
-function loadScroll(a){
+function loadScroll(type){
 	$(window ).off("scroll" ).on("scroll",function(){
 		var ntc = $('.notices');
 		var dh = $(document).height();
 		var end = $(window).height() + $(window ).scrollTop();
-		var len = ntc.eq(a-1).find('.notice:last .list').length;
+		var len = ntc.eq(type-1).find('.notice:last .list').length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		var type = a;
 		if(dh == end && scrollNow){
 			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url: "{:Url('Notice/activitymore')}",
 				data:{
-					length : len,
-					type : type //1.三会一课 2.组织活动
+					length:len
 				},
 				beforeSend: function(XMLHttpRequest){
 					tip.hide();
@@ -231,11 +229,14 @@ function addLists(data,t){
 		type = 'party'
 	}else if( t == 2){
 		type = 'activity';
+	}else{
+		type = 'situation';
 	}
+
 	for(var i = 0; i< len;i++){
 		var list = lists[i];
 		html +=
-				'<a href="/home/notice/activity/id/'+ list.id+'.html" class="list clear">'+
+				'<a href="/home/notice/'+type+'/id/'+ list.id+'.html" class="list clear">'+
 				'<div class="fl">'+
 				'<img src="'+list.path+'" alt="图片">'+
 				'</div>'+

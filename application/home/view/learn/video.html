@@ -2,80 +2,92 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/common/detail.css">
+<style>
+	.scrollDiy{
+		position: absolute;
+		top:0;
+		bottom:0;
+		overflow-y: scroll;
+		/* 增加该属性，可以增加弹性 */
+		-webkit-overflow-scrolling: touch;
+		width:100%;
+	}
+</style>
 {/block}
 
 {block name="body"}
-<div class="article">
-	<div class="title limit_">{$video.title}</div>
-	<div class="note clear">
-		<span class="fl">{$video.publisher}</span>
-		<span class="fr">{$video.create_time|time_format='Y-m-d'}</span>
-	</div>
-	<div class="content">
-		<div class="video">
-			<!--本地视频-->
-			{neq name="$video.video_path" value=""}
-			<video class="videocon" src="{$video.video_path}"></video>
-			<img src="/home/images/learn/video.png" class="play" alt="播放">
-			{else/}
-			<!--链接视频-->
-			<iframe class="videocon" frameborder="0" src="{$video.net_path}" allowfullscreen></iframe>
-			{/neq}
+<div class="scrollDiy">
+	<div class="article">
+		<div class="title limit_">{$video.title}</div>
+		<div class="note clear">
+			<span class="fl">{$video.publisher}</span>
+			<span class="fr">{$video.create_time|time_format='Y-m-d'}</span>
 		</div>
-		{$video.content}
-		<div class="note">
-			<span class="read">{$video.views}</span>
-			{eq name="visit" value="0"}
-			{eq name="video.is_like" value="1"}
-			<span class="isgood good_" onclick="isGood(this,1,{$video.id})">{$video.likes}</span>
-			{else/}
-			<span class="isgood good" onclick="isGood(this,1,{$video.id})">{$video.likes}</span>
-			{/eq}
-			{else/}
-			<span class="isgood good">{$video.likes}</span>
-			{/eq}
-		</div>
-	</div>
-</div>
-<div class="comment">
-	<div class="sum">共<span>{$video.comments}</span>条评论</div>
-	<div class="lists">
-		{volist name="comment" id="co"}
-		<div class="list clear">
-			<div class="fl">
-				<img src="{$co.header}" alt="用户" class="user">
+		<div class="content">
+			<div class="video">
+				<!--本地视频-->
+				{neq name="$video.video_path" value=""}
+				<video class="videocon" src="{$video.video_path}"></video>
+				<img src="/home/images/learn/video.png" class="play" alt="播放">
+				{else/}
+				<!--链接视频-->
+				<iframe class="videocon" frameborder="0" src="{$video.net_path}" allowfullscreen></iframe>
+				{/neq}
 			</div>
-			<div class="fl mid">
-				<div class="name limit">{$co.nickname}</div>
-				<div class="content" >{$co.content}</div>
-				<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+			{$video.content}
+			<div class="note">
+				<span class="read">{$video.views}</span>
+				{eq name="visit" value="0"}
+				{eq name="video.is_like" value="1"}
+				<span class="isgood good_" onclick="isGood(this,1,{$video.id})">{$video.likes}</span>
+				{else/}
+				<span class="isgood good" onclick="isGood(this,1,{$video.id})">{$video.likes}</span>
+				{/eq}
+				{else/}
+				<span class="isgood good">{$video.likes}</span>
+				{/eq}
 			</div>
-			{eq name="visit" value="0"}
-			{eq name="co.is_like" value="1"}
-			<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{else/}
-			<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{/eq}
-			{else/}
-			<div class="fr isgood good">{$co.likes}</div>
-			{/eq}
 		</div>
-		{/volist}
 	</div>
-	<div class="tip"></div>
-	<div class="loading hidden">
-		<div class="typing_loader"></div>
+	<div class="comment">
+		<div class="sum">共<span>{$video.comments}</span>条评论</div>
+		<div class="lists">
+			{volist name="comment" id="co"}
+			<div class="list clear">
+				<div class="fl">
+					<img src="{$co.header}" alt="用户" class="user">
+				</div>
+				<div class="fl mid">
+					<div class="name limit">{$co.nickname}</div>
+					<div class="content" >{$co.content}</div>
+					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+				</div>
+				{eq name="visit" value="0"}
+				{eq name="co.is_like" value="1"}
+				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{else/}
+				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{/eq}
+				{else/}
+				<div class="fr isgood good">{$co.likes}</div>
+				{/eq}
+			</div>
+			{/volist}
+		</div>
+		<div class="tip"></div>
+		<div class="loading hidden">
+			<div class="typing_loader"></div>
+		</div>
 	</div>
+	{eq name="visit" value="0"}
+	<div class="bottom clear">
+		<div class="myword fl">
+			<input type="text" placeholder="说说你的感想！">
+		</div>
+		<div class="send fr" onclick="send(this,1,{$video['id']})">发送</div>
+	</div>
+	{/eq}
 </div>
-{eq name="visit" value="0"}
-<div class="bottom clear">
-	<div class="myword fl">
-		<input type="text" placeholder="说说你的感想！">
-	</div>
-	<div class="send fr" onclick="send(this,1,{$video['id']})">发送</div>
-</div>
-{/eq}
-
 {/block}
 
 {block name="script"}
@@ -95,7 +107,7 @@ $(function(){
 	hideplay();
 	videoPlay();
 	//ios fix兼容
-	tofixed();
+//	tofixed();
 	//ue限定
 	ueLimit();
 });
@@ -225,14 +237,15 @@ var videoPlay =function(){
 	});
 };
 function loadScroll(){
-	$(window ).off("scroll" ).on("scroll",function(){
-		var dh = $(document).height();
-		var end = $(window).height() + $(window ).scrollTop();
+	$('.scrollDiy').off("scroll").on("scroll",function(){
+		var dh = $('.article').height() + $('.comment').height();
+		var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
 		var id = {$video['id']};
-		if(dh == end){
+		if(dh <= end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
@@ -256,8 +269,9 @@ function loadScroll(){
 						}
 					}else{
 						tip.text('没有更多了');
-						$(window ).off("scroll");
+						$('.scrollDiy').off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}

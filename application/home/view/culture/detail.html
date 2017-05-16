@@ -241,14 +241,15 @@ var tofixed = function(){
 	}
 };
 function loadScroll(){
-	$(window ).off("scroll" ).on("scroll",function(){
-		var dh = $(document).height();
-		var end = $(window).height() + $(window ).scrollTop();
+	$('.scrollDiy').off("scroll" ).on("scroll",function(){
+		var dh = $('.article').height() + $('.comment').height() + $('.scrollDiy>.title').height() +$('.scrollDiy>.note').height() ;
+		var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
 		var id = {$list['id']};
-		if(dh == end && scrollNow){
+		if(dh <= end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
@@ -272,7 +273,7 @@ function loadScroll(){
 						}
 					}else{
 						tip.text('没有更多了');
-						$(window ).off("scroll");
+						$('.scrollDiy').off("scroll");
 					}
 					scrollNow = true;//请求结束
 				}

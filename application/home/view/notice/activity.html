@@ -2,82 +2,95 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/common/detail.css">
+<style>
+	.scrollDiy{
+		position: absolute;
+		top:0;
+		bottom:0;
+		overflow-y: scroll;
+		/* 增加该属性，可以增加弹性 */
+		-webkit-overflow-scrolling: touch;
+		width:100%;
+	}
+</style>
 {/block}
 
 {block name="body"}
 <!--新增-->
-<div class="title" style="margin:10px auto;width:90%;text-align: center">
-	<span style="color:#333;font-size:16px;">{$activity['title']}</span>
-</div>
-<div class="note">
-	<span class="fl">{$activity.publisher}</span>
-	{$activity.create_time|time_format='Y-m-d'}
-</div>
-<!--新增-->
-<div class="article">
-	<div class="content">
-		{volist name="$activity.images" id="img"}
-		<img src="{$img}" alt="笔记图片" class="img" style="width:100%;">
-		{/volist}
-        <div style="text-indent:2em;">{$activity.content}</div>
-		<div class="note">
-			<span class="read">{$activity.views}</span>
-			{eq name="visit" value="0"}
-			{eq name="activity.is_like" value="1"}
-			<span class="isgood good_" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
-			{else/}
-			<span class="isgood good" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
-			{/eq}
-			{else/}
-			<span class="isgood good">{$activity.likes}</span>
-			{/eq}
+<div class="scrollDiy">
+	<div class="title" style="margin:10px auto;width:90%;text-align: center">
+		<span style="color:#333;font-size:16px;">{$activity['title']}</span>
+	</div>
+	<div class="note">
+		<span class="fl">{$activity.publisher}</span>
+		{$activity.create_time|time_format='Y-m-d'}
+	</div>
+	<!--新增-->
+	<div class="article">
+		<div class="content">
+			{volist name="$activity.images" id="img"}
+			<img src="{$img}" alt="笔记图片" class="img" style="width:100%;">
+			{/volist}
+			<div style="text-indent:2em;">{$activity.content}</div>
+			<div class="note">
+				<span class="read">{$activity.views}</span>
+				{eq name="visit" value="0"}
+				{eq name="activity.is_like" value="1"}
+				<span class="isgood good_" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+				{else/}
+				<span class="isgood good" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
+				{/eq}
+				{else/}
+				<span class="isgood good">{$activity.likes}</span>
+				{/eq}
+			</div>
 		</div>
 	</div>
-</div>
-<div class="comment">
-	<div class="sum">共<span>{$activity.comments}</span>条评论</div>
-	<div class="lists">
-		{volist name="comment" id="co"}
-		<div class="list clear">
-			<div class="fl">
-				<img src="{$co.header}" alt="用户" class="user">
+	<div class="comment">
+		<div class="sum">共<span>{$activity.comments}</span>条评论</div>
+		<div class="lists">
+			{volist name="comment" id="co"}
+			<div class="list clear">
+				<div class="fl">
+					<img src="{$co.header}" alt="用户" class="user">
+				</div>
+				<div class="fl mid">
+					<div class="name limit">{$co.nickname}</div>
+					<div class="content" >{$co.content}</div>
+					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+				</div>
+				{eq name="visit" value="0"}
+				{eq name="co.is_like" value="1"}
+				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{else/}
+				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{/eq}
+				{else/}
+				<div class="fr isgood good">{$co.likes}</div>
+				{/eq}
 			</div>
-			<div class="fl mid">
-				<div class="name limit">{$co.nickname}</div>
-				<div class="content" >{$co.content}</div>
-				<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
-			</div>
-			{eq name="visit" value="0"}
-			{eq name="co.is_like" value="1"}
-			<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{else/}
-			<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{/eq}
-			{else/}
-			<div class="fr isgood good">{$co.likes}</div>
-			{/eq}
+			{/volist}
 		</div>
-		{/volist}
+		<div class="tip"></div>
+		<div class="loading hidden">
+			<div class="typing_loader"></div>
+		</div>
 	</div>
-	<div class="tip"></div>
-	<div class="loading hidden">
-		<div class="typing_loader"></div>
+	{eq name="visit" value="0"}
+	<div class="bottom clear">
+		<div class="myword fl">
+			<input type="text" placeholder="说说你的感想！">
+		</div>
+		<div class="send fr" onclick="send(this,2,{$activity['id']})">发送</div>
 	</div>
+	{/eq}
 </div>
-{eq name="visit" value="0"}
-<div class="bottom clear">
-	<div class="myword fl">
-		<input type="text" placeholder="说说你的感想！">
-	</div>
-	<div class="send fr" onclick="send(this,2,{$activity['id']})">发送</div>
-</div>
-{/eq}
-
 {/block}
 
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//模块标题
 	$('title' ).text('支部活动');
@@ -89,7 +102,7 @@ $(function(){
 		loadScroll();
 	}
 	//ios fix兼容
-	tofixed();
+//	tofixed();
 	//ue限定
 	ueLimit();
 	//初始图片
@@ -232,14 +245,15 @@ var tofixed = function(){
 	}
 };
 function loadScroll(){
-	$(window ).off("scroll" ).on("scroll",function(){
-		var dh = $(document).height();
-		var end = $(window).height() + $(window ).scrollTop();
+	$('.scrollDiy').off("scroll" ).on("scroll",function(){
+		var dh = $('.article').height() + $('.comment').height() + $('.scrollDiy>.title').height() +$('.scrollDiy>.note').height() ;
+		var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
 		var id = {$activity['id']};
-		if(dh == end){
+		if(dh <= end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
@@ -263,8 +277,9 @@ function loadScroll(){
 						}
 					}else{
 						tip.text('没有更多了');
-						$(window ).off("scroll");
+						$('.scrollDiy').off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}
