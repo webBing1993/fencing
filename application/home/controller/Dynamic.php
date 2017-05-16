@@ -45,7 +45,35 @@ class Dynamic extends Base{
      * 列表  更多
      */
     public function listmore(){
-        
+        $len = input("length");
+        $type = input('type/d');
+        if ($type == 1){
+            // 中心组 学习
+            $map = array(
+                'type' => 2,
+                'status' => array('egt',0)
+            );
+        }else{
+            // 工作部署
+            $map = array(
+                'type' => 1,
+                'status' => array('egt',0)
+            );
+        }
+        $list = News::where($map)->order('id desc')->limit($len,7)->select();
+        foreach($list as $value){
+            if ($value['type'] == 2){
+                // 中心组 学习
+                $img = Picture::get($value['front_cover']);
+                $value['path'] = $img['path'];
+            }
+            $value['time'] = date("Y-m-d",$value['create_time']);
+        }
+        if($list){
+            return $this->success("加载成功","",$list);
+        }else{
+            return $this->error("加载失败");
+        }
     }
     /**
      * 党委动态详情页

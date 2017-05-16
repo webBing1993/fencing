@@ -11,7 +11,7 @@
             <div class="imgs swiper-wrapper">
                 {volist name="lists" id="ls"}
                 <div class="banner swiper-slide">
-                    <a href="{:Url('Dynamic/detail?id='.$ls.id)}">
+                    <a href="{:Url('Dynamic/detail?id='.$ls['id'])}">
                         <img src="{$ls.front_cover|get_cover='path'}" alt="">
                         <div class="title_ limit">{$ls.title}</div>
                     </a>
@@ -31,7 +31,7 @@
         <div class="notices hidden">
             <div class="notice party">
                 {volist name="list2" id="loo"}
-                <a href="{:Url('Dynamic/detail?id='.$ls.id)}" class="list clear">
+                <a href="{:Url('Dynamic/detail?id='.$loo['id'])}" class="list clear">
                     <div class="fl">
                         <img src="{$loo.front_cover|get_cover='path'}" alt="图片">
                     </div>
@@ -50,7 +50,7 @@
         <div class="notices hidden">
             <div class="notice activity">
                 {volist name="list1" id="lo"}
-                <a href="{:Url('Dynamic/detail?id='.$lo.id)}" class="list clear">
+                <a href="{:Url('Dynamic/detail?id='.$lo['id'])}" class="list clear">
                     <div class="fr right">
                         <div class="title limit_">{$lo.title}</div>
                         <div class="clear time">
@@ -107,10 +107,10 @@
           ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
           ntc.eq(eq).removeClass('hidden');
           var len = ntc.eq(eq ).find('.notice:last .list').length;
-//		if(len >= 5){
-//			$('.tip' ).text('上拉加载更多');
-//		}
-//		loadScroll(eq+1);
+		if(len >= 5){
+			$('.tip' ).text('上拉加载更多');
+		}
+		loadScroll(eq+1);
           //使用示例
           setCookie("type",eq+11);
       });
@@ -134,19 +134,14 @@
           var len = ntc.eq(type-1).find('.notice:last .list').length;
           var tip = $(".tip");
           var loading = $('.loading');
-          var url;
-          if(type == 1){
-              url = "";
-          }else if(type == 2){
-              url = "";
-          }
           if(dh == end && scrollNow){
               scrollNow = false;//请求执行中
               $.ajax({
                   type:"post",
-                  url: url,
+                  url: "{:Url('Dynamic/listmore')}",
                   data:{
-                      length:len
+                      length:len,
+                      type : type
                   },
                   beforeSend: function(XMLHttpRequest){
                       tip.hide();
@@ -184,20 +179,21 @@
 
       for(var i = 0; i< len;i++){
           var list = lists[i];
-          if(t == 2){
+          var a = '';
+          if(t == 1){
 //              activity没有封面图
-              var a='<div class="fl">'+
+               a='<div class="fl">'+
                       '<img src="'+list.path+'" alt="图片">'+
                       '</div>';
           }
           html +=
-                  '<a href="/home/notice/'+type+'/id/'+ list.id+'.html" class="list clear">'+
+                  '<a href="/home/Dynamic/detail/id/'+ list.id+'.html" class="list clear">'+
                    a+
                   '<div class="fr right">'+
                   '<div class="title limit_">'+list.title+'</div>'+
                   '<div class="clear time">'+
-                  '<span class="fl">'+list.time+'</span>'+
-                  '<span class="fr fa fa-angle-right"></span>'+
+                  '<span class="fl">'+list.publisher+'</span>'+
+                  '<span class="fr">'+list.time+'</span>'+
                   '</div>'+
                   '</div>'+
                   '</a>'
