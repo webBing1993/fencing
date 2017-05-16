@@ -24,12 +24,12 @@
 	<div class="notices hidden">
 		<!--相关通知-->
 		<div class="notice">
-			<a href="{:Url('Notice/relevantlist')}" class="tab clear">
+			<a href="{:Url('Notice/relevantlist?type=1')}" class="tab clear">
 				<span class="fl">相关通知</span>
 				<span class="fr">更多</span>
 			</a>
 			{volist name="relevant" id="re"}
-			<a href="{:Url('Notice/relevant?id='.$re['id'])}" class="list">
+			<a href="{:Url('Notice/recruit?id='.$re['id'])}" class="list">
 				<div class="title limit">{$re['title']}</div>
 				<div class="content limit_">{$re['description']}</div>
 				<div class="clear time">
@@ -45,7 +45,7 @@
 				<span class="fl">情况报道</span>
 			</div>
 			{volist name="meet" id="pa"}
-			<a href="{:Url('Notice/meet?id='.$pa['id'])}" class="list clear">
+			<a href="{:Url('Notice/activity?id='.$pa['id'])}" class="list clear">
 				<div class="fl">
 					<img src="{$pa['front_cover']|get_cover='path'}" alt="图片">
 				</div>
@@ -64,7 +64,7 @@
 	<div class="notices hidden">
 		<!--活动通知-->
 		<div class="notice">
-			<a href="{:Url('Notice/recruitlist')}" class="tab clear" >
+			<a href="{:Url('Notice/relevantlist?type=3')}" class="tab clear" >
 				<span class="fl">活动通知</span>
 				<span class="fr">更多</span>
 			</a>
@@ -183,18 +183,10 @@ function loadScroll(type){
 		var len = ntc.eq(type-1).find('.notice:last .list').length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		var url;
-		if(type == 1){
-			url = "{:Url('Notice/partymore')}";
-		}else if(type == 2){
-			url = "{:Url('Notice/activitymore')}";
-		}else{
-			url = "{:Url('Notice/regularmore')}";
-		}
 		if(dh == end){
 			$.ajax({
 				type:"post",
-				url: url,
+				url: "{:Url('Notice/activitymore')}",
 				data:{
 					length:len
 				},

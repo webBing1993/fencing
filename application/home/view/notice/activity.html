@@ -10,8 +10,8 @@
 	<span style="color:#333;font-size:16px;">{$activity['title']}</span>
 </div>
 <div class="note">
-	<span class="fl">{$info.publisher}</span>
-	{$info.create_time|time_format='Y-m-d'}
+	<span class="fl">{$activity.publisher}</span>
+	{$activity.create_time|time_format='Y-m-d'}
 </div>
 <!--新增-->
 <div class="article">
@@ -28,6 +28,8 @@
 			{else/}
 			<span class="isgood good" onclick="isGood(this,2,{$activity.id})">{$activity.likes}</span>
 			{/eq}
+			{else/}
+			<span class="isgood good">{$activity.likes}</span>
 			{/eq}
 		</div>
 	</div>
@@ -51,6 +53,8 @@
 			{else/}
 			<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
 			{/eq}
+			{else/}
+			<div class="fr isgood good">{$co.likes}</div>
 			{/eq}
 		</div>
 		{/volist}
@@ -81,9 +85,9 @@ $(function(){
 	var len = $(".list" ).length;
 	if(len >= 7){
 		$('.tip' ).text('上拉加载更多');
+		//上拉加载评论
+		loadScroll();
 	}
-	//上拉加载评论
-	loadScroll();
 	//ios fix兼容
 	tofixed();
 	//ue限定
@@ -283,10 +287,14 @@ function addComment(data){
 				'<div class="content" >'+ list.content+'</div>'+
 				'<div class="time">'+ list.time+'</div>'+
 				'</div>';
-		if(list.is_like == 0){
-			html+='<div class="fr isgood good" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+		if ({$visit} == 0){
+			if(list.is_like == 0){
+				html+='<div class="fr isgood good" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+			}else{
+				html+='<div class="fr isgood good_" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+			}
 		}else{
-			html+='<div class="fr isgood good_" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+			html+='<div class="fr isgood good">'+list.likes+'</div>'
 		}
 		html+=
 				'</div>';
