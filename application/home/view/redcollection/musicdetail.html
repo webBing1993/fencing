@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/home/css/redcollection/musicdetail.css">
 <style>
 	.scrollDiy{
-		position: absolute;
+		position: fixed;
 		top:0;
 		bottom:0;
 		overflow-y: scroll;
@@ -197,7 +197,7 @@ function loadScroll(){
 						}
 					}else{
 						tip.text('没有更多了');
-						$(window ).off("scroll");
+						$('.scrollDiy').off("scroll");
 					}
 					scrollNow = true;//请求结束
 				}
@@ -338,7 +338,7 @@ $(function(){
 	}
 
 	//ios fix兼容
-	tofixed();
+//	tofixed();
 })
 </script>
 {/block}
