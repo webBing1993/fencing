@@ -52,6 +52,7 @@ class Feedback extends Base {
                 'aid' => $value['id'],
                 'status' => 0,
                 'type' => 13,
+                'uid' => $userId
             );
             $msg = Like::where($map2)->find();
             if($msg) {

@@ -183,6 +183,7 @@ class Culture extends Base{
                 'aid' => $id,
                 'status' => 0,
                 'type' => 14,
+                'aid' => $userId
             );
             $msg = Like::where($map2)->find();
             if($msg) {

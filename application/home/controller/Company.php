@@ -68,7 +68,8 @@ class Company extends Base{
         $map2 = array(
             'aid' => $id,
             'status' => 0,
-            'type' => 15
+            'type' => 15,
+            'uid' => $userId
         );
         $msg = Like::where($map2)->find();
         if($msg) {
@@ -76,6 +77,7 @@ class Company extends Base{
         }else{
             $info['is_like'] = 0;
         }
+        dump($info['is_like']);
         $this->assign('detail',$info);
         //获取 评论
         $commentModel = new Comment();
