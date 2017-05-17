@@ -1,0 +1,89 @@
+{extend name="public/common"}
+{block name="style"}
+<title>红色珍藏</title>
+<link rel="stylesheet" href="/home/css/learn/index.css">
+<style>
+    body{
+        height:100%;
+        width:100%;
+        overflow: hidden;
+    }
+    .tabs{
+        margin-bottom:1px;
+    }
+    iframe{
+        width:100vw;
+        /*display:none;*/
+        float:left;
+        height:0;
+    }
+</style>
+{/block}
+{block name="body"}
+<!--tab-->
+<div class="tabs clear">
+    <div class="tab"><span>红色电影</span></div>
+    <div class="tab"><span>红色文学</span></div>
+    <div class="tab"><span>红色歌曲</span></div>
+</div>
+<iframe src="" frameborder="0"  id="tab0" ></iframe>
+<iframe src="" frameborder="0"  id="tab1" ></iframe>
+<iframe src="" frameborder="0"  id="tab2" ></iframe>
+{/block}
+{block name="script"}
+<script src="/home/js/reset.js"></script>
+<script>
+    var c =  parseInt(window.location.href.split("index/c/")[1]);
+    $(function(){
+        var WH = $(window).height();
+//        $('iframe').height(WH - 45);
+        var co = getCookie("type");
+        if(co == 11 || co == 12 || co == 13){
+            c = co - 10;
+        }
+        if(c == 1){
+            $('#tab'+(c-1))[0].src='/home/redcollection/redfilm.html';
+        }else if(c == 2){
+            $('#tab'+(c-1))[0].src='/home/redcollection/redliterature.html';
+        }else if(c == 3){
+            $('#tab'+(c-1))[0].src='/home/redcollection/redmusic.html';
+        }
+        $('#tab'+(c-1)).height(WH - 45);
+        $('#tab'+(c-1)).show();
+        $('.tabs>.tab').eq(c-1).find('span').addClass('active');
+        //tab切换
+        $('.tabs>.tab ').on('click',function(){
+            var ntc = $('.notices' );
+            var eq = $(this ).index();
+            $(this ).siblings('.tab' ).find('span' ).removeClass('active');
+            $(this ).find('span' ).addClass('active');
+            //先全部隐藏
+            $('iframe').css('display','none');
+            $('iframe').height(0);
+            if(eq == 0){
+                $('#tab'+eq)[0].src='/home/redcollection/redfilm.html';
+            }else if(eq == 1){
+                $('#tab'+eq)[0].src='/home/redcollection/redliterature.html';
+            }else if(eq == 2){
+                $('#tab'+eq)[0].src='/home/redcollection/redmusic.html';
+            }
+            $('#tab'+eq).height(WH - 45);
+            $('#tab'+eq).show();
+            //使用示例
+            setCookie("type",eq+11);
+        });
+        isOut();
+    });
+
+    //退出清理tab缓存
+    function isOut(){
+        pushHistory();
+        setTimeout(function(){
+            window.addEventListener("popstate", function(e) {
+                delCookie("type");
+                window.history.go(-1);
+            }, false);
+        },200)
+    }
+</script>
+{/block}

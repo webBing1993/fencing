@@ -25,6 +25,13 @@ use app\home\model\Browse;
  */
 class Redcollection extends Base {
     /**
+     * 红色珍藏首页
+     */
+    public function index(){
+
+        return $this ->fetch();
+    }
+    /**
      * 红色电影
      */
     public function redfilm() {

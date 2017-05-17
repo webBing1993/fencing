@@ -2,84 +2,96 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/redcollection/musicdetail.css">
+<style>
+	.scrollDiy{
+		position: absolute;
+		top:0;
+		bottom:0;
+		overflow-y: scroll;
+		/* 增加该属性，可以增加弹性 */
+		-webkit-overflow-scrolling: touch;
+		width:100%;
+	}
+</style>
 {/block}
 
 {block name="body"}
-<div class="music">
-	<div class="title limit_">{$music.title}</div>
-	<div class="time">
-		<span>{$music.create_time|time_format='Y-m-d'}</span>
-	</div>
-	<div class="content">
-		<div id="content">
-			{$music.content}
+<div class="scrollDiy">
+	<div class="music">
+		<div class="title limit_">{$music.title}</div>
+		<div class="time">
+			<span>{$music.create_time|time_format='Y-m-d'}</span>
 		</div>
-		<div class="note">
-			<span class="read">{$music.views}</span>
-			{eq name="visit" value="0"}
-			{eq name="music.is_like" value="0"}
-			<span class="isgood good" onclick="isGood(this,4,{$music.id})">{$music.likes}</span>
-			<!--点过赞good_-->
-			{else/}
-			<span class="isgood good_" onclick="isGood(this,4,{$music.id})">{$music.likes}</span>
-			{/eq}
-			{else/}
-			<span class="isgood good">{$music.likes}</span>
-			{/eq}
-		</div>
-	</div>
-</div>
-<div class="comment">
-	<div class="sum">共<span>{$music.comments}</span>条评论</div>
-	<div class="lists">
-		{volist name="comment" id="co"}
-		<div class="list clear">
-			<div class="fl">
-				<img src="{$co.header}" alt="用户" class="user">
+		<div class="content">
+			<div id="content">
+				{$music.content}
 			</div>
-			<div class="fl mid">
-				<div class="name limit">{$co.nickname}</div>
-				<div class="content" >{$co.content}</div>
-				<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+			<div class="note">
+				<span class="read">{$music.views}</span>
+				{eq name="visit" value="0"}
+				{eq name="music.is_like" value="0"}
+				<span class="isgood good" onclick="isGood(this,4,{$music.id})">{$music.likes}</span>
+				<!--点过赞good_-->
+				{else/}
+				<span class="isgood good_" onclick="isGood(this,4,{$music.id})">{$music.likes}</span>
+				{/eq}
+				{else/}
+				<span class="isgood good">{$music.likes}</span>
+				{/eq}
 			</div>
-			{eq name="visit" value="0"}
-			{eq name="co.is_like" value="1"}
-			<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{else/}
-			<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-			{/eq}
-			{else/}
-			<div class="fr isgood good">{$co.likes}</div>
-			{/eq}
-		</div>
-		{/volist}
-	</div>
-	<div class="tip"></div>
-	<div class="loading hide">
-		<div class="typing_loader"></div>
-	</div>
-</div>
-</div>
-{eq name="visit" value="0"}
-<div class="bottom clear">
-	<div class="myword fl">
-		<input type="text" placeholder="说说你的感想！">
-	</div>
-	<div class="send fl" onclick="send(this,4,{$music.id})">发送</div>
-	<div class="not">
-		<div class="bg"></div>
-		<div class="msg">
-			您的评论不能为空
-			<div class="confirm">确定</div>
 		</div>
 	</div>
+	<div class="comment">
+		<div class="sum">共<span>{$music.comments}</span>条评论</div>
+		<div class="lists">
+			{volist name="comment" id="co"}
+			<div class="list clear">
+				<div class="fl">
+					<img src="{$co.header}" alt="用户" class="user">
+				</div>
+				<div class="fl mid">
+					<div class="name limit">{$co.nickname}</div>
+					<div class="content" >{$co.content}</div>
+					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+				</div>
+				{eq name="visit" value="0"}
+				{eq name="co.is_like" value="1"}
+				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{else/}
+				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{/eq}
+				{else/}
+				<div class="fr isgood good">{$co.likes}</div>
+				{/eq}
+			</div>
+			{/volist}
+		</div>
+		<div class="tip"></div>
+		<div class="loading hide">
+			<div class="typing_loader"></div>
+		</div>
+	</div>
+	{eq name="visit" value="0"}
+	<div class="bottom clear">
+		<div class="myword fl">
+			<input type="text" placeholder="说说你的感想！">
+		</div>
+		<div class="send fl" onclick="send(this,4,{$music.id})">发送</div>
+		<div class="not">
+			<div class="bg"></div>
+			<div class="msg">
+				您的评论不能为空
+				<div class="confirm">确定</div>
+			</div>
+		</div>
+	</div>
+	{/eq}
 </div>
-{/eq}
 {/block}
 
 {block name="script"}
 <script>
-	var now1 = false;//判断请求情况,false为未请求.
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 //点赞
 function isGood(e,type,id){
 	var n = $(e ).text();
@@ -153,15 +165,15 @@ function send(e,type,id){
 }
 //评论加载更多
 function loadScroll(){
-	$(window ).off("scroll" ).on("scroll",function(){
-		var dh = $(document).height();
-		var end = $(window).height() + $(window ).scrollTop();
+	$('.scrollDiy').off("scroll" ).on("scroll",function(){
+		var dh = $('.music').height() + $('.comment').height();
+		var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
 		var id = {$music.id};
-		if(dh == end && !now1){
-			now1 = true;//请求中
+		if(dh <= end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
@@ -176,7 +188,6 @@ function loadScroll(){
 				},
 				success:function(data){
 					loading.toggleClass('hidden');
-					now1 = false;//请求结束,恢复状态
 					tip.show();
 					if(data.code == 1){
 						addComment(data);
@@ -188,6 +199,7 @@ function loadScroll(){
 						tip.text('没有更多了');
 						$(window ).off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}
