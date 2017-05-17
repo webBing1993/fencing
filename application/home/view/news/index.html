@@ -30,6 +30,7 @@
 
 {block name="script"}
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//模块标题
 	$('title').text('第一聚焦');
@@ -51,7 +52,8 @@ function loadScroll(){
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		if(dh == end){
+		if(dh == end && scrollNow){
+			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",
 				url:"{:Url('News/listmore')}",
@@ -75,6 +77,7 @@ function loadScroll(){
 						tip.text('没有更多了');
 						$(window ).off("scroll");
 					}
+					scrollNow = true;//请求结束
 				}
 			})
 		}
