@@ -1,0 +1,56 @@
+/*banner*/
+.banner {
+    width: 100vw;
+    height: 50vw;
+    position: relative;
+}
+.banner img {
+    width: 100%;
+    height: 50vw;
+}
+/*个人中心按钮*/
+.banner .user{
+    position: absolute;
+    display: block;
+    float: left;
+    width: 10.6vw;
+    height: 10.6vw;
+    left: 3.2vw;
+    top: 3.2vw;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.banner .user>img{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+/*model*/
+.model{
+    padding-bottom: 30px;
+}
+.model>li{
+    float: left;
+    width: 17.3vw;
+    margin: 4vw 8vw;
+    min-height: 10vw;
+    margin-bottom: 0px;
+}
+.model>li>a{
+    width: 100%;
+    display: block;
+}
+.model>li>a>img{
+    display: block;
+    width: 100%;
+    height: 17.3vw;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.model>li>a>span{
+    display: block;
+    text-align: center;
+    font-size: 1.4rem;
+    margin-top: 2vw;
+    color: #333;
+}

@@ -43,7 +43,7 @@ class Tourist extends Base{
         $result = input('get.str');
         $record = check_md5_token($result);
         if($record){
-            return $this ->fetch();
+            return $this ->fetch('Index/index');
         }else{
             return $this ->error('请扫描当日的游客模式二维码进入');
         }

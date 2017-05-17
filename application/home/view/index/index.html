@@ -1,13 +1,115 @@
-{extend name="public/common"}
+{extend name="public/pure"}
 
 {block name="style"}
-
+    <title>国网浙江信通公司党建</title>
+    <link rel="stylesheet" href="/home/css/common/rem.css">
+    <link rel="stylesheet" href="/home/css/index/index.css">
+    <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 {/block}
 
 {block name="body"}
-
+    <!--banner-->
+    <div class="banner">
+        <img src="/home/images/feedback/1.jpg" alt="首页banner图">
+        <a href="" class="user">
+            <img src="/home/images/feedback/1.jpg" alt="个人中心">
+        </a>
+    </div>
+    <!--图标轮播-->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <ul class="model clearfix">
+                    <li>
+                        <a href="{:Url('Notice/index?c=1')}">
+                            <img src="/home/images/feedback/1.jpg" alt="支部动态">
+                            <span>支部动态</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Dynamic/index?c=1')}">
+                            <img src="/home/images/feedback/1.jpg" alt="党委动态">
+                            <span>党委动态</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Learn/index?c=1')}">
+                            <img src="/home/images/feedback/1.jpg" alt="两学一做">
+                            <span>两学一做</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Volunteer/order')}">
+                            <img src="/home/images/feedback/1.jpg" alt="心愿认领">
+                            <span>心愿认领</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Feedback/index')}">
+                            <img src="/home/images/feedback/1.jpg" alt="党员之声">
+                            <span>党员之声</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="/home/images/feedback/1.jpg" alt="组织架构">
+                            <span>组织架构</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="swiper-slide">
+                <ul class="model clearfix">
+                    <li>
+                        <a href="{:Url('Redcollection/index?c=1')}">
+                            <img src="/home/images/feedback/1.jpg" alt="红色珍藏">
+                            <span>红色珍藏</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="/home/images/feedback/1.jpg" alt="队伍管理">
+                            <span>队伍管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Culture/index')}">
+                            <img src="/home/images/feedback/1.jpg" alt="文明创建">
+                            <span>文明创建</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Company/index')}">
+                            <img src="/home/images/feedback/1.jpg" alt="企业文化">
+                            <span>企业文化</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('News/index')}">
+                            <img src="/home/images/feedback/1.jpg" alt="文件资料">
+                            <span>文件资料</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Tourist/erweima')}">
+                            <img src="/home/images/feedback/1.jpg" alt="游客模式">
+                            <span>游客模式</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
 {/block}
 
 {block name="script"}
-
+<script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        loop: true,
+        autoplayDisableOnInteraction: false,
+        pagination : '.swiper-pagination',
+    })
+</script>
 {/block}
