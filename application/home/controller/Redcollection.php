@@ -91,13 +91,13 @@ class Redcollection extends Base {
 
         //获取 文章点赞
         $likeModel = new Like;
-        $like = $likeModel->getLike(2,$id,$userId);
+        $like = $likeModel->getLike(3,$id,$userId);
         $film['is_like'] = $like;
 
         $this->assign('film',$film);
         //获取 评论
         $commentModel = new Comment();
-        $comment = $commentModel->getComment(2,$id,$userId);
+        $comment = $commentModel->getComment(3,$id,$userId);
         $this->assign('comment',$comment);
         return $this->fetch();
     }
@@ -169,13 +169,13 @@ class Redcollection extends Base {
         $music = $musicModel->get($id);
         //获取 文章点赞
         $likeModel = new Like;
-        $like = $likeModel->getLike(3,$id,$userId);
+        $like = $likeModel->getLike(4,$id,$userId);
         $music['is_like'] = $like;
         $this->assign('music',$music);
 
         //获取 评论
         $commentModel = new Comment();
-        $comment = $commentModel->getComment(3,$id,$userId);
+        $comment = $commentModel->getComment(4,$id,$userId);
         $this->assign('comment',$comment);
         return $this->fetch();
     }
@@ -265,13 +265,13 @@ class Redcollection extends Base {
         
         //获取 文章点赞
         $likeModel = new Like;
-        $like = $likeModel->getLike(4,$id,$userId);
+        $like = $likeModel->getLike(5,$id,$userId);
         $book['is_like'] = $like;
         $this->assign('book',$book);
 
         //获取 评论
         $commentModel = new Comment();
-        $comment = $commentModel->getComment(4,$id,$userId);
+        $comment = $commentModel->getComment(5,$id,$userId);
         $this->assign('comment',$comment);
         
         return $this->fetch();

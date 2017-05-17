@@ -140,9 +140,9 @@ class Base extends Controller {
      * 0 评论点赞
      * 1 learn
      * 2 notice
-     * 3 AllianceArrange
-     * 4 AllianceShow
-     * 5 Talent
+     * 3 redfilm
+     * 4 redmusic
+     * 5 redbook
      * 6 News
      * 7 RedtutorCourse
      * 8 RedtutorNotice
@@ -169,13 +169,13 @@ class Base extends Controller {
                 $table = "notice";
                 break;
             case 3:
-                $table = "alliance_arrange";
+                $table = "redfilm";
                 break;
             case 4:
-                $table = "alliance_show";
+                $table = "redmusic";
                 break;
             case 5:
-                $table = "talent";
+                $table = "redbook";
                 break;
             case 6:
                 $table = "news";
@@ -309,9 +309,9 @@ class Base extends Controller {
      * type值：
      * 1 learn
      * 2 notice
-     * 3 AllianceArrange
-     * 4 AllianceShow
-     * 5 Talent
+     * 3 redfilm
+     * 4 redmusic
+     * 5 redbook
      * 6 News
      * 7 RedtutorCourse
      * 8 RedtutorNotice
@@ -336,13 +336,13 @@ class Base extends Controller {
                     $table = "notice";
                     break;
                 case 3:
-                    $table = "alliance_arrange";
+                    $table = "redfilm";
                     break;
                 case 4:
-                    $table = "alliance_show";
+                    $table = "redmusic";
                     break;
                 case 5:
-                    $table = "talent";
+                    $table = "redbook";
                     break;
                 case 6:
                     $table = "news";
