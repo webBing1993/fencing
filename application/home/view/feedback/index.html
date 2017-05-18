@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>党员之声</title>
 <link rel="stylesheet" href="/static/viewer/viewer.min.css">
 <link rel="stylesheet" href="/home/css/feedback/feedback.css">
 {/block}
@@ -66,8 +67,6 @@
 <script>
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
-	//模块标题
-	$('title' ).text('建言献策');
 	//reset
 	var len = $(".list" ).length;
 	if(len == 7){

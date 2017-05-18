@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>支部动态</title>
 <link rel="stylesheet" href="/home/css/common/detail.css">
 <style>
 	.scrollDiy{
@@ -92,8 +93,6 @@
 <script>
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
-	//模块标题
-	$('title' ).text('支部活动');
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 7){

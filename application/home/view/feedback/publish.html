@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>党员之声</title>
 <link rel="stylesheet" href="/static/sweetalert/sweetalert2.min.css">
 <link rel="stylesheet" href="/home/css/feedback/advice.css">
 {/block}
@@ -113,8 +114,6 @@ $(function(){
 	//
 	//
 	//--------------------------------------------------------------------------
-	//模块标题
-	$('title' ).text('建言献策');
 	//图片预览
 	$('.add' ).on('click',function(){
 		var imglen = $('.img img' ).length;

@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>支部动态</title>
 <link rel="stylesheet" href="/home/css/notice/notice.css">
 <style>
 	.tabs .tab {
@@ -112,8 +113,6 @@
 <script>
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
-	//模块标题
-	$('title').text('支部活动');
 	//tab初始化和数据存储
 	var ntc = $('.notices');
 	var c =  parseInt(window.location.href.split("index/c/")[1]);

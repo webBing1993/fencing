@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>心愿认领</title>
 <link rel="stylesheet" href="/home/css/volunteer/order.css">
 {/block}
 {block name="body"}
@@ -35,8 +36,6 @@
 <script>
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
-	//标题
-	$('title' ).text('心愿认领');
 	//上拉加载
 	loadScroll("{:Url('Volunteer/ordermore')}",7,5);
 });
