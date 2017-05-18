@@ -26,7 +26,7 @@
   line-height: 22vw;
 }
 .banner .good {
-  background: url('/home/images/special/yes.png') 0 0 no-repeat;
+  background: url('/home/images/special/no.png') 0 0 no-repeat;
 }
 .banner .bigger{
   animation: bigger 300ms ease;
@@ -34,7 +34,7 @@
 }
 .banner .good_ {
 
-  background: url('/home/images/special/no.png') 0 0 no-repeat;
+  background: url('/home/images/special/yes.png') 0 0 no-repeat;
 }
 .banner .isgood {
   background-size: 16vw 16vw;
