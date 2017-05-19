@@ -24,7 +24,9 @@ class Tourist extends Base{
      * 游客模式登录页
      */
     public function tourist(){
-        $result = input('get.str');
+        return $this ->fetch();
+        $this ->assign('url','11');
+        return '';
         $record = check_md5_token($result);
         $url = Request::instance()->domain();
         $this ->assign('url',$url);

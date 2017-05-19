@@ -10,7 +10,8 @@
 {block name="script"}
 <script src="/static/jq-qrcode/jquery.qrcode.min.js"></script>
 <script>
-
+    //密钥10分钟过期一次,5分钟页面刷新一次
+    setTimeout(function(){location.reload()},300000);
     jQuery('#qrcode').qrcode({width: document.body.clientWidth-20,height: document.body.clientWidth-20,text: '{$url}/home/tourist/tourist/str/{$md5}'});
     $('body').height(window.screen.availHeight);
     $('#qrcode').width(document.body.clientWidth-20);

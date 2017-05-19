@@ -193,25 +193,6 @@ var send = function(e,type,id){
 		wAlert('您的评论少于5个字');
 	}
 };
-var wAlert = window.alert;
-window.alert = function (message) {
-	try {
-		var iframe = document.createElement("IFRAME");
-		iframe.style.display = "none";
-		iframe.setAttribute("src", 'data:text/plain,');
-		document.documentElement.appendChild(iframe);
-		var alertFrame = window.frames[0];
-		var iwindow = alertFrame.window;
-		if (iwindow == undefined) {
-			iwindow = alertFrame.contentWindow;
-		}
-		iwindow.alert(message);
-		iframe.parentNode.removeChild(iframe);
-	}
-	catch (exc) {
-		return wAlert(message);
-	}
-};
 var tofixed = function(){
 	var u = navigator.userAgent;
 	var word = $('.myword input');
