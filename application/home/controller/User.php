@@ -7,15 +7,10 @@
  */
 
 namespace app\home\controller;
-use app\home\model\Comment;
-use app\home\model\Learn;
-use app\home\model\Years;
 use app\home\model\Notice;
-use app\home\model\Picture;
 use app\home\model\Browse;
 use app\home\model\Feedback;
 use app\home\model\WechatUser;
-use app\home\model\WechatUserTag;
 use think\Controller;
 use think\Db;
 use com\wechat\TPQYWechat;
@@ -119,20 +114,7 @@ class User extends Base {
             return $this->error("修改失败");
         }
     }
-    
-    /*
-     * 我的消息
-     */
-    public function history(){
-        $userId = session('userId');
-        $Year = new Years();
-        $map = array(
-            "userid" => $userId,
-        );
-        $list = $Year->where($map)->order(['create_time'=>'desc'])->select();
-        $this->assign('list',$list);
-        return $this->fetch();
-    }
+
     /**
      * 临时党员信息
      */
@@ -221,6 +203,37 @@ class User extends Base {
             return $this->success('提交成功');
         }else{
             return $this->error('提交失败');
+        }
+    }
+    /*
+     * 签到功能
+     */
+    public function sign(){
+        $userId = session('userId');
+        $week = date('N',time());
+        if ($week != 6 && $week != 7){  // 周一 到  周五
+            $User = WechatUser::where('userid',$userId)->field('sign,sign_time')->find();
+            if ($User['sign'] == 0){
+                // 未签到  点击签到
+                WechatUser::where('userid',$userId)->update(['sign_time' => time(),'sign' => ['exp','sign+1'],'score' => ['exp','score+1']]);
+                return $this->success('签到成功',1); // 签到成功   加1分
+            }else{
+                // 已签到
+                $now = date('z',time());  // 当前年份中的第几天
+                $time = date('z',$User['sign_time']);  // 签到年份中的第几天
+                if ($now - $time >1){
+                    // 签到中间有间断  重新计算
+                    WechatUser::where('userid',$userId)->update(['sign_time' => time(),'score' => ['exp','score+1'],'sign' => 1]);
+                    return $this->success('签到成功',1); // 签到成功   加1分
+                }else{
+                    $score = $User['sign'] + 1;
+                    WechatUser::where('userid',$userId)->update(['sign_time' => time(),'sign' => ['exp',"sign+1"],'score' => ['exp',"score+{$score}"]]);
+                    return $this->success('签到成功',$score);
+                }
+            }
+        }else{
+            // 周六 周天
+            return $this->success('周末不给签到,去休息吧!');
         }
     }
 }
