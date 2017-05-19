@@ -155,7 +155,7 @@ body {
   margin-bottom: 5vw;
 }
 .listbox .box .box_:before {
-  content: '组织介绍';
+  content: '组织概况';
   position: absolute;
   top: 3vw;
   left: -7px;
@@ -169,7 +169,7 @@ body {
   line-height: 22px;
 }
 .listbox .box .box_.or:before {
-  content: '组织架构';
+  content: '组织概况';
 }
 .listbox .box .box_.summary {
   padding: 11vw 3vw 6vw 3vw;
