@@ -15,6 +15,7 @@ use think\Controller;
 use think\Db;
 use com\wechat\TPQYWechat;
 use think\Config;
+use think\Request;
 /**
  * Class User
  * 用户个人中心
@@ -29,6 +30,18 @@ class User extends Base {
         $userId = session('userId');
         $user = WechatUser::where('userid',$userId)->find();
         $this->assign('user',$user);
+        //判断是否签到
+        if($user){
+            //获取当天0点的时间戳
+            $timestamp0=strtotime(date('Y-m-d',time()));
+            $info = WechatUser::where(['userid' =>$userId,'sign_time' =>['EGT',$timestamp0]])->find();
+            //当日未签到为0
+            if($info){
+                $this ->assign('is_sign',$info['sign']);
+            }else{
+                $this ->assign('is_sign',0);
+            }
+        }
         return $this->fetch();
     }
 
@@ -94,7 +107,8 @@ class User extends Base {
             'num' => $num2
         );
         $this->assign('user',$user);
-
+        $request = Request::instance() ->domain();
+        $this ->assign('request',$request);
         return $this->fetch();
     }
 
@@ -216,7 +230,7 @@ class User extends Base {
             if ($User['sign'] == 0){
                 // 未签到  点击签到
                 WechatUser::where('userid',$userId)->update(['sign_time' => time(),'sign' => ['exp','sign+1'],'score' => ['exp','score+1']]);
-                return $this->success('签到成功',1); // 签到成功   加1分
+                return $this->success('签到成功',null,1); // 签到成功   加1分
             }else{
                 // 已签到
                 $now = date('z',time());  // 当前年份中的第几天
@@ -224,16 +238,16 @@ class User extends Base {
                 if ($now - $time >1){
                     // 签到中间有间断  重新计算
                     WechatUser::where('userid',$userId)->update(['sign_time' => time(),'score' => ['exp','score+1'],'sign' => 1]);
-                    return $this->success('签到成功',1); // 签到成功   加1分
+                    return $this->success('签到成功',null,1); // 签到成功   加1分
                 }else{
                     $score = $User['sign'] + 1;
                     WechatUser::where('userid',$userId)->update(['sign_time' => time(),'sign' => ['exp',"sign+1"],'score' => ['exp',"score+{$score}"]]);
-                    return $this->success('签到成功',$score);
+                    return $this->success('签到成功',null,$score);
                 }
             }
         }else{
             // 周六 周天
-            return $this->success('周末不给签到,去休息吧!');
+            return $this ->error('周末不给签到,去休息吧!');
         }
     }
 }
