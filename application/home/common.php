@@ -178,10 +178,10 @@ function get_name($userid){
  * $str md5加密字符串 1通过 2失败
  */
 function check_md5_token($str){
-    $date = date('Y/m/d',time());
-    $token = 'ct!zi&uhg9&b$*nw4m9^a51e%ps^*m7h';
-    $result = md5($date.$token);
-    if($str === $result){
+    $date = time();
+    $result = substr(think_ucenter_decrypt($str,'ztkj'),2,10);
+    //10分钟后密钥失效
+    if($date - $result < 600){
         return '1';
     }else{
         return '0';
@@ -202,3 +202,4 @@ function check_md5_token($str){
          return '参数错误';
      }
  }
+
