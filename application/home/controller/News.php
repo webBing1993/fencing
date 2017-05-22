@@ -13,7 +13,7 @@ use app\home\model\Like;
 use app\home\model\Picture;
 use app\home\model\WechatUser;
 use think\Controller;
-use app\home\model\News as NewsModel;
+use app\home\model\Paper;
 
 /**
  * Class News
@@ -28,7 +28,7 @@ class News extends Base {
         $map2 = array(
             'status' => array('egt',0),
         );
-        $list = NewsModel::where($map2)->order('id desc')->limit(5)->select();
+        $list = Paper::where($map2)->order('id desc')->limit(5)->select();
         $this->assign('list',$list);
 
         return $this->fetch();
@@ -45,7 +45,7 @@ class News extends Base {
         $userId = session('userId');
         //浏览加一
         $info['views'] = array('exp','`views`+1');
-        NewsModel::where('id',$id)->update($info);
+        Paper::where('id',$id)->update($info);
 
         if($userId != "visitor"){
             //浏览不存在则存入pb_browse表
@@ -64,7 +64,7 @@ class News extends Base {
             }
         }
         //详细信息
-        $info = NewsModel::get($id);
+        $info = Paper::get($id);
         //分享图片及链接及描述
         $image = Picture::where('id',$info['front_cover'])->find();
         $info['share_image'] = "http://".$_SERVER['SERVER_NAME'].$image['path'];
@@ -92,7 +92,7 @@ class News extends Base {
         $map = array(
             'status' => array('egt',0),
         );
-        $list = NewsModel::where($map)->order('id desc')->limit($len,5)->select();
+        $list = Paper::where($map)->order('id desc')->limit($len,5)->select();
         foreach($list as $value){
             $img = Picture::get($value['front_cover']);
             $value['src'] = $img['path'];

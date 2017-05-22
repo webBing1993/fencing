@@ -4,6 +4,11 @@
     <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
     <link rel="stylesheet" href="/home/css/civilization/index.css">
     <link rel="stylesheet" href="/home/css/common/tip.css">
+<style>
+    .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
+        background-color: #fff;
+    }
+</style>
 {/block}
 {block name="body"}
     <div class="banners">
@@ -13,11 +18,12 @@
                     <div class="banner swiper-slide">
                         <a href="{:Url('Culture/detail',[ 'id' =>$vo.id])}">
                             <img src="{$vo.front_cover|get_cover='path'}" alt="">
-                            <div class="title_ limit">{$vo.title}</div>
+                            <!--<div class="title_ limit">{$vo.title}</div>-->
                         </a>
                     </div>
                 {/volist}
             </div>
+            <div class="swiper-pagination"></div>
         </div>
     </div>
 
@@ -76,9 +82,11 @@
     $(function(){
         //轮播
         var mySwiper = new Swiper('.swiper-container', {
-            autoplay: 3000,
+//            autoplay: 3000,
             loop:true,
-            autoplayDisableOnInteraction:false
+            autoplayDisableOnInteraction:false,
+            pagination : '.swiper-pagination',
+            paginationClickable :true
         });
 
         var len = $('.notices').find('.notice:last .list').length;
@@ -96,7 +104,7 @@
             var tip = $(".tip");
             var loading = $('.loading');
             var url;
-            url = "{:Url('Civilization/more')}";
+            url = "{:Url('Culture/more')}";
             if(dh == end && scrollNow){
                 scrollNow = false;//请求执行中
                 $.ajax({
