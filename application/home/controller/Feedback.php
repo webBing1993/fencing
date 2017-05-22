@@ -22,7 +22,7 @@ use think\Db;
  */
 class Feedback extends Base {
     /**
-     * 主页
+     * 主页..
      */
     public function index() {
         $userId = session('userId');
