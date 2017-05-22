@@ -5,6 +5,61 @@
     <link rel="stylesheet" href="/home/css/common/rem.css">
     <link rel="stylesheet" href="/home/css/index/index.css">
     <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
+    <link rel="stylesheet" href="/home/css/common/tip.css">
+<style>
+    .fl {
+        float: left;
+    }
+    .fr {
+        float: right;
+    }
+     .notice .list {
+         display: block;
+         width: 100%;
+         padding-left: 3.2vw;
+         padding-right: 3.2vw;
+         border-bottom: 1px solid #f1f1f1;
+         color: #666666;
+         position: relative;
+    }
+     .notice .list .fr .title {
+         color: #333333;
+         font-size: 1.4rem;
+         width: 100%;
+         overflow : hidden;
+         text-overflow: ellipsis;
+         display: -webkit-box;
+         -webkit-line-clamp: 2;
+         -webkit-box-orient: vertical;
+    }
+    .notice .list .fl img {
+         width: 21.3vw;
+         height: 16vw;
+         margin-top: 10px;
+         margin-bottom: 10px;
+    }
+    .notice .list .right {
+         width: 69vw;
+         height: 16vw;
+         margin-top: 10px;
+         margin-left: 3.2vw;
+    }
+    .notice .list .time {
+         width: 69vw;
+         font-size: 1.3rem;
+         position: absolute;
+         bottom: 10px;
+    }
+    .notice .list .fl .type{
+        position: absolute;
+        bottom: 15px;
+        left: 3.2vw;
+        width: 21.3vw;
+        text-align: center;
+        /*color: #fff;*/
+        font-size: 1.2rem;
+    }
+</style>
 {/block}
 
 {block name="body"}
@@ -51,7 +106,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{:Url('Structure/index')}">
+                        <a href="{:Url('Structure/index?c=1')}">
                             <img src="/home/images/feedback/1.jpg" alt="组织架构">
                             <span>组织架构</span>
                         </a>
@@ -101,6 +156,87 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
+    <!--新闻通知-->
+    <div class="notice">
+        <!--党员动态-->
+        {volist name="details.new" id="vo"}
+            <a href="{:Url('Dynamic/detail?id='.$vo['id'])}" class="list clearfix" data-type="new">
+                <div class="fl">
+                    {eq name="vo.type" value="2"}
+                    <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
+                    {else/}
+                    <img src="/home/images/dangshi/0.jpg" alt="图片">
+                    {/eq}
+                    <span class="type">党员动态</span>
+                </div>
+                <div class="fr right">
+                    <div class="title limit_">{$vo.title}</div>
+                    <div class="clearfix time">
+                        <span class="fr">{$vo.create_time|date="Y-m-d",###}</span>
+                        <span class="fl">{$vo.publisher}</span>
+                    </div>
+                </div>
+            </a>
+        {/volist}
+        <!--支部动态-->
+        {volist name="details.notice" id="vo"}
+            {switch name="vo.type"}
+                {case value="1"}<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
+                {case value="2"}<a href="{:Url('Notice/activity?id='.vo['id'])}" class="list clearfix" data-type="notice">{/case}
+                {case value="3"}<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
+                {case value="4"}<a href="{:Url('Notice/activity?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
+                {default /}
+            {/switch}
+                <div class="fl">
+                    {eq name="vo.type" value='1'}
+                    <img src="/home/images/dangshi/0.jpg" alt="图片">
+                    {/eq}
+                    {eq name="vo.type" value='2'}
+                    <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
+                    {/eq}
+                    {eq name="vo.type" value='3'}
+                    <img src="/home/images/dangshi/0.jpg" alt="图片">
+                    {/eq}
+                    {eq name="vo.type" value='4'}
+                    <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
+                    {/eq}
+                    <span class="type">支部动态</span>
+                </div>
+                <div class="fr right">
+                    <div class="title limit_">{$vo.title}</div>
+                    <div class="clearfix time">
+                        <span class="fr">{$vo.create_time|date="Y-m-d",###}</span>
+                        <span class="fl">{$vo.publisher}</span>
+                    </div>
+                </div>
+            </a>
+        {/volist}
+            <!--两学一做-->
+            {volist name="details.learn" id="vo"}
+            {eq name="vo.type" value="2"}
+            <a href="{:Url('Learn/article?id='.$vo['id'])}" class="list clearfix" data-type="learn">
+                {else/}
+                <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list clearfix" data-type="learn">
+                    {/eq}
+                    <div class="fl">
+                        <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
+                        <span class="type">两学一做</span>
+                    </div>
+                    <div class="fr right">
+                        <div class="title limit_">{$vo.title}</div>
+                        <div class="clearfix time">
+                            <span class="fr">{$vo.create_time|date="Y-m-d",###}</span>
+                            <span class="fl">{$vo.publisher}</span>
+                        </div>
+                    </div>
+                </a>
+        {/volist}
+    </div>
+    <!--加载更多-->
+    <div class="tip"></div>
+    <div class="loading hidden">
+        <div class="typing_loader"></div>
+    </div>
 {/block}
 
 {block name="script"}
@@ -111,6 +247,70 @@
         autoplayDisableOnInteraction: false,
         pagination : '.swiper-pagination',
         paginationClickable :true
-    })
+    });
+    var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+    $(function(){
+        var len = $(".list" ).length;
+        if(len == 6){
+            $('.tip' ).text('上拉加载更多');
+        }
+        //上拉加载
+        loadScroll();
+    });
+    function loadScroll(){
+        $(window ).off("scroll" ).on("scroll",function(){
+            var dh = $(document).height();
+            var end = $(window).height() + $(window ).scrollTop();
+            var tip = $(".tip");
+            var loading = $('.loading');
+            var len=[];
+            len['learn'] = $('[data-type = learn]').length;
+            len['new'] = $('[data-type = new]').length;
+            len['notice'] = $('[data-type = notice]').length;
+            if(dh == end && scrollNow){
+                scrollNow = false;//请求执行中
+                $.ajax({
+                    type:"get",
+                    url:"{:Url('Index/lists')}",
+                    data:{
+                        length:len
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data){
+                            addNews(data);
+                            var dataLen =data.data.length;
+                            if(data.length == 6){
+                                tip.text('上拉加载更多');
+                            }else{
+                                tip.text('没有更多了');
+                                $(window ).off("scroll");
+                            }
+                        }else{
+                            tip.text('没有更多了');
+                            $(window ).off("scroll");
+                        }
+                        scrollNow = true;//请求结束
+                    }
+                })
+            }
+        })
+    }
+
+    function add(data){
+        var html = '';
+        var lists = data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++){
+
+        }
+        $(".notice" ).append(html);
+    }
+
 </script>
 {/block}
