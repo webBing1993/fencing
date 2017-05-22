@@ -89,8 +89,10 @@ class Volunteer extends Base{
             $msg = WechatUser::where('userid',$value['userid'])->find();
             $value['avatar'] = $msg['avatar'];
             $value['name'] = $msg['name'];
-            $Obj = WechatDepartment::where('id',json_decode($msg['unit']))->find();
-            $value['unit'] = $Obj['name'];
+            foreach(json_decode($msg['department']) as $val){
+                $Obj = WechatDepartment::where(['id' =>$val])->find();
+                $value['unit'] = $Obj['name'];
+            }
         }
         $this->assign('namelist',$namelist);
 
