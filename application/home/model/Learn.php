@@ -12,5 +12,9 @@ namespace app\home\model;
 use think\Model;
 
 class Learn extends Model {
-
+    //首页获取已推送的数据
+    public function get_list($length,$len){
+        $details = $this ->where(['status' => 1]) ->order('create_time desc') ->limit($length,$len) ->select();
+        return $details;
+    }
 }
