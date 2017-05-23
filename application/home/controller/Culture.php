@@ -205,5 +205,13 @@ class Culture extends Base{
         }
         return $this ->fetch();
     }
-    
+    /**
+     * 创建要求
+     */
+    public function demand(){
+        $culture = new CultureModel();
+        $result = $culture ->where(['type' => 1]) ->find();
+        $this ->assign('list',$result);
+        return $this ->fetch();
+    }
 }
