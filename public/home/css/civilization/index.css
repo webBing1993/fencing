@@ -21,6 +21,8 @@
     color: #ffffff;
 }
 
+
+
 /*列表*/
 .content .notices .notice .tab {
     display: block;
@@ -109,4 +111,23 @@
     position: relative;
     top: 17px;
     left: calc( 50vw - 20px );
+}
+
+/**创建要求**/
+
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
+    background-color: #fff;
+}
+.banners {
+    position: relative;
+}
+.help{
+    position: absolute;
+    top:3vw;
+    right: 3vw;
+    z-index: 9999;
+}
+.help>img{
+    height:5vw;
+    width:5vw;;
 }
