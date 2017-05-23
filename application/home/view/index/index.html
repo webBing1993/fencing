@@ -6,68 +6,14 @@
     <link rel="stylesheet" href="/home/css/index/index.css">
     <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
     <link rel="stylesheet" href="/home/css/common/tip.css">
-<style>
-    .fl {
-        float: left;
-    }
-    .fr {
-        float: right;
-    }
-     .notice .list {
-         display: block;
-         width: 100%;
-         padding-left: 3.2vw;
-         padding-right: 3.2vw;
-         border-bottom: 1px solid #f1f1f1;
-         color: #666666;
-         position: relative;
-    }
-     .notice .list .fr .title {
-         color: #333333;
-         font-size: 1.4rem;
-         width: 100%;
-         overflow : hidden;
-         text-overflow: ellipsis;
-         display: -webkit-box;
-         -webkit-line-clamp: 2;
-         -webkit-box-orient: vertical;
-    }
-    .notice .list .fl img {
-         width: 21.3vw;
-         height: 16vw;
-         margin-top: 10px;
-         margin-bottom: 10px;
-    }
-    .notice .list .right {
-         width: 69vw;
-         height: 16vw;
-         margin-top: 10px;
-         margin-left: 3.2vw;
-    }
-    .notice .list .time {
-         width: 69vw;
-         font-size: 1.3rem;
-         position: absolute;
-         bottom: 10px;
-    }
-    .notice .list .fl .type{
-        position: absolute;
-        bottom: 15px;
-        left: 3.2vw;
-        width: 21.3vw;
-        text-align: center;
-        /*color: #fff;*/
-        font-size: 1.2rem;
-    }
-</style>
 {/block}
 
 {block name="body"}
     <!--banner-->
     <div class="banner">
-        <img src="/home/images/feedback/1.jpg" alt="首页banner图">
-        <a href="" class="user">
-            <img src="/home/images/feedback/1.jpg" alt="个人中心">
+        <img src="/home/images/common/banner.png" alt="首页banner图">
+        <a href="{:Url('User/index')}" class="user">
+            <img src="{$user|get_header}" alt="个人中心">
         </a>
     </div>
     <!--图标轮播-->
@@ -76,39 +22,39 @@
             <div class="swiper-slide">
                 <ul class="model clearfix">
                     <li>
-                        <a href="{:Url('Notice/index?c=1')}">
-                            <img src="/home/images/feedback/1.jpg" alt="支部动态">
-                            <span>支部动态</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:Url('Dynamic/index?c=1')}">
-                            <img src="/home/images/feedback/1.jpg" alt="党委动态">
-                            <span>党委动态</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:Url('Learn/index?c=1')}">
-                            <img src="/home/images/feedback/1.jpg" alt="两学一做">
-                            <span>两学一做</span>
+                        <a href="{:Url('Redcollection/index?c=1')}">
+                            <img src="/home/images/index/7.png" alt="红色珍藏">
+                            <span>红色珍藏</span>
                         </a>
                     </li>
                     <li>
                         <a href="{:Url('Volunteer/order')}">
-                            <img src="/home/images/feedback/1.jpg" alt="心愿认领">
+                            <img src="/home/images/index/4.png" alt="心愿认领">
                             <span>心愿认领</span>
                         </a>
                     </li>
                     <li>
                         <a href="{:Url('Feedback/index')}">
-                            <img src="/home/images/feedback/1.jpg" alt="党员之声">
+                            <img src="/home/images/index/5.png" alt="党员之声">
                             <span>党员之声</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{:Url('Structure/index?c=1')}">
-                            <img src="/home/images/feedback/1.jpg" alt="组织架构">
-                            <span>组织架构</span>
+                        <a href="#">
+                            <img src="/home/images/index/8.png" alt="队伍管理">
+                            <span>队伍管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('News/index')}">
+                            <img src="/home/images/index/11.png" alt="文件资料">
+                            <span>文件资料</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Dynamic/index?c=1')}">
+                            <img src="/home/images/index/2.png" alt="党委动态">
+                            <span>党委动态</span>
                         </a>
                     </li>
                 </ul>
@@ -116,38 +62,38 @@
             <div class="swiper-slide">
                 <ul class="model clearfix">
                     <li>
-                        <a href="{:Url('Redcollection/index?c=1')}">
-                            <img src="/home/images/feedback/1.jpg" alt="红色珍藏">
-                            <span>红色珍藏</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="/home/images/feedback/1.jpg" alt="队伍管理">
-                            <span>队伍管理</span>
+                        <a href="{:Url('Notice/index?c=1')}">
+                            <img src="/home/images/index/1.png" alt="支部动态">
+                            <span>支部动态</span>
                         </a>
                     </li>
                     <li>
                         <a href="{:Url('Culture/index')}">
-                            <img src="/home/images/feedback/1.jpg" alt="文明创建">
+                            <img src="/home/images/index/9.png" alt="文明创建">
                             <span>文明创建</span>
                         </a>
                     </li>
                     <li>
+                        <a href="{:Url('Learn/index?c=1')}">
+                            <img src="/home/images/index/3.png" alt="两学一做">
+                            <span>两学一做</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{:Url('Company/index')}">
-                            <img src="/home/images/feedback/1.jpg" alt="企业文化">
+                            <img src="/home/images/index/10.png" alt="企业文化">
                             <span>企业文化</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{:Url('News/index')}">
-                            <img src="/home/images/feedback/1.jpg" alt="文件资料">
-                            <span>文件资料</span>
+                        <a href="{:Url('Structure/index?c=1')}">
+                            <img src="/home/images/index/6.png" alt="组织架构">
+                            <span>组织架构</span>
                         </a>
                     </li>
                     <li>
                         <a href="{:Url('Tourist/erweima')}">
-                            <img src="/home/images/feedback/1.jpg" alt="游客模式">
+                            <img src="/home/images/index/12.png" alt="游客模式">
                             <span>游客模式</span>
                         </a>
                     </li>
@@ -156,18 +102,20 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
+    <!--分割线-->
+    <div class="level"></div>
     <!--新闻通知-->
     <div class="notice">
-        <!--党员动态-->
+        <!--党委动态-->
         {volist name="details.new" id="vo"}
             <a href="{:Url('Dynamic/detail?id='.$vo['id'])}" class="list clearfix" data-type="new">
                 <div class="fl">
                     {eq name="vo.type" value="2"}
                     <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
                     {else/}
-                    <img src="/home/images/dangshi/0.jpg" alt="图片">
+                    <img src="/home/images/common/1.jpg" alt="图片">
                     {/eq}
-                    <span class="type">党员动态</span>
+                    <span class="type">党委动态</span>
                 </div>
                 <div class="fr right">
                     <div class="title limit_">{$vo.title}</div>
@@ -189,13 +137,13 @@
             {/switch}
                 <div class="fl">
                     {eq name="vo.type" value='1'}
-                    <img src="/home/images/dangshi/0.jpg" alt="图片">
+                    <img src="/home/images/common/1.jpg" alt="图片">
                     {/eq}
                     {eq name="vo.type" value='2'}
                     <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
                     {/eq}
                     {eq name="vo.type" value='3'}
-                    <img src="/home/images/dangshi/0.jpg" alt="图片">
+                    <img src="/home/images/common/1.jpg" alt="图片">
                     {/eq}
                     {eq name="vo.type" value='4'}
                     <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
@@ -253,9 +201,10 @@
         var len = $(".list" ).length;
         if(len == 6){
             $('.tip' ).text('上拉加载更多');
+            //上拉加载
+            loadScroll();
         }
-        //上拉加载
-        loadScroll();
+
     });
     function loadScroll(){
         $(window ).off("scroll" ).on("scroll",function(){
@@ -264,16 +213,16 @@
             var tip = $(".tip");
             var loading = $('.loading');
             var len=[];
-            len['learn'] = $('[data-type = learn]').length;
-            len['new'] = $('[data-type = new]').length;
-            len['notice'] = $('[data-type = notice]').length;
+            len[0] = $('[data-type = learn]').length;
+            len[1] = $('[data-type = new]').length;
+            len[2] = $('[data-type = notice]').length;
             if(dh == end && scrollNow){
                 scrollNow = false;//请求执行中
                 $.ajax({
                     type:"get",
-                    url:"{:Url('Index/lists')}",
+                    url:"{:Url('Index/more')}",
                     data:{
-                        length:len
+                        length: JSON.stringify(len)
                     },
                     beforeSend: function(XMLHttpRequest){
                         tip.hide();
@@ -282,14 +231,10 @@
                     success:function(data){
                         loading.toggleClass('hidden');
                         tip.show();
-                        if(data){
+                        if(data['new'].length || data['learn'].length || data['notice'].length){
                             addNews(data);
-                            var dataLen =data.data.length;
-                            if(data.length == 6){
+                            if(data['new'].length + data['learn'].length + data['notice'].length == 6){
                                 tip.text('上拉加载更多');
-                            }else{
-                                tip.text('没有更多了');
-                                $(window ).off("scroll");
                             }
                         }else{
                             tip.text('没有更多了');
@@ -302,14 +247,50 @@
         })
     }
 
-    function add(data){
-        var html = '';
-        var lists = data;
-        var len = lists.length;
-        for(var i = 0; i< len;i++){
-
-        }
-        $(".notice" ).append(html);
+    function addNews(data){
+       for(var key in data){
+            var html = '';
+            var lists = data[key];
+            var len = lists.length;
+            var href ='';//跳转链接
+            var name = '';//对应的模块名称
+            for(var i = 0; i< len;i++){
+                var list = lists[i];
+                if(list['genre'] == 'learn'){
+                    name = '两学一做';
+                    if(list['type'] == 2){
+                        href = '/home/learn/article?id='+list['id'];
+                    }else{
+                        href = '/home/learn/video?id='+list['id'];
+                    }
+                }else if(list['genre'] == 'notice'){
+                    name = '支部动态';
+                    if(list['type'] == 2 ||list['type'] == 4 ){
+                        href = '/home/notice/activity?id='+list['id'];
+                    }else{
+                        href = '/home/notice/recruit?id='+list['id'];
+                    }
+                }else{
+                    name = '党委动态';
+                    href = '/home/dynamic/detail?id='+list['id'];
+                }
+                html +=
+                        '<a href="'+href+'" class="list clearfix" data-type ="'+list['genre']+'">'+
+                            '<div class="fl">'+
+                                '<img src="'+list['front_cover']+'" alt="图片">'+
+                                '<span class="type">'+name+'</span>'+
+                            '</div>'+
+                            '<div class="fr right">'+
+                                '<div class="title limit_">'+list.title+'</div>'+
+                                '<div class="clearfix time">'+
+                                    '<span class="fr">'+list.time+'</span>'+
+                                    '<span class="fl">'+list.publisher+'</span>'+
+                                '</div>'+
+                            '</div>'+
+                        '</a>'
+            }
+            $(".notice" ).append(html);
+       }
     }
 
 </script>

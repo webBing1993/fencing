@@ -21,10 +21,11 @@ use app\home\model\Notice as NoticeModel;
 /**
  * 党建主页
  */
-class Index extends Controller {
+class Index extends Base {
     public function index(){
         $details = $this ->lists();
         $this ->assign('details',$details);
+        $this ->assign('user',session('userId'));
         return $this->fetch();
     }
 
@@ -64,11 +65,17 @@ class Index extends Controller {
      * 首页获取不同模块数据
      */
     public function lists($length = 0){
-        if ($length == 0) {
+        //不是get请求默认初始数据
+        if (empty($length)) {
             $length = array();
             $length['learn'] = 0;
             $length['new'] = 0;
             $length['notice'] = 0;
+        }else{
+            $length = json_decode($length);
+            $length['learn'] = $length[0];
+            $length['new'] = $length[1];
+            $length['notice'] = $length[2];
         }
         $data = array();
         //记录上一条缺几条的数据
@@ -100,6 +107,7 @@ class Index extends Controller {
             //先去支部动态取
             if (count($data['notice']) >= 2) {
                 $record = $notice ->get_list(count($data['notice'])+$length['notice'],$more);
+                //数据如果不够再补
                 if (count($record) < $more) {
                     $more += $more - count($record);
                     if($record){
@@ -137,5 +145,21 @@ class Index extends Controller {
             $v['genre'] = $field;
         }
         return $data;
+    }
+
+    public function more(){
+        $length = input('get.length');
+        $details = $this ->lists($length);
+        foreach($details as $key => $value) {
+            foreach ($value as $k => $v) {
+                if ($v['front_cover']) {
+                    $v['front_cover'] = get_cover($v['front_cover'], 'path');
+                } else {
+                    $v['front_cover'] = '/home/images/common/1.jpg';
+                }
+                $v['time'] = date('Y-m-d',$v['create_time']);
+            }
+        }
+        return $details;
     }
 }
