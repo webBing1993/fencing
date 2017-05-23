@@ -31,9 +31,9 @@
 				<span class="read">{$new.views}</span>
 				{eq name="visit" value="0"}
 				{eq name="new.is_like" value="1"}
-				<span class="isgood good_" onclick="isGood(this,6,{$new.id})">{$new.likes}</span>
+				<span class="isgood good_" onclick="isGood(this,16,{$new.id})">{$new.likes}</span>
 				{else/}
-				<span class="isgood good" onclick="isGood(this,6,{$new.id})">{$new.likes}</span>
+				<span class="isgood good" onclick="isGood(this,16,{$new.id})">{$new.likes}</span>
 				{/eq}
 				{/eq}
 			</div>
@@ -73,7 +73,7 @@
 	<div class="myword fl">
 		<input type="text" placeholder="说说你的感想！">
 	</div>
-	<div class="send fr" onclick="send(this,6,{$new['id']})">发送</div>
+	<div class="send fr" onclick="send(this,16,{$new['id']})">发送</div>
 </div>
 {/eq}
 

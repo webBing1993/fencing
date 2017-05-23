@@ -73,13 +73,14 @@ class News extends Base {
 
         //获取 文章点赞
         $likeModel = new Like;
-        $like = $likeModel->getLike(6,$id,$userId);
+        $like = $likeModel->getLike(16,$id,$userId);
         $info['is_like'] = $like;
+
         $this->assign('new',$info);
 
         //获取 评论
         $commentModel = new Comment();
-        $comment = $commentModel->getComment(6,$id,$userId);
+        $comment = $commentModel->getComment(16,$id,$userId);
         $this->assign('comment',$comment);
         return $this->fetch();
     }
