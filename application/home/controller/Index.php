@@ -14,12 +14,17 @@ use think\Config;
 use think\Controller;
 use app\user\controller\Index as APIIndex;
 use think\Log;
+use app\home\model\Learn as LearnModel;
+use app\home\model\News;
+use app\home\model\Notice as NoticeModel;
 
 /**
  * 党建主页
  */
 class Index extends Controller {
     public function index(){
+        $details = $this ->lists();
+        $this ->assign('details',$details);
         return $this->fetch();
     }
 
@@ -54,5 +59,83 @@ class Index extends Controller {
             session('userId','visitor');
             $this->redirect(session('url'));
         }
+    }
+    /**
+     * 首页获取不同模块数据
+     */
+    public function lists($length = 0){
+        if ($length == 0) {
+            $length = array();
+            $length['learn'] = 0;
+            $length['new'] = 0;
+            $length['notice'] = 0;
+        }
+        $data = array();
+        //记录上一条缺几条的数据
+        $more = 0;
+        $new = new  News();
+        $learn = new LearnModel();
+        $notice = new NoticeModel();
+        //党员动态
+        $data['new'] = $new ->get_list($length['new'],2);
+        if (count($data['new']) < 2) {
+            $more += 2 - count($data['new']);
+        }
+        //支部动态
+        $data['notice'] = $notice ->get_list($length['notice'],2+$more);
+        if (count($data['notice']) < (2+$more)) {
+            $more = $more + 2 - count($data['notice']);
+        }else{
+            $more = 0;
+        }
+        //两学一做
+        $data['learn'] = $learn ->get_list($length['learn'],2+$more);
+        if (count($data['learn']) < (2+$more)) {
+            $more = $more + 2 - count($data['learn']);
+        }else{
+            $more = 0;
+        }
+        //数据不够6条,反过来再取一遍
+        if( count($data['learn']) + count($data['notice']) + count($data['new']) < 6){
+            //先去支部动态取
+            if (count($data['notice']) >= 2) {
+                $record = $notice ->get_list(count($data['notice'])+$length['notice'],$more);
+                if (count($record) < $more) {
+                    $more += $more - count($record);
+                    if($record){
+                        $data['notice'] = array_merge($data['notice'],$record);
+                    }
+                    $record = $new ->get_list(count($data['new'])+$length['new'],$more);
+                    if($record){
+                        $data['new'] = array_merge($data['new'],$record);
+                    }
+                } else {
+                    if($record){
+                        $data['notice'] = array_merge($data['notice'],$record);
+                    }
+                }
+            } else if (count($data['new']) == 2){
+            //支部动态不够,再党员动态取
+                $record = $new ->get_list(count($data['new'])+$length['new'],$more);
+                if($record){
+                    $data['new'] = array_merge($data['new'],$record);
+                }
+            }
+        }
+        //对应增加类型
+        $data['new'] = $this->add_field($data['new'], 'new');
+        $data['notice'] = $this->add_field($data['notice'], 'notice');
+        $data['learn'] = $this->add_field($data['learn'], 'learn');
+        return $data;
+    }
+
+    /**
+     * 给列表数据增加类型
+     */
+    public function add_field($data,$field){
+        foreach($data as $k =>$v){
+            $v['genre'] = $field;
+        }
+        return $data;
     }
 }
