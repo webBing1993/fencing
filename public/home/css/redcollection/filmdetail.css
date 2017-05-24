@@ -285,5 +285,5 @@
   animation: typing 1s linear infinite alternate;
   position: relative;
   top: 17px;
-  left: calc( 50vw - 20px );
+  left: calc( 50vw - 15px );
 }

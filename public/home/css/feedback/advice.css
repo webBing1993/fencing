@@ -164,7 +164,7 @@
   animation: typing 1s linear infinite alternate;
   position: fixed;
   top: 30vh;
-  left: calc( 50% - 20px);
+  left: calc( 50% - 15px);
 }
 .typing_loader {
   width: 6px;
@@ -175,7 +175,7 @@
   animation: typing 1s linear infinite alternate;
   margin: 46px auto;
   position: relative;
-  left: -12px;
+  left: calc( 50% - 15px);
 }
 @-webkit-keyframes typing {
   0% {
