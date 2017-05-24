@@ -95,6 +95,11 @@ class Company extends Base{
         $data = input('post.');
         $Model = new CompanyModel();
         $res = $Model->getMoreList($data);
+        //对应的封面id转成为path,时间戳转换
+        foreach($res as $k => $v){
+            $res[$k]['front_src'] = get_cover($res[$k]['front_cover'])->path;
+            $res[$k]['header_src'] = get_cover($res[$k]['image'])->path;
+        }
         if($res) {
             return $this->success("加载成功","",$res);
         }else {
