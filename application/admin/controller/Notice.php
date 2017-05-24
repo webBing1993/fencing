@@ -312,11 +312,11 @@ class Notice extends Admin {
             $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
             switch ($focus1['type']) {
                 case 1:
-                    $url1 = hostUrl."/home/notice/relevant/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/notice/recruit/id/".$focus1['id'].".html";
                     $pre1 = "【相关通知】";
                     break;
                 case 2:
-                    $url1 = hostUrl."/home/notice/meet/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/notice/activity/id/".$focus1['id'].".html";
                     $pre1 = "【情况报道】";
                     break;
                 case 3:
@@ -353,11 +353,11 @@ class Notice extends Admin {
                 $content = str_replace("&nbsp;","",$des);  //空格符替换成空
                 switch ($focus['type']) {
                     case 1:
-                        $url = hostUrl."/home/notice/relevant/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/notice/recruit/id/".$focus['id'].".html";
                         $pre = "【相关通知】";
                         break;
                     case 2:
-                        $url = hostUrl."/home/notice/meet/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/notice/activity/id/".$focus['id'].".html";
                         $pre = "【情况报道】";
                         break;
                     case 3:

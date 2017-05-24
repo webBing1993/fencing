@@ -195,7 +195,7 @@ use app\admin\model\WishReceive;
          $str1 = strip_tags($info1['content']);
          $des1 = mb_substr($str1,0,40);
          $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-         $url1 = hostUrl."/home/company/detail/id/".$info1['id'].".html";
+         $url1 = hostUrl."/home/Volunteer/orderdetail/id/".$info1['id'].".html";
          $image1 = Picture::get($info1['front_cover']);
          $path1 = hostUrl.$image1['path'];
          $information1 = array(
@@ -215,7 +215,7 @@ use app\admin\model\WishReceive;
                  $str2 = strip_tags($info2['content']);
                  $des2 = mb_substr($str2,0,40);
                  $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
-                 $url2 = hostUrl."/home/company/detail/id/".$info2['id'].".html";
+                 $url2 = hostUrl."/home/Volunteer/orderdetail/id/".$info2['id'].".html";
                  $image2 = Picture::get($info2['front_cover']);
                  $path2 = hostUrl.$image2['path'];
                  $information2[] = array(

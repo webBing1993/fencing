@@ -261,13 +261,14 @@ class Culture extends Admin{
         CultureModel::where(['id'=>$arr1])->update($update); // 更新推送后的状态
         if ($info1['type'] == 2){
             $pre = '【志愿发布】';
+            $url1 = hostUrl."/home/Culture/publish/id/".$info1['id'].".html";
         }else{
             $pre = '【志愿情况】';
+            $url1 = hostUrl."/home/Culture/detail/id/".$info1['id'].".html";
         }
         $str1 = strip_tags($info1['content']);
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-        $url1 = hostUrl."/home/news/detail/id/".$info1['id'].".html";
         $image1 = Picture::get($info1['front_cover']);
         $path1 = hostUrl.$image1['path'];
         $information1 = array(
@@ -287,12 +288,13 @@ class Culture extends Admin{
                 $str2 = strip_tags($info2['content']);
                 if ($info2['type'] == 2){
                     $pre1 = '【志愿发布】';
+                    $url2 = hostUrl."/home/Culture/publish/id/".$info2['id'].".html";
                 }else{
                     $pre1 = '【志愿情况】';
+                    $url2 = hostUrl."/home/Culture/detail/id/".$info2['id'].".html";
                 }
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
-                $url2 = hostUrl."/home/news/detail/id/".$info2['id'].".html";
                 $image2 = Picture::get($info2['front_cover']);
                 $path2 = hostUrl.$image2['path'];
                 $information2[] = array(

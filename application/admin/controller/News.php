@@ -214,12 +214,13 @@ class News extends Admin {
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
         if ($info1['type'] == 1){
             $pre = '【工作部署】';
+            $path1 = hostUrl.'/home/images/common/1.jpg';
         }else{
             $pre = '【中心组学习】';
+            $url1 = hostUrl."/home/Dynamic/detail/id/".$info1['id'].".html";
+            $image1 = Picture::get($info1['front_cover']);
+            $path1 = hostUrl.$image1['path'];
         }
-        $url1 = hostUrl."/home/news/detail/id/".$info1['id'].".html";
-        $image1 = Picture::get($info1['front_cover']);
-        $path1 = hostUrl.$image1['path'];
         $information1 = array(
             'title' => $pre.$title1,
             'description' => $content1,
@@ -239,12 +240,13 @@ class News extends Admin {
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
                 if ($info2['type'] == 1){
                     $pre1 = '【工作部署】';
+                    $path2 = hostUrl.'/home/images/common/1.jpg';
                 }else{
                     $pre1 = '【中心组学习】';
+                    $url2 = hostUrl."/home/Dynamic/detail/id/".$info2['id'].".html";
+                    $image2 = Picture::get($info2['front_cover']);
+                    $path2 = hostUrl.$image2['path'];
                 }
-                $url2 = hostUrl."/home/news/detail/id/".$info2['id'].".html";
-                $image2 = Picture::get($info2['front_cover']);
-                $path2 = hostUrl.$image2['path'];
                 $information2[] = array(
                     "title" =>$pre1.$title2,
                     "description" => $content2,
