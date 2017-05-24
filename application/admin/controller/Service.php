@@ -33,17 +33,17 @@ class Service extends Controller
                 $event = $Wechat->getRev()->getRevEvent();
                 switch ($event['event']) {
                     case 'subscribe':
-//                        $replyText = "您好！欢迎关注香市党建！";
-//                        $Wechat->text($replyText)->reply();
-                        $newsData = array(
-                            '0'=> array(
-                                'Title' => "欢迎您关注“香市机关党建”",
-                                'Description' => "内含企业二维码，可转发给同事关注",
-                                'PicUrl' => "http://xspb.0571ztnet.com/home/images/special/music_2.jpg",
-                                'Url' => "http://u3665579.viewer.maka.im/pcviewer/WRZ0GJFA",
-                            ),
-                        );
-                        $Wechat->news($newsData)->reply();
+                        $replyText = "您好！欢迎关注台州移动党建！";
+                        $Wechat->text($replyText)->reply();
+//                        $newsData = array(
+//                            '0'=> array(
+//                                'Title' => "欢迎您关注“香市机关党建”",
+//                                'Description' => "内含企业二维码，可转发给同事关注",
+//                                'PicUrl' => "http://xspb.0571ztnet.com/home/images/special/music_2.jpg",
+//                                'Url' => "http://u3665579.viewer.maka.im/pcviewer/WRZ0GJFA",
+//                            ),
+//                        );
+//                        $Wechat->news($newsData)->reply();
                         break;
                     case 'enter_agent':
                         $data = array(
