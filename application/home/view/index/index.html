@@ -26,6 +26,47 @@
             <div class="swiper-slide">
                 <ul class="model clearfix">
                     <li>
+                        <a href="{:Url('Notice/index?c=1')}">
+                            <img src="/home/images/index/1.png" alt="支部动态">
+                            <span>支部动态</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Culture/index')}">
+                            <img src="/home/images/index/9.png" alt="文明创建">
+                            <span>文明创建</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Learn/index?c=1')}">
+                            <img src="/home/images/index/3.png" alt="两学一做">
+                            <span>两学一做</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{:Url('Dynamic/index?c=1')}">
+                            <img src="/home/images/index/2.png" alt="党委动态">
+                            <span>党委动态</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('News/index')}">
+                            <img src="/home/images/index/11.png" alt="文件资料">
+                            <span>文件资料</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:Url('Company/index')}">
+                            <img src="/home/images/index/10.png" alt="企业文化">
+                            <span>企业文化</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="swiper-slide">
+                <ul class="model clearfix">
+                    <li>
                         <a href="{:Url('Redcollection/index?c=1')}">
                             <img src="/home/images/index/7.png" alt="红色珍藏">
                             <span>红色珍藏</span>
@@ -44,52 +85,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa9604d4517c1ee5d&redirect_uri=https%3A%2F%2Fqy.weixin.qq.com%2Fcgi-bin%2Fwap_contact_v5%3Ftype%3Dcontact&response_type=code&scope=snsapi_base&state=MTA3NDAwODM0Mg%3D%3D#wechat_redirect">
-                            <img src="/home/images/index/8.png" alt="队伍管理">
-                            <span>队伍管理</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:Url('News/index')}">
-                            <img src="/home/images/index/11.png" alt="文件资料">
-                            <span>文件资料</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:Url('Dynamic/index?c=1')}">
-                            <img src="/home/images/index/2.png" alt="党委动态">
-                            <span>党委动态</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="swiper-slide">
-                <ul class="model clearfix">
-                    <li>
-                        <a href="{:Url('Notice/index?c=1')}">
-                            <img src="/home/images/index/1.png" alt="支部动态">
-                            <span>支部动态</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:Url('Culture/index')}">
-                            <img src="/home/images/index/9.png" alt="文明创建">
-                            <span>文明创建</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:Url('Learn/index?c=1')}">
-                            <img src="/home/images/index/3.png" alt="两学一做">
-                            <span>两学一做</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:Url('Company/index')}">
-                            <img src="/home/images/index/10.png" alt="企业文化">
-                            <span>企业文化</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="{:Url('Structure/index?c=1')}">
                             <img src="/home/images/index/6.png" alt="组织架构">
                             <span>组织架构</span>
@@ -99,6 +94,12 @@
                         <a href="{:Url('Tourist/erweima')}">
                             <img src="/home/images/index/12.png" alt="游客模式">
                             <span>游客模式</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa9604d4517c1ee5d&redirect_uri=https%3A%2F%2Fqy.weixin.qq.com%2Fcgi-bin%2Fwap_contact_v5%3Ftype%3Dcontact&response_type=code&scope=snsapi_base&state=MTA3NDAwODM0Mg%3D%3D#wechat_redirect">
+                            <img src="/home/images/index/8.png" alt="队伍管理">
+                            <span>队伍管理</span>
                         </a>
                     </li>
                 </ul>
@@ -134,7 +135,7 @@
         {volist name="details.notice" id="vo"}
             {switch name="vo.type"}
                 {case value="1"}<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
-                {case value="2"}<a href="{:Url('Notice/activity?id='.vo['id'])}" class="list clearfix" data-type="notice">{/case}
+                {case value="2"}<a href="{:Url('Notice/activity?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
                 {case value="3"}<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
                 {case value="4"}<a href="{:Url('Notice/activity?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
                 {default /}
