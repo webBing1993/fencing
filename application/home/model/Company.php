@@ -14,7 +14,7 @@ class Company extends Model{
      */
     public function getMoreList($data) {
         $order = array('create_time desc');
-        $where = array('status' => 0);
+        $where = array('status' => array('egt',0));
         $list = $this ->where($where)->order($order)->limit($data['length'],5)->select();
         return $list;
     }

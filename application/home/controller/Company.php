@@ -25,7 +25,7 @@ class Company extends Base{
     public function index(){
         $Model = new CompanyModel();
         $order = array('create_time desc');
-        $where = array('status' => 0);
+        $where = array('status' => array('egt',0));
         $list = $Model ->where($where) ->order($order)->limit(5) ->select();
         $this->assign('list',$list);
         return $this->fetch();
