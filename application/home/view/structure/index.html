@@ -67,10 +67,10 @@
 	<div class="service box pd">
 		<!--数据统计-->
 		<div class="list1 clear">
-			<div class="title">党组织分布</div>
-			<div class="pie" id="pie1"></div>
-			<span class="pie2"></span>
-			<div class="pie fr" id="pie2"></div>
+			<!--<div class="title">党组织分布</div>-->
+			<!--<div class="pie" id="pie1"></div>-->
+			<!--<span class="pie2"></span>-->
+			<!--<div class="pie fr" id="pie2"></div>-->
 		</div>
 		<div class="list1">
 			<div class="title">党员关注比例</div>
@@ -100,7 +100,7 @@
 		</div>
 	</div>
 	<div class="vr box hidden">
-		<a href="http://720yun.com/t/e3cjO5mvuO2?pano_id=2107800">
+		<a href="#">
 			<div class="title">国网浙江信通公司全景展示</div>
 			<img src="/home/images/structure/vr.jpg" alt="vr封面">
 		</a>
@@ -122,7 +122,7 @@
 		//大饼图数据：data1、data2、data3，条形图数据：data4、data5，环形图数据：data6
 		//党组织总数量表
 		var data1 = [{
-			label: "机关单位数量",
+			label: "移动",
 			data: 10,
 			color: "#e8e8e8"
 		}, {
@@ -138,37 +138,20 @@
 			data: 10,
 			color: "#5FB8C5"
 		}];
-		//	党组织总人数表
-		var data2 = [{
-			label: "机关单位人数",
-			data: 10,
-			color: "#e8e8e8"
-		}, {
-			label: "村（社区）人数",
-			data: 10,
-			color: "#d3d3d3"
-		}, {
-			label: "非公企业人数",
-			data: 10,
-			color: "#A2DBB3"
-		}, {
-			label: "社会组织人数",
-			data: 10,
-			color: "rgb(148, 204, 163)"
-		}];
+
 		//	党员总人数表
 		var data3 = [{
 			label: "关注人数",
-			data: 10,
+			data: "{$msg.concernnum}",
 			color: "#5FB8C5"
 		},{
 			label: "未关注人数",
-			data: 10,
+			data: "{$msg.nonnum}",
 			color: "#d3d3d3"
 		}];
 		// 平均年龄表
 		var data4 = {
-			labels: ["20岁以下", "20-30岁", "30-40岁", "40-50岁", "50岁以上"],
+			labels: ["10岁以下", "10-20岁", "20-30岁", "30-40岁", "40岁以上"],
 			datasets: [
 				{
 					label: "平均年龄",
@@ -176,13 +159,13 @@
 					strokeColor: "rgba(26,179,148,0.8)",
 					highlightFill: "rgba(26,179,148,0.75)",
 					highlightStroke: "rgba(26,179,148,1)",
-					data: [10,10, 10, 10, 10]
+					data: ["{$msg.agepercent1}","{$msg.agepercent2}", "{$msg.agepercent3}", "{$msg.agepercent4}", "{$msg.agepercent5}"]
 				}
 			]
 		};
 		// 学历表
 		var data5 = {
-			labels: ["初中以下", "初中", "高中", "中专", "大专","本科","硕士","硕士以上"],
+			labels: [ "中专", "大专","本科","硕士"],
 			datasets: [
 				{
 					label: "平均年龄",
@@ -190,55 +173,55 @@
 					strokeColor: "rgba(26,179,148,0.8)",
 					highlightFill: "rgba(26,179,148,0.75)",
 					highlightStroke: "rgba(26,179,148,1)",
-					data: [10, 10, 10,10,10,10,10,10]
+					data: ["{$msg.edu4}","{$msg.edu5}","{$msg.edu6}","{$msg.edu7}"]
 				}
 			]
 
 		};
 		//男女比例
 		var data6 = {
-			male:10,
-			female:10
+			male:"{$msg.male}",
+			female:"{$msg.female}"
 		};
 		//大饼图
-		var plotObj1 = $.plot($("#pie1"), data1, {
-			series: {
-				pie: {
-					show: true
-				}
-			},
-			grid: {
-				hoverable: true
-			},
-			tooltip: true,
-			tooltipOpts: {
-				content: "<span class='tit'>%s</span>：<span class='num'></span>人 , <span style='color:#5FB8C5'>%p.0%</span>",
-				shifts: {
-					x: 20,
-					y: 0
-				},
-				defaultTheme: false
-			}
-		});
-		var plotObj2 = $.plot($("#pie2"), data2, {
-			series: {
-				pie: {
-					show: true
-				}
-			},
-			grid: {
-				hoverable: true
-			},
-			tooltip: true,
-			tooltipOpts: {
-				content: "<span class='tit'>%s</span>: <span class='num'>%s</span>人, <span style='color:rgb(148, 204, 163)'>%p.0%</span>",
-				shifts: {
-					x: 20,
-					y: 0
-				},
-				defaultTheme: false
-			}
-		});
+//		var plotObj1 = $.plot($("#pie1"), data1, {
+//			series: {
+//				pie: {
+//					show: true
+//				}
+//			},
+//			grid: {
+//				hoverable: true
+//			},
+//			tooltip: true,
+//			tooltipOpts: {
+//				content: "<span class='tit'>%s</span>：<span class='num'></span>人 , <span style='color:#5FB8C5'>%p.0%</span>",
+//				shifts: {
+//					x: 20,
+//					y: 0
+//				},
+//				defaultTheme: false
+//			}
+//		});
+//		var plotObj2 = $.plot($("#pie2"), data2, {
+//			series: {
+//				pie: {
+//					show: true
+//				}
+//			},
+//			grid: {
+//				hoverable: true
+//			},
+//			tooltip: true,
+//			tooltipOpts: {
+//				content: "<span class='tit'>%s</span>: <span class='num'>%s</span>人, <span style='color:rgb(148, 204, 163)'>%p.0%</span>",
+//				shifts: {
+//					x: 20,
+//					y: 0
+//				},
+//				defaultTheme: false
+//			}
+//		});
 		var plotObj3 = $.plot($("#pie3"), data3, {
 			series: {
 				pie: {
@@ -317,10 +300,10 @@
 				data: 10
 			},{
 				label: "关注人数",
-				data: 10
+				data: "{$msg.concernnum}"
 			},{
 				label: "未关注人数",
-				data: 10
+				data: "{$msg.nonnum}"
 			}];
 			var len = datas.length;
 			var tip = $('#flotTip');
