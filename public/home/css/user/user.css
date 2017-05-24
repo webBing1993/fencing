@@ -95,3 +95,63 @@ body {
   background: url("/home/images/user/publish.png") 0 3vw no-repeat;
   background-size: 7.5vw 7.5vw;
 }
+/*签到功能*/
+.sign,.change,.over{
+  position: absolute;
+  top:3vw;
+  right:0;
+  width: 18vw;
+  height: 8vw;
+  -webkit-border-radius:4vw 0 0 4vw ;
+  border-radius:4vw 0 0 4vw ;
+  line-height: 8vw;
+  text-align: center;
+  color: #ffffff;
+  background: -webkit-linear-gradient(left, #ff8548, #fd5a0a);
+  background: linear-gradient(left, #ff8548, #fd5a0a);
+}
+.over{
+  width: 22vw;
+}
+.change{
+  width: 22vw;
+  animation: sign 0.5s ;
+  -webkit-animation: sign 0.5s ;
+}
+@keyframes sign
+{
+  0%{
+    width: 18vw;
+  }
+  25%{
+    width: 19vw;
+  }
+  50%{
+    width: 20vw;
+  }
+  75%{
+    width: 21vw;
+  }
+  100% {
+    width: 22vw;
+  }
+}
+
+@-webkit-keyframes sign /* Safari 和 Chrome */
+{
+  0%{
+    width: 18vw;
+  }
+  25%{
+    width: 19vw;
+  }
+  50%{
+    width: 20vw;
+  }
+  75%{
+    width: 21vw;
+  }
+  100% {
+    width: 22vw;
+  }
+}

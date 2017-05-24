@@ -13,7 +13,11 @@
     <div class="banner">
         <img src="/home/images/common/banner.png" alt="首页banner图">
         <a href="{:Url('User/index')}" class="user">
+            {eq name="visit" value="0"}
             <img src="{$user|get_header}" alt="个人中心">
+            {else/}
+            <img src="/home/images/user/vistor.jpg" alt="个人中心">
+            {/eq}
         </a>
     </div>
     <!--图标轮播-->
