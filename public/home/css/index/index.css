@@ -19,7 +19,7 @@
     left: 0vw;
     top: 6.2vw;
     overflow: hidden;
-    background: url("/home/images/user/3.png") no-repeat center center;
+    background: url("/home/images/user/3.png") no-repeat 0 center;
     background-size: cover;
 }
 .banner .user>img{
@@ -97,15 +97,17 @@
 }
 .notice .list .right {
     width: 65.3vw;
-    height: 17.4vw;
+    height: 19vw;
     margin-top: 2.6vw;
     margin-left: 3.2vw;
+    position: relative;
 }
 .notice .list .time {
     width: 65.3vw;
     font-size: 1.2rem;
     position: absolute;
-    bottom: 3vw;
+    bottom: 0;
+    line-height: 1.2rem;
 }
 .notice .list .fl .type{
     position: absolute;
@@ -124,4 +126,9 @@
 }
 .tip{
     font-size: 1.4rem;
+}
+/*swiper覆盖*/
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
+    position: relative!important;
+    bottom: 1vw!important;
 }
