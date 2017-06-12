@@ -356,7 +356,8 @@
         window.addEventListener("popstate", function(e) {
             if(bool)
             {
-                history.back();
+//                window.location.href = "{:Url('notice/index')}";
+				history.back();
             }
             pushHistory();
 
@@ -364,8 +365,8 @@
     });
     function pushHistory() {
         var state = {
-            title: "title",
-            url: "#"
+            title: "",
+            url: ""
         };
         window.history.pushState(state, "title", "#");
     }

@@ -202,7 +202,7 @@
 }
 /*底部*/
 .bottom {
-  position: absolute;
+  position: fixed;
   bottom: -45px;
   width: 100vw;
   height: 45px;
