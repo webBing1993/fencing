@@ -92,6 +92,9 @@
 .film .note span {
   margin-right: 10px;
 }
+.film .note span:last-child{
+  margin-right: 0;
+}
 .film .content {
   width: 100%;
   overflow: hidden;
@@ -132,11 +135,11 @@
 .film .content .note {
   color: #666666;
   font-size: 14px;
+  float: right;
 }
 .film .content .note span {
   height: 40px;
   display: inline-block;
-  margin-right: 10px;
   line-height: 40px;
 }
 .film .content .note .read {

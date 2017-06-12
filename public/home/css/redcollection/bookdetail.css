@@ -213,12 +213,16 @@
 .book .content .note {
   color: #666666;
   font-size: 14px;
+  float: right;
 }
 .book .content .note span {
   height: 40px;
   display: inline-block;
   margin-right: 10px;
   line-height: 40px;
+}
+.book .content .note span:last-child{
+  margin-right: 0 ;
 }
 .book .content .note .read {
   background: url('/home/images/news/scan_.png') 0 12px no-repeat;
