@@ -92,6 +92,9 @@ $(function(){
 	if(len >= 7){
 		$('.tip' ).text('上拉加载更多');
 	}
+	if(len > 0 && len< 7){
+        $('.tip' ).text('没有更多了');
+	}
 	//上拉加载评论
 	loadScroll();
 //	//ios fix兼容
