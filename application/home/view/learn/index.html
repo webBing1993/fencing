@@ -136,8 +136,8 @@
             var len = ntc.eq(c-1 ).find('.notice:last .list').length;
             if(len >= 3){
                 $('.tip' ).text('上拉加载更多');
+                loadScroll(c);
             }
-            loadScroll(c);
         }else{
             $('.tip' ).hide();
         }
@@ -153,8 +153,8 @@
                 var len = ntc.eq(eq ).find('.notice:last .list').length;
                 if(len >= 5){
                     $('.tip' ).text('上拉加载更多');
+                    loadScroll(eq+1);
                 }
-                loadScroll(eq+1);
             }else{
                 $('.tip' ).hide();
                 $(window ).off("scroll" );

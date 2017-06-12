@@ -127,8 +127,8 @@ $(function(){
 	var len = ntc.eq(c-1 ).find('.notice:last .list').length;
 	if(len >= 5){
 		$('.tip' ).text('上拉加载更多');
+		loadScroll(c);
 	}
-	loadScroll(c);
 	//tab切换
 	$('.tabs>.tab ').on('click',function(){
 		var ntc = $('.notices' );

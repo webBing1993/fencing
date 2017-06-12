@@ -44,9 +44,9 @@ $(function(){
 	var len = $(".list" ).length;
 	if(len >= 7){
 		$('.tip' ).text('上拉加载更多');
+		//上拉加载
+		loadScroll();
 	}
-	//上拉加载
-	loadScroll();
 	//列表页：ue图片过滤
 	$('.limit_ img' ).replaceWith('[图片]');
 });
