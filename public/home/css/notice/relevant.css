@@ -110,8 +110,8 @@
   height: 30px;
   padding-left: 10px;
   background: #fbfbfb;
-  border-top: 1px solid #dadada;
-  border-bottom: 1px solid #dadada;
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
   font-size: 1.2rem;
   line-height: 30px;
 }
@@ -249,8 +249,10 @@
 .article  .note span {
   height: 40px;
   display: inline-block;
-  margin-right: 10px;
   line-height: 40px;
+}
+.article  .note span:last-child{
+  margin-right: 10px;
 }
 .article  .note_ span{
   margin-right: 0;

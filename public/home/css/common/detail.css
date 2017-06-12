@@ -80,6 +80,9 @@
   padding: 0 4vw;
   text-align: right;
 }
+.article .note:last-child{
+  padding: 0;
+}
 .note_{
   padding: 0;
 }
@@ -149,7 +152,6 @@
 .article .content .note span {
   height: 40px;
   display: inline-block;
-  margin-right: 10px;
   line-height: 40px;
 }
 .article .content .note_ span{

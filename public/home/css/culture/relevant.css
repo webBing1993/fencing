@@ -58,8 +58,8 @@
 .content .message {
   margin-top: 15px;
   margin-bottom: 15px;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
 }
 .content .message div {
   width: 100%;
@@ -71,7 +71,7 @@
   display: inline-block;
   width: 100%;
   padding-right: 15px;
-  border-bottom: 1px dashed #eeeeee;
+  border-bottom: 1px dashed #f1f1f1;
 }
 .content .message div span:nth-child(5) {
   border-bottom: none;
@@ -108,8 +108,8 @@
   height: 30px;
   padding-left: 10px;
   background: #fbfbfb;
-  border-top: 1px solid #dadada;
-  border-bottom: 1px solid #dadada;
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
   font-size: 1.2rem;
   line-height: 30px;
 }
@@ -118,7 +118,7 @@
   padding-left: 13px;
   padding-right: 13px;
   min-height: 100px;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 1px solid #f1f1f1;
 }
 .comment .lists .list .fl img {
   width: 30px;
