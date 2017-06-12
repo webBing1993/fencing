@@ -8,7 +8,7 @@
 
 {block name="body"}
 <div class="content">
-	<textarea name="content" id="content" placeholder="这一刻的新闻（图片选填，提供问题截图，最多四张，字数最多400）"></textarea>
+	<textarea name="content" id="content" placeholder="这一刻的新闻（图片选填，提供问题截图，最多四张，字数最多400）" maxlength="400"></textarea>
 	<div class="contentnum">
 		<span>0</span>/400
 	</div>
@@ -171,8 +171,18 @@ $(function(){
 
 	});
 });
-
-
+//监听input框输入字数
+$("#content").on("input",function(){
+    var content = $('#content' ).val();
+    var len = content.length;
+    if (len < 100) {
+        len = `0${len}`;
+    }
+    if (len < 10) {
+        len = `0${len}`;
+    }
+    $('.contentnum span').text(len);
+})
 
 </script>
 {/block}

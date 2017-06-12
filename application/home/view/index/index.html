@@ -208,7 +208,8 @@
             $('.tip' ).text('上拉加载更多');
             //上拉加载
             loadScroll();
-        }else{
+        }
+        if(len > 0 && len< 6){
             $('.tip' ).text('没有更多了');
         }
     });

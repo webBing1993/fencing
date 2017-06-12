@@ -104,6 +104,9 @@
 			//上拉加载评论
 			loadScroll();
 		}
+        if(len >0 && len < 7){
+            $('.tip' ).text('没有更多了');
+        }
 		//ios fix兼容
 //		tofixed();
 	});
@@ -343,5 +346,28 @@
 	wx.error(function (res) {
 		alert('wx.error: '+JSON.stringify(res));
 	});
+
+    $(function(){
+        pushHistory();
+        var bool=false;
+        setTimeout(function(){
+            bool=true;
+        },1500);
+        window.addEventListener("popstate", function(e) {
+            if(bool)
+            {
+                history.back();
+            }
+            pushHistory();
+
+        }, false);
+    });
+    function pushHistory() {
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+    }
 </script>
 {/block}
