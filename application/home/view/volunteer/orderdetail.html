@@ -65,6 +65,7 @@
 <div class="enroll">
 	<div class="title">报名名单</div>
 	<div class="lists">
+		{notempty name="namelist"}
 		{volist name="namelist" id="name"}
 		<div class="list">
 			<img src="{$name.avatar}" alt="头像">
@@ -73,6 +74,11 @@
 			<span class="time limit">{$name.create_time|time_format='Y-m-d'}</span>
 		</div>
 		{/volist}
+		{else/}
+		<div class="list">
+			<span class="fl" style="text-align: center">还没有人认领哦~~</span>
+		</div>
+		{/notempty}
 	</div>
 </div>
 {/block}
