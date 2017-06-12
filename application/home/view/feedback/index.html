@@ -263,6 +263,29 @@ var layout = function(){
 		}
 	})
 };
+
+    $(function(){
+        pushHistory();
+        var bool=false;
+        setTimeout(function(){
+            bool=true;
+        },1500);
+        window.addEventListener("popstate", function(e) {
+            if(bool)
+            {
+                window.location.href = "{:Url('index/index')}";
+            }
+            pushHistory();
+
+        }, false);
+    });
+    function pushHistory() {
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+    }
 //图片排版、评论框
 layout();
 //图片裁剪
