@@ -77,7 +77,6 @@ class Company extends Base{
         }else{
             $info['is_like'] = 0;
         }
-        dump($info['is_like']);
         $this->assign('detail',$info);
         //获取 评论
         $commentModel = new Comment();

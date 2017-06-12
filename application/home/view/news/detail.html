@@ -88,9 +88,10 @@ $(function(){
 	var len = $(".list" ).length;
 	if(len >= 7){
 		$('.tip' ).text('上拉加载更多');
+		//上拉加载评论
+		loadScroll();
 	}
-	//上拉加载评论
-	loadScroll();
+
 //	//ios fix兼容
 //	tofixed();
 	//ue限定
