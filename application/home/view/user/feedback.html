@@ -10,7 +10,7 @@
 </div>
 <div class="content">
 	<div class="box">
-		<textarea name="feedback" id="feedback" placeholder="在此留下您宝贵的意见，您的意见是我们前进的动力。"></textarea>
+		<textarea name="feedback" id="feedback" placeholder="在此留下您宝贵的意见，您的意见是我们前进的动力。" maxlength="200"></textarea>
 		<label for="feedback"><span>000</span>/200</label>
 		<div class="submit">提交</div>
 	</div>
@@ -110,11 +110,17 @@ $('title' ).text('意见反馈');
 //	});
 //}
 	//实时监听输入框的字数
-var feedback = document.getElementById("#feedback");
-feedback.addEventListener("input", numChange);
-function numChange(){
-    var len = $("#feedback").val();
-     $("label span").val(200-len);
-}
+$("#feedback").on("input",function(){
+    var content = $('#feedback' ).val();
+    var len = content.length;
+        if (len < 100) {
+            len = `0${len}`;
+        }
+        if (len < 10) {
+            len = `0${len}`;
+        }
+        $('label span').text(len);
+})
+
 </script>
 {/block}
