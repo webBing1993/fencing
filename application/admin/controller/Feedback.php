@@ -54,7 +54,7 @@ class Feedback extends Admin{
         $message = array(
             "touser" => $userid,
             "msgtype" => 'text',
-            "agentid" => 8,  // 个人中心
+            "agentid" => agentId,  // 个人中心
             "text" => $send,
             "safe" => "0"
         );
