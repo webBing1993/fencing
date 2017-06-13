@@ -13,7 +13,7 @@
                     <div class="banner swiper-slide">
                         <a href="{:Url('Culture/detail',[ 'id' =>$vo.id])}">
                             <img src="{$vo.front_cover|get_cover='path'}" alt="">
-                            <!--<div class="title_ limit">{$vo.title}</div>-->
+                            <div class="title_ limit">{$vo.title}</div>
                         </a>
                     </div>
                 {/volist}
@@ -90,8 +90,8 @@
         var len = $('.notices').find('.notice:last .list').length;
         if(len >= 5){
             $('.tip' ).text('上拉加载更多');
+            loadScroll();
         }
-        loadScroll();
     });
     function loadScroll(){
         $(window ).off("scroll" ).on("scroll",function(){
@@ -142,7 +142,7 @@
         for(var i = 0; i< len;i++){
             var list = lists[i];
             html +=
-                    '<a href="'+'" class="list clear">'+
+                    '<a href="/home/culture/detail/id/'+list.id+'" class="list clear">'+
                     '<div class="fl">'+
                     '<img src="'+list.path+'" alt="图片">'+
                     '</div>'+
