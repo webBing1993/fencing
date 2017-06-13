@@ -12,6 +12,7 @@ use app\home\model\Like;
 use app\home\model\Opinion;
 use app\home\model\Picture;
 use com\wechat\TPQYWechat;
+use  app\admin\model\WechatDepartment;
 use think\Config;
 use think\Db;
 
@@ -35,6 +36,16 @@ class Feedback extends Base {
             //获取用户信息
             $value['images'] = json_decode($value['images']);
             $value['username'] = $value->user->name;
+            if(empty($value['department_name'])){
+                if (empty($value->user->department)){
+                    $value['department_name'] = '暂无';
+                }else{
+                    foreach(json_decode($value->user->department) as $val){
+                        $Obj = WechatDepartment::where(['id' =>$val])->find();
+                        $value['department_name'] = $Obj['name'];
+                    }
+                }
+            }
             ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
             //获取相关意见反馈评论
             $map1 = array(
@@ -113,6 +124,16 @@ class Feedback extends Base {
             $value['images'] = $image;
             $value['username'] = $value->user->name;
             ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
+            if(empty($value['department_name'])){
+                if (empty($value->user->department)){
+                    $value['department_name'] = '暂无';
+                }else{
+                    foreach(json_decode($value->user->department) as $val){
+                        $Obj = WechatDepartment::where(['id' =>$val])->find();
+                        $value['department_name'] = $Obj['name'];
+                    }
+                }
+            }
             //获取相关意见反馈评论
             $map1 = array(
                 'aid' => $value['id'],

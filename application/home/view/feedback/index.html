@@ -71,7 +71,7 @@
 $(function(){
 	//reset
 	var len = $(".list" ).length;
-	if(len == 7){
+	if(len >= 7){
 		$('.tip' ).text('上拉加载更多');
 		//上拉加载评论
 		loadScroll();
@@ -171,7 +171,7 @@ function loadScroll(){
 					if(data.code == 1){
 						addLists(data);
 						var dataLen =data.data.length;
-						if(data.data.length == 7){
+						if(dataLen == 7){
 							tip.text('上拉加载更多');
 						}
 					}else{
