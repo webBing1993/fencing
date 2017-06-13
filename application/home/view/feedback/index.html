@@ -80,11 +80,12 @@ $(function(){
 //	tofixed();
 	//悬浮框移动
 //	moveanyway();
-	$('.imgs').viewer({
+    viewer = $('.imgs').viewer({
 		url: 'data-original',
 		toolbar:false,
 		title:false
 	});
+//    viewer = $('.imgs').viewer();
 });
 //点赞
 var isGood = function(e,id,comment_id,userid,cla){
@@ -233,6 +234,13 @@ function addLists(data){
 	//图片排版、评论框
 	layout();
 	imgresize();
+	if(viewer) {
+        viewer = $('.lists .imgs').viewer({
+            url: 'data-original',
+            toolbar:false,
+            title:false
+        });
+    }
 }
 
 
