@@ -7,7 +7,7 @@
 {/block}
 
 {block name="body"}
-<div class="scrollDiy" style="position: absolute;top: 0;bottom: 0;overflow-y: scroll;-webkit-overflow-scrolling: touch;width: 100%;">
+<div class="scrollDiy" style="position: absolute;top: 0;bottom: 0;overflow: scroll;-webkit-overflow-scrolling: touch;width: 100%;">
 <div class="banner">
 	<img src="/home/images/feedback/1.jpg" alt="建言献策banner图">
 </div>
@@ -147,13 +147,13 @@ var send = function(e){
 };
 //上拉加载
 function loadScroll(){
-	$(window ).off("scroll" ).on("scroll",function(){
+	$(".scrollDiy").off("scroll" ).on("scroll",function(){
 		var dh = $(document).height();
 		var end = $(window).height() + $(window ).scrollTop();
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		if(dh == end && scrollNow){
+		if(dh === end && scrollNow){
 			scrollNow = false;//请求执行中
 			$.ajax({
 				type:"post",

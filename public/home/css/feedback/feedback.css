@@ -90,6 +90,10 @@
     box-shadow: 12px 0 0 0 rgba(0, 0, 0, 0.2), 24px 0 0 0 rgba(0, 0, 0, 0.8);
   }
 }
+html,body{
+  height: 100%!important;
+  overflow: scroll;
+}
 .banner {
   width: 100vw;
   height: 50vw;
