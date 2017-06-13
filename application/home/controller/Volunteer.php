@@ -89,9 +89,13 @@ class Volunteer extends Base{
             $msg = WechatUser::where('userid',$value['userid'])->find();
             $value['avatar'] = $msg['avatar'];
             $value['name'] = $msg['name'];
-            foreach(json_decode($msg['department']) as $val){
-                $Obj = WechatDepartment::where(['id' =>$val])->find();
-                $value['unit'] = $Obj['name'];
+            if (!empty($msg['department'])){
+                foreach(json_decode($msg['department']) as $val){
+                    $Obj = WechatDepartment::where(['id' =>$val])->find();
+                    $value['unit'] = $Obj['name'];
+                }
+            }else{
+                $value['unit'] = '暂无';
             }
         }
         $this->assign('namelist',$namelist);
@@ -137,9 +141,13 @@ class Volunteer extends Base{
                         $rec = $model2->where($map)->find();
                         $data = WechatUser::where('userid',$rec['userid'])->field('avatar,name,department')->find();
                         $data['time'] = date("Y-m-d",$rec['create_time']);
-                        foreach(json_decode($data['department']) as $val){
-                            $Obj = WechatDepartment::where(['id' =>$val])->find();
-                            $data['department'] = $Obj['name'];
+                        if (!empty($data['department'])){
+                            foreach(json_decode($data['department']) as $val){
+                                $Obj = WechatDepartment::where(['id' =>$val])->find();
+                                $data['department'] = $Obj['name'];
+                            }
+                        }else{
+                            $data['department'] = '暂无';
                         }
                         return $this->success("领取成功","",$data);
                     }else {
