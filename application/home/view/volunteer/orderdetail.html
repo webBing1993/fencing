@@ -75,8 +75,8 @@
 		</div>
 		{/volist}
 		{else/}
-		<div class="list" style="text-align: center">
-			<span class="fl" style="text-align: center">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;还没有人认领哦~~</span>
+		<div class="list">
+			<span class="fl no-claim" style="text-align: center;width: 100%;">还没有人认领哦~~</span>
 		</div>
 		{/notempty}
 	</div>
@@ -90,8 +90,9 @@
 		$('.yes' ).off('click').on('click',function(){
 			var id = {$info.id};
 			var this_ = $(this);
+            if(this_.text()==="已认领") return false;
 			this_.css('background','#9a9a9a');
-			this_.text('已领取');
+			this_.text('已认领');
 			$.ajax({
 				type:"post",
 				url:"{:Url('Volunteer/enroll')}",
@@ -109,6 +110,7 @@
 							'<span class="publish limit">'+m.department+'</span>'+
 							'<span class="time limit">'+m.time+'</span>'+
 							'</div>';
+					$(".no-claim").hide();
 					$('.enroll .lists' ).append(html);
 					n.text(parseInt(n.text())+1)
 				}

@@ -153,8 +153,9 @@
   height: 40px;
   display: inline-block;
   line-height: 40px;
+  margin-right: 10px;
 }
-.article .content .note_ span{
+.article .content .note span:last-child{
   margin-right: 0;
 }
 .article .content .note .read {

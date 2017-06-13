@@ -7,10 +7,11 @@
 {/block}
 
 {block name="body"}
+<div class="scrollDiy" style="position: absolute;top: 0;bottom: 0;overflow-y: scroll;-webkit-overflow-scrolling: touch;width: 100%;">
 <div class="banner">
 	<img src="/home/images/feedback/1.jpg" alt="建言献策banner图">
 </div>
-<div class="lists">
+<div class="lists" style="width: 100%;overflow: hidden">
 	{volist name="list" id="vo"}
 	<div class="list clear">
 		<div class="fl">
@@ -51,13 +52,14 @@
 <a id="publish" href="{:Url('Feedback/publish')}"></a>
 <div class="bottom clear">
 	<div class="myword fl">
-		<input type="text" placeholder="说说你的感想！">
+		<input type="text" placeholder="说说你的感想！" id="impression">
 	</div>
 	<div class="send fr" onclick="send(this)">发送</div>
 </div>
 <div class="tip"></div>
 <div class="loading hidden">
 	<div class="typing_loader"></div>
+</div>
 </div>
 {/block}
 
