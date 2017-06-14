@@ -20,7 +20,29 @@ class Verify extends Controller{
         $result = $Wechat->getUserId(input('code'), config('party.agentid'));
         if(isset($result['UserId'])) {
             $user = $Wechat->getUserInfo($result['UserId']);
-
+            $user['department'] = json_encode($user['department']);
+            /*
+             * array(10) {
+                  ["errcode"] => int(0)
+                  ["errmsg"] => string(2) "ok"
+                  ["userid"] => string(15) ""
+                  ["name"] => string(9) ""
+                  ["department"] => array(1) {
+                    [0] => int(493)
+                  }
+                  ["mobile"] => string(11) ""
+                  ["gender"] => string(1) ""
+                  ["avatar"] => string(82) ""
+                  ["status"] => int()
+                  ["extattr"] => array(1) {
+                    ["attrs"] => array(0) {
+                    }
+                  }
+            }
+             */
+            if (isset($user['extattr'])){
+                $user['extattr'] = json_encode($user['extattr']);
+            }
             // 添加本地数据
             $UserAPI = new APIIndex();
             $localUser = $UserAPI->checkWechatUser($result['UserId']);
