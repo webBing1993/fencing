@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/home/css/redcollection/bookdetail.css">
 <style>
 	.scrollDiy{
-		position: fixed;
+		position: absolute;
 		top:0;
 		bottom:0;
 		overflow-y: scroll;
@@ -107,7 +107,7 @@
 	{eq name="visit" value="0"}
 	<div class="bottom clear">
 		<div class="myword fl">
-			<input type="text" placeholder="说说你的感想！">
+			<input type="text" placeholder="说说你的感想！" id="message">
 		</div>
 		<div class="send fr" onclick="send(this,5,{$book.id})">发送</div>
 	</div>
@@ -209,6 +209,7 @@ function send(e,type,id){
 		wAlert('您的评论不能为空');
 	}
 }
+
 
     if(navigator.userAgent.match(/android/i)){
         $("input").focus(function(){
