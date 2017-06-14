@@ -354,18 +354,19 @@
             if(bool)
             {
 //                window.location.href = "{:Url('notice/index')}";
-				history.back();
+                window.history.go( -1 );
             }
             pushHistory();
 
         }, false);
     });
-    function pushHistory() {
-        var state = {
-            title: "",
-            url: ""
+    function pushHistory(){
+        var sta = {
+            title: "title"
         };
-        window.history.pushState(state, "title", "#");
+        if( window.history.state === null ){
+            window.history.pushState( sta, "title" );
+        }
     }
 </script>
 {/block}

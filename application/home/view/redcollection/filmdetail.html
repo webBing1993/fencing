@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/home/css/redcollection/filmdetail.css">
 <style>
 	.scrollDiy{
-		position: fixed;
+		position: absolute;
 		top:0;
 		bottom:0;
 		overflow-y: scroll;
@@ -164,6 +164,16 @@ function send(e,type,id) {
 		wAlert('您的评论不能为空');
 	}
 }
+    if (/Android/gi.test(navigator.userAgent)) {
+        alert(3)
+        window.addEventListener('resize', function () {
+            if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+                window.setTimeout(function () {
+                    document.activeElement.scrollIntoViewIfNeeded();
+                }, 0);
+            }
+        })
+    }
 //评论加载更多
 function loadScroll(){
 	$('.scrollDiy').off("scroll" ).on("scroll",function(){

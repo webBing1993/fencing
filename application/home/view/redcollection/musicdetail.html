@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/home/css/redcollection/musicdetail.css">
 <style>
 	.scrollDiy{
-		position: fixed;
+		position: absolute;
 		top:0;
 		bottom:0;
 		overflow-y: scroll;
@@ -114,11 +114,11 @@ function isGood(e,type,id){
 }
 //发送评论
 function send(e,type,id){
-	var it = $(e ).prev().find('input');	if(it.val().length<5){
+	var it = $(e ).prev().find('input');
+	if(it.val().length<5){
         alert("您的评论少于5个字");
         return false;
     }
-
 	if(it.val() != ''){
 				$.ajax({
 					type:"post",
@@ -167,6 +167,15 @@ function send(e,type,id){
 		wAlert('您的评论不能为空');
 	}
 }
+    if (/Android/gi.test(navigator.userAgent)) {
+        window.addEventListener('resize', function () {
+            if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+                window.setTimeout(function () {
+                    document.activeElement.scrollIntoViewIfNeeded();
+                }, 0);
+            }
+        })
+    }
 //评论加载更多
 function loadScroll(){
 	$('.scrollDiy').off("scroll" ).on("scroll",function(){
