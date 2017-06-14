@@ -167,13 +167,17 @@ function send(e,type,id){
 		wAlert('您的评论不能为空');
 	}
 }
-    if (/Android/gi.test(navigator.userAgent)) {
-        window.addEventListener('resize', function () {
-            if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
-                window.setTimeout(function () {
-                    document.activeElement.scrollIntoViewIfNeeded();
-                }, 0);
-            }
+
+    if(navigator.userAgent.match(/android/i)){
+        $("input").focus(function(){
+            $(".bottom").css("position","absolute")
+            var inputTextBox = document.getElementById('message');
+            setInterval(function(){
+                inputTextBox.scrollIntoView(false);
+            },200)
+        });
+        $("input").blur(function(){
+            $(".bottom").css("position","fixed")
         })
     }
 //评论加载更多
