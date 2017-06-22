@@ -79,6 +79,7 @@
 .activity .lists .list .note span {
   display: inline-block;
   width: 49%;
+  font-size: 1.4rem;
 }
 .activity .lists .list .note .true i {
   color: #fc4f42;
