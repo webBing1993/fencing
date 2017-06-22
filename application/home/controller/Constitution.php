@@ -424,4 +424,20 @@ class Constitution extends Base {
             return $this->error('提交失败');
         }
     }
+    /*
+    * 每日一课  查看详情
+    */
+    public function scan(){
+        $id = input('id');
+        $Answers = Answers::get($id);
+        $Qid = json_decode($Answers->question_id);
+        $rights=json_decode($Answers->value);
+        $re = array();
+        foreach($Qid as $key => $value){
+            $re[$key] = Question::get($value);
+            $re[$key]['right'] = $rights[$key];
+        }
+        $this->assign('question',$re);
+        return $this->fetch();
+    }
 }
