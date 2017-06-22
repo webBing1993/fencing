@@ -105,9 +105,10 @@
 		}
 		$('.tabs>.tab').eq(c-1).find('span').addClass('active');
 		ntc.eq(c-1).removeClass('hidden');
-
 		if(c == 1){
-			$(".content").css({"position":"inherit", "margin-top":"0", "margin-left":"0"});
+			$(".content").css({"position":"inherit", "margin-top":"0", "margin-left":"0","height":"100%"});
+		}else{
+			$(".content").css({"position":"relative", "margin-top":"35vh", "margin-left":"calc(50% - 75px)","height":"0"})
 		}
 		//tab切换
 		$('.tabs>.tab ').on('click',function(){
@@ -118,10 +119,10 @@
 			ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
 			ntc.eq(eq).removeClass('hidden');
 			if(eq==0){
-				$(".content").css({"position":"inherit", "margin-top":"0", "margin-left":"0"});
+				$(".content").css({"position":"inherit", "margin-top":"0", "margin-left":"0","height":"100%"});
 			}
 			if(eq == 1){
-				$(".content").css({"position":"relative", "margin-top":"35vh", "margin-left":"calc(50% - 75px)"})
+				$(".content").css({"position":"relative", "margin-top":"35vh", "margin-left":"calc(50% - 75px)","height":"0"})
 			}
 			//使用示例
 			setCookie("type",eq+11);
