@@ -74,9 +74,50 @@ class Constitution extends Base {
      */
     public function game(){
         $this->anonymous();
-        //获取该用户的的信息
-        $users=$users=session('userId');
-        $info = Answer::get(['userid'=>$users]);
+        //每日一课数据
+        $userid = session('userId');
+        $map = array(
+            'userid' => $userid,
+        );
+        $Answers = Answers::where($map)->order('id desc')->whereTime('create_time','d')->find();
+        $this->assign('check',0);//1为答过题
+        if(empty($Answers)){   // 没有数据
+            //取单选
+            $arr=Question::all(['type'=>0]);
+            foreach($arr as $value){
+                $ids[]=$value->id;
+            }
+            //随机获取单选的题目
+            $num=3;//题目数目
+            $data=array();
+            while(true){
+                if(count($data) == $num){
+                    break;
+                }
+                $index=mt_rand(0,count($ids)-1);
+                $res=$ids[$index];
+                if(!in_array($res,$data)){
+                    $data[]=$res;
+                }
+            }
+            foreach($data as $value){
+                $question[]=Question::get($value);
+            }
+            $this->assign('question',$question);
+            return $this->fetch();
+        }else{  //  有数据
+            // 当天已经答过题
+            $Qid = json_decode($Answers->question_id);
+            $rights=json_decode($Answers->value);
+            $re = array();
+            foreach($Qid as $key => $value){
+                $re[$key] = Question::get($value);
+                $re[$key]['right'] = $rights[$key];
+            }
+            $this->assign('question',$re);
+            $this->assign('check',1);//1为答过题
+        }
+        $info = Answer::get(['userid'=>$userid]);
         if($info) {
             $exist=$info->exist;
             $this->assign('exist',$exist);
@@ -85,7 +126,6 @@ class Constitution extends Base {
             $this->assign('exist',"");
             $this->assign('info',"");
         }
-
         return $this->fetch();
     }
     

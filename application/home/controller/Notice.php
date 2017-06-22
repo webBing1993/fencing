@@ -50,7 +50,7 @@ class Notice extends Base {
         $map = array(
             'status' => array('egt',0),
         );
-        $list = NoticeModel::where($map)->order('id desc')->limit($len,5)->field('id,title,create_time,end_time')->select();
+        $list = NoticeModel::where($map)->order('id desc')->limit($len,5)->field('id,title,description,create_time,end_time')->select();
         foreach($list as $value){
             $value['create_time'] = date("Y-m-d",$value['create_time']);
             $value['is_over'] = 0;  // 未结束
