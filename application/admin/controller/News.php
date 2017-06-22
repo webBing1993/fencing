@@ -15,34 +15,14 @@ use app\admin\model\News as NewsModel;
 use think\Config;
 /**
  * Class News
- * @package 第一聚焦控制器
+ * @package 党建动态   控制器
  */
 class News extends Admin {
-
     /**
-     * 工作部署  主页列表
+     * 主页列表
      */
     public function index(){
         $map = array(
-            'type' => 1,
-            'status' => array('egt',0),
-        );
-        $list = $this->lists('News',$map);
-        int_to_string($list,array(
-            'status' => array(0 =>"已发布",1=>"已发布"),
-        ));
-
-        $this->assign('list',$list);
-
-        return $this->fetch();
-    }
-
-    /**
-     * 中心组学习  主页列表
-     */
-    public function centre(){
-        $map = array(
-            'type' => 2,
             'status' => array('egt',0),
         );
         $list = $this->lists('News',$map);
@@ -55,11 +35,11 @@ class News extends Admin {
 
         return $this->fetch();
     }
+
     /**
      * 新闻添加
      */
     public function add(){
-        $type = input('type');
         if(IS_POST) {
             $data = input('post.');
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
@@ -67,25 +47,15 @@ class News extends Admin {
                 unset($data['id']);
             }
             $newModel = new NewsModel();
-            if ($data['type'] == 1){  // 工作部署
-                $info = $newModel->validate('news.act')->save($data);
-            }else{
-                // 中心组学习
-                $info = $newModel->validate('news.other')->save($data);
-            }
+            $info = $newModel->validate('news')->save($data);
             if($info) {
-                if ($data['type'] == 1){
-                    return $this->success("新增成功",Url('News/index'));
-                }else{
-                    return $this->success("新增成功",Url('News/centre'));
-                }
+                return $this->success("新增成功",Url('News/index'));
             }else{
-                return $this->get_update_error_msg($newModel->getError());
+                return $this->error($newModel->getError());
             }
         }else{
-            $this->default_pic();
             $this->assign('msg','');
-            $this->assign('type',$type);
+
             return $this->fetch('edit');
         }
     }
@@ -98,27 +68,17 @@ class News extends Admin {
             $data = input('post.');
             $data['create_time'] = time();
             $newModel = new NewsModel();
-            if ($data['type'] == 1){  // 工作部署
-                $info = $newModel->validate('news.act')->save($data,['id'=>$data['id']]);
-            }else{
-                $info = $newModel->validate('news.other')->save($data,['id'=>$data['id']]);
-            }
+            $info = $newModel->validate('news')->save($data,['id'=>input('id')]);
             if($info){
-                if ($data['type'] == 1){
-                    return $this->success("修改成功",Url("News/index"));
-                }else{
-                    return $this->success("修改成功",Url('News/centre'));
-                }
+                return $this->success("修改成功",Url("News/index"));
             }else{
                 return $this->get_update_error_msg($newModel->getError());
             }
         }else{
-            $this->default_pic();
-            $id = input('id/d');
-            $type = input('type/d');
+            $id = input('id');
             $msg = NewsModel::get($id);
             $this->assign('msg',$msg);
-            $this->assign('type',$type);
+
             return $this->fetch();
         }
     }
@@ -152,17 +112,13 @@ class News extends Admin {
             );
             $infoes = NewsModel::where($info)->select();
             foreach($infoes as $value){
-                if ($value['type'] == 1){
-                    $value['title'] = '【工作部署】'.$value['title'];
-                }else{
-                    $value['title'] = '【中心组学习】'.$value['title'];
-                }
+                $value['title'] = '【党建动态】'.$value['title'];
             }
             return $this->success($infoes);
         }else{
             //新闻消息列表
             $map = array(
-                'class' => 3,  // 党委动态
+                'class' => 1,  // 党建动态
                 'status' => array('egt',-1)
             );
             $list=$this->lists('Push',$map);
@@ -183,11 +139,7 @@ class News extends Admin {
             );
             $infoes = NewsModel::where($info)->select();
             foreach($infoes as $value){
-                if ($value['type'] == 1){
-                    $value['title'] = '【工作部署】'.$value['title'];
-                }else{
-                    $value['title'] = '【中心组学习】'.$value['title'];
-                }
+                $value['title'] = '【党建动态】'.$value['title'];
             }
             $this->assign('info',$infoes);
             return $this->fetch();
@@ -212,15 +164,10 @@ class News extends Admin {
         $str1 = strip_tags($info1['content']);
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-        if ($info1['type'] == 1){
-            $pre = '【工作部署】';
-            $path1 = hostUrl.'/home/images/common/1.jpg';
-        }else{
-            $pre = '【中心组学习】';
-            $url1 = hostUrl."/home/Dynamic/detail/id/".$info1['id'].".html";
-            $image1 = Picture::get($info1['front_cover']);
-            $path1 = hostUrl.$image1['path'];
-        }
+        $pre = '【党建动态】';
+        $url1 = hostUrl."/home/News/detail/id/".$info1['id'].".html";
+        $image1 = Picture::get($info1['front_cover']);
+        $path1 = hostUrl.$image1['path'];
         $information1 = array(
             'title' => $pre.$title1,
             'description' => $content1,
@@ -238,15 +185,10 @@ class News extends Admin {
                 $str2 = strip_tags($info2['content']);
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
-                if ($info2['type'] == 1){
-                    $pre1 = '【工作部署】';
-                    $path2 = hostUrl.'/home/images/common/1.jpg';
-                }else{
-                    $pre1 = '【中心组学习】';
-                    $url2 = hostUrl."/home/Dynamic/detail/id/".$info2['id'].".html";
-                    $image2 = Picture::get($info2['front_cover']);
-                    $path2 = hostUrl.$image2['path'];
-                }
+                $pre1 = '【党建动态】';
+                $url2 = hostUrl."/home/News/detail/id/".$info2['id'].".html";
+                $image2 = Picture::get($info2['front_cover']);
+                $path2 = hostUrl.$image2['path'];
                 $information2[] = array(
                     "title" =>$pre1.$title2,
                     "description" => $content2,
@@ -284,7 +226,7 @@ class News extends Admin {
         if($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
-            $data['class'] = 3;  // 省委动态
+            $data['class'] = 1;  // 党建动态
             $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);

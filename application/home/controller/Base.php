@@ -138,22 +138,7 @@ class Base extends Controller {
      * 点赞，$type,$aid
      * type值：
      * 0 评论点赞
-     * 1 learn
-     * 2 notice
-     * 3 redfilm
-     * 4 redmusic
-     * 5 redbook
-     * 6 News
-     * 7 RedtutorCourse
-     * 8 RedtutorNotice
-     * 9 Redlead
-     * 10 RedforumDetail
-     * 11 RedforumNotice
-     * 12 VolunteerTeam
-     * 13 opinion
-     * 14 culture
-     * 15 company
-     * 16 paper
+     * 1 news  党建动态
      */
     public function like(){
         $uid = session('userId'); //点赞人
@@ -164,52 +149,7 @@ class Base extends Controller {
                 $table = "comment";
                 break;
             case 1:
-                $table = "learn";
-                break;
-            case 2:
-                $table = "notice";
-                break;
-            case 3:
-                $table = "redfilm";
-                break;
-            case 4:
-                $table = "redmusic";
-                break;
-            case 5:
-                $table = "redbook";
-                break;
-            case 6:
                 $table = "news";
-                break;
-            case 7:
-                $table = "redtutor_course";
-                break;
-            case 8:
-                $table = "redtutor_notice";
-                break;
-            case 9:
-                $table = "redlead";
-                break;
-            case 10:
-                $table = "redforum_detail";
-                break;
-            case 11:
-                $table = "redforum_notice";
-                break;
-            case 12:
-                $table = "volunteer_team";
-                break;
-            case 13:
-                $table = "opinion";
-                break;
-            case 14:
-                $table = "culture";
-                break;
-            case 15:
-                $table = "company";
-                break;
-            case 16:
-                $table = "paper";
                 break;
             default:
                 return $this->error("无该数据表");
@@ -311,22 +251,7 @@ class Base extends Controller {
     /**
      * 评论，$type,$aid,$content
      * type值：
-     * 1 learn
-     * 2 notice
-     * 3 redfilm
-     * 4 redmusic
-     * 5 redbook
-     * 6 News
-     * 7 RedtutorCourse
-     * 8 RedtutorNotice
-     * 9 Redlead
-     * 10 RedforumDetail
-     * 11 RedforumNotice
-     * 12 VolunteerTeam
-     * 13 opinion
-     * 14 culture
-     * 15 company
-     * 16 paper
+     * 1 news  党建动态
      */
     public function comment(){
         if(IS_POST){
@@ -335,52 +260,7 @@ class Base extends Controller {
             $aid = input('aid');
             switch ($type) {    //根据类别获取表明
                 case 1:
-                    $table = "learn";
-                    break;
-                case 2:
-                    $table = "notice";
-                    break;
-                case 3:
-                    $table = "redfilm";
-                    break;
-                case 4:
-                    $table = "redmusic";
-                    break;
-                case 5:
-                    $table = "redbook";
-                    break;
-                case 6:
                     $table = "news";
-                    break;
-                case 7:
-                    $table = "redtutor_course";
-                    break;
-                case 8:
-                    $table = "redtutor_notice";
-                    break;
-                case 9:
-                    $table = "redlead";
-                    break;
-                case 10:
-                    $table = "redforum_detail";
-                    break;
-                case 11:
-                    $table = "redforum_notice";
-                    break;
-                case 12:
-                    $table = "volunteer_team";
-                    break;
-                case 13:
-                    $table = "opinion";
-                    break;
-                case 14:
-                    $table = "culture";
-                    break;
-                case 15:
-                    $table = "company";
-                    break;
-                case 16:
-                    $table = "paper";
                     break;
                 default:
                     return $this->error("无该数据表");

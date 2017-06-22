@@ -44,13 +44,13 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>党委动态</h2>
+        <h2>党建动态</h2>
         <ol class="breadcrumb">
             <li>
-                {eq name="type" value="1"}<a href="{:Url('News/index')}">工作部署</a>{else/}<a href="{:Url('News/centre')}">中心组学习</a>{/eq}
+                <a href="{:Url('News/index')}">新闻列表</a>
             </li>
             <li class="active">
-                <strong>{empty name="msg"}新增{else/}编辑{/empty}</strong>
+                <strong>新增</strong>
             </li>
         </ol>
     </div>
@@ -75,29 +75,14 @@
                     <form id="form" class="form-horizontal" method="post">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>类型:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <select class="form-control" name="type" disabled>
-                                    {if condition="$type eq 1"}
-                                    <option value="1">工作部署</option>
-                                    {else/}
-                                    <option value="2">中心组学习</option>
-                                    {/if}
-                                </select>
-                            </div>
-                        </div>
-                        {eq name="type" value="2"}
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
                                 <label>封面图片:</label>
                             </div>
                             {eq name="msg" value=""}
                             <div class="col-lg-5">
                                 <div class="imggroup">
-                                    <img src="{$front_pic|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
+                                    <img src="" alt='图片' class='thumbnail imgbox'>
                                     <input type="file" class="imgfile" accept="image/jpg, image/png, image/gif, image/jpeg">
-                                    <input type="hidden" name="front_cover" class="img"  value="{$front_pic}" required="">
+                                    <input type="hidden" name="front_cover" class="img"  value="" required="">
                                 </div>
                                 <b>推荐尺寸：750*400px</b>
                             </div>
@@ -112,7 +97,6 @@
                             </div>
                             {/eq}
                        </div>
-                        {/eq}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>标题:</label>
@@ -141,7 +125,6 @@
                                 <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher || default=''}">
                             </div>
                         </div>
-                        {eq name="type" value="2"}
                         {eq name="msg" value=""}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
@@ -170,7 +153,6 @@
                                 </label>
                             </div>
                         </div>
-                        {/eq}
                         {/eq}
                         <input type="hidden" name="id" value="{$msg.id || default=''}">
                         <div class="form-group">
@@ -201,12 +183,8 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green'
         });
-        if ({$type} == 1){
-            highlight_subnav("{:Url('News/index')}");
-        }else{
-            highlight_subnav("{:Url('News/centre')}");
-        }
 
+        highlight_subnav("{:Url('News/index')}");
         //上传图片
         var plus = $('.plus');
         var imgnum = 1;
@@ -260,7 +238,6 @@
         $(".post-put").off('click').on("click",function(){
             var it=$(this);
             var data = {
-                type:$("select[name='type']").val(),
                 id:$("input[name='id']").val(),
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
@@ -274,7 +251,6 @@
                 url:$("#form").attr("action"),
                 data:data,
                 success:function(data){
-                    console.log(data);
                     if(data.code == 1){
                         if (data.url) {
                             updateAlert(data.msg + ' 页面即将自动跳转~','success');

@@ -1,18 +1,32 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title>文件资料</title>
+<link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/news/news.css">
 {/block}
 
 {block name="body"}
-<div class="banner">
-	<img src="/home/images/volunteer/banner.jpg" alt="服务团队banner" class="banner-img">
+<div class="banners">
+	<div class="swiper-container">
+		<div class="imgs swiper-wrapper">
+			{volist name="recommend" id="re"}
+			<div class="banner swiper-slide">
+				<a href="{:Url('News/detail?id='.$re['id'])}">
+					<img src="{$re['front_cover']|get_cover='path'}" alt="{$re.title}">
+					<div class="title_ limit">{$re['title']}</div>
+				</a>
+			</div>
+			{/volist}
+		</div>
+	</div>
 </div>
 <!--新闻列表-->
 <div class="lists">
 	{volist name="list" id="vo"}
 	<a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
+		<div class="fl">
+			<img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
+		</div>
 		<div class="fr lr">
 			<div class="title limit_">{$vo.title}</div>
 			<div class="clear">
@@ -30,9 +44,11 @@
 {/block}
 
 {block name="script"}
+<script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script>
-	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
+	//模块标题
+	$('title').text('第一聚焦');
 	//reset
 	var txt;
 	var len = $(".list" ).length;
@@ -43,6 +59,12 @@ $(function(){
 	}
 	//上拉加载
 	loadScroll();
+	//轮播
+	var mySwiper = new Swiper('.swiper-container', {
+		autoplay: 3000,
+		loop:true,
+		autoplayDisableOnInteraction:false,
+	})
 });
 function loadScroll(){
 	$(window ).off("scroll" ).on("scroll",function(){
@@ -51,8 +73,7 @@ function loadScroll(){
 		var len = $(".list" ).length;
 		var tip = $(".tip");
 		var loading = $('.loading');
-		if(dh == end && scrollNow){
-			scrollNow = false;//请求执行中
+		if(dh == end){
 			$.ajax({
 				type:"post",
 				url:"{:Url('News/listmore')}",
@@ -76,7 +97,6 @@ function loadScroll(){
 						tip.text('没有更多了');
 						$(window ).off("scroll");
 					}
-					scrollNow = true;//请求结束
 				}
 			})
 		}
@@ -90,9 +110,9 @@ function addNews(data){
 		var list = lists[i];
 		html +=
 				'<a class="list clear" href="/home/news/detail/id/'+list.id+'.html">'+
-//				'<div class="fl">'+
-//				'<img src="'+ list.src+'" alt="图片">'+
-//				'</div>'+
+				'<div class="fl">'+
+				'<img src="'+ list.src+'" alt="图片">'+
+				'</div>'+
 				'<div class="fr lr">'+
 				'<div class="title">'+list.title+'</div>'+
 				'<div class="clear">'+

@@ -1,8 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title>文件资料</title>
-<link rel="stylesheet" href="/home/css/common/detail.css">
+<link rel="stylesheet" href="/home/css/news/detail.css">
 <style>
 	.scrollDiy{
 		position: absolute;
@@ -25,16 +24,17 @@
 			<span class="fr">{$new.create_time|time_format="Y-m-d"}</span>
 		</div>
 		<div class="content">
-			<img src="{$new.front_cover|get_cover='path'}" alt="" >
 			{$new.content}
 			<div class="note">
 				<span class="read">{$new.views}</span>
 				{eq name="visit" value="0"}
 				{eq name="new.is_like" value="1"}
-				<span class="isgood good_" onclick="isGood(this,16,{$new.id})">{$new.likes}</span>
+				<span class="isgood good_" onclick="isGood(this,1,{$new.id})">{$new.likes}</span>
 				{else/}
-				<span class="isgood good" onclick="isGood(this,16,{$new.id})">{$new.likes}</span>
+				<span class="isgood good" onclick="isGood(this,1,{$new.id})">{$new.likes}</span>
 				{/eq}
+				{else/}
+				<span class="isgood good">{$new.likes}</span>
 				{/eq}
 			</div>
 		</div>
@@ -58,6 +58,8 @@
 				{else/}
 				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
 				{/eq}
+				{else/}
+				<div class="fr isgood good">{$co.likes}</div>
 				{/eq}
 			</div>
 			{/volist}
@@ -73,7 +75,7 @@
 	<div class="myword fl">
 		<input type="text" placeholder="说说你的感想！">
 	</div>
-	<div class="send fr" onclick="send(this,16,{$new['id']})">发送</div>
+	<div class="send fr" onclick="send(this,1,{$new['id']})">发送</div>
 </div>
 {/eq}
 
@@ -84,6 +86,8 @@
 <script>
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
+	//模块标题
+	$('title' ).text('党建动态');
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 7){
@@ -205,6 +209,25 @@ var tofixed = function(){
 		})
 	}
 };
+var wAlert = window.alert;
+window.alert = function (message) {
+	try {
+		var iframe = document.createElement("IFRAME");
+		iframe.style.display = "none";
+		iframe.setAttribute("src", 'data:text/plain,');
+		document.documentElement.appendChild(iframe);
+		var alertFrame = window.frames[0];
+		var iwindow = alertFrame.window;
+		if (iwindow == undefined) {
+			iwindow = alertFrame.contentWindow;
+		}
+		iwindow.alert(message);
+		iframe.parentNode.removeChild(iframe);
+	}
+	catch (exc) {
+		return wAlert(message);
+	}
+};
 function loadScroll(){
 	$('.scrollDiy').off("scroll" ).on("scroll",function(){
 		var dh = $('.article').height() + $('.comment').height();
@@ -219,7 +242,7 @@ function loadScroll(){
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
 				data:{
-					type:6,
+					type:1,
 					aid:id,
 					length:len
 				},
@@ -263,10 +286,14 @@ function addComment(data){
 				'<div class="content" >'+ list.content+'</div>'+
 				'<div class="time">'+ list.time+'</div>'+
 				'</div>';
-		if(list.is_like == 0){
-			html+='<div class="fr isgood good" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
-		}else{
-			html+='<div class="fr isgood good_" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
+		if ({$visit} == 0){
+			if(list.is_like == 0){
+				html+='<div class="fr isgood good" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
+			}else{
+				html+='<div class="fr isgood good_" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
+			}
+		}else {
+			html+='<div class="fr isgood good">'+list.likes+'</div>'
 		}
 		html+=
 				'</div>';
@@ -282,5 +309,59 @@ function ueLimit(){
 		}
 	});
 }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script>
+	//---微信接口JS-SDK的调用
+	wx.config({
+		debug: false,
+		appId: '{$jsSign.appid}', // 必填，公众号的唯一标识
+		timestamp: {$jsSign['timestamp']}, // 必填，生成签名的时间戳，切记时间戳是整数型，别加引号
+		nonceStr: '{$jsSign.noncestr}', // 必填，生成签名的随机串
+		signature: '{$jsSign.signature}', // 必填，签名，见附录1
+		jsApiList: [
+			'checkJsApi',
+			'chooseImage',
+			'previewImage',
+			'uploadImage',
+			'downloadImage',
+			'onMenuShareTimeline',
+			'onMenuShareAppMessage',
+		]
+	});
+
+	wx.ready(function () {
+		//分享到朋友圈
+		wx.onMenuShareTimeline({
+			title: '{$new.title}',
+			link: '{$new.link}',
+			imgUrl: '{$new.share_image}',
+			success: function () {
+				// 用户确认分享后执行的回调函数
+			},
+			cancel: function () {
+				// 用户取消分享后执行的回调函数
+			}
+		});
+		//分享给朋友
+		wx.onMenuShareAppMessage({
+			title: '{$new.title}', // 分享标题
+			desc: '{$new.desc}', // 分享描述
+			link: '{$new.link}', // 分享链接
+			imgUrl: '{$new.share_image}', // 分享图标
+			type: '', // 分享类型,music、video或link，不填默认为link
+			dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			success: function () {
+				// 用户确认分享后执行的回调函数
+			},
+			cancel: function () {
+				// 用户取消分享后执行的回调函数
+			}
+		});
+
+	});
+	wx.error(function (res) {
+		alert('wx.error: '+JSON.stringify(res));
+	});
 </script>
 {/block}

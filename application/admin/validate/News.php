@@ -25,9 +25,5 @@ class News extends Validate {
         'content.require'  =>  '请填写内容！',
         'publisher.require'  =>  '请填写发布人名称！',
     ];
-    protected $scene = [
-        'act' => ['title','content','publisher'],
-        'other' => ['front_cover','title','content','publisher'],
-    ];
 
 }

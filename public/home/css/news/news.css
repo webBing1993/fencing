@@ -29,7 +29,7 @@
 	height: 90px;
 	padding-left: 13px;
 	padding-right: 13px;
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px solid #dddddd;
 }
 .list img{
 	width: 100px;
@@ -37,7 +37,7 @@
 	margin-top: 20px;
 }
 .list .lr{
-	width: 100%;
+	width: calc(100% - 112px);
 }
 .list .lr .title{
 	width: 100%;
@@ -71,7 +71,7 @@
 	animation: typing 1s linear infinite alternate;
 	position: relative;
 	top: 17px;
-	left: calc( 50vw - 15px );
+	left: calc( 50vw - 20px );
 }
 @-webkit-keyframes typing{
 	0%{
