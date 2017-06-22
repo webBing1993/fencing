@@ -22,8 +22,8 @@ use app\home\model\Answers;
 
 class Base extends Controller {
     public function _initialize(){
-//        session('userId','visitor');
-        session('userId','yjy_15067198358');
+        session('userId','visitor');
+//        session('userId','yjy_15067198358');
 //        session('header','/home/images/vistor.jpg');
 //        session('nickname','游客');
         if(!empty($_SERVER['REQUEST_URI'])){
@@ -76,7 +76,16 @@ class Base extends Controller {
             $this->assign('visit', 0);
         }
     }
-
+    /*
+     * 判断  是否 游客访问
+     */
+    public function checkRole(){
+        $userId = session('userId');
+        //如果userId等于visitor  则为游客登录，否则则正常显示
+        if($userId == 'visitor'){
+            return $this ->error('抱歉,游客暂无相关权限!',Url('Constitution/game'));
+        }
+    }
     /**
      * 获取企业号签名
      */

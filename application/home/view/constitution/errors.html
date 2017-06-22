@@ -1,0 +1,59 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/constitution/answer.css">
+{/block}
+
+{block name="body"}
+<div class="lists">
+    <!--单选题-->
+
+    {foreach $question as $y=>$vo}
+    <div class="single list" data-id="{$vo->id}">
+        <div class="question">
+		<span class="type">
+			单选
+		</span>
+            {$vo->title}
+        </div>
+        {volist name="vo->Option" id="value" key="k"}
+        <label class="option_">
+            <input type="radio" name="s{$y}" value="{$k}" {foreach $right1 as $key=>$val }{if condition="($key eq $y) AND ($val eq $k)"}checked{/if}{/foreach} >
+            <label class='option {foreach $right1 as $key=>$val }{if condition="($key eq $y) AND ($val eq $k)"}active{/if}{/foreach}'>{if condition="($k eq 1) AND ($value neq ' ')"}A{elseif condition="($k eq 2) AND ($value neq ' ')"}B{elseif condition="($k eq 3 )AND ($value neq ' ')"}C{elseif condition="($k eq 4 )AND ($value neq ' ')"/}D{/if}</label>
+            <label class="opt">{$value|substr=###,'2'}</label>
+        </label>
+        {/volist}
+        <div class="answer">正确答案：<span>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</span></div>
+        <div class="sum"><span class="num">{$y+1}</span>/30</div>
+    </div>
+    {/foreach}
+
+    <!--多选题-->
+    {foreach $questions as $t=>$vo}
+    <div class="muti list" data-id="{$vo->id}">
+        <div class="question">
+		<span class="type">
+			多选
+		</span>
+            {$vo->title}
+        </div>
+        {volist name="vo->Option" id="value" key="k"}
+        <label class="option_">
+            <input type="checkbox" name="m$t" value="{$k}" {foreach $right2 as $ke=>$rt2 }{if condition="$rt2 neq 0"}{in name="$rt2" value="1,2,3,4"}{if condition="($ke eq $t) AND ($rt2 eq $k)"}checked{/if}{else/}{volist name="$rt2" id="r2" }{if condition="($ke eq $t) AND ($r2 eq $k)"}checked{/if}{/volist}{/in}{/if}{/foreach} >
+            <label class='option {foreach $right2 as $ke=>$rt2 }{if condition="$rt2 neq 0"}{in name="$rt2" value="1,2,3,4"}{if condition="($ke eq $t) AND ($rt2 eq $k)"}active{/if}{else/}{volist name="$rt2" id="r2" }{if condition="($ke eq $t) AND ($r2 eq $k)"}active{/if}{/volist}{/in}{/if}{/foreach}'>{if condition="($k eq 1) AND ($value neq ' ')"}A{elseif condition="($k eq 2) AND ($value neq ' ')"}B{elseif condition="($k eq 3 )AND ($value neq ' ')"}C{elseif condition="($k eq 4 )AND ($value neq ' ')"/}D{/if}</label>
+            <label class="opt">{$value|substr=###,'2'}</label>
+        </label>
+        {/volist}
+        <div class="answer">正确答案：<span>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</span></div>
+        <div class="sum"><span class="num">{$t+1}</span>/30</div>
+    </div>
+    {/foreach}
+</div>
+{/block}
+
+{/block}
+
+{block name="script"}
+
+
+{/block}
