@@ -7,6 +7,7 @@
  */
 
 namespace app\home\controller;
+use app\home\model\News;
 use app\home\model\Notice;
 use app\home\model\Browse;
 use app\home\model\Feedback;
@@ -66,45 +67,28 @@ class User extends Base {
         }
         $Notice = new Notice();
         $map = array(
-            'type' => array('in',[3,4]), // 活动通知 活动情况
             'status' =>array('egt',0)
         );
-        $activityAll = $Notice->where($map)->count(); // 活动情况总数
-        $maps = array(
-            'type' => 2, // 情况报道
-            'status' =>array('egt',0)
-        );
-        $partyAll = $Notice->where($maps)->count(); // 情况报道总数
+        $activityAll = $Notice->where($map)->count(); // 相关通知 总数
+        $news = News::where(['status' => ['egt',0]])->count();  // 党建动态 
         $Brower = new Browse();
         $map1 = array(
             'user_id' => $userId,
             'notice_id' => array('exp',"is not null")
         );
-        $activity = $Brower->where($map1)->select(); // 浏览notice总记录
-        $num1 = 0; // 活动情况数
-        $num2 = 0; // 情况报道数
-        foreach($activity as $value){
-            $All = $Notice->where('id',$value['notice_id'])->find();
-            // 判断具体的类型  活动情况 情况报道
-            switch($All['type']){
-                case 3 : // 活动通知
-                    $num1++;
-                    break;
-                case 4 : // 活动情况
-                    $num1++;
-                    break;
-                case 2 : // 情况报道
-                    $num2++;
-                    break;
-            }
-        }
+        $map2 = array(
+            'user_id' => $userId,
+            'news_id' => array('exp',"is not null")
+        );
+        $num = $Brower->where($map1)->count(); // 浏览notice总记录
+        $num1 = $Brower->where($map2)->count();  // 党建动态  总记录
         $user['activity'] = array(
             'all' => $activityAll,
-            'num' => $num1,
+            'num' => $num,
         );
-        $user['party'] = array(
-            'all' => $partyAll,
-            'num' => $num2
+        $user['news'] = array(
+            'all' => $news,
+            'num' => $num1,
         );
         $this->assign('user',$user);
         $request = Request::instance() ->domain();
@@ -150,45 +134,28 @@ class User extends Base {
         }
         $Notice = new Notice();
         $map = array(
-            'type' => array('in',[3,4]), // 活动通知 活动情况
             'status' =>array('egt',0)
         );
-        $activityAll = $Notice->where($map)->count(); // 活动情况总数
-        $maps = array(
-            'type' => 2, // 情况报道
-            'status' =>array('egt',0)
-        );
-        $partyAll = $Notice->where($maps)->count(); // 情况报道总数
+        $activityAll = $Notice->where($map)->count(); // 相关通知 总数
+        $news = News::where(['status' => ['egt',0]])->count();  // 党建动态 
         $Brower = new Browse();
         $map1 = array(
             'user_id' => $id,
             'notice_id' => array('exp',"is not null")
         );
-        $activity = $Brower->where($map1)->select(); // 浏览notice总记录
-        $num1 = 0; // 活动情况数
-        $num2 = 0; // 情况报道数
-        foreach($activity as $value){
-            $All = $Notice->where('id',$value['notice_id'])->find();
-            // 判断具体的类型  活动情况 党课情况  会议情况
-            switch($All['type']){
-                case 3 : // 活动通知
-                    $num1++;
-                    break;
-                case 4 : // 活动情况
-                    $num1++;
-                    break;
-                case 2 : // 情况报道
-                    $num2++;
-                    break;
-            }
-        }
+        $map2 = array(
+            'user_id' => $id,
+            'news_id' => array('exp',"is not null")
+        );
+        $num = $Brower->where($map1)->count(); // 浏览notice总记录
+        $num1 = $Brower->where($map2)->count();  // 党建动态  总记录
         $user['activity'] = array(
             'all' => $activityAll,
-            'num' => $num1,
+            'num' => $num,
         );
-        $user['party'] = array(
-            'all' => $partyAll,
-            'num' => $num2
+        $user['news'] = array(
+            'all' => $news,
+            'num' => $num1,
         );
         $this->assign('user',$user);
         return $this->fetch();
