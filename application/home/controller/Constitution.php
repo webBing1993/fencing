@@ -104,7 +104,6 @@ class Constitution extends Base {
                 $question[]=Question::get($value);
             }
             $this->assign('question',$question);
-            return $this->fetch();
         }else{  //  有数据
             // 当天已经答过题
             $Qid = json_decode($Answers->question_id);
