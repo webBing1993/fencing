@@ -18,6 +18,12 @@ use app\home\model\Answers;
  * 抄党章
  */
 class Constitution extends Base {
+    /*
+     * 网上党校 
+     */
+    public function index(){
+        
+    }
     /**
      * 排行榜
      */
