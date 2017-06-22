@@ -12,17 +12,25 @@
 		<div class="tab"><span>在线答题</span></div>
 	</div>
 <div class="content" ontouchstart="" onmouseover="">
-	<!--两学一做-->
+
+	<!--每日一课-->
 	<div class="notices hidden">
+		{eq name = "check" value = "0"}
 		<div class="notice activity">
 			<div class="lists">
-				<div class="list" data-tab="">
-					<div class="title">dddddd</div>
-					<label>的点点滴滴</label>
-					<div class="number">1/ 3</div>
+				{volist name="question" id="vo" key="n"}
+				<div class="list" data-tab="{$vo.id}">
+					<div class="title">{$vo.title}</div>
+					{volist name="vo->Option" id="value" key="k"}
+					<label>{if condition="($k eq 1) AND ($value neq ' ') AND ($value neq '-')"}A{elseif condition="($k eq 2) AND ($value neq ' ') AND ($value neq '-')"}B{elseif condition="($k eq 3 )AND ($value neq ' ') AND ($value neq '-')"}C{elseif condition="($k eq 4 ) AND ($value neq ' ') AND ($value neq '-')"/}D{/if}.{$value|substr=###,'2'}</label>
+					{/volist}
+					<div class="number">{$n} / 3</div>
 				</div>
+				{/volist}
 			</div>
+			{eq name='visit' value="0"}
 			<div class="submit" data-toggle="modal" data-target="#modal">确认提交</div>
+			{/eq}
 			<!--模态框-->
 			<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -38,8 +46,27 @@
 				</div>
 			</div>
 		</div>
+		{else/}
+		<div class="notice activity">
+			<div class="lists">
+				{volist name="question" id="vo" key="n"}
+				<div class="list" data-tab="题号">
+					<div class="title" >{$vo.title}</div>
+					{volist name="vo->Option" id="value" key="k"}
+					<label {eq name="vo.right" value="$k" }class="checked" {/eq}>{if condition="($k eq 1) AND ($value neq ' ') AND ($value neq '-') "}A{elseif condition="($k eq 2) AND ($value neq ' ') AND ($value neq '-')"}B{elseif condition="($k eq 3 )AND ($value neq ' ') AND ($value neq '-')"}C{elseif condition="($k eq 4 )AND ($value neq ' ') AND ($value neq '-')"/}D{/if}.{$value|substr=###,'2'}</label>
+					{/volist}
+					<div class="note">
+						<span class="true">正确答案：<i>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</i></span>
+						<span class="number">{$n} / 3</span>
+					</div>
+				</div>
+				{/volist}
+			</div>
+		</div>
+		{/eq}
 	</div>
 
+	<!--在线答题-->
 	<div class="notices hidden">
 		<div class="notice party">
 			{eq name="visit" value="0"}
