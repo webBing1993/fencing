@@ -9,7 +9,6 @@ img { border: none; vertical-align: top; }
 input, textarea ,select{ outline: none;border:none;}
 textarea { resize: none; }
 table { border-collapse: collapse; background-color: #ffffff; }
-html,body{height: 100%;}
 /*public*/
 .hidden{
 	display: none;
@@ -91,8 +90,8 @@ body{
 	margin-top:35vh;
 	margin-left: calc(50% - 75px);
 }
-.notices{
-	height: calc(100% - 145px);
+.notice.activity{
+	height: 82vh;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 }
