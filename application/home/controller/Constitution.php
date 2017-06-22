@@ -22,7 +22,7 @@ class Constitution extends Base {
      * 网上党校 
      */
     public function index(){
-        
+        return $this->fetch();
     }
     /**
      * 排行榜

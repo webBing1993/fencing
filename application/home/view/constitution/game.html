@@ -2,27 +2,62 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/constitution/game.css">
+<link rel="stylesheet" href="/home/css/learn/course.css">
+
 {/block}
 
 {block name="body"}
-<div class="top clear">
-	<div class="tab fl"><a href="{:Url('Constitution/game')}">在线答题</a></div>
-	<div class="tab fl"><a href="{:Url('Constitution/rank?type=2')}">积分排行</a></div>
-</div>
+	<div class="tabs clear">
+		<div class="tab"><span>每日一课</span></div>
+		<div class="tab"><span>在线答题</span></div>
+	</div>
 <div class="content" ontouchstart="" onmouseover="">
-	{eq name="visit" value="0"}
-	<!--<img src="/home/images/game2.png" alt="" class="text">-->
-	{if condition='$info eq null'}
-	<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
-	{elseif condition='$exist eq 0'/}
-	<a class="start" href="{:Url('Constitution/goon')}">继续答题</a>
-	<a class="continue" href="{:Url('Constitution/answer')}">重新开始</a>
-	{else/}
-	<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
-	{/if}
-	{else/}
-	<a class="start" href="">游客暂无权限</a>
-	{/eq}
+	<!--两学一做-->
+	<div class="notices hidden">
+		<div class="notice activity">
+			<div class="lists">
+				<div class="list" data-tab="">
+					<div class="title">dddddd</div>
+					<label>的点点滴滴</label>
+					<div class="number">1/ 3</div>
+				</div>
+			</div>
+			<div class="submit" data-toggle="modal" data-target="#modal">确认提交</div>
+			<!--模态框-->
+			<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div>正确答案 : <span id="true1"></span></div>
+							<div class="text-center">本次得分：<span class="score"></span> 分</div>
+						</div>
+						<div class="modal-footer">
+							<a href="" id="link">查看详情</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="notices hidden">
+		<div class="notice party">
+			{eq name="visit" value="0"}
+			<!--<img src="/home/images/game2.png" alt="" class="text">-->
+			{if condition='$info eq null'}
+			<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
+			{elseif condition='$exist eq 0'/}
+			<a class="start" href="{:Url('Constitution/goon')}">继续答题</a>
+			<a class="continue" href="{:Url('Constitution/answer')}">重新开始</a>
+			{else/}
+			<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
+			{/if}
+			{else/}
+			<a class="start" href="">游客暂无权限</a>
+			{/eq}
+		</div>
+	</div>
+
 </div>
 
 <div class="foot"></div>
@@ -30,10 +65,97 @@
 {/block}
 
 {block name="script"}
+<script src="/home/js/reset.js"></script>
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+	var c =  parseInt(window.location.href.split("index/c/")[1]);
+	$(function(){
+		//tab初始化和数据存储
+		var ntc = $('.notices');
+		var co = getCookie("type");
+		if(co == 11 || co == 12 || co == 13){
+			c = co - 10;
+		}
+		$('.tabs>.tab').eq(c-1).find('span').addClass('active');
+		ntc.eq(c-1).removeClass('hidden');
+
+		if(c == 1){
+			$(".content").css({"position":"inherit", "margin-top":"0", "margin-left":"0"});
+		}
+		//tab切换
+		$('.tabs>.tab ').on('click',function(){
+			var ntc = $('.notices' );
+			var eq = $(this ).index();
+			$(this ).siblings('.tab' ).find('span' ).removeClass('active');
+			$(this ).find('span' ).addClass('active');
+			ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
+			ntc.eq(eq).removeClass('hidden');
+			if(eq==0){
+				$(".content").css({"position":"inherit", "margin-top":"0", "margin-left":"0"});
+			}
+			if(eq == 1){
+				$(".content").css({"position":"relative", "margin-top":"35vh", "margin-left":"calc(50% - 75px)"})
+			}
+			//使用示例
+			setCookie("type",eq+11);
+		});
+		//安卓4.4tab兼容
+		var u = navigator.userAgent;
+		var isAnd = !u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+		if(isAnd){
+			var num = u.substr(u.indexOf('Android') + 8, 3);
+			if(num <= 4.4){
+				var tabw = $('.tabs').width()/3 -2;
+				$('.tabs>.tab').width(tabw);
+			}
+		}
+	});
 	$(function(){
 		//模块标题
 		$('title' ).text('两学一做');
 	});
 </script>
+
+<script>
+	/**
+	 * 每日一课
+	 */
+		//提交
+	$(function(){
+		$('.submit').on('click',function(e){
+			var data = [];
+			$('.activity .list').each(function(){
+				var id = $(this ).attr('data-tab');
+				var answer = $(this ).find('.checked' ).index();
+				data.push([id,answer]);
+			});
+//            		console.log(data);
+			$.ajax({
+				type:"post",
+				url:"{:Url('Learn/commit')}",
+				data:{'data':data},
+				success:function(data){
+					$('.score').html(data.url.score);
+					$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
+					var link='scan';
+					$('#link').attr('href',link+'/id/'+data.url.id);
+				}
+			});
+		});
+
+	})
+</script>
+<!--当日已经答题就不能选中lable-->
+
+<script>
+	//选中样式变化
+	$(function() {
+		$('label').on('click', function (e) {
+			var it = $(this);
+			it.addClass('checked');
+			it.siblings('label').removeClass('checked');
+		});
+	});
+</script>
+
 {/block}

@@ -22,8 +22,8 @@ use app\home\model\Answers;
 
 class Base extends Controller {
     public function _initialize(){
-        session('userId','visitor');
-//        session('userId','yjy_15067198358');
+//        session('userId','visitor');
+        session('userId','yjy_15067198358');
 //        session('header','/home/images/vistor.jpg');
 //        session('nickname','游客');
         if(!empty($_SERVER['REQUEST_URI'])){
