@@ -47,7 +47,7 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>课程管理</h2>
+        <h2>党建风采</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{:Url('Learn/index')}">主页</a>
@@ -78,53 +78,31 @@
                     <form id="form" class="form-horizontal" method="post">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>类型:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <select class="form-control" name="type">
-                                    {neq name="msg" value=""}
-                                    {if condition="$msg['type'] eq 1"}
-                                    <option value="1" >视频</option>
-                                    {elseif condition="$msg['type'] eq 2"}
-                                    <option value="2" >图文</option>
-                                    {else /}
-                                    <!--<option value="3" >音乐</option>-->
-                                    {/if}
-                                    {else/}
-                                    <option value="1" >视频</option>
-                                    <option value="2" >图文</option>
-                                    <!--<option value="3" >音乐</option>-->
-                                    {/neq}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
                                 <label>封面图片:</label>
                             </div>
                             <div class="col-lg-5">
                                 <div class="imggroup">
                                     {eq name="$msg" value=""}
-                                    <img src="{$front_pic|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
+                                    <img src="" alt='图片' class='thumbnail imgbox'>
                                     {else/}
                                     <img src="{$msg.front_cover|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
                                     {/eq}
                                     <input type="file" class="imgfile"  accept="image/jpg, image/png, image/gif, image/jpeg">
-                                    <input type="hidden" name="front_cover" class="img"  value="{$msg.front_cover||default=$front_pic}" required="">
+                                    <input type="hidden" name="front_cover" class="img"  value="{$msg.front_cover||default=''}" required="">
                                 </div>
                                 <b>推荐尺寸：500*400px</b>
                             </div>
                             <div class="clear"></div>
                         </div>
-                        <div class="one">
+                        <div class="two">
                             <div class="form-group">
                                 <div class="col-lg-1 text-right control-label">
                                     <label>视频:</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select name="videoway" id="videoway"  class="form-control" >
-                                        <option value="0"> — 上传视频本地文件（小于20M，MP4格式）— </option>
+                                    <select name="videoway" id="videoway"  class="form-control" disabled>
                                         <option value="1"> —— 输入视频链接地址 —— </option>
+                                        <!--<option value="0"> — 上传视频本地文件（小于20M，MP4格式）— </option>-->
                                         <!--<option value="2"> —— 上传音频本地文件（.mp3格式） —— </option>-->
                                     </select>
                                 </div>
@@ -418,42 +396,10 @@
             video.removeAttr('disabled');
         });
 
-        //上传本地音频
-        $("#audio" ).on("change",function(){
-            var audio = $(this)[0].files[0];
-            var formData = new FormData();
-            formData.append("download",audio);
-            //console.log(formData);
-            $.ajax({
-                type:"post",
-                url:"{:Url('File/upload')}",
-                data:formData,
-                processData : false,
-                contentType : false,
-                success:function(d){
-                    //console.log('1');
-                    var data = $.parseJSON(d);
-                    var video = $("#videoway");
-                    if(data.status == 1){
-                        $("input[name='music_path']").val(data.path);
-                        //显示音频
-                        video.parent().find("audio").remove();
-                        video.after("<audio controls></audio>");
-                        video.next().attr({"src":data.path}).css({"margin-top":5});
-                        //video.next().attr({"src":"/admin/huluwa.mp3"}).css({"margin-top":5});
-                        video.prop('disabled','true');
-                    }else {
-                        warning({msg:"上传失败"});
-                        video.removeAttr('disabled');
-                    }
-                }
-            });
-        });
         $(".post-add").on("click",function(){
             var it=$(this);
             var data = {
                 id:$("input[name='id']").val(),
-                type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
                 video_path:$("input[name='video_path']").val(),
                 net_path:$("input[name='net_path']").val(),

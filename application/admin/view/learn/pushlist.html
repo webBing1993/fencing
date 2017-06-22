@@ -16,7 +16,7 @@
         <h2>推送管理</h2>
         <ol class="breadcrumb">
             <li class="active">
-                两学一做
+                微电影
             </li>
             <li>
                 <strong><a href="{:Url('Learn/pushlist')}">推送列表</a></strong>
@@ -53,7 +53,7 @@
                                                         <select class="form-control chosen-select" name="focus_main" id="main">
                                                             <option value="-1" >--请选择--</option>
                                                             {volist name="info" id="vo"}
-                                                            <option value="{$vo.id}" >【{$vo.type_text}】{$vo.title}</option>
+                                                            <option value="{$vo.id}" >【微电影】{$vo.title}</option>
                                                             {/volist}
                                                         </select>
                                                     </div>
@@ -156,7 +156,7 @@
                 html += '<select class="chosen-select form-control" data-placeholder="--请选择--" name="focus_vice" multiple>';
                 for(var i = 0; i < len; i++ ){
                     var t = titles[i];
-                    html += '<option value="'+ t.id +'">'+'【'+ t.type_text +'】'+ t.title +'</option>';
+                    html += '<option value="'+ t.id +'">'+'【微电影】'+ t.title +'</option>';
                 }
                 html += '</select>';
                 $('.vice' ).append(html);
