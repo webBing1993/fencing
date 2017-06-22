@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>网上党课</title>
 <link rel="stylesheet" href="/home/css/constitution/game.css">
 <link rel="stylesheet" href="/home/css/learn/course.css">
 
@@ -37,7 +38,7 @@
 					<div class="modal-content">
 						<div class="modal-body">
 							<div>正确答案 : <span id="true1"></span></div>
-							<div class="text-center">本次得分：<span></span> 分</div>
+							<div class="text-center">本次得分：<span class="scores"></span> 分</div>
 						</div>
 						<div class="modal-footer">
 							<a href="" id="link">查看详情</a>
@@ -138,10 +139,6 @@
 			}
 		}
 	});
-	$(function(){
-		//模块标题
-		$('title' ).text('两学一做');
-	});
 </script>
 
 <script>
@@ -157,15 +154,14 @@
 				var answer = $(this ).find('.checked' ).index();
 				data.push([id,answer]);
 			});
-//            		console.log(data);
 			$.ajax({
 				type:"post",
-				url:"{:Url('Learn/commit')}",
+				url:"{:Url('Constitution/commit')}",
 				data:{'data':data},
 				success:function(data){
-					$('.score').html(data.url.score);
+					$('.scores').html(data.url.score);
 					$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
-					var link='scan';
+					var link='game';
 					$('#link').attr('href',link+'/id/'+data.url.id);
 				}
 			});

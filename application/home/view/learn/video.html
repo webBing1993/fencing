@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title>两学一做</title>
+<title>党建之家</title>
 <link rel="stylesheet" href="/home/css/common/detail.css">
 <style>
 	.scrollDiy{
@@ -40,9 +40,9 @@
 				<span class="read">{$video.views}</span>
 				{eq name="visit" value="0"}
 				{eq name="video.is_like" value="1"}
-				<span class="isgood good_" onclick="isGood(this,1,{$video.id})">{$video.likes}</span>
+				<span class="isgood good_" onclick="isGood(this,3,{$video.id})">{$video.likes}</span>
 				{else/}
-				<span class="isgood good" onclick="isGood(this,1,{$video.id})">{$video.likes}</span>
+				<span class="isgood good" onclick="isGood(this,3,{$video.id})">{$video.likes}</span>
 				{/eq}
 				{else/}
 				<span class="isgood good">{$video.likes}</span>
@@ -85,7 +85,7 @@
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！">
 		</div>
-		<div class="send fr" onclick="send(this,1,{$video['id']})">发送</div>
+		<div class="send fr" onclick="send(this,3,{$video['id']})">发送</div>
 	</div>
 	{/eq}
 </div>
@@ -95,6 +95,7 @@
 <script src="/home/js/reset.js"></script>
 <script>
 $(function(){
+	scrollNow = true;
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 7){
@@ -249,7 +250,7 @@ function loadScroll(){
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
 				data:{
-					type:1,
+					type:3,
 					aid:id,
 					length:len
 				},
