@@ -32,6 +32,9 @@ html,body{height: 100%;}
 a:active{
 	background: #d61920;
 }
+.modal-footer a:active{
+	background: transparent;
+}
 body{
 	background: #fde8d7;
 }
@@ -164,4 +167,7 @@ body{
 	display: block;
 	height: 100vh;
 	background: rgba(0, 0, 0, 0.30);
+}
+.modal-dialog{
+	z-index: 999;
 }
