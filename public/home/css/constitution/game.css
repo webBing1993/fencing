@@ -87,6 +87,7 @@ body{
 	position: relative;
 	margin-top:35vh;
 	margin-left: calc(50% - 75px);
+	z-index:-1;
 }
 .notices{
 	height: calc(100% - 145px);
@@ -170,4 +171,7 @@ body{
 }
 .modal-dialog{
 	z-index: 999;
+}
+.modal{
+	z-index: 99999!important;
 }

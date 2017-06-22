@@ -111,6 +111,7 @@
 }
 #modal .modal-content .modal-body {
   text-align: center;
+  font-size:1.4rem;
 }
 #modal .modal-content .modal-body .score {
   color: #fc4f42;
