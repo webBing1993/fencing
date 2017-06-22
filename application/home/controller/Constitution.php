@@ -18,57 +18,6 @@ use app\home\model\Answers;
  * 抄党章
  */
 class Constitution extends Base {
-    /*
-     * 网上党校 
-     */
-    public function index(){
-        return $this->fetch();
-    }
-    /**
-     * 排行榜
-     */
-    public function rank(){
-        $this->checkRole();
-        $type = input('type');  //获取类型，1为常规模式排行 2为互动模式排行
-
-        $wechatModel = new WechatUser();
-        $userId = session('userId');
-        $personal = $wechatModel->where('userid',$userId)->find();    //获取个人信息
-
-        //传统模式
-        $map['trad_score'] = array('neq',0);
-        $trad = $wechatModel->where($map)->order('trad_score desc')->limit(50)->select();
-        foreach ($trad as $key => $value) {
-            if($value['userid'] == $userId) {
-                $personal['trad_rank'] = $key+1;     //该用户传统排名
-            }
-        }
-        //游戏模式
-        $map1['game_score'] = array('neq',0);
-        $game = $wechatModel->where($map1)->order('game_score desc')->limit(50)->select();
-        foreach ($game as $key => $value) {
-            if($value['userid'] == $userId) {
-                $personal['game_rank'] = $key+1;     //该用户游戏排名
-            }
-        }
-        if(isset($personal['trad_rank'])) {
-            $personal['trad_rank'] = "第".$personal['trad_rank']."名";
-        }else {
-            $personal['trad_rank'] = "无";
-        }
-        if(isset($personal['game_rank'])) {
-            $personal['game_rank'] = "第".$personal['game_rank']."名";
-        }else {
-            $personal['game_rank'] = "无";
-        }
-        $this->assign('per',$personal);
-        $this->assign('trad',$trad);
-        $this->assign('game',$game);
-        $this->assign('type',$type);
-
-        return $this->fetch();
-    }
-
     /**
      * 互动模式主页
      */
@@ -476,10 +425,9 @@ class Constitution extends Base {
         }
     }
     /*
-     * 每日一课  查看详情
-     */
+    * 每日一课  查看详情
+    */
     public function scan(){
-        $this->checkRole();
         $id = input('id');
         $Answers = Answers::get($id);
         $Qid = json_decode($Answers->question_id);
