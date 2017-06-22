@@ -44,6 +44,9 @@ body{
 	height: 44px;
 	padding: 8px 0;
 	background: #d61920;
+	position: fixed;
+	top: 0;
+	z-index: 999;
 }
 .tabs .tab {
 	display: inline-block;
