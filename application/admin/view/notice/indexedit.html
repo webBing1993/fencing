@@ -41,11 +41,10 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>支部活动</h2>
+        <h2>通知公告</h2>
         <ol class="breadcrumb">
             <li>
-                {if condition="$msg.type eq 1"}<a href="{:Url('Notice/index')}">相关通知</a>{elseif condition="$msg.type eq 3"/}
-                <a href="{:Url('Notice/recruit')}">活动通知</a>{/if}
+                <a href="{:Url('Notice/index')}">相关通知</a>
             </li>
             <li class="active">
                 <strong>编辑</strong>
@@ -73,20 +72,6 @@
                     <form id="form" class="form-horizontal" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>类型:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <select class="form-control" name="type" disabled>
-                                    {if condition="$msg.type eq 1"}
-                                    <option value="1">相关通知</option>
-                                    {else/}
-                                    <option value="3">活动通知</option>
-                                    {/if}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
                                 <label>顶部Banner:</label>
                             </div>
                             <div class="col-lg-5" >
@@ -104,47 +89,63 @@
                                 <label>标题:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入名称" class="form-control form_title" name="title" value="{$msg.title}">
+                                <input type="text" placeholder="请输入标题..." class="form-control form_title" name="title" value="{$msg.title}">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>简介:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <div class=" float-e-margins">
-                                    <div class="ibox-content no-padding borders">
-                                        <textarea  class="text form-control form_title" name="description">{$msg.description}</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {empty name="msg.start_time"}
                         <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
                                 <label>开始时间:</label>
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
+                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker" name="start_time"  value=""/>
+                                </div>
+
+                            </div>
+                        </div>
+                        {else/}
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>开始时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="date">
+                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
                                 </div>
                             </div>
                         </div>
+                        {/empty}
+                        {empty name="msg.end_time"}
                         <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
                                 <label>结束时间:</label>
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" class="form-control datetimepicker " name="end_time"  value="{$msg.end_time|time_format='Y-m-d H:i'}"/>
+                                    <input type="text" placeholder="请输入结束时间...(可为空)" class="form-control datetimepicker" name="end_time"  value=""/>
+                                </div>
+
+                            </div>
+                        </div>
+                        {else/}
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>结束时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="date">
+                                    <input type="text" placeholder="请输入结束时间...(可为空)" class="form-control datetimepicker " name="end_time"  value="{$msg.end_time|time_format='Y-m-d H:i'}"/>
                                 </div>
                             </div>
                         </div>
+                        {/empty}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>地址:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="{$msg.address}">
+                                <input type="text" placeholder="请输入详细地址...(可为空)" class="form-control form_title" name="address" value="{$msg.address}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -152,7 +153,7 @@
                                 <label>联系方式:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入联系方式" class="form-control form_title" name="telephone" value="{$msg.telephone}">
+                                <input type="text" placeholder="请输入联系方式...(可为空)" class="form-control form_title" name="telephone" value="{$msg.telephone}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -200,12 +201,7 @@
 <script>
     $(function(){
         //导航高亮
-        var type = $("select[name='type']").val();
-        if(type == 1){
-            highlight_subnav("{:Url('Notice/index')}");
-        }else{
-            highlight_subnav("{:Url('Notice/recruit')}");
-        }
+        highlight_subnav("{:Url('Notice/index')}");
 
         //上传图片
         var plus = $('.plus');
@@ -264,15 +260,13 @@
             var it=$(this);
             var data = {
                 id:$("input[name='id']").val(),
-                type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
-                content:ue.getContent(),
-                telephone:$("input[name='telephone']").val(),
                 start_time:$("input[name='start_time']").val(),
                 end_time:$("input[name='end_time']").val(),
+                content:ue.getContent(),
+                telephone:$("input[name='telephone']").val(),
                 address:$("input[name='address']").val(),
-                description:$("textarea[name='description']").val(),
                 publisher:$("input[name='publisher']").val(),
                 status:0,
             };

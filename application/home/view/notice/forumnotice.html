@@ -1,8 +1,9 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title>支部动态</title>
-<link rel="stylesheet" href="/home/css/notice/relevant.css">
+<title>通知公告</title>
+<link rel="stylesheet" href="/home/css/college/relevant.css">
+<link rel="stylesheet" href="/home/css/common/rem.css">
 <style>
 	.scrollDiy{
 		position: absolute;
@@ -19,38 +20,44 @@
 {block name="body"}
 <div class="scrollDiy">
 	<div class="banner">
-		<img src="{$list.front_cover|get_cover='path'}" alt="支部活动banner" class="banner-img">
+		<img src="{$info.front_cover|get_cover='path'}" alt="支部活动banner" class="banner-img">
 	</div>
 	<div class="content">
 		<div class="top">
-			<div class="title limit_" style="text-align: center">{$list.title}</div>
+			<div class="title limit_" style="text-align: center">{$info.title}</div>
 			<div class="note">
-				<span class="fl">{$list.publisher}</span>
-				{$list.create_time|time_format='Y-m-d'}
+				<span class="fl">{$info.publisher}</span>
+				{$info.create_time|time_format='Y-m-d'}
 			</div>
 		</div>
 		<div class="message">
-			<div class="name limit">{$list.start_time|time_format="Y/m/d H:i"}&nbsp;--&nbsp;{$list.end_time|time_format="m/d H:i"}</div>
-			<div class="content" >{$list.address}</div>
-			<div class="time">{$list.telephone}</div>
+			{notempty name="info.start_time"}
+			<div class="name limit">{$info.start_time|time_format='Y/m/d H:i'}--{$info.end_time|time_format='Y/m/d H:i'}</div>
+			{/notempty}
+			{notempty name="info.address"}
+			<div class="content" >{$info.address}</div>
+			{/notempty}
+			{notempty name="info.telephone"}
+			<div class="time"><a href="tel:{$info.telephone}">{$info.telephone}</a></div>
+			{/notempty}
 		</div>
-		<div class="article">{$list.content}</div>
+		<div class="article">{$info.content}</div>
 		<div class="article">
 			<div class="note">
 				{eq name="visit" value="0"}
-				{eq name="list.is_like" value="1"}
-				<span class="isgood good_" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
+				{eq name="info.is_like" value="1"}
+				<span class="isgood good_" onclick="isGood(this,2,{$info.id})">{$info.likes}</span>
 				{else/}
-				<span class="isgood good" onclick="isGood(this,2,{$list.id})">{$list.likes}</span>
+				<span class="isgood good" onclick="isGood(this,2,{$info.id})">{$info.likes}</span>
 				{/eq}
 				{else/}
-				<span class="isgood good">{$list.likes}</span>
+				<span class="isgood good">{$info.likes}</span>
 				{/eq}
-				<span class="read">{$list.views}</span>
+				<span class="read">{$info.views}</span>
 			</div>
 		</div>
 		<div class="comment">
-			<div class="sum">共<span>{$list.comments}</span>条评论</div>
+			<div class="sum">共<span>{$info.comments}</span>条评论</div>
 			<div class="lists">
 				{volist name="comment" id="co"}
 				<div class="list clear">
@@ -85,7 +92,7 @@
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！">
 		</div>
-		<div class="send fr" onclick="send(this,2,{$list['id']})">发送</div>
+		<div class="send fr" onclick="send(this,2,{$info['id']})">发送</div>
 	</div>
 	{/eq}
 </div>
@@ -97,6 +104,9 @@
 <script>
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 	$(function(){
+	    if($(".message").children().length==0){
+	        $(".message").css("border-top","none");
+		}
 		//reset
 		var len = $(".list" ).length;
 		if(len >= 7){
@@ -224,8 +234,8 @@
 			var len = $(".list" ).length;
 			var tip = $(".tip");
 			var loading = $('.loading');
-			var id = {$list['id']};
-			if(dh <= end && scrollNow){
+			var id = {$info['id']};
+			if(dh <= end+1 && scrollNow){
 				scrollNow = false;//请求执行中
 				$.ajax({
 					type:"post",
@@ -240,6 +250,7 @@
 						loading.toggleClass('hidden');
 					},
 					success:function(data){
+						console.log(data);
 						loading.toggleClass('hidden');
 						tip.show();
 						if(data.code == 1){
@@ -313,9 +324,9 @@
 	wx.ready(function () {
 		//分享到朋友圈
 		wx.onMenuShareTimeline({
-			title: '{$list.title}',
-			link: '{$list.link}',
-			imgUrl: '{$list.share_image}',
+			title: '{$info.title}',
+			link: '{$info.link}',
+			imgUrl: '{$info.share_image}',
 			success: function () {
 				// 用户确认分享后执行的回调函数
 			},
@@ -325,10 +336,10 @@
 		});
 		//分享给朋友
 		wx.onMenuShareAppMessage({
-			title: '{$list.title}', // 分享标题
-			desc: '{$list.desc}', // 分享描述
-			link: '{$list.link}', // 分享链接
-			imgUrl: '{$list.share_image}', // 分享图标
+			title: '{$info.title}', // 分享标题
+			desc: '{$info.desc}', // 分享描述
+			link: '{$info.link}', // 分享链接
+			imgUrl: '{$info.share_image}', // 分享图标
 			type: '', // 分享类型,music、video或link，不填默认为link
 			dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 			success: function () {
@@ -343,30 +354,5 @@
 	wx.error(function (res) {
 		alert('wx.error: '+JSON.stringify(res));
 	});
-
-    $(function(){
-        pushHistory();
-        var bool=false;
-        setTimeout(function(){
-            bool=true;
-        },1500);
-        window.addEventListener("popstate", function(e) {
-            if(bool)
-            {
-                window.location.href = "{:Url('/home/notice/index/c/1')}";
-//                window.history.go( -1 );
-            }
-            pushHistory();
-
-        }, false);
-    });
-    function pushHistory(){
-        var sta = {
-            title: "title"
-        };
-        if( window.history.state === null ){
-            window.history.pushState( sta, "title" );
-        }
-    }
 </script>
 {/block}

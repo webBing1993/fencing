@@ -16,221 +16,92 @@ use think\Config;
 
 /**
  * Class Notice
- * @package 支部活动
+ * @package 通知公告
  */
 class Notice extends Admin {
     /**
      * 相关通知
-     * type: 1
      */
     public function index(){
         $map = array(
-            'type' => 1,
             'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"已发布",1=>"已发布"),
-        ));
-
+        
         $this->assign('list',$list);
         return $this->fetch();
     }
-
     /**
-     * 情况 报道
-     * type: 2
-     */
-    public function meet(){
-        $map = array(
-            'type' => 2,
-            'status' => array('egt',0),
-        );
-        $list = $this->lists('Notice',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"已发布",1=>"已发布"),
-        ));
-
-        $this->assign('list',$list);
-
-        return $this->fetch();
-    }
-
-    /**
-     * 活动通知
-     * type: 3
-     */
-    public function recruit(){
-        $map = array(
-            'type' => 3,
-            'status' => array('egt',0),
-        );
-        $list = $this->lists('Notice',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"已发布",1=>"已发布"),
-        ));
-
-        $this->assign('list',$list);
-
-        return $this->fetch();
-    }
-
-    /**
-     * 活动情况
-     * type: 4
-     */
-    public function activity(){
-        $map = array(
-            'type' => 4,
-            'status' => array('egt',0),
-        );
-        $list = $this->lists('Notice',$map);
-        int_to_string($list,array(
-            'status' => array(0=>"已发布",1=>"已发布"),
-        ));
-
-        $this->assign('list',$list);
-
-        return $this->fetch();
-    }
-
-    /**
-     * 相关通知和活动招募 添加
+     * 相关通知 添加
      */
     public function indexadd(){
         if(IS_POST) {
             $data = input('post.');
-            if (empty($data['start_time']) || empty($data['end_time'])){
-                return $this->error('请输入时间字段');
-            }
-            if (!is_numeric($data['telephone'])){
-                return $this->error('联系电话必须为数字');
-            }
+            $result = $this->validate($data,'Notice');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            $noticeModel = new NoticeModel();
-            $data['start_time'] = strtotime($data['start_time']);
-            $data['end_time'] = strtotime($data['end_time']);
-            if ($data['end_time'] <= $data['start_time']){
-                return $this->error('结束时间有错误');
-            }
-            $id = $noticeModel->validate('Notice.act')->save($data);
-            if($id){
-                if($data['type'] == 1){
-                    return $this->success("新增相关通知成功",Url('Notice/index'));
-                }else{
-                    return $this->success("新增活动通知成功",Url('Notice/recruit'));
-                }
+            if (true !== $result) {
+                return $this->error($result);
             }else{
-                return $this->error($noticeModel->getError());
+                $noticeModel = new NoticeModel();
+                $data['start_time'] = strtotime($data['start_time']);
+                $data['end_time'] = strtotime($data['end_time']);
+                if (!empty($data['start_time']) && empty($data['end_time'])){
+                    return $this->error('请添加结束时间');
+                }
+                if (empty($data['start_time']) && !empty($data['end_time'])){
+                    return $this->error('请添加开始时间');
+                }
+                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
+                    return $this->error('结束时间有错误');
+                }
+                $res = $noticeModel->save($data);
+                if ($res){
+                    return $this->success("新增通知成功",Url('Notice/index'));
+                }else{
+                    return $this->error($noticeModel->getError());
+                }
             }
         }else {
-            $this->default_pic();
-            $type = input('type');
-            $this->assign('type',$type);
             return $this->fetch();
         }
     }
-
     /**
-     * 相关通知和活动招募 修改
+     * 相关通知 修改
      */
     public function indexedit(){
         if(IS_POST) {
             $data = input('post.');
-            if (empty($data['start_time']) || empty($data['end_time'])){
-                return $this->error('请输入时间字段');
-            }
-            if (!is_numeric($data['telephone'])){
-                return $this->error('联系电话必须为数字');
-            }
+            $result = $this->validate($data,'Notice');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            $noticeModel = new NoticeModel();
-            $data['start_time'] = strtotime($data['start_time']);
-            $data['end_time'] = strtotime($data['end_time']);
-            if ($data['end_time'] <= $data['start_time']){
-                return $this->error('结束时间有错误');
-            }
-            $id = $noticeModel->validate('Notice.act')->save($data,['id'=>input('id')]);
-            if($id){
-                if($data['type'] == 1){
-                    return $this->success("修改相关通知成功",Url('Notice/index'));
+            if (true !== $result) {
+                return $this->error($result);
+            }else{
+                $noticeModel = new NoticeModel();
+                if (!empty($data['start_time']) && empty($data['end_time'])){
+                    return $this->error('请添加结束时间');
+                }
+                if (empty($data['start_time']) && !empty($data['end_time'])){
+                    return $this->error('请添加开始时间');
+                }
+                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
+                    return $this->error('结束时间有错误');
+                }
+                $data['start_time'] = strtotime($data['start_time']);
+                $data['end_time'] = strtotime($data['end_time']);
+                $res = $noticeModel->save($data,['id'=>$data['id']]);
+                if ($res){
+                    return $this->success("修改通知成功",Url('Notice/index'));
                 }else{
-                    return $this->success("修改活动通知成功",Url('Notice/recruit'));
+                    return $this->get_update_error_msg($noticeModel->getError());
                 }
-            }else{
-                return $this->get_update_error_msg($noticeModel->getError());
             }
         }else{
-            $this->default_pic();
-
             $id = input('id');
             $msg = NoticeModel::get($id);
             $this->assign('msg',$msg);
             return $this->fetch();
         }
     }
-
-    /**
-     * 三个情况添加
-     */
-    public function add(){
-        if(IS_POST) {
-            $data = input('post.');
-            $noticeModel = new NoticeModel();
-            if(empty($data['id'])) {
-                unset($data['id']);
-            }
-            $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            $model = $noticeModel->validate('Notice.other')->save($data);
-            if($model){
-               if ($data['type'] == 2){
-                  return $this->success('新增情况报道成功',Url('Notice/meet'));
-               }else if($data['type'] == 4){
-                   return $this->success('新增活动情况成功',Url('Notice/activity'));
-               }
-            }else{
-                 return $this->error($noticeModel->getError());
-            }
-        }else{
-            $this->default_pic();
-            $msg = array();
-            $msg['type'] = input('type');
-            $msg['class'] = 1; // 1为添加 ，2为修改
-            $this->assign('msg',$msg);
-
-            return $this->fetch('edit');
-        }
-    }
-
-    /**
-     * 修改
-     */
-    public function edit(){
-        if(IS_POST) {
-            $data = input('post.');
-            $noticeModel = new NoticeModel();
-            $model = $noticeModel->validate('Notice.other')->save($data,['id'=> input('id')]);
-            if($model){
-                if ($data['type'] == 2){
-                    return $this->success('修改情况报道成功',Url('Notice/meet'));
-                }else if($data['type'] == 4){
-                    return $this->success('修复活动情况成功',Url('Notice/activity'));
-                }
-            }else{
-                return $this->get_update_error_msg($noticeModel->getError());
-            }
-        }else{
-            $this->default_pic();
-
-            $id = input('id');
-            $msg = NoticeModel::get($id);
-            $msg['class'] = 2;
-            $this->assign('msg',$msg);
-
-            return $this->fetch();
-        }
-    }
-
     /**
      * 删除
      */
@@ -258,14 +129,11 @@ class Notice extends Admin {
                 'status' => 0,
             );
             $infoes = NoticeModel::where($info)->select();
-            int_to_string($infoes,array(
-                'type' => array(1=>"相关通知",2=>"情况报道",3=>"活动通知",4=>"活动情况"),
-            ));
             return $this->success($infoes);
         }else{
             //消息列表
             $map = array(
-                'class' => 2,  // 支部活动
+                'class' => 2,  //  通知公告
                 'status' => array('egt',-1),
             );
             $list = $this->lists('Push',$map);
@@ -285,9 +153,6 @@ class Notice extends Admin {
                 'status' => 0,
             );
             $infoes = NoticeModel::where($info)->select();
-            int_to_string($infoes,array(
-                'type' => array(1=>"相关通知",2=>"情况报道",3=>"活动通知",4=>"活动情况"),
-            ));
             $this->assign('info',$infoes);
             return $this->fetch();
         }
@@ -310,26 +175,8 @@ class Notice extends Admin {
             $str1 = strip_tags($focus1['content']);
             $des1 = mb_substr($str1,0,100);
             $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-            switch ($focus1['type']) {
-                case 1:
-                    $url1 = hostUrl."/home/notice/recruit/id/".$focus1['id'].".html";
-                    $pre1 = "【相关通知】";
-                    break;
-                case 2:
-                    $url1 = hostUrl."/home/notice/activity/id/".$focus1['id'].".html";
-                    $pre1 = "【情况报道】";
-                    break;
-                case 3:
-                    $url1 = hostUrl."/home/notice/recruit/id/".$focus1['id'].".html";
-                    $pre1 = "【活动通知】";
-                    break;
-                case 4:
-                    $url1 = hostUrl."/home/notice/activity/id/".$focus1['id'].".html";
-                    $pre1 = "【活动情况】";
-                    break;
-                default:
-                    break;
-            }
+            $url1 = hostUrl."/home/notice/recruit/id/".$focus1['id'].".html";
+            $pre1 = "【相关通知】";
             $img1 = Picture::get($focus1['front_cover']);
             $path1 = hostUrl.$img1['path'];
             $information1 = array(
@@ -351,26 +198,8 @@ class Notice extends Admin {
                 $str = strip_tags($focus['content']);
                 $des = mb_substr($str,0,100);
                 $content = str_replace("&nbsp;","",$des);  //空格符替换成空
-                switch ($focus['type']) {
-                    case 1:
-                        $url = hostUrl."/home/notice/recruit/id/".$focus['id'].".html";
-                        $pre = "【相关通知】";
-                        break;
-                    case 2:
-                        $url = hostUrl."/home/notice/activity/id/".$focus['id'].".html";
-                        $pre = "【情况报道】";
-                        break;
-                    case 3:
-                        $url = hostUrl."/home/notice/recruit/id/".$focus['id'].".html";
-                        $pre = "【活动通知】";
-                        break;
-                    case 4:
-                        $url = hostUrl."/home/notice/activity/id/".$focus['id'].".html";
-                        $pre = "【活动情况】";
-                        break;
-                    default:
-                        break;
-                }
+                $url = hostUrl."/home/notice/recruit/id/".$focus['id'].".html";
+                $pre = "【相关通知】";
                 $img = Picture::get($focus['front_cover']);
                 $path = hostUrl.$img['path'];
                 $info = array(
@@ -414,11 +243,11 @@ class Notice extends Admin {
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
             $data['status'] = 1;
-            $data['class'] = 2;  // 支部活动
+            $data['class'] = 2;  // 通知公告
             //保存到推送列表
             $s = Push::create($data);
             if ($s){
-                return $this->success("发送成功");
+                return $this->success("发送成 功");
             }else{
                 return $this->error("发送失败");
             }

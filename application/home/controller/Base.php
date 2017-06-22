@@ -139,6 +139,7 @@ class Base extends Controller {
      * type值：
      * 0 评论点赞
      * 1 news  党建动态
+     * 2 notice 通知公告
      */
     public function like(){
         $uid = session('userId'); //点赞人
@@ -150,6 +151,9 @@ class Base extends Controller {
                 break;
             case 1:
                 $table = "news";
+                break;
+            case 2:
+                $table = "notice";
                 break;
             default:
                 return $this->error("无该数据表");
@@ -252,6 +256,7 @@ class Base extends Controller {
      * 评论，$type,$aid,$content
      * type值：
      * 1 news  党建动态
+     * 2 notice 通知公告
      */
     public function comment(){
         if(IS_POST){
@@ -261,6 +266,9 @@ class Base extends Controller {
             switch ($type) {    //根据类别获取表明
                 case 1:
                     $table = "news";
+                    break;
+                case 2:
+                    $table = "notice";
                     break;
                 default:
                     return $this->error("无该数据表");
