@@ -167,8 +167,7 @@
 				success:function(data){
 					$('.scores').html(data.url.score);
 					$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
-					var link='game';
-					$('#link').attr('href',link+'/id/'+data.url.id);
+					$('#link').attr('href','/home/Constitution/game/c/1/id/'+data.url.id);
 				}
 			});
 		});
