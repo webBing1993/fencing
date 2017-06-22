@@ -134,7 +134,7 @@ body{
 .score{
 	width: 325px;
 	height: 250px;
-	/*background: url("/home/images/constitution/sco1.png");*/
+	background: url("/home/images/constitution/sco1.png");
 	background-size: 100% 100%;
 	position: fixed;
 	top:calc((100% - 300px)/2);;
