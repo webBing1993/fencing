@@ -1,30 +1,37 @@
 {extend name="public/common"}
 {block name="style"}
 <title>党建风采</title>
+<link rel="stylesheet" href="/home/css/learn/index.css">
 <link rel="stylesheet" href="/home/css/news/index.css">
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/common/tip.css">
 <link rel="stylesheet" href="/home/css/common/rem.css">
 {/block}
 {block name="body"}
-<!--banner-->
-<div class="banners">
-    <div class="swiper-container">
-        <div class="imgs swiper-wrapper">
-            {volist name="lists" id="ls"}
-            <div class="banner swiper-slide">
-                <a href="{:Url('Learn/video?id='.$ls['id'])}">
-                    <img src="{$ls.front_cover|get_cover='path'}" alt="">
-                    <div class="title_ limit">{$ls.title}</div>
-                </a>
-            </div>
-            {/volist}
-        </div>
-    </div>
+<!--tab-->
+<div class="tabs clear">
+    <a class="tab"><span>微电影</span></a>
+    <a  href="#" class="tab"><span>手机报</span></a>
 </div>
+
 <!--列表-->
 <div class="content">
     <div class="notices">
+        <!--banner-->
+        <div class="banners">
+            <div class="swiper-container">
+                <div class="imgs swiper-wrapper">
+                    {volist name="lists" id="ls"}
+                    <div class="banner swiper-slide">
+                        <a href="{:Url('Learn/video?id='.$ls['id'])}">
+                            <img src="{$ls.front_cover|get_cover='path'}" alt="">
+                            <div class="title_ limit">{$ls.title}</div>
+                        </a>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+        </div>
         <div class="notice party">
             {volist name="list2" id="loo"}
             <a href="{:Url('Learn/video?id='.$loo['id'])}" class="list clear">
@@ -42,6 +49,20 @@
             {/volist}
         </div>
     </div>
+
+    <div class="notices hidden">
+        <div class="notice activity">
+            <a href="" class="list clear">
+                <div class="fr right">
+                    <div class="title limit_"></div>
+                    <div class="clear time">
+                        <span class="fl"></span>
+                        <span class="fr"></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 <!--加载更多-->
 <div class="tip"></div>
@@ -51,6 +72,7 @@
 {/block}
 {block name="script"}
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
+<script src="/home/js/reset.js"></script>
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     $(function(){
@@ -60,12 +82,64 @@
             loop:true,
             autoplayDisableOnInteraction:false
         });
-        //
-        var len = $('.notice .list').length;
-        if(len >= 6){
-            $('.tip' ).text('上拉加载更多');
+    });
+
+    $(function(){
+        //tab初始化和数据存储
+        var ntc = $('.notices');
+        var c =  parseInt(window.location.href.split("index/c/")[1]);
+        var co = getCookie("type");
+        if(co == 11 || co == 12 || co == 13){
+            c = co - 10;
         }
-        loadScroll();
+        console.log(c)
+        $('.tabs>.tab').eq(c-1).find('span').addClass('active');
+        ntc.eq(c-1).siblings('.notices' ).addClass('hidden');
+        ntc.eq(c-1).removeClass('hidden');
+        //上拉加载
+        if(c==1) {
+            var len = ntc.eq(c - 1).find('.party a').length;
+            if (len >= 6) {
+                $('.tip').text('上拉加载更多');
+            }
+            loadScroll(c);
+        }
+        if(c==2) {
+            $(".tip").hide();
+          $(".loading").hide();
+        }
+        //tab切换
+        $('.tabs>.tab ').on('click',function(){
+            var ntc = $('.notices' );
+            var eq = $(this ).index();
+            $(this ).siblings('.tab' ).find('span' ).removeClass('active');
+            $(this ).find('span' ).addClass('active');
+            ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
+            ntc.eq(eq).removeClass('hidden');
+            if(eq==0) {
+                var len = ntc.eq(eq).find('.party a').length;
+                if (len >= 5) {
+                    $('.tip').text('上拉加载更多');
+                }
+                loadScroll(eq + 1);
+            }
+            if(eq==1) {
+                $(".tip").hide();
+                $(".loading").hide();
+            }
+            //使用示例
+            setCookie("type",eq+11);
+        });
+        //安卓4.4tab兼容
+        var u = navigator.userAgent;
+        var isAnd = !u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if(isAnd){
+            var num = u.substr(u.indexOf('Android') + 8, 3);
+            if(num <= 4.4){
+                var tabw = $('.tabs').width()/3 -2;
+                $('.tabs>.tab').width(tabw);
+            }
+        }
     });
     //上拉加载更多
     function loadScroll(){

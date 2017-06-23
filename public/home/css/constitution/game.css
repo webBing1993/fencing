@@ -70,7 +70,6 @@ body{
 	width: 222px;
 	height: 80px;
 	position: fixed;
-	z-index: -1;
 	top:calc(50% - 95px);
 	left:calc(50% - 111px);
 }
@@ -169,10 +168,4 @@ body{
 	display: block;
 	height: 100vh;
 	background: rgba(0, 0, 0, 0.30);
-}
-.modal-dialog{
-	z-index: 999;
-}
-.modal{
-	z-index: 99999!important;
 }
