@@ -127,7 +127,7 @@
 				if(objNow){
 					var r=confirm("您未保存，是否离开当前页面");
 					if (r==true){
-						window.history.go(-1);
+						window.location.href= "{:Url('Constitution/game?c=2')}";
 					}else{
 						pushHistory();
 					}
