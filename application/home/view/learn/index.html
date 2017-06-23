@@ -49,20 +49,6 @@
             {/volist}
         </div>
     </div>
-
-    <div class="notices hidden">
-        <div class="notice activity">
-            <a href="" class="list clear">
-                <div class="fr right">
-                    <div class="title limit_"></div>
-                    <div class="clear time">
-                        <span class="fl"></span>
-                        <span class="fr"></span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
 </div>
 <!--加载更多-->
 <div class="tip"></div>
@@ -75,6 +61,10 @@
 <script src="/home/js/reset.js"></script>
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+    var c =  parseInt(window.location.href.split("index/c/")[1]);
+    $('.tabs>.tab').eq(0).find('span').addClass('active');
+    ntc.eq(0).siblings('.notices' ).addClass('hidden');
+    ntc.eq(0).removeClass('hidden');
     $(function(){
         //轮播
         var mySwiper = new Swiper('.swiper-container', {
@@ -87,15 +77,10 @@
     $(function(){
         //tab初始化和数据存储
         var ntc = $('.notices');
-        var c =  parseInt(window.location.href.split("index/c/")[1]);
         var co = getCookie("type");
         if(co == 11 || co == 12 || co == 13){
             c = co - 10;
         }
-        console.log(c)
-        $('.tabs>.tab').eq(c-1).find('span').addClass('active');
-        ntc.eq(c-1).siblings('.notices' ).addClass('hidden');
-        ntc.eq(c-1).removeClass('hidden');
         //上拉加载
         if(c==1) {
             var len = ntc.eq(c - 1).find('.party a').length;
