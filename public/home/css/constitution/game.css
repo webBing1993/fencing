@@ -51,14 +51,14 @@ body{
 	display: inline-block;
 	width: 49vw;
 	height: 100%;
-	color: #fff;
+	color: #333;
 	font-size: 1.5rem;
 	line-height: 28px;
 	text-align: center;
 }
 
 .tabs .active {
-	color: #333;
+	color: #fff;
 }
 .tip{
 	width: 100%;
