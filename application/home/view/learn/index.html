@@ -6,30 +6,7 @@
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/common/tip.css">
 <link rel="stylesheet" href="/home/css/common/rem.css">
-<style>
-    /*banner*/
-    .banner{
-        position: relative;
-        width: 100%;
-        height: 50vw;
-    }
-    .banner img{
-        width: 100%;
-        height: 50vw;
-    }
-    .banner .title_{
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 40px;
-        padding-left: 13px;
-        padding-right: 13px;
-        background-color: rgba(0, 0, 0, 0.6);
-        line-height: 40px;
-        font-size: 1.6rem;
-        color: #ffffff;
-    }
-</style>
+
 {/block}
 {block name="body"}
 <!--tab-->
@@ -41,20 +18,33 @@
 <!--列表-->
 <div class="content">
     <div class="notices">
-        <!--banner-->
-        <div class="banners">
-            <div class="swiper-container">
-                <div class="imgs swiper-wrapper">
-                    {volist name="lists" id="ls"}
-                    <div class="banner swiper-slide">
-                        <a href="{:Url('Learn/video?id='.$ls['id'])}">
-                            <img src="{$ls.front_cover|get_cover='path'}" alt="">
-                            <div class="title_ limit">{$ls.title}</div>
-                        </a>
+        <div class="banner">
+            <div class="tag">—— 精品推荐 ——</div>
+            <!--精彩专题-->
+            {volist name="list1" id="re"}
+            <div class="box">
+                {eq name="re.type" value="2"}
+                <a href="{:Url('Learn/article?id='.$re['id'])}" class="box_up">
+                    {else/}
+                    <a href="{:Url('Learn/video?id='.$re['id'])}" class="box_up">
+                        {/eq}
+                        <img src="{$re.front_cover|get_cover='path'}" alt="图片">
+                        <div class="title limit">{$re.title}</div>
+                        <div class="note clear">
+                            <span class="fl">{$re.publisher}</span>
+                            <span class="fr">{$re.create_time|time_format=""}</span>
+                        </div>
+                    </a>
+                    <div class="box_down">
+                        <div class="clear">
+                            <span class="scan">{$re.views}</span>
+                            <div class="fr" onclick="tonext(this)">下一篇</div>
+                        </div>
                     </div>
-                    {/volist}
-                </div>
+                    <!--模糊层-->
+                    <img src="{$re.front_cover|get_cover='path'}" alt="背景" class="bg">
             </div>
+            {/volist}
         </div>
         <div class="notice party regularmore">
             <!--课程列表-->
