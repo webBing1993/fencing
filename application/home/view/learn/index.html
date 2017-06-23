@@ -23,11 +23,7 @@
             <!--精彩专题-->
             {volist name="lists" id="re"}
             <div class="box">
-                {eq name="re.type" value="2"}
-                <a href="{:Url('Learn/article?id='.$re['id'])}" class="box_up">
-                    {else/}
-                    <a href="{:Url('Learn/video?id='.$re['id'])}" class="box_up">
-                        {/eq}
+                <a href="{:Url('Learn/video?id='.$re['id'])}" class="box_up">
                         <img src="{$re.front_cover|get_cover='path'}" alt="图片">
                         <div class="title limit">{$re.title}</div>
                         <div class="note clear">
@@ -49,13 +45,14 @@
         <div class="notice party regularmore">
             <!--课程列表-->
             <div class="lists">
+                <div class="tag"> —— 更多视频 —— </div>
                 <!--图文课程-->
                 {volist name="list2" id="vo"}
                     <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list">
-                        <div class="tab">视频</div>
+                        <div class="tab">微电影</div>
                         <img src="{$vo.front_cover|get_cover='path'}" alt="图片" class="img">
                         <div class="title limit">{$vo.title}</div>
-                        <span class="study">{$vo.views}人阅读过</span>
+                        <span class="study">{$vo.views}次浏览</span>
                     </a>
                     {/volist}
             </div>
@@ -97,7 +94,7 @@
         ntc.eq(c-1).removeClass('hidden');
         //上拉加载
             var len = ntc.eq(c - 1).find('.party a').length;
-            if (len >= 6) {
+            if (len >= 2) {
                 $('.tip').text('上拉加载更多');
             }
             loadScroll(c);

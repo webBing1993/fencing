@@ -31,8 +31,8 @@ class Learn extends Base{
         $map2 = array(
             'status' => array('egt',0),
         );
-        $list1 = LearnModel::where($map1)->limit(3)->order('id desc')->select();  // 轮播
-        $list2 = LearnModel::where($map2) ->order('id desc') ->limit(6)->select();  // 列表
+        $list1 = LearnModel::where($map1)->order('id desc')->limit(3)->select();  // 轮播
+        $list2 = LearnModel::where($map2) ->order('id desc') ->limit(2)->select();  // 列表
         $this->assign('lists',$list1);
         $this ->assign('list2',$list2);
         return $this->fetch();
