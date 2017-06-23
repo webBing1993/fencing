@@ -87,6 +87,7 @@
 
     $(function(){
         //tab初始化和数据存储
+        $('.box').eq(0).show();
         var ntc = $('.notices');
         var co = getCookie("type");
         if(co == 11 || co == 12 || co == 13){
@@ -191,6 +192,21 @@
         }
         $('.notice .lists').append(html);
     }
+
+    /**
+     * 切换精彩专题
+     * @param e
+     */
+    var tonext = function(e){
+        var box =$('.box');
+        var len = box.length;
+        var this_ = $(e ).parents('.box');
+        var index = this_.index();
+        index = index == len ? 0:index;
+        $('.box_up').find('img' ).hide();
+        box.eq(index).show().siblings('.box' ).hide();
+        box.eq(index).find('img' ).fadeIn();
+    };
     pushHistory();
     setTimeout(function(){
         window.addEventListener("popstate", function(e) {
