@@ -15,12 +15,12 @@ use app\home\model\Company as CompanyModel;
 use app\home\model\WechatUser;
 use think\Request;
 /*
- * 品牌特色
+ * 党员之家
 */
 
 class Company extends Base{
     /*
-     * 品牌特色 主页
+     * 交流互动   主页
      */
     public function index(){
         $Model = new CompanyModel();
@@ -31,7 +31,7 @@ class Company extends Base{
         return $this->fetch();
     }
     /*
-     * 品牌特色 详情页
+     * 交流互动 详情页
      */
     public function detail(){
         $this->anonymous();

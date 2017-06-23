@@ -12,11 +12,11 @@ use app\admin\model\Picture;
 use think\Config;
 use app\admin\model\Company as CompanyModel;
 /*
- * 企业文化  控制器
+ * 党员之家  控制器
  */
 class Company extends Admin{
     /*
-     * 企业文化   主页
+     * 交流互动   主页
      */
     public function index(){
         $map = array(
@@ -30,10 +30,10 @@ class Company extends Admin{
         return $this->fetch();
     }
     /*
-     * 企业文化  添加 修改
+     * 交流互动  添加 修改
      */
     public function edit(){
-        $id = input('id/d');
+        $id = input('get.id/d');
         if ($id){
             // 修改
             if (IS_POST){
@@ -67,14 +67,28 @@ class Company extends Admin{
                     return $this->error($companyModel->getError());
                 }
             }else{
-                $this->default_pic();
                 $this->assign('msg','');
                 return $this->fetch();
             }
         }
     }
     /*
-     * 企业文化   推送列表
+     * 交流互动  删除
+     */
+    public function del(){
+        $id = input('get.id/d');
+        if ($id){
+            return  $this->error('系统错误,数据不存在');
+        }
+        $res = CompanyModel::where('id',$id)->update(['status' => -1]);
+        if ($res){
+            return $this->success('删除成功');
+        }else{
+            return $this->error('删除失败');
+        }
+    }
+    /*
+     * 交流互动   推送列表
      */
     public function pushlist(){
         if(IS_POST){
@@ -88,13 +102,13 @@ class Company extends Admin{
             );
             $infoes = CompanyModel::where($info)->select();
             foreach($infoes as $value){
-                $value['title'] = '【企业文化】'.$value['title'];
+                $value['title'] = '【交流互动】'.$value['title'];
             }
             return $this->success($infoes);
         }else{
             //新闻消息列表
             $map = array(
-                'class' => 6,  // 企业文化
+                'class' => 4,  // 党员之家
                 'status' => array('egt',-1)
             );
             $list=$this->lists('Push',$map);
@@ -115,14 +129,14 @@ class Company extends Admin{
             );
             $infoes = CompanyModel::where($info)->select();
             foreach($infoes as $value){
-                $value['title'] = '【企业文化】'.$value['title'];
+                $value['title'] = '【交流互动】'.$value['title'];
             }
             $this->assign('info',$infoes);
             return $this->fetch();
         }
     }
     /*
-     * 企业文化  推送
+     * 交流互动 推送
      */
     public function push(){
         $data = input('post.');
@@ -141,10 +155,9 @@ class Company extends Admin{
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
         $url1 = hostUrl."/home/Company/detail/id/".$info1['id'].".html";
-        $image1 = Picture::get($info1['front_cover']);
-        $path1 = hostUrl.$image1['path'];
+        $path1 = hostUrl.'/home/images/dangshi/0.jpg';
         $information1 = array(
-            'title' => '【企业文化】'.$title1,
+            'title' => '【交流互动】'.$title1,
             'description' => $content1,
             'url'  => $url1,
             'picurl' => $path1
@@ -161,10 +174,9 @@ class Company extends Admin{
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
                 $url2 = hostUrl."/home/Company/detail/id/".$info2['id'].".html";
-                $image2 = Picture::get($info2['front_cover']);
-                $path2 = hostUrl.$image2['path'];
+                $path2 = hostUrl.'/home/images/dangshi/0.jpg';
                 $information2[] = array(
-                    "title" =>'【企业文化】'.$title2,
+                    "title" =>'【交流互动】'.$title2,
                     "description" => $content2,
                     "url" => $url2,
                     "picurl" => $path2,
@@ -200,7 +212,7 @@ class Company extends Admin{
         if($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
-            $data['class'] = 6;  // 企业文化
+            $data['class'] = 4 ;  // 党员之家
             $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);

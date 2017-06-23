@@ -9,7 +9,6 @@ namespace app\admin\model;
 use think\Model;
 class Company extends Model{
     protected $insert = [
-        'views' => 0,
         'comments' => 0,
         'likes' => 0,
         'create_time' => NOW_TIME,
