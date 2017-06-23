@@ -2,10 +2,34 @@
 {block name="style"}
 <title>党建风采</title>
 <link rel="stylesheet" href="/home/css/learn/index.css">
-<link rel="stylesheet" href="/home/css/news/index.css">
+<link rel="stylesheet" href="/home/css/learn/learn.css">
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/common/tip.css">
 <link rel="stylesheet" href="/home/css/common/rem.css">
+<style>
+    /*banner*/
+    .banner{
+        position: relative;
+        width: 100%;
+        height: 50vw;
+    }
+    .banner img{
+        width: 100%;
+        height: 50vw;
+    }
+    .banner .title_{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 40px;
+        padding-left: 13px;
+        padding-right: 13px;
+        background-color: rgba(0, 0, 0, 0.6);
+        line-height: 40px;
+        font-size: 1.6rem;
+        color: #ffffff;
+    }
+</style>
 {/block}
 {block name="body"}
 <!--tab-->
@@ -32,21 +56,19 @@
                 </div>
             </div>
         </div>
-        <div class="notice party">
-            {volist name="list2" id="loo"}
-            <a href="{:Url('Learn/video?id='.$loo['id'])}" class="list clear">
-                <div class="fl">
-                    <img src="{$loo.front_cover|get_cover='path'}" alt="图片">
-                </div>
-                <div class="fr right">
-                    <div class="title limit_">{$loo.title}</div>
-                    <div class="clear time">
-                        <span class="fl">{$loo.publisher}</span>
-                        <span class="fr">{$loo.create_time|time_format='Y-m-d'}</span>
-                    </div>
-                </div>
-            </a>
-            {/volist}
+        <div class="notice party regularmore">
+            <!--课程列表-->
+            <div class="lists">
+                <!--图文课程-->
+                {volist name="list2" id="vo"}
+                    <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list">
+                        <div class="tab">视频</div>
+                        <img src="{$vo.front_cover|get_cover='path'}" alt="图片" class="img">
+                        <div class="title limit">{$vo.title}</div>
+                        <span class="study">{$vo.views}人阅读过</span>
+                    </a>
+                    {/volist}
+            </div>
         </div>
     </div>
 </div>
@@ -62,10 +84,8 @@
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     var c =  parseInt(window.location.href.split("index/c/")[1]);
-    var ntc = $('.notices');
     $('.tabs>.tab').eq(0).find('span').addClass('active');
-    ntc.eq(0).siblings('.notices' ).addClass('hidden');
-    ntc.eq(0).removeClass('hidden');
+    $('.tabs>.tab').eq(1).find('span' ).removeClass('active');
     $(function(){
         //轮播
         var mySwiper = new Swiper('.swiper-container', {
@@ -77,22 +97,19 @@
 
     $(function(){
         //tab初始化和数据存储
+        var ntc = $('.notices');
         var co = getCookie("type");
         if(co == 11 || co == 12 || co == 13){
             c = co - 10;
         }
+        ntc.eq(c-1).siblings('.notices' ).addClass('hidden');
+        ntc.eq(c-1).removeClass('hidden');
         //上拉加载
-        if(c==1) {
             var len = ntc.eq(c - 1).find('.party a').length;
             if (len >= 6) {
                 $('.tip').text('上拉加载更多');
             }
             loadScroll(c);
-        }
-        if(c==2) {
-            $(".tip").hide();
-          $(".loading").hide();
-        }
         //tab切换
         $('.tabs>.tab ').on('click',function(){
             var ntc = $('.notices' );
@@ -174,22 +191,32 @@
         var len = lists.length;
         for(var i = 0; i< len;i++){
             var list = lists[i];
-            html +=
-                    '<a href="/home/Learn/video/id/'+ list.id+'.html" class="list clear">'+
-                    '<div class="fl">'+
-                    '<img src="'+list.path+'" alt="图片">'+
-                    '</div>'+
-                    '<div class="fr right">'+
-                    '<div class="title limit_">'+list.title+'</div>'+
-                    '<div class="clear time">'+
-                    '<span class="fl">'+list.publisher+'</span>'+
-                    '<span class="fr">'+list.time+'</span>'+
-                    '</div>'+
-                    '</div>'+
-                    '</a>'
+                html+=
+                        '<a href="/home/learn/video/id/'+list.id+'.html" class="list">'+
+                        '<div class="tab">视频</div>'+
+                        '<img src="'+list.path+'" alt="图片" class="img">'+
+                        '<div class="title limit">'+ list.title+'</div>'+
+                        '<span class="study">'+ list.views+'人阅读过</span>'+
+                        '</a>'
         }
-        $('.notice').append(html);
+        $('.notice .lists').append(html);
     }
-
+    pushHistory();
+    setTimeout(function(){
+        window.addEventListener("popstate", function(e) {
+            delCookie("type");
+            $('.tabs>.tab').eq(0).find('span').addClass('active');
+            $('.tabs>.tab').eq(1).find('span' ).removeClass('active');
+            tip.hide();
+            loading.toggleClass('hidden');
+            if(eq==0) {
+                var len = ntc.eq(eq).find('.party a').length;
+                if (len >= 5) {
+                    $('.tip').text('上拉加载更多');
+                }
+                loadScroll(eq + 1);
+            }
+        }, false);
+    },200)
 </script>
 {/block}
