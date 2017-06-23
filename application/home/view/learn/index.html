@@ -21,7 +21,7 @@
         <div class="banner">
             <div class="tag">—— 精品推荐 ——</div>
             <!--精彩专题-->
-            {volist name="list1" id="re"}
+            {volist name="lists" id="re"}
             <div class="box">
                 {eq name="re.type" value="2"}
                 <a href="{:Url('Learn/article?id='.$re['id'])}" class="box_up">
