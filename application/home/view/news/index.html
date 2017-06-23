@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>党建动态</title>
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/news/news.css">
 {/block}
@@ -48,17 +49,16 @@
 <script>
 $(function(){
 	//模块标题
-	$('title').text('第一聚焦');
 	//reset
 	var txt;
 	var len = $(".list" ).length;
 	if(len == 0){
 		$('body' ).html('<div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>');
-	}else if(len >= 9){
+	}else if(len >= 6){
 		$('.tip' ).text('上拉加载更多');
+		//上拉加载
+		loadScroll();
 	}
-	//上拉加载
-	loadScroll();
 	//轮播
 	var mySwiper = new Swiper('.swiper-container', {
 		autoplay: 3000,

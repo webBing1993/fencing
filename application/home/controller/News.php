@@ -42,7 +42,7 @@ class News extends Base {
         $map2 = array(
             'status' => array('egt',0),
         );
-        $list = NewsModel::where($map2)->order('id desc')->limit(5)->select();
+        $list = NewsModel::where($map2)->order('id desc')->limit(6)->select();
         $this->assign('list',$list);
 
         return $this->fetch();
