@@ -46,6 +46,9 @@
   text-align: center;
   overflow: hidden;
 }
+.regularmore .lists .list:last-child{
+  margin-bottom: 0;
+}
 .regularmore .lists .list .tab {
   position: absolute;
   top: 20px;
