@@ -47,6 +47,7 @@
             <div class="lists">
                 <div class="tag"> —— 更多视频 —— </div>
                 <!--图文课程-->
+                <ul>
                 {volist name="list2" id="vo"}
                     <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list">
                         <div class="tab">微电影</div>
@@ -55,6 +56,7 @@
                         <span class="study">{$vo.views}次浏览</span>
                     </a>
                     {/volist}
+                </ul>
             </div>
         </div>
     </div>
@@ -93,7 +95,7 @@
         ntc.eq(c-1).siblings('.notices' ).addClass('hidden');
         ntc.eq(c-1).removeClass('hidden');
         //上拉加载
-            var len = ntc.eq(c - 1).find('.party a').length;
+            var len = ntc.eq(0).find('.lists ul a').length;
         if(len == 0){
             $(".tip").hide();
             $('.content' ).html('<div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>');
