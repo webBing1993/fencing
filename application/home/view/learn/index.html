@@ -206,22 +206,5 @@
         box.eq(index).show().siblings('.box' ).hide();
         box.eq(index).find('img' ).fadeIn();
     };
-    pushHistory();
-    setTimeout(function(){
-        window.addEventListener("popstate", function(e) {
-            delCookie("type");
-            $('.tabs>.tab').eq(0).find('span').addClass('active');
-            $('.tabs>.tab').eq(1).find('span' ).removeClass('active');
-            tip.hide();
-            loading.toggleClass('hidden');
-            if(eq==0) {
-                var len = ntc.eq(eq).find('.party a').length;
-                if (len >= 5) {
-                    $('.tip').text('上拉加载更多');
-                }
-                loadScroll(eq + 1);
-            }
-        }, false);
-    },200)
 </script>
 {/block}

@@ -1,3 +1,27 @@
+/*tab*/
+.tabs {
+  width: 100vw;
+  height: 44px;
+  padding: 8px 0;
+  background: #f1f1f1;
+}
+.tabs .tab {
+  display: inline-block;
+  width: 32vw;
+  height: 100%;
+  color: #333333;
+  font-size: 1.5rem;
+  line-height: 28px;
+  text-align: center;
+  border-right: 1px solid #e5e5e5;
+}
+.tabs .tab:last-child {
+  border-right: none;
+}
+.tabs .active {
+  color: #fd6743;
+}
+
 .lists {
   padding: 3.2vw;
 }
