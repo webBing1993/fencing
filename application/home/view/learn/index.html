@@ -95,11 +95,13 @@
         //上拉加载
             var len = ntc.eq(c - 1).find('.party a').length;
         if(len == 0){
-            $('body' ).html('<div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>');
+            $(".tip").hide();
+            $('.content' ).html('<div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>');
         }else if (len >= 2) {
                 $('.tip').text('上拉加载更多');
+                 loadScroll(c);
             }
-            loadScroll(c);
+
         //tab切换
         $('.tabs>.tab ').on('click',function(){
             var ntc = $('.notices' );
