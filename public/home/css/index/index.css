@@ -1,3 +1,4 @@
+
 /*banner*/
 .banner {
     width: 100vw;
@@ -34,14 +35,17 @@
 }
 /*model*/
 .model{
-    padding-bottom: 2vw;
+    padding: 2vw;
 }
 .model>li{
     float: left;
-    width: 17.3vw;
+    width: 16vw;
     margin: 2vw 8vw;
     min-height: 10vw;
     margin-bottom: 0px;
+}
+.model>li:active{
+    background: #eeeeee;
 }
 .model>li>a{
     width: 100%;
