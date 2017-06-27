@@ -212,12 +212,18 @@
 					</div>
 					<div class="note clear">
 						<span class="fl">{$vo.department_name}/{$vo.create_time|time_format="Y.m.d"}发布</span>
+						{eq name="visit" value="0"}
 						<span class="fr message" onclick="tosend(this,{$vo.id})"></span>
 						<span class="fr goodnum">{$vo.likes}</span>
 						{eq name="vo.is_like" value="1"}
 						<span class="fr good_" onclick="isGood(this,5,{$vo.id})"></span>
 						{else/}
 						<span class="fr good" onclick="isGood(this,5,{$vo.id})"></span>
+						{/eq}
+						{else/}
+						<span class="fr message"></span>
+						<span class="fr goodnum">{$vo.likes}</span>
+						<span class="fr good"></span>
 						{/eq}
 					</div>
 					<ul class="comments">
@@ -232,7 +238,9 @@
 			</div>
 			{/volist}
 		</div>
+	{eq name="visit" value="0"}
 		<a id="publish" href="{:Url('Company/publish')}"></a>
+	{/eq}
 		<div class="bottom clear">
 			<div class="myword fl">
 				<input type="text" placeholder="说说你的感想！" id="impression">
@@ -346,12 +354,12 @@
 			var tip = $(".tip");
 			var loading = $('.loading');
 			if(type==2){
-				var len = $("ul").length;
+				var len = $(" .interactive ul > li").length;
 			}
 			if(type==3){
 				var len = $('.aa .lists .list').length;
 			}
-			if(dh == end+1 && scrollNow){
+			if(dh == end && scrollNow){
 				scrollNow = false;//请求执行中
 				$.ajax({
 					type:"post",
@@ -365,7 +373,6 @@
 						loading.toggleClass('hidden');
 					},
 					success:function(data){
-						console.log(data)
 						loading.toggleClass('hidden');
 						tip.show();
 						if(data.code == 1){
@@ -392,11 +399,11 @@
 			var list = lists[i];
 			if(type==2){
 				html+=
-						'<a href="">'+
-						'<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>'+
-						'<span>发布人所在支部</span>'+
-						'<span><i></i>45</span>'+
-						'</a>';
+						'<li><a href="/home/Company/detail/id/"'+list.id+'>'+
+						'<p>'+list.title+'</p>'+
+						'<span>'+list.publisher+'</span>'+
+						'<span><i></i>'+list.comments+'</span>'+
+						'</a></li>';
 			}
 			if(type==3){
 				html +=
@@ -419,12 +426,20 @@
 				html +=
 						'</div>'+
 						'<div class="note clear">'+
-						'<span class="fl">'+list.department_name+'/'+list.time+'发布</span>'+
-						'<span class="fr message" onclick="tosend(this,'+list.id+')"></span>'+
-						'<span class="fr goodnum">'+list.likes+'</span>'+
-						'<span class="fr '+good+'" onclick="isGood(this,5,'+list.id+')"></span>'+
-						'</div>'+
-						'<ul class="comments">';
+						'<span class="fl">'+list.department_name+'/'+list.time+'发布</span>'
+				if ({$visit} == 0){
+					html+='<span class="fr message" onclick="tosend(this,'+list.id+')"></span>'+
+							'<span class="fr goodnum">'+list.likes+'</span>'+
+							'<span class="fr '+good+'" onclick="isGood(this,5,'+list.id+')"></span>'+
+							'</div>'+
+							'<ul class="comments">';
+				}else{
+					html+='<span class="fr message"></span>'+
+							'<span class="fr goodnum">'+list.likes+'</span>'+
+							'<span class="fr '+good+'"></span>'+
+							'</div>'+
+							'<ul class="comments">';
+				}
 				var commentlen = list.comment.length;
 				for(var x = 0 ;x <commentlen ;x++){
 					html+=

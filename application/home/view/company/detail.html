@@ -80,12 +80,14 @@
 			<div class="typing_loader"></div>
 		</div>
 	</div>
+	{eq name="visit" value="0"}
 	<div class="bottom clear">
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！">
 		</div>
 		<div class="send fr" onclick="send(this,4,{$detail.id})">发送</div>
 	</div>
+	{/eq}
 </div>
 {/block}
 
