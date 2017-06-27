@@ -872,17 +872,18 @@ class QYWechat
 	 * @param string $appsecret
 	 * @param string $token 手动指定access_token，非必要情况不建议用
 	 */
-	public function checkAuth($appid='',$appsecret='',$token=''){
-		if (!$appid || !$appsecret) {
+	public function checkAuth($appid='',$appsecret='',$token='',$agentid=''){
+		if (!$appid || !$appsecret || !$agentid) {
 			$appid = $this->appid;
 			$appsecret = $this->appsecret;
+			$agentid = $this->agentid;
 		}
 		if ($token) { //手动指定token，优先使用
 		    $this->access_token=$token;
 		    return $this->access_token;
 		}
 
-		$authname = 'qywechat_access_token'.$appid;
+		$authname = 'qywechat_access_token'.$appid.$agentid;
 		if ($rs = $this->getCache($authname))  {
 			$this->access_token = $rs;
 			return $rs;
@@ -892,7 +893,7 @@ class QYWechat
 		if ($result)
 		{
 			$json = json_decode($result,true);
-			if (!$json || isset($json['errcode'])) {
+			if (!$json || !empty($json['errcode']) || $json['errcode'] != 0) {
 				$this->errCode = $json['errcode'];
 				$this->errMsg = $json['errmsg'];
 				return false;
@@ -909,10 +910,11 @@ class QYWechat
 	 * 删除验证数据
 	 * @param string $appid
 	 */
-	public function resetAuth($appid=''){
+	public function resetAuth($appid='',$agentid=''){
 		if (!$appid) $appid = $this->appid;
+		if (!$agentid) $agentid = $this->agentid;
 		$this->access_token = '';
-		$authname = 'qywechat_access_token'.$appid;
+		$authname = 'qywechat_access_token'.$appid.$agentid;
 		$this->removeCache($authname);
 		return true;
 	}
