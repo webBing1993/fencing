@@ -149,7 +149,9 @@ class Base extends Controller {
      * 0 评论点赞
      * 1 news  党建动态
      * 2 notice 通知公告
-     * 3 learn  党建之家
+     * 3 learn  党建风采
+     * 4 company 党员之家 交流互动
+     * 5 opinion 意见反馈
      */
     public function like(){
         $uid = session('userId'); //点赞人
@@ -167,6 +169,12 @@ class Base extends Controller {
                 break;
             case 3:
                 $table = "learn";
+                break;
+            case 4:
+                $table = "company";
+                break;
+            case 5:
+                $table = "opinion";
                 break;
             default:
                 return $this->error("无该数据表");
@@ -270,7 +278,9 @@ class Base extends Controller {
      * type值：
      * 1 news  党建动态
      * 2 notice 通知公告
-     * 3 learn  党建之家
+     * 3 learn  党建风采
+     * 4 company 党员之家
+     * 5 opinion  意见反馈
      */
     public function comment(){
         if(IS_POST){
@@ -286,6 +296,12 @@ class Base extends Controller {
                     break;
                 case 3:
                     $table = "learn";
+                    break;
+                case 4:
+                    $table = "company";
+                    break;
+                case 5:
+                    $table = "opinion";
                     break;
                 default:
                     return $this->error("无该数据表");

@@ -21,24 +21,31 @@
 {block name="body"}
 <div class="scrollDiy">
 	<div class="article special">
-		<div class="title limit_">哦哦</div>
+		<div class="title limit_">{$detail.title}</div>
 		<div class="note">
-			<span class="read">1455</span>
-			<span class="comment">1455</span>
-			<span class="fl">2015.3654</span>
+			<span class="read">{$detail.views}</span>
+			<span class="comment">{$detail.comments}</span>
+			<span class="fl">{$detail.create_time|time_format='Y-m-d'}</span>
 		</div>
 	</div>
 
 		<div class="content">
 			<div class="uecontent">
 				<img src="/home/images/common/banner.png">
-				<p class="name">我是名字</p>
-				<span class="department">企业党支部</span>
+				<p class="name">发布支部</p>
+				<span class="department">{$detail->getDepart->name}</span>
 			</div>
-			<p>曲面得得得哈哈哈哈东阿忙得很返回到，涣发大号的哈哈哈打哈哈的好的名，单架构我我到你当活动阿尔。</p>
+			<p>{$detail.content}</p>
 			<div class="like special">
-				<span class="isgood good_ like" onclick="isGood(this,15)">2345</span>
-				<!--<span class="isgood good like" onclick="isGood(this,15)">9999</span>-->
+				{eq name="visit" value="0"}
+					{eq name="detail.is_like" value="1"}
+						<span class="isgood good_ like" onclick="isGood(this,4,{$detail.id})">{$detail.likes}</span>
+					{else/}
+						<span class="isgood good like" onclick="isGood(this,4,{$detail.id})">{$detail.likes}</span>
+					{/eq}
+				{else/}
+				<span class="isgood good like" >{$detail.likes}</span>
+				{/eq}
 				<span id="addnum"><em>+1</em></span>
 			</div>
 		</div>
@@ -46,18 +53,27 @@
 	<div class="comment">
 		<div class="sum">论坛讨论</div>
 		<div class="lists">
+			{volist name="comment" id="co"}
 			<div class="list clear">
 				<div class="fl">
-					<img src="" alt="用户" class="user">
+					<img src="{$co.header}" alt="用户" class="user">
 				</div>
 				<div class="fl mid">
-					<div class="name limit">楼主蓝</div>
-					<div class="time">2017-6-28</div>
-					<div class="content" >即将赛事所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所，司机姐姐军军军军军军军军军军军军军军军军军军军，二甲基军军军军军军军军军军军军军军军军军军军军军，二甲基军军军军军军军军军军军军军军军军军军。</div>
+					<div class="name limit">{$co.nickname}</div>
+					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+					<div class="content" >{$co.content}</div>
 				</div>
-				<div class="fr isgood good_" onclick="isGood(this,0)">1002</div>
-				<!--<div class="fr isgood good" onclick="isGood(this,0)">1002</div>-->
+				{eq name="visit" value="0"}
+					{eq name="co.is_like" value="1"}
+					<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+					{else/}
+					<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+					{/eq}
+				{else/}
+				<div class="fr isgood good" >{$co.likes}</div>
+				{/eq}
 			</div>
+			{/volist}
 		</div>
 		<div class="tip"></div>
 		<div class="loading hidden">
@@ -68,7 +84,7 @@
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！">
 		</div>
-		<div class="send fr" onclick="send(this,15)">发送</div>
+		<div class="send fr" onclick="send(this,4,{$detail.id})">发送</div>
 	</div>
 </div>
 {/block}
@@ -155,6 +171,8 @@
 							'</div>'+
 							'<div class="fl mid">'+
 							'<div class="name limit">'+data.nickname+'</div>'+
+							'<div class="time" >'+data.time+'</div>'+
+							'<div class="content">'+it.val()+'</div>'+
 							'<div class="time">'+data.time+'</div>'+
 							'<div class="content" >'+it.val()+'</div>'+
 							'</div>'+
@@ -177,6 +195,78 @@
 		}else{
 			wAlert('您的评论不能为空');
 		}
+	}
+	function loadScroll(){
+		$('.scrollDiy').off("scroll" ).on("scroll",function(){
+			var dh = $('.article').height() + $('.comment').height();
+			var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
+			var len = $(".list" ).length;
+			var tip = $(".tip");
+			var loading = $('.loading');
+			var id = {$detail['id']};
+			if(dh <= end && scrollNow){
+				scrollNow = false;//请求执行中
+				$.ajax({
+					type:"post",
+					url:"{:Url('Base/morecomment')}",
+					data:{
+						type:4,
+						aid:id,
+						length:len
+					},
+					beforeSend: function(XMLHttpRequest){
+						tip.hide();
+						loading.toggleClass('hidden');
+					},
+					success:function(data){
+						loading.toggleClass('hidden');
+						tip.show();
+						if(data.code == 1){
+							addComment(data);
+							var dataLen =data.data.length;
+							if(data.data.length == 5){
+								tip.text('上拉加载更多');
+							}
+						}else{
+							tip.text('没有更多了');
+							$('.scrollDiy' ).off("scroll");
+						}
+						scrollNow = true;//请求结束
+					}
+				})
+			}
+		})
+	}
+	function addComment(data){
+		//is_like : 1为已点赞 0为未点赞
+		var html = '';
+		var lists = data.data;
+		var len = lists.length;
+		for(var i = 0; i< len;i++){
+			var list = lists[i];
+			var userid = "'"+list.create_user+"'";
+			html += '<div class="list clear">'+
+					'<div class="fl">'+
+					'<img src="'+list.header+'" alt="用户" class="user">'+
+					'</div>'+
+					'<div class="fl mid">'+
+					'<div class="name limit">'+ list.nickname+'</div>'+
+					'<div class="time" >'+ list.time+'</div>'+
+					'<div class="content">'+list.content +'</div>'+
+					'</div>';
+			if ({$visit} == 0){
+				if(list.is_like == 0){
+					html+='<div class="fr isgood good" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+				}else{
+					html+='<div class="fr isgood good_" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
+				}
+			}else {
+				html+='<div class="fr isgood good">'+list.likes+'</div>'
+			}
+			html+=
+					'</div>';
+		}
+		$(".lists" ).append(html);
 	}
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>

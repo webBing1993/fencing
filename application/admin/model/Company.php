@@ -11,6 +11,7 @@ class Company extends Model{
     protected $insert = [
         'comments' => 0,
         'likes' => 0,
+        'views' => 0,
         'create_time' => NOW_TIME,
     ];
     //获取后台用户名称

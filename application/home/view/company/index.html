@@ -58,6 +58,15 @@
 	<!--/交流互动-->
 	<div class="notices interactive">
 		<ul>
+			{volist name="list" id="lo"}
+			<li>
+				<a href="{:Url('Company/detail?id='.$lo['id'])}">
+				<p>{$lo.title}</p>
+				<span>{$lo->getDepart->name}</span>
+				<span><i></i>{$lo.comments}</span>
+				</a>
+			</li>
+			{/volist}
 			<a href="{:Url('company/detail')}">
 				<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>
 				<span>发布人所在支部</span>
@@ -69,7 +78,7 @@
 	<!--/建言献策-->
 	<div class="scrollDiy notices" style="position: absolute;top: 0;bottom: 0;overflow: scroll;-webkit-overflow-scrolling: touch;width: 100%;">
 		<div class="lists" style="width: 100%;overflow: hidden">
-			{volist name="list" id="vo"}
+			{volist name="lists" id="vo"}
 			<div class="list clear">
 				<div class="fl">
 					<img src="{$vo.header}" alt="用户头像">
@@ -106,7 +115,7 @@
 			</div>
 			{/volist}
 		</div>
-		<a id="publish" href="{:Url('Feedback/publish')}"></a>
+		<a id="publish" href="{:Url('Company/publish')}"></a>
 		<div class="bottom clear">
 			<div class="myword fl">
 				<input type="text" placeholder="说说你的感想！" id="impression">
@@ -148,7 +157,7 @@
 		}
 		if(c==3){
 			var len = ntc.eq(c - 1).find('.lists .list').length;
-			if (len >= 5) {
+			if (len >= 7) {
 				$('.tip').text('上拉加载更多');
 			}
 			loadScroll(c);

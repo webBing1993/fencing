@@ -18,4 +18,8 @@ class Company extends Model{
         $list = $this ->where($where)->order($order)->limit($data['length'],5)->select();
         return $list;
     }
+    //  获取 部门 名称
+    public function getDepart(){
+        return $this->hasOne('WechatDepartment','id','publisher');
+    }
 }
