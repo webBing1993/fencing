@@ -280,6 +280,7 @@
 			loadScroll(c);
 		}
 		if(c==3){
+
 			var len = ntc.eq(c - 1).find('.lists .list').length;
 			if (len >= 7) {
 				$('.tip').text('上拉加载更多');
@@ -353,7 +354,7 @@
 				var len = $("ul").length;
 			}
 			if(type==3){
-				var len = $('.lists .list').length;
+				var len = $('.aa .lists .list').length;
 			}
 			if(dh == end && scrollNow){
 				scrollNow = false;//请求执行中

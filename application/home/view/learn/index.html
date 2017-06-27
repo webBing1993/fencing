@@ -11,8 +11,8 @@
 {block name="body"}
 <!--tab-->
 <div class="tabs clear">
-    <a class="tab"><span>微电影</span></a>
-    <a  href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAxNjc1OTc2Mg==&scene=124#wechat_redirect" class="tab"><span>手机报</span></a>
+    <a class="tab active"><span>微电影</span></a>
+    <a  href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAxNjc1OTc2Mg==&scene=124#wechat_redirect" class="tab" onclick="isOut()"><span>手机报</span></a>
 </div>
 
 <!--列表-->
@@ -69,12 +69,8 @@
 {/block}
 {block name="script"}
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
-<script src="/home/js/reset.js"></script>
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
-    var c =  parseInt(window.location.href.split("index/c/")[1]);
-    $('.tabs>.tab').eq(0).find('span').addClass('active');
-    $('.tabs>.tab').eq(1).find('span' ).removeClass('active');
     $(function(){
         //轮播
         var mySwiper = new Swiper('.swiper-container', {
@@ -88,12 +84,7 @@
         //tab初始化和数据存储
         $('.box').eq(0).show();
         var ntc = $('.notices');
-        var co = getCookie("type");
-        if(co == 11 || co == 12 || co == 13){
-            c = co - 10;
-        }
-        ntc.eq(c-1).siblings('.notices' ).addClass('hidden');
-        ntc.eq(c-1).removeClass('hidden');
+
         //上拉加载
             var len = ntc.eq(0).find('.lists ul a').length;
         if(len == 0){
@@ -108,8 +99,6 @@
         $('.tabs>.tab ').on('click',function(){
             var ntc = $('.notices' );
             var eq = $(this ).index();
-            $(this ).siblings('.tab' ).find('span' ).removeClass('active');
-            $(this ).find('span' ).addClass('active');
             ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
             ntc.eq(eq).removeClass('hidden');
             if(eq==0) {
@@ -123,8 +112,7 @@
                 $(".tip").hide();
                 $(".loading").hide();
             }
-            //使用示例
-            setCookie("type",eq+11);
+
         });
         //安卓4.4tab兼容
         var u = navigator.userAgent;
