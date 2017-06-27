@@ -178,12 +178,16 @@
 				var len = ntc.eq(eq).find('ul').length;
 				if (len >= 5) {
 					$('.tip').text('上拉加载更多');
+				}else{
+					$('.tip').hide();
 				}
 			}
 			if(eq==2) {
 				var len = ntc.eq(eq).find('.lists .list').length;
 				if (len >= 5) {
 					$('.tip').text('上拉加载更多');
+				}else{
+					$('.tip').hide();
 				}
 			}
 			loadScroll(eq + 1);
