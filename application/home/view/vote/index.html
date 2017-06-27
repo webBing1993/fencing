@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>党员之家</title>
 <link rel="stylesheet" href="/static/framework7/framework7.ios.min.css">
 <link rel="stylesheet" href="/static/framework7/framework7.ios.colors.min.css">
 <style>
@@ -140,60 +141,42 @@
     <!--课程列表-->
     <div class="lists">
         <!--图文课程-->
+        {empty name="top"}
+        <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+        {else/}
         <ul>
-            <a href="/home/learn/video/id/1.html" class="list">
+            {volist name="top" id="to"}
+            <a href="{:Url('Vote/vote?id='.$to['id'])}" class="list">
                 <div class="tab">火热投票中</div>
-                <span class="imgtext">2017年优秀党员评选投票</span>
-                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
+                <span class="imgtext">{$to.title}</span>
+                <img src="{$to.front_cover|get_cover='path'}" alt="图片" class="img">
                 <div class="content">
-                <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
-                <span class="study">已投：20人</span>
-                <div class="details">查看详情</div>
-                </div>
-            </a>
-            <a href="/home/learn/video/id/1.html" class="list">
-                <div class="tab">火热投票中</div>
-                <span class="imgtext">2017年优秀党员评选投票</span>
-                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
-                <div class="content">
-                    <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
-                    <span class="study">已投：20人</span>
+                    <div class="title limit">还剩<span> {$to.left} </span>结束</div>
+                    <span class="study">已投：{$to.sum}人</span>
                     <div class="details">查看详情</div>
                 </div>
             </a>
-            <a href="/home/learn/video/id/1.html" class="list">
-                <div class="tab">火热投票中</div>
-                <span class="imgtext">2017年优秀党员评选投票</span>
-                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
-                <div class="content">
-                    <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
-                    <span class="study">已投：20人</span>
-                    <div class="details">查看详情</div>
-                </div>
-            </a>
-            <a href="/home/learn/video/id/1.html" class="list">
-                <div class="tab">火热投票中</div>
-                <span class="imgtext">2017年优秀党员评选投票</span>
-                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
-                <div class="content">
-                    <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
-                    <span class="study">已投：20人</span>
-                    <div class="details">查看详情</div>
-                </div>
-            </a>
+            {/volist}
         </ul>
+        {/empty}
     </div>
 </div>
 
 <div class="lists history">
      <div>历史投票</div>
+    {empty name="list"}
+    <span  style="text-align: center;width: 100%;">暂无历史数据</span>
+    {else/}
     <ul>
-        <a>
-            <img src="/home/images/common/banner.png">
-            <p>哈哈哈哈哈哈哈哈哈哈哈哈哈hhhhhh或哈哈哈哈或哈或或或或哈哈哈哈或</p>
-            <span>已结束</span><span>已投：20人</span>
+        {volist name="list" id="lo"}
+        <a href="{:Url('Vote/vote?id='.$lo['id'])}">
+            <img src="{$lo.front_cover|get_cover='path'}">
+            <p>{$lo.title}</p>
+            <span>已结束</span><span>已投：{$lo.sum}人</span>
         </a>
+        {/volist}
     </ul>
+    {/empty}
 </div>
 
 
