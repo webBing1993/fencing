@@ -40,7 +40,9 @@ class Rank extends Base {
         $personal['score'] = $personal['score'] + 10;  // 关注企业号  基础分10
         $personal['dpname'] = $dp['name'];
         //总榜
-        $con['score'] = array('neq',0);
+        $con = array(
+            'status' => 1
+        );
         $all  = $wechatModel->where($con)->order('score desc')->limit(60)->select();
         foreach ($all as $k => $value){
             $value['score'] += 10;  // 关注企业号  基础分10

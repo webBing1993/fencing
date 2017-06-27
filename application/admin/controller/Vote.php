@@ -54,7 +54,7 @@ class Vote extends Admin{
                     return $this->error($Vote->getError());
                 }
             }else{
-                $Department = WechatDepartment::where(['parentid' => ['neq',1]])->field('id,name')->select();
+                $Department = WechatDepartment::where(['parentid' => ['neq',0]])->field('id,name')->select();
                 $this->assign('info',$Department);
                 $Vote = VoteModel::where('id',$id)->find();
                 $this->assign('msg',$Vote);
@@ -80,7 +80,7 @@ class Vote extends Admin{
                     return $this->error($Vote->getError());
                 }
             }else{
-                $Department = WechatDepartment::where(['parentid' => ['neq',1]])->field('id,name')->select();
+                $Department = WechatDepartment::where(['parentid' => ['neq',0]])->field('id,name')->select();
                 $this->assign('info',$Department);
                 $this->assign('msg','');
                 return  $this->fetch();

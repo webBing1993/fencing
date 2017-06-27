@@ -55,7 +55,7 @@ class Company extends Admin{
                     return $this->get_update_error_msg($companyModel->getError());
                 }
             }else{
-                $Department = WechatDepartment::where(['parentid' => ['neq',1]])->field('id,name')->select();
+                $Department = WechatDepartment::where(['parentid' => ['neq',0]])->field('id,name')->select();
                 $this->assign('info',$Department);
                 $msg = CompanyModel::where('id',$id)->find();
                 $this->assign('msg',$msg);
@@ -80,7 +80,7 @@ class Company extends Admin{
                     return $this->error($companyModel->getError());
                 }
             }else{
-                $Department = WechatDepartment::where(['parentid' => ['neq',1]])->field('id,name')->select();
+                $Department = WechatDepartment::where(['parentid' => ['neq',0]])->field('id,name')->select();
                 $this->assign('info',$Department);
                 $this->assign('msg','');
                 return $this->fetch();
