@@ -838,13 +838,13 @@ var data2 =[
 			}]
 	},
 	{
-		"party3":"温岭市松门个协党支部",
+		"party3":"温岭市泽国个协党总支",
 		"detail3":[
 			{
 				"party4":"综合第一党支部",
 				"detail4":[
 					{
-						"position":"党总支副书记兼综合支委",
+						"position":"副书记兼综合支委",
 						"name":"李祖林",
 						"tel":"13858676599"
 					},
@@ -854,7 +854,7 @@ var data2 =[
 						"tel":"13958625373"
 					},
 					{
-						"position":"党总支书记兼综合支部书",
+						"position":"书记兼综合支部书",
 						"name":"颜连根",
 						"tel":"18858692555"
 					},
@@ -869,7 +869,7 @@ var data2 =[
 						"tel":"13906563133"
 					},
 					{
-						"position":"党总支副书记、支部书记",
+						"position":"副书记、支部书记",
 						"name":"林桂英",
 						"tel":"13906867937"
 					},
@@ -898,7 +898,7 @@ var data2 =[
 			}]
 	},
 	{
-		"party3":"开发区个私协党支部 ",
+		"party3":"开发区个私协党支部",
 		"detail3":[
 			{
 				"party4":"综合第一党支部",
@@ -1461,12 +1461,7 @@ var data2 =[
 
 				]
 			}]
-	},
-
-
-
-
-
+	}
 
 ];
 var len = data2.length;
@@ -1501,7 +1496,7 @@ for(var i = 0 ; i < len ;i++){
 					'<div class="tb fl tel">';
 			for(var n = 0 ;n < len4 ;n++){
 				html+=
-						'<span>'+detail4[n].tel+'</span>';
+						'<span><a href="tel:'+detail4[n].tel+'">'+detail4[n].tel+'</a></span>';
 			}
 			html+=
 					'</div>'+
