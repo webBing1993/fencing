@@ -12,6 +12,7 @@ use app\home\model\Notice;
 use app\home\model\Browse;
 use app\home\model\Feedback;
 use app\home\model\WechatUser;
+use app\home\model\WechatUserTag;
 use think\Controller;
 use think\Db;
 use com\wechat\TPQYWechat;
@@ -42,6 +43,13 @@ class User extends Base {
             }else{
                 $this ->assign('is_sign',0);
             }
+        }
+        //  是否 具有  游客模式 权限
+        $Tourist = WechatUserTag::where(['tagid' => 1, 'userid' => $userId])->find();
+        if ($Tourist){
+            $this ->assign('tourist',1);
+        }else{
+            $this ->assign('tourist',0);
         }
         return $this->fetch();
     }
