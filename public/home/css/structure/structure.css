@@ -265,14 +265,14 @@ body {
   margin: 5vw 10vw;
   width: 80vw;
 }
-.table .party {
+.table .tel {
   width: 40vw;
 }
 .table .position {
-  width: 30vw;
+  width: 40vw;
 }
 .table .name {
-  width: 30vw;
+  width: 20vw;
 }
 .table .thead .th {
   display: inline-block;
