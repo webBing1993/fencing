@@ -134,6 +134,7 @@
 
 {block name="script"}
 <script src="/home/js/reset.js"></script>
+<script src="/static/viewer/viewer-jquery.min.js"></script>
 <script>
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 	var c =  parseInt(window.location.href.split("index/c/")[1]);
@@ -204,6 +205,11 @@
 				$('.tabs>.tab').width(tabw);
 			}
 		}
+		viewer = $('.imgs').viewer({
+			url: 'data-original',
+			toolbar:false,
+			title:false
+		});
 	});
 
 	function loadScroll(type){
@@ -296,7 +302,22 @@
 						'</div>';
 			}
 		}
-		$(".lists" ).append(html);
+		if(type==2){
+			$(".interactive ul").append(html);
+		}
+		if(type==3){
+			$(".aa .lists" ).append(html);
+		}
+		//图片排版、评论框
+		layout();
+		imgresize();
+		if(viewer) {
+			viewer = $('.lists .imgs').viewer({
+				url: 'data-original',
+				toolbar:false,
+				title:false
+			});
+		}
 	}
 
 	//点击评论弹出评论框
