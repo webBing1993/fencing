@@ -3,22 +3,117 @@
 {block name="style"}
 <title>党员之家</title>
 <link rel="stylesheet" href="/home/css/company/index.css">
+<link rel="stylesheet" href="/static/viewer/viewer.min.css">
+<link rel="stylesheet" href="/home/css/feedback/feedback.css">
 {/block}
 {block name="body"}
-<div class="tabs">
-	<span class="tab active">组织概况</span>
-	<span class="tab">数据统计</span>
-	<span class="tab">VR</span>
+<div class="banner">
+	<a>民主评议</a>
+	<img src="/home/images/feedback/1.jpg" alt="建言献策banner图">
 </div>
-<div class="lists">
-	<!--好案例：good,新成果：new-->
-	{volist name="list" id="vo"}
-	<a href="{:Url('Company/detail?id='.$vo['id'])}" class="list">
-		<img src="{$vo.front_cover|get_cover='path'}" alt="封面图" class="cover">
-		<img src="{$vo.image|get_cover='path'}" alt="头像" class="user">
-		<div class="title limit">{$vo.title}</div>
-	</a>
-	{/volist}
+<div class="tabs">
+	<span class="tab active">组织架构</span>
+	<span class="tab">交流互动</span>
+	<span class="tab">建言献策</span>
+</div>
+<div class="lists listbox">
+	<div class="town box active notices">
+		<!--组织架构-->
+		<div class="box_ or">
+			<div class="lists">
+				<!--第一层-->
+				<div class="list clear">
+					<div class="party1">
+						<div class="tri"></div>
+						<div class="name1">公司党委</div>
+					</div>
+					<!--第二层-->
+					<div class="down detail1">
+						<a class="name2 limit" href="{:Url('Structure/detail')}">综合第一党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">综合第二党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">市场经营部党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">政企客户部党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">网络部党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">椒江分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">黄岩分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">路桥分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">天台分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">临海分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">温岭分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">仙居分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">三门分公司党支部</a>
+						<a class="name2 limit" href="{:Url('Structure/detail')}">玉环分公司党支部</a>
+					</div>
+					<!--/第二层-->
+				</div>
+			</div>
+		</div>
+		<div class="box_ summary">
+			<p>
+				公司党委成立于1999年，在台州市委和省公司党委的正确领导下，不断完善基层党组织建设，团结全体干部员工，实现了公司的跨越式发展。特别是十八大以来，着力加强党的基层组织建设，着力发挥党员先进性，着力加强领导班子和干部人才队伍建设，为公司持续发展提供了坚强的政治保证。公司党委先后获得了省级党建工作优秀单位、省级优秀基层党组织、集团公司优秀基层党组织、中央企业优秀基层党组织等系列荣誉，实现“党委有亮点、支部有特色、党员有贡献、员工有提升”。多年来，公司党员队伍不断发展壮大。截至2016年底，公司党员人数549名，其中劳动合同制员工党员541名，占党员总数99%。全公司设立14个党支部，实现了9个县（市、区）分公司党组织建设全覆盖，确保了公司发展到哪里，党的组织就建设到哪里，党的工作就延伸到哪里。强化人员配备，为全面从严治党提供了人员保障,市公司设立党委办公室（党群工作部）和纪检监察室，党建工作架构更加健全；强化人员配备，选任支部书记及委员组成的基层组织队伍56人，市公司职能部门共有专职党务工作者7名，14个支部各有1名兼职党务工作人员，其中9个县公司各配备“党工干事”1名，为全面从严治党提供了人员保障。
+			</p>
+		</div>
+	</div>
+
+	<!--/交流互动-->
+	<div class="notices interactive">
+		<ul>
+			<a href="">
+				<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>
+				<span>发布人所在支部</span>
+				<span><i></i>45</span>
+			</a>
+		</ul>
+	</div>
+
+	<!--/建言献策-->
+	<div class="scrollDiy notices" style="position: absolute;top: 0;bottom: 0;overflow: scroll;-webkit-overflow-scrolling: touch;width: 100%;">
+		<div class="lists" style="width: 100%;overflow: hidden">
+			{volist name="list" id="vo"}
+			<div class="list clear">
+				<div class="fl">
+					<img src="{$vo.header}" alt="用户头像">
+				</div>
+				<div class="fr">
+					<div class="name limit">{$vo.username}</div>
+					<div class="content">{$vo.content}</div>
+					<div class="imgs">
+						{volist name="$vo.images" id="img"}
+						<div class="img">
+							<img src="{$img|get_cover='path'}" alt="评论图" data-original="">
+						</div>
+						{/volist}
+					</div>
+					<div class="note clear">
+						<span class="fl">{$vo.department_name}/{$vo.create_time|time_format="Y.m.d"}发布</span>
+						<span class="fr message" onclick="tosend(this,{$vo.id})"></span>
+						<span class="fr goodnum">{$vo.likes}</span>
+						{eq name="vo.is_like" value="1"}
+						<span class="fr good_" onclick="isGood(this,{$vo.id},null,null,13)"></span>
+						{else/}
+						<span class="fr good" onclick="isGood(this,{$vo.id},null,null,13)"></span>
+						{/eq}
+					</div>
+					<ul class="comments">
+						{volist name="$vo.comment" id="com"}
+						<li>
+							<span class="name">{$com.username}：</span>
+							<span class="comment">{$com.content}</span>
+						</li>
+						{/volist}
+					</ul>
+				</div>
+			</div>
+			{/volist}
+		</div>
+		<a id="publish" href="{:Url('Feedback/publish')}"></a>
+		<div class="bottom clear">
+			<div class="myword fl">
+				<input type="text" placeholder="说说你的感想！" id="impression">
+			</div>
+			<div class="send fr" onclick="send(this)">发送</div>
+		</div>
+	</div>
 </div>
 <div class="tip"></div>
 <div class="loading hidden">
@@ -27,8 +122,12 @@
 {/block}
 
 {block name="script"}
+<script src="/home/js/reset.js"></script>
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+	var c =  parseInt(window.location.href.split("index/c/")[1]);
 	$(function(){
+		slide();
 		//tab初始化和数据存储
 		var ntc = $('.notices');
 		var co = getCookie("type");
@@ -38,30 +137,41 @@
 		ntc.eq(c-1).siblings('.notices' ).addClass('hidden');
 		ntc.eq(c-1).removeClass('hidden');
 		//上拉加载
-		var len = ntc.eq(c - 1).find('.party a').length;
-		if (len >= 2) {
-			$('.tip').text('上拉加载更多');
+		if(c==2){
+			var len = ntc.eq(c - 1).find('ul').length;
+			if (len >= 5) {
+				$('.tip').text('上拉加载更多');
+			}
+		}
+		if(c==1){
+			var len = ntc.eq(c - 1).find('.lists .list').length;
+			if (len >= 5) {
+				$('.tip').text('上拉加载更多');
+			}
 		}
 		loadScroll(c);
+
 		//tab切换
 		$('.tabs>.tab ').on('click',function(){
 			var ntc = $('.notices' );
 			var eq = $(this ).index();
-			$(this ).siblings('.tab' ).find('span' ).removeClass('active');
-			$(this ).find('span' ).addClass('active');
+			$(this ).siblings('.tab' ).removeClass('active');
+			$(this ).addClass('active');
 			ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
 			ntc.eq(eq).removeClass('hidden');
-			if(eq==0) {
-				var len = ntc.eq(eq).find('.party a').length;
+			if(eq==1) {
+				var len = ntc.eq(eq).find('ul').length;
 				if (len >= 5) {
 					$('.tip').text('上拉加载更多');
 				}
-				loadScroll(eq + 1);
 			}
-			if(eq==1) {
-				$(".tip").hide();
-				$(".loading").hide();
+			if(eq==2) {
+				var len = ntc.eq(eq).find('.lists .list').length;
+				if (len >= 5) {
+					$('.tip').text('上拉加载更多');
+				}
 			}
+			loadScroll(eq + 1);
 			//使用示例
 			setCookie("type",eq+11);
 		});
@@ -77,13 +187,18 @@
 		}
 	});
 
-	function loadScroll(){
+	function loadScroll(type){
 		$(window ).off("scroll" ).on("scroll",function(){
 			var dh = $(document).height();
 			var end = $(window).height() + $(window ).scrollTop();
-			var len = $(".list" ).length;
 			var tip = $(".tip");
 			var loading = $('.loading');
+			if(type==2){
+				var len = $("ul").length;
+			}
+			if(type==3){
+				var len = $('.lists .list').length;
+			}
 			if(dh == end && scrollNow){
 				scrollNow = false;//请求执行中
 				$.ajax({
@@ -100,7 +215,7 @@
 						loading.toggleClass('hidden');
 						tip.show();
 						if(data.code == 1){
-							addLists(data);
+							addLists(data,type);
 							var dataLen =data.data.length;
 							if(data.data.length == 5){
 								tip.text('上拉加载更多');
@@ -115,20 +230,136 @@
 			}
 		})
 	}
-	function addLists(data){
+	function addLists(data,type){
 		var html = '';
 		var lists = data.data;
 		var len = lists.length;
 		for(var i = 0; i< len;i++){
 			var list = lists[i];
-			html +=
-					'<a href="/home/company/detail/id/'+ list.id+'.html" class="list">'+
-						'<img src="'+ list.front_src +'" alt="封面图" class="cover">'+
-							'<img src="'+ list.header_src +'" alt="头像" class="user">'+
-							'<div class="title limit">'+ list.title +'</div>'+
-					'</a>'
+			if(type==2){
+				html+=
+						'<a href="">'+
+						'<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>'+
+						'<span>发布人所在支部</span>'+
+						'<span><i></i>45</span>'+
+						'</a>';
+			}
+			if(type==3){
+				html+=
+						'<div class="list clear">'+
+						'	<div class="fl"><img src="" alt="用户头像"></div>'+
+						'	<div class="fr">'+
+						'		<div class="name limit">'+
+						'		</div>'+
+						'		<div class="content">'+
+						'			<p>交流互动</p>'+
+						'		</div>'+
+						'		<div class="imgs">'+
+						'		<div class="img">'+
+						'		<img src="" alt="评论图" data-original="">'+
+						'		</div>'+
+						'		</div>'+
+						'		<div class="note clear">'+
+						'			<span class="fl">/2017.06.26发布</span>'+
+						'			<span class="fr message" onclick="tosend(this,1)"></span>'+
+						'			<span class="fr goodnum">0</span>'+
+						'			<span class="fr good" onclick="isGood(this,1,null,null,13)"></span>'+
+						'		</div>'+
+						'		<ul class="comments">'+
+						'		</ul>'+
+						'	</div>'+
+						'</div>';
+			}
 		}
 		$(".lists" ).append(html);
 	}
+
+	//点击评论弹出评论框
+	var tosend = function(e,id){
+		var index = $(e).parents('.list' ).index();
+		$('.banner,.list,.tabs' ).off('click');
+		$('.bottom' ).animate({'bottom':'0'},500,'swing',function(){
+			$('.banner,.list,.tabs' ).off('click').one('click',function(){
+				$('.bottom' ).animate({'bottom':'-45px'},500,'swing');
+				$('.myword input' ).val('');
+			})
+		}).attr('data-tab',index);
+		$('.send' ).attr('data-tab',id);
+	};
+
+	function slide(){
+		$('.lists .party1' ).on('click',function(){
+			var it = $(this);
+			var detail = it.next('.detail1' );
+			if(detail.hasClass('down')){
+				detail.slideDown();
+				it.find('.tri').removeClass('toup').addClass('todown');
+			}else{
+				detail.slideUp();
+				it.find('.tri').removeClass('todown').addClass('toup');
+			}
+			detail.toggleClass('down');
+		});
+	}
+
+	//发送评论
+	var send = function(e){
+		var it = $(e ).prev().find('input');
+		var index = $('.bottom' ).attr('data-tab');
+		if(it.val() != ''){
+			$.ajax({
+				type:"post",
+				url:"{:Url('Base/comment')}",
+				data:{
+					type : 13,
+					aid:$('.send' ).attr('data-tab'),
+					content:it.val()
+				},
+				success:function(msg){
+					var data = msg.data;
+					var html = '';
+					html +=
+							'<li>'+
+							'<span class="name">'+data.nickname+'：</span>'+
+							'<span class="comment">'+data.content+'</span>'+
+							'</li>';
+
+					$('.clear').eq(index).find('.comments').removeClass('hide').append(html);
+					$('.banner,.list,.tabs' ).click();
+				}
+			});
+		}else{
+			var not = $('.not');
+			not.fadeIn();
+			document.body.style.overflow='hidden';
+			$('.confirm,.not .bg' ).on('click',function(){
+				not.fadeOut();
+				document.body.style.overflow='scroll';
+				$('.banner,.lists' ).click();
+//			$('.bottom' ).animate({'bottom':'-45px'},500,'swing');
+//			$('.myword input' ).val('');
+			})
+		}
+	};
+
+	//点赞
+	var isGood = function(e,id,comment_id,userid,cla){
+		//样式变化，移到suc
+		var n = $(e).prev('.goodnum').text();
+		$.ajax({
+			type:"post",
+			url:"{:Url('Base/like')}",
+			data:{
+				type:cla,
+				aid:id,
+				comment_id:comment_id
+			},
+			success:function(data){
+				$(e).toggleClass('good' ).toggleClass('good_');
+				$(e ).hasClass('good')?n--:n++;
+				$(e ).prev('.goodnum').text(n);
+			}
+		})
+	};
 </script>
 {/block}
