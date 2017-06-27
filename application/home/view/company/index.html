@@ -220,9 +220,9 @@
 						<span class="fr message" onclick="tosend(this,{$vo.id})"></span>
 						<span class="fr goodnum">{$vo.likes}</span>
 						{eq name="vo.is_like" value="1"}
-						<span class="fr good_" onclick="isGood(this,{$vo.id},null,null,13)"></span>
+						<span class="fr good_" onclick="isGood(this,5,{$vo.id})"></span>
 						{else/}
-						<span class="fr good" onclick="isGood(this,{$vo.id},null,null,13)"></span>
+						<span class="fr good" onclick="isGood(this,5,{$vo.id})"></span>
 						{/eq}
 					</div>
 					<ul class="comments">
@@ -356,7 +356,7 @@
 			if(type==3){
 				var len = $('.aa .lists .list').length;
 			}
-			if(dh == end && scrollNow){
+			if(dh == end+1 && scrollNow){
 				scrollNow = false;//请求执行中
 				$.ajax({
 					type:"post",
@@ -404,29 +404,43 @@
 						'</a>';
 			}
 			if(type==3){
-				html+=
+				html +=
 						'<div class="list clear">'+
-						'	<div class="fl"><img src="" alt="用户头像"></div>'+
-						'	<div class="fr">'+
-						'		<div class="name limit">'+
-						'		</div>'+
-						'		<div class="content">'+
-						'			<p>交流互动</p>'+
-						'		</div>'+
-						'		<div class="imgs">'+
-						'		<div class="img">'+
-						'		<img src="" alt="评论图" data-original="">'+
-						'		</div>'+
-						'		</div>'+
-						'		<div class="note clear">'+
-						'			<span class="fl">/2017.06.26发布</span>'+
-						'			<span class="fr message" onclick="tosend(this,1)"></span>'+
-						'			<span class="fr goodnum">0</span>'+
-						'			<span class="fr good" onclick="isGood(this,1,null,null,13)"></span>'+
-						'		</div>'+
-						'		<ul class="comments">'+
-						'		</ul>'+
-						'	</div>'+
+						'<div class="fl">'+
+						'<img src="'+list.header+'" alt="用户头像">'+
+						'</div>'+
+						'<div class="fr">'+
+						'<div class="name limit">'+list.username+'</div>'+
+						'<div class="content limit_">'+list.content+'</div>'+
+						'<div class="imgs">';
+				var imglen = list.images.length;
+				for(var j = 0 ;j<imglen ;j++){
+					html+=
+							'<div class="img">'+
+							'<img src='+list.images[j]+' alt="评论图">'+
+							'</div>';
+				}
+				var good = list.is_like == 0?'good':'good_';
+				html +=
+						'</div>'+
+						'<div class="note clear">'+
+						'<span class="fl">'+list.department_name+'/'+list.time+'发布</span>'+
+						'<span class="fr message" onclick="tosend(this,'+list.id+')"></span>'+
+						'<span class="fr goodnum">'+list.likes+'</span>'+
+						'<span class="fr '+good+'" onclick="isGood(this,5,'+list.id+')"></span>'+
+						'</div>'+
+						'<ul class="comments">';
+				var commentlen = list.comment.length;
+				for(var x = 0 ;x <commentlen ;x++){
+					html+=
+							'<li>'+
+							'<span class="name">'+list.comment[x].username+'：</span>'+
+							'<span class="comment">'+list.comment[x].content+'</span>'+
+							'</li>'
+				}
+				html+=
+						'</ul>'+
+						'</div>'+
 						'</div>';
 			}
 		}

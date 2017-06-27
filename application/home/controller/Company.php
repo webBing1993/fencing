@@ -132,7 +132,6 @@ class Company extends Base{
     public function moreList() {
         $len = input('post.length');
         $type = input('post.type');
-        return $len.$type;
         if ($type == 2){
             // 交流互动
             $Model = new CompanyModel();
@@ -148,12 +147,14 @@ class Company extends Base{
             foreach($res as $value){
                 //获取用户信息
                 $value['images'] = json_decode($value['images']);
-                $image =array();
-                foreach ($value['images'] as $k=>$val){
-                    $img = Picture::get($val);
-                    $image[$k] = $img['path'];
+                if (!empty($value['images'])){
+                    $image =array();
+                    foreach ($value['images'] as $k=>$val){
+                        $img = Picture::get($val);
+                        $image[$k] = $img['path'];
+                    }
+                    $value['images'] = $image;
                 }
-                $value['images'] = $image;
                 $value['username'] = $value->user->name;
                 ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
                 if(empty($value['department_name'])){
