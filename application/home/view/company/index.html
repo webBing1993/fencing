@@ -454,7 +454,7 @@
 		layout();
 		imgresize();
 		if(viewer) {
-			viewer = $('.lists .imgs').viewer({
+			viewer = $('.aa .lists .imgs').viewer({
 				url: 'data-original',
 				toolbar:false,
 				title:false
@@ -549,5 +549,25 @@
 			}
 		})
 	};
+
+
+	var layout = function(){
+		$('.list' ).each(function(){
+			var this_ = $(this);
+			var n_img = this_.find('.imgs .img' ).length;
+			var n_li = this_.find('.comments li' ).length;
+			if(n_img == 4){
+				this_.find('.imgs .img' ).eq(1).after('<br>')
+			}
+			if(n_li == 0){
+				this_.find('.comments').addClass('hide');
+			}
+		})
+	};
+
+	//图片排版、评论框
+	layout();
+	//图片裁剪
+	imgresize();
 </script>
 {/block}
