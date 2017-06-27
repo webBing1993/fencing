@@ -134,7 +134,8 @@
 		if(co == 11 || co == 12 || co == 13){
 			c = co - 10;
 		}
-		console.log(c)
+		$('.tabs>.tab').eq(c-1).addClass('active');
+		$('.tabs>.tab').eq(c-1).siblings().removeClass('active');
 		ntc.eq(c-1).siblings('.notices' ).addClass('hidden');
 		ntc.eq(c-1).removeClass('hidden');
 		//上拉加载

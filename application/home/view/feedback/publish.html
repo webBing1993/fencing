@@ -90,7 +90,7 @@ $(function(){
 						success:function(e){
 							if(e.code == 1){
 								setTimeout(function(){
-									window.location.href = "{:Url('company/index')}";
+									window.location.href = "{:Url('company/index?c=1')}";
 								},1000)
 							}else{
 								swal({
