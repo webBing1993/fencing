@@ -14,6 +14,7 @@ use app\home\model\Opinion;
 use app\home\model\Picture;
 use  app\admin\model\WechatDepartment;
 use app\home\model\Company as CompanyModel;
+use app\home\model\WechatDepartmentUser;
 use app\home\model\WechatUser;
 use think\Request;
 use think\Db;
@@ -45,14 +46,8 @@ class Company extends Base{
             $value['images'] = json_decode($value['images']);
             $value['username'] = $value->user->name;
             if(empty($value['department_name'])){
-                if (empty($value->user->department)){
-                    $value['department_name'] = '暂无';
-                }else{
-                    foreach(json_decode($value->user->department) as $val){
-                        $Obj = WechatDepartment::where(['id' =>$val])->find();
-                        $value['department_name'] = $Obj['name'];
-                    }
-                }
+                $Departid = WechatDepartmentUser::where('userid',$value['create_user'])->order('id desc')->name('departmentid');
+                $value['department_name'] = \app\home\model\WechatDepartment::where('id',$Departid)->name('name');
             }
             ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
             //获取相关意见反馈评论
@@ -135,13 +130,62 @@ class Company extends Base{
      * 加载更多
      */
     public function moreList() {
-        $data = input('post.');
-        $Model = new CompanyModel();
-        $res = $Model->getMoreList($data);
-        //对应的封面id转成为path,时间戳转换
-        foreach($res as $k => $v){
-            $res[$k]['front_src'] = get_cover($res[$k]['front_cover'])->path;
-            $res[$k]['header_src'] = get_cover($res[$k]['image'])->path;
+        $len = input('post.length');
+        $type = input('post.type');
+        return $len.$type;
+        if ($type == 2){
+            // 交流互动
+            $Model = new CompanyModel();
+            $res = $Model->getMoreList($len);
+            //对应的封面id转成为path,时间戳转换
+            foreach($res as $k => $v){
+                $res[$k]['front_src'] = get_cover($res[$k]['front_cover'])->path;
+                $res[$k]['header_src'] = get_cover($res[$k]['image'])->path;
+            }
+        }else{
+            // 建言献策
+            $res = Opinion::where(['status' => ['eq',0]])->order('id desc')->limit($len,7)->select();
+            foreach($res as $value){
+                //获取用户信息
+                $value['images'] = json_decode($value['images']);
+                $image =array();
+                foreach ($value['images'] as $k=>$val){
+                    $img = Picture::get($val);
+                    $image[$k] = $img['path'];
+                }
+                $value['images'] = $image;
+                $value['username'] = $value->user->name;
+                ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
+                if(empty($value['department_name'])){
+                    $Departid = WechatDepartmentUser::where('userid',$value['create_user'])->order('id desc')->name('departmentid');
+                    $value['department_name'] = \app\home\model\WechatDepartment::where('id',$Departid)->name('name');
+                }
+                //获取相关意见反馈评论
+                $map1 = array(
+                    'aid' => $value['id'],
+                    'status' => 0,
+                    'type' => 5,
+                );
+                $comment = Comment::where($map1)->select();
+                foreach ($comment as $k => $val){
+                    $val['username'] = get_name($val['uid']);
+                }
+                $value['comment'] = $comment;
+
+                //是否点赞
+                $map2 = array(
+                    'aid' => $value['id'],
+                    'status' => 0,
+                    'type' => 5,
+                );
+                $msg = Like::where($map2)->find();
+                if($msg) {
+                    $value['is_like'] = 1;
+                }else{
+                    $value['is_like'] = 0;
+                }
+                $value['time'] = date("Y.m.d",$value['create_time']);
+            }
         }
         if($res) {
             return $this->success("加载成功","",$res);

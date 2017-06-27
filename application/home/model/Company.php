@@ -12,10 +12,10 @@ class Company extends Model{
     /**
      * 加载更多
      */
-    public function getMoreList($data) {
+    public function getMoreList($len) {
         $order = array('create_time desc');
         $where = array('status' => array('egt',0));
-        $list = $this ->where($where)->order($order)->limit($data['length'],5)->select();
+        $list = $this ->where($where)->order($order)->limit($len,5)->select();
         return $list;
     }
     //  获取 部门 名称

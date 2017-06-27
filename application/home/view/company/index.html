@@ -236,13 +236,15 @@
 					type:"post",
 					url:"{:Url('Company/moreList')}",
 					data:{
-						length:len
+						length:len,
+						type:type
 					},
 					beforeSend: function(XMLHttpRequest){
 						tip.hide();
 						loading.toggleClass('hidden');
 					},
 					success:function(data){
+						console.log(data)
 						loading.toggleClass('hidden');
 						tip.show();
 						if(data.code == 1){

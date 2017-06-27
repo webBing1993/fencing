@@ -160,12 +160,12 @@ class Wechat extends Admin
                     WechatDepartmentUser::create($data);
                 }
                 
-                if($value['id'] != 1) {
-                    $data1 = ['departmentid' => 1, 'userid' => $user['userid']];     //当部门补位1时补全用户
-                    if(empty(WechatDepartmentUser::where($data1)->find())){
-                        WechatDepartmentUser::create($data1);
-                    }
-                }
+//                if($value['id'] != 1) {
+//                    $data1 = ['departmentid' => 1, 'userid' => $user['userid']];     //当部门补位1时补全用户
+//                    if(empty(WechatDepartmentUser::where($data1)->find())){
+//                        WechatDepartmentUser::create($data1);
+//                    }
+//                }
             }
         }
 
