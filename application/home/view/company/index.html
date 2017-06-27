@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="/home/css/feedback/feedback.css">
 {/block}
 {block name="body"}
+<div style="position: relative;height: 100%;">
+<div class="scrollDiy" style="position:absolute;top: 0;bottom:0;overflow: scroll;-webkit-overflow-scrolling: touch;width: 100%;">
 <div class="banner">
 	<a href="{:Url('vote/index')}">民主评议</a>
 	<img src="/home/images/feedback/1.jpg" alt="建言献策banner图">
@@ -16,7 +18,6 @@
 	<span class="tab">交流互动</span>
 	<span class="tab">建言献策</span>
 </div>
-<div class="lists listbox">
 	<div class="town box active notices">
 		<!--组织架构-->
 		<div class="box_ or">
@@ -76,8 +77,8 @@
 	</div>
 
 	<!--/建言献策-->
-	<div class="scrollDiy notices" style="position: absolute;top: 0;bottom: 0;overflow: scroll;-webkit-overflow-scrolling: touch;width: 100%;">
-		<div class="lists" style="width: 100%;overflow: hidden">
+<div class="notices aa">
+		<div class="lists">
 			{volist name="lists" id="vo"}
 			<div class="list clear">
 				<div class="fl">
@@ -123,10 +124,11 @@
 			<div class="send fr" onclick="send(this)">发送</div>
 		</div>
 	</div>
-</div>
 <div class="tip"></div>
 <div class="loading hidden">
 	<div class="typing_loader"></div>
+</div>
+</div>
 </div>
 {/block}
 
@@ -201,9 +203,15 @@
 	});
 
 	function loadScroll(type){
-		$(window ).off("scroll" ).on("scroll",function(){
-			var dh = $(document).height();
-			var end = $(window).height() + $(window ).scrollTop();
+		$(".scrollDiy").off("scroll" ).on("scroll",function(){
+			var ntc = $('.notices' );
+			if(type==3){
+				var dh = $('.tabs').height() +$('.aa').height()+ $('.banner').height()+$(".tip").height()+16;
+			}
+			if(type==2){
+				var dh = $('.tabs').height() +$('.interactive').height()+ $('.banner').height()+$(".tip").height()+16;
+			}
+			var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
 			var tip = $(".tip");
 			var loading = $('.loading');
 			if(type==2){
