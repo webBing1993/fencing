@@ -38,9 +38,9 @@ class Index extends Base {
         //不是get请求默认初始数据
         if (empty($length)) {
             $length = array();
-            $length['learn'] = 0;
-            $length['new'] = 0;
-            $length['notice'] = 0;
+            $length['learn'] = 0;  //  党建风采
+            $length['new'] = 0;   // 党建动态
+            $length['notice'] = 0;  // 通知公告
         }else{
             $length = json_decode($length);
             $length['learn'] = $length[0];

@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 use app\admin\model\Push;
+use app\admin\model\WechatDepartment;
 use com\wechat\TPQYWechat;
 use app\admin\model\Picture;
 use think\Config;
@@ -23,6 +24,10 @@ class Company extends Admin{
             'status' => array('egt',0),
         );
         $list = $this->lists('Company',$map);
+        foreach($list as $value){
+            $Department = WechatDepartment::where('id',$value['publisher'])->field('name')->find();
+            $value['publisher'] = $Department['name'];
+        }
         int_to_string($list,[
             'status' => [0=>"已发布",1=>"已发布"],
         ]);
@@ -39,6 +44,9 @@ class Company extends Admin{
             if (IS_POST){
                 $data = input('post.');
                 $data['create_user'] = $_SESSION['think']['user_auth']['id'];
+                if ($data['publisher'] == -1){
+                    return $this->error("请选择支部发布");
+                }
                 $companyModel = new CompanyModel();
                 $info = $companyModel->validate('company')->save($data,['id' => $data['id']]);
                 if($info) {
@@ -47,6 +55,8 @@ class Company extends Admin{
                     return $this->get_update_error_msg($companyModel->getError());
                 }
             }else{
+                $Department = WechatDepartment::where(['parentid' => ['neq',1]])->field('id,name')->select();
+                $this->assign('info',$Department);
                 $msg = CompanyModel::where('id',$id)->find();
                 $this->assign('msg',$msg);
                 return $this->fetch();
@@ -55,6 +65,9 @@ class Company extends Admin{
             // 添加
             if (IS_POST){
                 $data = input('post.');
+                if ($data['publisher'] == -1){
+                    return $this->error("请选择支部发布");
+                }
                 $data['create_user'] = $_SESSION['think']['user_auth']['id'];
                 if(empty($data['id'])) {
                     unset($data['id']);
@@ -67,6 +80,8 @@ class Company extends Admin{
                     return $this->error($companyModel->getError());
                 }
             }else{
+                $Department = WechatDepartment::where(['parentid' => ['neq',1]])->field('id,name')->select();
+                $this->assign('info',$Department);
                 $this->assign('msg','');
                 return $this->fetch();
             }

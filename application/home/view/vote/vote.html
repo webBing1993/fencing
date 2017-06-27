@@ -1,0 +1,224 @@
+{extend name="public/common"}
+
+{block name="style"}
+<style>
+    /*reset*/
+    .page{
+        background:#fff;
+    }
+    .navbar:after,.list-block ul:before,.list-block ul:after{
+        min-height:0;height:0;
+    }
+    .navbar{
+        border:none;
+    }
+    .list-block{
+        margin:0;
+    }
+    /*tab1 赛事投票*/
+    .banner_img{
+        width:100%;
+        height: 50vw;
+    }
+    .banner_words{
+        position:absolute;top:20%;left:0;color:#fff;width:100%;
+    }
+    .banner_words>span:nth-child(1){
+        font-size:22px;text-shadow: 0px 5px 5px rgba(98,157,244,.6);width:100%;display: block;text-align:center;font-weight:bold;text-overflow: ellipsis;  white-space: nowrap; overflow: hidden;
+    }
+    .banner_words>span:nth-child(2){
+        font-size:16px;width:100%;text-align: center;display: block;text-shadow: 0px 5px 5px rgba(98,157,244,.6);text-overflow: ellipsis;  white-space: nowrap; overflow: hidden;
+    }
+    .banner_words>span:nth-child(3){
+        font-size:14px;width:100%;text-align: center;display: block;text-shadow: 0px 5px 5px rgba(98,157,244,.6)
+    }
+    .banner_data{
+        width:94%;margin:0 3%;height:50px;box-shadow: 0px 3px 3px rgba(98,157,244,.3);position:absolute;bottom:-25px;background:#fff;border-radius:3px;
+    }
+    .banner_data>div{
+        display: inline-block;width:calc(100%/3);float:left;text-align: center;
+    }
+    .banner_data>div>b{
+        display:block;height:25px;line-height:32px;color:#333;
+    }
+    .banner_data>div>span{
+        display:block;height:25px;line-height:25px;font-size:12px;color:#999;
+    }
+
+    .list-block .item-content{
+        height:76px;
+    }
+    .list-block>ul>li{
+        border-bottom:1px solid #efeff4;
+    }
+
+    .list-block>ul>li>img:nth-child(1){
+        height:50px;width:50px;position: absolute;left:12px;top:12px;border-radius: 50%;;
+    }
+    .list-block>ul>li>div:nth-child(2){
+        position:absolute;left:77px;font-size:14px;color:#333;line-height: 75px;text-align: left;overflow:hidden; white-space:nowrap;text-overflow:ellipsis;width:170px;
+    }
+    .list-block>ul>li>div:nth-child(3){
+        font-size:14px;color:#333;height:20px;position:absolute;right:12px;top:28px;
+    }
+    .list-block>ul>li>div:nth-child(3)>span{
+        display:inline-block;width:60px;text-align: center;font-size:14px;height:20px;line-height:20px;
+    }
+    .list-block>ul>li>div:nth-child(3)>span:nth-child(1){
+        background:#FDB112;border-radius: 5px;color:#fff;width:52px;
+    }
+</style>
+{/block}
+
+{block name="body"}
+<div class="views">
+    <div class="view view-main">
+        <div class="navbar">
+            <div class="top" style="position:relative;">
+                <div class="banner">
+                    <img src="/home/images/news/bc1.jpg" alt="banner图片" class="banner_img">
+                </div>
+                <div class="banner_words">
+                    <span>{$list.awards}</span>
+                    <span>{$list.title}</span>
+                    <span>截止日期：<span>{$list.end_time|time_format="Y-m-d H:i"}</span></span>
+                </div>
+                <div class="banner_data">
+                    <div >
+                        <b class="sum1">{$list.num}</b>
+                        <span>候选人</span>
+                    </div>
+                    <div>
+                        <b>{$list.sum}</b>
+                        <span>投票人次</span>
+                    </div>
+                    <div>
+                        <b>{$list.views}</b>
+                        <span>访问量</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-content" style="padding-bottom:44px;">
+                <div class="tabs">
+                    <!-- Tab 1 -->
+                    <div id="tab1" class="tab active">
+                        <div class="list-block">
+                            <ul>
+                                {volist name="$list->option" id="oo"}
+                                <li class="item-content">
+                                    <img src="{$oo.images|get_cover='path'}" alt="" >
+                                    <div>{$oo.content}</div>
+                                    <div>
+                                        <span class="btn1" onclick="btn(this,{$list.id},{$oo.id})">投 票</span>
+                                    </div>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/static/framework7/framework7.js"></script>
+<script>
+    var myApp=new Framework7;
+    var $$=Dom7;
+    //alert隐藏网址
+    var wAlert = window.alert;
+    window.alert = function (message) {
+        try {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            var alertFrame = window.frames[0];
+            var iwindow = alertFrame.window;
+            if (iwindow == undefined) {
+                iwindow = alertFrame.contentWindow;
+            }
+            iwindow.alert(message);
+            iframe.parentNode.removeChild(iframe);
+        }
+        catch (exc) {
+            return wAlert(message);
+        }
+    };
+    var wConfirm = window.confirm;
+    window.confirm = function (message) {
+        try {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            var alertFrame = window.frames[0];
+            var iwindow = alertFrame.window;
+            if (iwindow == undefined) {
+                iwindow = alertFrame.contentWindow;
+            }
+            var a=iwindow.confirm(message);
+            iframe.parentNode.removeChild(iframe);
+            return a;
+        }
+        catch (exc) {
+            return wConfirm(message);
+        }
+    };
+    $(document).ready(function(){
+        var screen_width=screen.width/2;
+        console.log(screen_width);
+        $('.banner_img').css({'height':screen_width+'px'});
+        $('#tab1 .list-block').css({'margin-top':screen_width+25+'px'});
+        $('.toolbar').css({'bottom':'-44px'})
+    });
+
+//  投票/取消投票
+    var a=$('#tab1 .list-block>ul>li').length;
+    $('.sum1').text(a);
+
+
+    //$(this).parent().parent().siblings().find('span.btn1').parent().hide();
+    function btn(e,vid,id){
+        var aaa=vid;
+        if($(e).text()!= '已投票'){
+            var html='';
+            var r=confirm("您已投票成功，谢谢参与！");
+            if (r==true)
+            {
+                $.ajax({
+                    type: "post",
+                    url: "{:Url('vote/polling')}",
+                    data:{
+                        vid:vid,
+                        id:id
+                    },
+                    success: function(data){
+                        $(e).text('已投票').css({'background':'#aaa'}).parent().parent().siblings().find('span.btn1').text('投 票').css({'background':'#FDB112'});
+//                        window.location.href='/home/vote/rank/id/'+aaa;
+                        window.location.replace('http://'+"{$link}"+'/home/vote/rank/id/'+aaa);
+                    }
+                })
+            }
+            else
+            {
+                $(e).text('投 票').css({'background':'#FDB112'});
+                return '';
+            }
+        }
+        else{
+            //alert('您已取消，请重新进行投票！');
+            $(e).text('投 票').css({'background':'#FDB112'});
+        }
+    }
+
+//
+
+</script>
+{/block}
