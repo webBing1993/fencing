@@ -189,11 +189,6 @@
 				</a>
 			</li>
 			{/volist}
-			<a href="{:Url('company/detail')}">
-				<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>
-				<span>发布人所在支部</span>
-				<span><i></i>45</span>
-			</a>
 		</ul>
 	</div>
 
@@ -499,7 +494,7 @@
 				type:"post",
 				url:"{:Url('Base/comment')}",
 				data:{
-					type : 13,
+					type :5,
 					aid:$('.send' ).attr('data-tab'),
 					content:it.val()
 				},
@@ -531,16 +526,15 @@
 	};
 
 	//点赞
-	var isGood = function(e,id,comment_id,userid,cla){
+	var isGood = function(e,type,id){
 		//样式变化，移到suc
 		var n = $(e).prev('.goodnum').text();
 		$.ajax({
 			type:"post",
 			url:"{:Url('Base/like')}",
 			data:{
-				type:cla,
+				type:type,
 				aid:id,
-				comment_id:comment_id
 			},
 			success:function(data){
 				$(e).toggleClass('good' ).toggleClass('good_');
