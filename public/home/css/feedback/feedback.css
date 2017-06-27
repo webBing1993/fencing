@@ -97,6 +97,7 @@ html,body{
 .banner {
   width: 100vw;
   height: 50vw;
+  position: relative;
 }
 .banner img {
   width: 100%;

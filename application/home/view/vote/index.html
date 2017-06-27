@@ -4,237 +4,201 @@
 <link rel="stylesheet" href="/static/framework7/framework7.ios.min.css">
 <link rel="stylesheet" href="/static/framework7/framework7.ios.colors.min.css">
 <style>
-    *{
-        box-sizing: border-box;
-    }
-    .navbar:after,.navbar:before{
-        height:0;
-    }
-    .content-block,.list-block{
-        padding:0;
-        margin:0;
-    }
-    .list-block .item-inner{
-        padding:0;
-    }
-    .list-block .item-content{
-        height:80px;padding:0;
+    body{
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        background: #eee;
     }
     .lists{
-        width:100%;height:80px;position: relative;
+        width: 96%;
+        margin: 0 auto;
+        background: #fff;
+        padding-top: 20px;
     }
-    .list_img{
-        height:60px;width:70px;border-radius:5px;position:absolute;left:12px;top:10px;
+    .lists ul{
+        padding-bottom: 20px;
     }
-
-    .lists>div{
-        display: inline-block;color:#666;height:40px;line-height: 40px;;text-overflow: ellipsis;  white-space: nowrap; overflow: hidden;float:left;padding-left:90px;
+    .regularmore .lists .list {
+        display: block;
+        width: 90%;
+        margin: 0 auto;
+        margin-bottom: 15px;
+        background: #ffffff;
+        text-align: center;
+        overflow: hidden;
+        border-radius: 4px;
+        -moz-box-shadow:1px 1px 6px #999;
+        -webkit-box-shadow:1px 1px 6px #999;
+        box-shadow:1px 1px 6px #999;
     }
-    .lists>div:nth-child(1){
-        font-size:14px;width:95%
-    }
-    .lists>div:nth-child(2){
-        font-size:12px;position:relative;width:95%
-    }
-    .lists>span:nth-child(3){
-        display:inline-block;font-weight: normal;width:75px;position:absolute;right:12px;top:50px;font-size:12px;height:20px;line-height:20px;text-align: right;color:#555;
-    }
-
-    /*.swiper*/
-    .swiper-container{
-        background:#fff;
-        height:50vw;
-    }
-    .swiper-slide>div{
-        position:absolute;
-        left:0;
-        bottom:0;
-        background:#000;
-        opacity: .5;
-        width:100%;
+    .regularmore .lists .list .tab {
+        position: absolute;
+        margin-top: 10px;
+        left: 6.2vw;
+        width: 90px;
+        height: 30px;
+        background: url(/home/images/common/bg.png) no-repeat;
+        background-size: 90px 30px;
+        color: #ffffff;
+        font-size: 1.2rem;
+        text-align: center;
+        line-height: 20px;
         z-index:99;
     }
-    .swiper-slide>div>span{
-        color:#fff;
-        height:30px;
-        line-height: 30px;
-        width:95%;
+    .regularmore .lists .list .content{
+        height:20vw;
+    }
+
+    .regularmore .lists .list .img {
+        width: 100%;
+        height: 50vw;
+    }
+    .regularmore .lists .list .title {
+        font-size: 1.3rem;
+        line-height: 36px;
+        text-align: left;
+        padding-left: 5.3vw;
+        padding-top: 4vw;
+        color: #666;
+    }
+    .regularmore .lists .list .title span{
+        color: #ffa726;
+    }
+    .regularmore .lists .list .study {
         display: block;
-        float:left;
+        padding-left: 5.3vw;
+        color: #666;
+        font-size: 1.2rem;
+        text-align: left;
+    }
+    .regularmore .lists .list .details{
+        background: #ffa726;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        border-radius: 30px;
+        position: absolute;
+        right: 10vw;
+        margin-top: -43px;
+    }
+    .imgtext{
+        position: absolute;
+        left: 12vw;
+        margin-top: 40vw;
+        opacity: 0.2;
+        color: #fff;
+        background:-moz-linear-gradient(top,#fff,#000);/*Mozilla*/
+        background:-webkit-gradient(linear,0 50%,100% 50%,from(#fff),to(#000));/*Old gradient for webkit*/
+        background:-webkit-linear-gradient(top,#fff,#000);/*new gradient for Webkit*/
+        background:-o-linear-gradient(top,#fff,#000); /*Opera11*/
+    }
+    .history{
+        padding-top: 0;
+        margin-top: 20px;
+    }
+    .history>div{
+        height:30px;
+        font-size: 1.2rem;
+        color: #999;
+        line-height: 30px;
+        padding-left: 4vw;
+        border-bottom: 1px solid #f7f7f7;
+    }
+    .history ul a{
+        display: block;
+        padding: 4vw;
         overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding-left:15px;
-        z-index:100;
-        font-size:13px;
     }
-    .swiper-slide>img{
-        width:100%;
+    .history ul a>img{
+        float: left;
+        height: 21vw;
+        width: 21vw;
+        border-radius: 4px;
     }
-    .nomessage{
-        text-align: center;
-        position:fixed;
-        top:50%;
-        left:50%;
-        -webkit-transform: translateY(-50%) translateX(-50%);
-        /*display:none;*/
+    .history ul a>p{
+        font-size: 1.4rem;
+        color: #333;
+        margin-left: 25vw;
+        margin-top: 10px;
     }
-    .nomessage>img{
-        width:56%;
-        margin-bottom:15px;
+    .history ul a span{
+        font-size: 1.4rem;
+        color: #ffa726;
+        margin-left: 4vw;
     }
-    .nomessage>span{
-        font-size: 17px;
-        color:#ccc;
+    .history ul a span:last-child{
+        float: right;
+        font-size: 1.3rem;
+        color: #999;
     }
 </style>
 {/block}
 
 {block name="body"}
-<div class="views">
-    {empty name="top"}
-    <div class="nomessage">
-        <img src="/exchange/5.png" alt="" ><br>
-        <span>抱歉，暂无数据</span>
-    </div>
-    {else/}
-    <!-- Your main view -->
-    <div class="view view-main" >
-        <div class="navbar" style="border:none;height:50vw;">
-            <div class="content-block">
-                <div class="swiper-container">
-                    <!-- Slides wrapper -->
-                    <div class="swiper-wrapper">
-                        <!-- Slides -->
-                        {volist name="top" id="to"}
-                        <div class="swiper-slide" onclick="jump({$to.id})">
-                            <img src="{$to.front_cover|get_cover='path'}" alt="" style="height:50vw;width:100%;">
-                            <div>
-                                <span>{$to.title}</span>
-                            </div>
-                        </div>
-                        {/volist}
-                    </div>
-                    <!-- Pagination, if required -->
-                    <div class="swiper-pagination"></div>
+<div class="notice party regularmore">
+    <!--课程列表-->
+    <div class="lists">
+        <!--图文课程-->
+        <ul>
+            <a href="/home/learn/video/id/1.html" class="list">
+                <div class="tab">火热投票中</div>
+                <span class="imgtext">2017年优秀党员评选投票</span>
+                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
+                <div class="content">
+                <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
+                <span class="study">已投：20人</span>
+                <div class="details">查看详情</div>
                 </div>
-            </div>
-        </div>
-        <!-- Pages -->
-        <div class="pages" >
-            <div class="page" data-page="home" style="padding-top:50vw;">
-                <div class="page-content">
-                    <div class="list-block">
-                        <ul class="add_here" >
-                            {volist name="list" id="lo"}
-
-                            <li class="item-content" >
-                                <div class="item-inner" onclick="jump({$lo.id})">
-                                    <img src="{$lo.front_cover|get_cover='path'}" alt="" class="list_img">
-                                    <div class="lists">
-                                        <div>{$lo.title}</div>
-                                        <div>
-                                            <span>截止: {$lo.end_time|time_format="Y-m-d H:i"}</span>
-                                        </div>
-                                        <span style=""><b>{$lo.sum}</b>人已投票</span>
-                                    </div>
-                                </div>
-                            </li>
-                            {/volist}
-                        </ul>
-                        <div style="color:#666;text-align: center;width:100%;height:30px;font-size:14px;margin-top:5px;margin-bottom:20px;display: none" class="add1" >点击加载更多...</div>
-                    </div>
+            </a>
+            <a href="/home/learn/video/id/1.html" class="list">
+                <div class="tab">火热投票中</div>
+                <span class="imgtext">2017年优秀党员评选投票</span>
+                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
+                <div class="content">
+                    <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
+                    <span class="study">已投：20人</span>
+                    <div class="details">查看详情</div>
                 </div>
-            </div>
-        </div>
-
+            </a>
+            <a href="/home/learn/video/id/1.html" class="list">
+                <div class="tab">火热投票中</div>
+                <span class="imgtext">2017年优秀党员评选投票</span>
+                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
+                <div class="content">
+                    <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
+                    <span class="study">已投：20人</span>
+                    <div class="details">查看详情</div>
+                </div>
+            </a>
+            <a href="/home/learn/video/id/1.html" class="list">
+                <div class="tab">火热投票中</div>
+                <span class="imgtext">2017年优秀党员评选投票</span>
+                <img src="/home/images/constitution/bg_rank.jpg" alt="图片" class="img">
+                <div class="content">
+                    <div class="title limit">还剩<span> 28天20小时18分 </span>结束</div>
+                    <span class="study">已投：20人</span>
+                    <div class="details">查看详情</div>
+                </div>
+            </a>
+        </ul>
     </div>
-    {/empty}
 </div>
+
+<div class="lists history">
+     <div>历史投票</div>
+    <ul>
+        <a>
+            <img src="/home/images/common/banner.png">
+            <p>哈哈哈哈哈哈哈哈哈哈哈哈哈hhhhhh或哈哈哈哈或哈或或或或哈哈哈哈或</p>
+            <span>已结束</span><span>已投：20人</span>
+        </a>
+    </ul>
+</div>
+
+
 {/block}
 
 {block name="script"}
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script src="/static/framework7/framework7.js"></script>
-<script>
-    var myApp = new Framework7();
-    var $$ = Dom7;
-    var jump=function(id){
-        window.location.href='/home/vote/vote/id/'+id;
-    };
-    if ($('.add_here>li').length >= 5){
-        $('.add1').css({'display':'block'});
-    }
-    var mySwiper = new Swiper('.swiper-container', {
-        autoplay:3000,//可选选项，自动滑动
-        loop:true,
-        autoplayDisableOnInteraction : false,
-        //pagination : '#swiper-pagination1',
-        observer:true,
-        observeParents:true
-    });
 
-    //点击加载更多
-    //新闻动态
-    $('.add1').click(function(){
-        var b=$('.add_here>li').length;
-        $.ajax({
-            type:"post",
-            url:"{:Url('Vote/more')}",
-            data:{id:b},
-            success:function(data){
-                var html='';
-                if (data == 0){
-                    $('.add1').text('没有更多了');
-                }else {
-                    for(var i=0; i< data.length;i++){
-                        html='<li class="item-content" >'+
-                            '<div class="item-inner" onclick="jump('+data[i].id+')">'+
-                                '<img src="'+data[i].front_cover+'" alt="" class="list_img">'+
-                                    '<div class="lists">'+
-                                        '<div>'+data[i].title+'</div>'+
-                                        '<div>'+
-                                            '<span>截止:'+data[i].create_time+'</span>'+
-                                        '</div>'+
-                                        '<span style=""><b>'+data[i].sum+'</b>人已投票</span>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</li>';
-                        }
-                    console.log($(this).parent().find('div.list-block').find('ul.add_here'))
-                    $('.add_here').append(html);
-                }
-            }
-        })
-
-    })
-    var appId='{$jsSign.appid}';
-    var timestamp='{$jsSign.timestamp}';
-    var nonceStr='{$jsSign.noncestr}';
-    var signature='{$jsSign.signature}';
-    wx.config({
-        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: appId, // 必填，公众号的唯一标识
-        timestamp: timestamp, // 必填，生成签名的时间戳
-        nonceStr: nonceStr, // 必填，生成签名的随机串
-        signature: signature,// 必填，签名，见附录1
-        jsApiList: ['scanQRCode','getLocation','closeWindow'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    });
-    wx.ready(function(){
-        $(function(){
-            pushHistory();
-            window.addEventListener("popstate", function(e) {
-                wx.closeWindow();
-            }, false);
-            function pushHistory() {
-                var state = {
-                    title: "title"
-                };
-                if(window.history.state===null){
-                    window.history.pushState(state, "title");
-                }
-            }
-        });
-    });
-</script>
 {/block}

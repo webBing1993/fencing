@@ -8,7 +8,7 @@
 {/block}
 {block name="body"}
 <div class="banner">
-	<a>民主评议</a>
+	<a href="{:Url('vote/index')}">民主评议</a>
 	<img src="/home/images/feedback/1.jpg" alt="建言献策banner图">
 </div>
 <div class="tabs">
@@ -58,7 +58,7 @@
 	<!--/交流互动-->
 	<div class="notices interactive">
 		<ul>
-			<a href="">
+			<a href="{:Url('company/detail')}">
 				<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>
 				<span>发布人所在支部</span>
 				<span><i></i>45</span>
@@ -144,14 +144,16 @@
 			if (len >= 5) {
 				$('.tip').text('上拉加载更多');
 			}
+			loadScroll(c);
 		}
-		if(c==1){
+		if(c==3){
 			var len = ntc.eq(c - 1).find('.lists .list').length;
 			if (len >= 5) {
 				$('.tip').text('上拉加载更多');
 			}
+			loadScroll(c);
 		}
-		loadScroll(c);
+
 
 		//tab切换
 		$('.tabs>.tab ').on('click',function(){
