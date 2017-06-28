@@ -167,6 +167,7 @@
 {/block}
 
 {block name="body"}
+<div class="scrollDiy">
 <div class="notice party regularmore">
     <!--课程列表-->
     <div class="novote">进行中投票</div>
@@ -210,10 +211,81 @@
     </ul>
     {/empty}
 </div>
-
-
+<div class="tip"></div>
+<div class="loading hidden">
+    <div class="typing_loader"></div>
+</div>
 {/block}
 
 {block name="script"}
+<script>
+    $(function(){
+            var len = $(".scrollDiy").find('.history ul').length;
+            if (len >= 5) {
+                $('.tip').text('上拉加载更多');
+                loadScroll(c);
+            }else{
+                $('.tip' ).hide();
+            }
+    });
 
+    //上拉加载
+    function loadScroll(type){
+        $(".scrollDiy").off("scroll" ).on("scroll",function(){
+            var dh = $(".party").height()+$(".history").height();
+            var end = $('.scrollDiy').height() + $('.scrollDiy').scrollTop();
+            var len = $(".scrollDiy").find('.history ul').length;
+            var tip = $(".tip");
+            var loading = $('.loading');
+            if(dh == end && scrollNow){
+                scrollNow = false;//请求执行中
+                $.ajax({
+                    type:"post",
+                    url: "{:Url('Pioneer/morelist')}",
+                    data:{
+                        length:len,
+                        type:type
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data.code == 1){
+                            addLists(data,type);
+                            var dataLen =data.data.length;
+                            if(data.data.length == 5){
+                                tip.text('上拉加载更多');
+                            }
+                        }else{
+                            tip.text('没有更多了');
+                            $(window ).off("scroll");
+                        }
+                        scrollNow = true;//请求结束
+                    }
+                })
+            }
+        })
+    }
+
+    //数据循环
+    function addLists(data){
+        var type;
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++){
+            var list = lists[i];
+            html +=
+                    '<a href="/home/vote/vote/type/2/id/3.html">'+
+                    '<img src="/uploads/download/2017-06-26/5950a0204e01a.jpg">'+
+                    '<p>历史测试</p>'+
+                    '<span>已结束</span><span>已投：0人</span>'+
+                    '</a>';
+        }
+        $(".history ul").append(html);
+    }
+</script>
 {/block}

@@ -10,7 +10,7 @@
     <a  href="{:Url('constitution/game?c=1')}" class="tab"><span>每日一课</span></a>
     <a  href="{:Url('constitution/game?c=2')}" class="tab active"><span>在线答题</span></a>
 </div>
-<div class="lists">
+<div class="lists" style="padding-top: 35px;">
     <!--单选题-->
 
     {foreach $question as $y=>$vo}
@@ -59,6 +59,13 @@
 {/block}
 
 {block name="script"}
-
+<script>
+//    pushHistory();
+//    setTimeout(function(){
+//        window.addEventListener("popstate", function(e) {
+//           window.location.href="/home/constitution/game.html"
+//        }, false);
+//    },200)
+</script>
 
 {/block}
