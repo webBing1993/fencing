@@ -103,6 +103,7 @@
 .content .article {
   width: 100%;
   padding-left: 13px;
+  padding-right: 13px;
   margin-bottom: 15px;
   font-size: 1.6rem;
   text-indent: 3.2rem;
