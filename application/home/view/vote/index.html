@@ -14,7 +14,6 @@
         width: 96%;
         margin: 0 auto;
         background: #fff;
-        padding-top: 20px;
     }
     .lists ul{
         padding-bottom: 20px;
@@ -83,6 +82,18 @@
         right: 10vw;
         margin-top: -43px;
     }
+    .regularmore div.novote{
+        height:30px;
+        font-size: 1.2rem;
+        color: #999;
+        line-height: 30px;
+        padding-left: 4vw;
+        border-bottom: 1px solid #f7f7f7;
+        text-align: left;
+        background: #fff;
+        width: 96%;
+        margin: 0 auto;
+    }
     .imgtext{
         position: absolute;
         margin-top: 40vw;
@@ -145,16 +156,24 @@
         font-size: 1.3rem;
         color: #999;
     }
+    .default{
+        width:100%;
+        height: 65vh;
+        background: #f7f7f7;
+        text-align: center;
+        padding-top: 50%;
+    }
 </style>
 {/block}
 
 {block name="body"}
 <div class="notice party regularmore">
     <!--课程列表-->
+    <div class="novote">进行中投票</div>
     <div class="lists">
         <!--图文课程-->
         {empty name="top"}
-        <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+        <div class="default">暂无进行中的投票</div>
         {else/}
         <ul>
             {volist name="top" id="to"}
@@ -178,7 +197,7 @@
 <div class="lists history">
      <div>历史投票</div>
     {empty name="list"}
-    <span  style="text-align: center;width: 100%;display: block;">暂无历史数据</span>
+    <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">暂无历史数据</span>
     {else/}
     <ul>
         {volist name="list" id="lo"}
