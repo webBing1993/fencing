@@ -307,20 +307,24 @@
 			if(eq==1) {
 				var len = ntc.eq(eq).find('ul').length;
 				if (len >= 5) {
+					$(".tip").show();
 					$('.tip').text('上拉加载更多');
 				}else{
 					$('.tip').hide();
 				}
+				loadScroll(eq + 1);
 			}
 			if(eq==2) {
 				var len = ntc.eq(eq).find('.lists .list').length;
 				if (len >= 5) {
+					$(".tip").show();
 					$('.tip').text('上拉加载更多');
 				}else{
 					$('.tip').hide();
 				}
+				loadScroll(eq + 1);
 			}
-			loadScroll(eq + 1);
+
 			//使用示例
 			setCookie("type",eq+11);
 		});
@@ -339,6 +343,7 @@
 			toolbar:false,
 			title:false
 		});
+		moveanyway();
 	});
 
 	function loadScroll(type){
@@ -522,7 +527,7 @@
 							'<span class="comment">'+data.content+'</span>'+
 							'</li>';
 
-					$('.clear').eq(index).find('.comments').removeClass('hide').append(html);
+					$('.aa .lists .list').eq(index).find('.comments').removeClass('hide').append(html);
 					$('.banner,.list,.tabs' ).click();
 				}
 			});
