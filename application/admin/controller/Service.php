@@ -33,7 +33,7 @@ class Service extends Controller
                 $event = $Wechat->getRev()->getRevEvent();
                 switch ($event['event']) {
                     case 'subscribe':
-                        $replyText = "您好！欢迎关注台州移动党建！";
+                        $replyText = "您好！欢迎关注台州个协党建！";
                         $Wechat->text($replyText)->reply();
 //                        $newsData = array(
 //                            '0'=> array(

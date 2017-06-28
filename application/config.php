@@ -30,9 +30,9 @@ return [
     
     /* 企业配置 */
     'party' => array(
-        'login' => 'http://tzpb.0571ztnet.com/home/verify/login',
-//        'token' => 'N3mIjNX',
-//        'encodingaeskey' => 'RxanruTaFxW7X5r5Cx2xRrI91dhRgNUx77KM3paUfS7',
+        'login' => 'http://tzgxpb.0571ztnet.com/home/verify/login',
+        'token' => 'ZfqkOC4Fhd7D',
+        'encodingaeskey' => 'SWWdiNibALNG3hZfvqqAzQ48rmibi5KTc1JnqouajTC',
         'appid' => 'wwe2d5103c1343a8bb',
         'appsecret' => 'agp2IBdsHpDef0lKv8tdcnDIS0k-iHiR5yoNy_A-J34',
         'agentid' => 1000002
