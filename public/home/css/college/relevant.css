@@ -96,6 +96,7 @@
   background-size: 20px 20px ;
   word-wrap: break-word;
   word-break: normal;
+  line-height: 24px;
 }
 .content .article {
   width: 100%;
