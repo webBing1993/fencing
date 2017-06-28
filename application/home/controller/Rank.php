@@ -429,9 +429,9 @@ class Rank extends Base {
                 $personal['rank'] = $k+1;
             }
             if($k < 20){ //取小于20名排行
-                if ($v['id'] != 2){
+//                if ($v['id'] != 2){
                     $last[$k] = $v;
-                }
+//                }
             }
         }
         $this->assign('all',$last);
@@ -609,9 +609,9 @@ class Rank extends Base {
         $dpfinals = array();
         foreach ($item as $key =>$value){
             if($key < 20){
-                if ($value['id'] != 2){
+//                if ($value['id'] != 2){
                     $dpfinals[] = $value;
-                }
+//                }
             }
         }
         $this->assign('week',$dpfinals);
@@ -768,9 +768,9 @@ class Rank extends Base {
         $dpfinals_m = array();
         foreach ($item_m as $key =>$value){
             if($key < 20){
-                if ($value['id'] != 2){
+//                if ($value['id'] != 2){
                     $dpfinals_m[] = $value;
-                }
+//                }
             }
         }
         $this->assign('month',$dpfinals_m);
