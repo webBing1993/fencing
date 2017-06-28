@@ -46,8 +46,9 @@ class Company extends Base{
             $value['images'] = json_decode($value['images']);
             $value['username'] = $value->user->name;
             if(empty($value['department_name'])){
-                $Departid = WechatDepartmentUser::where('userid',$value['create_user'])->order('id desc')->name('departmentid');
-                $value['department_name'] = \app\home\model\WechatDepartment::where('id',$Departid)->name('name');
+                $Departid = WechatDepartmentUser::where('userid',$value['create_user'])->order('id desc')->field('departmentid')->find();
+                $depart = \app\home\model\WechatDepartment::where('id',$Departid)->field('name')->find();
+                $value['department_name'] = $depart['name'];
             }
             ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
             //获取相关意见反馈评论
@@ -157,8 +158,9 @@ class Company extends Base{
                 $value['username'] = $value->user->name;
                 ($value->user->header) ? $value['header'] = $value->user->header : $value['header'] = $value->user->avatar;
                 if(empty($value['department_name'])){
-                    $Departid = WechatDepartmentUser::where('userid',$value['create_user'])->order('id desc')->name('departmentid');
-                    $value['department_name'] = \app\home\model\WechatDepartment::where('id',$Departid)->name('name');
+                    $Departid = WechatDepartmentUser::where('userid',$value['create_user'])->order('id desc')->field('departmentid')->find();
+                    $depart = \app\home\model\WechatDepartment::where('id',$Departid)->field('name')->find();
+                    $value['department_name'] = $depart['name'];
                 }
                 //获取相关意见反馈评论
                 $map1 = array(
