@@ -63,16 +63,12 @@
     <div class="level"></div>
     <!--新闻通知-->
     <div class="notice">
-        <!--党委动态-->
+        <!--党建动态-->
         {volist name="details.new" id="vo"}
-            <a href="{:Url('Dynamic/detail?id='.$vo['id'])}" class="list clearfix" data-type="new">
+            <a href="{:Url('News/detail?id='.$vo['id'])}" class="list clearfix" data-type="new">
                 <div class="fl">
-                    {eq name="vo.type" value="2"}
                     <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
-                    {else/}
-                    <img src="/home/images/common/1.jpg" alt="图片">
-                    {/eq}
-                    <span class="type">党委动态</span>
+                    <span class="type">党建动态</span>
                 </div>
                 <div class="fr right">
                     <div class="title limit_">{$vo.title}</div>
@@ -83,29 +79,12 @@
                 </div>
             </a>
         {/volist}
-        <!--支部动态-->
+        <!--通知公告-->
         {volist name="details.notice" id="vo"}
-            {switch name="vo.type"}
-                {case value="1"}<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
-                {case value="2"}<a href="{:Url('Notice/activity?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
-                {case value="3"}<a href="{:Url('Notice/recruit?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
-                {case value="4"}<a href="{:Url('Notice/activity?id='.$vo['id'])}" class="list clearfix" data-type="notice">{/case}
-                {default /}
-            {/switch}
+            <a href="{:Url('Notice/forumnotice?id='.$vo['id'])}" class="list clearfix" data-type="notice">
                 <div class="fl">
-                    {eq name="vo.type" value='1'}
-                    <img src="/home/images/common/1.jpg" alt="图片">
-                    {/eq}
-                    {eq name="vo.type" value='2'}
                     <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
-                    {/eq}
-                    {eq name="vo.type" value='3'}
-                    <img src="/home/images/common/1.jpg" alt="图片">
-                    {/eq}
-                    {eq name="vo.type" value='4'}
-                    <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
-                    {/eq}
-                    <span class="type">支部动态</span>
+                    <span class="type">通知公告</span>
                 </div>
                 <div class="fr right">
                     <div class="title limit_">{$vo.title}</div>
@@ -116,16 +95,12 @@
                 </div>
             </a>
         {/volist}
-            <!--两学一做-->
+            <!--党建风采-->
             {volist name="details.learn" id="vo"}
-            {eq name="vo.type" value="2"}
-            <a href="{:Url('Learn/article?id='.$vo['id'])}" class="list clearfix" data-type="learn">
-                {else/}
                 <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list clearfix" data-type="learn">
-                    {/eq}
                     <div class="fl">
                         <img src="{$vo.front_cover|get_cover='path'}" alt="图片">
-                        <span class="type">两学一做</span>
+                        <span class="type">党建风采</span>
                     </div>
                     <div class="fr right">
                         <div class="title limit_">{$vo.title}</div>
@@ -160,9 +135,6 @@
             $('.tip' ).text('上拉加载更多');
             //上拉加载
             loadScroll();
-        }
-        if(len > 0 && len< 6){
-            $('.tip' ).text('没有更多了');
         }
     });
     function loadScroll(){
@@ -216,22 +188,14 @@
             for(var i = 0; i< len;i++){
                 var list = lists[i];
                 if(list['genre'] == 'learn'){
-                    name = '两学一做';
-                    if(list['type'] == 2){
-                        href = '/home/learn/article?id='+list['id'];
-                    }else{
-                        href = '/home/learn/video?id='+list['id'];
-                    }
+                    name = '党建风采';
+                    href = '/home/learn/video?id='+list['id'];
                 }else if(list['genre'] == 'notice'){
-                    name = '支部动态';
-                    if(list['type'] == 2 ||list['type'] == 4 ){
-                        href = '/home/notice/activity?id='+list['id'];
-                    }else{
-                        href = '/home/notice/recruit?id='+list['id'];
-                    }
+                    name = '通知公告';
+                    href = '/home/notice/forumnotice?id='+list['id'];
                 }else{
-                    name = '党委动态';
-                    href = '/home/dynamic/detail?id='+list['id'];
+                    name = '党建动态';
+                    href = '/home/news/detail?id='+list['id'];
                 }
                 html +=
                         '<a href="'+href+'" class="list clearfix" data-type ="'+list['genre']+'">'+
