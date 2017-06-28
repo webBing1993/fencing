@@ -175,8 +175,8 @@ class Notice extends Admin {
             $str1 = strip_tags($focus1['content']);
             $des1 = mb_substr($str1,0,100);
             $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-            $url1 = hostUrl."/home/notice/recruit/id/".$focus1['id'].".html";
-            $pre1 = "【相关通知】";
+            $url1 = hostUrl."/home/notice/forumnotice/id/".$focus1['id'].".html";
+            $pre1 = "【通知公告】";
             $img1 = Picture::get($focus1['front_cover']);
             $path1 = hostUrl.$img1['path'];
             $information1 = array(
@@ -198,8 +198,8 @@ class Notice extends Admin {
                 $str = strip_tags($focus['content']);
                 $des = mb_substr($str,0,100);
                 $content = str_replace("&nbsp;","",$des);  //空格符替换成空
-                $url = hostUrl."/home/notice/recruit/id/".$focus['id'].".html";
-                $pre = "【相关通知】";
+                $url = hostUrl."/home/notice/forumnotice/id/".$focus['id'].".html";
+                $pre = "【通知公告】";
                 $img = Picture::get($focus['front_cover']);
                 $path = hostUrl.$img['path'];
                 $info = array(
