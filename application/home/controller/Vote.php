@@ -46,7 +46,7 @@ class Vote extends Base{
              if ($secs >= 86400) {
                  $days = floor($secs / 86400);
                  $secs = $secs % 86400;
-                 $result = $days . ' 天';
+                 $result = $days . '天';
                  if ($secs > 0) {
                      $result .= ' ';
                  }
@@ -54,7 +54,7 @@ class Vote extends Base{
              if ($secs >= 3600) {
                  $hours = floor($secs / 3600);
                  $secs = $secs % 3600;
-                 $result .= $hours . ' 小时';
+                 $result .= $hours . '小时';
                  if ($secs > 0) {
                      $result .= ' ';
                  }
@@ -62,7 +62,7 @@ class Vote extends Base{
              if ($secs >= 60) {
                  $minutes = floor($secs / 60);
                  $secs = $secs % 60;
-                 $result .= $minutes . ' 分钟';
+                 $result .= $minutes . '分钟';
                  if($secs > 0) {
                      $result .= ' ';
                  }
