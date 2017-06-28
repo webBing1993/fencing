@@ -11,6 +11,8 @@ use app\home\model\News;
 use app\home\model\Notice;
 use app\home\model\Browse;
 use app\home\model\Feedback;
+use app\home\model\WechatDepartment;
+use app\home\model\WechatDepartmentUser;
 use app\home\model\WechatUser;
 use app\home\model\WechatUserTag;
 use think\Controller;
@@ -72,6 +74,11 @@ class User extends Base {
                 break;
             default:
                 break;
+        }
+        $Departid = WechatDepartmentUser::where('userid',$userId)->order('id desc')->field('departmentid')->find();
+        if (empty($user['branch'])){
+             $Depart = WechatDepartment::where('id',$Departid['departmentid'])->find();
+            $user['branch'] = $Depart->name;
         }
         $Notice = new Notice();
         $map = array(
@@ -139,6 +146,11 @@ class User extends Base {
                 break;
             default:
                 break;
+        }
+        $Departid = WechatDepartmentUser::where('userid',$id)->order('id desc')->field('departmentid')->find();
+        if (empty($user['branch'])){
+            $Depart = WechatDepartment::where('id',$Departid['departmentid'])->find();
+            $user['branch'] = $Depart->name;
         }
         $Notice = new Notice();
         $map = array(
