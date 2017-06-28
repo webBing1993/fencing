@@ -64,7 +64,8 @@ return [
     'session_prefix' => 'zt_admin',  //session前缀
     'cookie_prefix'  => 'zt_admin_', // Cookie前缀 避免冲突
     'var_session_id' => 'session_id',//修复uploadify插件无法传递session_id的bug
-    define('hostUrl','http://tzpb.0571ztnet.com'),
-    define('agentId',13),
-    define('toUser','@all')
+    define('hostUrl','http://tzgxpb.0571ztnet.com'),
+    define('agentId',1000002),
+//    define('toUser','@all')
+    define('toUser','17557289172')
 ];

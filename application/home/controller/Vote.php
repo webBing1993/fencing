@@ -22,18 +22,19 @@ class Vote extends Base{
       * 投票主页
       */
      public function index(){
+         $this->anonymous();
          $userId = session('userId');
          //  获取该用户 所在支部
          $Depart = WechatUser::where('userid',$userId)->field('department')->find();
          $depart = json_decode($Depart['department']);
          $this->jssdk();
          $map = array(
-             'status' => array('eq',0),
+             'status' => array('egt',0),
              'end_time' => array('gt',time()),  // 未结束
              'publisher' => array('in',$depart)
          );
          $maps = array(
-             'status' => array('eq',0),
+             'status' => array('egt',0),
              'end_time' => array('elt',time()),  // 历史投票
              'publisher' => array('in',$depart)
          );
@@ -74,7 +75,7 @@ class Vote extends Base{
              }
              $value['sum'] = $sum;
          }
-         $list = $voteModel->where($maps)->order('id desc')->limit(5)->select();  // 历史记录
+         $list = $voteModel->where($maps)->order('id desc')->select();  // 历史记录
          foreach($list as $value){
              $Options = VoteOptions::where(['vote_id' => $value->id , 'status' => 0])->select();
              $sum = 0;
@@ -91,8 +92,9 @@ class Vote extends Base{
      * 加载更多列表
      */
     public function more(){
+        $this->checkRole();
         $id = input('post.id');
-        $res = VoteModel::where(['status' => 0])->order('id desc')->limit($id,3)->select();
+        $res = VoteModel::where(['status' => ['egt',0]])->order('id desc')->limit($id,3)->select();
         if ($res){
             foreach($res as $value){
                 $Options = VoteOptions::where(['vote_id' => $value->id , 'status' => 0])->select();
@@ -114,6 +116,7 @@ class Vote extends Base{
      * 投票 页面
      */
      public function vote(){
+         $this->checkRole();
          $id = input('get.id');  // 主题id
          $type = input('get.type');  // 类型
          $userId = session('userId');
@@ -151,12 +154,30 @@ class Vote extends Base{
              }else{
                  //  已经投票  排名页面
                  $Vote = VoteModel::where('id',$id)->find();   // 获取 投票信息
-                 
+                 $Vote['num'] = VoteOptions::where(['vote_id' => $id,'status' => 0])->count();  // 候选人
+                 $sum = 0;
+                 $Options= VoteOptions::where(['vote_id' => $id , 'status' => 0])->select();
+                 foreach($Options as $value){
+                     $sum += $value->num;
+                 }
+                 $Vote['sum'] = $sum;  // 投票人次
+                 $data = VoteAnswer::where(['vote_id' => $id,'userid' => $userId])->find();
+                 $Vote['vote'] = $data['content'];
                  return $this->fetch('rank',['list' => $Vote]);
              }
          }else{
              // 已结束
-
+             $Vote = VoteModel::where('id',$id)->find();   // 获取 投票信息
+             $Vote['num'] = VoteOptions::where(['vote_id' => $id,'status' => 0])->count();  // 候选人
+             $sum = 0;
+             $Options= VoteOptions::where(['vote_id' => $id , 'status' => 0])->select();
+             foreach($Options as $value){
+                 $sum += $value->num;
+             }
+             $Vote['sum'] = $sum;  // 投票人次
+             $data = VoteAnswer::where(['vote_id' => $id,'userid' => $userId])->find();
+             $Vote['vote'] = $data['content'];
+             return $this->fetch('rank',['list' => $Vote]);
          }
          
      }
@@ -164,6 +185,7 @@ class Vote extends Base{
      * 投票 功能
      */
     public function polling(){
+        $this->checkRole();
         $id = input('id');  // 选项id
         $vid = input('vid');  // 主题id
         $userId = session('userId');
@@ -188,9 +210,9 @@ class Vote extends Base{
      * 投票 排名
      */
      public function rank(){
+         $this->checkRole();
          $id = input('id');  // 主题id
          $userId = session('userId');
-         $Answer = VoteAnswer::where(['userid' => $userId,'vote_id' => $id])->find();  // 获取该用户投票信息
          $list = VoteModel::where('id',$id)->find();
          $list['num'] = VoteOptions::where(['vote_id' => $id,'status' => 0])->count();
          $sum = 0;
@@ -199,14 +221,16 @@ class Vote extends Base{
              $sum += $value->num;
          }
          $list['sum'] = $sum;  // 投票总人次
+         $data = VoteAnswer::where(['vote_id' => $id,'userid' => $userId])->find();
+         $list['vote'] = $data['content'];
          $this->assign('list',$list);  // 投票主题,选项内容
-         $this->assign('is',$Answer['content']);
          return $this->fetch();
      }
     /*
      * 视频会议
      */
     public function meet(){
+        $this->checkRole();
         return $this->fetch();
     }
 }

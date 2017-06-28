@@ -290,6 +290,10 @@
 	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 	var c =  parseInt(window.location.href.split("index/c/")[1]);
 	$(function(){
+		if({$visit} == 1){
+			//  游客  跳转失效
+			$('.name2').attr('href','#');
+		}
 		slide();
 		//tab初始化和数据存储
 		var ntc = $('.notices');
@@ -322,11 +326,7 @@
 				$('.tip' ).hide();
 			}
 		}
-		$('.name2' ).each(function(){
-			var t = $(this ).text();
-			var href = '/home/structure/detail?party='+t+'';
-			$(this ).attr('href', href);
-		})
+
 
 		//tab切换
 		$('.tabs>.tab ').on('click',function(){
@@ -381,7 +381,14 @@
 			toolbar:false,
 			title:false
 		});
-		moveanyway();
+		if ({$visit} == 0){
+			moveanyway();
+			$('.name2' ).each(function(){
+				var t = $(this ).text();
+				var href = '/home/structure/detail?party='+t+'';
+				$(this ).attr('href', href);
+			})
+		}
 	});
 
 	function loadScroll(type){
@@ -624,5 +631,6 @@
 	layout();
 	//图片裁剪
 	imgresize();
+
 </script>
 {/block}

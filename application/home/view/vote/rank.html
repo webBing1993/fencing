@@ -19,6 +19,7 @@
     /*tab2排行榜单*/
     .banner_img{
         width:100%;
+        height: 60vw;
     }
 
     .top{
@@ -73,7 +74,7 @@
         height:20px;line-height:20px;float: right;  margin-top: 28px;
     }
     .rank .top3 li img:nth-child(5){
-        position:absolute;margin-left: -56px;height: 56px; margin-top: 15px;
+        position:absolute;margin-left: -56px;height: 56px; margin-top: 12px;
     }
     .rank b{
         font-weight: normal;
@@ -104,11 +105,11 @@
         <div class="navbar">
             <div class="top" style="position:relative;">
                 <div class="banner">
-                    <img src="/home/images/news/bc1.jpg"  alt="banner图片" class="banner_img">
+                    <img src="{$list.front_cover|get_cover='path'}"  alt="banner图片" class="banner_img">
                 </div>
                 <div class="middle">
                     <div>
-                        <img src="" alt="第一名头像" style="border-radius:50%;height:92px;width:92px">
+                        <img src="{$list.num}" alt="第一名头像" style="border-radius:50%;height:92px;width:92px">
                     </div>
                     <div>
                         <img src="/home/images/vote/no1.png" alt="" style="width:140px;">
@@ -149,7 +150,9 @@
 
                                     <!--<img src="/home/images/vote/no1-1.png" alt="" >-->
                                 </li>
+                                {eq name="$list.vote" value="$oo.id"}
                                 <span>已投票</span>
+                                {/eq}
                                 {/volist}
                             </ul>
                         </div>

@@ -170,46 +170,54 @@
 <div class="scrollDiy">
 <div class="notice party regularmore">
     <!--课程列表-->
-    <div class="novote">进行中投票</div>
+    <div class="novote">投票进行中</div>
     <div class="lists">
         <!--图文课程-->
-        {empty name="top"}
-        <div class="default">暂无进行中的投票</div>
+        {eq name="visit" value="0"}
+            {empty name="top"}
+            <div class="default">暂无进行中的投票</div>
+            {else/}
+            <ul>
+                {volist name="top" id="to"}
+                <a href="{:Url('Vote/vote?type=1&id='.$to['id'])}" class="list">
+                    <div class="tab">火热投票中</div>
+                    <span class="imgtext"></span>
+                    <i>{$to.title}</i>
+                    <img src="{$to.front_cover|get_cover='path'}" alt="图片" class="img">
+                    <div class="content">
+                        <div class="title limit">还剩<span> {$to.left} </span>结束</div>
+                        <span class="study">已投：{$to.sum}人</span>
+                        <div class="details">查看详情</div>
+                    </div>
+                </a>
+                {/volist}
+            </ul>
+            {/empty}
         {else/}
-        <ul>
-            {volist name="top" id="to"}
-            <a href="{:Url('Vote/vote?type=1&id='.$to['id'])}" class="list">
-                <div class="tab">火热投票中</div>
-                <span class="imgtext"></span>
-                <i>{$to.title}</i>
-                <img src="{$to.front_cover|get_cover='path'}" alt="图片" class="img">
-                <div class="content">
-                    <div class="title limit">还剩<span> {$to.left} </span>结束</div>
-                    <span class="study">已投：{$to.sum}人</span>
-                    <div class="details">查看详情</div>
-                </div>
-            </a>
-            {/volist}
-        </ul>
-        {/empty}
+        <div class="default">游客无权限</div>
+        {/eq}
     </div>
 </div>
 
 <div class="lists history">
      <div>历史投票</div>
-    {empty name="list"}
-    <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">暂无历史数据</span>
+    {eq name="visit" value="0"}
+        {empty name="list"}
+        <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">暂无历史数据</span>
+        {else/}
+        <ul>
+            {volist name="list" id="lo"}
+            <a href="{:Url('Vote/vote?type=2&id='.$lo['id'])}">
+                <img src="{$lo.front_cover|get_cover='path'}">
+                <p>{$lo.title}</p>
+                <span>已结束</span><span>已投：{$lo.sum}人</span>
+            </a>
+            {/volist}
+        </ul>
+        {/empty}
     {else/}
-    <ul>
-        {volist name="list" id="lo"}
-        <a href="{:Url('Vote/vote?type=2&id='.$lo['id'])}">
-            <img src="{$lo.front_cover|get_cover='path'}">
-            <p>{$lo.title}</p>
-            <span>已结束</span><span>已投：{$lo.sum}人</span>
-        </a>
-        {/volist}
-    </ul>
-    {/empty}
+    <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">游客无权限</span>
+    {/eq}
 </div>
 {/block}
 

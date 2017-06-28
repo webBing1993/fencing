@@ -19,7 +19,7 @@
     /*tab1 赛事投票*/
     .banner_img{
         width:100%;
-        height: 70vw;
+        height: 60vw;
     }
     .banner_words{
         position:absolute;top:20%;left:0;color:#fff;width:100%;
@@ -224,7 +224,7 @@
                     success: function(data){
                         $(e).text('已投票').css({'background':'#aaa'}).parent().parent().siblings().find('span.btn1').text('投 票').css({'background':'#FDB112'});
 //                        window.location.href='/home/vote/rank/id/'+aaa;
-                        window.location.replace('http://'+"{$link}"+'/home/vote/rank/id/?index='+aaa);
+                        window.location.replace('http://'+"{$link}"+'/home/vote/rank/id/'+aaa);
                     }
                 })
             }
