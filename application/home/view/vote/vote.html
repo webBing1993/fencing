@@ -149,7 +149,7 @@
 {/block}
 
 {block name="script"}
-<script src="/static/framework7/framework7.js"></script>
+    <script src="/static/framework7/framework7.js"></script>
 <script>
     var myApp= new Framework7;
     var $$=Dom7;
@@ -224,7 +224,7 @@
                     success: function(data){
                         $(e).text('已投票').css({'background':'#aaa'}).parent().parent().siblings().find('span.btn1').text('投 票').css({'background':'#FDB112'});
 //                        window.location.href='/home/vote/rank/id/'+aaa;
-                        window.location.replace('http://'+"{$link}"+'/home/vote/rank/id/'+aaa);
+                        window.location.replace('http://'+"{$link}"+'/home/vote/rank/id/?index='+aaa);
                     }
                 })
             }

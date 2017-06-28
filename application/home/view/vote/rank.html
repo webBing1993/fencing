@@ -51,21 +51,29 @@
         height: 76px;
         line-height: 76px;
         position: relative;
-        top: -34px;
-        padding-right: 5px;
+        padding-right: 2vw;
     }
     .rank .top3 li img:nth-child(2),.myself img:nth-child(2),.top4 li img:nth-child(2){
-        border-radius:50%;height:50px;width:50px;top:10px;left:39px;margin-top: 13px;
+        border-radius:50%;height:50px;width:50px;margin-top: 13px;
     }
 
     .rank .top3 li span:nth-child(3),.myself span:nth-child(3),.top4 li span:nth-child(3){
-        display:inline-block;height:76px;line-height:76px;width:150px;overflow:hidden; white-space:nowrap;text-overflow:ellipsis;top:0;left:105px;padding-left: 5px;
+        width: 55%;
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box!important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        position: absolute;
+        margin-top: -45px;
+        left: 30vw;
     }
     .rank .top3 li span:nth-child(4),.myself span:nth-child(4),.top4 li span:nth-child(4){
         height:20px;line-height:20px;float: right;  margin-top: 28px;
     }
     .rank .top3 li img:nth-child(5){
-        position:absolute;left: 26px;height: 56px; margin-top: 15px;
+        position:absolute;margin-left: -56px;height: 56px; margin-top: 15px;
     }
     .rank b{
         font-weight: normal;
@@ -126,7 +134,7 @@
                         <div class="list-block rank">
                             <ul style="font-size:14px;" class="top3">
                                 {volist name="$list->get_rank" id="oo" key="k"}
-                                <li>
+                                <li data-id="{$oo.id}">
                                     <!--color:#F4C84A;-->
                                     <span>{$k}</span>
                                     <img src="{$oo.images|get_cover='path'}" alt="" >
@@ -155,6 +163,11 @@
     var myApp=new Framework7;
     var $$=Dom7;
     $(document).ready(function(){
+        $(".rank ul li").each(function(){
+            if($(this).data("id")==c){
+
+            }
+        })
         var screen_width=screen.width/2;
         console.log(screen_width);
     });
