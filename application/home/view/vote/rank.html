@@ -138,11 +138,11 @@
                                     <!--color:#F4C84A;-->
                                     <span>{$k}</span>
                                     <img src="{$oo.images|get_cover='path'}" alt="" >
-
                                     <span>{$oo.content}</span>
                                     <span>
                                         <b><b>{$oo.num}</b>票</b>
                                     </span>
+
                                     <!--<img src="/home/images/vote/no1-1.png" alt="" >-->
                                 </li>
                                 {/volist}
@@ -162,10 +162,11 @@
 <script>
     var myApp=new Framework7;
     var $$=Dom7;
+    var c=1;
     $(document).ready(function(){
         $(".rank ul li").each(function(){
             if($(this).data("id")==c){
-
+                $(this).append("<span style='position: absolute;right: 12vw;margin-top: 28px;background: #eee;border-radius: 4px;padding: 0 4px;color: #999;'>已投票</span>")
             }
         })
         var screen_width=screen.width/2;
