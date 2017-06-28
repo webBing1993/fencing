@@ -128,10 +128,6 @@
     transform: rotate(0deg);
   }
 }
-a:active {
-  background-color: #000!important;
-  opacity:0.1;
-}
 body {
   overflow-x: hidden;
 }
