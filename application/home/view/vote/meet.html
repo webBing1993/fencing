@@ -14,6 +14,7 @@
         width: 100%;
     }
     .content .btn{
+        display: block;
         width: 250px;
         height: 35px;
         border-radius: 30px;
@@ -61,5 +62,14 @@
 {/block}
 
 {block name="script"}
+<script>
+    $(".btn").click(function(){
+        if (/(iPhone|iPad|iOS)/i.test(navigator.userAgent)) {
+            window.location.href ="https://itunes.apple.com/cn/app/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1/id1087897068";
+        } else if (/(Android)/i.test(navigator.userAgent)) {
+            window.location.href ="https://work.weixin.qq.com/#indexDownload";
+        }
+    })
 
+</script>
 {/block}
