@@ -529,14 +529,15 @@
 	var tosend = function(e,id){
 		var index = $(e).parents('.list' ).index();
 		$('.banner,.list,.tabs' ).off('click');
-		$('.bottom' ).animate({'bottom':'0'},500,'swing',function(){
-			$('.banner,.list,.tabs' ).off('click').one('click',function(){
-				$('.bottom' ).animate({'bottom':'-45px'},500,'swing');
-				$('.myword input' ).val('');
-			})
-		}).attr('data-tab',index);
+			$('.bottom' ).animate({'bottom':'0'},300,'swing',function(){
+				$('.banner,.list,.tabs' ).off('click').one('click',function(){
+					$('.bottom' ).animate({'bottom':'-45px'},300,'swing');
+					$('.myword input' ).val('');
+				})
+			}).attr('data-tab',index);
 		$('.send' ).attr('data-tab',id);
 	};
+
 
 	function slide(){
 		$('.lists .party1' ).on('click',function(){
@@ -576,7 +577,7 @@
 							'</li>';
 
 					$('.aa .lists .list').eq(index).find('.comments').removeClass('hide').append(html);
-					$('.banner,.list,.tabs' ).click();
+					$('.banner' ).click();
 				}
 			});
 		}else{
