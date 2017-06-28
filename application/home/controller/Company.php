@@ -206,6 +206,7 @@ class Company extends Base{
                 ->alias('a')
                 ->join('pb_wechat_department b','a.departmentid = b.id','LEFT')
                 ->where('a.userid',$userId)
+                ->order('a.id desc')
                 ->find();
             $data['department_name'] = $department['name'];
             $data['images'] = json_encode($data['images']);
