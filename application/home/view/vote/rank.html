@@ -58,7 +58,7 @@
     }
 
     .rank .top3 li span:nth-child(3),.myself span:nth-child(3),.top4 li span:nth-child(3){
-        width: 55%;
+        width: 38%;
         word-wrap: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -66,7 +66,7 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         position: absolute;
-        margin-top: -45px;
+        margin-top: -48px;
         left: 30vw;
     }
     .rank .top3 li span:nth-child(4),.myself span:nth-child(4),.top4 li span:nth-child(4){
@@ -91,7 +91,11 @@
     }
     .banner_data>div>span{
         display:block;height:25px;line-height:25px;font-size:12px;color:#999;
-    }</style>
+    }
+    .rank ul li+span{
+        position: absolute;right: 15vw;margin-top: -48px;background: #eee;border-radius: 4px;padding: 0 4px;color: #999;
+    }
+</style>
 {/block}
 
 {block name="body"}
@@ -145,6 +149,7 @@
 
                                     <!--<img src="/home/images/vote/no1-1.png" alt="" >-->
                                 </li>
+                                <span>已投票</span>
                                 {/volist}
                             </ul>
                         </div>
@@ -164,11 +169,6 @@
     var $$=Dom7;
     var c=1;
     $(document).ready(function(){
-        $(".rank ul li").each(function(){
-            if($(this).data("id")==c){
-                $(this).append("<span style='position: absolute;right: 12vw;margin-top: 28px;background: #eee;border-radius: 4px;padding: 0 4px;color: #999;'>已投票</span>")
-            }
-        })
         var screen_width=screen.width/2;
         console.log(screen_width);
     });
