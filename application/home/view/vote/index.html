@@ -85,17 +85,26 @@
     }
     .imgtext{
         position: absolute;
-        left: 12vw;
         margin-top: 40vw;
-        opacity: 0.2;
+        opacity: 0.3;
         color: #fff;
         height: 6vw;
         line-height: 6vw;
-        padding: 0 2vw;
+        width:86.5%;
+        text-align: left;
+        padding-left: 20px;
         background:-moz-linear-gradient(top,#fff,#000);/*Mozilla*/
         background:-webkit-gradient(linear,0 50%,100% 50%,from(#fff),to(#000));/*Old gradient for webkit*/
         background:-webkit-linear-gradient(top,#fff,#000);/*new gradient for Webkit*/
         background:-o-linear-gradient(top,#fff,#000); /*Opera11*/
+    }
+    .imgtext+i{
+        position: absolute;
+        margin-top: 41vw;
+        padding-left: 20px;
+        color: #fff;
+        font-style: inherit;
+        line-height: 4vw;
     }
     .history{
         padding-top: 0;
@@ -151,7 +160,8 @@
             {volist name="top" id="to"}
             <a href="{:Url('Vote/vote?id='.$to['id'])}" class="list">
                 <div class="tab">火热投票中</div>
-                <span class="imgtext">{$to.title}</span>
+                <span class="imgtext"></span>
+                <i>{$to.title}</i>
                 <img src="{$to.front_cover|get_cover='path'}" alt="图片" class="img">
                 <div class="content">
                     <div class="title limit">还剩<span> {$to.left} </span>结束</div>
