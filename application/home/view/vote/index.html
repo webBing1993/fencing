@@ -158,7 +158,7 @@
         {else/}
         <ul>
             {volist name="top" id="to"}
-            <a href="{:Url('Vote/vote?id='.$to['id'])}" class="list">
+            <a href="{:Url('Vote/vote?type=1&id='.$to['id'])}" class="list">
                 <div class="tab">火热投票中</div>
                 <span class="imgtext"></span>
                 <i>{$to.title}</i>
@@ -182,7 +182,7 @@
     {else/}
     <ul>
         {volist name="list" id="lo"}
-        <a href="{:Url('Vote/vote?id='.$lo['id'])}">
+        <a href="{:Url('Vote/vote?type=2&id='.$lo['id'])}">
             <img src="{$lo.front_cover|get_cover='path'}">
             <p>{$lo.title}</p>
             <span>已结束</span><span>已投：{$lo.sum}人</span>

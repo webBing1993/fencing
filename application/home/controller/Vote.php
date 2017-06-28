@@ -114,45 +114,51 @@ class Vote extends Base{
      * 投票 页面
      */
      public function vote(){
-         $id = input('id');  // 主题id
+         $id = input('get.id');  // 主题id
+         $type = input('get.type');  // 类型
          $userId = session('userId');
-         $Answer = VoteAnswer::where(['userid' => $userId,'vote_id' => $id])->find();  // 获取投票信息
-         $now = time();
-         $Vote = VoteModel::where('id',$id)->find();   // 获取截止时间
-         $end_time = $Vote['end_time'];
-         $dif = $now - $end_time;
-         if (empty($Answer) && ($dif < 0)){
-            // 未投票  并且 未到截止时间  投票页面 否则 排名页面
-             $voteModel = new voteModel();
-             // 浏览量 +1
-             $info['views'] = array('exp','`views`+1');
-             $voteModel::where('id',$id)->update($info);
-             if($userId != "visitor"){
-                 //浏览不存在则存入sw_browse表
-                 $con = array(
-                     'user_id' => $userId,
-                     'vote_id' => $id, // 投票主题 id
-                 );
-                 $history = Browse::get($con);
-                 if(!$history && $id != 0){
-                     Browse::create($con);
+         if ($type == 1){
+             // 进行中
+             $Answer = VoteAnswer::where(['userid' => $userId,'vote_id' => $id])->find();  // 获取投票信息
+             if (empty($Answer)){
+                 // 未投票 
+                 $voteModel = new voteModel();
+                 // 浏览量 +1
+                 $info['views'] = array('exp','`views`+1');
+                 $voteModel::where('id',$id)->update($info);
+                 if($userId != "visitor"){
+                     //浏览不存在则存入sw_browse表
+                     $con = array(
+                         'user_id' => $userId,
+                         'vote_id' => $id, // 投票主题 id
+                     );
+                     $history = Browse::get($con);
+                     if(!$history && $id != 0){
+                         Browse::create($con);
+                     }
                  }
+                 $list = VoteModel::where('id',$id)->find();
+                 $list['num'] = VoteOptions::where(['vote_id' => $id,'status' => 0])->count();
+                 $sum = 0;
+                 $Options= VoteOptions::where(['vote_id' => $id , 'status' => 0])->select();
+                 foreach($Options as $value){
+                     $sum += $value->num;
+                 }
+                 $list['sum'] = $sum;
+                 $this->assign('list',$list);
+                 $this->assign('link',$_SERVER['HTTP_HOST']);
+                 return $this->fetch();
+             }else{
+                 //  已经投票  排名页面
+                 $Vote = VoteModel::where('id',$id)->find();   // 获取 投票信息
+                 
+                 return $this->fetch('rank',['list' => $Vote]);
              }
-             $list = VoteModel::where('id',$id)->find();
-             $list['num'] = VoteOptions::where(['vote_id' => $id,'status' => 0])->count();
-             $sum = 0;
-             $Options= VoteOptions::where(['vote_id' => $id , 'status' => 0])->select();
-             foreach($Options as $value){
-                $sum += $value->num;
-             }
-             $list['sum'] = $sum;
-             $this->assign('list',$list);
-             $this->assign('link',$_SERVER['HTTP_HOST']);
-             return $this->fetch();
          }else{
-            //  排名页面
-             return $this->fetch('rank',['list' => $Vote]);
+             // 已结束
+
          }
+         
      }
     /*
      * 投票 功能
