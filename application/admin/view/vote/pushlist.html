@@ -13,13 +13,13 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>党建之家</h2>
+        <h2>党员之家</h2>
         <ol class="breadcrumb">
             <li class="active">
-                <a href="{:Url('Company/index')}">交流互动</a>
+                <a href="{:Url('Vote/index')}">民主评议</a>
             </li>
             <li>
-                <strong><a href="{:Url('Company/pushlist')}">推送列表</a></strong>
+                <strong><a href="{:Url('Vote/pushlist')}">推送列表</a></strong>
             </li>
         </ol>
     </div>
@@ -58,13 +58,13 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="row" id="vice">
-                                                    <div class="col-lg-2 col-sm-2 no-padding text-right" style="text-align:center;line-height:30px;margin-bottom: 10px">
-                                                        <label>副图文:</label>
-                                                    </div>
-                                                    <div class="col-lg-10 col-sm-10 sel vice" style="padding-right:35px;">
-                                                    </div>
-                                                </div>
+                                                <!--<div class="row" id="vice">-->
+                                                    <!--<div class="col-lg-2 col-sm-2 no-padding text-right" style="text-align:center;line-height:30px;margin-bottom: 10px">-->
+                                                        <!--<label>副图文:</label>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="col-lg-10 col-sm-10 sel vice" style="padding-right:35px;">-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
@@ -127,50 +127,14 @@
 <script src="/admin/js/chosen.jquery.js"></script>
 <script>
     $(function(){
-        highlight_subnav("{:Url('Company/pushlist')}");
+        highlight_subnav("{:Url('Vote/pushlist')}");
+
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green'
         });
 
     });
-
-    //点击主图文传递数据,并显示副图文
-    $("#vice").hide();
-    $("select[name='focus_main']").on("change",function () {
-        var id = $("select[name='focus_main']").val();
-        if(id == -1){
-            $("#vice").hide();
-        }else{
-            $("#vice").show();
-        }
-        $.ajax({
-            type:"post",
-            url:"{:Url('Company/pushlist')}",
-            data:{id:id},
-            success:function(data){
-                var html = "";
-                var titles = data.msg;
-                var len = titles.length;
-                $('.vice' ).empty();
-                html += '<select class="chosen-select form-control" data-placeholder="--请选择--" name="focus_vice" multiple>';
-                for(var i = 0; i < len; i++ ){
-                    var t = titles[i];
-                    html += '<option value="'+ t.id +'">'+ t.title +'</option>';
-                }
-                html += '</select>';
-                $('.vice' ).append(html);
-                $(".vice select" ).chosen({
-                    no_results_text: "没有找到该选项",
-                    allow_single_de: true,
-                    width:'100%',
-                    max_selected_options:'5'
-                });
-            }
-        });
-
-    });
-
     //多选框
     $(".sel select" ).chosen({
         no_results_text: "没有找到该选项",
@@ -209,13 +173,13 @@
         var it=$(this);
         var data = {
             focus_main: $("select[name='focus_main']").val(),
-            focus_vice: $("select[name='focus_vice']").val(),
         };
         $.ajax({
             type:"post",
             url:$("#form").attr("action"),
             data:data,
             success:function(data){
+                console.log(data)
                 if(data.code == 1){
                     if (data.url) {
                         updateAlert(data.msg + ' 页面即将自动跳转~','success');

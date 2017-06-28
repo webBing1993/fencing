@@ -9,6 +9,10 @@ namespace app\admin\controller;
 use app\admin\model\Vote as VoteModel;
 use app\admin\model\VoteOptions;
 use app\admin\model\WechatDepartment;
+use com\wechat\TPQYWechat;
+use app\admin\model\Picture;
+use app\admin\model\Push;
+use think\Config;
 /*
  *  选举投票
 */
@@ -26,7 +30,7 @@ class Vote extends Admin{
             $value['publisher'] = $Department['name'];
         }
         int_to_string($list,array(
-            'status' => array(0=>"已发布"),
+            'status' => array(0=>"已发布",1=>"已发布"),
         ));
         $this->assign('list',$list);
         return $this->fetch();
@@ -192,6 +196,95 @@ class Vote extends Admin{
             return $this->success('删除成功');
         }else{
             return $this->error('删除失败');
+        }
+    }
+    /*
+    * 民主评议   推送列表
+    */
+    public function pushlist(){
+        //新闻消息列表
+        $map = array(
+            'class' => 5,  // 民主评议
+            'status' => array('egt',-1)
+        );
+        $list=$this->lists('Push',$map);
+        int_to_string($list,array(
+            'status' => array(-1 => '不通过', 0 => '未审核', 1=> '已发送')
+        ));
+        //数据重组
+        foreach($list as $value){
+            $msg = VoteModel::where('id',$value['focus_main'])->find();
+            $value['title'] = $msg['title'];
+        }
+        $this->assign('list',$list);
+        //主图文本周内的新闻消息
+        $t = $this->week_time();
+        $info = array(
+            'create_time' => array('egt',$t),
+            'end_time' => ['gt',time()],
+            'status' => 0
+        );
+        $infoes = VoteModel::where($info)->select();
+        foreach($infoes as $value){
+            $value['title'] = '【民主评议】'.$value['title'];
+        }
+        $this->assign('info',$infoes);
+        return $this->fetch();
+    }
+    /*
+     * 民主评议  推送
+     */
+    public function push(){
+        $data = input('post.');
+        $arr = $data['focus_main'];      //主图文id
+        if($arr == -1){
+            return $this->error('请选择主图文');
+        }else{
+            //主图文信息
+            $info = VoteModel::where('id',$arr)->find();
+        }
+        $update['status'] = '1';
+        $title = $info['title'];
+        VoteModel::where(['id'=>$arr])->update($update); // 更新推送后的状态
+        $content = $info['awards'];  //空格符替换成空
+        $url = hostUrl."/home/Vote/vote/type/1/id/".$info['id'].".html";
+        $img = Picture::get($info['front_cover']);
+        $path = hostUrl.$img['path'];
+        $information = array(
+            'title' => '【民主评议】'.$title,
+            'description' => $content,
+            'url'  => $url,
+            'picurl' => $path
+        );
+        //重组成article数据
+        $send = array(
+            'articles' => $information
+        );
+        //发送给企业号
+        $Wechat = new TPQYWechat(Config::get('party'));
+        $message = array(
+            "toparty" => $info['publisher'],
+//        'touser' => toUser,
+            "msgtype" => 'news',
+            "agentid" => agentId,
+            "news" => $send,
+            "safe" => "0"
+        );
+        $msg = $Wechat->sendMessage($message);  // 推送至审核
+        if($msg['errcode'] === 0){
+            $data['focus_vice'] = null;
+            $data['create_user'] = session('user_auth.username');
+            $data['class'] = 5 ;  // 民主评议
+            $data['status'] = 1;
+            //保存到推送列表
+            $result = Push::create($data);
+            if($result){
+                return $this->success('发送成功');
+            }else{
+                return $this->error('发送失败');
+            }
+        }else{
+            return $this->error($Wechat->errMsg.'发送失败');
         }
     }
 }
