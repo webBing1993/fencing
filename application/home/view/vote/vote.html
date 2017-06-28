@@ -51,16 +51,37 @@
     }
     .list-block>ul>li{
         border-bottom:1px solid #efeff4;
+        padding: 0 4vw;
     }
 
     .list-block>ul>li>img:nth-child(1){
-        height:50px;width:50px;position: absolute;left:12px;top:12px;border-radius: 50%;;
+        height: 50px;
+        width: 50px;
+        left: 12px;
+        margin-top: 13px;
+        border-radius: 50%;
+        float: left;
     }
     .list-block>ul>li>div:nth-child(2){
-        position:absolute;left:77px;font-size:14px;color:#333;line-height: 75px;text-align: left;overflow:hidden; white-space:nowrap;text-overflow:ellipsis;width:170px;
+        position: absolute;
+        left: 77px;
+        font-size: 14px;
+        color: #333;
+        line-height: 75px;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 170px;
     }
     .list-block>ul>li>div:nth-child(3){
-        font-size:14px;color:#333;height:20px;position:absolute;right:12px;top:28px;
+        font-size: 14px;
+        color: #333;
+        height: 20px;
+        margin-right: 12px;
+        top: 28px;
+        float: right;
+        margin-top: 28px;
     }
     .list-block>ul>li>div:nth-child(3)>span{
         display:inline-block;width:60px;text-align: center;font-size:14px;height:20px;line-height:20px;
@@ -130,7 +151,7 @@
 {block name="script"}
 <script src="/static/framework7/framework7.js"></script>
 <script>
-    var myApp=new Framework7;
+    var myApp= new Framework7;
     var $$=Dom7;
     //alert隐藏网址
     var wAlert = window.alert;
@@ -176,7 +197,7 @@
         var screen_width=screen.width/2;
         console.log(screen_width);
         $('.banner_img').css({'height':screen_width+'px'});
-        $('#tab1 .list-block').css({'margin-top':screen_width+25+'px'});
+//        $('#tab1 .list-block').css({'margin-top':screen_width+25+'px'});
         $('.toolbar').css({'bottom':'-44px'})
     });
 
