@@ -189,11 +189,6 @@
 				</a>
 			</li>
 			{/volist}
-			<a href="{:Url('company/detail')}">
-				<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>
-				<span>发布人所在支部</span>
-				<span><i></i>45</span>
-			</a>
 		</ul>
 	</div>
 
@@ -217,12 +212,18 @@
 					</div>
 					<div class="note clear">
 						<span class="fl">{$vo.department_name}/{$vo.create_time|time_format="Y.m.d"}发布</span>
+						{eq name="visit" value="0"}
 						<span class="fr message" onclick="tosend(this,{$vo.id})"></span>
 						<span class="fr goodnum">{$vo.likes}</span>
 						{eq name="vo.is_like" value="1"}
 						<span class="fr good_" onclick="isGood(this,5,{$vo.id})"></span>
 						{else/}
 						<span class="fr good" onclick="isGood(this,5,{$vo.id})"></span>
+						{/eq}
+						{else/}
+						<span class="fr message"></span>
+						<span class="fr goodnum">{$vo.likes}</span>
+						<span class="fr good"></span>
 						{/eq}
 					</div>
 					<ul class="comments">
@@ -237,7 +238,9 @@
 			</div>
 			{/volist}
 		</div>
+	{eq name="visit" value="0"}
 		<a id="publish" href="{:Url('Company/publish')}"></a>
+	{/eq}
 		<div class="bottom clear">
 			<div class="myword fl">
 				<input type="text" placeholder="说说你的感想！" id="impression">
@@ -304,20 +307,24 @@
 			if(eq==1) {
 				var len = ntc.eq(eq).find('ul').length;
 				if (len >= 5) {
+					$(".tip").show();
 					$('.tip').text('上拉加载更多');
 				}else{
 					$('.tip').hide();
 				}
+				loadScroll(eq + 1);
 			}
 			if(eq==2) {
 				var len = ntc.eq(eq).find('.lists .list').length;
 				if (len >= 5) {
+					$(".tip").show();
 					$('.tip').text('上拉加载更多');
 				}else{
 					$('.tip').hide();
 				}
+				loadScroll(eq + 1);
 			}
-			loadScroll(eq + 1);
+
 			//使用示例
 			setCookie("type",eq+11);
 		});
@@ -336,6 +343,7 @@
 			toolbar:false,
 			title:false
 		});
+		moveanyway();
 	});
 
 	function loadScroll(type){
@@ -351,12 +359,12 @@
 			var tip = $(".tip");
 			var loading = $('.loading');
 			if(type==2){
-				var len = $("ul").length;
+				var len = $(" .interactive ul > li").length;
 			}
 			if(type==3){
 				var len = $('.aa .lists .list').length;
 			}
-			if(dh == end+1 && scrollNow){
+			if(dh == end && scrollNow){
 				scrollNow = false;//请求执行中
 				$.ajax({
 					type:"post",
@@ -370,7 +378,6 @@
 						loading.toggleClass('hidden');
 					},
 					success:function(data){
-						console.log(data)
 						loading.toggleClass('hidden');
 						tip.show();
 						if(data.code == 1){
@@ -397,11 +404,11 @@
 			var list = lists[i];
 			if(type==2){
 				html+=
-						'<a href="">'+
-						'<p>如果你法务发福安发放呜呜呜呜呜呜得打，哈哈哈为兑换法律无法理解微蜂窝健身房</p>'+
-						'<span>发布人所在支部</span>'+
-						'<span><i></i>45</span>'+
-						'</a>';
+						'<li><a href="/home/Company/detail/id/"'+list.id+'>'+
+						'<p>'+list.title+'</p>'+
+						'<span>'+list.publisher+'</span>'+
+						'<span><i></i>'+list.comments+'</span>'+
+						'</a></li>';
 			}
 			if(type==3){
 				html +=
@@ -424,12 +431,20 @@
 				html +=
 						'</div>'+
 						'<div class="note clear">'+
-						'<span class="fl">'+list.department_name+'/'+list.time+'发布</span>'+
-						'<span class="fr message" onclick="tosend(this,'+list.id+')"></span>'+
-						'<span class="fr goodnum">'+list.likes+'</span>'+
-						'<span class="fr '+good+'" onclick="isGood(this,5,'+list.id+')"></span>'+
-						'</div>'+
-						'<ul class="comments">';
+						'<span class="fl">'+list.department_name+'/'+list.time+'发布</span>'
+				if ({$visit} == 0){
+					html+='<span class="fr message" onclick="tosend(this,'+list.id+')"></span>'+
+							'<span class="fr goodnum">'+list.likes+'</span>'+
+							'<span class="fr '+good+'" onclick="isGood(this,5,'+list.id+')"></span>'+
+							'</div>'+
+							'<ul class="comments">';
+				}else{
+					html+='<span class="fr message"></span>'+
+							'<span class="fr goodnum">'+list.likes+'</span>'+
+							'<span class="fr '+good+'"></span>'+
+							'</div>'+
+							'<ul class="comments">';
+				}
 				var commentlen = list.comment.length;
 				for(var x = 0 ;x <commentlen ;x++){
 					html+=
@@ -454,7 +469,7 @@
 		layout();
 		imgresize();
 		if(viewer) {
-			viewer = $('.lists .imgs').viewer({
+			viewer = $('.aa .lists .imgs').viewer({
 				url: 'data-original',
 				toolbar:false,
 				title:false
@@ -499,7 +514,7 @@
 				type:"post",
 				url:"{:Url('Base/comment')}",
 				data:{
-					type : 13,
+					type :5,
 					aid:$('.send' ).attr('data-tab'),
 					content:it.val()
 				},
@@ -512,7 +527,7 @@
 							'<span class="comment">'+data.content+'</span>'+
 							'</li>';
 
-					$('.clear').eq(index).find('.comments').removeClass('hide').append(html);
+					$('.aa .lists .list').eq(index).find('.comments').removeClass('hide').append(html);
 					$('.banner,.list,.tabs' ).click();
 				}
 			});
@@ -531,16 +546,15 @@
 	};
 
 	//点赞
-	var isGood = function(e,id,comment_id,userid,cla){
+	var isGood = function(e,type,id){
 		//样式变化，移到suc
 		var n = $(e).prev('.goodnum').text();
 		$.ajax({
 			type:"post",
 			url:"{:Url('Base/like')}",
 			data:{
-				type:cla,
+				type:type,
 				aid:id,
-				comment_id:comment_id
 			},
 			success:function(data){
 				$(e).toggleClass('good' ).toggleClass('good_');
@@ -549,5 +563,25 @@
 			}
 		})
 	};
+
+
+	var layout = function(){
+		$('.list' ).each(function(){
+			var this_ = $(this);
+			var n_img = this_.find('.imgs .img' ).length;
+			var n_li = this_.find('.comments li' ).length;
+			if(n_img == 4){
+				this_.find('.imgs .img' ).eq(1).after('<br>')
+			}
+			if(n_li == 0){
+				this_.find('.comments').addClass('hide');
+			}
+		})
+	};
+
+	//图片排版、评论框
+	layout();
+	//图片裁剪
+	imgresize();
 </script>
 {/block}

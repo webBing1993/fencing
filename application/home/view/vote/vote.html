@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>党员之家</title>
 <style>
     /*reset*/
     .page{
@@ -76,7 +77,7 @@
         <div class="navbar">
             <div class="top" style="position:relative;">
                 <div class="banner">
-                    <img src="/home/images/news/bc1.jpg" alt="banner图片" class="banner_img">
+                    <img src="{$list.front_cover|get_cover='path'}" alt="banner图片" class="banner_img">
                 </div>
                 <div class="banner_words">
                     <span>{$list.awards}</span>

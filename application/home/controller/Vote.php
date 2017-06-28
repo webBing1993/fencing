@@ -11,6 +11,8 @@ use app\home\model\VoteOptions;
 use app\home\model\Browse;
 use app\home\model\VoteAnswer;
 use app\home\model\Picture;
+use app\home\model\WechatUser;
+
 /*
  * 选举投票主页
 */
@@ -20,13 +22,59 @@ class Vote extends Base{
       * 投票主页
       */
      public function index(){
+         $userId = session('userId');
+         //  获取该用户 所在支部
+         $Depart = WechatUser::where('userid',$userId)->field('department')->find();
+         $depart = json_decode($Depart['department']);
          $this->jssdk();
          $map = array(
              'status' => array('eq',0),
+             'end_time' => array('gt',time()),  // 未结束
+             'publisher' => array('in',$depart)
+         );
+         $maps = array(
+             'status' => array('eq',0),
+             'end_time' => array('elt',time()),  // 历史投票
+             'publisher' => array('in',$depart)
          );
          $voteModel = new VoteModel();
-         $top = $voteModel->where($map)->order('id desc')->limit(3)->select();
-         $list = $voteModel->where($map)->order('id desc')->limit(5)->select();
+         $top = $voteModel->where($map)->order('id desc')->select(); // 未结束
+         foreach($top as $value){
+             $secs = $value['end_time'] - time();
+             $result = '';
+             if ($secs >= 86400) {
+                 $days = floor($secs / 86400);
+                 $secs = $secs % 86400;
+                 $result = $days . ' 天';
+                 if ($secs > 0) {
+                     $result .= ' ';
+                 }
+             }
+             if ($secs >= 3600) {
+                 $hours = floor($secs / 3600);
+                 $secs = $secs % 3600;
+                 $result .= $hours . ' 小时';
+                 if ($secs > 0) {
+                     $result .= ' ';
+                 }
+             }
+             if ($secs >= 60) {
+                 $minutes = floor($secs / 60);
+                 $secs = $secs % 60;
+                 $result .= $minutes . ' 分钟';
+                 if($secs > 0) {
+                     $result .= ' ';
+                 }
+             }
+             $value['left'] = $result;
+             $Options = VoteOptions::where(['vote_id' => $value->id , 'status' => 0])->select();
+             $sum = 0;
+             foreach($Options as $val){
+                 $sum += $val->num;
+             }
+             $value['sum'] = $sum;
+         }
+         $list = $voteModel->where($maps)->order('id desc')->limit(5)->select();  // 历史记录
          foreach($list as $value){
              $Options = VoteOptions::where(['vote_id' => $value->id , 'status' => 0])->select();
              $sum = 0;
@@ -149,4 +197,10 @@ class Vote extends Base{
          $this->assign('is',$Answer['content']);
          return $this->fetch();
      }
+    /*
+     * 视频会议
+     */
+    public function meet(){
+        return $this->fetch();
+    }
 }

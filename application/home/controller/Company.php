@@ -136,10 +136,9 @@ class Company extends Base{
             // 交流互动
             $Model = new CompanyModel();
             $res = $Model->getMoreList($len);
-            //对应的封面id转成为path,时间戳转换
-            foreach($res as $k => $v){
-                $res[$k]['front_src'] = get_cover($res[$k]['front_cover'])->path;
-                $res[$k]['header_src'] = get_cover($res[$k]['image'])->path;
+            foreach($res as $value){
+                $Depart = \app\home\model\WechatDepartment::where('id',$value['publisher'])->field('name')->find();
+                $value['publisher'] = $Depart['name'];
             }
         }else{
             // 建言献策
