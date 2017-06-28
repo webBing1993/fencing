@@ -304,11 +304,13 @@
 			$(this ).addClass('active');
 			ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
 			ntc.eq(eq).removeClass('hidden');
+			if(eq==0){
+				$('.tip').hide();
+			}
 			if(eq==1) {
 				var len = ntc.eq(eq).find('ul').length;
 				if (len >= 5) {
 					$(".tip").show();
-					$('.tip').text('上拉加载更多');
 				}else{
 					$('.tip').hide();
 				}
@@ -318,11 +320,10 @@
 				var len = ntc.eq(eq).find('.lists .list').length;
 				if (len >= 5) {
 					$(".tip").show();
-					$('.tip').text('上拉加载更多');
+					loadScroll(eq + 1);
 				}else{
 					$('.tip').hide();
 				}
-				loadScroll(eq + 1);
 			}
 
 			//使用示例
