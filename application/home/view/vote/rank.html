@@ -38,7 +38,7 @@
     }
     /**/
     .rank{
-        border-top:1px solid #f1f1f1;color:#666;margin-top: 70vw;
+        border-top:1px solid #f1f1f1;color:#666;margin-top: 12vw;
     }
     .rank ul{
         padding: 0 4vw;
@@ -71,8 +71,19 @@
         font-weight: normal;
     }
     /**/
-
-</style>
+    .banner_data{
+        width:94%;margin:0 3%;height:50px;box-shadow: 0px 3px 3px rgba(98,157,244,.3);background:#fff;
+        position: absolute;border-radius:3px;margin-top: -27px;
+    }
+    .banner_data>div{
+        display: inline-block;width:calc(100%/3);float:left;text-align: center;
+    }
+    .banner_data>div>b{
+        display:block;height:25px;line-height:32px;color:#333;
+    }
+    .banner_data>div>span{
+        display:block;height:25px;line-height:25px;font-size:12px;color:#999;
+    }</style>
 {/block}
 
 {block name="body"}
@@ -93,13 +104,20 @@
                     <div></div>
                 </div>
 
-                <!---->
-                <div class="banner_words" style="position:absolute;bottom:0;left:0;background:#333;opacity: .5;width:100%;color:#fff;font-size:17px;height:28px;line-height:28px;padding-left:12px;overflow:hidden; white-space:nowrap;text-overflow:ellipsis;">
-                    <span>{$list.awards}</span>
-                </div>
+        <div class="banner_data">
+            <div >
+                <b class="sum1">{$list.num}</b>
+                <span>候选人</span>
+            </div>
+            <div>
+                <b>{$list.sum}</b>
+                <span>投票人次</span>
+            </div>
+            <div>
+                <b>{$list.views}</b>
+                <span>访问量</span>
             </div>
         </div>
-
         <div class="page">
             <div class="page-content" style="">
                 <div class="tabs">
