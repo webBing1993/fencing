@@ -258,7 +258,9 @@ class Vote extends Admin{
         );
         //重组成article数据
         $send = array(
-            'articles' => $information
+            'articles' => array(
+                $information
+            )
         );
         //发送给企业号
         $Wechat = new TPQYWechat(Config::get('party'));
