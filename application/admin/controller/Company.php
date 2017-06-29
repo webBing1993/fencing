@@ -224,7 +224,7 @@ class Company extends Admin{
         );
         $msg = $Wechat->sendMessage($message);  // 推送至审核
 
-        if($msg['errcode'] == 0){
+        if($msg['errcode'] === 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
             $data['class'] = 4 ;  // 党员之家
@@ -237,7 +237,7 @@ class Company extends Admin{
                 return $this->error('发送失败');
             }
         }else{
-            return $this->error('发送失败');
+            return $this->error($Wechat->errMsg.'发送失败');
         }
     }
 }
