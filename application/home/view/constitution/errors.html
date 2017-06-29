@@ -63,7 +63,7 @@
     pushHistory();
     setTimeout(function(){
         window.addEventListener("popstate", function(e) {
-           window.history.go(-2);
+           window.location.href="{:Url('Constitution/game?c=2')}"
         }, false);
     },200)
 </script>
