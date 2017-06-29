@@ -263,8 +263,8 @@ class Vote extends Admin{
         //发送给企业号
         $Wechat = new TPQYWechat(Config::get('party'));
         $message = array(
-            "toparty" => $info['publisher'],
-//        'touser' => toUser,
+//            "toparty" => $info['publisher'],
+        'touser' => toUser,
             "msgtype" => 'news',
             "agentid" => agentId,
             "news" => $send,
