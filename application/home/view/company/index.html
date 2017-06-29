@@ -632,5 +632,10 @@
 	layout();
 	//图片裁剪
 	imgresize();
+	window.onpageshow = function (e) {
+		if (e.persisted) {
+			window.location.reload(true)
+		}
+	}
 </script>
 {/block}
