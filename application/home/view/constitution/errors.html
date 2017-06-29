@@ -59,11 +59,12 @@
 {/block}
 
 {block name="script"}
+<script src="/home/js/reset.js"></script>
 <script>
     pushHistory();
     setTimeout(function(){
         window.addEventListener("popstate", function(e) {
-           window.location.href="/home/constitution/game/2"
+           window.location.href="{:Url('constitution/game?c=2')}"
         }, false);
     },200)
 </script>
