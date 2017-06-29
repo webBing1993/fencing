@@ -90,7 +90,7 @@ $(function(){
 						success:function(e){
 							if(e.code == 1){
 								setTimeout(function(){
-									window.location.href = "/home/company/index/c/3";
+									window.history.go(-1);
 								},1000)
 							}else{
 								swal({
