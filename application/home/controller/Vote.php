@@ -132,7 +132,12 @@ class Vote extends Base{
              );
              $history = Browse::get($con);
              if(!$history && $id != 0){
-                 Browse::create($con);
+                 $s['score'] = array('exp','`score`+1');
+                 if ($this->score_up()){
+                     // 未满 15分
+                     Browse::create($con);
+                     WechatUser::where('userid',$userId)->update($s);
+                 }
              }
          }
          if ($type == 1){
