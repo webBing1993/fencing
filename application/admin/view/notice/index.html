@@ -67,7 +67,7 @@
                                 {else/}
                                 <td>{$vo.end_time|time_format='Y-m-d H:i'}</td>
                                 {/empty}
-                                <td>{$vo.address}</td>
+                                <td>{$vo.address|mb_substr=###,0,20}</td>
                                 <td>{$vo.telephone}</td>
                                 <td>{$vo->publisher}</td>
                                 <td>{$vo->user->nickname}</td>
