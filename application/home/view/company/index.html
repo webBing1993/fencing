@@ -633,5 +633,11 @@
 	//图片裁剪
 	imgresize();
 
+	pushHistory();
+	setTimeout(function(){
+		window.addEventListener("popstate", function(e) {
+			window.location.href="/home/index/index.html"
+		}, false);
+	},200)
 </script>
 {/block}
