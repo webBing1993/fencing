@@ -18,11 +18,7 @@
         <div class="title limit">{$vo['title']}</div>
         <div class="content limit_">{$vo['description']}</div>
         <div class="note clear">
-            {eq name="vo.is_over" value="1"}
-            <span class="fl over">已结束</span>
-            {else/}
-            <span class="fl ing">进行中</span>
-            {/eq}
+            {switch name="vo.is_over"}{case value="1"}<span class="fl over">已结束</span>{/case}{case value="0"}<span class="fl ing">进行中</span>{/case}{default /}{/switch}
             <span class="time fr">{$vo.create_time|time_format="Y-m-d"}</span>
         </div>
     </a>
@@ -98,8 +94,10 @@
                     '<div class="note clear">';
             if(list.is_over == 0){
                 html +=	'<span class="fl ing">进行中</span>'
-            }else{
+            }else if(list.is_over == 1){
                 html +=	'<span class="fl over">已结束</span>'
+            }else{
+                html+='';
             }
             html +=
                     '<span class="time fr">'+list.create_time+'</span>'+

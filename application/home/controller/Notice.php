@@ -34,6 +34,9 @@ class Notice extends Base {
         $list = NoticeModel::where($map)->order('id desc')->limit(10)->select();
         foreach($list as $value){
             $value['is_over'] = 0;  // 未结束
+            if (empty($value['end_time'])){
+                $value['is_over'] = 2;  // 无状态
+            }
             if (!empty($value['end_time']) && $value['end_time'] < time()){
                 $value['is_over'] = 1;  // 已结束
             }
@@ -54,6 +57,9 @@ class Notice extends Base {
         foreach($list as $value){
             $value['create_time'] = date("Y-m-d",$value['create_time']);
             $value['is_over'] = 0;  // 未结束
+            if (empty($value['end_time'])){
+                $value['is_over'] = 2;  // 无状态
+            }
             if (!empty($value['end_time']) && $value['end_time'] < time()){
                 $value['is_over'] = 1;  // 已结束
             }
