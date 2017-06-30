@@ -120,6 +120,7 @@
 {/block}
 
 {block name="script"}
+<script src="/home/js/reset.js"></script>
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script>
     var mySwiper = new Swiper('.swiper-container', {
@@ -216,5 +217,13 @@
        }
     }
 
+    pushHistory();
+    setTimeout(function(){
+        window.addEventListener("popstate", function(e) {
+          if(window.location.pathname=="/home/index/index.html"){
+                WeixinJSBridge.call('closeWindow');
+            }
+        }, false);
+    },200)
 </script>
 {/block}
