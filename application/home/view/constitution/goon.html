@@ -59,14 +59,8 @@
 {block name="script"}
 <script>
 $(function(){
-    var u = navigator.userAgent;
-    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
-    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-    if(isiOS){
-        //ios下的样式差异
         $('.option' ).css({'top':'5px','line-height':'18px'});
         $('.opt').css({'margin-left':'6px'});
-    }
     //同级触发input点击的事件
     $('.option,.opt' ).on('click',function(){
         var it = $(this).siblings('input');
