@@ -182,7 +182,7 @@ $(function(){
                         timer.fadeOut();
                         up.text('提交成功');
                         setTimeout(function(){
-                            window.location.href= "{:Url('Constitution/score')}";
+                            window.location.replace( "{:Url('Constitution/score')}");
                         },1000)
                     },2000);
                 }
@@ -201,7 +201,7 @@ $(function(){
                             timer.fadeOut();
                             up.text('提交成功');
                             setTimeout(function(){
-                                window.location.href= "{:Url('Constitution/score')}";
+                                window.location.replace("{:Url('Constitution/score')}");
                             },1000)
                         },2000);
                     }

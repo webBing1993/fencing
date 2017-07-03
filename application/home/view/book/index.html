@@ -134,7 +134,7 @@ body{
 .list_header.open .sj {
         border-top-color: #5d9cec;
     }
-.list_header.close .sj {
+.list_header.shut .sj {
         border-left-color: #5d9cec;
     }
     .hidden{
@@ -219,7 +219,7 @@ body{
     </ul>
     <ul class="lists">
         <li>
-            <a class="list_header type1 close">
+            <a class="list_header type1 shut">
                <span class="sj "></span>希垦科技园<span class="fr">3370</span>
             </a>
             <ul class="lists hidden">
@@ -229,7 +229,7 @@ body{
                     </a>
                 </li>
                 <li>
-                    <a class="list_header type2 close">
+                    <a class="list_header type2 shut">
                         <span class="sj "></span>服务团队<span class="fr">3370</span>
                     </a>
                     <ul class="lists hidden">
@@ -250,7 +250,7 @@ body{
                     </ul>
                 </li>
                 <li>
-                    <a class="list_header type2 close">
+                    <a class="list_header type2 shut">
                         <span class="sj "></span>园区企业<span class="fr">3370</span>
                     </a>
                     <ul class="lists hidden">
@@ -303,9 +303,9 @@ body{
 
         function toggleLists(a){
             if(a.hasClass('open')){
-                a.removeClass('open').addClass('close');
-            }else if(a.hasClass('close')){
-                a.removeClass('close').addClass('open')
+                a.removeClass('open').addClass('shut');
+            }else if(a.hasClass('shut')){
+                a.removeClass('shut').addClass('open')
             }else{
 
             }

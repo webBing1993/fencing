@@ -5,11 +5,11 @@
 <link rel="stylesheet" href="/home/css/constitution/game.css">
 {/block}
 {block name="body"}
-<a class="bg" href="{:Url('Constitution/game')}"></a>
+<div class="bg"></div>
 <div class="score">
     <span>{$score}</span>
     <span>{$num}</span>
-    <a href="{:Url('Constitution/errors')}"  alt="查看错题"></a>
+    <a alt="查看错题"></a>
 </div>
 <!--<div class="content">-->
     <!--<p class="start clear">我的得分:<span style="font-size: large"></span></p>-->
@@ -21,5 +21,29 @@
 
 {block name="script"}
 <script>
+    $(".score a").click(function(){
+        window.location.replace("{:Url('Constitution/errors')}");
+    });
+    isOut();
+    //防止恶意刷新
+    function pushHistory(){
+        var sta = {
+            title: "title"
+        };
+        if( window.history.state === null )
+        {
+            window.history.pushState( sta, "title" );
+        }
+    }
+    //退出提示
+    function isOut(){
+        pushHistory();
+        setTimeout(function(){
+            window.addEventListener("popstate", function(e) {
+                localStorage.setItem("c", 2);
+                window.history.go(-2);
+            }, false);
+        },200)
+    }
 </script>
 {/block}

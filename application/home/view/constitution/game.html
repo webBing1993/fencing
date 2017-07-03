@@ -73,12 +73,12 @@
 			{eq name="visit" value="0"}
 			<!--<img src="/home/images/game2.png" alt="" class="text">-->
 			{if condition='$info eq null'}
-			<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
+			<a class="start start1">开始答题</a>
 			{elseif condition='$exist eq 0'/}
-			<a class="start" href="{:Url('Constitution/goon')}">继续答题</a>
-			<a class="continue" href="{:Url('Constitution/answer')}">重新开始</a>
+			<a class="start goon">继续答题</a>
+			<a class="continue">重新开始</a>
 			{else/}
-			<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
+			<a class="start start1">开始答题</a>
 			{/if}
 			{else/}
 			<a class="start" href="">游客暂无权限</a>
@@ -104,11 +104,11 @@
 		var ntc = $('.notices');
 		var co = getCookie("type");
 		if(co == 11 || co == 12 || co == 13){
-			if(!c) {
 				c = co - 10;
-			}else{
-				c=c;
-			}
+			}else if(localStorage.c) {
+			c = localStorage.c
+		}else {
+			c = c;
 		}
 		$('.tabs>.tab').eq(c-1).find('span').addClass('active');
 		ntc.eq(c-1).removeClass('hidden');
@@ -186,12 +186,15 @@
 		});
 	});
 
-	pushHistory();
-	setTimeout(function(){
-		window.addEventListener("popstate", function(e) {
-			window.location.href="/home/index/index.html"
-		}, false);
-	},200)
+	$(".party .start1").click(function(){
+		window.location.href = "{:Url('Constitution/answer')}";
+	})
+	$(".party .goon").click(function(){
+		window.location.href = "{:Url('Constitution/goon')}";
+	})
+	$(".party .continue").click(function(){
+		window.location.href = "{:Url('Constitution/answer')}";
+	})
 </script>
 
 {/block}

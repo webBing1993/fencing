@@ -216,14 +216,5 @@
             $(".notice" ).append(html);
        }
     }
-
-    pushHistory();
-    setTimeout(function(){
-        window.addEventListener("popstate", function(e) {
-          if(window.location.pathname=="/home/index/index.html"){
-                WeixinJSBridge.call('closeWindow');
-            }
-        }, false);
-    },200)
 </script>
 {/block}
