@@ -16,7 +16,7 @@ class Constitution extends Admin {
      */
     public function question(){
         $data=array();
-        $question=$this->lists('Question',$data,'id');
+        $question=$this->lists('Question',$data,'id desc');
         $this->assign('question',$question);
         return $this->fetch();
     }
