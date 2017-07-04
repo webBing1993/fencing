@@ -1,4 +1,4 @@
-{extend name="base/common"}
+{extend name="public/common"}
 
 {block name="style"}
 <style>
@@ -33,7 +33,7 @@
         min-width: 1px;
         line-height: 7.467vw;
         height:7.467vw;
-        background: url("/index/images/addressbook/search.png") 0 50% no-repeat;
+        background: url("/home/images/book/search.png") 0 50% no-repeat;
         background-size: 4.8vw 4.8vw;
     }
     .search.isClick{
@@ -82,30 +82,31 @@
         padding: 1.333vw 0;
     }
     .main>.nav>li>a{
+        padding:0;
         display: block;
         line-height: 5.867vw;
         color: #666;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
     .main>.nav>li:first-child a{
         color:#5d9cec;
-        font-size: 1.7rem;
+        font-size: 1.6rem;
     }
     .main>.nav>li:not(:last-child)>a:after{
         display: inline;
         content: '';
         padding:1px 2.133vw;
-        background: url("/index/images/addressbook/right.png") center center no-repeat;
+        background: url("/home/images/book/right.png") center center no-repeat;
         background-size:1.6vw 3.2vw;
     }
 
 
-     .list>li{
+    .lists>li{
         box-sizing: border-box;
         font-size: 1.4rem;
         color: #666;
     }
-     .list a{
+    .lists a{
         padding-left: 4vw;
         display: flex;
         align-items: center;
@@ -116,32 +117,36 @@
         box-sizing: border-box;
         justify-content: space-between;
     }
-     .list a img{
+    .lists a img{
         width:8vw;
         height:8vw;
         margin-right: 5.33vw;
     }
-     .list a div{
+    .lists a div{
         border-bottom: 1px solid #f1f1f1;
         width:82.66vw;
     }
-     .list a .fr{
+    .lists a .fr{
         box-sizing: border-box;
         width:13.33vw;
         height:14.4vw;
         text-align: right;
         margin-right: 4vw;
         color: #999;
-        background: url("/index/images/addressbook/right.png") right center no-repeat;
+        background: url("/home/images/book/right.png") right center no-repeat;
         background-size: 1.6vw 3.2vw;
     }
 
-    
+
     .onloading{
         line-height: 2;
         text-align: center;
         font-size: 1.5rem;
         color: #333;
+    }
+
+    .hidden{
+        display: none;
     }
 </style>
 {/block}
@@ -155,35 +160,46 @@
 </div>
 
 <!--搜索返回列表-->
-<ul class="result_box list">
-    <li><a href=""><img src="/index/images/addressbook/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
-    <li><a href=""><img src="/index/images/addressbook/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
-    <li><a href=""><img src="/index/images/addressbook/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
+<ul class="result_box lists hidden">
+    <li><a href=""><img src="/home/images/book/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
 </ul>
 
 <!--加载等待-->
-<div class="onloading">
+<div class="onloading hidden">
     加载中...
 </div>
-
-
 <div class="main">
     <ul class="nav clear">
-        <li><a href="{:Url('Addressbook/index')}">智新泽地园区</a></li>
-        <li><a href="{:Url('Addressbook/index')}">希垦科技园</a></li>
-        <li><a href="{:Url('Addressbook/index')}">运营团队</a></li>
-        <li><a href="{:Url('Addressbook/index')}">其他部门</a></li>
+        <li><a href="/home/book/index" data-pid="">组织A</a></li>
+        <li><a href="/home/book/index" data-pid="">组织B</a></li>
+        <li><a href="/home/book/grouplist" data-pid="">组织C</a></li>
+        <li><a data-pid="">部门A</a></li>
     </ul>
-    <ul class="list">
-        <li><a href=""><img src="/index/images/addressbook/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
-        <li><a href=""><img src="/index/images/addressbook/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
-        <li><a href=""><img src="/index/images/addressbook/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
+    <ul class="lists">
+        <li>
+            <a href="/home/book/userinfo">
+                <img src="/home/images/book/pb.png" alt="头像">
+                <div> 成员A<span class="fr"></span></div>
+            </a>
+        </li>
     </ul>
 </div>
 {/block}
 {block name="script"}
 <script>
     $(function(){
+//        创建导航的sessionStorage
+        function addToSession(){
+            var list=$(".nav>li>a");
+            var pid=[];
+            for(var i=0,len=list.length;i<len;i++){
+                var val=list.eq(i).attr('data-pid');
+                pid.push(val);
+            }
+            sessionStorage.setItem('nav-pid',pid);
+        }
+        addToSession();
+
         function onInput() {
             $(".searchBox").off('click').on('click',function(){
                 $(".search").addClass('isClick');
@@ -202,6 +218,21 @@
             offInput();
             onInput()
         });
+        var a='{//$list}';
+        var html='';
+        for(var i=0;i<a.length;i++){
+            html+= '<li>'+
+                    '<a href="/home/book/userinfo/userid/'+a[i].userid+'">';
+            if( a[i].avatar==''){
+                html+='<img src="/home/images/book/pb.png" alt="头像">';
+            }else{
+                html+='<img src="'+a[i].avatar+'" alt="头像">'}
+            html+= '<div>'+ a[i].name+'<span class="fr"></span></div>'+
+                    '</a>'+
+                    '</li>';
+        };
+//        $('.lists').append(html)
+
     })
 </script>
 {/block}

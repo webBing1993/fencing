@@ -1,10 +1,10 @@
-{extend name="base/common"}
+{extend name="public/common"}
 
 {block name="style"}
 <style>
-body{
-    background: #f0eff5;
-}
+    body{
+        background: #f0eff5;
+    }
     .header{
         margin:2.667vw 0;
         padding:2.667vw 4vw;
@@ -19,22 +19,22 @@ body{
         color: #333;
         font-size: 1.7rem;
     }
-.head_info li{
-    width:66vw;
+    .head_info li{
+        width:66vw;
 
-}
-.head_info .sex{
-    padding:2vw;
-    margin-left: 5px;
-}
-.head_info .sex.boy{
-    background: url("/index/images/addressbook/pb.png") 50% 43% no-repeat;
-    background-size: 4vw 4vw;
-}
-.head_info .sex.girl{
-    background: url("/index/images/addressbook/pg.png") 50% 43% no-repeat;
-    background-size: 4vw 4vw;
-}
+    }
+    .head_info .sex{
+        padding:2vw;
+        margin-left: 5px;
+    }
+    .head_info .sex.boy{
+        background: url("/home/images/book/pb.png") 50% 43% no-repeat;
+        background-size: 4vw 4vw;
+    }
+    .head_info .sex.girl{
+        background: url("/home/images/book/pg.png") 50% 43% no-repeat;
+        background-size: 4vw 4vw;
+    }
     .head_info li:not(:first-child){
         color: #999;
         font-size: 1.4rem;
@@ -55,33 +55,37 @@ body{
         color: #999;
         font-size: 1.4rem;
     }
-.main>li a{
-    font-size: 1.4rem;
-    color: #5d9cec;
-}
+    .main>li a{
+        font-size: 1.4rem;
+        color: #5d9cec;
+    }
 </style>
 {/block}
 {block name="body"}
 <div class="header clear">
-    <img src="/index/images/addressbook/pb.png" class="head_img fl" alt="头像">
+    <img src="/home/images/book/pb.png" class="head_img fl" alt="头像">
+    <!--<img src="" class="head_img fl" alt="头像">-->
     <ul class="head_info fl">
         <li>
-            <span class="name">巴拉拉</span>
+            <span class="name">成员A</span>
             <span class="sex boy"></span>
             <span class="sex girl"></span>
         </li>
         <li>
-            <span>微信号：bllhahaha</span>
+            <span>微信号：chenyuanA</span>
         </li>
         <li>
-            <span>企业微信号：bllhahaha</span>
+            <!--<span>企业微信号：bllhahaha</span>-->
         </li>
     </ul>
 </div>
+
 <ul class="main">
-    <li><span>手机</span><a href="tel:15824167420">15824167420</a></li>
-    <li><span>部门</span><span>研发部</span></li>
+    <li><span>手机</span><a href="">13344556699</a></li>
+    <li><span>部门</span><a href="/home/book/userlist">$info->departmentName->name</a></li>
 </ul>
 {/block}
 {block name="script"}
+<script>
+</script>
 {/block}

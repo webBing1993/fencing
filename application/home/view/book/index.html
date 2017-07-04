@@ -1,194 +1,188 @@
 {extend name="public/common"}
 {block name="style"}
-<title>通讯名录</title>
 <style>
-body{
-    background: #ffffff;
-}
+    body{
+        background: #ffffff;
+    }
     .search{
         background: #f0eff5;
-        padding:8px 15px;
+        padding:2.133vw 4vw;
         border-bottom: 1px solid #f0eff5;
     }
     .search>.searchBox{
         border-radius: 5px;
-        height:28px;
+        height:7.466vw;
         background: #ffffff;
         text-align: center;
 
     }
-.search>.unBtn{
-    display: none;
-}
-.search>.searchBox>.searchInput{
-    display: none;
-}
-.search>.searchBox>.searchText{
-    display: inline-block;
-    font-size:1.4rem;
-    color: #999;
-    padding-left:24px;
-    min-width: 1px;
-    line-height: 28px;
-    height:28px;
-    background: url("/home/images/book/search.png") 0 50% no-repeat;
-    background-size: 18px 18px;
-}
+    .search>.unBtn{
+        display: none;
+    }
+    .search>.searchBox>.searchInput{
+        display: none;
+    }
+    .search>.searchBox>.searchText{
+        display: inline-block;
+        font-size:1.4rem;
+        color: #999;
+        padding-left:6.4vw;
+        min-width: 1px;
+        line-height: 7.46vw;
+        height:7.46vw;
+        background: url("/home/images/book/search.png") 0 50% no-repeat;
+        background-size: 4.8vw 4.8vw;
+    }
     .search.isClick{
         background: #ffffff;
         border-bottom: 1px solid #f1f1f1;
         display: flex;
     }
-.search.isClick>.searchBox{
-    background: #f0eff5;
-    padding-left: 10px;
-    width:74vw;
-    display: flex;
-    align-items: center;
-}
-.search.isClick>.searchBox>.searchText{
-    display: inline-block;
-}
-.search.isClick>.searchBox>.searchText>.searchText_c{
-    display: none;
-}
-.search.isClick .searchInput{
-    background: #f0eff5;
-    display: inline-block;
-    height:24px;
-    width:61.33vw;
-}
-.search.isClick>.unBtn{
-    margin-left: 20px;
-    display: block;
-    box-sizing: border-box;
-    width:50px;
-    height:28px;
-    border-radius: 5px;
-    border:1px solid #5d9cec;
-    color: #5d9cec;
-    text-align: center;
-    line-height: 26px;
-    font-size: 1.4rem;
-}
-.main>.nav{
-    padding:0 15px;
-}
+    .search.isClick>.searchBox{
+        background: #f0eff5;
+        padding-left: 2.66vw;
+        width:74vw;
+        display: flex;
+        align-items: center;
+    }
+    .search.isClick>.searchBox>.searchText{
+        display: inline-block;
+    }
+    .search.isClick>.searchBox>.searchText>.searchText_c{
+        display: none;
+    }
+    .search.isClick .searchInput{
+        background: #f0eff5;
+        display: inline-block;
+        height:6.4vw;
+        width:61.33vw;
+    }
+    .search.isClick>.unBtn{
+        margin-left: 5.33vw;
+        display: block;
+        box-sizing: border-box;
+        width:13.33vw;
+        height:7.46vw;
+        border-radius: 5px;
+        border:1px solid #5d9cec;
+        color: #5d9cec;
+        text-align: center;
+        line-height: 6.93vw;
+        font-size: 1.4rem;
+    }
+    .main>.nav{
+        padding:0 4vw;
+    }
     .main>.nav>li{
         float: left;
-        line-height: 54px;
-        height:54px;
+        line-height: 14.4vw;
+        height:14.4vw;
     }
-.main>.nav>li:first-child{
-    color:#5d9cec;
-    font-size: 1.7rem;
-}
+    .main>.nav>li:first-child{
+        color:#5d9cec;
+        font-size: 1.7rem;
+    }
 
     .main .lists{
         width:100%;
-        -webkit-transition: all 1000ms linear;
-        -moz-transition: all 1000ms linear;
-        -ms-transition: all 1000ms linear;
-        -o-transition: all 1000ms linear;
-        transition: all 1000ms linear;
     }
-.main .lists>li{
-    box-sizing: border-box;
-    font-size: 1.4rem;
-    color: #666;
-}
+    .main .lists>li{
+        box-sizing: border-box;
+        font-size: 1.4rem;
+        color: #666;
+    }
     .main .lists .list_header{
-        display: block;
-        height:54px;
-        line-height: 54px;
+        height:14.4vw;
+        line-height: 14.4vw;
         box-sizing: border-box;
         border-bottom: 1px solid #f1f1f1;
+        color: #666;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding:0 4vw;
     }
-
-   .main .sj{
-        display: inline-block;
-        box-sizing: border-box;
-        height:0.5rem;
-        width:0.5rem;
-        border:0.5rem solid transparent;
-        margin-right:4px;
-        margin-left: 15px;
-    }
-
-    
-.list_header>.fr{
-    width:50px;
-    text-align: left;
-    margin-right: 15px;
-    color: #999;
-}
-.list_header>.fr.rt_icon{
-    background: url("/home/images/book/right.png") right center no-repeat;
-    background-size: 6px 12px;
-}
-.main>ul>li>ul>li .sj{
-    margin-left: 36px;
-}
-.main>ul>li>ul>li>ul>li .sj{
-    margin-left: 70px;
-}
-.list_header.open .sj {
-        border-top-color: #5d9cec;
-    }
-.list_header.shut .sj {
-        border-left-color: #5d9cec;
-    }
-    .hidden{
-        height:0;
+    .main .lists .list_header.type1>span:first-child{
+        width:90vw;
+        height:100%;
         overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .main .lists .list_header.type2{
+        padding-left:12vw;
+    }
+    .main .lists .list_header.type2>span:first-child{
+        width:70vw;
+    }
+    .list_header>.fr{
+        width:13.33vw;
+        height:100%;
+        text-align: left;
+        margin-right: 4vw;
+        color: #999;
+    }
+    .list_header>span:first-child{
+        height:100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .list_header>.fr.rt_icon{
+        background: url("/home/images/book/right.png") right center no-repeat;
+        background-size: 1.6vw 3.2vw;
+    }
+
+    .hidden{
+        display: none;
     }
 
 
 
 
-.result_box>li{
-    box-sizing: border-box;
-    font-size: 1.4rem;
-    color: #666;
-}
-.result_box a{
-    padding-left: 4vw;
-    display: flex;
-    align-items: center;
-    height:14.4vw;
-    font-size: 1.4rem;
-    color: #333;
-    line-height: 14.4vw;
-    box-sizing: border-box;
-    justify-content: space-between;
-}
-.result_box a img{
-    width:8vw;
-    height:8vw;
-    margin-right: 5.33vw;
-}
-.result_box a div{
-    border-bottom: 1px solid #f1f1f1;
-    width:82.66vw;
-}
-.result_box a .fr{
-    box-sizing: border-box;
-    width:13.33vw;
-    height:14.4vw;
-    text-align: right;
-    margin-right: 4vw;
-    color: #999;
-    background: url("/home/images/book/right.png") right center no-repeat;
-    background-size: 1.6vw 3.2vw;
-}
+    .result_box>li{
+        box-sizing: border-box;
+        font-size: 1.4rem;
+        color: #666;
+    }
+    .result_box a{
+        padding-left: 4vw;
+        display: flex;
+        align-items: center;
+        height:14.4vw;
+        font-size: 1.4rem;
+        color: #333;
+        line-height: 14.4vw;
+        box-sizing: border-box;
+        justify-content: space-between;
+    }
+    .result_box a img{
+        width:8vw;
+        height:8vw;
+        margin-right: 5.33vw;
+    }
+    .result_box a div{
+        border-bottom: 1px solid #f1f1f1;
+        width:82.66vw;
+    }
+    .result_box a .fr{
+        box-sizing: border-box;
+        width:13.33vw;
+        height:14.4vw;
+        text-align: right;
+        margin-right: 4vw;
+        color: #999;
+        background: url("/home/images/book/right.png") right center no-repeat;
+        background-size: 1.6vw 3.2vw;
+    }
 
 
-.onloading{
-    line-height: 2;
-    text-align: center;
-    font-size: 1.5rem;
-    color: #333;
-}
+    .onloading{
+        line-height: 2;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #333;
+    }
 </style>
 {/block}
 {block name="body"}
@@ -202,69 +196,38 @@ body{
 
 
 <!--搜索返回列表-->
-<ul class="result_box">
-    <li><a href=""><img src="/home/images/book/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
-    <li><a href=""><img src="/home/images/book/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
+<ul class="result_box hidden">
     <li><a href=""><img src="/home/images/book/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
 </ul>
 
 <!--加载等待-->
-<div class="onloading">
+<div class="onloading hidden">
     加载中...
 </div>
-
-
 <div class="main">
     <ul class="nav clear">
-        <li>智新泽地园区</li>
+        <li>组织A</li>
     </ul>
     <ul class="lists">
+
+
         <li>
-            <a class="list_header type1 shut">
-               <span class="sj "></span>希垦科技园<span class="fr">3370</span>
+            <a class="list_header type1" data-pid="">
+                <span>组织B</span>
             </a>
-            <ul class="lists hidden">
+            <ul class="lists">
+
                 <li>
-                    <a class="list_header type2">
-                        <span class="sj"></span>运营团队</span><span class="fr rt_icon">3370</span>
+                    <a  class="list_header type2" data-pid="">
+                        <span>组织C</span><span class="fr rt_icon"></span>
                     </a>
                 </li>
                 <li>
-                    <a class="list_header type2 shut">
-                        <span class="sj "></span>服务团队<span class="fr">3370</span>
+                    <a href="/home/book/grouplist" class="list_header type2" data-pid="">
+                        <span>组织D</span><span class="fr rt_icon"></span>
                     </a>
-                    <ul class="lists hidden">
-                        <li>
-                            <a class="list_header">
-                                <span class="sj "></span>主任</span><span class="fr rt_icon">3370</span>
-                            </a>
-                            <a class="list_header">
-                                <span class="sj "></span>工程</span><span class="fr rt_icon">3370</span>
-                            </a>
-                            <a class="list_header">
-                                <span class="sj "></span>客服</span><span class="fr rt_icon">3370</span>
-                            </a>
-                            <a class="list_header">
-                                <span class="sj "></span>保安</span><span class="fr rt_icon">3370</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-                <li>
-                    <a class="list_header type2 shut">
-                        <span class="sj "></span>园区企业<span class="fr">3370</span>
-                    </a>
-                    <ul class="lists hidden">
-                        <li>
-                            <a class="list_header">
-                                <span class="sj "></span>之图</span><span class="fr">3370</span>
-                            </a>
-                            <a class="list_header">
-                                <span class="sj "></span>智慧政务</span><span class="fr">3370</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+
             </ul>
         </li>
     </ul>
@@ -273,40 +236,80 @@ body{
 {block name="script"}
 <script>
     $(function(){
+//        //  获取储存
+//        function getStorage(){
+//            var pid=sessionStorage.getItem("nav-pid");
+//            console.log(pid);
+//            if(pid){
+//                pid=pid.split(",");
+//                console.log(pid);
+//                var lists=$(".main>.lists>li");
+//                for(var i=0;i<pid.length-1;i++){
+//                    console.log(pid[i]);
+//                    var shouldOpen=lists.find("[data-pid="+pid[i]+"]").eq(0);
+//                    console.log(shouldOpen);
+//                    if(shouldOpen){
+//                        shouldOpen.addClass("open").removeClass("close");
+//                        shouldOpen.siblings(".lists").removeClass("hidden");
+//                    }
+//                }
+//                sessionStorage.removeItem("nav-pid")
+//            }else{
+//            }
+//        }
+////获取储存
+//        getStorage();
         //点击输入
         onInput();
         //取消输入
-        $(".search .unBtn").on('click',function(){
+        $(".search .unBtn").on("click",function(){
             offInput();
-                onInput()
+            onInput()
         });
         //折叠列表
-        $('.type1').on('click',function(){
+        $('.main').on("click",".type1",function(){
             toggleLists($(this))
         });
-        $('.type2').on('click',function(){
+        $(".main").on("click",".type2",function(){
             toggleLists($(this))
         });
         //搜索ajax
-        $(".searchInput").on('keyup',function(){
+        $(".searchInput").on("keyup",function(){
             var val=$(this).val();
             $.ajax({
-                type:'post',
-                url:'Addressbook/index',
+                type:"post",
+                url:"book/index",
                 data:{
                     val:val
                 },
-                beforesend:function(XML){},
-                success:function(data){}
-            })
-        })
+                beforeSend:function(XMLHttpRequest){
+                    $(".onloading").removeClass("hidden");
+                },
+                success:function(data){
+                    $(".onloading").addClass("hidden");
+                    $(".result_box").removeClass("hidden");
+                    addToList(data)
+                }
+            });
 
 
+
+//            添加到网页
+            function addToList(data) {
+                var html="";
+                for(var i=0;i<data.length;i++){
+                    html+= "<li><a href='"+data.url+"'><img src='"+data.src+"' alt='头像'><div>"+data.name+" <span class='fr'></span></div></a></li>";
+                }
+                $(".result_box").append(html);
+            }
+        });
+
+//        折叠
         function toggleLists(a){
             if(a.hasClass('open')){
-                a.removeClass('open').addClass('shut');
-            }else if(a.hasClass('shut')){
-                a.removeClass('shut').addClass('open')
+                a.removeClass('open').addClass('close');
+            }else if(a.hasClass('close')){
+                a.removeClass('close').addClass('open')
             }else{
 
             }
@@ -327,7 +330,9 @@ body{
         //关闭输入框函数
         function offInput(){
             $(".search").removeClass("isClick");
-            $('.main').removeClass('hidden')
+            $('.main').removeClass('hidden');
+            $(".result_box").addClass('hidden');
+            $(".onloading").addClass('hidden');
         }
 
 
