@@ -202,7 +202,6 @@ class Company extends Base{
      * 反馈提交页
      */
     public function publish() {
-        $this->checkRole();
         if(IS_POST) {
             $userId = session('userId');
             $data = input('post.');
@@ -224,6 +223,7 @@ class Company extends Base{
                 return $this->error("提交失败");
             }
         }else{
+            $this->checkRole();
             return $this->fetch();
         }
     }
