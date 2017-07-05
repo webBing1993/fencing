@@ -47,6 +47,7 @@ class Book extends Base
         $this->assign('list',$list);
         return $this->fetch();
     }
+
     /*   通讯录用户列表*/
     public function  userlist(){
         $this->anonymous();
