@@ -174,8 +174,8 @@
 </div>
 <div class="main">
     <ul class="nav clear">
-        <li><a href="/home/book/index" data-pid="">台州市个协党建</a></li>
-        <li><a href="/home/book/grouplist/did/1" data-pid="">台州市个协党建</a></li>
+        <li><a data-pid="">台州市个协党建</a></li>
+        <li><a data-pid="">台州市个协党建</a></li>
         <li>{$depart}</li>
     </ul>
     <ul class="lists">
@@ -201,6 +201,21 @@
 {block name="script"}
 <script>
     $(function(){
+        //跳转
+        $(".nav>li:first-child a").on('click',function () {
+            if(window.history.length<3){
+                window.history.back();
+            }else{
+            window.history.go(-2);
+            }
+        })
+        $(".nav>li:nth-child(2) a").on('click',function () {
+            if(window.history.length<3){
+                window.location.replace('/home/book/grouplist/did/1');
+            }else{
+                window.history.back();
+            }
+        })
 //        创建导航的sessionStorage
         function addToSession(){
             var list=$(".nav>li>a");

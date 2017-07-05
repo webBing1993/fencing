@@ -192,7 +192,7 @@
 <div class="main">
 
     <ul class="nav clear">
-        <li><a href="{:Url('book/index')}" data-pid="">台州市个协党建</a></li>
+        <li><a data-pid="">台州市个协党建</a></li>
         <li>台州市个协党建</li>
     </ul>
     <ul class="lists">
@@ -209,6 +209,10 @@
 {block name="script"}
 <script>
     $(function(){
+        //跳转
+        $(".nav>li:first-child a").on('click',function () {
+            window.history.go(-1);
+        })
         //        创建导航的sessionStorage
 //        function addToSession() {
 //            var list=$(".nav>li>a");

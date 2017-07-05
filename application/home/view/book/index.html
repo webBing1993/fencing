@@ -215,13 +215,13 @@
         <li>
             <ul class="lists">
 
-                <li>
+                <li class="all_group">
                     <a  href="/home/book/grouplist/did/1" class="list_header type2" data-pid="">
                         <span>台州市个协党建</span><span class="fr rt_icon"></span>
                     </a>
                 </li>
                 {eq name="visit" value="0"}
-                <li>
+                <li class="my_group">
                     <a href="/home/book/userlist/did/{$did}" class="list_header type2" data-pid="">
                         <span>我的部门</span><span class="fr rt_icon"></span>
                     </a>
@@ -235,6 +235,7 @@
 {block name="script"}
 <script>
     $(function(){
+//
 //        //  获取储存
 //        function getStorage(){
 //            var pid=sessionStorage.getItem("nav-pid");
