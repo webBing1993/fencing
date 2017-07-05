@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>通讯名录</title>
 <style>
     body{
         background: #f0eff5;
@@ -63,16 +64,27 @@
 {/block}
 {block name="body"}
 <div class="header clear">
+    {empty name="info.header"}
     <img src="/home/images/book/pb.png" class="head_img fl" alt="头像">
+    {else/}
+    <img src="{$info.header}" class="head_img fl" alt="头像">
+    {/empty}
     <!--<img src="" class="head_img fl" alt="头像">-->
     <ul class="head_info fl">
         <li>
-            <span class="name">成员A</span>
-            <span class="sex boy"></span>
-            <span class="sex girl"></span>
+            <span class="name">{$info.name}</span>
+            {eq name="info.gender" value="0"}
+                <span class="sex">未定义</span>
+            {else/}
+                {eq name="info.gender" value="1"}
+                <span class="sex boy"></span>
+                {else/}
+                <span class="sex girl"></span>
+                {/eq}
+            {/eq}
         </li>
         <li>
-            <span>微信号：chenyuanA</span>
+            <span>账号：{$info.userid}</span>
         </li>
         <li>
             <!--<span>企业微信号：bllhahaha</span>-->
@@ -81,8 +93,9 @@
 </div>
 
 <ul class="main">
-    <li><span>手机</span><a href="">13344556699</a></li>
-    <li><span>部门</span><a href="/home/book/userlist">$info->departmentName->name</a></li>
+    <li><span>手机</span><a href="tel:{$info.mobile}">{$info.mobile}</a></li>
+    <li><span>职位</span><a href="">{$info.position}</a></li>
+    <li><span>部门</span><a href="/home/book/userlist/did/{$info.did}">{$info.depart}</a></li>
 </ul>
 {/block}
 {block name="script"}

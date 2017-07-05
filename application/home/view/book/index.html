@@ -1,5 +1,6 @@
 {extend name="public/common"}
 {block name="style"}
+<title>通讯名录</title>
 <style>
     body{
         background: #ffffff;
@@ -197,7 +198,7 @@
 
 <!--搜索返回列表-->
 <ul class="result_box hidden">
-    <li><a href=""><img src="/home/images/book/pb.png" alt="头像"><div>哈哈 <span class="fr"></span></div></a></li>
+
 </ul>
 
 <!--加载等待-->
@@ -206,28 +207,26 @@
 </div>
 <div class="main">
     <ul class="nav clear">
-        <li>组织A</li>
+        <li>台州市个协党建</li>
     </ul>
     <ul class="lists">
 
 
         <li>
-            <a class="list_header type1" data-pid="">
-                <span>组织B</span>
-            </a>
             <ul class="lists">
 
                 <li>
-                    <a  class="list_header type2" data-pid="">
-                        <span>组织C</span><span class="fr rt_icon"></span>
+                    <a  href="/home/book/grouplist/did/1" class="list_header type2" data-pid="">
+                        <span>台州市个协党建</span><span class="fr rt_icon"></span>
                     </a>
                 </li>
+                {eq name="visit" value="0"}
                 <li>
-                    <a href="/home/book/grouplist" class="list_header type2" data-pid="">
-                        <span>组织D</span><span class="fr rt_icon"></span>
+                    <a href="/home/book/userlist/did/{$did}" class="list_header type2" data-pid="">
+                        <span>我的部门</span><span class="fr rt_icon"></span>
                     </a>
                 </li>
-
+                {/eq}
             </ul>
         </li>
     </ul>
@@ -264,7 +263,8 @@
         //取消输入
         $(".search .unBtn").on("click",function(){
             offInput();
-            onInput()
+            onInput();
+            $(".searchInput").val('');
         });
         //折叠列表
         $('.main').on("click",".type1",function(){
@@ -276,9 +276,14 @@
         //搜索ajax
         $(".searchInput").on("keyup",function(){
             var val=$(this).val();
+            if(!val)
+            {
+                $(".result_box").html('');
+                return '';
+            }
             $.ajax({
                 type:"post",
-                url:"book/index",
+                url:"{:Url('Book/search')}",
                 data:{
                     val:val
                 },
@@ -288,6 +293,7 @@
                 success:function(data){
                     $(".onloading").addClass("hidden");
                     $(".result_box").removeClass("hidden");
+                    $(".result_box").html('');
                     addToList(data)
                 }
             });
@@ -296,9 +302,20 @@
 
 //            添加到网页
             function addToList(data) {
+                var lists = data.data;
                 var html="";
-                for(var i=0;i<data.length;i++){
-                    html+= "<li><a href='"+data.url+"'><img src='"+data.src+"' alt='头像'><div>"+data.name+" <span class='fr'></span></div></a></li>";
+                for(var i=0;i<lists.length;i++){
+                    if ({$visit} == 0){
+                        html+= "<li><a href='/home/book/userinfo/id/"+lists[i].id+"/did/"+lists[i].did+"'>"
+                    }else {
+                        html+= "<li><a href=''>"
+                    }
+                    if (lists[i].header == ''){
+                        html+="<img src='/home/images/book/pb.png' alt='头像'>";
+                    }else{
+                        html+="<img src='"+lists[i].header+"' alt='头像'>";
+                    }
+                    html+="<div>"+lists[i].name+" <span class='fr'></span></div></a></li>";
                 }
                 $(".result_box").append(html);
             }

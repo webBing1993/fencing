@@ -10,60 +10,85 @@
 namespace app\home\controller;
 use app\home\model\WechatDepartment;
 use app\home\model\WechatUser;
+use think\Db;
 class Book extends Base
 {
- /*   通讯录首页*/
+ /*通讯录首页*/
     public function  index(){
-//       $user=WechatUser::where('userid',session("userId"))->find();
-//       $hand=WechatDepartment::where('parentid',0)->find();
-//       $department=$this->findChild($hand);
-//       $this->assign('department',$department);
-//        $this->assign('user',$user);
-//       $sd=$this-> mydeparment();
+        $this->anonymous();
+        // 获取  我的部门
+        $userId = session('userId');
+        $Depart = Db::table('pb_wechat_department_user')->where(['userid' => $userId])->order('id desc')->field('departmentid')->find();  // 获取子部门
+        $this->assign('did',$Depart['departmentid']);
         return $this->fetch();
     }
-    //全部部门的方法
-    public function  findChild($hand){
-        $child=WechatDepartment::where('parentid', $hand['id'])->select();
-        if($child) {
-            $hand['child'] = $child;
-            foreach ($hand['child'] as $child) {
-              $child=$this->findChild($child);
+    /* 搜索
+     */
+    public function search(){
+        $name = input('val');
+        $list = Db::table('pb_wechat_user')->where('name',['like',"%$name%"],['neq',''])->field('id,userid,name,header,avatar')->select();  // 模糊查询
+        foreach($list as $key => $value){
+            if (empty($value['header'])){  //  获取头像
+                if (empty($value['avatar'])){
+                    $list[$key]['header'] = '';
+                }else{
+                    $list[$key]['header'] = $value['avatar'];
+                }
             }
-        return $hand;
+            $Depart = Db::table('pb_wechat_department_user')->where(['userid' => $value['userid']])->order('id desc')->field('departmentid')->find(); //  获取用户所在部门
+            $list[$key]['did'] = $Depart['departmentid'];
         }
-        else{
-            $hand['child'] = "";
-          return $hand;
-        }
+        return $this->success('','',$list);
     }
- //只看自己部门的方法
-    public function  mydeparment(){
-       $wd=new  WechatDepartment();
-        $user=WechatUser::where('userid',session("userId"))->find();
-       $dep=WechatDepartment::where('id',$user['department'])->find();
-        $did=array();
-       $did=$wd->findallfartherbychild($dep,$did);
-
-
-echo json_encode($did);
-  return $did;
+    public function grouplist(){
+        $this->anonymous();
+        $did = input('get.did/d');   // 获取部门列表
+        $list = Db::table('pb_wechat_department')->where('parentid',$did)->order('id desc')->field('id,name')->select();
+        $this->assign('list',$list);
+        return $this->fetch();
     }
     /*   通讯录用户列表*/
     public function  userlist(){
-      //  $id=input('id');
-     //   $userlist=WechatUser::where('deparment',$id)->select();
-      //  $this->assign("list",$userlist);
+        $this->anonymous();
+        $did = input('get.did/d');
+        $department = Db::table('pb_wechat_department')->field('name')->find($did);
+        $list = Db::table('pb_wechat_department_user')->where('departmentid',$did)->order('id desc')->field('userid')->select();  // 获取 用户列表
+        foreach($list as $key => $value){
+            $User = Db::table('pb_wechat_user')->where('userid',$value['userid'])->field('id,header,name,avatar')->find();
+            $list[$key]['name'] = $User['name'];
+            $list[$key]['id'] = $User['id'];
+            if (empty($User['header'])){   //  头像
+                if (empty($User['avatar'])){
+                    $list[$key]['header'] = '';
+                }else{
+                    $list[$key]['header'] = $User['avatar'];
+                }
+            }else{
+                $list[$key]['header'] = $User['header'];
+            }
+        }
+        $this->assign('list',$list);
+        $this->assign('depart',$department['name']);
+        $this->assign('did',$did);
         return $this->fetch();
     }
     /*   通讯录用户详情*/
     public function  userinfo(){
-        $id=input('userid');
-        $userinfo=  WechatUser::where('userid',$id)->select();
+        $this->anonymous();  // 用户信息
+        $id = input('id');
+        $did = input('get.did/d');
+        $department = Db::table('pb_wechat_department')->field('name')->find($did);
+        $userinfo =  WechatUser::where('id',$id)->find();
+        if (empty($userinfo['header'])){
+            if (empty($userinfo['avatar'])){
+                $userinfo['header'] = '';
+            }else{
+                $userinfo['header'] = $userinfo['avatar'];
+            }
+        }
+        $userinfo['depart'] = $department['name'];
+        $userinfo['did'] = $did;
         $this->assign("info",$userinfo);
         return $this->fetch();
     }
-
-
-
 }
