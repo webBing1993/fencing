@@ -23,8 +23,8 @@ class Cronjob extends Controller {
         $Wechat = new TPQYWechat(Config::get('party'));
         $title = '"每日一课"已经等候您多时了...';
         $content = "休息一下,去答个题吧";
-        $path = "http://.0571ztnet.com/home/images/user/relax.jpg";//图片链接
-        $url = "http://.0571ztnet.com/home/Constitution/course";  //答题页面链接
+        $path = "http://tzgxpb.0571ztnet.com/home/images/user/relax.jpg";//图片链接
+        $url = "http://tzgxpb.0571ztnet.com/home/Constitution/course";  //答题页面链接
         $send = array(
             "articles" => array(
                 array(
@@ -37,10 +37,10 @@ class Cronjob extends Controller {
         );
         //发送
         $message = array(
-//                'touser' => '18768112486',
+                'touser' => '17557289172',
 //           'touser' =>"@all",
             "msgtype" => 'news',
-            "agentid" => 0, 
+            "agentid" => 1000002,
             "news" => $send,
             "safe" => "0"
         );

@@ -65,4 +65,7 @@ class Verify extends Controller{
             $this->redirect(session('url'));
         }
     }
+    public function null(){
+        return $this->fetch();
+    }
 }

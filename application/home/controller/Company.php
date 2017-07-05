@@ -27,6 +27,7 @@ class Company extends Base{
      * 交流互动   主页
      */
     public function index(){
+        $this->checkRole();
         $this->anonymous();
         $this->jssdk();
         $Model = new CompanyModel();
@@ -84,6 +85,7 @@ class Company extends Base{
      * 交流互动 详情页
      */
     public function detail(){
+        $this->checkRole();
         $this->anonymous();
         $this->jssdk();
 
@@ -131,6 +133,7 @@ class Company extends Base{
      * 加载更多
      */
     public function moreList() {
+        $this->checkRole();
         $len = input('post.length');
         $type = input('post.type');
         if ($type == 2){
@@ -199,6 +202,7 @@ class Company extends Base{
      * 反馈提交页
      */
     public function publish() {
+        $this->checkRole();
         if(IS_POST) {
             $userId = session('userId');
             $data = input('post.');

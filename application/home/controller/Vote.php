@@ -22,6 +22,7 @@ class Vote extends Base{
       * 投票主页
       */
      public function index(){
+         $this->checkRole();
          $this->anonymous();
          $userId = session('userId');
          //  获取该用户 所在支部
