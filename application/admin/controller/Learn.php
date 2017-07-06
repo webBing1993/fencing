@@ -12,6 +12,8 @@ use app\admin\model\Picture;
 use app\admin\model\Push;
 use com\wechat\TPQYWechat;
 use think\Config;
+use think\Db;
+use think\Url;
 
 /**
  * Class Learn
@@ -234,6 +236,79 @@ class Learn extends Admin {
             }
         }else{
             return $this->error("发送失败");
+        }
+    }
+    /*
+     * 手机报
+     */
+    public function paper(){
+        $map = array(
+            'status' => array('egt',0),
+        );
+        $list = $this->lists('Paper',$map);
+        $this->assign('list',$list);
+        return $this->fetch();
+    }
+    /*
+     * 手机报  添加修改
+     */
+    public function paperadd(){
+        $id = input('id/d');
+        if ($id){
+            // 修改
+            if (IS_POST){
+                $data = input('post.');
+                if (empty($data['content'])){
+                    return $this->error('链接内容不能为空');
+                }
+                $data['create_user'] = $_SESSION['think']['user_auth']['id'];
+                $data['create_time'] = time();
+                $res = Db::table('pb_paper')->update($data);
+                if ($res){
+                    return $this->success('修改成功',Url("Learn/paper"));
+                }else{
+                    return $this->error('修改失败');
+                }
+            }else{
+                $msg = Db::table('pb_paper')->find($id);
+                $this->assign('msg',$msg);
+                return $this->fetch();
+            }
+        }else{
+            // 添加
+            if (IS_POST){
+                $data = input('post.');
+                if (empty($data['id'])){
+                    unset($data['id']);
+                }
+                if (empty($data['content'])){
+                    return $this->error('链接内容不能为空');
+                }
+                $data['create_user'] = $_SESSION['think']['user_auth']['id'];
+                $data['create_time'] = time();
+                $res = Db::table('pb_paper')->insert($data);
+                if ($res){
+                    return $this->success('新增成功',Url("Learn/paper"));
+                }else{
+                    return $this->error('新增失败');
+                }
+            }else{
+                $this->assign('msg','');
+                return $this->fetch();
+            }
+        }
+    }
+    /*
+     * 手机报  删除
+     */
+    public function paperdel(){
+        $data['id'] = input('id');
+        $data['status'] = '-1';
+        $info = Db::table('pb_paper')->update($data);
+        if($info) {
+            return $this->success("删除成功");
+        }else{
+            return $this->error("删除失败");
         }
     }
 }
