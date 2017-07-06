@@ -16,6 +16,7 @@ use app\home\model\Comment;
 use app\admin\model\Picture;
 use app\home\model\Learn as LearnModel;
 use app\home\model\Like;
+use think\Db;
 
 class Learn extends Base{
     /**
@@ -33,6 +34,8 @@ class Learn extends Base{
         );
         $list1 = LearnModel::where($map1)->order('id desc')->limit(3)->select();  // 轮播
         $list2 = LearnModel::where($map2) ->order('id desc') ->limit(2)->select();  // 列表
+        $link = Db::table('pb_paper')->where($map2)->field('content')->find();
+        $this->assign('link',$link['content']);
         $this->assign('lists',$list1);
         $this ->assign('list2',$list2);
         return $this->fetch();
