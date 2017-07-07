@@ -22,7 +22,7 @@ class Constitution extends Base {
      * 互动模式主页
      */
     public function game(){
-        $this->anonymous();
+        $this->checkRole();
         //每日一课数据
         $userid = session('userId');
         $map = array(
@@ -81,7 +81,7 @@ class Constitution extends Base {
      * 答题页面
      */
     public function answer(){
-        $this->anonymous();
+        $this->checkRole();
         //取单选
         $arr=Question::all(['type'=>0]);
         foreach($arr as $value){
@@ -317,7 +317,7 @@ class Constitution extends Base {
      * 每日一课 页面
      */
     public function course(){
-        $this->anonymous();
+        $this->checkRole();
         $userid = session('userId');
         $map = array(
             'userid' => $userid,
@@ -428,7 +428,11 @@ class Constitution extends Base {
     * 每日一课  查看详情
     */
     public function scan(){
+        $this->checkRole();
         $id = input('id');
+        if (empty($id)){
+            return $this->error('系统错误');
+        }
         $Answers = Answers::get($id);
         $Qid = json_decode($Answers->question_id);
         $rights=json_decode($Answers->value);
