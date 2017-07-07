@@ -23,6 +23,7 @@ class Constitution extends Base {
      */
     public function game(){
         $this->checkRole();
+        $this->anonymous();
         //每日一课数据
         $userid = session('userId');
         $map = array(
@@ -82,6 +83,7 @@ class Constitution extends Base {
      */
     public function answer(){
         $this->checkRole();
+        $this->anonymous();
         //取单选
         $arr=Question::all(['type'=>0]);
         foreach($arr as $value){
@@ -180,6 +182,7 @@ class Constitution extends Base {
      */
     public function goon(){
         $this->checkRole();
+        $this->anonymous();
         //获取该用户的已经保存的信息
         $users=$users=session('userId');
         $Info=Answer::get(['userid'=>$users]);
@@ -278,6 +281,7 @@ class Constitution extends Base {
      */
     public function score(){
         $this->checkRole();
+        $this->anonymous();
         $Answer=Answer::get(['userid'=>session('userId')]);
         $WechatUser=WechatUser::get(['userid'=>session('userId')]);
         $num=$WechatUser->game_score;
@@ -291,6 +295,7 @@ class Constitution extends Base {
      */
     public function errors(){
         $this->checkRole();
+        $this->anonymous();
         $Answer=Answer::get(['userid'=>session('userId')]);
         $arr=json_decode($Answer->status,true);
         $lists=json_decode($Answer->question_id,true);
@@ -318,6 +323,7 @@ class Constitution extends Base {
      */
     public function course(){
         $this->checkRole();
+        $this->anonymous();
         $userid = session('userId');
         $map = array(
             'userid' => $userid,
@@ -429,6 +435,7 @@ class Constitution extends Base {
     */
     public function scan(){
         $this->checkRole();
+        $this->anonymous();
         $id = input('id');
         if (empty($id)){
             return $this->error('系统错误');
