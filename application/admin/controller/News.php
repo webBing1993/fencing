@@ -27,8 +27,8 @@ class News extends Admin {
         );
         $list = $this->lists('News',$map);
         int_to_string($list,array(
+            'type' => array(1=>"新闻聚焦",2=>"各地动态",3=>"意见文件"),
             'status' => array(0 =>"已发布",1=>"已发布"),
-            'recommend' => array( 1=>"推荐" , 0=>"不推荐")
         ));
 
         $this->assign('list',$list);
@@ -43,7 +43,7 @@ class News extends Admin {
         if(IS_POST) {
             $data = input('post.');
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            if(empty($data['id'])) {
+            if(empty($data['id'])){
                 unset($data['id']);
             }
             $newModel = new NewsModel();
@@ -112,7 +112,18 @@ class News extends Admin {
             );
             $infoes = NewsModel::where($info)->select();
             foreach($infoes as $value){
-                $value['title'] = '【党建动态】'.$value['title'];
+                switch ($value['type']){
+                    case 1:
+                        $value['title'] = '【新闻聚焦】'.$value['title'];
+                        break;
+                    case 2:
+                        $value['title'] = '【各地动态】'.$value['title'];
+                        break;
+                    case 3:
+                        $value['title'] = '【意见文件】'.$value['title'];
+                        break;
+                    default;
+                }
             }
             return $this->success($infoes);
         }else{
@@ -128,6 +139,18 @@ class News extends Admin {
             //数据重组
             foreach($list as $value){
                 $msg = NewsModel::where('id',$value['focus_main'])->find();
+                switch ($msg['type']){
+                    case 1:
+                        $value['type'] = '新闻聚焦';
+                        break;
+                    case 2:
+                        $value['type'] = '各地动态';
+                        break;
+                    case 3:
+                        $value['type'] = '意见文件';
+                        break;
+                    default;
+                }
                 $value['title'] = $msg['title'];
             }
             $this->assign('list',$list);
@@ -139,7 +162,18 @@ class News extends Admin {
             );
             $infoes = NewsModel::where($info)->select();
             foreach($infoes as $value){
-                $value['title'] = '【党建动态】'.$value['title'];
+                switch ($value['type']){
+                    case 1:
+                        $value['title'] = '【新闻聚焦】'.$value['title'];
+                        break;
+                    case 2:
+                        $value['title'] = '【各地动态】'.$value['title'];
+                        break;
+                    case 3:
+                        $value['title'] = '【意见文件】'.$value['title'];
+                        break;
+                    default;
+                }
             }
             $this->assign('info',$infoes);
             return $this->fetch();
