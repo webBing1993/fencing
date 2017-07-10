@@ -8,8 +8,210 @@
     body{
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
-        background: #eee;
     }
+    /*tab*/
+    .tabs {
+        width: 100vw;
+        height: 44px;
+        padding: 8px 0;
+        background: #f1f1f1;
+    }
+    .tabs .tab {
+        display: inline-block !important;
+        width: 32vw;
+        height: 100%;
+        color: #333333;
+        font-size: 1.5rem;
+        line-height: 28px;
+        text-align: center;
+        border-right: 1px solid #e5e5e5;
+    }
+    .tabs .tab:last-child {
+        border-right: none;
+    }
+    .tabs .active {
+        color: #fd6743;
+    }
+    .scroll{
+        position: relative;
+        height: 100%;
+    }
+    .scrollDiy{
+        position:absolute;
+        top: 0;
+        bottom:0;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    .box {
+        top: 0;
+        width: 99vw;
+    }
+    .box .box_ {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 90vw;
+        margin: 4vw 5vw 0 5vw;
+        padding-top: 6vw;
+        box-shadow: 1px 3px 8px rgba(102, 102, 102, 0.2);
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+    }
+    .box .box_:last-child {
+        margin-bottom: 5vw;
+    }
+    .box .box_:before {
+        content: '组织概况';
+        position: absolute;
+        top: 3vw;
+        left: -7px;
+        width: 76px;
+        height: 30px;
+        background: url('/home/images/structure/tag.png') 0 0 no-repeat;
+        background-size: 76px 30px;
+        color: #ffffff;
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 22px;
+    }
+    .box .box_.or:before {
+        content: '组织概况';
+    }
+    .box .box_.summary {
+        padding: 11vw 3vw 6vw 3vw;
+    }
+    .box .box_.summary p {
+        margin-top: 2vw;
+        text-indent: 2em;
+        font-size: 13px;
+        line-height: 20px;
+    }
+    .box .box_ .lists {
+        padding: 13px;
+        color: #333333;
+        font-size: 14px;
+    }
+    .box .box_ .lists .name1 {
+        display: inline-block;
+        width: 100%;
+        height: 45px;
+        font-size: 14px;
+        line-height: 45px;
+        border-bottom: 1px solid #f1f1f1;
+    }
+    .box .box_ .lists .party1 {
+        position: relative;
+        top: 0;
+        font-size: 1.6rem;
+        padding-left: 15px;
+        line-height: 30px;
+    }
+    .box .box_ .lists .party1 .tri {
+        position: absolute;
+        top: 15px;
+        left: 0;
+        content: '';
+        height: 10px;
+        width: 10px;
+        background: url('/home/images/structure/tri.png') 0 0 no-repeat;
+        background-size: 10px 10px;
+    }
+    .box .box_ .lists .detail1 {
+        display: none;
+        width: 100%;
+    }
+    .box .box_ .lists .detail1 .name2 {
+        display: inline-block;
+        width: 90%;
+        height: 45px;
+        margin-left: 30px;
+        font-size: 14px;
+        color: #333333;
+        line-height: 45px;
+        border-bottom: 1px solid #f1f1f1;
+    }
+    @media screen and (max-width: 320px) {
+        .listbox .box .box_ .lists .detail1 .name2 {
+            font-size: 12px;
+        }
+    }
+    .box .box_ .lists .down {
+        -webkit-animation: toDown 0.4s linear alternate;
+        animation: toDown 0.4s linear alternate;
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+    }
+    .box .box_ .lists .up {
+        -webkit-animation: toUp 0.4s linear alternate;
+        animation: toUp 0.4s linear alternate;
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+    }
+    .town {
+        left: 0;
+    }
+    .service {
+        left: 100vw;
+    }
+    .vr {
+        left: 200vw;
+    }
+    .vr a {
+        display: inline-block;
+        width: 100vw;
+    }
+    .vr .title {
+        width: 100vw;
+        font-size: 1.6rem;
+        color: #333333;
+        line-height: 60px;
+        text-align: center;
+    }
+    .vr img {
+        margin: 5vw 10vw;
+        width: 80vw;
+    }
+    /*ntc-list*/
+    .notices .ntc-list a{
+        display: block;
+        width:100%;
+        padding: 4vw 3.2vw;
+        line-height: 24px;
+        border-bottom: 1px solid #f1f1f1;
+    }
+    .notices .ntc-list a p{
+        font-size: 1.4rem;
+        color: #333;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin: 0;
+    }
+    .notices .ntc-list a span{
+        display: inline-block;
+        font-size: 1.2rem;
+        color: #999;
+        padding-top: 2vw;
+        max-width: 85%;
+    }
+    .notices .ntc-list a .ntc-icon{
+        float: right;
+        padding-right: 2vw;
+    }
+    .notices .ntc-list a .ntc-icon i{
+        display: inline-block;
+        background: url("/home/images/common/comment-border.png");
+        background-size: 13px 13px;
+        width: 13px;
+        height:13px;
+        margin-right: 1.2vw;
+    }
+
     .lists{
         width: 96%;
         margin: 0 auto;
@@ -17,6 +219,9 @@
     }
     .lists ul{
         padding-bottom: 20px;
+    }
+    .regularmore {
+        background: #eee;
     }
     .regularmore .lists .list {
         display: block;
@@ -173,63 +378,574 @@
         text-align: center;
         padding-top: 50%;
     }
+    @keyframes toDown {
+        0% {
+            transform: rotate(0deg);
+        }
+        10% {
+            transform: rotate(15deg);
+        }
+        30% {
+            transform: rotate(25deg);
+        }
+        50% {
+            transform: rotate(45deg);
+        }
+        70% {
+            transform: rotate(60deg);
+        }
+        90% {
+            transform: rotate(75deg);
+        }
+        100% {
+            transform: rotate(90deg);
+        }
+    }
+    @-webkit-keyframes toDown {
+        0% {
+            transform: rotate(0deg);
+        }
+        10% {
+            transform: rotate(15deg);
+        }
+        30% {
+            transform: rotate(25deg);
+        }
+        50% {
+            transform: rotate(45deg);
+        }
+        70% {
+            transform: rotate(60deg);
+        }
+        90% {
+            transform: rotate(75deg);
+        }
+        100% {
+            transform: rotate(90deg);
+        }
+    }
+    @keyframes toUp {
+        0% {
+            transform: rotate(90deg);
+        }
+        10% {
+            transform: rotate(75deg);
+        }
+        30% {
+            transform: rotate(60deg);
+        }
+        50% {
+            transform: rotate(45deg);
+        }
+        70% {
+            transform: rotate(30deg);
+        }
+        90% {
+            transform: rotate(15deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+    @-webkit-keyframes toUp {
+        0% {
+            transform: rotate(90deg);
+        }
+        10% {
+            transform: rotate(75deg);
+        }
+        30% {
+            transform: rotate(60deg);
+        }
+        50% {
+            transform: rotate(45deg);
+        }
+        70% {
+            transform: rotate(30deg);
+        }
+        90% {
+            transform: rotate(15deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
 </style>
 {/block}
 
 {block name="body"}
-<div class="scrollDiy">
-<div class="notice party regularmore">
-    <!--课程列表-->
-    <div class="novote">投票进行中</div>
-    <div class="lists">
-        <!--图文课程-->
-        {eq name="visit" value="0"}
-            {empty name="top"}
-            <div class="default">暂无进行中的投票</div>
-            {else/}
-            <ul>
-                {volist name="top" id="to"}
-                <a href="{:Url('Vote/vote?type=1&id='.$to['id'])}" class="list">
-                    <div class="tab">火热投票中</div>
-                    <span class="imgtext"></span>
-                    <i>{$to.title}</i>
-                    <img src="{$to.front_cover|get_cover='path'}" alt="图片" class="img">
-                    <div class="content">
-                        <div class="title limit">还剩<span> {$to.left} </span>结束</div>
-                        <span class="study">已投：{$to.sum}人</span>
-                        <div class="details">查看详情</div>
+<div class="scroll">
+    <div class="scrollDiy">
+        <div class="content">
+            <div class="tabs">
+                <span class="tab active">三会一课</span>
+                <span class="tab">支部活动</span>
+                <span class="tab">民主评议</span>
+            </div>
+            <div class="notices box">
+                <div class="box_ or">
+                    <div class="lists">
+                        <!--第一层-->
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">椒江区个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会海门分会联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会白云分会联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会葭沚分会联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会三甲分会联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会洪家分会联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会前所分会联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会农贸市场联合党支部</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">黄岩区个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协党总支</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城东分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城南分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城西分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城北分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协头陀分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协宁溪分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协院桥分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区市场服务中心自办场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区家乐购新天地家居广场临时党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区副食品市场党支部</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">路桥区个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥个协分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路南个协分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路北个协分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">峰江个协分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">螺洋个协分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">新桥个协分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥建筑装饰城市场经营户党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路南商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路北商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">峰江商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">螺洋商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">新桥商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">蓬街商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">金清商品交易市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥个协直属党支部</a>
+
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">临海市个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海古城分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海大洋分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海杜桥分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海大田分党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海江南分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海白水洋分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海网络经营者分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海市恒大国际家居建材城党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海市中心菜场党支部</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">温岭市个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市太平个协党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市文化桥菜市场党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市购物中心党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭太平路菜市场党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市城东个协党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市温西个协党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市城北个协党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市石桥头镇个私协会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市松门个协党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市泽国个协党总支</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市大溪个协党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市新河个协党支部</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">玉环市民个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">玉环市民个协党总支</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">天台县个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会城东分会支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会城西分会支部 </a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会平桥分会支部 </a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会坦头分会支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县经纪人支部 </a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县机动车交易市场党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会洪畴分会支部 </a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体劳动者协会劳动路党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体劳动者协会赤城路党支部</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">仙居县个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个私协机关支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会白塔分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会福应分会党支部 </a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会横溪分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会南峰分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会下各分会党支部 </a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">三门县个协党总支</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会海游分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会花桥分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会健跳分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会浦坝港分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会亭旁分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会珠岙分会党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县市场联合党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县首府商贸区党支部</a>
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县新大华酒店党支部</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
+                        <div class="list clear">
+                            <div class="party1">
+                                <div class="tri"></div>
+                                <div class="name1">开发区党支部</div>
+                            </div>
+                            <!--第二层-->
+                            <div class="dw detail1">
+                                <a class="name2 limit" href="{:Url('Structure/detail')}">开发区个私协党支部</a>
+                            </div>
+                            <!--/第二层-->
+                        </div>
                     </div>
-                </a>
-                {/volist}
-            </ul>
-            {/empty}
-        {else/}
-        <div class="default">游客无权限</div>
-        {/eq}
+                </div>
+                <div class="box_ summary">
+                    <p>
+                        台州市市场监管局党委下设机关党委，有9个支部：机关第一、第二、第三、第四、第五、第六支部，经开分局支部、药检院支部和老干部支部，现有党员169名。
+                    </p>
+                </div>
+            </div>
+            <div class="notices activity">
+                <ul class="ntc-list">
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>说个事发顺丰是方式方式说个事发式方式</p>
+                            <div class="clear">
+                                <span>说个事发顺丰是方式方式说个事发方式</span><span class="ntc-icon"><i></i>3</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <p>返回返回发过火发过火</p>
+                            <div class="clear">
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="notices">
+                <div class="notice party regularmore">
+                    <!--课程列表-->
+                    <div class="novote">投票进行中</div>
+                    <div class="lists">
+                        <!--图文课程-->
+                        {eq name="visit" value="0"}
+                        {empty name="top"}
+                        <div class="default">暂无进行中的投票</div>
+                        {else/}
+                        <ul>
+                            {volist name="top" id="to"}
+                            <a href="{:Url('Vote/vote?type=1&id='.$to['id'])}" class="list">
+                                <div class="tab">火热投票中</div>
+                                <span class="imgtext"></span>
+                                <i>{$to.title}</i>
+                                <img src="{$to.front_cover|get_cover='path'}" alt="图片" class="img">
+                                <div class="content">
+                                    <div class="title limit">还剩<span> {$to.left} </span>结束</div>
+                                    <span class="study">已投：{$to.sum}人</span>
+                                    <div class="details">查看详情</div>
+                                </div>
+                            </a>
+                            {/volist}
+                        </ul>
+                        {/empty}
+                        {else/}
+                        <div class="default">游客无权限</div>
+                        {/eq}
+                    </div>
+                </div>
+
+                <div class="lists history">
+                    <div>历史投票</div>
+                    {eq name="visit" value="0"}
+                    {empty name="list"}
+                    <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">暂无历史数据</span>
+                    {else/}
+                    <ul>
+                        {volist name="list" id="lo"}
+                        <a href="{:Url('Vote/vote?type=2&id='.$lo['id'])}">
+                            <img src="{$lo.front_cover|get_cover='path'}">
+                            <p>{$lo.title}</p>
+                            <span>已结束</span><span>已投：{$lo.sum}人</span>
+                        </a>
+                        {/volist}
+                    </ul>
+                    {/empty}
+                    {else/}
+                    <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">游客无权限</span>
+                    {/eq}
+                </div>
+            </div>
+            <div class="tip"></div>
+            <div class="loading hidden">
+                <div class="typing_loader"></div>
+            </div>
+
+        </div>
     </div>
 </div>
 
-<div class="lists history">
-     <div>历史投票</div>
-    {eq name="visit" value="0"}
-        {empty name="list"}
-        <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">暂无历史数据</span>
-        {else/}
-        <ul>
-            {volist name="list" id="lo"}
-            <a href="{:Url('Vote/vote?type=2&id='.$lo['id'])}">
-                <img src="{$lo.front_cover|get_cover='path'}">
-                <p>{$lo.title}</p>
-                <span>已结束</span><span>已投：{$lo.sum}人</span>
-            </a>
-            {/volist}
-        </ul>
-        {/empty}
-    {else/}
-    <span  style="text-align: center;width: 100%;display: block;height:18vh;padding-top:8vh;">游客无权限</span>
-    {/eq}
-</div>
 {/block}
 
 {block name="script"}
+<script src="/home/js/reset.js"></script>
+<script>
+    var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+    $(function () {
+        if({$visit} == 1){
+            //  游客  跳转失效
+            $('.name2').attr('href','#');
+        }
+        slide();
+        //初始化数据
+        var ntc = $(".notices");
+        var tab = $(".tabs .tab");
+        var co = getCookie("type") || 0;
+        co = parseInt(co);
+        tab.eq(co).addClass("active").siblings(".tab").removeClass("active");
+        ntc.eq(co).removeClass("hidden").siblings(".notices").addClass("hidden");
+        if(co == 1){
+            var len  = ntc.eq(co).find("ul li").length;
+            if(len >= 9){
+                $('.tip').text('上拉加载更多');
+                loadScroll(co + 1);
+            }
+        }
+        //tab点击切换
+        $(".tabs").on('click','.tab',function () {
+            var _this = $(this);
+            var ntc =  $(".notices");
+            var index = _this.index();
+            _this.addClass("active").siblings(".tab").removeClass("active");
+            ntc.eq(index).removeClass("hidden").siblings(".notices").addClass("hidden");
+            if(index == 1){
+                var len = ntc.eq(index).find('ul li').length;
+                if (len >= 9) {
+                    $(".tip").text('上拉加载更多').show();
+                    loadScroll(index + 1);
+                }else{
+                    $('.tip').hide();
+                    $(window).off("scroll" );
+                }
+            } else {
+                $('.tip').hide();
+            }
+            //使用示例
+            setCookie("type",index);
+        })
+    });
+    //滚动加载
+    function loadScroll(type){
+        if(!type){
+            return;
+        }
+        var windowHeight = $(".scrollDiy").height();
+        $(".scrollDiy").off("scroll").on("scroll",function () {
+
+            var ntc = $(".notices");
+            var dh = $(".content").height();
+//		console.log("dh"+dh);
+            var end = windowHeight + $(".scrollDiy" ).scrollTop();
+            var len  = ntc.eq(type - 1).find("ul li").length;
+            var tip = $(".tip");
+            var loading = $('.loading');
+            if(dh == end){
+                scrollNow = false;
+                $.ajax({
+                    type:"post",
+                    url:"",
+                    data:{
+                        length:len,
+                        type:type
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data.code == 1){
+                            addList(data,type);
+                            var dataLen =data.data.length;
+                            if(data.data.length == 9){
+                                tip.text('上拉加载更多');
+                            }
+                        }else{
+                            tip.text('没有更多了');
+                            $(window ).off("scroll");
+                        }
+                        scrollNow = true;
+                    }
+                })
+            }
+        })
+    }
+    //列表添加
+    function  addList(data,type) {
+        if (type) {
+            type = parseInt(type);
+        } else {
+            return;
+        }
+        var html = '';
+        var lists = data.data;
+        if(type == 2){
+            $.each(lists,function (index,item) {
+                html += '<li><a href="/home/Company/detail/id/"' + list.id + '>' +
+                        '<p>' + list.title + '</p>' +
+                        '<span>' + list.publisher + '</span>' +
+                        '<span><i></i>' + list.comments + '</span>' +
+                        '</a></li>';
+            });
+            $(".notices").eq(type - 1).children("ul").append(html);
+        }
+    }
+
+    //下拉样式
+    function slide(){
+        $('.lists .party1' ).on('click',function(){
+            var it = $(this);
+            var detail = it.next('.detail1' );
+            if(detail.hasClass('dw')){
+                detail.slideDown();
+                it.find('.tri').removeClass('up').addClass('down');
+            }else{
+                detail.slideUp();
+                it.find('.tri').removeClass('down').addClass('up');
+            }
+            detail.toggleClass('dw');
+        });
+    }
+</script>
 {/block}
