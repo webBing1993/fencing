@@ -105,6 +105,7 @@
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script src="/home/js/reset.js"></script>
 <script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
 	//初始化数据
 	var ntc = $(".notice");
@@ -151,6 +152,7 @@ function loadScroll(type){
 		var tip = $(".tip");
 		var loading = $('.loading');
 		if(dh == end){
+			scrollNow = false;
 			$.ajax({
 				type:"post",
 				url:"{:Url('News/listmore')}",
@@ -168,13 +170,14 @@ function loadScroll(type){
 					if(data.code == 1){
 						addNews(data,type);
 						var dataLen =data.data.length;
-						if(data.data.length == 5){
+						if(data.data.length == 6){
 							tip.text('上拉加载更多');
 						}
 					}else{
 						tip.text('没有更多了');
 						$(window ).off("scroll");
 					}
+					scrollNow = true;
 				}
 			})
 		}
