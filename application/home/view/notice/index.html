@@ -6,6 +6,13 @@
 {/block}
 
 {block name="body"}
+<!--tab-->
+<div class="tabs clear">
+    <div class="tab active"><span>微电影</span></div>
+    <div class="tab"><span>手机报</span></div>
+</div>
+
+<div class="notices dynamic">
 {empty name="fnotice"}
 <div class="default">
     <img src="/home/images/notice/nomessage.png" alt="暂无消息">
@@ -24,6 +31,28 @@
     </a>
     {/volist}
 </div>
+</div>
+
+<div class="notices second">
+    {empty name="fnotice"}
+    <div class="default">
+        <img src="/home/images/notice/nomessage.png" alt="暂无消息">
+    </div>
+    {else/}
+    <div class="lists">
+        <!--两种状态：ing进行中，over已结束-->
+        {volist name="fnotice" id="vo"}
+        <a href="{:Url('Notice/forumnotice?id='.$vo['id'])}" class="list">
+            <div class="title limit">{$vo['title']}</div>
+            <div class="content limit_">{$vo['description']}</div>
+            <div class="note clear">
+                {switch name="vo.is_over"}{case value="1"}<span class="fl over">已结束</span>{/case}{case value="0"}<span class="fl ing">进行中</span>{/case}{default /}{/switch}
+                <span class="time fr">{$vo.create_time|time_format="Y-m-d"}</span>
+            </div>
+        </a>
+        {/volist}
+    </div>
+</div>
 <div class="tip"></div>
 <div class="loading hidden">
     <div class="typing_loader"></div>
@@ -33,23 +62,82 @@
 
 {block name="script"}
 <script>
+    var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+    var c =  parseInt(window.location.href.split("index/c/")[1]);
     $('title' ).text('通知公告');
     $(function(){
         //模块标题
-        var len = $(".list" ).length;
-        if(len >= 7){
-            $('.tip' ).text('上拉加载更多');
-            //上拉加载
-            loadScroll();
+        var ntc = $('.notices');
+        var co = getCookie("type");
+        if(co == 11 || co == 12 || co == 13){
+            c = co - 10;
+        }
+        ntc.eq(c-1).removeClass('hidden');
+        //活动列表上拉加载
+        if(c == 1){
+            var len = ntc.eq(eq).find('.dynamic .lists a').length;
+            if(len >= 7){
+                $('.tip' ).text('上拉加载更多');
+                loadScroll(c);
+            }else{
+                $('.tip' ).hide();
+            }
+        }
+        //活动列表上拉加载
+        if(c == 2){
+            var len = ntc.eq(eq).find('.dynamic .lists a').length;
+            if(len >= 7){
+                $('.tip' ).text('上拉加载更多');
+                loadScroll(c);
+            }else{
+                $('.tip' ).hide();
+            }
         }
         //列表页：ue图片过滤
         $('.limit_ img' ).replaceWith('[图片]');
+        //tab切换
+        $('.tabs>.tab ').on('click',function(){
+            var ntc = $('.notices' );
+            var eq = $(this ).index();
+            $(this ).siblings('.tab' ).removeClass('active');
+            $(this ).addClass('active');
+            ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
+            ntc.eq(eq).removeClass('hidden');
+            if(eq==0) {
+                var len = ntc.eq(eq).find('.dynamic .lists a').length;
+                if (len >= 7) {
+                    $('.tip').text('上拉加载更多');
+                    loadScroll(eq + 1);
+                }else{
+                    $(".tip").hide();
+                    $(window ).off("scroll" );
+                }
+            }
+            if(eq==1) {
+                var len = ntc.eq(eq).find('.second .lists a').length;
+                if (len >= 7) {
+                    $('.tip').text('上拉加载更多');
+                    loadScroll(eq + 1);
+                }else{
+                    $(".tip").hide();
+                    $(window ).off("scroll" );
+                }
+            }
+        });
+        setCookie("type",eq+11);
     });
-    function loadScroll(){
+
+
+
+    function loadScroll(type){
         $(window ).off("scroll" ).on("scroll",function(){
             var dh = $(document).height();
             var end = $(window).height() + $(window ).scrollTop();
-            var len = $(".list" ).length;
+            if(type==1){
+                var len = ntc.eq(eq).find('.dynamic .lists a').length;
+            }else if(type==2){
+                var len = ntc.eq(eq).find('.second .lists a').length;
+            }
             var tip = $(".tip");
             var loading = $('.loading');
             if(dh == end){
@@ -67,7 +155,7 @@
                         loading.toggleClass('hidden');
                         tip.show();
                         if(data.code == 1){
-                            addMeets(data);
+                            addMeets(data,type);
                             var dataLen =data.data.length;
                             if(data.data.length == 5){
                                 tip.text('上拉加载更多');
@@ -81,7 +169,7 @@
             }
         })
     }
-    function addMeets(data){
+    function addMeets(data,type){
         var html = '';
         var lists = data.data;
         var len = lists.length;
@@ -104,7 +192,13 @@
                     '</div>'+
                     '</a>'
         }
-        $(".lists" ).append(html);
+        if(type==1){
+            $(".dynamic .lists" ).append(html);
+        }
+        if(type==2){
+            $(".second .lists" ).append(html);
+        }
+
     }
 </script>
 {/block}
