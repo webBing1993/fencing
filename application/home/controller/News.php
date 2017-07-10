@@ -30,21 +30,25 @@ class News extends Base {
      * 主页
      */
     public function index(){
-        //首页轮播推荐
-        $map1 = array(
-            'status' => array('egt',0),
-            'recommend' => 1
-        );
-        $recom = NewsModel::where($map1)->order('id desc')->limit(3)->select();
-        $this->assign('recommend',$recom);
-
         //列表
-        $map2 = array(
+        $map1 = array(
+            'type' => 1 , // 新闻聚焦
             'status' => array('egt',0),
         );
-        $list = NewsModel::where($map2)->order('id desc')->limit(6)->select();
-        $this->assign('list',$list);
-
+        $list1 = NewsModel::where($map1)->order('id desc')->limit(6)->select();
+        $this->assign('list1',$list1);
+        $map2 = array(
+            'type' => 2 , // 各地动态
+            'status' => array('egt',0),
+        );
+        $list2 = NewsModel::where($map2)->order('id desc')->limit(6)->select();
+        $this->assign('list2',$list2);
+        $map3 = array(
+            'type' => 3 , // 意见文件
+            'status' => array('egt',0),
+        );
+        $list3 = NewsModel::where($map3)->order('id desc')->limit(6)->select();
+        $this->assign('list3',$list3);
         return $this->fetch();
     }
 
@@ -103,7 +107,9 @@ class News extends Base {
      */
     public function listmore(){
         $len = input('length');
+        $type = input('type');
         $map = array(
+            'type' => $type,
             'status' => array('egt',0),
         );
         $list = NewsModel::where($map)->order('id desc')->limit($len,5)->select();

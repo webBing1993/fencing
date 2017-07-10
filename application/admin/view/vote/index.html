@@ -58,7 +58,7 @@
                             {volist name="list" id="lo"}
                             <tr>
                                 <td><input type="checkbox" class="i-checks ids" name="input[]"></td>
-                                <td>{$lo.title}</td>
+                                <td>{$lo.title|mb_substr=###,0,20}</td>
                                 <td>{$lo.awards}</td>
                                 <td>{$lo->get_num}</td>
                                 <td>{$lo.end_time|time_format="Y-m-d H:i"}</td>
