@@ -10,33 +10,78 @@
 <div class="banners">
 	<div class="swiper-container">
 		<div class="imgs swiper-wrapper">
-			{volist name="recommend" id="re"}
+
 			<div class="banner swiper-slide">
-				<a href="{:Url('News/detail?id='.$re['id'])}">
-					<img src="{$re['front_cover']|get_cover='path'}" alt="{$re.title}">
-					<div class="title_ limit">{$re['title']}</div>
+				<a href="javascript:;">
+					<img src="/home/images/feedback/1.jpg" alt="图片">
+
 				</a>
 			</div>
-			{/volist}
+
 		</div>
 	</div>
 </div>
-<!--新闻列表-->
-<div class="lists">
-	{volist name="list" id="vo"}
-	<a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
-		<div class="fl">
-			<img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
-		</div>
-		<div class="fr lr">
-			<div class="title limit_">{$vo.title}</div>
-			<div class="clear">
-				<span class="fl">{$vo.create_time|time_format='Y-m-d'}</span>
-				<span class="fr">详情</span>
+<div class="tabs">
+	<span class="tab active">新闻聚焦</span>
+	<span class="tab">各地动态</span>
+	<span class="tab">意见文件</span>
+</div>
+<!--新闻聚焦-->
+<div class="notice">
+	<div class="lists">
+		{volist name="list" id="vo"}
+		<a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
+			<div class="fl">
+				<img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
 			</div>
-		</div>
-	</a>
-	{/volist}
+			<div class="fr lr">
+				<div class="title limit_">{$vo.title}</div>
+				<div class="clear">
+					<span class="fl">{$vo.create_time|time_format='Y-m-d'}</span>
+					<span class="fr">详情</span>
+				</div>
+			</div>
+		</a>
+		{/volist}
+	</div>
+</div>
+<!--各地动态-->
+<div class="notice">
+	<div class="lists">
+		{volist name="list" id="vo"}
+		<a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
+			<div class="fl">
+				<img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
+			</div>
+			<div class="fr lr">
+				<div class="title limit_">{$vo.title}</div>
+				<div class="clear">
+					<span class="fl">{$vo.create_time|time_format='Y-m-d'}</span>
+					<span class="fr">详情</span>
+				</div>
+			</div>
+		</a>
+		{/volist}
+	</div>
+</div>
+<!--意见文件-->
+<div class="notice">
+	<div class="lists">
+		{volist name="list" id="vo"}
+		<a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
+			<div class="fl">
+				<img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
+			</div>
+			<div class="fr lr">
+				<div class="title limit_">{$vo.title}</div>
+				<div class="clear">
+					<span class="fl">{$vo.create_time|time_format='Y-m-d'}</span>
+					<span class="fr">详情</span>
+				</div>
+			</div>
+		</a>
+		{/volist}
+	</div>
 </div>
 <div class="tip"></div>
 <div class="loading hidden">
@@ -46,6 +91,7 @@
 
 {block name="script"}
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
+<script src="/home/js/reset.js"></script>
 <script>
 $(function(){
 	//模块标题
@@ -54,23 +100,55 @@ $(function(){
 	var len = $(".list" ).length;
 	if(len == 0){
 		$('body' ).html('<div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>');
-	}else if(len >= 6){
-		$('.tip' ).text('上拉加载更多');
-		//上拉加载
-		loadScroll();
 	}
-	//轮播
-	var mySwiper = new Swiper('.swiper-container', {
-		autoplay: 3000,
-		loop:true,
-		autoplayDisableOnInteraction:false,
+//	//轮播
+//	var mySwiper = new Swiper('.swiper-container', {
+//		autoplay: 3000,
+//		loop:true,
+//		autoplayDisableOnInteraction:false,
+//	});
+	//初始化数据
+	var ntc = $(".notice");
+	var tab = $(".tabs .tab");
+	var co = getCookie("type") || 0;
+	co = parseInt(co);
+	tab.eq(co).addClass("active").siblings(".tab").removeClass("active");
+	ntc.eq(co).removeClass("hidden").siblings(".notice").addClass("hidden");
+	var len  = ntc.eq(co).find(".list").length;
+	if(len >= 6 ){
+		$('.tip').text('上拉加载更多');
+		loadScroll(co + 1);
+	}
+	//tab切换
+	$(".tabs").on('click','.tab',function () {
+		var ntc = $(".notice");
+		var index = $(this).index();
+		$(this).addClass("active").siblings(".tab").removeClass("active");
+		$(".notice").eq(index).removeClass("hidden").siblings(".notice").addClass("hidden");
+		var len = ntc.eq(index).find('.list').length;
+//		console.log(len);
+		if ( len >= 6 ) {
+			$(".tip").show();
+			$(".tip").text('上拉加载更多');
+			loadScroll(index + 1);
+		}else{
+			$('.tip').hide();
+			$(window ).off("scroll" );
+		}
+		//使用示例
+		setCookie("type",index);
 	})
 });
-function loadScroll(){
+function loadScroll(type){
+	if(!type){
+		return;
+	}
 	$(window ).off("scroll" ).on("scroll",function(){
+		var ntc = $(".notice");
 		var dh = $(document).height();
+//		console.log("dh"+dh);
 		var end = $(window).height() + $(window ).scrollTop();
-		var len = $(".list" ).length;
+		var len  = ntc.eq(type - 1).find(".list").length;
 		var tip = $(".tip");
 		var loading = $('.loading');
 		if(dh == end){
@@ -78,7 +156,8 @@ function loadScroll(){
 				type:"post",
 				url:"{:Url('News/listmore')}",
 				data:{
-					length:len
+					length:len,
+					type:type
 				},
 				beforeSend: function(XMLHttpRequest){
 					tip.hide();
@@ -88,7 +167,7 @@ function loadScroll(){
 					loading.toggleClass('hidden');
 					tip.show();
 					if(data.code == 1){
-						addNews(data);
+						addNews(data,type);
 						var dataLen =data.data.length;
 						if(data.data.length == 5){
 							tip.text('上拉加载更多');
@@ -102,10 +181,16 @@ function loadScroll(){
 		}
 	})
 }
-function addNews(data){
+function addNews(data,type){
 	var html = '';
 	var lists = data.data;
 	var len = lists.length;
+	var ntc = $(".notice");
+	if(type){
+		type =parseInt(type);
+	}else{
+		return;
+	}
 	for(var i = 0; i< len;i++){
 		var list = lists[i];
 		html +=
@@ -122,7 +207,7 @@ function addNews(data){
 				'</div>'+
 				'</a>'
 	}
-	$(".lists" ).append(html);
+	ntc.eq(type - 1).children(".lists").append(html);
 }
 </script>
 {/block}
