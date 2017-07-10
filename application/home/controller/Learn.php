@@ -25,18 +25,12 @@ class Learn extends Base{
     public function index(){
         $this->anonymous();
         //数据列表
-        $map1 = array(
-            'status' => array('egt',0),
-            'recommend' => 1
-        );
         $map2 = array(
             'status' => array('egt',0),
         );
-        $list1 = LearnModel::where($map1)->order('id desc')->limit(3)->select();  // 轮播
-        $list2 = LearnModel::where($map2) ->order('id desc') ->limit(2)->select();  // 列表
+        $list2 = LearnModel::where($map2) ->order('id desc') ->limit(5)->select();  // 列表
         $link = Db::table('pb_paper')->where($map2)->field('content')->find();
         $this->assign('link',$link['content']);
-        $this->assign('lists',$list1);
         $this ->assign('list2',$list2);
         return $this->fetch();
     }

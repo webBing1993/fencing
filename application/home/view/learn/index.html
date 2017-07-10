@@ -6,7 +6,16 @@
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/common/tip.css">
 <link rel="stylesheet" href="/home/css/common/rem.css">
-
+<style>
+    .tabs  {
+        position: fixed;
+        top: 0;
+        z-index: 1;
+    }
+    .content{
+        margin-top: 44px;
+    }
+</style>
 {/block}
 {block name="body"}
 <!--tab-->
@@ -18,35 +27,9 @@
 <!--列表-->
 <div class="content">
     <div class="notices">
-        <div class="banner">
-            <div class="tag">—— 精品推荐 ——</div>
-            <!--精彩专题-->
-            {volist name="lists" id="re"}
-            <div class="box">
-                <a href="{:Url('Learn/video?id='.$re['id'])}" class="box_up">
-                        <img src="{$re.front_cover|get_cover='path'}" alt="图片">
-                        <div class="title limit">{$re.title}</div>
-                        <div class="note clear">
-                            <span class="fl">{$re.publisher}</span>
-                            <span class="fr">{$re.create_time|time_format=""}</span>
-                        </div>
-                    </a>
-                    <div class="box_down">
-                        <div class="clear">
-                            <span class="scan">{$re.views}</span>
-                            <div class="fr" onclick="tonext(this)">下一篇</div>
-                        </div>
-                    </div>
-                    <!--模糊层-->
-                    <img src="{$re.front_cover|get_cover='path'}" alt="背景" class="bg">
-            </div>
-            {/volist}
-        </div>
         <div class="notice party regularmore">
             <!--课程列表-->
             <div class="lists">
-                <div class="tag"> —— 更多视频 —— </div>
-                <!--图文课程-->
                 <ul>
                 {volist name="list2" id="vo"}
                     <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list">
@@ -90,7 +73,7 @@
         if(len == 0){
             $(".tip").hide();
             $('.content' ).html('<div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>');
-        }else if (len >= 2) {
+        }else if (len >= 5) {
                 $('.tip').text('上拉加载更多');
                  loadScroll();
             }
