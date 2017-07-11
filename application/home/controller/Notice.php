@@ -27,11 +27,12 @@ class Notice extends Base {
      */
     public function index(){
         $this->anonymous(); //判断是否是游客
-        //相关通知
+        //相关通知   台州个协
         $map = array(
+            'type' => 1,
             'status' => array('egt',0)
         );
-        $list = NoticeModel::where($map)->order('id desc')->limit(10)->select();
+        $list = NoticeModel::where($map)->order('id desc')->limit(7)->select();
         foreach($list as $value){
             $value['is_over'] = 0;  // 未结束
             if (empty($value['end_time'])){
@@ -42,6 +43,22 @@ class Notice extends Base {
             }
         }
         $this->assign('fnotice',$list);
+        //相关通知   党总支
+        $map1 = array(
+            'type' => 2,
+            'status' => array('egt',0)
+        );
+        $list1 = NoticeModel::where($map1)->order('id desc')->limit(7)->select();
+        foreach($list1 as $value){
+            $value['is_over'] = 0;  // 未结束
+            if (empty($value['end_time'])){
+                $value['is_over'] = 2;  // 无状态
+            }
+            if (!empty($value['end_time']) && $value['end_time'] < time()){
+                $value['is_over'] = 1;  // 已结束
+            }
+        }
+        $this->assign('fnotice1',$list1);
         return $this->fetch();
     }
 
@@ -50,7 +67,9 @@ class Notice extends Base {
      */
     public function leadlistmore(){
         $len = input('length');
+        $type = input('type');
         $map = array(
+            'type' => $type,
             'status' => array('egt',0),
         );
         $list = NoticeModel::where($map)->order('id desc')->limit($len,5)->field('id,title,description,create_time,end_time')->select();

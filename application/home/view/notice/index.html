@@ -8,8 +8,8 @@
 {block name="body"}
 <!--tab-->
 <div class="tabs clear">
-    <div class="tab active"><span>微电影</span></div>
-    <div class="tab"><span>手机报</span></div>
+    <div class="tab active"><span>台州个协</span></div>
+    <div class="tab"><span>党总支</span></div>
 </div>
 
 <div class="notices dynamic">
@@ -33,7 +33,7 @@
 </div>
 </div>
 
-<div class="notices second">
+<div class="notices second hidden">
     {empty name="fnotice"}
     <div class="default">
         <img src="/home/images/notice/nomessage.png" alt="暂无消息">
@@ -41,7 +41,7 @@
     {else/}
     <div class="lists">
         <!--两种状态：ing进行中，over已结束-->
-        {volist name="fnotice" id="vo"}
+        {volist name="fnotice1" id="vo"}
         <a href="{:Url('Notice/forumnotice?id='.$vo['id'])}" class="list">
             <div class="title limit">{$vo['title']}</div>
             <div class="content limit_">{$vo['description']}</div>
@@ -52,6 +52,7 @@
         </a>
         {/volist}
     </div>
+    {/empty}
 </div>
 <div class="tip"></div>
 <div class="loading hidden">
@@ -61,6 +62,7 @@
 {/block}
 
 {block name="script"}
+<script src="/home/js/reset.js"></script>
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     var c =  parseInt(window.location.href.split("index/c/")[1]);
@@ -68,14 +70,16 @@
     $(function(){
         //模块标题
         var ntc = $('.notices');
+        var tab= $(".tabs .tab")
         var co = getCookie("type");
         if(co == 11 || co == 12 || co == 13){
             c = co - 10;
         }
-        ntc.eq(c-1).removeClass('hidden');
+        ntc.eq(c-1).removeClass('hidden').siblings('.notices' ).addClass('hidden');
+        tab.eq(c-1).addClass('active').siblings('.tab' ).removeClass('active');
         //活动列表上拉加载
         if(c == 1){
-            var len = ntc.eq(eq).find('.dynamic .lists a').length;
+            var len = $('.dynamic .lists a').length;
             if(len >= 7){
                 $('.tip' ).text('上拉加载更多');
                 loadScroll(c);
@@ -85,7 +89,7 @@
         }
         //活动列表上拉加载
         if(c == 2){
-            var len = ntc.eq(eq).find('.dynamic .lists a').length;
+            var len =$('.second .lists a').length;
             if(len >= 7){
                 $('.tip' ).text('上拉加载更多');
                 loadScroll(c);
@@ -104,7 +108,7 @@
             ntc.eq(eq ).siblings('.notices' ).addClass('hidden');
             ntc.eq(eq).removeClass('hidden');
             if(eq==0) {
-                var len = ntc.eq(eq).find('.dynamic .lists a').length;
+                var len = $('.dynamic .lists a').length;
                 if (len >= 7) {
                     $('.tip').text('上拉加载更多');
                     loadScroll(eq + 1);
@@ -114,7 +118,7 @@
                 }
             }
             if(eq==1) {
-                var len = ntc.eq(eq).find('.second .lists a').length;
+                var len = $('.second .lists a').length;
                 if (len >= 7) {
                     $('.tip').text('上拉加载更多');
                     loadScroll(eq + 1);
@@ -123,8 +127,8 @@
                     $(window ).off("scroll" );
                 }
             }
+            setCookie("type",eq+11);
         });
-        setCookie("type",eq+11);
     });
 
 
@@ -134,9 +138,9 @@
             var dh = $(document).height();
             var end = $(window).height() + $(window ).scrollTop();
             if(type==1){
-                var len = ntc.eq(eq).find('.dynamic .lists a').length;
+                var len = $('.dynamic .lists a').length;
             }else if(type==2){
-                var len = ntc.eq(eq).find('.second .lists a').length;
+                var len = $('.second .lists a').length;
             }
             var tip = $(".tip");
             var loading = $('.loading');
@@ -145,7 +149,8 @@
                     type:"post",
                     url:"{:Url('Notice/leadlistmore')}",
                     data:{
-                        length:len
+                        length:len,
+                        type:type
                     },
                     beforeSend: function(XMLHttpRequest){
                         tip.hide();
@@ -200,5 +205,6 @@
         }
 
     }
+
 </script>
 {/block}

@@ -78,6 +78,17 @@
                     <form id="form" class="form-horizontal" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
+                                <label>类型:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <select name="type" id="type"  class="form-control">
+                                    <option value="1">台州个协</option>
+                                    <option value="2">党总支</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
                                 <label>顶部Banner:</label>
                             </div>
                             <div class="col-lg-5">
@@ -249,6 +260,7 @@
             var it = $(this);
 
             var data = {
+                type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
                 telephone:$("input[name='tel']").val(),

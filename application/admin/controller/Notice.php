@@ -27,7 +27,9 @@ class Notice extends Admin {
             'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
-        
+        int_to_string($list,array(
+            'type' => array(1 =>'台州个协',2=>"党总支")
+        ));
         $this->assign('list',$list);
         return $this->fetch();
     }
@@ -129,6 +131,13 @@ class Notice extends Admin {
                 'status' => 0,
             );
             $infoes = NoticeModel::where($info)->select();
+            foreach ($infoes as $value) {
+                if ($value['type'] == 1){
+                    $value['title'] = '【台州个协】'.$value['title'];
+                }else{
+                    $value['title'] = $value['title'] = '【党总支】'.$value['title'];
+                }
+            }
             return $this->success($infoes);
         }else{
             //消息列表
@@ -143,6 +152,11 @@ class Notice extends Admin {
             //数据重组
             foreach ($list as $value) {
                 $msg = NoticeModel::where('id',$value['focus_main'])->find();
+                if ($msg['type'] == 1){
+                    $value['title'] = '台州个协';
+                }else{
+                    $value['title'] = '党总支';
+                }
                 $value['title'] = $msg['title'];
             }
             $this->assign('list',$list);
@@ -153,6 +167,13 @@ class Notice extends Admin {
                 'status' => 0,
             );
             $infoes = NoticeModel::where($info)->select();
+            foreach ($infoes as $value) {
+                if ($value['type'] == 1){
+                    $value['title'] = '【台州个协】'.$value['title'];
+                }else{
+                    $value['title'] = $value['title'] = '【党总支】'.$value['title'];
+                }
+            }
             $this->assign('info',$infoes);
             return $this->fetch();
         }
@@ -247,7 +268,7 @@ class Notice extends Admin {
             //保存到推送列表
             $s = Push::create($data);
             if ($s){
-                return $this->success("发送成 功");
+                return $this->success("发送成功");
             }else{
                 return $this->error("发送失败");
             }
