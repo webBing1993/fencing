@@ -43,6 +43,7 @@ class Verify extends Controller{
             if (isset($user['extattr'])){
                 $user['extattr'] = json_encode($user['extattr']);
             }
+            $user['order'] = json_encode($user['order']);
             // 添加本地数据
             $UserAPI = new APIIndex();
             $localUser = $UserAPI->checkWechatUser($result['UserId']);
@@ -68,4 +69,5 @@ class Verify extends Controller{
     public function null(){
         return $this->fetch();
     }
+
 }
