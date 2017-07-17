@@ -96,6 +96,7 @@ class Wechat extends Admin
             foreach ($users['userlist'] as $user) {
                 $num++;
                 $user['department'] = json_encode($user['department']);
+                $user['order'] = json_encode($user['order']);
 //                foreach ($user['extattr']['attrs'] as $value) {
 //                    switch ($value['name']){
 //                        case "出生日期":
