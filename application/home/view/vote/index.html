@@ -562,6 +562,9 @@
                 <span class="tab">投票选举</span>
                 <span class="tab">民主评议</span>
             </div>
+            {empty name="meet"}
+            <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+            {else/}
             <div class="notices box">
                 {volist name="meet" id="me"}
                 <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
@@ -578,8 +581,12 @@
                 </a>
                 {/volist}
             </div>
+            {/empty}
+            {empty name="activity"}
+            <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+            {else/}
             <div class="notices activity">
-                {volist name="meet" id="me"}
+                {volist name="activity" id="me"}
                 <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
                     <div class="fl">
                         <img src="{$me['front_cover']|get_cover='path'}" alt="{$me['title']}">
@@ -594,6 +601,7 @@
                 </a>
                 {/volist}
             </div>
+            {/empty}
             <div class="notices">
                 <div class="notice party regularmore">
                     <!--课程列表-->

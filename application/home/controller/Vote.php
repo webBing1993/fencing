@@ -12,7 +12,7 @@ use app\home\model\Browse;
 use app\home\model\VoteAnswer;
 use app\home\model\Picture;
 use app\home\model\WechatUser;
-
+use app\home\model\Work;
 /*
  * 选举投票主页
 */
@@ -25,6 +25,12 @@ class Vote extends Base{
          $this->checkRole();
          $this->anonymous();
          $userId = session('userId');
+         // 获取 三会一课  内容
+         $meet = Work::where(['type' => 1,'status' => 1])->order('id desc')->limit(10)->select();
+         $this->assign('meet',$meet);
+         // 获取  支部活动 内容
+         $activity = Work::where(['type' => 2,'status' => 1])->order('id desc')->limit(10)->select();
+         $this->assign('activity',$activity);
          //  获取该用户 所在支部
          $Depart = WechatUser::where('userid',$userId)->field('department')->find();
          $depart = json_decode($Depart['department']);
@@ -86,7 +92,7 @@ class Vote extends Base{
              $value['sum'] = $sum;
          }
          $this->assign('top',$top);
-         $this->assign('meet',$list);
+         $this->assign('list',$list);
          return $this->fetch();
      }
     /*
