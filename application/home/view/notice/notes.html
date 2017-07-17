@@ -111,7 +111,7 @@
 <!--摸态框-->
 <div class="typebg"></div>
 <ul class="type">
-	<li>会议情况</li>
+	<li>情况</li>
 	<li>党课情况</li>
 	<li>活动情况</li>
 </ul>
@@ -308,7 +308,7 @@ $(function(){
 			meet_home:$("input[name='place']").val(),
 			meet_time:$("input[name='meet_time']").val(),
 		};
-		console.log(data.meet_time);
+//		console.log(data.meet_time);
 		var all = true;
 		for(var key in data){
 			if(data[key]== ''){
@@ -333,7 +333,7 @@ $(function(){
 					},
 					success:function(data){
 						//window.history.go(-1);
-						console.log(data);
+//						console.log(data);
 						window.location.href = "{:Url('Notice/index?c=1')}";
 					}
 				});
@@ -361,7 +361,7 @@ $(function(){
 			meet_home:$("input[name='place']").val(),
 			meet_time:$("input[name='meet_time']").val(),
 		};
-		console.log(data);
+//		console.log(data);
 		var single = false;
 		for(var key in data){
 			if(data[key]!= ''){

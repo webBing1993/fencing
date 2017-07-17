@@ -59,17 +59,12 @@
 		<div class="select" data-tab="{$note.type || default=''}">请选择发布栏目 <i class="fa fa-angle-down"></i></div>
 	</div>
 	<div class="list">
-		<span>标&emsp;题</span>
-		<input type="text" placeholder="请输入标题..." name="title" value="{$note.title || default=''}" style="width:80%;">
+		<span>所属支部</span>
+		<input type="text" placeholder="请输入支部..." name="branch" value="{$note.title || default=''}" style="width:80%;">
 	</div>
-	<div class="list">
-		<span>地&emsp;点</span>
-		<input type="text" placeholder="请输入地点..." name="place" value="{$note.meet_home || default=''}" style="width:80%;">
-	</div>
-
-    <div class="item-input list" style="border-bottom: 1px solid #f1f1f1;">
-        <span>日&emsp;期</span>
-        <!--<input type="text" placeholder="请输入日期..." name="date" readonly id="calendar-disabled" value="{$note.meet_time || default =''}">-->
+	<div class="item-input list meeting" style="border-bottom: 1px solid #f1f1f1;">
+		<span>会议时间</span>
+		<!--<input type="text" placeholder="请输入日期..." name="date" readonly id="calendar-disabled" value="{$note.meet_time || default =''}">-->
 		{eq name="class" value="1"}
 		{empty name="note.meet_time"}
 		<input type="text" placeholder="请输入时间..." class="form-control datetimepicker form_title" name="meet_time" style="border:none;-webkit-box-shadow:none;box-shadow:none;-webkit-transition:none;transition:none;padding:0;width:80%;" value="">
@@ -79,7 +74,20 @@
 		{else/}
 		<input type="text" placeholder="请输入时间..." class="form-control datetimepicker form_title" name="meet_time" style="border:none;-webkit-box-shadow:none;box-shadow:none;-webkit-transition:none;transition:none;padding:0;width:80%;" value="">
 		{/eq}
-    </div>
+	</div>
+	<div class="list meeting">
+		<span>会议地点</span>
+		<input type="text" placeholder="请输入地点..." name="place" value="{$note.meet_home || default=''}" style="width:80%;">
+	</div>
+	<div class="list meeting">
+		<span>会议主题</span>
+		<input type="text" placeholder="请输入主题..." name="title" value="{$note.title || default=''}" style="width:80%;">
+	</div>
+	<div class="list meeting">
+		<span>会议人员</span>
+		<input type="text" placeholder="请输入人员..." name="staff" value="{$note.title || default=''}" style="width:80%;">
+	</div>
+
 
 </div>
 <div class="block">
@@ -111,9 +119,8 @@
 <!--摸态框-->
 <div class="typebg"></div>
 <ul class="type">
-	<li>会议情况</li>
-	<li>党课情况</li>
-	<li>活动情况</li>
+	<li>三会一课</li>
+	<li>支部活动</li>
 </ul>
 <div class="tips">
 </div>
@@ -196,11 +203,9 @@ $(function(){
 	var value = sel.attr('data-tab');
 	if(value != '' ){
 		if(value == 2) {
-			text = "会议情况"
+			text = "三会一课"
 		}else if(value == 3 ){
-			text = '党课情况'
-		}else if(value == 5 ){
-			text = '活动情况'
+			text = '支部活动'
 		}
 		selchange(text,value);
 	}
@@ -438,5 +443,14 @@ function imgresize(){
 		});
 	},100);
 }
+
+$(".type li").click(function(){
+	var index = $(this).index();
+	if(index==1){
+		$(".meeting").hide();
+	}else{
+		$(".meeting").show();
+	}
+})
 </script>
 {/block}

@@ -536,39 +536,10 @@
         width: 60px;
         height: 60px;
     }
-    .general {
-        background: url("/home/images/notice/note.png") no-repeat;
-        background-size: 100% 100%;
-    }
-    .manager {
-        background: url("/home/images/notice/index.png") no-repeat;
-        background-size: 100% 100%;
-    }
-    .manager_ {
-        right: 25px;
-        bottom: 45px;
-        width: 50px;
-        height: 50px;
-        background: url("/home/images/notice/index_.png") no-repeat;
-        background-size: 100% 100%;
-    }
-    .manager_ .before {
+    .manager.after {
         position: absolute;
-        top: 5px;
-        left: -50px;
-        content: '';
-        width: 40px;
-        height: 40px;
-        background: url("/home/images/notice/up_.png") no-repeat;
-        background-size: 100% 100%;
-        opacity: 1;
-        -webkit-animation: cir 0.5s ease-in;
-        animation: cir 0.5s ease-in;
-    }
-    .manager_ .after {
-        position: absolute;
-        top: -49px;
-        left: -6px;
+        bottom:68px;
+        right:0;
         content: '';
         width: 40px;
         height: 40px;
@@ -612,7 +583,7 @@
                         <a href="">
                             <p>返回返回发过火发过火</p>
                             <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
+                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>222</span>
                             </div>
                         </a>
                     </li>
@@ -745,11 +716,8 @@
 </div>
 
 <!--[悬浮按钮]-->
-<!--两个权限：manager-->
-<div class="new manager" id="publish">
     <!--记笔记-->
-    <a href="{:Url('Vote/notes')}" class="after"></a>
-</div>
+    <a href="{:Url('Vote/notes')}" class="after manager" id="publish"></a>
 
 {/block}
 
