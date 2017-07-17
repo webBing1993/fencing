@@ -470,6 +470,114 @@
             transform: rotate(0deg);
         }
     }
+    /*列表*/
+    .content .notices .list {
+        display: block;
+        width: 100%;
+        padding-left: 13px;
+        padding-right: 13px;
+        border-bottom: 1px solid #f1f1f1;
+        color: #999999;
+    }
+    .content .notices .list .title {
+        color: #333333;
+        font-size: 1.4rem;
+    }
+    .content .notices .list .content {
+        font-size: 1.3rem;
+        height: 34px;
+    }
+    .content .notices .list .time {
+        margin-top: 5px;
+        font-size: 1.2rem;
+    }
+    .content .notices :nth-child(1) .tab {
+        color: #e82a2a;
+    }
+    .content .notices:nth-child(1) .list {
+        height: 90px;
+    }
+    .content .notices:nth-child(1) .list .title {
+        line-height: 30px;
+    }
+    .content .notices:nth-child(2) .tab {
+        color: #259b24;
+    }
+    .content .notices:nth-child(3) .tab {
+        color: #f98800;
+    }
+    .content .notices:nth-child(2) .list,
+    .content .notices:nth-child(3) .list {
+        height: 80px;
+    }
+    .content .notices:nth-child(2) .list .fl img,
+    .content .notices:nth-child(3) .list .fl img {
+        width: 80px;
+        height: 60px;
+        margin-top: 10px;
+    }
+    .content .notices:nth-child(2) .list .right,
+    .content .notices:nth-child(3) .list .right {
+        width: calc(100% - 90px);
+        height: 60px;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+    .content .notices:nth-child(2) .list .right .title,
+    .content .notices:nth-child(3) .list .right .title {
+        margin-bottom: 5px;
+        height: 38px;
+    }
+    /*悬浮按钮*/
+    .new {
+        position: fixed;
+        right: 20px;
+        bottom: 40px;
+        width: 60px;
+        height: 60px;
+    }
+    .general {
+        background: url("/home/images/notice/note.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .manager {
+        background: url("/home/images/notice/index.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .manager_ {
+        right: 25px;
+        bottom: 45px;
+        width: 50px;
+        height: 50px;
+        background: url("/home/images/notice/index_.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .manager_ .before {
+        position: absolute;
+        top: 5px;
+        left: -50px;
+        content: '';
+        width: 40px;
+        height: 40px;
+        background: url("/home/images/notice/up_.png") no-repeat;
+        background-size: 100% 100%;
+        opacity: 1;
+        -webkit-animation: cir 0.5s ease-in;
+        animation: cir 0.5s ease-in;
+    }
+    .manager_ .after {
+        position: absolute;
+        top: -49px;
+        left: -6px;
+        content: '';
+        width: 40px;
+        height: 40px;
+        background: url("/home/images/notice/note_.png") no-repeat;
+        background-size: 100% 100%;
+        opacity: 1;
+        -webkit-animation: cir2 0.5s ease-in;
+        animation: cir2 0.5s ease-in;
+    }
 </style>
 {/block}
 
@@ -483,199 +591,20 @@
                 <span class="tab">民主评议</span>
             </div>
             <div class="notices box">
-                <div class="box_ or">
-                    <div class="lists">
-                        <!--第一层-->
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">椒江区个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会海门分会联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会白云分会联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会葭沚分会联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会三甲分会联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会洪家分会联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会前所分会联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">椒江区个私协会农贸市场联合党支部</a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">黄岩区个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协党总支</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城东分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城南分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城西分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协城北分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协头陀分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协宁溪分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区个协院桥分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区市场服务中心自办场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区家乐购新天地家居广场临时党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">黄岩区副食品市场党支部</a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">路桥区个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥个协分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路南个协分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路北个协分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">峰江个协分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">螺洋个协分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">新桥个协分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥建筑装饰城市场经营户党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路南商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路北商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">峰江商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">螺洋商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">新桥商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">蓬街商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">金清商品交易市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">路桥个协直属党支部</a>
-
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">临海市个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海古城分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海大洋分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海杜桥分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海大田分党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海江南分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海白水洋分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海网络经营者分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海市恒大国际家居建材城党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">临海市中心菜场党支部</a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">温岭市个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市太平个协党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市文化桥菜市场党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市购物中心党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭太平路菜市场党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市城东个协党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市温西个协党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市城北个协党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市石桥头镇个私协会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市松门个协党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市泽国个协党总支</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市大溪个协党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">温岭市新河个协党支部</a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">玉环市民个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">玉环市民个协党总支</a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">天台县个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会城东分会支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会城西分会支部 </a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会平桥分会支部 </a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会坦头分会支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县经纪人支部 </a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县机动车交易市场党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体协会洪畴分会支部 </a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体劳动者协会劳动路党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">天台县个体劳动者协会赤城路党支部</a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">仙居县个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个私协机关支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会白塔分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会福应分会党支部 </a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会横溪分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会南峰分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">仙居县个体私营协会下各分会党支部 </a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">三门县个协党总支</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会海游分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会花桥分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会健跳分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会浦坝港分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会亭旁分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县个私协会珠岙分会党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县市场联合党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县首府商贸区党支部</a>
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">三门县新大华酒店党支部</a>
-                            </div>
-                            <!--/第二层-->
-                        </div>
-                        <div class="list clear">
-                            <div class="party1">
-                                <div class="tri"></div>
-                                <div class="name1">开发区党支部</div>
-                            </div>
-                            <!--第二层-->
-                            <div class="dw detail1">
-                                <a class="name2 limit" href="{:Url('Structure/detail')}">开发区个私协党支部</a>
-                            </div>
-                            <!--/第二层-->
+                {volist name="meet" id="me"}
+                <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
+                    <div class="fl">
+                        <img src="{$me['front_cover']|get_cover='path'}" alt="{$me['title']}">
+                    </div>
+                    <div class="fr right">
+                        <div class="title limit_">{$me['title']}</div>
+                        <div class="clear time">
+                            <span class="fl">{$me['create_time']|time_format="Y-m-d"}</span>
+                            <span class="fr fa fa-angle-right"></span>
                         </div>
                     </div>
-                </div>
-                <div class="box_ summary">
-                    <p>
-                        台州市市场监管局党委下设机关党委，有9个支部：机关第一、第二、第三、第四、第五、第六支部，经开分局支部、药检院支部和老干部支部，现有党员169名。
-                    </p>
-                </div>
+                </a>
+                {/volist}
             </div>
             <div class="notices activity">
                 <ul class="ntc-list">
@@ -815,6 +744,16 @@
     </div>
 </div>
 
+<!--[悬浮按钮]-->
+{eq name="is" value="1"}
+<!--两个权限：manager-->
+<div class="new manager">
+    <!--上传通知-->
+    <a href="{:Url('Notice/publish')}" class="before"></a>
+    <!--记笔记-->
+    <a href="{:Url('Notice/notes')}" class="after"></a>
+</div>
+{/eq}
 {/block}
 
 {block name="script"}
@@ -863,6 +802,23 @@
             //使用示例
             setCookie("type",index);
         })
+
+        //悬浮框点击
+        var show = true;
+        $('.manager').off('click').on('click',function(){
+            var this_ = $(this);
+            this_.fadeOut();
+            setTimeout(function(){
+                if(show){
+                    this_.removeClass('manager' ).addClass('manager_').fadeIn();
+                    show = false;
+                }else{
+                    this_.removeClass('manager_' ).addClass('manager').fadeIn();
+                    show = true;
+                }
+
+            },500)
+        });
     });
     //滚动加载
     function loadScroll(type){
