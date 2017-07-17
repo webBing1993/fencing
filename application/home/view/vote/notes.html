@@ -229,8 +229,6 @@ $(function(){
 		$('.typebg' ).fadeIn();
 		$('.type' ).fadeIn();
 		$('.type li' ).on('click',function(){
-			$("input").val("");
-			$("textarea").val("");
 			var value = $(this ).index()+1;
 			if(value == 1){
 				value = 2
@@ -347,14 +345,14 @@ $(function(){
 				$('.no' ).off('click');
 				$.ajax({
 					type:"post",
-					url: "{:Url('Notice/notes')}",
+					url: "{:Url('Vote/notes')}",
 					data:data,
 					beforeSend: function(XMLHttpRequest){
 					},
 					success:function(data){
 						//window.history.go(-1);
 						console.log(data);
-						window.location.href = "{:Url('Notice/index?c=1')}";
+						window.location.href = "{:Url('Vote/index?c=1')}";
 					}
 				});
 			});
@@ -411,7 +409,7 @@ $(function(){
 				data['images'] = [$('.img:nth-child(1) img').attr('src'),$('.img:nth-child(2) img').attr('src')];
 				$.ajax({
 					type:"post",
-					url: "{:Url('Notice/notes')}",
+					url: "{:Url('Vote/notes')}",
 					data:data,
 					success:function(data){
 						console.log(data);
@@ -419,13 +417,13 @@ $(function(){
 						$('.tips' ).css({'line-height': '30px'}).html('恭喜您，保存成功！<br>请至个人中心——我的笔记中查看').fadeIn();
 						$('.typebg,.tips').off('click');
 						setTimeout(function(){
-							window.location.href = "{:Url('Notice/index?c=1')}";
+							window.location.href = "{:Url('vote/index?c=1')}";
 						},2000)
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert(XMLHttpRequest.status);
-						alert(XMLHttpRequest.readyState);
-						alert(textStatus);
+//						alert(XMLHttpRequest.status);
+//						alert(XMLHttpRequest.readyState);
+//						alert(textStatus);
 					}
 				});
 			}else{

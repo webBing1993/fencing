@@ -18,7 +18,7 @@
     }
     .tabs .tab {
         display: inline-block !important;
-        width: 32vw;
+        width: 24vw;
         height: 100%;
         color: #333333;
         font-size: 1.5rem;
@@ -559,6 +559,7 @@
             <div class="tabs">
                 <span class="tab active">三会一课</span>
                 <span class="tab">支部活动</span>
+                <span class="tab">投票选举</span>
                 <span class="tab">民主评议</span>
             </div>
             <div class="notices box">
@@ -578,80 +579,20 @@
                 {/volist}
             </div>
             <div class="notices activity">
-                <ul class="ntc-list">
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>222</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>说个事发顺丰是方式方式说个事发式方式</p>
-                            <div class="clear">
-                                <span>说个事发顺丰是方式方式说个事发方式</span><span class="ntc-icon"><i></i>3</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <p>返回返回发过火发过火</p>
-                            <div class="clear">
-                                <span>黄岩区个协城东分会党支部</span><span class="ntc-icon"><i></i>2</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+                {volist name="meet" id="me"}
+                <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
+                    <div class="fl">
+                        <img src="{$me['front_cover']|get_cover='path'}" alt="{$me['title']}">
+                    </div>
+                    <div class="fr right">
+                        <div class="title limit_">{$me['title']}</div>
+                        <div class="clear time">
+                            <span class="fl">{$me['create_time']|time_format="Y-m-d"}</span>
+                            <span class="fr fa fa-angle-right"></span>
+                        </div>
+                    </div>
+                </a>
+                {/volist}
             </div>
             <div class="notices">
                 <div class="notice party regularmore">
@@ -767,7 +708,7 @@
             }
             if(index == 1){
                 $("#publish").show();
-                var len = ntc.eq(index).find('ul li').length;
+                var len = ntc.eq(index).find('a').length;
                 if (len >= 9) {
                     $(".tip").text('上拉加载更多').show();
                     loadScroll(index + 1);
@@ -814,7 +755,7 @@
             var dh = $(".content").height();
 //		console.log("dh"+dh);
             var end = windowHeight + $(".scrollDiy" ).scrollTop();
-            var len  = ntc.eq(type - 1).find("ul li").length;
+            var len  = ntc.eq(type - 1).find("a").length;
             var tip = $(".tip");
             var loading = $('.loading');
             if(dh == end){
