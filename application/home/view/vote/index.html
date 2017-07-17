@@ -746,7 +746,7 @@
 
 <!--[悬浮按钮]-->
 <!--两个权限：manager-->
-<div class="new manager">
+<div class="new manager" id="publish">
     <!--上传通知-->
     <a href="{:Url('Notice/publish')}" class="before"></a>
     <!--记笔记-->
@@ -786,7 +786,21 @@
             var index = _this.index();
             _this.addClass("active").siblings(".tab").removeClass("active");
             ntc.eq(index).removeClass("hidden").siblings(".notices").addClass("hidden");
+            if(index == 0){
+                $("#publish").show();
+                var len = ntc.eq(index).find('a').length;
+                if (len >= 9) {
+                    $(".tip").text('上拉加载更多').show();
+                    loadScroll(index + 1);
+                }else{
+                    $('.tip').hide();
+                    $(window).off("scroll" );
+                }
+            } else {
+                $('.tip').hide();
+            }
             if(index == 1){
+                $("#publish").show();
                 var len = ntc.eq(index).find('ul li').length;
                 if (len >= 9) {
                     $(".tip").text('上拉加载更多').show();
@@ -798,10 +812,12 @@
             } else {
                 $('.tip').hide();
             }
+            if(index == 2){
+                $("#publish").hide();
+            }
             //使用示例
             setCookie("type",index);
         })
-
         //悬浮框点击
         var show = true;
         $('.manager').off('click').on('click',function(){
@@ -818,6 +834,7 @@
 
             },500)
         });
+        moveanyway();
     });
     //滚动加载
     function loadScroll(type){

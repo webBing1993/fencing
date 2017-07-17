@@ -1,0 +1,354 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/static/datepicker/datetimepicker.min.css">
+<link rel="stylesheet" href="/home/css/notice/publish.css">
+{/block}
+
+{block name="body"}
+<div class="page first">
+	<div class="form">
+		<div class="list">
+			<span>发布栏</span>
+			<div class="select" data-tab="{$pub.type || default=''}">请选择发布栏目 <i class="fa fa-angle-down"></i></div>
+		</div>
+	</div>
+	<div class="form">
+		<div  class="list">
+			<span>题&emsp;目</span>
+			<input type="text" placeholder="请输入标题..." name="title" value="{$pub.title || default=''}">
+		</div >
+		<div  class="list">
+			<span>简&emsp;介</span>
+			<input type="text" placeholder="什么时候在什么地点做点什么事" name="description" value="{$pub.description || default=''}">
+		</div>
+	</div>
+	<textarea name="content" id="text" placeholder="请输入内容...">{$pub.content || default=''}</textarea>
+	<div class="foot" >
+		<div class="next" >下一步</div>
+	</div>
+</div>
+<div class="page second">
+	<div class="form">
+		<div class="list">
+			<span>主办方</span>
+			<input type="text" placeholder="请输入主办方" name="sponsor" value="{$pub.sponsor || default=''}">
+		</div>
+		<div class="list">
+			<span>电&emsp;话</span>
+			<input type="text" placeholder="请输入联系电话" name="telephone" value="{$pub.telephone || default=''}">
+		</div>
+		<div class="list">
+			<span>花&emsp;费</span>
+			<input type="text" placeholder="请输入花费,只能为数字" name="cost" value="{$pub.cost || default=''}">
+		</div>
+		<div class="list">
+			<span>开始时间</span>
+			<div class="time fr">
+				<div class="date">
+					{eq name="$pub.start_time" value=""}
+					<input type="text" placeholder="开始时间" class="form-control datetimepicker text-center" name="start_time"  value=""/>
+					{else/}
+					<input type="text" placeholder="开始时间" class="form-control datetimepicker text-center" name="start_time"  value="{$pub.start_time|time_format='Y-m-d H:i'}"/>
+					{/eq}
+				</div>
+			</div>
+		</div>
+		<div class="list">
+			<span>结束时间</span>
+			<div class="time fr">
+				<div class="date">
+					{eq name="$pub.end_time" value=""}
+					<input type="text" placeholder="结束时间" class="form-control datetimepicker text-center" name="end_time"  value=""/>
+					{else/}
+					<input type="text" placeholder="结束时间" class="form-control datetimepicker text-center" name="end_time"  value="{$pub.end_time|time_format='Y-m-d H:i'}"/>
+					{/eq}
+				</div>
+			</div>
+		</div>
+		<div class="list">
+			<span>地&emsp;址</span>
+			<input type="text" placeholder="请输入详细地址" name="address" value="{$pub.address || default=''}">
+		</div>
+		<div class="list">
+			<span>发布人</span>
+			<input type="text" placeholder="请输入发布人" name="publisher" value="{$pub.publisher || default=''}">
+		</div>
+		<input type="hidden" name="id" value="{$pub.id || default=''}">
+	</div>
+	<div class="foot">
+		<div class="save">保&emsp;存</div>
+		<div class="check">去审核</div>
+		<div class="atn">
+			注：点击保存将保存至个人中心-我的发布
+			点击去审核，审核通过后将在相应栏目发布
+		</div>
+	</div>
+</div>
+<!--摸态框-->
+<div class="typebg"></div>
+<ul class="type">
+	<li>相关通知</li>
+	<li>活动招募</li>
+</ul>
+<div class="tips">
+</div>
+<div class="tocheck">
+	<div class="text">
+		确认去审核吗？审核通过后将公开发布。
+	</div>
+	<div class="confirm">
+		<span class="yes">是</span>
+		<span class="no">否</span>
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
+<script>
+$(function(){
+	//模块标题
+	$('title').text('通知发布');
+	//初始发布栏
+	var sel = $('.select');
+	var text;
+	var value = sel.attr('data-tab');
+	if(value != '' ){
+		if( value == 1){
+			text = '相关通知'
+		}else if(value == 4 ){
+			text = '活动招募'
+		}
+		selchange(text,value);
+	}
+	//发布栏选择
+	sel.on('click',function(){
+		$('.typebg' ).fadeIn();
+		$('.type' ).fadeIn();
+		$('.type li' ).on('click',function(){
+			var value = $(this ).index()+1;
+			if(value == 1){
+				value = 1
+			}else if(value == 2){
+				value = 4
+			}else{
+				value = 6
+			}
+			var text = $(this ).text();
+			selchange(text,value);
+		});
+	});
+	//时间日历
+	$( ".datetimepicker" ).datetimepicker( {
+		language:  'cn',
+		format: 'yyyy-mm-dd hh:ii',
+		forceParse: false,
+		todayBtn: true,
+		autoclose: true,
+		todayHighlight: 1,
+		minuteStep: 5
+	}).on('show',function(){
+		$(this ).parents('.list' ).siblings('.list' ).find( ".datetimepicker").datetimepicker('hide');
+	});
+	//摸态框退出
+	$('.typebg,.tips' ).on('click',modalclear);
+	//电话、话费数字限定
+	numlimit();
+	//下一步
+	$('.next' ).on('click',function(){
+		$('.first' ).animate({left:'-100%'},600);
+		$('.second' ).show().animate({left:0},600);
+		setCookie('page','2')
+	});
+	//审核
+	$('.check').on('click',function(){
+		var data={
+			type:$(".select").attr('data-tab'),
+			title:$("input[name='title']").val(),
+			description:$("input[name='description']").val(),
+			content:$("textarea[name='content']").val(),
+			sponsor:$("input[name='sponsor']").val(),
+			telephone:$("input[name='telephone']").val(),
+			cost:$("input[name='cost']").val(),
+			start_time:$("input[name='start_time']").val(),
+			end_time:$("input[name='end_time']").val(),
+			address:$("input[name='address']").val(),
+			publisher:$("input[name='publisher']").val(),
+		};
+		var all = true;
+		for(var key in data){
+			if(data[key]== ''){
+				all = false;
+				break;
+			}
+		}
+		if(all){
+			data['status'] = 0;
+			data['id'] = $("input[name='id']").val();
+			$('.typebg' ).fadeIn();
+			$('.tocheck' ).fadeIn();
+			$('.yes' ).on('click',function(){
+				$('.yes').off('click');
+				$('.no' ).off('click');
+				$.ajax({
+					type:"post",
+					url:"{:Url('Notice/publish')}",
+					data:data,
+					beforeSend: function(XMLHttpRequest){
+					},
+					success:function(e){
+						window.location.href = "{:Url('Notice/index?c=1')}";
+					}
+				});
+			});
+			$('.no' ).on('click',function(){
+				$('.yes').off('click');
+				$('.tips' ).text('');
+				modalclear();
+			});
+		}else{
+			$('.typebg' ).fadeIn();
+			$('.tips' ).html('<div class="text">信息输入不完整 </div>' ).fadeIn();
+			setTimeout(function(){
+				modalclear();
+				$('.tips' ).text('');
+			},2500)
+		}
+	});
+	//保存
+	$('.save').on('click',function(){
+		var data={
+			type:$(".select").attr('data-tab'),
+			title:$("input[name='title']").val(),
+			description:$("input[name='description']").val(),
+			content:$("textarea[name='content']").val(),
+			sponsor:$("input[name='sponsor']").val(),
+			telephone:$("input[name='telephone']").val(),
+			cost:$("input[name='cost']").val(),
+			start_time:$("input[name='start_time']").val(),
+			end_time:$("input[name='end_time']").val(),
+			address:$("input[name='address']").val(),
+			publisher:$("input[name='publisher']").val(),
+		};
+		var single = false;
+		for(var key in data){
+			if(data[key]!= ''){
+				single = true;
+				break;
+			}
+		}
+		if(!data.type){
+			alert('请选择发布栏');
+		}else{
+			if(single){
+				data['status'] = 3;
+				data['id'] = $("input[name='id']").val();
+				$.ajax({
+					type:"POST",
+					url:"{:Url('Notice/publish')}",
+					data:data,
+					success:function(data){
+						$('.typebg' ).fadeIn();
+						$('.tips' ).css({'line-height': '30px'}).html('恭喜您，保存成功！<br>请至个人中心——我的发布中查看').fadeIn();
+						$('.typebg,.tips').off('click');
+						setTimeout(function(){
+							window.location.href = "{:Url('Notice/index?c=1')}";
+						},2000)
+					}
+				});
+			}else{
+				$('.typebg' ).fadeIn();
+				$('.tips' ).html('<div class="text">请您输入至少一项信息 </div>' ).fadeIn();
+				setTimeout(function(){
+					modalclear();
+					$('.tips' ).text('');
+				},2500)
+			}
+		}
+
+
+	});
+	//上一步
+	isOut();
+});
+
+function selchange(text,value){
+	modalclear();
+	$('.select').html('<div style="color:#999999">'+text+'</div>')
+			.attr('data-tab',value);
+}
+function modalclear(){
+	$('.typebg,.type,.tips,.tocheck' ).fadeOut();
+	setTimeout(function(){
+		$('.yes').on('click');
+	},1000)
+}
+function numlimit(){
+	$("input[name='telephone'],input[name='cost']" )
+	.keyup(function(){
+		//键盘输入
+		$(this).val($(this).val().replace(/\D|^/g,''));
+//		$('.typebg' ).fadeIn();
+//		$('.tips' ).text('请您输入数字' ).fadeIn();
+//		setTimeout(function(){
+//			modalclear();
+//			$('.tips' ).text('');
+//		},6000)
+	}).bind("paste",function(){
+		//黏贴输入
+		$(this).val($(this).val().replace(/\D|^/g,''));
+	}).css("ime-mode", "disabled"); //CSS设置输入法不可用
+}
+//返回第一步
+function isOut(){
+	pushHistory();
+	setTimeout(function(){
+		window.addEventListener("popstate", function(e) {
+			var left = parseInt($('.second').css('left'));
+			if(left == 0){
+				$('.second' ).animate({left:'100%'},600);
+				$('.first' ).animate({left:0},600,function(){
+					$('.second' ).hide();
+				});
+//				$( ".datetimepicker").datetimepicker('hide');
+				setCookie('page','1')
+			}else{
+				delCookie('page');
+				window.history.go(-1);
+			}
+		}, false);
+	},200)
+}
+//防止恶意刷新
+function pushHistory(){
+	var sta = {
+		title: "title"
+	};
+	if( window.history.state === null )
+	{
+		window.history.pushState( sta, "title" );
+	}
+}
+function setCookie(name,value){
+	var Days = 30;
+	var exp = new Date();
+	exp.setTime(exp.getTime() + Days*24*60*60*1000);
+	document.cookie = name + "="+ value + ";expires=" + exp.toGMTString();
+}
+function getCookie(name){
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return arr[2];
+	else
+		return null;
+}
+function delCookie(name){
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval=getCookie(name);
+	if(cval!=null)
+		document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}
+</script>
+{/block}
