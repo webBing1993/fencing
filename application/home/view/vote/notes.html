@@ -60,7 +60,7 @@
 	</div>
 	<div class="list">
 		<span>所属支部</span>
-		<input type="text" placeholder="请输入支部..." name="branch" value="{$note.title || default=''}" style="width:80%;">
+		<input type="text" placeholder="请输入支部..." name="branch" value="{$note.branch || default=''}" style="width:80%;">
 	</div>
 	<div class="item-input list meeting" style="border-bottom: 1px solid #f1f1f1;">
 		<span>会议时间</span>
@@ -85,7 +85,7 @@
 	</div>
 	<div class="list meeting">
 		<span>会议人员</span>
-		<input type="text" placeholder="请输入人员..." name="staff" value="{$note.title || default=''}" style="width:80%;">
+		<input type="text" placeholder="请输入人员..." name="staff" value="{$note.staff || default=''}" style="width:80%;">
 	</div>
 
 
@@ -229,13 +229,17 @@ $(function(){
 		$('.typebg' ).fadeIn();
 		$('.type' ).fadeIn();
 		$('.type li' ).on('click',function(){
+			$("input").val("");
+			$("textarea").val("");
 			var value = $(this ).index()+1;
 			if(value == 1){
 				value = 2
+				$(".meeting").show()
+				$('.select').attr('data-tab',value);
 			}else if(value == 2){
 				value = 3
-			}else if(value == 3){
-				value = 5
+				$('.select').attr('data-tab',value);
+				$(".meeting").hide()
 			}
 			var text = $(this ).text();
 			selchange(text,value);
@@ -306,14 +310,25 @@ $(function(){
 
 	//审核
 	$('.check').on('click',function(){
-		var data={
-			type:$(".select").attr('data-tab'),
-			title:$("input[name='title']").val(),
-			content:$("textarea[name='content']").val(),
-			meet_home:$("input[name='place']").val(),
-			meet_time:$("input[name='meet_time']").val(),
-		};
-		console.log(data.meet_time);
+		var data;
+		if($(".select div").html()=="三会一课") {
+			 data= {
+				type: $(".select").attr('data-tab'),
+				title: $("input[name='title']").val(),
+				content: $("textarea[name='content']").val(),
+				meet_home: $("input[name='place']").val(),
+				branch: $("input[name='branch']").val(),
+				staff: $("input[name='staff']").val(),
+				meet_time: $("input[name='meet_time']").val(),
+			};
+		}else{
+			data= {
+				type: $(".select").attr('data-tab'),
+				content: $("textarea[name='content']").val(),
+				branch: $("input[name='branch']").val(),
+			};
+		}
+		console.log(data);
 		var all = true;
 		for(var key in data){
 			if(data[key]== ''){
@@ -359,13 +374,23 @@ $(function(){
 	});
 	//保存
 	$('.save').on('click',function(){
-		var data={
-			type:$(".select").attr('data-tab'),
-			title:$("input[name='title']").val(),
-			content:$("textarea[name='content']").val(),
-			meet_home:$("input[name='place']").val(),
-			meet_time:$("input[name='meet_time']").val(),
-		};
+		if($(".select div").html()=="三会一课") {
+			data= {
+				type: $(".select").attr('data-tab'),
+				title: $("input[name='title']").val(),
+				content: $("textarea[name='content']").val(),
+				meet_home: $("input[name='place']").val(),
+				branch: $("input[name='branch']").val(),
+				staff: $("input[name='staff']").val(),
+				meet_time: $("input[name='meet_time']").val(),
+			};
+		}else{
+			data= {
+				type: $(".select").attr('data-tab'),
+				content: $("textarea[name='content']").val(),
+				branch: $("input[name='branch']").val(),
+			};
+		}
 		console.log(data);
 		var single = false;
 		for(var key in data){
@@ -415,11 +440,11 @@ $(function(){
 		}
 
 	});
+
 });
 function selchange(text,value){
 	modalclear();
 	$('.select').html('<div style="color:#999999">'+text+'</div>')
-			.attr('data-tab',value);
 }
 function modalclear(){
 	$('.typebg,.type,.tips,.tocheck' ).fadeOut();
@@ -443,14 +468,5 @@ function imgresize(){
 		});
 	},100);
 }
-
-$(".type li").click(function(){
-	var index = $(this).index();
-	if(index==1){
-		$(".meeting").hide();
-	}else{
-		$(".meeting").show();
-	}
-})
 </script>
 {/block}
