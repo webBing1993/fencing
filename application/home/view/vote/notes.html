@@ -79,7 +79,7 @@
 		<span>会议地点</span>
 		<input type="text" placeholder="请输入地点..." name="place" value="{$note.meet_home || default=''}" style="width:80%;">
 	</div>
-	<div class="list meeting">
+	<div class="list title">
 		<span>会议主题</span>
 		<input type="text" placeholder="请输入主题..." name="title" value="{$note.title || default=''}" style="width:80%;">
 	</div>
@@ -98,6 +98,8 @@
 		<div class="img fl img_"><img src='{$img}' alt=""></div>
 		{/volist}
 		{/eq}
+		<div class="img fl hide"></div>
+		<div class="img fl hide"></div>
 		<div class="img fl hide"></div>
 		<div class="img fl hide"></div>
 		<div class="add fl">
@@ -232,10 +234,12 @@ $(function(){
 			var value = $(this ).index()+1;
 			if(value == 1){
 				value = 2
-				$(".meeting").show()
+				$(".meeting").show();
+				$(".title span").html("会议主题")
 				$('.select').attr('data-tab',value);
 			}else if(value == 2){
 				value = 3
+				$(".title span").html("活动主题")
 				$('.select').attr('data-tab',value);
 				$(".meeting").hide()
 			}
@@ -280,6 +284,12 @@ $(function(){
 									imglen = 1;
 								}else if(imglen == 1){
 									$('.img').eq(1).removeClass('hide').append('<img src='+msg.data.path+' alt="笔记图片">');
+									imglen = 2;
+								}else if(imglen == 2){
+									$('.img').eq(2).removeClass('hide').append('<img src='+msg.data.path+' alt="笔记图片">');
+									imglen = 3;
+								}else if(imglen == 3){
+									$('.img').eq(3).removeClass('hide').append('<img src='+msg.data.path+' alt="笔记图片">');
 									$('.add').fadeOut();
 								}
 								imgresize();
@@ -323,6 +333,7 @@ $(function(){
 			data= {
 				type: $(".select").attr('data-tab'),
 				content: $("textarea[name='content']").val(),
+				title: $("input[name='title']").val(),
 				branch: $("input[name='branch']").val(),
 			};
 		}
@@ -385,6 +396,7 @@ $(function(){
 		}else{
 			data= {
 				type: $(".select").attr('data-tab'),
+				title: $("input[name='title']").val(),
 				content: $("textarea[name='content']").val(),
 				branch: $("input[name='branch']").val(),
 			};

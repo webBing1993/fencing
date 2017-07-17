@@ -725,22 +725,6 @@
             //使用示例
             setCookie("type",index);
         })
-        //悬浮框点击
-        var show = true;
-        $('.manager').off('click').on('click',function(){
-            var this_ = $(this);
-            this_.fadeOut();
-            setTimeout(function(){
-                if(show){
-                    this_.removeClass('manager' ).addClass('manager_').fadeIn();
-                    show = false;
-                }else{
-                    this_.removeClass('manager_' ).addClass('manager').fadeIn();
-                    show = true;
-                }
-
-            },500)
-        });
         moveanyway();
     });
     //滚动加载
