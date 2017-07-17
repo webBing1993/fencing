@@ -86,7 +86,7 @@ class Vote extends Base{
              $value['sum'] = $sum;
          }
          $this->assign('top',$top);
-         $this->assign('list',$list);
+         $this->assign('meet',$list);
          return $this->fetch();
      }
     /*
