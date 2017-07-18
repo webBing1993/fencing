@@ -362,14 +362,12 @@ $(function(){
 			}
 		}
 			if(single){
-				data['id'] = $("input[name='id']").val();
 				data['images'] = [$('.img:nth-child(1) img').attr('src'),$('.img:nth-child(2) img').attr('src'),$('.img:nth-child(3) img').attr('src'),$('.img:nth-child(4) img').attr('src')];
 				$.ajax({
 					type:"post",
 					url: "{:Url('Vote/notes')}",
 					data:data,
 					success:function(data){
-						console.log(data);
 						$('.typebg' ).fadeIn();
 						swal("恭喜您", "提交成功", "success");
 						$('.typebg,.tips').off('click');

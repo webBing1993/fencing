@@ -154,6 +154,7 @@ class Base extends Controller {
      * 4 company 党员之家 交流互动
      * 5 opinion 意见反馈
      * 6 special 专题模块
+     * 7 work 支部工作
      */
     public function like(){
         $uid = session('userId'); //点赞人
@@ -180,6 +181,9 @@ class Base extends Controller {
                 break;
             case 6:
                 $table = "special";
+                break;
+            case 7:
+                $table = "work";
                 break;
             default:
                 return $this->error("无该数据表");
@@ -286,7 +290,8 @@ class Base extends Controller {
      * 3 learn  党建风采
      * 4 company 党员之家
      * 5 opinion  意见反馈
-     * 5 special 专题模块
+     * 6 special 专题模块
+     * 7 work  支部工作
      */
     public function comment(){
         if(IS_POST){
@@ -311,6 +316,9 @@ class Base extends Controller {
                     break;
                 case 6:
                     $table = "special";
+                    break;
+                case 7:
+                    $table = "work";
                     break;
                 default:
                     return $this->error("无该数据表");

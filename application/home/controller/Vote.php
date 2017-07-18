@@ -14,6 +14,8 @@ use app\home\model\Picture;
 use app\home\model\WechatUser;
 use app\home\model\Work;
 use app\home\model\WechatDepartment;
+use app\home\model\Like;
+use app\home\model\Comment;
 /*
  * 选举投票主页
 */
@@ -31,10 +33,10 @@ class Vote extends Base{
          $depart = json_decode($Depart['department']);
          $this->jssdk();
          // 获取 三会一课  内容
-         $meet = Work::where(['type' => 1,'status' => 0])->order('id desc')->limit(10)->select();
+         $meet = Work::where(['type' => 1,'status' => 0,'branch' => ['in',$depart]])->order('id desc')->limit(10)->select();
          $this->assign('meet',$meet);
          // 获取  支部活动 内容
-         $activity = Work::where(['type' => 2,'status' => 0])->order('id desc')->limit(10)->select();
+         $activity = Work::where(['type' => 2,'status' => 0,'branch' => ['in',$depart]])->order('id desc')->limit(10)->select();
          $this->assign('activity',$activity);
          $map = array(
              'status' => array('egt',0),
@@ -96,29 +98,61 @@ class Vote extends Base{
          $this->assign('list',$list);
          return $this->fetch();
      }
-    /*
-     * 加载更多列表
-     */
-    public function more(){
-        $this->checkRole();
-        $id = input('post.id');
-        $res = VoteModel::where(['status' => ['egt',0]])->order('id desc')->limit($id,3)->select();
-        if ($res){
-            foreach($res as $value){
-                $Options = VoteOptions::where(['vote_id' => $value->id , 'status' => 0])->select();
-                $sum = 0;
-                foreach($Options as $val){
-                    $sum += $val->num;
+   /*
+    * 会议情况  详情
+    */
+    public function meeting(){
+        //判断是否是游客
+        $this->anonymous();
+        $this->jssdk();
+        $userId = session('userId');
+        $id = input('id');
+        $Model = new Work();
+        //浏览加一
+        $info['views'] = array('exp','`views`+1');
+        $Model::where('id',$id)->update($info);
+        if($userId != "visitor"){
+            //浏览不存在则存入pb_browse表
+            $con = array(
+                'user_id' => $userId,
+                'work_id' => $id,
+            );
+            $history = Browse::get($con);
+            if(!$history && $id != 0){
+                $s['score'] = array('exp','`score`+1');
+                if ($this->score_up()){
+                    // 未满 15 分
+                    Browse::create($con);
+                    WechatUser::where('userid',$userId)->update($s);
                 }
-                $value['sum'] = $sum;  // 总投票数
-                $Pictures = Picture::where(array('id' => $value['front_cover']))->find();
-                $value['front_cover'] = $Pictures['path']; // 数据重组  直径获取图片路径在js中显示
-                $value['create_time'] = date('Y-m-d H:i',$value['create_time']); // 数据重组  获取时间 年与日
             }
-            return $res;
-        }else{
-            return 0;
         }
+        //活动基本信息
+        $list = $Model::get($id);
+        $list['user'] = session('userId');
+        //分享图片及链接及描述
+        $image = Picture::where('id',$list['front_cover'])->find();
+        $list['share_image'] = "http://".$_SERVER['SERVER_NAME'].$image['path'];
+        $list['link'] = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'];
+        $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+        $list['images'] = json_decode($list['images']);
+        //获取 文章点赞
+        $likeModel = new Like;
+        $like = $likeModel->getLike(7,$id,$userId);
+        $list['is_like'] = $like;
+        $this->assign('info',$list);
+
+        //获取 评论
+        $commentModel = new Comment();
+        $comment = $commentModel->getComment(7,$id,$userId);
+        $this->assign('comment',$comment);
+        return $this->fetch();
+    }
+    /*
+     * 支部活动  详情
+     */
+    public function activity(){
+
     }
     /*
      * 投票 页面
@@ -250,58 +284,29 @@ class Vote extends Base{
      * 上传笔记
      */
     public function notes(){
-        $noticeModel = new Work();
         $userId = session('userId');
+        $a = array('1'=>'a','2'=>'b','3'=>'c','4'=>'d','5'=>'e','6'=>'f','7'=>'g','8'=>'h','9'=>'i','10'=>'j','11'=>'k','12'=>'l','13'=>'m','14'=>'n','15'=>'o',
+            '16'=>'p','17'=>'q','18'=>'r','19'=>'s','20'=>'t','21'=>'u','22'=>'v','23'=>'w','24'=>'x','25'=>'y','26'=>'z');
+        $Work = new Work();
         if(IS_POST) {
             $data = input('post.');
-            
-            if ($data['type']){
-
-            }
-            $data['meet_time'] = strtotime($data['meet_time']);
-            $data['userid'] = $userId;
-            if(isset($data['images'])) {
-                $data['images'] = json_encode($data['images']);
-            }
-            if($data['id']) {
-                //修改
-                $model = $noticeModel->save($data,['id' => $data['id']]);
-            }else {
-                // 添加
-                unset($data['id']);
-                $a = array('1'=>'a','2'=>'b','3'=>'c','4'=>'d','5'=>'e','6'=>'f','7'=>'g','8'=>'h','9'=>'i','10'=>'j','11'=>'k','12'=>'l','13'=>'m','14'=>'n','15'=>'o',
-                    '16'=>'p','17'=>'q','18'=>'r','19'=>'s','20'=>'t','21'=>'u','22'=>'v','23'=>'w','24'=>'x','25'=>'y','26'=>'z');
-                $data['front_cover'] = array_rand($a,1);
-                if (empty($data['meet_time'])){
-                    unset($data['meet_time']);
+            $data['front_cover'] = array_rand($a,1);
+            $data['publisher'] = $userId;
+            if ($data['type'] == 1){
+                // 三会一课
+                if (isset($data['images'])){
+                    $data['images'] = json_encode($data['images']);
                 }
-                $data['create_time'] = time();
-                $data['create_user'] = session('userId');
-                $model = $noticeModel->create($data);
-            }
-            if($model && ($data['status'] == 0) ) { // 待审核
-                $map['status'] = 0;
-                $count = $noticeModel->where($map)->count();
-                $content = "您有".$count."条[支部活动]审核消息，请点击【文章审核】进行查看。";
-                $Wechat = new TPQYWechat(Config::get('party'));
-                $message = array(
-                    "totag" => "2",
-                    "msgtype" => 'text',
-                    "agentid" => 11,
-                    "text" => array(
-                        "content" => $content
-                    ),
-                    "safe" => "0"
-                );
-                $msg = $Wechat->sendMessage($message);  // 推送至审核
-                if($msg['errcode'] == 0){
-                    return $this->success("发送成功");
-                }else{
-                    return $this->error('发送失败');
-                }
-
+                $data['meet_time'] = strtotime($data['meet_time']);
+                $res = $Work -> save($data);
             }else{
-                return $this->error("编辑失败");
+                // 支部活动
+
+            }
+            if ($res){
+                return $this->success('发布成功');
+            }else{
+                return $this->error('发布失败');
             }
         }else{
             $Department = WechatDepartment::where(['parentid' => ['neq',0]])->field('id,name')->select();
