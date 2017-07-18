@@ -14,6 +14,14 @@
 		-webkit-overflow-scrolling: touch;
 		width:100%;
 	}
+	.content img{
+		width: 92%;
+		margin-left: 4%;
+		margin-bottom: 10px;
+	}
+	.content .article {
+		text-indent: 2.2rem;
+	}
 </style>
 {/block}
 
@@ -231,7 +239,7 @@
 			var tip = $(".tip");
 			var loading = $('.loading');
 			var id = {$info['id']};
-			if(dh <= end+1 && scrollNow){
+			if(dh <= end && scrollNow){
 				scrollNow = false;//请求执行中
 				$.ajax({
 					type:"post",
