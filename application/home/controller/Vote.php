@@ -152,7 +152,51 @@ class Vote extends Base{
      * 支部活动  详情
      */
     public function activity(){
+       //判断是否是游客
+        $this->anonymous();
+        $this->jssdk();
+        $userId = session('userId');
+        $id = input('id');
+        $Model = new Work();
+        //浏览加一
+        $info['views'] = array('exp','`views`+1');
+        $Model::where('id',$id)->update($info);
+        if($userId != "visitor"){
+            //浏览不存在则存入pb_browse表
+            $con = array(
+                'user_id' => $userId,
+                'work_id' => $id,
+            );
+            $history = Browse::get($con);
+            if(!$history && $id != 0){
+                $s['score'] = array('exp','`score`+1');
+                if ($this->score_up()){
+                    // 未满 15 分
+                    Browse::create($con);
+                    WechatUser::where('userid',$userId)->update($s);
+                }
+            }
+        }
+        //活动基本信息
+        $list = $Model::get($id);
+        $list['user'] = session('userId');
+        //分享图片及链接及描述
+        $image = Picture::where('id',$list['front_cover'])->find();
+        $list['share_image'] = "http://".$_SERVER['SERVER_NAME'].$image['path'];
+        $list['link'] = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'];
+        $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+        $list['images'] = json_decode($list['images']);
+        //获取 文章点赞
+        $likeModel = new Like;
+        $like = $likeModel->getLike(7,$id,$userId);
+        $list['is_like'] = $like;
+        $this->assign('info',$list);
 
+        //获取 评论
+        $commentModel = new Comment();
+        $comment = $commentModel->getComment(7,$id,$userId);
+        $this->assign('comment',$comment);
+        return $this->fetch();
     }
     /*
      * 投票 页面
@@ -292,17 +336,13 @@ class Vote extends Base{
             $data = input('post.');
             $data['front_cover'] = array_rand($a,1);
             $data['publisher'] = $userId;
-            if ($data['type'] == 1){
-                // 三会一课
-                if (isset($data['images'])){
-                    $data['images'] = json_encode($data['images']);
-                }
-                $data['meet_time'] = strtotime($data['meet_time']);
-                $res = $Work -> save($data);
-            }else{
-                // 支部活动
-
+            if (isset($data['images'])){
+                $data['images'] = json_encode($data['images']);
             }
+            if (isset($data['meet_time'])){
+                $data['meet_time'] = strtotime($data['meet_time']);
+            }
+            $res = $Work -> save($data);
             if ($res){
                 return $this->success('发布成功');
             }else{
