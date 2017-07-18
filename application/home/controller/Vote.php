@@ -26,16 +26,16 @@ class Vote extends Base{
          $this->checkRole();
          $this->anonymous();
          $userId = session('userId');
-         // 获取 三会一课  内容
-         $meet = Work::where(['type' => 1,'status' => 1])->order('id desc')->limit(10)->select();
-         $this->assign('meet',$meet);
-         // 获取  支部活动 内容
-         $activity = Work::where(['type' => 2,'status' => 1])->order('id desc')->limit(10)->select();
-         $this->assign('activity',$activity);
          //  获取该用户 所在支部
          $Depart = WechatUser::where('userid',$userId)->field('department')->find();
          $depart = json_decode($Depart['department']);
          $this->jssdk();
+         // 获取 三会一课  内容
+         $meet = Work::where(['type' => 1,'status' => 0])->order('id desc')->limit(10)->select();
+         $this->assign('meet',$meet);
+         // 获取  支部活动 内容
+         $activity = Work::where(['type' => 2,'status' => 0])->order('id desc')->limit(10)->select();
+         $this->assign('activity',$activity);
          $map = array(
              'status' => array('egt',0),
              'end_time' => array('gt',time()),  // 未结束
@@ -253,8 +253,11 @@ class Vote extends Base{
         $noticeModel = new Work();
         $userId = session('userId');
         if(IS_POST) {
-            // 获取 发布用户所在的
             $data = input('post.');
+            
+            if ($data['type']){
+
+            }
             $data['meet_time'] = strtotime($data['meet_time']);
             $data['userid'] = $userId;
             if(isset($data['images'])) {
@@ -305,5 +308,17 @@ class Vote extends Base{
             $this->assign('info',$Department);
             return $this->fetch();
         }
+    }
+    /*
+     * 民主评议  页面
+     */
+    public function appraise(){
+        return $this->fetch();
+    }
+    /*
+     * 民主评议 详情
+     */
+    public function detail(){
+        return $this->fetch();
     }
 }

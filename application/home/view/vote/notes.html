@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>支部工作</title>
 <link rel="stylesheet" href="/static/datepicker/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="/home/css/special/notes.css">
 <link rel="stylesheet" href="/static/sweetalert/sweetalert.css">
@@ -42,6 +43,14 @@
     @-webkit-keyframes bganim {
         from { -webkit-transform:rotate(0deg); } to { -webkit-transform:rotate(360deg); }
     }
+	.type2 {
+		top: 80px;
+		height: 280px;
+		overflow: scroll;
+	}
+	.type2 li {
+		width: 305px;
+	}
 </style>
 {/block}
 
@@ -61,7 +70,7 @@
 	</div>
 	<div class="list">
 		<span>所属支部</span>
-		<div class="select1" data-tab="">请选择发布栏目 <i class="fa fa-angle-down"></i></div>
+		<div class="select1" data-tab="">请选择所在支部 <i class="fa fa-angle-down"></i></div>
 	</div>
 	<div class="item-input list meeting" style="border-bottom: 1px solid #f1f1f1;">
 		<span>会议时间</span>
@@ -114,8 +123,9 @@
 <!--摸态框-->
 <div class="typebg2"></div>
 <ul class="type2">
-	<li>三会一课</li>
-	<li>支部活动</li>
+	{volist name="info" id="io"}
+	<li data-id="{$io.id}">{$io.name}</li>
+	{/volist}
 </ul>
 <div class="tips">
 </div>
@@ -188,9 +198,9 @@ $(function(){
 	var text;
 	var value = sel.attr('data-tab');
 	if(value != '' ){
-		if(value == 2) {
+		if(value == 1) {
 			text = "三会一课"
-		}else if(value == 3 ){
+		}else if(value == 2 ){
 			text = '支部活动'
 		}
 		selchange(text,value);
@@ -217,12 +227,10 @@ $(function(){
 		$('.type li' ).on('click',function(){
 			var value = $(this ).index()+1;
 			if(value == 1){
-				value = 2
 				$(".meeting").show();
 				$(".title span").html("会议主题")
 				$('.select').attr('data-tab',value);
 			}else if(value == 2){
-				value = 3
 				$(".title span").html("活动主题")
 				$('.select').attr('data-tab',value);
 				$(".meeting").hide()
@@ -236,10 +244,10 @@ $(function(){
 		$('.typebg2' ).fadeIn();
 		$('.type2' ).fadeIn();
 		$('.type2 li' ).on('click',function(){
-			var value = $(this ).index()+1;
-				$('.select1').attr('data-tab',value)
+			var id = $(this).data("id")
+				$('.select1').attr('data-tab',id)
 			var text = $(this ).text();
-			selchange2(text,value);
+			selchange2(text,id);
 		})
 	});
 	//摸态框退出
@@ -319,7 +327,7 @@ $(function(){
 				title: $("input[name='title']").val(),
 				content: $("textarea[name='content']").val(),
 				meet_home: $("input[name='place']").val(),
-				branch: $("input[name='branch']").val(),
+				branch: $(".select1").attr('data-tab'),
 				staff: $("input[name='staff']").val(),
 				meet_time: $("input[name='meet_time']").val(),
 			};
@@ -328,7 +336,7 @@ $(function(){
 				type: $(".select").attr('data-tab'),
 				title: $("input[name='title']").val(),
 				content: $("textarea[name='content']").val(),
-				branch: $("input[name='branch']").val(),
+				branch: $(".select1").attr('data-tab'),
 			};
 		}
 		var single = false;
@@ -354,9 +362,8 @@ $(function(){
 			}
 		}
 			if(single){
-				data['status'] = 3;
 				data['id'] = $("input[name='id']").val();
-				data['images'] = [$('.img:nth-child(1) img').attr('src'),$('.img:nth-child(2) img').attr('src')];
+				data['images'] = [$('.img:nth-child(1) img').attr('src'),$('.img:nth-child(2) img').attr('src'),$('.img:nth-child(3) img').attr('src'),$('.img:nth-child(4) img').attr('src')];
 				$.ajax({
 					type:"post",
 					url: "{:Url('Vote/notes')}",
@@ -392,7 +399,7 @@ function selchange(text,value){
 	modalclear();
 	$('.select').html('<div style="color:#999999">'+text+'</div>')
 }
-function selchange2(text,value){
+function selchange2(text,id){
 	modalclear2();
 	$('.select1').html('<div style="color:#999999">'+text+'</div>')
 }
