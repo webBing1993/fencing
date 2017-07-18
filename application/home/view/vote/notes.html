@@ -56,48 +56,35 @@
 <div class="form">
 	<div class="list">
 		<span>发布栏</span>
-		<div class="select" data-tab="{$note.type || default=''}">请选择发布栏目 <i class="fa fa-angle-down"></i></div>
+		<div class="select" data-tab="">请选择发布栏目 <i class="fa fa-angle-down"></i></div>
 	</div>
 	<div class="list">
 		<span>所属支部</span>
-		<input type="text" placeholder="请输入支部..." name="branch" value="{$note.branch || default=''}" style="width:80%;">
+		<input type="text" placeholder="请输入支部..." name="branch" value="" style="width:80%;">
 	</div>
 	<div class="item-input list meeting" style="border-bottom: 1px solid #f1f1f1;">
 		<span>会议时间</span>
 		<!--<input type="text" placeholder="请输入日期..." name="date" readonly id="calendar-disabled" value="{$note.meet_time || default =''}">-->
-		{eq name="class" value="1"}
-		{empty name="note.meet_time"}
 		<input type="text" placeholder="请输入时间..." class="form-control datetimepicker form_title" name="meet_time" style="border:none;-webkit-box-shadow:none;box-shadow:none;-webkit-transition:none;transition:none;padding:0;width:80%;" value="">
-		{else/}
-		<input type="text" placeholder="请输入时间..." class="form-control datetimepicker form_title" name="meet_time" style="border:none;-webkit-box-shadow:none;box-shadow:none;-webkit-transition:none;transition:none;padding:0;width:80%;" value="{$note.meet_time |time_format='Y-m-d H:i'}">
-		{/empty}
-		{else/}
-		<input type="text" placeholder="请输入时间..." class="form-control datetimepicker form_title" name="meet_time" style="border:none;-webkit-box-shadow:none;box-shadow:none;-webkit-transition:none;transition:none;padding:0;width:80%;" value="">
-		{/eq}
 	</div>
 	<div class="list meeting">
 		<span>会议地点</span>
-		<input type="text" placeholder="请输入地点..." name="place" value="{$note.meet_home || default=''}" style="width:80%;">
+		<input type="text" placeholder="请输入地点..." name="place" value="" style="width:80%;">
 	</div>
 	<div class="list title">
 		<span>会议主题</span>
-		<input type="text" placeholder="请输入主题..." name="title" value="{$note.title || default=''}" style="width:80%;">
+		<input type="text" placeholder="请输入主题..." name="title" value="" style="width:80%;">
 	</div>
 	<div class="list meeting">
 		<span>会议人员</span>
-		<input type="text" placeholder="请输入人员..." name="staff" value="{$note.staff || default=''}" style="width:80%;">
+		<input type="text" placeholder="请输入人员..." name="staff" value="" style="width:80%;">
 	</div>
 
 
 </div>
 <div class="block">
-	<textarea name="content" id="text" placeholder="请输入内容..." style="text-indent:2em;">{$note.content || default=''}</textarea>
+	<textarea name="content" id="text" placeholder="请输入内容..." style="text-indent:2em;"></textarea>
 	<div class="imgs clear" style="position:relative;">
-		{eq name="class" value="1"}
-		{volist name="note.images" id="img"}
-		<div class="img fl img_"><img src='{$img}' alt=""></div>
-		{/volist}
-		{/eq}
 		<div class="img fl hide"></div>
 		<div class="img fl hide"></div>
 		<div class="img fl hide"></div>
@@ -106,17 +93,13 @@
 			+
 		</div>
 		<input type="file" class="hide" id="upimg" accept="image/jpg, image/png, image/gif, image/jpeg">
-        <span style="position:absolute;bottom:0;right:3.5%;;color:#cdcdcd;font-size:12px;" id="hehe" >（您最多上传两张图片）</span>
+        <span style="position:absolute;bottom:0;right:3.5%;;color:#cdcdcd;font-size:12px;" id="hehe" >（您最多上传四张图片）</span>
 		<input type="hidden" name="header"  value="" required="">
 	</div>
 </div>
 <input type="hidden" name="id" value="{$note.id || default=''}">
 <div class="foot">
-	<div class="save">保&emsp;存</div>
-	<div class="check">去审核</div>
-	<div class="atn">
-        注：点击保存将保存至个人中心-我的发布；点击去审核，审核通过后将在相应栏目发布。
-	</div>
+	<div class="save">提&emsp;交</div>
 </div>
 <!--摸态框-->
 <div class="typebg"></div>
@@ -126,16 +109,6 @@
 </ul>
 <div class="tips">
 </div>
-<div class="tocheck">
-	<div class="text">
-		确认去审核吗？审核通过后将公开发布。
-	</div>
-	<div class="confirm">
-		<span class="yes">是</span>
-		<span class="no">否</span>
-	</div>
-</div>
-
 {/block}
 {block name="script"}
 <!--<script src="/static/framework7/framework7.js"></script>-->
@@ -315,72 +288,6 @@ $(function(){
 			}
 		});
 	});
-
-	//审核
-	$('.check').on('click',function(){
-		var data;
-		if($(".select div").html()=="三会一课") {
-			 data= {
-				type: $(".select").attr('data-tab'),
-				title: $("input[name='title']").val(),
-				content: $("textarea[name='content']").val(),
-				meet_home: $("input[name='place']").val(),
-				branch: $("input[name='branch']").val(),
-				staff: $("input[name='staff']").val(),
-				meet_time: $("input[name='meet_time']").val(),
-			};
-		}else{
-			data= {
-				type: $(".select").attr('data-tab'),
-				content: $("textarea[name='content']").val(),
-				title: $("input[name='title']").val(),
-				branch: $("input[name='branch']").val(),
-			};
-		}
-		console.log(data);
-		var all = true;
-		for(var key in data){
-			if(data[key]== ''){
-				all = false;
-				break;
-			}
-		}
-		if(all){
-			data['images'] = [$('.img:nth-child(1) img').attr('src'),$('.img:nth-child(2) img').attr('src')];
-			data['status'] = 0;
-			data['id'] = $("input[name='id']").val();
-			$('.typebg' ).fadeIn();
-			$('.tocheck' ).fadeIn();
-			$('.yes' ).on('click',function(){
-				$('.yes').off('click');
-				$('.no' ).off('click');
-				$.ajax({
-					type:"post",
-					url: "{:Url('Vote/notes')}",
-					data:data,
-					beforeSend: function(XMLHttpRequest){
-					},
-					success:function(data){
-						//window.history.go(-1);
-						console.log(data);
-						window.location.href = "{:Url('Vote/index?c=1')}";
-					}
-				});
-			});
-			$('.no' ).on('click',function(){
-				$('.yes').off('click');
-				$('.tips' ).text('');
-				modalclear();
-			});
-		}else{
-			$('.typebg' ).fadeIn();
-			$('.tips' ).html('<div class="text">信息输入不完整 </div>' ).fadeIn();
-			setTimeout(function(){
-				modalclear();
-				$('.tips' ).text('');
-			},2500)
-		}
-	});
 	//保存
 	$('.save').on('click',function(){
 		if($(".select div").html()=="三会一课") {
@@ -401,7 +308,6 @@ $(function(){
 				branch: $("input[name='branch']").val(),
 			};
 		}
-		console.log(data);
 		var single = false;
 		for(var key in data){
 			if(data[key]!= ''){
@@ -426,7 +332,7 @@ $(function(){
 					success:function(data){
 						console.log(data);
 						$('.typebg' ).fadeIn();
-						$('.tips' ).css({'line-height': '30px'}).html('恭喜您，保存成功！<br>请至个人中心——我的笔记中查看').fadeIn();
+						$('.tips' ).css({'line-height': '30px'}).html('恭喜您，提交成功！<br>请至首页查看').fadeIn();
 						$('.typebg,.tips').off('click');
 						setTimeout(function(){
 							window.location.href = "{:Url('vote/index?c=1')}";
