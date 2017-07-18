@@ -734,8 +734,8 @@
         ntc.eq(co).removeClass("hidden").siblings(".notices").addClass("hidden");
         console.log(co)
         if(co == 1){
-            var len  = ntc.eq(co).find("ul a").length;
-            if(len >= 9){
+            var len  = ntc.eq(co).find("a").length;
+            if(len >= 10){
                 $('.tip').text('上拉加载更多');
                 loadScroll(co + 1);
             }
@@ -781,8 +781,8 @@
             }
             if(index == 1){
                 $("#publish").show();
-                var len = ntc.eq(index).find('ul a').length;
-                if (len >= 9) {
+                var len = ntc.eq(index).find('a').length;
+                if (len >= 10) {
                     $(".tip").text('上拉加载更多').show();
                     loadScroll(index + 1);
                 }else{
@@ -822,9 +822,16 @@
         $(".scrollDiy").off("scroll").on("scroll",function () {
             var ntc = $(".notices");
             var dh = $(".content").height();
-//		console.log("dh"+dh);
             var end = windowHeight + $(".scrollDiy" ).scrollTop();
-            var len  = ntc.eq(type - 1).find("a").length;
+            if(type==1){
+                var len  = ntc.eq(type - 1).find("a").length;
+            }
+            if(type==2){
+                var len  = ntc.eq(type - 1).find("a").length;
+            }
+            if(type==4){
+                var len  = ntc.eq(type - 1).find("ul a").length;
+            }
             var tip = $(".tip");
             var loading = $('.loading');
             if(dh == end){
@@ -927,6 +934,12 @@
             }
             detail.toggleClass('dw');
         });
+    }
+
+    window.onpageshow = function (e) {
+        if (e.persisted) {
+            window.location.reload(true)
+        }
     }
 </script>
 {/block}
