@@ -37,7 +37,8 @@ textarea::-webkit-input-placeholder {
 }
 .form .list input,
 .form .list .select,
-.form .list .time {
+.form .list .time,
+.form .list .select1{
   float: right;
   width: calc( 100% - 70px );
   color: #999999;
@@ -49,7 +50,7 @@ textarea::-webkit-input-placeholder {
   margin-top: 13px;
   line-height: 20px;
 }
-.form .list .select {
+.form .list .select,.form .list .select1 {
   color: #d9d9d9;
 }
 .block {
@@ -121,7 +122,7 @@ textarea::-webkit-input-placeholder {
   color: #d9d9d9;
   font-size: 1.2rem;
 }
-.typebg {
+.typebg,.typebg2 {
   display: none;
   z-index: 2;
   position: fixed;
@@ -131,14 +132,17 @@ textarea::-webkit-input-placeholder {
   height: 100%;
   background: rgba(0, 0, 0, 0.31);
 }
-.type {
+.type,.type2 {
   display: none;
   z-index: 3;
   position: absolute;
   right: 13px;
   top: 40px;
 }
-.type li {
+.type2{
+  top: 80px;
+}
+.type li,.type2 li  {
   width: 100px;
   height: 40px;
   background: #ffffff;
@@ -147,13 +151,13 @@ textarea::-webkit-input-placeholder {
   text-align: center;
   line-height: 40px;
 }
-.type li:first-child {
+.type li:first-child,.type2 li:first-child {
   -webkit-border-top-left-radius: 8px;
   border-top-left-radius: 8px;
   -webkit-border-top-right-radius: 8px;
   border-top-right-radius: 8px;
 }
-.type li:last-child {
+.type li:last-child,.type2 li:last-child  {
   -webkit-border-bottom-left-radius: 8px;
   border-bottom-left-radius: 8px;
   -webkit-border-bottom-right-radius: 8px;
