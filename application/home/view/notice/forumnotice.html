@@ -235,7 +235,7 @@
 			var tip = $(".tip");
 			var loading = $('.loading');
 			var id = {$info['id']};
-			if(dh <= end+1 && scrollNow){
+			if(dh <= end && scrollNow){
 				scrollNow = false;//请求执行中
 				$.ajax({
 					type:"post",
