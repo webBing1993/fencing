@@ -734,7 +734,7 @@
         ntc.eq(co).removeClass("hidden").siblings(".notices").addClass("hidden");
         console.log(co)
         if(co == 1){
-            var len  = ntc.eq(co).find("ul li").length;
+            var len  = ntc.eq(co).find("ul a").length;
             if(len >= 9){
                 $('.tip').text('上拉加载更多');
                 loadScroll(co + 1);
@@ -797,7 +797,7 @@
             }
             if(index == 3){
                 $("#publish").hide();
-                var len = ntc.eq(index).find('a').length;
+                var len = ntc.eq(index).find('ul a').length;
                 if (len >= 9) {
                     $(".tip").text('上拉加载更多').show();
                     loadScroll(index + 1);

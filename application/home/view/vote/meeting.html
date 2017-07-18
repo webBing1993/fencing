@@ -113,7 +113,7 @@
 		}
 		//reset
 		var len = $(".list" ).length;
-		if(len >= 10){
+		if(len >= 7){
 			$('.tip' ).text('上拉加载更多');
 			//上拉加载评论
 			loadScroll();
@@ -182,7 +182,7 @@
 							'</div>'+
 							'<div class="fr isgood good" onclick="isGood(this,0,'+data.id+')">'+data.likes+'</div>'+
 							'</div>';
-					$('.lists' ).append(html);
+					$('.lists' ).prepend(html);
 					it.val('');
 					var sum = $('.sum span' );
 					sum.text(parseInt(sum.text())+1);
