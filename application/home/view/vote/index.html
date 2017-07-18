@@ -373,8 +373,14 @@
     }
     .default{
         width:100%;
-        height: 65vh;
+        height: 63vh;
         background: #f7f7f7;
+        text-align: center;
+        padding-top: 50%;
+    }
+    .default1{
+        height: 65vh;
+        background: #fff;
         text-align: center;
         padding-top: 50%;
     }
@@ -549,9 +555,11 @@
         -webkit-animation: cir2 0.5s ease-in;
         animation: cir2 0.5s ease-in;
     }
-    .default img{
+    .default1 img{
         margin-top: 0;
         margin-left: 0;
+        width: 44.5vw;
+        height: 39vw;
     }
 </style>
 {/block}
@@ -568,7 +576,7 @@
             </div>
             <div class="notices box">
                 {empty name="meet"}
-                <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+                <div class="default1"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
                 {else/}
                 {volist name="meet" id="me"}
                 <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
@@ -590,7 +598,7 @@
 
             <div class="notices activity">
                 {empty name="activity"}
-                <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+                <div class="default1"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
                 {else/}
                 {volist name="activity" id="me"}
                 <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
