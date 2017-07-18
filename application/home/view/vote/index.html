@@ -692,12 +692,18 @@
                 </div>
             </div>
             <div class="notices comments">
+                {empty name="appraise"}
+                <div class="default1"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+                {else/}
                 <ul>
+                    {volist name="appraise" id="ap"}
                     <a href="">
-                        <img src="/home/images/index/1.png">
-                        <p>的点点滴滴多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</p>
+                        <img src="{$ap.front_cover|get_cover='path'}">
+                        <p>{$ap.title}</p>
                     </a>
+                    {/volist}
                 </ul>
+                {/empty}
             </div>
 
             <div class="tip"></div>
@@ -769,7 +775,7 @@
             if(index == 0){
                 $("#publish").show();
                 var len = ntc.eq(index).find('a').length;
-                if (len >= 9) {
+                if (len >= 10) {
                     $(".tip").text('上拉加载更多').show();
                     loadScroll(index + 1);
                 }else{
@@ -823,14 +829,18 @@
             var ntc = $(".notices");
             var dh = $(".content").height();
             var end = windowHeight + $(".scrollDiy" ).scrollTop();
+            var url = "";
             if(type==1){
                 var len  = ntc.eq(type - 1).find("a").length;
+                url = "{:Url('Vote/more')}";
             }
             if(type==2){
                 var len  = ntc.eq(type - 1).find("a").length;
+                url = "{:Url('Vote/more')}";
             }
             if(type==4){
                 var len  = ntc.eq(type - 1).find("ul a").length;
+                url = "{:Url('Vote/plus')}";
             }
             var tip = $(".tip");
             var loading = $('.loading');
@@ -838,7 +848,7 @@
                 scrollNow = false;
                 $.ajax({
                     type:"post",
-                    url:"",
+                    url:url,
                     data:{
                         length:len,
                         type:type
@@ -851,9 +861,10 @@
                         loading.toggleClass('hidden');
                         tip.show();
                         if(data.code == 1){
-                            addList(data,type);
+                            console.log(data.data)
+                            addList(data.data,type);
                             var dataLen =data.data.length;
-                            if(data.data.length == 9){
+                            if(data.data.length == 10){
                                 tip.text('上拉加载更多');
                             }
                         }else{
@@ -874,48 +885,52 @@
             return;
         }
         var html = '';
-        var lists = data.data;
+        var lists = data;
+        var len = lists.length;
         if(type == 2){
-            $.each(lists,function (index,item) {
-                html += '<a href="" class="list clear">'+
-                        '<div class="fl">'+
-                        '	<img src="" alt="">'+
-                        '</div>'+
-                        '<div class="fr right">'+
-                        '	<div class="title limit_">111</div>'+
-                        '	<div class="clear time">'+
-                        '		<span class="fl">2017-7-01</span>'+
-                        '		<span class="fr fa fa-angle-right"></span>'+
-                        '	</div>'+
-                        '</div>'+
+            for(var i = 0; i< len;i++) {
+                var list = lists[i];
+                html += '<a href="/home/vote/activity/id/'+list.id+'" class="list clear">' +
+                        '<div class="fl">' +
+                        '	<img src="'+list.front_cover+'" alt="">' +
+                        '</div>' +
+                        '<div class="fr right">' +
+                        '	<div class="title limit_">'+list.title+'</div>' +
+                        '	<div class="clear time">' +
+                        '		<span class="fl">'+list.create_time+'</span>' +
+                        '		<span class="fr fa fa-angle-right"></span>' +
+                        '	</div>' +
+                        '</div>' +
                         '</a>';
-            });
+            }
             $(".notices").eq(type - 1).append(html);
         }
         if(type == 1){
-            $.each(lists,function (index,item) {
-                html += '<a href="/home/notice/meet/id/3.html" class="list clear">'+
+            for(var i = 0; i< len;i++) {
+                var list = lists[i];
+                html += '<a href="/home/vote/meeting/id/'+list.id+'" class="list clear">'+
                         '<div class="fl">'+
-                        '	<img src="" alt="发送发送发顺丰是否是">'+
+                        '	<img src="'+list.front_cover+'" alt="发送发送发顺丰是否是">'+
                         '</div>'+
                         '<div class="fr right">'+
-                        '	<div class="title limit_">发送发送发顺丰是否是</div>'+
+                        '	<div class="title limit_">'+list.title+'</div>'+
                         '	<div class="clear time">'+
-                        '		<span class="fl">2017-07-18</span>'+
+                        '		<span class="fl">'+list.create_time+'</span>'+
                         '		<span class="fr fa fa-angle-right"></span>'+
                         '	</div>'+
                         '</div>'+
                         '</a>';
-            });
+            };
             $(".notices").eq(type - 1).append(html);
         }
         if(type == 4){
-            $.each(lists,function (index,item) {
-                html += '<a href="">'+
+            for(var i = 0; i< len;i++) {
+                var list = lists[i];
+                html += '<a href="/home/vote/meeting/id/">'+
                         '<img src="/home/images/index/1.png">'+
                         '<p>多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</p>'+
                         '</a>';
-            });
+            };
             $(".notices").eq(type - 1).append(html);
         }
     }

@@ -16,6 +16,8 @@ use app\home\model\Work;
 use app\home\model\WechatDepartment;
 use app\home\model\Like;
 use app\home\model\Comment;
+use think\Db;
+
 /*
  * 选举投票主页
 */
@@ -38,6 +40,9 @@ class Vote extends Base{
          // 获取  支部活动 内容
          $activity = Work::where(['type' => 2,'status' => 0,'branch' => ['in',$depart]])->order('id desc')->limit(10)->select();
          $this->assign('activity',$activity);
+         // 获取 民主评议
+         $appraise = Db::table('pb_appraise')->where(['status' => ['egt',0],'publisher' => ['in',$depart]])->order('id desc')->select();
+         $this->assign('appraise',$appraise);
          $map = array(
              'status' => array('egt',0),
              'end_time' => array('gt',time()),  // 未结束
@@ -197,6 +202,41 @@ class Vote extends Base{
         $comment = $commentModel->getComment(7,$id,$userId);
         $this->assign('comment',$comment);
         return $this->fetch();
+    }
+    /*
+     * 三会一课  支部活动 加载更多
+     */
+    public function more(){
+        $this->checkRole();
+        $this->anonymous();
+        $userId = session('userId');
+        //  获取该用户 所在支部
+        $Depart = WechatUser::where('userid',$userId)->field('department')->find();
+        $depart = json_decode($Depart['department']);
+        $len = input('length');
+        $type = input('type');
+        $map = array(
+            'type' => $type,
+            'status' => 0,
+            'branch' => ['in',$depart],
+        );
+        $list = Work::where($map)->order('id desc')->limit($len,10)->select();
+        foreach($list as $value){
+            $Pic = Picture::where('id',$value['front_cover'])->find();
+            $value['front_cover'] = $Pic['path'];
+            $value['create_time'] = date('Y-m-d',$value['create_time']);
+        }
+        if ($list){
+            return $this->success('加载成功','',$list);
+        }else{
+            return $this->error('加载失败');
+        }
+    }
+    /*
+     * 民主评议 加载更多
+     */
+    public function plus(){
+
     }
     /*
      * 投票 页面
