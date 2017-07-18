@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title></title>
+<title>专题模块</title>
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/news/news.css">
 <style>
@@ -26,79 +26,36 @@
         -webkit-transform: translate(-50%,-50%);
     }
     .default{
+        background:#eee;
         height:0;
     }
 </style>
 {/block}
 
 {block name="body"}
+{notempty name="topic"}
 <div class="banners">
     <div class="swiper-container">
         <div class="imgs swiper-wrapper">
             <div class="banner swiper-slide">
                 <a href="javascript:;">
-                    <img src="/home/images/feedback/feedback.jpg" alt="图片">
+                    <img src="{$topic.front_cover|get_cover='path'}" alt="图片">
                     <div></div>
-                    <span>新闻热点标题，多多新闻标电动蝶阀</span>
+                    <span>{$topic.title}</span>
                 </a>
             </div>
         </div>
     </div>
 </div>
+{/notempty}
 <!--新闻聚焦-->
 <div class="notice">
-    {empty name="list1"}
+    {empty name="list"}
     <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
     {else/}
     <div class="lists">
-        {volist name="list1" id="vo"}
-        <a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
-            <div class="fl">
-                <img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
-            </div>
-            <div class="fr lr">
-                <div class="title limit_">{$vo.title}</div>
-                <div class="clear">
-                    <span class="fl">{$vo.create_time|time_format='Y-m-d'}</span>
-                    <span class="fr">详情</span>
-                </div>
-            </div>
-        </a>
-        {/volist}
-    </div>
-    {/empty}
-</div>
-<!--各地动态-->
-<div class="notice">
-    {empty name="list2"}
-    <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
-    {else/}
-    <div class="lists">
-        {volist name="list2" id="vo"}
-        <a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
-            <div class="fl">
-                <img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
-            </div>
-            <div class="fr lr">
-                <div class="title limit_">{$vo.title}</div>
-                <div class="clear">
-                    <span class="fl">{$vo.create_time|time_format='Y-m-d'}</span>
-                    <span class="fr">详情</span>
-                </div>
-            </div>
-        </a>
-        {/volist}
-    </div>
-    {/empty}
-</div>
-<!--意见文件-->
-<div class="notice">
-    {empty name="list3"}
-    <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
-    {else/}
-    <div class="lists">
-        {volist name="list3" id="vo"}
-        <a class="list clear" href="{:Url('News/detail?id='.$vo['id'])}">
+        {volist name="list" id="vo"}
+        <a class="list clear" href="{:Url('Special/detail?id='.$vo['id'])}">
             <div class="fl">
                 <img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
             </div>

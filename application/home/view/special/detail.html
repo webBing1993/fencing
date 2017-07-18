@@ -30,9 +30,9 @@
                 <span class="read">{$new.views}</span>
                 {eq name="visit" value="0"}
                 {eq name="new.is_like" value="1"}
-                <span class="isgood good_" onclick="isGood(this,1,{$new.id})">{$new.likes}</span>
+                <span class="isgood good_" onclick="isGood(this,6,{$new.id})">{$new.likes}</span>
                 {else/}
-                <span class="isgood good" onclick="isGood(this,1,{$new.id})">{$new.likes}</span>
+                <span class="isgood good" onclick="isGood(this,6,{$new.id})">{$new.likes}</span>
                 {/eq}
                 {else/}
                 <span class="isgood good">{$new.likes}</span>
@@ -76,7 +76,7 @@
     <div class="myword fl">
         <input type="text" placeholder="说说你的感想！">
     </div>
-    <div class="send fr" onclick="send(this,1,{$new['id']})">发送</div>
+    <div class="send fr" onclick="send(this,6,{$new['id']})">发送</div>
 </div>
 {/eq}
 
@@ -243,7 +243,7 @@
                     type:"post",
                     url:"{:Url('Base/morecomment')}",
                     data:{
-                        type:1,
+                        type:6,
                         aid:id,
                         length:len
                     },
@@ -289,9 +289,9 @@
                     '</div>';
             if ({$visit} == 0){
                 if(list.is_like == 0){
-                    html+='<div class="fr isgood good" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
+                    html+='<div class="fr isgood good" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
                 }else{
-                    html+='<div class="fr isgood good_" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
+                    html+='<div class="fr isgood good_" onclick="isGood(this,0,'+list.id+')">'+list.likes+'</div>'
                 }
             }else {
                 html+='<div class="fr isgood good">'+list.likes+'</div>'
