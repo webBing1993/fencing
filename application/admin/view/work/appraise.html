@@ -12,10 +12,10 @@
         <h2>支部工作</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="{:Url('Vote/index')}">主题页面</a>
+                <a href="">民主评议</a>
             </li>
             <li class="active">
-                <strong>选项页面</strong>
+                <strong><a href="">主题页面</a></strong>
             </li>
         </ol>
     </div>
@@ -30,10 +30,10 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>选项列表</h5>
+                    <h5>列表</h5>
                     <div class="ibox-tools">
-                        <a class="btn btn-default" href="{:Url('Vote/index')}">返回主题页</a>
-                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('Vote/edit?vid='.$vid)}">添加投票选项</a>
+
+                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('Work/add')}">添加主题</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -42,30 +42,33 @@
                             <thead>
                             <tr>
                                 <th><input class="i-checks check-all" type="checkbox"></th>
-                                <th>选项内容</th>
-                                <th>选项图片</th>
-                                <th>所属主题</th>
-                                <th>投票数</th>
-                                <th>创建人</th>
+                                <th>投票主题</th>
+                                <th>选项数目</th>
+                                <th>发布支部</th>
+                                <th>浏览量</th>
+                                <th>创建人 </th>
                                 <th>创建时间</th>
+                                <th>更新时间</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             {volist name="list" id="lo"}
-                            <tr >
-                                <td style="line-height: 50px"><input type="checkbox" class="i-checks ids" name="input[]"></td>
-                                <td style="line-height: 50px">{$lo.content}</td>
-                                <td style="line-height: 50px"><img src="{$lo.images|get_cover='path'}" style="width: 50px;height: 50px;"></td>
-                                <td style="line-height: 50px">{$lo->getTitle->title}</td>
-                                <td style="line-height: 50px">{$lo.num}</td>
-                                <td style="line-height: 50px">{$lo->user->nickname}</td>
-                                <td style="line-height: 50px">{$lo.create_time|time_format="Y-m-d"}</td>
-                                <td style="line-height: 50px">{$lo.status_text}</td>
-                                <td style="line-height: 50px">
-                                    <a href="{:Url('Vote/edit?id='.$lo['id'])}">修改</a>&emsp;
-                                    <a href="{:Url('Vote/optionsdel?id='.$lo.id)}" class="confirm ajax-del">删除</a>
+                            <tr>
+                                <td><input type="checkbox" class="i-checks ids" name="input[]"></td>
+                                <td>{$lo.title|mb_substr=###,0,20}</td>
+                                <td>{$lo->get_num}</td>
+                                <td>{$lo.publisher}</td>
+                                <td>{$lo.views}</td>
+                                <td>{$lo->user->nickname}</td>
+                                <td>{$lo.create_time|time_format="Y-m-d H:i"}</td>
+                                <td>{$lo.update_time|time_format="Y-m-d H:i"}</td>
+                                <td>{$lo.status_text}</td>
+                                <td>
+                                    <a href="{:Url('Work/add?id='.$lo.id)}">修改</a>&emsp;
+                                    <a href="{:Url('Work/options?id='.$lo.id)}">选项详情列表</a>&emsp;
+                                    <a href="{:Url('Work/del?id='.$lo.id)}" class="confirm ajax-del">删除</a>
                                 </td>
                             </tr>
                             {/volist}
@@ -73,7 +76,7 @@
                             <tfoot>
                             <tr>
                                 <td colspan="10">
-                                    <div class="page"></div>
+                                    <div class="page">{$_page}</div>
                                 </td>
                             </tr>
                             </tfoot>
@@ -92,7 +95,7 @@
 <script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
 <script>
     $(document).ready(function(){
-        highlight_subnav("{:Url('Vote/index')}");
+        highlight_subnav("{:Url('Work/appraise')}");
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',

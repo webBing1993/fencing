@@ -12,7 +12,7 @@
         <h2>支部工作</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="{:Url('Vote/index')}">主题页面</a>
+                <a href="{:Url('Work/appraise')}">主题页面</a>
             </li>
             <li class="active">
                 <strong>选项页面</strong>
@@ -32,8 +32,8 @@
                 <div class="ibox-title">
                     <h5>选项列表</h5>
                     <div class="ibox-tools">
-                        <a class="btn btn-default" href="{:Url('Vote/index')}">返回主题页</a>
-                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('Vote/edit?vid='.$vid)}">添加投票选项</a>
+                        <a class="btn btn-default" href="{:Url('Work/appraise')}">返回主题页</a>
+                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('Work/edit?vid='.$vid)}">添加投票选项</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -45,9 +45,10 @@
                                 <th>选项内容</th>
                                 <th>选项图片</th>
                                 <th>所属主题</th>
-                                <th>投票数</th>
+                                <th>评论数</th>
                                 <th>创建人</th>
                                 <th>创建时间</th>
+                                <th>更新时间</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -61,11 +62,15 @@
                                 <td style="line-height: 50px">{$lo->getTitle->title}</td>
                                 <td style="line-height: 50px">{$lo.num}</td>
                                 <td style="line-height: 50px">{$lo->user->nickname}</td>
-                                <td style="line-height: 50px">{$lo.create_time|time_format="Y-m-d"}</td>
+                                <td style="line-height: 50px">{$lo.create_time|time_format="Y-m-d H:i"}</td>
+                                <td style="line-height: 50px">{$lo.update_time|time_format="Y-m-d H:i"}</td>
                                 <td style="line-height: 50px">{$lo.status_text}</td>
                                 <td style="line-height: 50px">
-                                    <a href="{:Url('Vote/edit?id='.$lo['id'])}">修改</a>&emsp;
-                                    <a href="{:Url('Vote/optionsdel?id='.$lo.id)}" class="confirm ajax-del">删除</a>
+                                    <a href="{:Url('Work/edit?id='.$lo['id'])}">修改</a>&emsp;
+                                    {eq name="$lo.num" value="0"}
+                                    <a onclick="scan({$lo.id})">查看评论详情</a>&emsp;
+                                    {/eq}
+                                    <a href="{:Url('Work/optionsdel?id='.$lo.id)}" class="confirm ajax-del">删除</a>
                                 </td>
                             </tr>
                             {/volist}
@@ -90,9 +95,10 @@
 
 {block name="script"}
 <script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/admin/js/layer/layer.js"></script>
 <script>
     $(document).ready(function(){
-        highlight_subnav("{:Url('Vote/index')}");
+        highlight_subnav("{:Url('work/appraise')}");
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
@@ -101,5 +107,26 @@
             $("tbody").find(".ids").iCheck("toggle");
         });
     });
+    function scan(Id) {
+        $.ajax({
+            type:"post",
+            url:"{:Url('Work/comment')}",
+            data:"id="+Id,
+            success:function(data){
+                console.log(data);
+                html = '';
+                for(var i = 0 ;i<data.length;i++){
+                    html += "<br>&emsp;<span>"+data[i].name+"</span>&emsp;<span>"+data[i].create_time+"</span><span>&emsp;&emsp;&emsp;"+data[i].content+"</span><hr>";
+                }
+                parent.layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['750px', '600px'], //宽高
+                    content:html
+                });
+            }
+        });
+
+    }
 </script>
 {/block}
