@@ -800,13 +800,20 @@
         var lists = data.data;
         if(type == 2){
             $.each(lists,function (index,item) {
-                html += '<li><a href="/home/Company/detail/id/"' + list.id + '>' +
-                        '<p>' + list.title + '</p>' +
-                        '<span>' + list.publisher + '</span>' +
-                        '<span><i></i>' + list.comments + '</span>' +
-                        '</a></li>';
+                html += '<a href="" class="list clear">'+
+                        '<div class="fl">'+
+                        '	<img src="" alt="">'+
+                        '</div>'+
+                        '<div class="fr right">'+
+                        '	<div class="title limit_">111</div>'+
+                        '	<div class="clear time">'+
+                        '		<span class="fl">2017-7-01</span>'+
+                        '		<span class="fr fa fa-angle-right"></span>'+
+                        '	</div>'+
+                        '</div>'+
+                        '</a>';
             });
-            $(".notices").eq(type - 1).children("ul").append(html);
+            $(".notices").eq(type - 1).append(html);
         }
     }
 
