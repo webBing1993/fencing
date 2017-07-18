@@ -5,6 +5,13 @@
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/css/news/news.css">
 <style>
+    .banner a div{
+        position: absolute;
+        top:23vw;
+        background:#000;
+        opacity: 0.4;
+        width:100%;
+    }
     .banner a span{
         position: absolute;
         top:23vw;
@@ -31,7 +38,8 @@
             <div class="banner swiper-slide">
                 <a href="javascript:;">
                     <img src="/home/images/feedback/feedback.jpg" alt="图片">
-                    <span>新闻热点标题，新闻标题 </span>
+                    <div></div>
+                    <span>新闻热点标题，多多新闻标题</span>
                 </a>
             </div>
 
@@ -119,6 +127,8 @@
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     $(function(){
+        var heigth = $(".banner a span").height();
+        $(".banner a div").css("height",heigth);
         //初始化数据
         var ntc = $(".notice");
         var tab = $(".tabs .tab");
