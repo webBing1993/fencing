@@ -747,7 +747,7 @@
                 loadScroll(co + 1);
             }
         }
-        if(co == 2){
+        if(co == 3){
             var len  = ntc.eq(co).find("ul a").length;
             if(len >= 9){
                 $('.tip').text('上拉加载更多');
@@ -781,7 +781,7 @@
             }
             if(index == 1){
                 $("#publish").show();
-                var len = ntc.eq(index).find('a').length;
+                var len = ntc.eq(index).find('ul a').length;
                 if (len >= 9) {
                     $(".tip").text('上拉加载更多').show();
                     loadScroll(index + 1);
@@ -797,6 +797,16 @@
             }
             if(index == 3){
                 $("#publish").hide();
+                var len = ntc.eq(index).find('a').length;
+                if (len >= 9) {
+                    $(".tip").text('上拉加载更多').show();
+                    loadScroll(index + 1);
+                }else{
+                    $('.tip').hide();
+                    $(window).off("scroll" );
+                }
+            } else {
+                $('.tip').hide();
             }
             //使用示例
             setCookie("type",index);
@@ -810,7 +820,6 @@
         }
         var windowHeight = $(".scrollDiy").height();
         $(".scrollDiy").off("scroll").on("scroll",function () {
-
             var ntc = $(".notices");
             var dh = $(".content").height();
 //		console.log("dh"+dh);
@@ -872,6 +881,32 @@
                         '		<span class="fr fa fa-angle-right"></span>'+
                         '	</div>'+
                         '</div>'+
+                        '</a>';
+            });
+            $(".notices").eq(type - 1).append(html);
+        }
+        if(type == 1){
+            $.each(lists,function (index,item) {
+                html += '<a href="/home/notice/meet/id/3.html" class="list clear">'+
+                        '<div class="fl">'+
+                        '	<img src="" alt="发送发送发顺丰是否是">'+
+                        '</div>'+
+                        '<div class="fr right">'+
+                        '	<div class="title limit_">发送发送发顺丰是否是</div>'+
+                        '	<div class="clear time">'+
+                        '		<span class="fl">2017-07-18</span>'+
+                        '		<span class="fr fa fa-angle-right"></span>'+
+                        '	</div>'+
+                        '</div>'+
+                        '</a>';
+            });
+            $(".notices").eq(type - 1).append(html);
+        }
+        if(type == 4){
+            $.each(lists,function (index,item) {
+                html += '<a href="">'+
+                        '<img src="/home/images/index/1.png">'+
+                        '<p>多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</p>'+
                         '</a>';
             });
             $(".notices").eq(type - 1).append(html);
