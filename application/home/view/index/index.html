@@ -6,6 +6,29 @@
     <link rel="stylesheet" href="/home/css/index/index.css">
     <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
     <link rel="stylesheet" href="/home/css/common/tip.css">
+<style>
+    /*悬浮按钮*/
+    .new {
+        position: fixed;
+        right: 20px;
+        bottom: 40px;
+        width: 60px;
+        height: 60px;
+    }
+    .manager.after {
+        position: absolute;
+        bottom:68px;
+        right:0;
+        content: '';
+        width: 40px;
+        height: 40px;
+        background: url("/home/images/notice/note_.png") no-repeat;
+        background-size: 100% 100%;
+        opacity: 1;
+        -webkit-animation: cir2 0.5s ease-in;
+        animation: cir2 0.5s ease-in;
+    }
+</style>
 {/block}
 
 {block name="body"}
@@ -117,6 +140,9 @@
     <div class="loading hidden">
         <div class="typing_loader"></div>
     </div>
+
+
+<a href="{:Url('Special/index')}" class="after manager" id="publish"></a>
 {/block}
 
 {block name="script"}
@@ -137,6 +163,7 @@
             //上拉加载
             loadScroll();
         }
+        moveanyway();
     });
     function loadScroll(){
         $(window ).off("scroll" ).on("scroll",function(){

@@ -3,6 +3,7 @@
 {block name="style"}
 <link rel="stylesheet" href="/static/datepicker/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="/home/css/special/notes.css">
+<link rel="stylesheet" href="/static/sweetalert/sweetalert.css">
 <!--<link rel="stylesheet" href="/static/framework7/framework7.ios.colors.min.css">-->
 <!--<link rel="stylesheet" href="/static/framework7/framework7.ios.min.css">-->
 <style>
@@ -114,6 +115,7 @@
 <!--<script src="/static/framework7/framework7.js"></script>-->
 <!--时间日历-->
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
+<script src="/static/sweetalert/sweetalert.min.js"></script>
 <script>
 
 //alert优化
@@ -318,9 +320,18 @@ $(function(){
 		if($('.img:nth-child(1) img').attr('src')!= undefined){
 			single = true;
 		}
-		if(!data.type){
-			alert('请选择发布栏');
-		}else {
+		if($(".select div").html()=="三会一课") {
+			if (!data.type || !data.title || !data.content || !data.meet_home || !data.branch || !data.staff || !data.meet_time) {
+				swal("", "请填写完整信息", "warning");
+				return;
+			}
+		}
+		if($(".select div").html()=="支部活动") {
+			if (!data.type || !data.title || !data.content || !data.branch) {
+				swal("", "请填写完整信息", "warning");
+				return;
+			}
+		}
 			if(single){
 				data['status'] = 3;
 				data['id'] = $("input[name='id']").val();
@@ -332,11 +343,11 @@ $(function(){
 					success:function(data){
 						console.log(data);
 						$('.typebg' ).fadeIn();
-						$('.tips' ).css({'line-height': '30px'}).html('恭喜您，提交成功！<br>请至首页查看').fadeIn();
+						swal("恭喜您", "提交成功", "success");
 						$('.typebg,.tips').off('click');
 						setTimeout(function(){
 							window.location.href = "{:Url('vote/index?c=1')}";
-						},2000)
+						},1500)
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 //						alert(XMLHttpRequest.status);
@@ -347,14 +358,12 @@ $(function(){
 			}else{
 				window.scrollTo(0,0);
 				$('.typebg' ).fadeIn();
-				$('.tips' ).html('<div class="text">请您输入至少一项信息 </div>' ).fadeIn();
+				swal("", "请填写完整信息", "warning");
 				setTimeout(function(){
 					modalclear();
 					$('.tips' ).text('');
-				},2500)
+				},500)
 			}
-		}
-
 	});
 
 });

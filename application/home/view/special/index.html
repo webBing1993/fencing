@@ -94,7 +94,7 @@
         tab.eq(co).addClass("active").siblings(".tab").removeClass("active");
         ntc.eq(co).removeClass("hidden").siblings(".notice").addClass("hidden");
         var len  = ntc.eq(co).find(".list").length;
-        if(len >= 6 ){
+        if(len >= 7 ){
             $('.tip').text('上拉加载更多');
             loadScroll(co + 1);
         }
