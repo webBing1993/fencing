@@ -732,12 +732,32 @@
         co = parseInt(co);
         tab.eq(co).addClass("active").siblings(".tab").removeClass("active");
         ntc.eq(co).removeClass("hidden").siblings(".notices").addClass("hidden");
+        console.log(co)
         if(co == 1){
             var len  = ntc.eq(co).find("ul li").length;
             if(len >= 9){
                 $('.tip').text('上拉加载更多');
                 loadScroll(co + 1);
             }
+        }
+        if(co == 0){
+            var len  = ntc.eq(co).find("a").length;
+            if(len >= 9){
+                $('.tip').text('上拉加载更多');
+                loadScroll(co + 1);
+            }
+        }
+        if(co == 2){
+            var len  = ntc.eq(co).find("ul a").length;
+            if(len >= 9){
+                $('.tip').text('上拉加载更多');
+                loadScroll(co + 1);
+            }
+        }
+        if(co == 0||co == 1){
+            $("#publish").show();
+        }else{
+            $("#publish").hide();
         }
         //tab点击切换
         $(".tabs").on('click','.tab',function () {
