@@ -549,6 +549,10 @@
         -webkit-animation: cir2 0.5s ease-in;
         animation: cir2 0.5s ease-in;
     }
+    .default img{
+        margin-top: 0;
+        margin-left: 0;
+    }
 </style>
 {/block}
 
@@ -562,10 +566,10 @@
                 <span class="tab">投票选举</span>
                 <span class="tab">民主评议</span>
             </div>
-            {empty name="meet"}
-            <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
-            {else/}
             <div class="notices box">
+                {empty name="meet"}
+                <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+                {else/}
                 {volist name="meet" id="me"}
                 <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
                     <div class="fl">
@@ -580,12 +584,14 @@
                     </div>
                 </a>
                 {/volist}
+                {/empty}
             </div>
-            {/empty}
-            {empty name="activity"}
-            <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
-            {else/}
+
+
             <div class="notices activity">
+                {empty name="activity"}
+                <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+                {else/}
                 {volist name="activity" id="me"}
                 <a href="{:Url('Notice/meet?id='.$me['id'])}" class="list clear">
                     <div class="fl">
@@ -600,8 +606,9 @@
                     </div>
                 </a>
                 {/volist}
+                {/empty}
             </div>
-            {/empty}
+
             <div class="notices">
                 <div class="notice party regularmore">
                     <!--课程列表-->
