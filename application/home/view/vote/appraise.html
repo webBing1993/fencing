@@ -123,21 +123,21 @@
         <div class="navbar">
             <div class="top" style="position:relative;">
                 <div class="banner">
-                    <img src=""  alt="banner图片" class="banner_img">
+                    <img src="{$list.front_cover|get_cover='path'}"  alt="banner图片" class="banner_img">
                 </div>
 
                 <div class="banner_data">
                     <div >
                         <span>候选人</span>
-                        <b class="sum1">3</b>
+                        <b class="sum1">{$list.num}</b>
                     </div>
                     <div>
                         <span>评论人数</span>
-                        <b>12</b>
+                        <b>{$list.sum}</b>
                     </div>
                     <div>
                         <span>访问量</span>
-                        <b>22</b>
+                        <b>{$list.views}</b>
                     </div>
                 </div>
                 <div class="page">
@@ -146,17 +146,19 @@
                             <!-- Tab 2 -->
                             <div id="tab2" class="tab active">
                                 <div class="list-block rank">
+                                    {volist name="$list.options" id="oo"}
                                     <ul style="font-size:14px;" class="top3">
                                         <li data-id="">
                                             <!--color:#F4C84A;-->
-                                            <img src="/home/images/index/1.png" alt="" >
+                                            <img src="{$oo.images|get_cover='path'}" alt="" >
                                             <span></span>
                                     <span>
-                                        <b><b></b>张三张三的 </b>
+                                        <b><b></b>{$oo.content} </b>
                                     </span>
                                             <span class="comment"></span>
                                         </li>
                                     </ul>
+                                    {/volist}
                                 </div>
                             </div>
                         </div>

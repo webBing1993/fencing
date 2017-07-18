@@ -398,6 +398,38 @@ class Vote extends Base{
      * 民主评议  页面
      */
     public function appraise(){
+        $this->checkRole();
+        $id = input('get.id');  // 主题id
+        $userId = session('userId');
+        // 浏览量 +1
+        $info['views'] = array('exp','`views`+1');
+        Db::table('pb_appraise')->where('id',$id)->update($info);
+        if($userId != "visitor"){
+            //浏览不存在则存入sw_browse表
+            $con = array(
+                'user_id' => $userId,
+                'appraise_id' => $id, // 投票主题 id
+            );
+            $history = Browse::get($con);
+            if(!$history && $id != 0){
+                $s['score'] = array('exp','`score`+1');
+                if ($this->score_up()){
+                    // 未满 15分
+                    Browse::create($con);
+                    WechatUser::where('userid',$userId)->update($s);
+                }
+            }
+        }
+        $list = Db::table('pb_appraise')->where('id',$id)->find();
+        $list['num'] = Db::table('pb_appraise_options')->where(['app_id' => $id,'status' => 0])->count();
+        $sum = 0;
+        $Options = Db::table('pb_appraise_options')->where(['app_id' => $id,'status' => 0])->select();
+        foreach($Options as $value){
+            $sum += $value['num'];
+        }
+        $list['sum'] = $sum;
+        $list['options'] = $Options;
+        $this->assign('list',$list);
         return $this->fetch();
     }
     /*

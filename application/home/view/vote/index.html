@@ -697,9 +697,10 @@
                 {else/}
                 <ul>
                     {volist name="appraise" id="ap"}
-                    <a href="">
+                    <a href="{:Url('Vote/appraise?id='.$ap['id'])}">
                         <img src="{$ap.front_cover|get_cover='path'}">
                         <p>{$ap.title}</p>
+                        <p style="color: #999">{$ap.create_time|time_format='Y-m-d'}</p>
                     </a>
                     {/volist}
                 </ul>
