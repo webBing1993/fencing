@@ -1,10 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{extend name="public/common"}
 
-</body>
-</html>
+{block name="style"}
+<title>民主评议</title>
+<style>
+    /*reset*/
+    .page{
+        background:#fff;
+    }
+    .navbar{
+        height:36px;min-height:36px;border:none;background:#f9f9f9;
+    }
+    .navbar:after,.list-block ul:before,.list-block ul:after{
+        min-height:0;height:0;
+    }
+    .list-block{
+        margin:0;
+    }
+
+    /*tab2排行榜单*/
+    .banner_img{
+        width:100%;
+        height: 60vw;
+    }
+
+    .top{
+        position:relative;
+    }
+    .top>.middle{
+        width:120px;height:120px;position:absolute;  left: 50%;
+        margin-left: -60px;
+        top: 17vw;
+    }
+    .top>.middle>div:nth-child(1){
+        position:absolute;top:0;left:calc( 50% - 46px)
+    }
+    .top>.middle>div:nth-child(2){
+        position:absolute;top:-19px;left:calc( 50% - 70px)
+    }
+    .top>.middle>div:nth-child(3){
+        position:absolute;top:93px;width:100%;text-align: center;left:0;color:#F4C84A;text-shadow: 0px 5px 5px rgba(244,200,74,.6);font-size:14px;
+    }
+    /**/
+    .rank{
+        border-top:1px solid #f1f1f1;color:#666;margin-top: 12vw;
+    }
+    .rank ul{
+        padding: 0 4vw;
+    }
+    .rank .top3 li, .rank .top4 li{
+        border-bottom:1px solid #f1f1f1;height:76px;
+    }
+    .rank .top3 li span:nth-child(1),.myself span:nth-child(1),.top4 li span:nth-child(1){
+        display: inline-block;
+        height: 76px;
+        line-height: 76px;
+        position: relative;
+        padding-right: 2vw;
+    }
+    .rank .top3 li img:nth-child(2),.myself img:nth-child(2),.top4 li img:nth-child(2){
+        border-radius:50%;height:50px;width:50px;margin-top: 13px;
+    }
+
+    .rank .top3 li span:nth-child(3),.myself span:nth-child(3),.top4 li span:nth-child(3){
+        width: 38%;
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box!important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        position: absolute;
+        margin-top: -30px;
+        left: 25vw;
+    }
+    .rank .top3 li span:nth-child(4),.myself span:nth-child(4),.top4 li span:nth-child(4){
+        height:20px;line-height:20px;float: right;  margin-top: 22px;
+    }
+    .rank .top3 li img:nth-child(5){
+        position:absolute;margin-left: -56px;height: 56px; margin-top: 12px;
+    }
+    .rank b{
+        font-weight: normal;
+    }
+    .rank .top3 li{
+        height:60px;
+    }
+    .rank .top3 li img{
+        height: 40px;
+        width: 40px;
+        margin-top: 10px;
+        margin-left: 16px;
+    }
+    .rank .top3 li .comment{
+        background: url("/home/images/vote/comment.png") no-repeat;
+        width:15px;
+        height:15px;
+        background-size: 15px 15px;
+    }
+    /**/
+    .banner_data{
+        width:94%;margin:0 3%;height:50px;box-shadow: 0px 3px 3px rgba(98,157,244,.3);background:#fff;
+        position: absolute;border-radius:3px;margin-top: -27px;
+    }
+    .banner_data>div{
+        display: inline-block;width:calc(100%/3);float:left;text-align: center;
+    }
+    .banner_data>div>b{
+        display:block;height:25px;line-height:32px;color:#333;font-weight: 100;
+    }
+    .banner_data>div>span{
+        display:block;height:25px;line-height:25px;font-size:13px;color:#333;
+    }
+    .rank ul li+span{
+        position: absolute;right: 15vw;margin-top: -48px;background: #eee;border-radius: 4px;padding: 0 4px;color: #999;
+    }
+</style>
+{/block}
+
+{block name="body"}
+<div class="views">
+    <div class="view view-main">
+        <div class="navbar">
+            <div class="top" style="position:relative;">
+                <div class="banner">
+                    <img src=""  alt="banner图片" class="banner_img">
+                </div>
+
+                <div class="banner_data">
+                    <div >
+                        <span>候选人</span>
+                        <b class="sum1">3</b>
+                    </div>
+                    <div>
+                        <span>评论人数</span>
+                        <b>12</b>
+                    </div>
+                    <div>
+                        <span>访问量</span>
+                        <b>22</b>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="page-content" style="">
+                        <div class="tabs">
+                            <!-- Tab 2 -->
+                            <div id="tab2" class="tab active">
+                                <div class="list-block rank">
+                                    <ul style="font-size:14px;" class="top3">
+                                        <li data-id="">
+                                            <!--color:#F4C84A;-->
+                                            <img src="/home/images/index/1.png" alt="" >
+                                            <span></span>
+                                    <span>
+                                        <b><b></b>张三张三的 </b>
+                                    </span>
+                                            <span class="comment"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {/block}
+
+        {block name="script"}
+        <script src="/static/framework7/framework7.js"></script>
+        <script>
+            var myApp=new Framework7;
+            var $$=Dom7;
+            var c=1;
+            $(document).ready(function(){
+                var screen_width=screen.width/2;
+                console.log(screen_width);
+            });
+
+
+            var aa=$('.top3>li:nth-child(1)').find('img:nth-child(2)').attr('src');
+            var bb=$('.top3>li:nth-child(1)').find('span:nth-child(3)').text();
+            var cc=$('.banner_words span').text();
+            $('.top .middle div:nth-child(1)').find('img').attr({src:aa});
+            $('.top .banner_words span').text(cc+'——'+bb);
+        </script>
+        {/block}
