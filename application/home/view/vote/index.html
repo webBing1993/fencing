@@ -933,7 +933,7 @@
                         '<p style="color: #999">'+list.create_time+'</p>'+
                         '</a>';
             };
-            $(".notices").eq(type - 1).append(html);
+            $(".notices").eq(type - 1).find("ul").append(html);
         }
     }
 
