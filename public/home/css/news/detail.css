@@ -23,7 +23,6 @@
 .note{
   color: #999999;
   font-size: 12px;
-  padding: 0 4vw;
   text-align: right;
 }
 .note_{
@@ -95,7 +94,6 @@
 .article .content .note span {
   height: 40px;
   display: inline-block;
-  margin-right: 10px;
   line-height: 40px;
 }
 .article .content .note_ span{
@@ -105,6 +103,7 @@
   background: url('/home/images/detail/scan_.png') 0 12px no-repeat;
   background-size: 15px 15px;
   padding-left: 18px;
+  margin-right: 10px;
 }
 .article .content .note .good {
   background: url('/home/images/detail/good.png') 0 12px no-repeat;

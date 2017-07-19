@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title></title>
+<title>专题模块</title>
 <link rel="stylesheet" href="/home/css/news/detail.css">
 <style>
     .scrollDiy{
@@ -87,8 +87,6 @@
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     $(function(){
-        //模块标题
-        $('title' ).text('');
         //reset
         var len = $(".list" ).length;
         if(len >= 7){
@@ -162,7 +160,7 @@
                             '</div>'+
                             '<div class="fr isgood good" onclick="isGood(this,0,'+data.id+')">'+data.likes+'</div>'+
                             '</div>';
-                    $('.lists' ).append(html);
+                    $('.lists' ).prepend(html);
                     it.val('');
                     var sum = $('.sum span' );
                     sum.text(parseInt(sum.text())+1);
@@ -299,7 +297,7 @@
             html+=
                     '</div>';
         }
-        $(".lists" ).prepend(html);
+        $(".lists" ).append(html);
     }
     function ueLimit(){
         var imgs = $('.content img');

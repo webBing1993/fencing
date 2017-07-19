@@ -118,7 +118,7 @@
                     url:"{:Url('Special/more')}",
                     data:{
                         length:len,
-                        type:type
+                        type:2
                     },
                     beforeSend: function(XMLHttpRequest){
                         tip.hide();
@@ -148,15 +148,10 @@
         var lists = data.data;
         var len = lists.length;
         var ntc = $(".notice");
-        if(type){
-            type =parseInt(type);
-        }else{
-            return;
-        }
         for(var i = 0; i< len;i++){
             var list = lists[i];
             html +=
-                    '<a class="list clear" href="/home/news/detail/id/'+list.id+'.html">'+
+                    '<a class="list clear" href="/home/special/detail/id/'+list.id+'.html">'+
                     '<div class="fl">'+
                     '<img src="'+ list.src+'" alt="图片">'+
                     '</div>'+

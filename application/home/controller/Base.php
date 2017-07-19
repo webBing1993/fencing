@@ -23,7 +23,7 @@ use app\home\model\Answers;
 class Base extends Controller {
     public function _initialize(){
 //        session('userId','visitor');
-        session('userId','17557289172');
+        session('userId','YangZhuQing');
 //        session('header','/home/images/vistor.jpg');
 //        session('nickname','游客');
         if(!empty($_SERVER['REQUEST_URI'])){
@@ -426,7 +426,7 @@ class Base extends Controller {
             foreach ($comment as $value) {
                 $user = WechatUser::where('userid',$value['uid'])->find();
                 $value['nickname'] = $user['name'];
-                $value['header'] = $user['avatar'];
+                $user['header'] ? $value['header'] = $user['header'] : $value['header'] = $user['avatar'];
                 $value['time'] = date('Y-m-d',$value['create_time']);
                 $value['content'] = strtr($value['content'], $badword1);
                 $map1 = array(
