@@ -17,12 +17,26 @@ use app\home\model\WechatDepartment;
 use app\home\model\Like;
 use app\home\model\Comment;
 use think\Db;
-
+use app\home\model\WechatUserTag;
 /*
  * 选举投票主页
 */
 
 class Vote extends Base{
+    /*
+     * 判断 权限
+     */
+    public function role(){
+        $this->checkRole();
+        $userId = session('userId');
+        $res = WechatUserTag::where(['tagid' => 3,'userid' => $userId])->find();
+        if ($res){
+            // 领导权限 查看所有 三会一课  支部活动
+            return 1;
+        }else{
+            return 0;
+        }
+    }
      /*
       * 投票主页
       */
@@ -34,27 +48,69 @@ class Vote extends Base{
          $Depart = WechatUser::where('userid',$userId)->field('department')->find();
          $depart = json_decode($Depart['department']);
          $this->jssdk();
+         if (!$this->role()){ // 普通
+             // 三会一课
+             $con1 = array(
+                 'type' => 1,
+                 'status' => 0,
+                 'branch' => ['in',$depart]
+             );
+             // 支部活动
+             $con2 = array(
+                 'type' => 2,
+                 'status' => 0,
+                 'branch' => ['in',$depart]
+             );
+             // 民主评议
+             $con3 = array(
+                 'status' => ['egt',0],
+                 'publisher' => ['in',$depart]
+             );
+             // 选举投票  未结束
+             $con4 = array(
+                 'status' => array('egt',0),
+                 'end_time' => array('gt',time()),  // 未结束
+                 'publisher' => array('in',$depart)
+             );
+             // 选举投票  历史
+             $con5 = array(
+                 'status' => array('egt',0),
+                 'end_time' => array('elt',time()),  // 历史投票
+                 'publisher' => array('in',$depart)
+             );
+         }else{  // 领导
+             $con1 = array(
+                 'type' => 1,
+                 'status' => 0,
+             );
+             $con2 = array(
+                 'type' => 2,
+                 'status' => 0,
+             );
+             $con3 = array(
+                 'status' => ['egt',0],
+             );
+             $con4 = array(
+                 'status' => array('egt',0),
+                 'end_time' => array('gt',time()),  // 未结束
+             );
+             $con5 = array(
+                 'status' => array('egt',0),
+                 'end_time' => array('elt',time()),  // 历史投票
+             );
+         }
          // 获取 三会一课  内容
-         $meet = Work::where(['type' => 1,'status' => 0,'branch' => ['in',$depart]])->order('id desc')->limit(10)->select();
+         $meet = Work::where($con1)->order('id desc')->limit(10)->select();
          $this->assign('meet',$meet);
          // 获取  支部活动 内容
-         $activity = Work::where(['type' => 2,'status' => 0,'branch' => ['in',$depart]])->order('id desc')->limit(10)->select();
+         $activity = Work::where($con2)->order('id desc')->limit(10)->select();
          $this->assign('activity',$activity);
          // 获取 民主评议
-         $appraise = Db::table('pb_appraise')->where(['status' => ['egt',0],'publisher' => ['in',$depart]])->order('id desc')->limit(10)->select();
+         $appraise = Db::table('pb_appraise')->where($con3)->order('id desc')->limit(10)->select();
          $this->assign('appraise',$appraise);
-         $map = array(
-             'status' => array('egt',0),
-             'end_time' => array('gt',time()),  // 未结束
-             'publisher' => array('in',$depart)
-         );
-         $maps = array(
-             'status' => array('egt',0),
-             'end_time' => array('elt',time()),  // 历史投票
-             'publisher' => array('in',$depart)
-         );
+         // 选举投票
          $voteModel = new VoteModel();
-         $top = $voteModel->where($map)->order('id desc')->select(); // 未结束
+         $top = $voteModel->where($con4)->order('id desc')->select(); // 未结束
          foreach($top as $value){
              $secs = $value['end_time'] - time();
              $result = '';
@@ -90,7 +146,7 @@ class Vote extends Base{
              }
              $value['sum'] = $sum;
          }
-         $list = $voteModel->where($maps)->order('id desc')->select();  // 历史记录
+         $list = $voteModel->where($con5)->order('id desc')->select();  // 历史记录
          foreach($list as $value){
              $Options = VoteOptions::where(['vote_id' => $value->id , 'status' => 0])->select();
              $sum = 0;
@@ -215,11 +271,20 @@ class Vote extends Base{
         $depart = json_decode($Depart['department']);
         $len = input('length');
         $type = input('type');
-        $map = array(
-            'type' => $type,
-            'status' => 0,
-            'branch' => ['in',$depart],
-        );
+        if ($this->role()){
+            // 领导
+            $map = array(
+                'type' => $type,
+                'status' => 0,
+            );
+        }else{
+            // 普通
+            $map = array(
+                'type' => $type,
+                'status' => 0,
+                'branch' => ['in',$depart],
+            );
+        }
         $list = Work::where($map)->order('id desc')->limit($len,10)->select();
         foreach($list as $value){
             $Pic = Picture::where('id',$value['front_cover'])->find();
@@ -243,10 +308,18 @@ class Vote extends Base{
         $Depart = WechatUser::where('userid',$userId)->field('department')->find();
         $depart = json_decode($Depart['department']);
         $len = input('length');
-        $map = array(
-            'status' => ['egt',0],
-            'publisher' => ['in',$depart],
-        );
+        if ($this->role()){
+            // 领导
+            $map = array(
+                'status' => ['egt',0],
+            );
+        }else{
+            // 普通
+            $map = array(
+                'status' => ['egt',0],
+                'publisher' => ['in',$depart],
+            );
+        }
         $list = Db::table('pb_appraise')->where($map)->order('id desc')->limit($len,10)->select();
         foreach($list as $key => $value){
             $Pic = Picture::where('id',$value['front_cover'])->find();
@@ -389,6 +462,7 @@ class Vote extends Base{
      * 上传笔记
      */
     public function notes(){
+        $this->checkRole();
         $userId = session('userId');
         $a = array('1'=>'a','2'=>'b','3'=>'c','4'=>'d','5'=>'e','6'=>'f','7'=>'g','8'=>'h','9'=>'i','10'=>'j','11'=>'k','12'=>'l','13'=>'m','14'=>'n','15'=>'o',
             '16'=>'p','17'=>'q','18'=>'r','19'=>'s','20'=>'t','21'=>'u','22'=>'v','23'=>'w','24'=>'x','25'=>'y','26'=>'z');
@@ -457,6 +531,7 @@ class Vote extends Base{
      * 民主评议 详情
      */
     public function detail(){
+        $this->checkRole();
         $id = input('id');
         $list = Db::table('pb_appraise_answer')->where(['op_id' => $id,'status' => 0])->order('id desc')->select();
         $this->assign('list',$list);
