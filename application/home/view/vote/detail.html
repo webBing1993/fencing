@@ -167,9 +167,10 @@ function loadScroll(){
                     tip.show();
                     if(data.code == 1){
                         addList(data);
-                        var dataLen =data.data.length;
-                        if(data.data.length == 9){
+                        if(data.data.length == 10){
                             tip.text('上拉加载更多');
+                        }else{
+                            tip.text('没有更多了');
                         }
                     }else{
                         tip.text('没有更多了');
@@ -186,14 +187,16 @@ function loadScroll(){
     function  addList(data) {
         var html = '';
         var lists = data.data;
-            $.each(lists,function (index,item) {
+        var len = lists.length;
+        for(var i = 0; i< len;i++) {
+            var list = lists[i];
                 html += '<li>'+
-                        '<img src="/home/images/index/1.png">'+
-                        '<p>张三</p>'+
-                        '<span>2017-07-07</span>'+
-                        '<p>不错哦，不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错错哦不错哦不错哦</p>'+
+                        '<img src="'+list.header+'">'+
+                        '<p>'+list.name+'</p>'+
+                        '<span>'+list.create_time+'</span>'+
+                        '<p>'+list.content+'</p>'+
                         '</li>';
-            });
+            };
             $(".content ul").append(html);
     }
 

@@ -546,6 +546,11 @@ class Vote extends Base{
         $id = input('id');
         $len = input('length');
         $list = Db::table('pb_appraise_answer')->where(['op_id' => $id,'status' => 0])->order('id desc')->limit($len,10)->select();
+        foreach($list as $key => $value){
+            $list[$key]['name'] = get_name($value['userid']);
+            $list[$key]['header'] = get_header($value['userid']);
+            $list[$key]['create_time'] = date('Y-m-d',$value['create_time']);
+        }
         return $this->success('加载成功','',$list);
     }
     /*
