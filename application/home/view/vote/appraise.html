@@ -47,21 +47,24 @@
     .rank ul{
         padding: 0 4vw;
     }
-    .rank .top3 li, .rank .top4 li{
+    .rank ul a{
+        display: block;
+    }
+    .rank .top3 a, .rank .top4 li{
         border-bottom:1px solid #f1f1f1;height:76px;
     }
-    .rank .top3 li span:nth-child(1),.myself span:nth-child(1),.top4 li span:nth-child(1){
+    .rank .top3 a span:nth-child(1),.myself span:nth-child(1),.top4 li span:nth-child(1){
         display: inline-block;
         height: 76px;
         line-height: 76px;
         position: relative;
         padding-right: 2vw;
     }
-    .rank .top3 li img:nth-child(2),.myself img:nth-child(2),.top4 li img:nth-child(2){
+    .rank .top3 a img:nth-child(2),.myself img:nth-child(2),.top4 li img:nth-child(2){
         border-radius:50%;height:50px;width:50px;margin-top: 13px;
     }
 
-    .rank .top3 li span:nth-child(3),.myself span:nth-child(3),.top4 li span:nth-child(3){
+    .rank .top3 a span:nth-child(3),.myself span:nth-child(3),.top4 li span:nth-child(3){
         width: 38%;
         word-wrap: break-word;
         overflow: hidden;
@@ -73,25 +76,26 @@
         margin-top: -30px;
         left: 25vw;
     }
-    .rank .top3 li span:nth-child(4),.myself span:nth-child(4),.top4 li span:nth-child(4){
+    .rank .top3 a span:nth-child(4),.myself span:nth-child(4),.top4 li span:nth-child(4){
         height:20px;line-height:20px;float: right;  margin-top: 22px;
     }
-    .rank .top3 li img:nth-child(5){
+    .rank .top3 a img:nth-child(5){
         position:absolute;margin-left: -56px;height: 56px; margin-top: 12px;
     }
     .rank b{
         font-weight: normal;
     }
-    .rank .top3 li{
+    .rank .top3 a{
         height:60px;
+        color: #333;
     }
-    .rank .top3 li img{
+    .rank .top3 a img{
         height: 40px;
         width: 40px;
         margin-top: 10px;
         margin-left: 16px;
     }
-    .rank .top3 li .comment{
+    .rank .top3 a .comment{
         background: url("/home/images/vote/comment.png") no-repeat;
         width:15px;
         height:15px;
@@ -140,15 +144,11 @@
                         <b>{$list.views}</b>
                     </div>
                 </div>
-                <div class="page">
-                    <div class="page-content" style="">
-                        <div class="tabs">
                             <!-- Tab 2 -->
-                            <div id="tab2" class="tab active">
                                 <div class="list-block rank">
-                                    {volist name="$list.options" id="oo"}
                                     <ul style="font-size:14px;" class="top3">
-                                        <li data-id="">
+                                        {volist name="$list.options" id="oo"}
+                                        <a data-id="" href="/home/vote/detail.html">
                                             <!--color:#F4C84A;-->
                                             <img src="{$oo.images|get_cover='path'}" alt="" >
                                             <span></span>
@@ -156,35 +156,17 @@
                                         <b><b></b>{$oo.content} </b>
                                     </span>
                                             <span class="comment"></span>
-                                        </li>
+                                        </a>
+                                        {/volist}
                                     </ul>
-                                    {/volist}
+
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
         {/block}
 
         {block name="script"}
-        <script src="/static/framework7/framework7.js"></script>
         <script>
-            var myApp=new Framework7;
-            var $$=Dom7;
-            var c=1;
-            $(document).ready(function(){
-                var screen_width=screen.width/2;
-                console.log(screen_width);
-            });
-
-
-            var aa=$('.top3>li:nth-child(1)').find('img:nth-child(2)').attr('src');
-            var bb=$('.top3>li:nth-child(1)').find('span:nth-child(3)').text();
-            var cc=$('.banner_words span').text();
-            $('.top .middle div:nth-child(1)').find('img').attr({src:aa});
-            $('.top .banner_words span').text(cc+'——'+bb);
         </script>
         {/block}
