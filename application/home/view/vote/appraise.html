@@ -22,10 +22,6 @@
         width:100%;
         height: 60vw;
     }
-
-    .top{
-        position:relative;
-    }
     .top>.middle{
         width:120px;height:120px;position:absolute;  left: 50%;
         margin-left: -60px;
@@ -118,6 +114,30 @@
     .rank ul li+span{
         position: absolute;right: 15vw;margin-top: -48px;background: #eee;border-radius: 4px;padding: 0 4px;color: #999;
     }
+    .banner{
+        position: relative;
+         }
+
+    .banner div{
+        position: absolute;
+        background:#000;
+        opacity: 0.5;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%,-50%);
+    }
+    .banner span{
+        position: absolute;
+        font-size: 1.8rem;
+        text-align: center;
+        color: #fff;
+        width: 60%;
+        text-align: center;
+        display: block;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%,-50%);
+    }
 </style>
 {/block}
 
@@ -125,9 +145,11 @@
 <div class="views">
     <div class="view view-main">
         <div class="navbar">
-            <div class="top" style="position:relative;">
+            <div class="top">
                 <div class="banner">
                     <img src="{$list.front_cover|get_cover='path'}"  alt="banner图片" class="banner_img">
+                    <div></div>
+                    <span>{$list.title}</span>
                 </div>
 
                 <div class="banner_data">
@@ -168,5 +190,10 @@
 
         {block name="script"}
         <script>
+            $(function(){
+                var heigth = $(".banner span").height();
+                var width = $(".banner span").width();
+                $(".banner div").css({"height":heigth,"width":width});
+            })
         </script>
         {/block}
