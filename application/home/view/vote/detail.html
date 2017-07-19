@@ -121,7 +121,7 @@
     <div class="myword fl">
         <input type="text" placeholder="说说你的感想！">
     </div>
-    <div class="send fr" onclick="send(this,7)">发送</div>
+    <div class="send fr" onclick="send(this,{$id})">发送</div>
 </div>
 </div>
 {/block}
@@ -132,7 +132,7 @@
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
 $(function(){
     var len  = $(".content").find("ul li").length;
-    if(len >= 9){
+    if(len >= 10){
         $('.tip').text('上拉加载更多');
         loadScroll();
     }
@@ -148,12 +148,16 @@ function loadScroll(){
         var len  = $(".content").find("ul li").length;
         var tip = $(".tip");
         var loading = $('.loading');
+        var id = {$id};
+        console.log(dh);
+        console.log(end,1)
         if(dh == end){
             scrollNow = false;
             $.ajax({
                 type:"post",
-                url:"",
+                url:"{:Url('Vote/commentmore')}",
                 data:{
+                    id : id,
                     length:len,
                 },
                 beforeSend: function(XMLHttpRequest){
@@ -199,15 +203,14 @@ function loadScroll(){
      * 发送评论
      * @param e
      */
-    var send = function(e,type,id){
+    var send = function(e,id){
         var it = $(e ).prev().find('input');
         if(it.val() != '' && it.val().length > 4){
             $.ajax({
                 type:"post",
-                url:"{:Url('Base/comment')}",
+                url:"{:Url('Vote/comment')}",
                 data:{
-                    type:type,
-                    aid:id,
+                    id:id,
                     content:it.val()
                 },
                 beforeSend:function(){
@@ -219,13 +222,12 @@ function loadScroll(){
                 },
                 success:function(data){
                     var data = data.data;
-                    var userid = "'"+data.create_user+"'";
                     var html = '';
                     html += '<li>'+
-                            '<img src="/home/images/index/1.png">'+
-                            '<p>张三</p>'+
-                            '<span>2017-07-07</span>'+
-                            '<p>不错哦，不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错错哦不错哦不错哦</p>'+
+                            '<img src="'+data.header+'">'+
+                            '<p>'+data.name+'</p>'+
+                            '<span>'+data.create_time+'</span>'+
+                            '<p>'+data.content+'</p>'+
                             '</li>';
                     $(".default").hide();
                     $(".content ul").prepend(html);

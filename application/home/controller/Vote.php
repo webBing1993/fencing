@@ -533,8 +533,40 @@ class Vote extends Base{
     public function detail(){
         $this->checkRole();
         $id = input('id');
-        $list = Db::table('pb_appraise_answer')->where(['op_id' => $id,'status' => 0])->order('id desc')->select();
+        $list = Db::table('pb_appraise_answer')->where(['op_id' => $id,'status' => 0])->order('id desc')->limit(10)->select();
         $this->assign('list',$list);
+        $this->assign('id',$id);
         return $this->fetch();
+    }
+    /*
+     * 民主评议  评论 更多
+     */
+    public function commentmore(){
+        $this->checkRole();
+        $id = input('id');
+        $len = input('length');
+        $list = Db::table('pb_appraise_answer')->where(['op_id' => $id,'status' => 0])->order('id desc')->limit($len,10)->select();
+        return $this->success('加载成功','',$list);
+    }
+    /*
+     * 民主评议  评论
+     */
+    public function comment(){
+        $data['op_id'] = input('id');
+        $data['content'] = input('content');
+        $data['userid'] = session('userId');
+        $data['create_time'] = time();
+        $res = Db::table('pb_appraise_answer')->insert($data);
+        if ($res){
+            $id = Db::table('pb_appraise_answer')->getLastInsID();
+            Db::table('pb_appraise_options')->where(['id' => $data['op_id'],'status' => 0])->setInc('num');
+            $list = Db::table('pb_appraise_answer')->where('id',$id)->find();
+            $list['name'] = get_name(session('userId'));
+            $list['header'] = get_header(session('userId'));
+            $list['create_time'] = date('Y-m-d',$list['create_time']);
+            return  $this->success('评论成功','',$list);
+        }else{
+            return $this->error('评论失败');
+        }
     }
 }
