@@ -927,9 +927,10 @@
         if(type == 4){
             for(var i = 0; i< len;i++) {
                 var list = lists[i];
-                html += '<a href="/home/vote/meeting/id/">'+
-                        '<img src="/home/images/index/1.png">'+
-                        '<p>多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</p>'+
+                html += '<a href="/home/vote/appraise/id/'+list.id+'">'+
+                        '<img src="'+list.front_cover+'">'+
+                        '<p>'+list.title+'</p>'+
+                        '<p style="color: #999">'+list.create_time+'</p>'+
                         '</a>';
             };
             $(".notices").eq(type - 1).append(html);

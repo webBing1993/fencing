@@ -41,7 +41,7 @@ class Vote extends Base{
          $activity = Work::where(['type' => 2,'status' => 0,'branch' => ['in',$depart]])->order('id desc')->limit(10)->select();
          $this->assign('activity',$activity);
          // 获取 民主评议
-         $appraise = Db::table('pb_appraise')->where(['status' => ['egt',0],'publisher' => ['in',$depart]])->order('id desc')->select();
+         $appraise = Db::table('pb_appraise')->where(['status' => ['egt',0],'publisher' => ['in',$depart]])->order('id desc')->limit(10)->select();
          $this->assign('appraise',$appraise);
          $map = array(
              'status' => array('egt',0),
@@ -236,7 +236,28 @@ class Vote extends Base{
      * 民主评议 加载更多
      */
     public function plus(){
-
+        $this->checkRole();
+        $this->anonymous();
+        $userId = session('userId');
+        //  获取该用户 所在支部
+        $Depart = WechatUser::where('userid',$userId)->field('department')->find();
+        $depart = json_decode($Depart['department']);
+        $len = input('length');
+        $map = array(
+            'status' => ['egt',0],
+            'publisher' => ['in',$depart],
+        );
+        $list = Db::table('pb_appraise')->where($map)->order('id desc')->limit($len,10)->select();
+        foreach($list as $value){
+            $Pic = Picture::where('id',$value['front_cover'])->find();
+            $value['front_cover'] = $Pic['path'];
+            $value['create_time'] = date('Y-m-d',$value['create_time']);
+        }
+        if ($list){
+            return $this->success('加载成功','',$list);
+        }else{
+            return $this->error('加载失败');
+        }
     }
     /*
      * 投票 页面
@@ -436,6 +457,9 @@ class Vote extends Base{
      * 民主评议 详情
      */
     public function detail(){
+        $id = input('id');
+        $list = Db::table('pb_appraise_answer')->where(['op_id' => $id,'status' => 0])->order('id desc')->select();
+        $this->assign('list',$list);
         return $this->fetch();
     }
 }

@@ -11,13 +11,24 @@ use app\admin\model\Appraise;
 use app\admin\model\AppraiseOptions;
 use app\admin\model\WechatUser;
 use app\admin\model\AppraiseAnswer;
+use think\Db;
+
 class Work extends Admin
 {
     /*
      * 三会一课
      */
     public function index(){
-
+        $map = array(
+            'type' => 1,
+            'status' => array('egt',0),
+        );
+        $list = $this->lists('Work',$map);
+        int_to_string($list,array(
+            'status' => array(0 =>"已发布"),
+        ));
+        $this->assign('list',$list);
+        return $this->fetch();
     }
     /*
      * 支部活动

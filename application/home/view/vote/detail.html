@@ -2,7 +2,7 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/common/tip.css">
-<title></title>
+<title>民主评议</title>
 <style>
     .content ul li img{
         float: left;
@@ -50,6 +50,10 @@
         -webkit-overflow-scrolling: touch;
         width: 100%;
     }
+    .default{
+        background:#eee;
+        height:0;
+    }
 
 </style>
 {/block}
@@ -57,14 +61,20 @@
 {block name="body"}
 <div class="scrollDiy">
 <div class="content">
+    {empty name="list"}
+    <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
+    {else/}
     <ul>
+        {volist name="list" id="lo"}
         <li>
-            <img src="/home/images/index/1.png">
-            <p>张三</p>
-            <span>2017-07-07</span>
-            <p>不错哦，不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错哦不错错哦不错哦不错哦</p>
+            <img src="{$lo.userid|get_header}">
+            <p>{$lo.userid|get_name}</p>
+            <span>{$lo.create_time|time_format='Y-m-d'}</span>
+            <p>{$lo.content}</p>
         </li>
+        {/volist}
     </ul>
+    {/empty}
 </div>
 <div class="tip"></div>
 <div class="loading hidden">

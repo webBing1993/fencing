@@ -67,9 +67,9 @@
                                 <td style="line-height: 50px">{$lo.status_text}</td>
                                 <td style="line-height: 50px">
                                     <a href="{:Url('Work/edit?id='.$lo['id'])}">修改</a>&emsp;
-                                    {eq name="$lo.num" value="0"}
+                                    {neq name="$lo.num" value="0"}
                                     <a onclick="scan({$lo.id})">查看评论详情</a>&emsp;
-                                    {/eq}
+                                    {/neq}
                                     <a href="{:Url('Work/optionsdel?id='.$lo.id)}" class="confirm ajax-del">删除</a>
                                 </td>
                             </tr>
