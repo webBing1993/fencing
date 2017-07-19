@@ -43,8 +43,11 @@
                                 <th>会议时间</th>
                                 <th>会议地点</th>
                                 <th>参与人员</th>
-                                <th>创建时间</th>
-                                <th>状态</th>
+                                <th>发布人</th>
+                                <th>发布时间</th>
+                                <th>浏览量</th>
+                                <th>点赞量</th>
+                                <th>评论量</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -57,10 +60,13 @@
                                 <td>{$vo.meet_time|time_format='Y-m-d H:i'}</td>
                                 <td>{$vo.meet_home}</td>
                                 <td>{$vo.staff}</td>
+                                <td>{$vo.name}</td>
                                 <td>{$vo.create_time|time_format='Y-m-d'}</td>
-                                <td>{$vo.status_text}</td>
+                                <td>{$vo.views}</td>
+                                <td>{$vo.likes}</td>
+                                <td>{$vo.comments}</td>
                                 <td>
-                                    <a href="{:Url('News/edit?id='.$vo['id'])}">修改</a>
+                                    <a onclick="scan({$vo.id})">查看内容</a>
                                     &emsp;<a href="{:Url('News/del?id='.$vo['id'])}" class="confirm ajax-del">删除</a>
                                 </td>
                             </tr>
@@ -86,6 +92,7 @@
 
 {block name="script"}
 <script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/admin/js/layer/layer.js"></script>
 <script>
     $(document).ready(function(){
         $('.i-checks').iCheck({
@@ -93,6 +100,26 @@
             radioClass: 'iradio_square-green',
         });
     });
+    function scan(Id) {
+        $.ajax({
+            type:"post",
+            url:"{:Url('Work/comment')}",
+            data:"id="+Id,
+            success:function(data){
+                console.log(data);
+                html = '';
+                for(var i = 0 ;i<data.length;i++){
+                    html += "<br>&emsp;<span>"+data[i].name+"</span>&emsp;<span>"+data[i].create_time+"</span><span>&emsp;&emsp;&emsp;"+data[i].content+"</span><hr>";
+                }
+                parent.layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['750px', '600px'], //宽高
+                    content:html
+                });
+            }
+        });
 
+    }
 </script>
 {/block}

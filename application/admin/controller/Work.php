@@ -24,9 +24,6 @@ class Work extends Admin
             'status' => array('egt',0),
         );
         $list = $this->lists('Work',$map);
-        int_to_string($list,array(
-            'status' => array(0 =>"已发布"),
-        ));
         $this->assign('list',$list);
         return $this->fetch();
     }

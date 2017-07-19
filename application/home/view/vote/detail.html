@@ -96,9 +96,10 @@
 <div class="scrollDiy">
 <div class="content">
     {empty name="list"}
-    <div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div>
-    <ul>
+    <ul><div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div></ul>
+
         {else/}
+    <ul>
         {volist name="list" id="lo"}
         <li>
             <img src="{$lo.userid|get_header}">
@@ -107,8 +108,8 @@
             <p>{$lo.content}</p>
         </li>
         {/volist}
-        {/empty}
     </ul>
+        {/empty}
 
 </div>
 <div class="tip"></div>
