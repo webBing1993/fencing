@@ -117,13 +117,7 @@
                                 <td>{$vo.type}</td>
                                 {neq name="vo.create_user" value=""}<td>{$vo.create_user}</td>{else/}<td>无</td>{/neq}
                                 <td>{$vo.create_time|time_format}</td>
-                                {if condition="$vo.status eq -1"}
-                                <td style="color:#ff0000;">{$vo.status_text}</td>
-                                {elseif condition="$vo.status eq 0"/}
                                 <td>{$vo.status_text}</td>
-                                {else/}
-                                <td style="color: #00a600;">{$vo.status_text}</td>
-                                {/if}
                             </tr>
                             {/volist}
                             </tbody>
