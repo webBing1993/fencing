@@ -153,9 +153,9 @@ class Notice extends Admin {
             foreach ($list as $value) {
                 $msg = NoticeModel::where('id',$value['focus_main'])->find();
                 if ($msg['type'] == 1){
-                    $value['title'] = '台州个协';
+                    $value['type'] = '台州个协';
                 }else{
-                    $value['title'] = '党总支';
+                    $value['type'] = '党总支';
                 }
                 $value['title'] = $msg['title'];
             }
