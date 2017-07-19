@@ -94,7 +94,7 @@
 
 {block name="body"}
 <div class="scrollDiy">
-<div class="content">
+<div class="content" style="padding-bottom: 50px">
     {empty name="list"}
     <ul><div class="default"><img src="/home/images/notice/nomessage.png" alt="暂无消息"> </div></ul>
 
@@ -111,7 +111,7 @@
     </ul>
         {/empty}
 
-</div>
+
 <div class="tip"></div>
 <div class="loading hidden">
     <div class="typing_loader"></div>
@@ -142,15 +142,13 @@ $(function(){
 function loadScroll(){
     var windowHeight = $(".scrollDiy").height();
     $(".scrollDiy").off("scroll").on("scroll",function () {
-        var dh = $(".content").height();
+        var dh = $(".content").height()+64;
 //		console.log("dh"+dh);
         var end = windowHeight + $(".scrollDiy" ).scrollTop();
         var len  = $(".content").find("ul li").length;
         var tip = $(".tip");
         var loading = $('.loading');
         var id = {$id};
-        console.log(dh);
-        console.log(end,1)
         if(dh == end){
             scrollNow = false;
             $.ajax({
