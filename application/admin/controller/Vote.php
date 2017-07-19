@@ -226,7 +226,7 @@ class Vote extends Admin{
         );
         $infoes = VoteModel::where($info)->select();
         foreach($infoes as $value){
-            $value['title'] = '【民主评议】'.$value['title'];
+            $value['title'] = '【选举投票】'.$value['title'];
         }
         $this->assign('info',$infoes);
         return $this->fetch();
@@ -251,7 +251,7 @@ class Vote extends Admin{
         $img = Picture::get($info['front_cover']);
         $path = hostUrl.$img['path'];
         $information = array(
-            'title' => '【民主评议】'.$title,
+            'title' => '【选举投票】'.$title,
             'description' => $content,
             'url'  => $url,
             'picurl' => $path

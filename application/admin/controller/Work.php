@@ -11,6 +11,7 @@ use app\admin\model\Appraise;
 use app\admin\model\AppraiseOptions;
 use app\admin\model\WechatUser;
 use app\admin\model\AppraiseAnswer;
+use app\admin\model\Work as WorkModel;
 use think\Db;
 
 class Work extends Admin
@@ -31,7 +32,40 @@ class Work extends Admin
      * 支部活动
      */
     public function activity(){
-
+        $map = array(
+            'type' => 2,
+            'status' => array('egt',0),
+        );
+        $list = $this->lists('Work',$map);
+        $this->assign('list',$list);
+        return $this->fetch();
+    }
+    /*
+     * 三会一课 支部活动 查看内容
+     */
+    public function scan(){
+        $id = input('id');
+        $Work = new WorkModel();
+        $data = $Work->where(['id' => $id,'status' => 0])->field('content,images')->find();
+        if (!empty($data['images'])){
+            $data['images'] = json_decode($data['images']);
+        }
+        return $data;
+    }
+    /*
+     * 三会一课 支部活动  删除
+     */
+    public function dele(){
+        $id = input('id');
+        if (empty($id)){
+            return $this->error('系统参数错误');
+        }
+        $res = WorkModel::where('id',$id)->update(['status' => -1]);
+        if ($res){
+            return $this->success('删除成功');
+        }else{
+            return $this->error('删除失败');
+        }
     }
     /*
      * 民主评议
