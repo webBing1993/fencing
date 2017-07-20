@@ -24,7 +24,7 @@
 		<div class="title limit_">{$detail.title}</div>
 		<div class="note">
 			<span class="read">{$detail.views}</span>
-			<span class="comment">{$detail.comments}</span>
+			<span class="comment" id="sum">{$detail.comments}</span>
 			<span class="fl">{$detail.create_time|time_format='Y-m-d'}</span>
 		</div>
 	</div>
@@ -181,7 +181,7 @@
 							'</div>';
 					$('.lists' ).prepend(html);
 					it.val('');
-					var sum = $('.sum span' );
+					var sum = $('#sum' );
 					sum.text(parseInt(sum.text())+1);
 					swal({
 						title: ' ',
