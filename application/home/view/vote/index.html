@@ -1000,7 +1000,7 @@
         block.addEventListener("touchend",function() {
             document.removeEventListener("touchmove",defaultEvent,false);
             if(touch_start != touch_end && touch_end){
-                var d = document.documentElement.clientWidth - block.offsetWidth -30;
+                var d = document.documentElement.clientWidth - block.offsetWidth -10;
                 if(block.offsetLeft<(document.documentElement.clientWidth - block.offsetWidth)/2) {
                     d = 10 ;
                 }
