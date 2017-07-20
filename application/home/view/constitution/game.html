@@ -166,6 +166,7 @@
 				data:{'data':data},
 				success:function(data){
 					$('.scores').html(data.url.score);
+					$('.modal').unbind('click');
 					$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
 					$('#link').attr('href','/home/Constitution/game/c/1/id/'+data.url.id);
 				}
@@ -195,6 +196,8 @@
 	$(".party .continue").click(function(){
 		window.location.href = "{:Url('Constitution/answer')}";
 	})
+
+
 </script>
 
 {/block}
