@@ -541,18 +541,26 @@
         display: block;
         border-bottom: 1px solid #f1f1f1;
     }
-    .comments ul a img{
-        height:60px;
-        width:60px;
+    .comments ul a img {
+        height: 60px;
+        width: 60px;
         float: left;
         margin: 10px;
         margin-left: 16px;
+    }
+    .content p{
+        width:auto;
     }
     .comments ul a p{
         color: #333;
         position: relative;
         left:16px;
-        width:90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        padding-right: 28px;
     }
 
     /*悬浮按钮*/
