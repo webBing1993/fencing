@@ -315,7 +315,7 @@ body {
 .interactive ul a{
   display: block;
   width:100%;
-  padding: 4vw 3.2vw;
+  padding: 12px 3.2vw;
   line-height: 24px;
   border-bottom: 1px solid #f1f1f1;
 }

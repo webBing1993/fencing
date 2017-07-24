@@ -95,7 +95,6 @@ html,body{
 }
 .banner {
   width: 100vw;
-  height: 50vw;
 }
 .banner img {
   width: 100%;
@@ -105,7 +104,7 @@ html,body{
   width: 100%;
   padding-left: 13px;
   padding-right: 13px;
-  padding-top: 5vw;
+  padding-top:20px;
   border-bottom: 1px solid #f7f7f7;
 }
 .lists .list .fl img {

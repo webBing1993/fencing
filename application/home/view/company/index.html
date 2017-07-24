@@ -226,7 +226,7 @@
 	</div>
 
 	<!--/建言献策-->
-<div class="notices aa">
+	<div class="notices aa">
 		<div class="lists">
 			{volist name="lists" id="vo"}
 			<div class="list clear">
@@ -271,9 +271,9 @@
 			</div>
 			{/volist}
 		</div>
-	{eq name="visit" value="0"}
+		{eq name="visit" value="0"}
 		<a id="publish" href="{:Url('Company/publish')}"></a>
-	{/eq}
+		{/eq}
 		<div class="bottom clear">
 			<div class="myword fl">
 				<input type="text" placeholder="说说你的感想！" id="impression">
@@ -372,16 +372,6 @@
 			//使用示例
 			setCookie("type",eq+11);
 		});
-		//安卓4.4tab兼容
-		var u = navigator.userAgent;
-		var isAnd = !u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-		if(isAnd){
-			var num = u.substr(u.indexOf('Android') + 8, 3);
-			if(num <= 4.4){
-				var tabw = $('.tabs').width()/3 -2;
-				$('.tabs>.tab').width(tabw);
-			}
-		}
 		viewer = $('.imgs').viewer({
 			url: 'data-original',
 			toolbar:false,
@@ -434,7 +424,7 @@
 						if(data.code == 1){
 							addLists(data,type);
 							var dataLen =data.data.length;
-							if(data.data.length == 5){
+							if(data.data.length == 7){
 								tip.text('上拉加载更多');
 							}else{
 								tip.text('没有更多了');
@@ -626,7 +616,7 @@
 			var n_img = this_.find('.imgs .img' ).length;
 			var n_li = this_.find('.comments li' ).length;
 			if(n_img == 4){
-				this_.find('.imgs .img' ).eq(1).after('<br>')
+				this_.find('.imgs .img' ).eq(1).after('')
 			}
 			if(n_li == 0){
 				this_.find('.comments').addClass('hide');
