@@ -54,7 +54,7 @@
 				<div class="list" data-tab="题号">
 					<div class="title" >{$vo.title}</div>
 					{volist name="vo->Option" id="value" key="k"}
-					<label {eq name="vo.right" value="$k" }class="checked" {/eq}>{if condition="($k eq 1) AND ($value neq ' ') AND ($value neq '-') "}A{elseif condition="($k eq 2) AND ($value neq ' ') AND ($value neq '-')"}B{elseif condition="($k eq 3 )AND ($value neq ' ') AND ($value neq '-')"}C{elseif condition="($k eq 4 )AND ($value neq ' ') AND ($value neq '-')"/}D{/if}.{$value|substr=###,'2'}</label>
+					<label  {eq name="vo.right" value="$k" }class="checked" {/eq}>{if condition="($k eq 1) AND ($value neq ' ') AND ($value neq '-') "}A{elseif condition="($k eq 2) AND ($value neq ' ') AND ($value neq '-')"}B{elseif condition="($k eq 3 )AND ($value neq ' ') AND ($value neq '-')"}C{elseif condition="($k eq 4 )AND ($value neq ' ') AND ($value neq '-')"/}D{/if}.{$value|substr=###,'2'}</label>
 					{/volist}
 					<div class="note">
 						<span class="true">正确答案：<i>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</i></span>
@@ -178,14 +178,16 @@
 <!--当日已经答题就不能选中lable-->
 
 <script>
-	//选中样式变化
-	$(function() {
-		$('label').on('click', function (e) {
-			var it = $(this);
-			it.addClass('checked');
-			it.siblings('label').removeClass('checked');
+	if ({$check} == 0){
+		//选中样式变化
+		$(function() {
+			$('label').on('click', function (e) {
+				var it = $(this);
+				it.addClass('checked');
+				it.siblings('label').removeClass('checked');
+			});
 		});
-	});
+	}
 
 	$(".party .start1").click(function(){
 		window.location.href = "{:Url('Constitution/answer')}";
