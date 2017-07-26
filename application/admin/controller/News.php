@@ -27,7 +27,7 @@ class News extends Admin {
         );
         $list = $this->lists('News',$map);
         int_to_string($list,array(
-            'type' => array(1=>"新闻聚焦",2=>"各地动态",3=>"意见文件"),
+            'type' => array(1=>"新闻聚焦",2=>"各地动态",3=>"政策文件"),
             'status' => array(0 =>"已发布",1=>"已发布"),
         ));
 
@@ -120,7 +120,7 @@ class News extends Admin {
                         $value['title'] = '【各地动态】'.$value['title'];
                         break;
                     case 3:
-                        $value['title'] = '【意见文件】'.$value['title'];
+                        $value['title'] = '【政策文件】'.$value['title'];
                         break;
                     default;
                 }
@@ -147,7 +147,7 @@ class News extends Admin {
                         $value['type'] = '各地动态';
                         break;
                     case 3:
-                        $value['type'] = '意见文件';
+                        $value['type'] = '政策文件';
                         break;
                     default;
                 }
@@ -170,7 +170,7 @@ class News extends Admin {
                         $value['title'] = '【各地动态】'.$value['title'];
                         break;
                     case 3:
-                        $value['title'] = '【意见文件】'.$value['title'];
+                        $value['title'] = '【政策文件】'.$value['title'];
                         break;
                     default;
                 }
