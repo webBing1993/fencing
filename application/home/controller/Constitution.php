@@ -12,6 +12,7 @@ use think\Controller;
 use app\admin\model\Question;
 use app\home\model\Answer;
 use app\home\model\Answers;
+use think\Db;
 
 /**
  * class Constitution
@@ -256,6 +257,7 @@ class Constitution extends Base {
             $answer->score=$score;
             $answer->exist=1;
             if($answer->save()){
+                Db::name('answer_data')->insert(['userid' => $users,'create_time' => time()]);
                 return $this->success('提交成功');
             }else{
                 return $this->error('提交失败');
@@ -270,6 +272,7 @@ class Constitution extends Base {
         $Answer->score=$score;
         $Answer->exist=1;
         if($Answer->save()){
+            Db::name('answer_data')->insert(['userid' => $users,'create_time' => time()]);
             return $this->success('提交成功');
         }else{
             return $this->error('提交失败');
