@@ -8,6 +8,7 @@ use think\Db;
  * Date: 2017/7/26
  * Time: 15:59
  */
+
 class Data extends Admin
 {   
     // 两学一做   数据统计
