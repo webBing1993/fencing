@@ -28,6 +28,22 @@
         -webkit-animation: cir2 0.5s ease-in;
         animation: cir2 0.5s ease-in;
     }
+    /*个人中心*/
+    .usercenter{
+        position: absolute;
+        top:3vw;
+        right:0;
+        width: 18vw;
+        height: 8vw;
+        font-size: 1.4rem;
+        -webkit-border-radius:4vw 0 0 4vw ;
+        border-radius:4vw 0 0 4vw ;
+        line-height: 8vw;
+        text-align: center;
+        color: #ffffff;
+        background: -webkit-linear-gradient(left, #ff8548, #fd5a0a);
+        background: linear-gradient(left, #ff8548, #fd5a0a);
+    }
 </style>
 {/block}
 
@@ -35,12 +51,8 @@
     <!--banner-->
     <div class="banner">
         <img src="/home/images/common/banner.png" alt="首页banner图">
-        <a href="{:Url('User/index')}" class="user">
-            {eq name="visit" value="0"}
-            <img src="{$user|get_header}" alt="个人中心">
-            {else/}
-            <img src="/home/images/user/vistor.jpg" alt="个人中心">
-            {/eq}
+        <a href="{:Url('User/index')}">
+            <div class="usercenter">个人中心</div>
         </a>
     </div>
     <!--图标轮播-->
@@ -79,9 +91,9 @@
 		</a>
 	</li>
 	<li>
-		<a href="{:Url('Vote/meet')}">
-			<img src="/home/images/index/8.png" alt="视频会议">
-			<span>视频会议</span>
+		<a href="">
+			<img src="/home/images/index/8.png" alt="观看直播">
+			<span>观看直播</span>
 		</a>
 	</li>
 </ul>
@@ -89,39 +101,33 @@
         <div class="swiper-slide">
             <ul class="model clearfix">
                 <li>
+                    <a href="{:Url('Study/index?c=1')}">
+                        <img src="/home/images/index/9.png" alt="两学一做">
+                        <span>两学一做</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{:Url('Redcollection/index?c=1')}">
-                        <img src="/home/images/index/7.png" alt="红色珍藏">
+                        <img src="/home/images/index/10.png" alt="红色珍藏">
                         <span>红色珍藏</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{:Url('Volunteer/order')}">
-                        <img src="/home/images/index/4.png" alt="心愿认领">
-                        <span>心愿认领</span>
+                    <a href="{:Url('Special/index')}">
+                        <img src="/home/images/index/11.png" alt="专题模块">
+                        <span>专题模块</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{:Url('Feedback/index')}">
-                        <img src="/home/images/index/5.png" alt="党员之声">
-                        <span>党员之声</span>
+                    <a href="">
+                        <img src="/home/images/index/12.png" alt="数据统计">
+                        <span>数据统计</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{:Url('Structure/index?c=1')}">
-                        <img src="/home/images/index/6.png" alt="组织架构">
-                        <span>组织架构</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{:Url('Tourist/erweima')}">
-                        <img src="/home/images/index/12.png" alt="游客模式">
-                        <span>游客模式</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa9604d4517c1ee5d&redirect_uri=https%3A%2F%2Fqy.weixin.qq.com%2Fcgi-bin%2Fwap_contact_v5%3Ftype%3Dcontact&response_type=code&scope=snsapi_base&state=MTA3NDAwODM0Mg%3D%3D#wechat_redirect">
-                        <img src="/home/images/index/8.png" alt="队伍管理">
-                        <span>队伍管理</span>
+                    <a href="">
+                        <img src="/home/images/index/13.png" alt="我要直播">
+                        <span>我要直播</span>
                     </a>
                 </li>
             </ul>
@@ -187,9 +193,6 @@
     <div class="loading hidden">
         <div class="typing_loader"></div>
     </div>
-
-
-<a href="{:Url('Special/index')}" class="after manager" id="publish"></a>
 {/block}
 
 {block name="script"}
@@ -210,7 +213,6 @@
             //上拉加载
             loadScroll();
         }
-        moveanyway();
     });
     function loadScroll(){
         $(window ).off("scroll" ).on("scroll",function(){

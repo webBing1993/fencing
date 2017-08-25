@@ -62,7 +62,7 @@
 	color: #666;
 }
 .list .lr{
-	width: calc(100% - 30vw);
+	width: calc(100% - 28vw);
 }
 .list .lr .title{
 	height:38px;
