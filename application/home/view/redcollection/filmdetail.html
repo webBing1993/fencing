@@ -29,9 +29,9 @@
 				<span class="read">{$film.views}</span>
 				{eq name="visit" value="0"}
 				{eq name="film.is_like" value="0"}
-				<span class="isgood good" onclick="isGood(this,3,{$film.id})">{$film.likes}</span>
+				<span class="isgood good" onclick="isGood(this,9,{$film.id})">{$film.likes}</span>
 				{else/}
-				<span class="isgood good_" onclick="isGood(this,3,{$film.id})">{$film.likes}</span>
+				<span class="isgood good_" onclick="isGood(this,9,{$film.id})">{$film.likes}</span>
 				{/eq}
 				{else/}
 				<span class="isgood good">{$film.likes}</span>
@@ -74,7 +74,7 @@
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！" id="message">
 		</div>
-		<div class="send fl" onclick="send(this,3,{$film.id})">发送</div>
+		<div class="send fl" onclick="send(this,9,{$film.id})">发送</div>
 		<div class="not">
 			<div class="bg"></div>
 			<div class="msg">
@@ -197,7 +197,7 @@ function loadScroll(){
 				type:"post",
 				url:"{:Url('Base/morecomment')}",
 				data:{
-					type:3,
+					type:9,
 					aid:id,
 					length:len
 				},
