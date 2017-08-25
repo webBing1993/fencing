@@ -57,7 +57,7 @@
         {volist name="list" id="vo"}
         <a class="list clear" href="{:Url('Special/detail?id='.$vo['id'])}">
             <div class="fl">
-                <img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}" style="width: 90px;height: 60px">
+                <img src="{$vo['front_cover']|get_cover='path'}" alt="{$vo.title}">
             </div>
             <div class="fr lr">
                 <div class="title limit_">{$vo.title}</div>

@@ -58,15 +58,17 @@ body {
 }
 .modal-content .header{
   position: absolute;
-  top:36%;
-  left:36%;
   width: 80px;
   height: 80px;
-  margin-top: 4px;
   border: 8px solid #ffffff;
   -webkit-border-radius: 50%;
   border-radius: 50%;
   overflow: hidden;
+  left: 50%;
+  top: 50%;
+  margin-left: -40px;
+  margin-top: -40px;
+}
 }
 .lists .list.tag{
   width: 100%;
