@@ -46,26 +46,32 @@
 .list {
   display: block;
   width: 100%;
-  padding-left: 13px;
-  padding-right: 13px;
-  padding-top: 5px;
-  height: 100px;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  padding-top:1vw;
+  height: 26.8vw;
   border-bottom: 1px solid #f1f1f1;
+  position: relative;
+  max-height: 160px;
 }
 .list .title {
   font-size: 1.4rem;
   font-weight: 600;
-  line-height: 30px;
   color: #333333;
 }
 .list .content {
   font-size: 1.3rem;
   color: #666666;
   min-height: 35px;
+  height:6vw;
+  margin-top: 2vw;
+
 }
 .list .note {
-  margin-top: 6px;
   font-size: 1.2rem;
+  position: absolute;
+  bottom: 1vw;
+  width: 94vw;
 }
 .list .note .ing {
   color: #259b24;

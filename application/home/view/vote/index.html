@@ -483,6 +483,7 @@
         padding-right: 13px;
         border-bottom: 1px solid #f1f1f1;
         color: #999999;
+        position: relative;
     }
     .content .notices .list .title {
         color: #333333;
@@ -496,6 +497,9 @@
     .content .notices .list .time {
         margin-top: 5px;
         font-size: 1.2rem;
+        position: absolute;
+        bottom:2vw;
+        width:calc(100% - 35vw);
     }
     .content .notices :nth-child(1) .tab {
         /*color: #e82a2a;*/
@@ -512,22 +516,20 @@
     .content .notices:nth-child(3) .tab {
         color: #f98800;
     }
-    .content .notices:nth-child(2) .list,
-    .content .notices:nth-child(3) .list {
-        height: 80px;
-    }
+
     .content .notices:nth-child(2) .list .fl img,
     .content .notices:nth-child(3) .list .fl img {
-        width: 80px;
-        height: 60px;
-        margin-top: 10px;
+        width: 24vw;
+        height: 16vw;
+        margin-top: 2vw;
+        color: #666;
+        margin-bottom: 2vw;
     }
     .content .notices:nth-child(2) .list .right,
     .content .notices:nth-child(3) .list .right {
-        width: calc(100% - 90px);
+        width: calc(100% - 28vw);
         height: 60px;
-        margin-top: 10px;
-        margin-left: 10px;
+        margin-top:2vw;
     }
     .content .notices:nth-child(2) .list .right .title,
     .content .notices:nth-child(3) .list .right .title {
@@ -540,27 +542,39 @@
     .comments ul a{
         display: block;
         border-bottom: 1px solid #f1f1f1;
+        position: relative;
     }
     .comments ul a img {
-        height: 60px;
-        width: 60px;
+        width: 24vw;
+        height: 16vw;
+        margin-top: 2vw;
+        color: #666;
+        margin-bottom: 2vw;
+        margin-left: 2vw;
         float: left;
-        margin: 10px;
-        margin-left: 16px;
     }
     .content p{
         width:auto;
     }
-    .comments ul a p{
+    .comments ul a p:nth-child(2){
         color: #333;
         position: relative;
-        left:16px;
+        width:calc(100% - 30vw);
+        left:2vw;
+        top:2vw;
+        margin:0!important;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         padding-right: 28px;
+    }
+    .comments ul a p:nth-child(3){
+        margin: 0!important;
+        position: absolute;
+        bottom: 2vw;
+        left:28vw;
     }
 
     /*悬浮按钮*/
