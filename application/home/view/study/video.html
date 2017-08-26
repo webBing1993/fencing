@@ -82,6 +82,8 @@
 <script src="/home/js/reset.js"></script>
 <script>
 $(function(){
+	timer();
+	setInterval(timer,60000);
 	//模块标题
 	$('title' ).text('两学一做');
 	//reset
@@ -343,6 +345,20 @@ function ueLimit(){
 			$(this ).width(ww)
 		}
 	});
+}
+
+//计时
+var timer = function(){
+	$.ajax({
+		type:"post",
+		url:"{:Url('Study/video')}",
+		data:{
+
+		},
+		success:function(){
+
+		}
+	})
 }
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
