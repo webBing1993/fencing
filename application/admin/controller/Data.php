@@ -48,6 +48,8 @@ class Data extends Admin
             ];
             $times = Browse::where($map)->whereOr($ors)->count();
             $value['times'] = $times;
+            // 两学一做  专题模块    红色珍藏   停留时间
+            
             // 在线答题
             $num1 = 0;
             $sum1 = 0;

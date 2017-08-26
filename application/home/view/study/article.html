@@ -311,11 +311,12 @@ function addComment(data){
 
 //计时
 	var timer = function(){
+		var iid = "{$insert_id}";
 		$.ajax({
 			type:"post",
 			url:"{:Url('Study/article')}",
 			data:{
-
+				id:iid
 			},
 			success:function(){
 
