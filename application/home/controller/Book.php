@@ -40,6 +40,7 @@ class Book extends Base
         }
         return $this->success('','',$list);
     }
+    /* 二级  通讯录 */
     public function grouplist(){
         $this->anonymous();
         $did = input('get.did/d');   // 获取部门列表
@@ -47,7 +48,39 @@ class Book extends Base
         $this->assign('list',$list);
         return $this->fetch();
     }
-
+    /* 三级通讯录 */
+    public function grouplists(){
+        $this->anonymous();
+        $did = input('get.did/d');   // 获取部门列表
+        $list = Db::table('pb_wechat_department')->where('parentid',$did)->order('id desc')->field('id,name')->select();
+        if ($list){
+            $department = Db::table('pb_wechat_department')->field('name')->find($did);
+            $this->assign('list',$list);
+            $this->assign('depart',$department['name']);
+            return $this->fetch('');
+        }else{
+            $department = Db::table('pb_wechat_department')->field('name')->find($did);
+            $list = Db::table('pb_wechat_department_user')->where('departmentid',$did)->order('id desc')->field('userid')->select();  // 获取 用户列表
+            foreach($list as $key => $value){
+                $User = Db::table('pb_wechat_user')->where('userid',$value['userid'])->field('id,header,name,avatar')->find();
+                $list[$key]['name'] = $User['name'];
+                $list[$key]['id'] = $User['id'];
+                if (empty($User['header'])){   //  头像
+                    if (empty($User['avatar'])){
+                        $list[$key]['header'] = '';
+                    }else{
+                        $list[$key]['header'] = $User['avatar'];
+                    }
+                }else{
+                    $list[$key]['header'] = $User['header'];
+                }
+            }
+            $this->assign('list',$list);
+            $this->assign('depart',$department['name']);
+            $this->assign('did',$did);
+            return $this->fetch('book/userlist');
+        }
+    }
     /*   通讯录用户列表*/
     public function  userlist(){
         $this->anonymous();

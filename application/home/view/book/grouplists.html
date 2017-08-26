@@ -193,12 +193,12 @@
 
     <ul class="nav clear">
         <li><a data-pid="">台州市个协党建</a></li>
-        <li>台州市个协党建</li>
+        <li>{$depart}</li>
     </ul>
     <ul class="lists">
         {volist name="list" id="lo"}
         <li>
-            <a href="/home/book/grouplists/did/{$lo.id}" class="list_header " data-pid="{$lo.id}">
+            <a href="/home/book/userlist/did/{$lo.id}" class="list_header " data-pid="{$lo.id}">
                 <span>{$lo.name}</span><span class="fr rt_icon"></span>
             </a>
         </li>
