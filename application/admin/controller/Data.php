@@ -40,6 +40,14 @@ class Data extends Admin
             $value['week'] = $score_week;  // 周
             $value['mouth'] = $score_mouth;  // 月
             $value['year'] = $score_year; // 年
+            // 组织生活
+            $ors = [
+                'work_id' => ['neq',null],
+                'appraise_id' => ['neq',null],
+                'vote_id' => ['neq',null]
+            ];
+            $times = Browse::where($map)->whereOr($ors)->count();
+            $value['times'] = $times;
             // 在线答题
             $num1 = 0;
             $sum1 = 0;
