@@ -349,6 +349,8 @@ function tofixed(){
 }
 $('title').text('经典书籍');
 $(function(){
+	timer();
+	setInterval(timer,60000);
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 5){
@@ -359,5 +361,20 @@ $(function(){
 	//ios fix兼容
 //	tofixed();
 })
+
+	//计时
+	var timer = function(){
+		var iid = "{$insert_id}";
+		$.ajax({
+			type:"post",
+			url:"{:Url('Study/article')}",
+			data:{
+				id:iid
+			},
+			success:function(){
+
+			}
+		})
+	}
 </script>
 {/block}

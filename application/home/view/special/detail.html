@@ -86,6 +86,8 @@
 <script>
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     $(function(){
+        timer();
+        setInterval(timer,60000);
         //reset
         var len = $(".list" ).length;
         if(len >= 7){
@@ -328,6 +330,21 @@
                 $(this ).width(ww)
             }
         });
+    }
+
+    //计时
+    var timer = function(){
+        var iid = "{$insert_id}";
+        $.ajax({
+            type:"post",
+            url:"{:Url('Study/article')}",
+            data:{
+                id:iid
+            },
+            success:function(){
+
+            }
+        })
     }
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
