@@ -58,7 +58,7 @@
         $('.tabs>.tab ').on('click',function(){
             var ntc = $('.notices' );
             var eq = $(this ).index();
-            $(this ).siblings('.tab' ).find('span' ).removeClass('active');
+            $(this ).siblings('.tab' ).find('span').removeClass('active');
             $(this ).find('span' ).addClass('active');
             //先全部隐藏
             $('iframe').css('display','none');
@@ -75,18 +75,6 @@
             //使用示例
             setCookie("type",eq+11);
         });
-        isOut();
     });
-
-    //退出清理tab缓存
-    function isOut(){
-        pushHistory();
-        setTimeout(function(){
-            window.addEventListener("popstate", function(e) {
-                delCookie("type");
-                window.history.go(-1);
-            }, false);
-        },200)
-    }
 </script>
 {/block}
