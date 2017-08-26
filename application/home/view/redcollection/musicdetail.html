@@ -371,7 +371,7 @@ $(function(){
 
 	//计时
 	var timer = function(){
-		var iid = "{$insert_id}";
+		var iid = {$insert_id};
 		$.ajax({
 			type:"post",
 			url:"{:Url('Redcollection/musicdetail')}",
