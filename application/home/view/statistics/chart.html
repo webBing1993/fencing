@@ -1,0 +1,280 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/css/statistics/chart.css">
+{/block}
+
+{block name="body"}
+<div class="list clear">
+	<div class="title">党组织分布</div>
+	<div class="pie" id="pie1"></div>
+	<span class="pie2"></span>
+	<div class="pie fr" id="pie2"></div>
+</div>
+<div class="list">
+	<div class="title">党员关注比例</div>
+	<div class="pie" id="pie3" ></div>
+</div>
+<div class="list">
+	<div class="title">年龄分布</div>
+	<div class="bar">
+		<canvas id="bar1" height="200"></canvas>
+	</div>
+</div>
+<div class="list">
+	<div class="title">男女比例</div>
+	<div class="cir">
+		<span class="m">男</span>
+		<div id="cir1"></div>
+		<span class="f">女</span>
+		<div id="cir2"></div>
+	</div>
+
+</div>
+<div class="list">
+	<div class="title">学历分布</div>
+	<div class="bar">
+		<canvas id="bar2" height="250"></canvas>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script src="/static/flot/jquery.flot.js"></script>
+<script src="/static/flot/jquery.flot.tooltip.min.js"></script>
+<script src="/static/flot/jquery.flot.pie.js"></script>
+<script src="/static/flot/Chart.min.js"></script>
+<script src="/static/flot/radialIndicator.js"></script>
+<script>
+$(function() {
+	//大饼图数据：data1、data2、data3，条形图数据：data4、data5，环形图数据：data6
+	//党组织总数量表
+//	党组织总人数表
+	var data1 = [{
+		label: "椒江区个协党总支人数",
+		data: 55,
+		color: "#91AAEE"
+	},
+	{
+		label: "黄岩区个协党总支人数",
+		data: 85,
+		color: "#73557F"
+	},
+	{
+		label: "路桥区个协党总支人数",
+		data: 74,
+		color: "#916165"
+	},
+	{
+		label: "临海市个协党总支人数",
+		data: 62,
+		color: "#71B08F"
+	},
+	{
+		label: "温岭市个协党总支人数",
+		data: 304,
+		color: "#A2FAEA"
+	},
+	{
+		label: "玉环市个协党总支人数",
+		data: 16,
+		color: "#90F25E"
+	},
+	{
+		label: "天台市个协党总支人数",
+		data: 67,
+		color: "#F5BCA4"
+	},
+	{
+		label: "仙居县个协党总支人数",
+		data: 81,
+		color: "#64DE8D"
+	},
+	{
+		label: "三门县个协党总支人数",
+		data: 46,
+		color: "#F0925B"
+	},
+	{
+		label: "开发区党支部人数",
+		data: 34,
+		color: "#C8CC83"
+	},
+	];
+
+	//	党员总人数表
+	var data3 = [{
+		label: "关注人数",
+		data: {$msg['concernnum']},
+		color: "#5FB8C5"
+	},{
+		label: "未关注人数",
+		data: {$msg['nonnum']},
+		color: "#d3d3d3"
+	}];
+	// 平均年龄表
+	var data4 = {
+		labels: ["20岁以下", "20-30岁", "30-40岁", "40-50岁", "50岁以上"],
+		datasets: [
+			{
+				label: "平均年龄",
+				fillColor: "rgba(26,179,148,0.5)",
+				strokeColor: "rgba(26,179,148,0.8)",
+				highlightFill: "rgba(26,179,148,0.75)",
+				highlightStroke: "rgba(26,179,148,1)",
+				data: [{$msg['agepercent1']},{$msg['agepercent2']}, {$msg['agepercent3']}, {$msg['agepercent4']}, {$msg['agepercent5']}]
+			}
+		]
+	};
+	// 学历表
+	var data5 = {
+		labels: ["初中以下", "初中", "高中", "中专", "大专","本科","硕士","硕士以上"],
+		datasets: [
+			{
+				label: "平均年龄",
+				fillColor: "rgba(26,179,148,0.5)",
+				strokeColor: "rgba(26,179,148,0.8)",
+				highlightFill: "rgba(26,179,148,0.75)",
+				highlightStroke: "rgba(26,179,148,1)",
+				data: [{$msg['edu1']}, {$msg['edu2']}, {$msg['edu3']},{$msg['edu4']},{$msg['edu5']},{$msg['edu6']},{$msg['edu7']},{$msg['edu8']}]
+			}
+		]
+
+	};
+	//男女比例
+	var data6 = {
+		male:{$msg['male']},
+		female:{$msg['female']}
+	};
+//	大饼图
+	var plotObj1 = $.plot($("#pie1"), data1, {
+		series: {
+			pie: {
+				show: true
+			}
+		},
+		grid: {
+			hoverable: true
+		},
+		tooltip: true,
+		tooltipOpts: {
+			content: "<span class='tit'>%s</span>: <span class='num'>%s</span>人, <span style='color:rgb(148, 204, 163)'>%p.0%</span>",
+			shifts: {
+				x: 20,
+				y: 0
+			},
+			defaultTheme: false
+		}
+	});
+	var plotObj3 = $.plot($("#pie3"), data3, {
+		series: {
+			pie: {
+				show: true
+			}
+		},
+		grid: {
+			hoverable: true
+		},
+		tooltip: true,
+		tooltipOpts: {
+			content: "<span class='tit'>%s</span>: <span class='num'></span>人, <span style='color:#5FB8C5'>%p.0%</span>",
+			shifts: {
+				x: 20,
+				y: 0
+			},
+			defaultTheme: false
+		}
+	});
+	//条形图
+	var bar1 = {
+		scaleBeginAtZero: true,
+		scaleShowGridLines: true,
+		scaleGridLineColor: "rgba(0,0,0,.05)",
+		scaleGridLineWidth: 1,
+		barShowStroke: true,
+		barStrokeWidth: 2,
+		barValueSpacing: 5,
+		barDatasetSpacing: 1,
+		responsive: true
+	};
+	var ctx1 = document.getElementById("bar1").getContext("2d");
+	var myNewChart1 = new Chart(ctx1).Bar(data4, bar1);
+	var ctx2 = document.getElementById("bar2").getContext("2d");
+	var myNewChart2 = new Chart(ctx2).Bar(data5, bar1);
+	//	环形图
+	$('#cir1').radialIndicator({
+		barColor: '#A2DBB3',
+		barWidth: 10,
+		initValue: data6.male,//男百分比
+		roundCorner : true,
+		percentage: true
+	});
+	$('#cir2').radialIndicator({
+		barColor: '#5EB8C5',
+		barWidth: 10,
+		initValue: data6.female,//女百分比
+		roundCorner : true,
+		percentage: true
+	});
+	//修改提示信息
+	$('.pie').on('plothover',function(){
+		var datas=[
+		{
+			label: "椒江区个协党总支人数",
+			data: 55
+		},
+		{
+			label: "黄岩区个协党总支人数",
+			data: 85
+		},
+		{
+			label: "路桥区个协党总支人数",
+			data: 74
+		},
+		{
+			label: "临海市个协党总支人数",
+			data: 62
+		},
+		{
+			label: "温岭市个协党总支人数",
+			data: 304
+		},
+		{
+			label: "玉环市个协党总支人数",
+			data: 16
+		},
+		{
+			label: "天台市个协党总支人数",
+			data: 67
+		},
+		{
+			label: "仙居县个协党总支人数",
+			data: 81
+		},
+		{
+			label: "三门县个协党总支人数",
+			data: 46
+		},
+		{
+			label: "开发区党支部人数",
+			data: 34
+		},
+			{
+			label: "关注人数",
+			data: {$msg['concernnum']}
+		},{
+			label: "未关注人数",
+			data: {$msg['nonnum']}
+		}];
+		var len = datas.length;
+		var tip = $('#flotTip');
+		var tit = tip.find('.tit' ).text();
+		for(var i = 0 ;i< len ; i++){
+			if( tit == datas[i].label ){
+				tip.find('.num' ).text(datas[i].data);
+				return;
+			}
+		}
+	})
+});
+</script>
+{/block}
