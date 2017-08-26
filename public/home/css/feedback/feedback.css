@@ -102,22 +102,23 @@ html,body{
 }
 .lists .list {
   width: 100%;
-  padding-left: 13px;
-  padding-right: 13px;
-  padding-top:20px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 3vw;
   border-bottom: 1px solid #f7f7f7;
 }
 .lists .list .fl img {
-  height: 40px;
-  width: 40px;
+  height: 10.7vw;
+  width: 10.7vw;
 }
 .lists .list > .fr {
-  width: calc( 100% - 10px - 40px);
+  width: calc( 100% - 12.7vw);
 }
 .lists .list > .fr .name {
   color: #5a6883;
   font-size: 1.4rem;
   line-height: 26px;
+  width:80%;
 }
 .lists .list > .fr .content {
   color: #333333;

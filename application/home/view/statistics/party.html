@@ -47,10 +47,14 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    var c =  1;
+    var c =  parseInt(window.location.href.split("party/c/")[1]);
     $(function(){
         var WH = $(window).height();
         var WW = $(window).width();
+        var co = getCookie("type");
+        if(co == 11 || co == 12){
+            c = co - 10;
+        }
         if(c == 1){
             $('#tab'+(c-1))[0].src='/home/statistics/form.html';
         }else if(c == 2){

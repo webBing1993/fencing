@@ -13,6 +13,7 @@ body {
   border-radius: 5px;
   padding: 15px;
   margin-bottom: 13px;
+  overflow-x: hidden;
 }
 .list:nth-child(6) {
   padding-bottom: 50px;
