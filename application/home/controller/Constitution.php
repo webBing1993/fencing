@@ -221,6 +221,13 @@ class Constitution extends Base {
         //获取用户提交信息
         $data=input('post.');
         $score=0;
+        $num = 0;
+        $sum = 0;
+        foreach($data['arr'] as $value){
+            if ($value != 0){
+                $sum ++;
+            }
+        }
         //判断题目的对错,并改变分数
         foreach($data['arrId'] as $key=>$value){
             $question=Question::get($value);
@@ -228,6 +235,7 @@ class Constitution extends Base {
                 if($data['arr'][$key]==$question->value){
                     $status[$key]=1;
                     $score++;
+                    $num ++;
                 }else{
                     $status[$key]=0;
                 }
@@ -235,6 +243,7 @@ class Constitution extends Base {
                 if($data['arr'][$key]===explode(':',$question->value)){
                     $status[$key]=1;
                     $score++;
+                    $num ++;
                 }else{
                     $status[$key]=0;
                 }
@@ -248,6 +257,8 @@ class Constitution extends Base {
         //将分数添加至用户积分排名
         $wechatModel = new WechatUser();
         $wechatModel->where('userid',session('userId'))->setInc('game_score',$score);
+        // 统计该成员  答题总数   答对 题数
+        Db::name('answer_data')->insert(['userid' => $users,'create_time' => time(),'num' => $num,'sum' => $sum]);
         //若该用户存在则修改数据
         if(Answer::get(['userid'=>session('userId')])){
             $answer=Answer::get(['userid'=>session('userId')]);
@@ -257,27 +268,25 @@ class Constitution extends Base {
             $answer->score=$score;
             $answer->exist=1;
             if($answer->save()){
-                Db::name('answer_data')->insert(['userid' => $users,'create_time' => time()]);
                 return $this->success('提交成功');
             }else{
                 return $this->error('提交失败');
             };
-        }
-        //若该用户不存在则添加数据
-        $Answer=new Answer();
-        $Answer->userid=$users;
-        $Answer->question_id=$questions;
-        $Answer->value=$rights;
-        $Answer->status=$status;
-        $Answer->score=$score;
-        $Answer->exist=1;
-        if($Answer->save()){
-            Db::name('answer_data')->insert(['userid' => $users,'create_time' => time()]);
-            return $this->success('提交成功');
         }else{
-            return $this->error('提交失败');
+            //若该用户不存在则添加数据
+            $Answer=new Answer();
+            $Answer->userid=$users;
+            $Answer->question_id=$questions;
+            $Answer->value=$rights;
+            $Answer->status=$status;
+            $Answer->score=$score;
+            $Answer->exist=1;
+            if($Answer->save()){
+                return $this->success('提交成功');
+            }else{
+                return $this->error('提交失败');
+            }
         }
-
     }
     /*
      * 查看分数
