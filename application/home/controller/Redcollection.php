@@ -17,7 +17,7 @@ use app\home\model\Redmusic;
 use app\home\model\Redremark;
 use app\home\model\WechatUser;
 use app\home\model\Browse;
-
+use think\Db;
 /**
  * Class Redcollection
  * @package app\home\controller
@@ -72,41 +72,49 @@ class Redcollection extends Base {
      */
     public function filmdetail() {
         $this->anonymous(); //判断是否是游客
-        $id = input('id');
         $filmModel = new Redfilm();
         $userId = session('userId');
-        //浏览加一
-        $info['views'] = array('exp','`views`+1');
-        $filmModel::where('id',$id)->update($info);
-        if($userId != "visitor"){
-            //浏览不存在则存入pb_browse表
-            $con = array(
-                'user_id' => $userId,
-                'film_id' => $id,
-            );
-            $history = Browse::get($con);
-            if(!$history && $id != 0){
-                $s['score'] = array('exp','`score`+1');
-                if ($this->score_up()){
-                    // 未满 15分
-                    Browse::create($con);
-                    WechatUser::where('userid',$userId)->update($s);
+        if (IS_POST){
+            $post_id = input('post.insert_id');
+            Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
+        }else{
+            $id = input('id');
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time()]);
+            $insert_id = Db::name('stay_time')->getLastInsID();
+            $this->assign('insert_id',$insert_id);
+            //浏览加一
+            $info['views'] = array('exp','`views`+1');
+            $filmModel::where('id',$id)->update($info);
+            if($userId != "visitor"){
+                //浏览不存在则存入pb_browse表
+                $con = array(
+                    'user_id' => $userId,
+                    'film_id' => $id,
+                );
+                $history = Browse::get($con);
+                if(!$history && $id != 0){
+                    $s['score'] = array('exp','`score`+1');
+                    if ($this->score_up()){
+                        // 未满 15分
+                        Browse::create($con);
+                        WechatUser::where('userid',$userId)->update($s);
+                    }
                 }
             }
+            $film = $filmModel->get($id);
+
+            //获取 文章点赞
+            $likeModel = new Like;
+            $like = $likeModel->getLike(9,$id,$userId);
+            $film['is_like'] = $like;
+
+            $this->assign('film',$film);
+            //获取 评论
+            $commentModel = new Comment();
+            $comment = $commentModel->getComment(9,$id,$userId);
+            $this->assign('comment',$comment);
+            return $this->fetch();
         }
-        $film = $filmModel->get($id);
-
-        //获取 文章点赞
-        $likeModel = new Like;
-        $like = $likeModel->getLike(9,$id,$userId);
-        $film['is_like'] = $like;
-
-        $this->assign('film',$film);
-        //获取 评论
-        $commentModel = new Comment();
-        $comment = $commentModel->getComment(9,$id,$userId);
-        $this->assign('comment',$comment);
-        return $this->fetch();
     }
 
     /**
@@ -150,41 +158,49 @@ class Redcollection extends Base {
      */
     public function musicdetail() {
         $this->anonymous(); //判断是否是游客
-        $id = input('id');
         $userId = session('userId');
-        $musicModel = new Redmusic();
-        //浏览加一
-        $info['views'] = array('exp','`views`+1');
-        $musicModel::where('id',$id)->update($info);
-        if($userId != "visitor"){
-            //浏览不存在则存入pb_browse表
-            $con = array(
-                'user_id' => $userId,
-                'music_id' => $id,
-            );
-            $history = Browse::get($con);
-            if(!$history && $id != 0){
-                $s['score'] = array('exp','`score`+1');
-                if ($this->score_up()){
-                    // 未满 15分
-                    Browse::create($con);
-                    WechatUser::where('userid',$userId)->update($s);
+        if(IS_POST){
+            $post_id = input('post.insert_id');
+            Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
+        }else{
+            $id = input('id');
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time()]);
+            $insert_id = Db::name('stay_time')->getLastInsID();
+            $musicModel = new Redmusic();
+            //浏览加一
+            $info['views'] = array('exp','`views`+1');
+            $musicModel::where('id',$id)->update($info);
+            if($userId != "visitor"){
+                //浏览不存在则存入pb_browse表
+                $con = array(
+                    'user_id' => $userId,
+                    'music_id' => $id,
+                );
+                $history = Browse::get($con);
+                if(!$history && $id != 0){
+                    $s['score'] = array('exp','`score`+1');
+                    if ($this->score_up()){
+                        // 未满 15分
+                        Browse::create($con);
+                        WechatUser::where('userid',$userId)->update($s);
+                    }
                 }
             }
+
+            $music = $musicModel->get($id);
+            //获取 文章点赞
+            $likeModel = new Like;
+            $like = $likeModel->getLike(11,$id,$userId);
+            $music['is_like'] = $like;
+            $this->assign('music',$music);
+
+            //获取 评论
+            $commentModel = new Comment();
+            $comment = $commentModel->getComment(11,$id,$userId);
+            $this->assign('comment',$comment);
+            $this->assign('insert_id',$insert_id);
+            return $this->fetch();
         }
-
-        $music = $musicModel->get($id);
-        //获取 文章点赞
-        $likeModel = new Like;
-        $like = $likeModel->getLike(11,$id,$userId);
-        $music['is_like'] = $like;
-        $this->assign('music',$music);
-
-        //获取 评论
-        $commentModel = new Comment();
-        $comment = $commentModel->getComment(11,$id,$userId);
-        $this->assign('comment',$comment);
-        return $this->fetch();
     }
 
     /**
@@ -233,55 +249,62 @@ class Redcollection extends Base {
      */
     public function bookdetail() {
         $this->anonymous(); //判断是否是游客
-        $id = input('id');
         $userId = session('userId');
-        $bookModel = new Redbook();
-        //浏览加一
-        $info['views'] = array('exp','`views`+1');
-        $bookModel::where('id',$id)->update($info);
-        if($userId != "visitor"){
-            //浏览不存在则存入pb_browse表
-            $con = array(
-                'user_id' => $userId,
-                'book_id' => $id,
-            );
-            $history = Browse::get($con);
-            if(!$history && $id != 0){
-                $s['score'] = array('exp','`score`+1');
-                if ($this->score_up()){
-                    // 未满 15分
-                    Browse::create($con);
-                    WechatUser::where('userid',$userId)->update($s);
+        if (IS_POST){
+            $post_id = input('post.insert_id');
+            Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
+        }else{
+            $id = input('id');
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time()]);
+            $insert_id = Db::name('stay_time')->getLastInsID();
+            $bookModel = new Redbook();
+            //浏览加一
+            $info['views'] = array('exp','`views`+1');
+            $bookModel::where('id',$id)->update($info);
+            if($userId != "visitor"){
+                //浏览不存在则存入pb_browse表
+                $con = array(
+                    'user_id' => $userId,
+                    'book_id' => $id,
+                );
+                $history = Browse::get($con);
+                if(!$history && $id != 0){
+                    $s['score'] = array('exp','`score`+1');
+                    if ($this->score_up()){
+                        // 未满 15分
+                        Browse::create($con);
+                        WechatUser::where('userid',$userId)->update($s);
+                    }
                 }
             }
-        }
-        $book = $bookModel->get($id);   //基础信息
+            $book = $bookModel->get($id);   //基础信息
 
-        //是否读过此书
-        $userId = session('userId');
-        $info1 = array(
-            'create_user' => $userId,
-            'book_id' => $id,
-        );
-        $isread =  RedbookRead::where($info1)->find();
-        if($isread) {
-            $book['is_read'] = 1; //已读过
-        }else{
-            $book['is_read'] = 0;
-        }
-        
-        //获取 文章点赞
-        $likeModel = new Like;
-        $like = $likeModel->getLike(10,$id,$userId);
-        $book['is_like'] = $like;
-        $this->assign('book',$book);
+            //是否读过此书
+            $userId = session('userId');
+            $info1 = array(
+                'create_user' => $userId,
+                'book_id' => $id,
+            );
+            $isread =  RedbookRead::where($info1)->find();
+            if($isread) {
+                $book['is_read'] = 1; //已读过
+            }else{
+                $book['is_read'] = 0;
+            }
 
-        //获取 评论
-        $commentModel = new Comment();
-        $comment = $commentModel->getComment(10,$id,$userId);
-        $this->assign('comment',$comment);
-        
-        return $this->fetch();
+            //获取 文章点赞
+            $likeModel = new Like;
+            $like = $likeModel->getLike(10,$id,$userId);
+            $book['is_like'] = $like;
+            $this->assign('book',$book);
+
+            //获取 评论
+            $commentModel = new Comment();
+            $comment = $commentModel->getComment(10,$id,$userId);
+            $this->assign('insert_id',$insert_id);
+            $this->assign('comment',$comment);
+            return $this->fetch();
+        }
     }
 
     /**

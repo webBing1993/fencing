@@ -350,7 +350,7 @@ function tofixed(){
 $('title').text('经典书籍');
 $(function(){
 	timer();
-	setInterval(timer,60000);
+	setInterval(timer,5000);
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 5){
@@ -367,9 +367,9 @@ $(function(){
 		var iid = "{$insert_id}";
 		$.ajax({
 			type:"post",
-			url:"{:Url('Study/article')}",
+			url:"{:Url('Redcollection/bookdetail')}",
 			data:{
-				id:iid
+				insert_id:iid
 			},
 			success:function(){
 

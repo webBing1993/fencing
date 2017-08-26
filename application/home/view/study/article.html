@@ -74,7 +74,7 @@
 <script>
 $(function(){
 	timer();
-	setInterval(timer,60000);
+	setInterval(timer,5000);
 	//模块标题
 	$('title' ).text('两学一做');
 	//reset
@@ -311,15 +311,15 @@ function addComment(data){
 
 //计时
 	var timer = function(){
-		var iid = "{$insert_id}";
+		var iid = {$insert_id};
 		$.ajax({
 			type:"post",
 			url:"{:Url('Study/article')}",
 			data:{
-				id:iid
+				insert_id:iid
 			},
-			success:function(){
-
+			success:function(data){
+				console.log(data)
 			}
 		})
 	}

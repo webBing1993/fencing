@@ -87,7 +87,7 @@
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     $(function(){
         timer();
-        setInterval(timer,60000);
+        setInterval(timer,5000);
         //reset
         var len = $(".list" ).length;
         if(len >= 7){
@@ -337,9 +337,9 @@
         var iid = "{$insert_id}";
         $.ajax({
             type:"post",
-            url:"{:Url('Study/article')}",
+            url:"{:Url('Special/detail')}",
             data:{
-                id:iid
+                insert_id:iid
             },
             success:function(){
 

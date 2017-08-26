@@ -77,7 +77,8 @@ class Study extends Base {
             Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
         }else{
             $id = input('id');
-            $insert_id = Db::name('stay_time')->insert(['userid' => $userId,'type' => 1,'aid' =>$id, 'start_time' => time()]);
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 1,'aid' =>$id, 'start_time' => time()]);
+            $insert_id = Db::name('stay_time')->getLastInsID();
             $this->anonymous();        //判断是否是游客
             $this->jssdk();
             $learnModel = new StudyModel();
@@ -136,7 +137,8 @@ class Study extends Base {
             Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
         }else{
             $id = input('id');
-            $insert_id = Db::name('stay_time')->insert(['userid' => $userId,'type' => 1,'aid' =>$id, 'start_time' => time()]);
+             Db::name('stay_time')->insert(['userid' => $userId,'type' => 1,'aid' =>$id, 'start_time' => time()]);
+            $insert_id = Db::name('stay_time')->getLastInsID();
             $learnModel = new StudyModel();
             //浏览加一
             $info['views'] = array('exp','`views`+1');

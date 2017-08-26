@@ -83,7 +83,7 @@
 <script>
 $(function(){
 	timer();
-	setInterval(timer,60000);
+	setInterval(timer,5000);
 	//模块标题
 	$('title' ).text('两学一做');
 	//reset
@@ -354,7 +354,7 @@ var timer = function(){
 		type:"post",
 		url:"{:Url('Study/video')}",
 		data:{
-			id:iid
+			insert_id:iid
 		},
 		success:function(){
 

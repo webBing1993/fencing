@@ -302,7 +302,7 @@ function tofixed(){
 $('title').text('红色电影');
 $(function(){
 	timer();
-	setInterval(timer,60000);
+	setInterval(timer,5000);
 	//reset
 	var len = $(".list" ).length;
 	if(len >= 7){
@@ -320,9 +320,9 @@ $(function(){
 		var iid = "{$insert_id}";
 		$.ajax({
 			type:"post",
-			url:"{:Url('Study/article')}",
+			url:"{:Url('Redcollection/filmdetail')}",
 			data:{
-				id:iid
+				insert_id:iid
 			},
 			success:function(){
 
