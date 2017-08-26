@@ -39,7 +39,7 @@ class Comment extends Model {
         if ($type == 12) {
             $map['create_time'] = ['egt',strtotime(date('Y-m-d'))];
         }
-        $comment = $this->where($map)->order('likes desc,create_time desc')->limit(7)->select();
+        $comment = $this->where($map)->order('likes desc,create_time desc')->limit(10)->select();
         foreach ($comment as $value) {
             $user = WechatUser::where('userid',$value['uid'])->find();
             $value['nickname'] = $user['name'];

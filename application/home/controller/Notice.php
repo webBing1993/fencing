@@ -32,7 +32,7 @@ class Notice extends Base {
             'type' => 1,
             'status' => array('egt',0)
         );
-        $list = NoticeModel::where($map)->order('id desc')->limit(7)->select();
+        $list = NoticeModel::where($map)->order('id desc')->limit(10)->select();
         foreach($list as $value){
             $value['is_over'] = 0;  // 未结束
             if (empty($value['end_time'])){
@@ -48,7 +48,7 @@ class Notice extends Base {
             'type' => 2,
             'status' => array('egt',0)
         );
-        $list1 = NoticeModel::where($map1)->order('id desc')->limit(7)->select();
+        $list1 = NoticeModel::where($map1)->order('id desc')->limit(10)->select();
         foreach($list1 as $value){
             $value['is_over'] = 0;  // 未结束
             if (empty($value['end_time'])){
@@ -72,7 +72,7 @@ class Notice extends Base {
             'type' => $type,
             'status' => array('egt',0),
         );
-        $list = NoticeModel::where($map)->order('id desc')->limit($len,5)->field('id,title,description,create_time,end_time')->select();
+        $list = NoticeModel::where($map)->order('id desc')->limit($len,10)->field('id,title,description,create_time,end_time')->select();
         foreach($list as $value){
             $value['create_time'] = date("Y-m-d",$value['create_time']);
             $value['is_over'] = 0;  // 未结束
