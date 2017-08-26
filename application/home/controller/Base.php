@@ -312,12 +312,14 @@ class Base extends Controller {
      * 9 redfilm 红色电影
      * 10 redbook  红色书籍
      * 11 redmusic  红色音乐
+     * 12 live 直播
      */
     public function comment(){
         if(IS_POST){
             $uid = session('userId');
             $type = input('type');
             $aid = input('aid');
+            $live = input('live');
             switch ($type) {    //根据类别获取表明
                 case 1:
                     $table = "news";
@@ -351,6 +353,9 @@ class Base extends Controller {
                     break;
                 case 11:
                     $table = "redmusic";
+                    break;
+                case 12:
+                    $table = "live";
                     break;
                 default:
                     return $this->error("无该数据表");
@@ -448,6 +453,9 @@ class Base extends Controller {
             'type' => input('type'),
             'aid' => input('aid'),
         );
+        if (input('type') == 12) {
+            $map['create_time'] = ['egt',strtotime(date('Y-m-d'))];
+        }
         //敏感词屏蔽
         $badword = array(
             '法轮功','法轮','FLG','六四','6.4','flg'

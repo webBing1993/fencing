@@ -35,6 +35,10 @@ class Comment extends Model {
             'aid' => $aid,
             'status' => 0
         );
+
+        if ($type == 12) {
+            $map['create_time'] = ['egt',strtotime(date('Y-m-d'))];
+        }
         $comment = $this->where($map)->order('likes desc,create_time desc')->limit(7)->select();
         foreach ($comment as $value) {
             $user = WechatUser::where('userid',$value['uid'])->find();

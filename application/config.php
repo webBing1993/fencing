@@ -40,6 +40,8 @@ return [
     
 
     /* UC用户中心配置 */
-    'uc_auth_key' => '(.t!)=JTb_OPCkrD:-i"QEz6KLGq5glnf^[{p;je'
-    
+    'uc_auth_key' => '(.t!)=JTb_OPCkrD:-i"QEz6KLGq5glnf^[{p;je',
+    /*直播地址*/
+
+    'live_path' => 'http://pullhls36734237.live.126.net/live/5142b43a0fda47c38254a4865281e1c4/playlist.m3u8'
 ];
