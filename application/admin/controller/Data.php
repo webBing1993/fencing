@@ -51,7 +51,7 @@ class Data extends Admin
             $stay = Db::name('stay_time')->where(['userid' => $value['userid']])->select();
             $stay_time = 0;
             foreach($stay as $vals){
-                $stay_time += $vals['end_time'] - $vals['start_time'];
+                $stay_time += ($vals['end_time'] - $vals['start_time']);
             }
             $value['stay_time'] = $this->time2string($stay_time);;
             // 在线答题
