@@ -18,18 +18,62 @@
         /*display:none;*/
         height:50vw;
     }
+    .tabs {
+        width: 100vw;
+        height: 44px;
+        padding: 8px 0;
+        background: #f1f1f1;
+        position: fixed;
+        z-index: 99;
+    }
+    .tabs .tab {
+        display: inline-block;
+        width:49vw;
+        height: 100%;
+        color: #333333;
+        font-size: 1.5rem;
+        line-height: 28px;
+        text-align: center;
+    }
+    .tabs .active {
+        color: #fd6743;
+    }
+    .notice{
+        margin-top: 44px;
+    }
+    .area{
+        padding: 3vw 4vw;
+        padding-left: 6vw;
+    }
+    .area div{
+        display: inline-block;
+        width: 44vw;
+        text-align: left;
+    }
+    .area div span:first-child{
+        width: 20vw;
+        display: inline-block;
+    }
 </style>
+
 {/block}
 <!--css一处 scrollDiy标签一对 tofixed()注释  scrollNow 跟scrollDiy滚动绑定-->
 {block name="body"}
 <video src="{$live_path}" controls="controls" webkit-playsinline="true" playsinline></video>
-
 <div class="scrollDiy">
-    <div class="comment">
-        <div class="sum">最新评论</div>
+    <div class="tabs">
+        <span class="tab active">聊天</span>
+        <span class="tab">人数</span>
+    </div>
+    <div class="notice">
+        <div class="comment">
         <div class="lists">
-
         </div>
+        </div>
+    </div>
+    <div class="notice area">
+
+    </div>
         <div class="tip"></div>
         <div class="loading hidden">
             <div class="typing_loader"></div>
@@ -52,8 +96,43 @@
 
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
     $(function(){
-        //reset
-        var len = $(".list" ).length;
+        //初始化数据
+        var ntc = $(".notice");
+        var tab = $(".tabs .tab");
+        var co = getCookie("type") || 0;
+        co = parseInt(co);
+        tab.eq(co).addClass("active").siblings(".tab").removeClass("active");
+        ntc.eq(co).removeClass("hidden").siblings(".notice").addClass("hidden");
+        if(co==0){
+            chat();
+            setInterval(chat,1500);
+            $(".bottom").show();
+        }else if(co==1){
+            people();
+            setInterval(people,1500);
+            $(".bottom").hide();
+        }
+
+        //tab切换
+        $(".tabs").on('click','.tab',function () {
+            var ntc = $(".notice");
+            var index = $(this).index();
+            $(this).addClass("active").siblings(".tab").removeClass("active");
+            $(".notice").eq(index).removeClass("hidden").siblings(".notice").addClass("hidden");
+            if(index==0){
+                chat();
+                setInterval(chat,2000);
+                $(".bottom").show();
+            }else if(index==1){
+                people();
+                setInterval(people,2000);
+                $(".bottom").hide();
+            }
+            //使用示例
+            setCookie("type",index);
+        })
+
+
     });
     /**
      * 点赞
@@ -139,23 +218,23 @@
                 });
     };
 
-    setInterval(function(){
-
-        if ($(".list" ).length == 0) {
+//聊天评论
+    var chat = function() {
+        if ($(".list").length == 0) {
             var id = 0;
         } else {
             var id = $(".list:first").attr('data-id');
         }
         $.ajax({
-            type:"post",
-            url:"{:Url('Live/getComment')}",
-            data:{
-                id:id
+            type: "post",
+            url: "{:Url('Live/getComment')}",
+            data: {
+                id: id
             },
-            beforeSend: function(XMLHttpRequest){
+            beforeSend: function (XMLHttpRequest) {
 
             },
-            success:function(data){
+            success: function (data) {
 
                 if (data.code == 1) {
 
@@ -163,7 +242,7 @@
                 }
             }
         })
-    },1500);
+    }
 
 
     function addComment(data){
@@ -183,19 +262,54 @@
                     '<div class="content" >'+ list.content+'</div>'+
                     '<div class="time">'+ list.time+'</div>'+
                     '</div>';
-            if ({$visit} == 0){
-                if(list.is_like == 0){
-                    html+='<div class="fr isgood good" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
-                }else{
-                    html+='<div class="fr isgood good_" onclick="isGood(this,'+list.news_id+','+list.id+','+userid+','+1+')">'+list.likes+'</div>'
-                }
-            }else {
-                html+='<div class="fr isgood good">'+list.likes+'</div>'
-            }
             html+=
                     '</div>';
         }
         $(".lists" ).prepend(html);
+    }
+
+    //观看人数
+    var people = function() {
+        $.ajax({
+            type: "post",
+            url: "{:Url('Live/getDepartmentNumer')}",
+            data: {
+            },
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data) {
+
+                if (data.code == 1) {
+                    number(data);
+                }
+            }
+        })
+    }
+
+
+    function number(data){
+        //is_like : 1为已点赞 0为未点赞
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++){
+            var list = lists[i];
+            if(list.name.substr(0, 2)!=="之图"){
+                html +=
+                        '<div class="area">'
+                                if(list.name=="开发区党支部"){
+                                    html+=  '<span>'+ list.name.substr(0, 3)+'&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+                                }else {
+                                    html+=  '<span>'+ list.name.substr(0, 2)+'&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+                                }
+
+                       html+= '<span>'+ list.numer+'人</span>'+
+                        '</div>';
+            }
+            }
+
+       $(".area" ).html(html);
     }
 
 </script>
