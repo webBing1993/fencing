@@ -121,13 +121,13 @@ body {
   font-weight: 600;
   line-height: 4vw;
 }
-.listbox .words2 {
+.listbox .words2,.listbox .words {
   position: absolute;
   top: 0;
   left: 0;
   width: 99vw;
 }
-.listbox .words2 .list {
+.listbox .words2 .list,.listbox .words .list {
   display: inline-block;
   width: 99vw;
   height: 14vw;
@@ -138,11 +138,11 @@ body {
   font-size: 1.5rem;
   line-height: 14vw;
 }
-.listbox .words2 .list .title {
+.listbox .words2 .list .title,.listbox .words .list .title {
   display: inline-block;
   width: 88vw;
 }
-.listbox .words2 .list .fa {
+.listbox .words2 .list .fa,.listbox .words .list .fa {
   color: #999999;
   font-size: 2rem;
   font-weight: 600;
