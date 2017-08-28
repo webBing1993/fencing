@@ -27,23 +27,23 @@ class Data extends Admin
                 'status' => ['egt',0]
             ];
             $or = [
-                'study_id' => ['neq',null],
-                'film_id' => ['neq',null],
-                'music_id' => ['neq',null],
-                'book_id' => ['neq',null],
-                'special_id' => ['neq',null]
+                'study_id' => ['eq','not null'],
+                'film_id' => ['eq','not null'],
+                'music_id' => ['eq' ,'not null'],
+                'book_id' => ['eq' ,'not null'],
+                'special_id' => ['eq' ,'not null']
             ];
-            $score_week = Browse::where($map)->whereOr($or)->whereTime('create_time','w')->count();
-            $score_mouth = Browse::where($map)->whereOr($or)->whereTime('create_time','m')->count();
-            $score_year = Browse::where($map)->whereOr($or)->whereTime('create_time','y')->count();
+            $score_week = Browse::where($map)->whereTime('create_time','w')->count();
+            $score_mouth = Browse::where($map)->whereTime('create_time','w')->count();
+            $score_year = Browse::where($map)->count();
             $value['week'] = $score_week;  // 周
             $value['mouth'] = $score_mouth;  // 月
             $value['year'] = $score_year; // 年
             // 组织生活
             $ors = [
-                'work_id' => ['neq',null],
-                'appraise_id' => ['neq',null],
-                'vote_id' => ['neq',null]
+                'work_id' => ['eq','not null'],
+                'appraise_id' => ['eq','not null'],
+                'vote_id' => ['eq','not null']
             ];
             $times = Browse::where($map)->whereOr($ors)->count();
             $value['times'] = $times;

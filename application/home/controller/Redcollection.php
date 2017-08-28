@@ -79,7 +79,7 @@ class Redcollection extends Base {
             Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
         }else{
             $id = input('id');
-            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time()]);
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time(),'end_time' => time()+5]);
             $insert_id = Db::name('stay_time')->getLastInsID();
             $this->assign('insert_id',$insert_id);
             //浏览加一
@@ -164,7 +164,7 @@ class Redcollection extends Base {
             Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
         }else{
             $id = input('id');
-            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time()]);
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time(),'end_time' => time()+5]);
             $insert_id = Db::name('stay_time')->getLastInsID();
             $musicModel = new Redmusic();
             //浏览加一
@@ -255,7 +255,7 @@ class Redcollection extends Base {
             Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
         }else{
             $id = input('id');
-            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time()]);
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 3,'aid' =>$id, 'start_time' => time(),'end_time' => time()+5]);
             $insert_id = Db::name('stay_time')->getLastInsID();
             $bookModel = new Redbook();
             //浏览加一

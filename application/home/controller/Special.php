@@ -49,7 +49,7 @@ class Special extends Base
             Db::name('stay_time')->where('id',$post_id)->update(['end_time' => time()]);
         }else{
             $id = input('id');
-            Db::name('stay_time')->insert(['userid' => $userId,'type' => 2,'aid' =>$id, 'start_time' => time()]);
+            Db::name('stay_time')->insert(['userid' => $userId,'type' => 2,'aid' =>$id, 'start_time' => time(),'end_time' => time()+5]);
             $insert_id = Db::name('stay_time')->getLastInsID();
             //浏览加一
             $info['views'] = array('exp','`views`+1');
