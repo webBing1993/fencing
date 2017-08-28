@@ -55,10 +55,7 @@
         display: inline-block;
     }
 
-    video {
-        object-position: 0px 0px;
-        width: 100%;
-    }
+
 
     #videoBox {
         position: relative;
@@ -408,5 +405,20 @@ console.log(data)
        $(".area" ).html(html);
     }
 
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if (isiOS) {
+        $('video source').css({
+            'object-position': ' 0px 0px',
+            'width': '100%',
+            'height': '50vw'
+        });
+    } else {
+        $('video').css({
+            'object-position': ' 0px 0px',
+            'width': '100%'
+        });
+    }
 </script>
 {/block}
