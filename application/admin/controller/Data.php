@@ -22,31 +22,54 @@ class Data extends Admin
             }else{
                 $value['department'] = '暂无';
             }
-            $map = [
+            $map1 = [
                 'user_id' => $value['userid'],
-                'status' => ['egt',0]
+                'status' => ['egt',0],
+                'study_id' => array('exp',"is not null"),
             ];
-            $or = [
-                'study_id' => ['eq','not null'],
-                'film_id' => ['eq','not null'],
-                'music_id' => ['eq' ,'not null'],
-                'book_id' => ['eq' ,'not null'],
-                'special_id' => ['eq' ,'not null']
+            $map2 = [
+                'user_id' => $value['userid'],
+                'status' => ['egt',0],
+                'film_id' => array('exp',"is not null"),
             ];
-            $score_week = Browse::where($map)->whereTime('create_time','w')->count();
-            $score_mouth = Browse::where($map)->whereTime('create_time','w')->count();
-            $score_year = Browse::where($map)->count();
-            $value['week'] = $score_week;  // 周
-            $value['mouth'] = $score_mouth;  // 月
-            $value['year'] = $score_year; // 年
+            $map3 = [
+                'user_id' => $value['userid'],
+                'status' => ['egt',0],
+                'music_id' => array('exp',"is not null"),
+            ];
+            $map4 = [
+                'user_id' => $value['userid'],
+                'status' => ['egt',0],
+                'book_id' => array('exp',"is not null"),
+            ];
+            $map5 = [
+                'user_id' => $value['userid'],
+                'status' => ['egt',0],
+                'special_id' => array('exp',"is not null"),
+            ];
+            $value['week'] = $this->get_count($map1,'w') + $this->get_count($map2,'w') + $this->get_count($map3,'w') + $this->get_count($map4,'w') + $this->get_count($map5,'w');  // 周
+            $value['mouth'] = $this->get_count($map1,'m') + $this->get_count($map2,'m') + $this->get_count($map3,'m') + $this->get_count($map4,'m') + $this->get_count($map5,'m');  // 月
+            $value['year'] = $this->get_count($map1,'y') + $this->get_count($map2,'y') + $this->get_count($map3,'y') + $this->get_count($map4,'y') + $this->get_count($map5,'y'); // 年
             // 组织生活
-            $ors = [
-                'work_id' => ['eq','not null'],
-                'appraise_id' => ['eq','not null'],
-                'vote_id' => ['eq','not null']
+            $maps1 = [
+                'user_id' => $value['userid'],
+                'status' => ['egt',0],
+                'work_id' => array('exp',"is not null"),
             ];
-            $times = Browse::where($map)->whereOr($ors)->count();
-            $value['times'] = $times;
+            $maps2 = [
+                'user_id' => $value['userid'],
+                'status' => ['egt',0],
+                'appraise_id' => array('exp',"is not null"),
+            ];
+            $maps3 = [
+                'user_id' => $value['userid'],
+                'status' => ['egt',0],
+                'vote_id' => array('exp',"is not null")
+            ];
+            $times1 = Browse::where($maps1)->count();
+            $times2 = Browse::where($maps2)->count();
+            $times3 = Browse::where($maps3)->count();
+            $value['times'] = $times1 + $times2 + $times3;
             // 两学一做  专题模块    红色珍藏   停留时间
             $stay = Db::name('stay_time')->where(['userid' => $value['userid']])->select();
             $stay_time = 0;
@@ -94,5 +117,9 @@ class Data extends Admin
         $second = $second%60;//除去整分钟之后剩余的时间
         //返回字符串
         return $day.'天'.$hour.'小时'.$minute.'分'.$second.'秒';
+    }
+    // 获取 数量
+    public function get_count($where='',$type='d'){
+        return  Browse::where($where)->whereTime('create_time',$type)->count();
     }
 }
