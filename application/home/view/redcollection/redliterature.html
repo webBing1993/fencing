@@ -33,7 +33,7 @@
 		{/volist}
 		<!--经典书籍列表-->
 	</div>
-	<div class="words hidden">
+	<div class="words2 hidden">
 		<!--经典语录列表-->
 		{volist name="remark" id="re"}
 		<a href="{:Url('Redcollection/quotationdetail?id='.$re['id'])}" class="list clear">
@@ -89,24 +89,16 @@ $(function(){
 	//切换卡
 	$('.tab' ).off('click').on('click',function(){
 		var this_ = this ;
-		var box = $('.listbox');
 		var index = $(this_ ).index();
-		var ww = $('.tabs' ).width();
 		$(this_ ).addClass('active' );
 		$(this_ ).siblings('.tab').removeClass('active');
 		if(index == 1){
-			$('.words' ).removeClass('hidden');
+			$('.words2' ).removeClass('hidden');
+			$('.books').addClass('hidden');
 		}else{
+			$('.words2').addClass('hidden');
 			$('.books' ).removeClass('hidden');
 		}
-		ww = ww * index;
-		box.animate({left: -ww +'px'},500,function(){
-			if(index == 1){
-				$('.books').addClass('hidden');
-			}else{
-				$('.words').addClass('hidden');
-			}
-		});
 	})
 	//如果是访问经典语录后返回就执行
 	var redliterature = sessionStorage.getItem("redliterature");

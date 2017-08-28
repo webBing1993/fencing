@@ -6,7 +6,7 @@
 <style>
     .scrollDiy{
         position: absolute;
-        top:50vw;
+        top:calc(50vw + 44px);
         bottom:0;
         overflow-y: scroll;
         /* 增加该属性，可以增加弹性 */
@@ -23,8 +23,9 @@
         height: 44px;
         padding: 8px 0;
         background: #f1f1f1;
-        position: fixed;
+        position: absolute;
         z-index: 99;
+        top:50vw;
     }
     .tabs .tab {
         display: inline-block;
@@ -37,9 +38,6 @@
     }
     .tabs .active {
         color: #fd6743;
-    }
-    .notice{
-        margin-top: 44px;
     }
     .area{
         padding: 3vw 4vw;
@@ -58,7 +56,9 @@
 
 
     #videoBox {
-        position: relative;
+        width: 100%;
+        top:0;
+        position: absolute;
         height: 50vw;
     }
 
@@ -99,11 +99,11 @@
     <input id="playBtn" type="button" value="">
     <img id="poster" src="/home/images/live/player.png" alt="">
 </div>
-<div class="scrollDiy">
-    <div class="tabs">
-        <span class="tab active">聊天</span>
-        <span class="tab">人数</span>
-    </div>
+<div class="tabs" id="tab">
+    <span class="tab active">聊天</span>
+    <span class="tab">人数</span>
+</div>
+<div class="scrollDiy" id="scroll">
     <div class="notice">
         <div class="comment">
         <div class="lists">
@@ -153,9 +153,12 @@
     oPoster.onload = function () {
         oVideoBox.style.height = oPoster.offsetHeight + "px";
     }
-//    window.addEventListener('touchmove', function (e) {
-//        e.preventDefault();
-//    }, false);
+    document.getElementById("videoBox").addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+    document.getElementById("tab").addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
     function autoWH() {
         //获取可视区宽度
         iWindowWidth = $(window).width();
@@ -185,25 +188,13 @@
     }, false);
 </script>
 <script>
-
     var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+    var set1= null;
+    var set2= null;
     $(function(){
-        //初始化数据
-        var ntc = $(".notice");
-        var tab = $(".tabs .tab");
-        var co = getCookie("type") || 0;
-        co = parseInt(co);
-        tab.eq(co).addClass("active").siblings(".tab").removeClass("active");
-        ntc.eq(co).removeClass("hidden").siblings(".notice").addClass("hidden");
-        if(co==0){
             chat();
-            setInterval(chat,1500);
+            set1 = setInterval(chat,1500);
             $(".bottom").show();
-        }else if(co==1){
-            people();
-            setInterval(people,1500);
-            $(".bottom").hide();
-        }
 
         //tab切换
         $(".tabs").on('click','.tab',function () {
@@ -212,12 +203,20 @@
             $(this).addClass("active").siblings(".tab").removeClass("active");
             $(".notice").eq(index).removeClass("hidden").siblings(".notice").addClass("hidden");
             if(index==0){
+                document.getElementById("scroll").addEventListener('touchmove', function (e) {
+                    e.returnValue = true;
+                }, false);
                 chat();
-                setInterval(chat,2000);
+                clearInterval (set2);
+                set1 = setInterval(chat,2000);
                 $(".bottom").show();
             }else if(index==1){
+                document.getElementById("scroll").addEventListener('touchmove', function (e) {
+                    e.preventDefault();
+                }, false);
                 people();
-                setInterval(people,2000);
+                clearInterval (set1);
+                 set2 = setInterval(people,2000);
                 $(".bottom").hide();
             }
             //使用示例
@@ -371,7 +370,6 @@
 
             },
             success: function (data) {
-console.log(data)
                 if (data.code == 1) {
                     number(data);
                 }
@@ -381,7 +379,6 @@ console.log(data)
 
 
     function number(data){
-        console.log(data)
         //is_like : 1为已点赞 0为未点赞
         var html = '';
         var lists = data.data;

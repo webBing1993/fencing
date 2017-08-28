@@ -120,13 +120,13 @@ body {
   font-weight: 600;
   line-height: 4vw;
 }
-.listbox .words {
+.listbox .words2 {
   position: absolute;
   top: 0;
-  left: 100vw;
+  left: 0;
   width: 99vw;
 }
-.listbox .words .list {
+.listbox .words2 .list {
   display: inline-block;
   width: 99vw;
   height: 14vw;
@@ -137,11 +137,11 @@ body {
   font-size: 1.5rem;
   line-height: 14vw;
 }
-.listbox .words .list .title {
+.listbox .words2 .list .title {
   display: inline-block;
   width: 88vw;
 }
-.listbox .words .list .fa {
+.listbox .words2 .list .fa {
   color: #999999;
   font-size: 2rem;
   font-weight: 600;
