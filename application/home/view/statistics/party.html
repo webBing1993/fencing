@@ -27,15 +27,6 @@
 </style>
 {/block}
 {block name="body"}
-<div class="banners">
-    <div class="swiper-container">
-        <div class="imgs swiper-wrapper">
-            <div class="banner swiper-slide">
-                <img src="/home/images/feedback/feedback.jpg" alt="图片">
-            </div>
-        </div>
-    </div>
-</div>
 <!--tab-->
 <div class="tabs clear">
     <div class="tab"><span>文字型</span></div>
@@ -60,7 +51,7 @@
         }else if(c == 2){
             $('#tab'+(c-1))[0].src='/home/statistics/chart.html';
         }
-        $('#tab'+(c-1)).height(WH - 45 - 0.5*WW);
+        $('#tab'+(c-1)).height(WH - 45);
         $('#tab'+(c-1)).show();
         $('.tabs>.tab').eq(c-1).find('span').addClass('active');
         //tab切换
@@ -77,7 +68,7 @@
             }else if(eq == 1){
                 $('#tab'+eq)[0].src='/home/statistics/chart.html';
             }
-            $('#tab'+eq).height(WH - 45 - 0.5*WW);
+            $('#tab'+eq).height(WH - 45);
             $('#tab'+eq).show();
             //使用示例
             setCookie("type",eq+11);
