@@ -19,11 +19,11 @@
 	<div class="up" data-tab="{$user.header}"></div>
 	{/eq}
 	<!--未签-->
-	{eq name="is_sign" value="0"}
-	<div class="sign">签到</div>
-	{else/}
-	<div class="over">已签 +{$is_sign}</div>
-	{/eq}
+	<!--{eq name="is_sign" value="0"}-->
+	<!--<div class="sign">签到</div>-->
+	<!--{else/}-->
+	<!--<div class="over">已签 +{$is_sign}</div>-->
+	<!--{/eq}-->
 	<div class="name">{$user.name}</div>
 	<input type="file" class="hide" id="upload" accept="image/jpg, image/png, image/gif, image/jpeg">
 	<input type="hidden" name="header"  value="" required="">
