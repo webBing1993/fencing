@@ -83,6 +83,10 @@
         z-index: 100;
         height: 50vw;
     }
+    .totalnum{
+        margin-left: 6vw;
+        margin-top: 3vw;
+    }
 
 </style>
 
@@ -380,10 +384,33 @@
     function number(data){
         //is_like : 1为已点赞 0为未点赞
         var html = '';
+        var total = '';
         var lists = data.data;
         var len = lists.length;
         for(var i = 0; i< len;i++){
             var list = lists[i];
+            total += parseInt(list.numer);
+            if(list.name.substr(0, 2)=="椒江"){
+               var areatotal = 55;
+            }else if(list.name.substr(0, 2)=="黄岩"){
+                var areatotal = 85;
+            }else if(list.name.substr(0, 2)=="路桥"){
+                var areatotal = 74;
+            }else if(list.name.substr(0, 2)=="临海"){
+                var areatotal = 62;
+            }else if(list.name.substr(0, 2)=="温岭"){
+                var areatotal = 304;
+            }else if(list.name.substr(0, 2)=="玉环"){
+                var areatotal = 16;
+            }else if(list.name.substr(0, 2)=="天台"){
+                var areatotal = 67;
+            }else if(list.name.substr(0, 2)=="仙居"){
+                var areatotal = 81;
+            }else if(list.name.substr(0, 2)=="三门"){
+                var areatotal = 46;
+            }else if(list.name.substr(0, 2)=="开发"){
+                var areatotal = 34;
+            }
             if(list.name.substr(0, 2)!=="之图"){
                 html +=
                         '<div class="area">'
@@ -393,11 +420,11 @@
                                     html+=  '<span>'+ list.name.substr(0, 2)+'&nbsp;&nbsp;&nbsp;&nbsp;</span>'
                                 }
 
-                       html+= '<span>'+ list.numer+'人</span>'+
+                       html+= '<span>'+ list.numer+'/'+areatotal+'</span>'+
                         '</div>';
             }
             }
-
+        html+=  '<p class="totalnum">观看总人数：'+parseInt(total) +'</p>'
        $(".area" ).html(html);
     }
 
