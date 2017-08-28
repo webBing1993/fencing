@@ -43,7 +43,7 @@
         padding: 3vw 4vw;
         padding-left: 6vw;
     }
-    .area div{
+    .area .areapeople div{
         display: inline-block;
         width: 44vw;
         text-align: left;
@@ -86,6 +86,11 @@
     .totalnum{
         margin-left: 6vw;
         margin-top: 3vw;
+        position: absolute;
+        top:0;
+    }
+    .areapeople{
+        margin-top: 8vw;
     }
 
 </style>
@@ -115,7 +120,7 @@
         </div>
     </div>
     <div class="notice area">
-
+        <div class="areapeople"></div>
     </div>
         <div class="tip"></div>
         <div class="loading hidden">
@@ -425,7 +430,7 @@
             }
             }
         html+=  '<p class="totalnum">观看总人数：'+parseInt(total) +'</p>'
-       $(".area" ).html(html);
+       $(".area .areapeople" ).html(html);
     }
 
     var u = navigator.userAgent;
