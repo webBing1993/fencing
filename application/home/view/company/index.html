@@ -533,16 +533,13 @@
 	//发送评论
 	var send = function(e,id){
 		var index = $(e).parents('.aa .lists .list' ).index();
-		setTimeout(function(){
-			$("input").focus();
-		},0)
 		swal({
 					title: "",
 					text: "请输入评论内容！",
 					type: "input",
 					showCancelButton: true,
 					animation: "slide-from-top",
-					inputPlaceholder: "请在此输入评论内容（300字以内）",
+					inputPlaceholder: "",
 					confirmButtonText: "确定",
 					cancelButtonText: "取消",
 					closeOnConfirm: false
@@ -554,9 +551,9 @@
 							$("input").blur();
 						},0)
 						return false
-					}else if (inputValue === "" || inputValue.length<5)
+					}else if (inputValue === "" || inputValue.length<1)
 					{
-						swal.showInputError("评论不少于5个字");
+						swal.showInputError("评论不少于1个字");
 						return false
 					}else if(inputValue.length>300){
 						swal.showInputError("评论不得多于300字");

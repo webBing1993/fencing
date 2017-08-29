@@ -226,6 +226,9 @@
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
+input::-webkit-input-placeholder{
+  color: #000;
+}
 .bottom .send {
   width: 20.5vw;
   line-height: 45px;
