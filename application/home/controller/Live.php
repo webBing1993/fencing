@@ -165,7 +165,7 @@ class Live extends Base
                 $user = WechatUser::where('userid',$value['uid'])->find();
                 $value['nickname'] = $user['name'];
                 $user['header'] ? $value['header'] = $user['header'] : $value['header'] = $user['avatar'];
-                $value['time'] = date('Y-m-d H:i:s',$value['create_time']);
+                $value['time'] = date('H:i:s',$value['create_time']);
                 $value['content'] = strtr($value['content'], $badword1);
                 $map1 = array(
                     'type' => 0,

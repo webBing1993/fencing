@@ -100,6 +100,20 @@
         position: absolute;
         width: 100%;
     }
+
+    .comment .lists .list .mid .time {
+        font-size: 1.2rem;
+        line-height: 20px;
+        color: #999999;
+        float: right;
+        margin-top: 3vw;
+        position: absolute;
+        right: 13px;
+    }
+    .comment .lists .list .mid .name {
+        /*margin-top: 0px;*/
+        /*float: left;*/
+    }
 </style>
 
 {/block}
@@ -139,7 +153,7 @@
 {eq name="visit" value="0"}
 <div class="bottom clear">
     <div class="myword fl">
-        <input type="text" placeholder="说说你的感想！" onclick="tosend(this,12,1)">
+        <input type="text" placeholder="说说你的感想！" onclick="tosend(this,12,1)" tabindex="-1">
     </div>
 </div>
 {/eq}
@@ -204,6 +218,7 @@
                     confirmButtonText:'确定',
                     timer:3000
                 });
+                myPlayer.pause();
                 return false
             } else {
 
@@ -297,7 +312,7 @@
                     type: "input",
                     showCancelButton: true,
                     animation: "slide-from-top",
-                    inputPlaceholder: "请在此输入评论内容（300字以内）",
+                    inputPlaceholder: "",
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
                     closeOnConfirm: false
@@ -309,9 +324,9 @@
                             $("input").blur();
                         },0)
                         return false
-                    }else if (inputValue === "" || inputValue.length<5)
+                    }else if (inputValue === "" || inputValue.length<1)
                     {
-                        swal.showInputError("评论不少于5个字");
+                        swal.showInputError("评论不少于1个字");
                         return false
                     }else if(inputValue.length>300){
                         swal.showInputError("评论不得多于300字");
@@ -382,9 +397,9 @@
                     '<img src="'+list.header+'" alt="用户" class="user">'+
                     '</div>'+
                     '<div class="fl mid">'+
+                    '<div class="time">'+ list.time+'</div>'+
                     '<div class="name limit">'+ list.nickname+'</div>'+
                     '<div class="content" >'+ list.content+'</div>'+
-                    '<div class="time">'+ list.time+'</div>'+
                     '</div>';
             html+=
                     '</div>';
