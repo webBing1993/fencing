@@ -25,7 +25,7 @@
 </style>
 {/block}
 {block name="body"}
-<div class="list clear">
+<div class="list clear" id="eee">
 	<div class="title">党组织人数分布</div>
 	<div class="bar">
 		<canvas id="pie1" height="200"></canvas>
@@ -51,10 +51,12 @@
 <div class="list">
 	<div class="title">男女比例</div>
 	<div class="cir">
-		<span class="m">男</span>
+
 		<div id="cir1"></div>
-		<span class="f">女</span>
+		<span class="m">男:</span>
+
 		<div id="cir2"></div>
+		<span class="f">女:</span>
 	</div>
 
 </div>
@@ -142,11 +144,11 @@ $(function() {
 
 	//	党员总人数表
 	var data3 = [{
-		label: "关注人数",
+		label: "关注人数："+{$msg['concernnum']}+"人",
 		data: {$msg['concernnum']},
 		color: "#5FB8C5"
 	},{
-		label: "未关注人数",
+		label: "未关注人数："+{$msg['nonnum']}+"人",
 		data: {$msg['nonnum']},
 		color: "#d3d3d3"
 	}];
@@ -238,6 +240,7 @@ $(function() {
 		barDatasetSpacing : 1,// 在同一x值内的柱状块之间的间距
 		animation : true,//是否有动画效果
 		animationSteps : 60,//动画的步数
+		showTooltips: false,
 		animationEasing : "easeOutQuart",// 动画的效果
 		// 图例
 		legendTemplate : '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
@@ -278,6 +281,8 @@ $(function() {
 		roundCorner : true,
 		percentage: true
 	});
+	$(".m").append(Math.round(384 * data6.male/100)+"人");
+	$(".f").append(Math.round(384 * data6.female/100)+"人");
 	//修改提示信息
 	$('.pie').on('plothover',function(){
 		var datas=[

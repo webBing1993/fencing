@@ -17,7 +17,6 @@
         /*display:none;*/
         float:left;
         height:0;
-        margin-top: 44px;
     }
     .tabs .tab {
         width: 49vw;
@@ -49,14 +48,17 @@
         }
         if(c == 1){
             $('#tab'+(c-1))[0].src='/home/statistics/form.html';
+            $("iframe").css("margin-top","44px");
         }else if(c == 2){
+            $("iframe").css("margin-top","20px");
             $('#tab'+(c-1))[0].src='/home/statistics/chart.html';
         }
-        $('#tab'+(c-1)).height(WH - 45);
+        $('#tab'+(c-1)).height(WH);
         $('#tab'+(c-1)).show();
         $('.tabs>.tab').eq(c-1).find('span').addClass('active');
         //tab切换
         $('.tabs>.tab ').on('click',function(){
+            $("iframe").css("margin-top","44px");
             var ntc = $('.notices' );
             var eq = $(this ).index();
             $(this ).siblings('.tab' ).find('span' ).removeClass('active');
@@ -69,7 +71,7 @@
             }else if(eq == 1){
                 $('#tab'+eq)[0].src='/home/statistics/chart.html';
             }
-            $('#tab'+eq).height(WH - 45);
+            $('#tab'+eq).height(WH);
             $('#tab'+eq).show();
             //使用示例
             setCookie("type",eq+11);

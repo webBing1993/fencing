@@ -58,7 +58,6 @@ body {
   left: calc(100% + 20px);
 }
 #flotTip {
-  margin-left: 30!important;
   min-width: 100px;
   min-height: 30px;
   padding: 5px;
@@ -75,14 +74,14 @@ body {
 }
 .cir span {
   position: absolute;
-  top: 80px;
+  bottom:-20px;
   color: #b2b2b2;
 }
 .cir .m {
-  left: 80px;
+  left: 60px;
 }
 .cir .f {
-  left: calc(60% + 45px);
+  left: calc(60% + 30px);
 }
 .cir #cir1 {
   position: absolute;
