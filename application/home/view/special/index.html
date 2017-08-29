@@ -29,6 +29,9 @@
         background:#eee;
         height:0;
     }
+    .banner a:active{
+        background: none;
+    }
 </style>
 {/block}
 
@@ -38,7 +41,7 @@
     <div class="swiper-container">
         <div class="imgs swiper-wrapper">
             <div class="banner swiper-slide">
-                <a href="javascript:;">
+                <a href="{:Url('Special/detail?id='.$topic['id'])}">
                     <img src="{$topic.front_cover|get_cover='path'}" alt="图片">
                     <div></div>
                     <span>{$topic.title}</span>
