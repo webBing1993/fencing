@@ -13,6 +13,9 @@
     height: 44px;
     padding: 8px 0;
     background: #f1f1f1;
+    position: absolute;
+    top: 0;
+    z-index: 99;
 }
 .tabs .tab {
     display: inline-block;

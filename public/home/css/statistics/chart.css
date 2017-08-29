@@ -58,6 +58,7 @@ body {
   left: calc(100% + 20px);
 }
 #flotTip {
+  margin-left: 30!important;
   min-width: 100px;
   min-height: 30px;
   padding: 5px;
