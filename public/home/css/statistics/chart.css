@@ -69,19 +69,19 @@ body {
 .cir {
   position: relative;
   width: 100%;
-  height: 120px;
+  height: 140px;
   margin: 20px auto;
 }
 .cir span {
   position: absolute;
-  bottom:-20px;
+  bottom:-10px;
   color: #b2b2b2;
 }
 .cir .m {
-  left: 60px;
+  left: 55px;
 }
 .cir .f {
-  left: calc(60% + 30px);
+  left: calc(60% + 25px);
 }
 .cir #cir1 {
   position: absolute;
