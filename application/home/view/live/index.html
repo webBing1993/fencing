@@ -92,7 +92,14 @@
     .areapeople{
         margin-top: 8vw;
     }
-
+    #loading{
+        text-align: center;
+        line-height: 50vw;
+        font-size: 16px;
+        display: none;
+        position: absolute;
+        width: 100%;
+    }
 </style>
 
 {/block}
@@ -101,6 +108,7 @@
 <!--<video src="{$live_path}" controls="controls" webkit-playsinline="true" playsinline></video>-->
 <div id="videoBox">
     <!--<video id="videoBox" controls preload="auto" poster="images/tempPoster.jpg" x5-video-player-type="h5" x5-video-player-fullscreen="true">-->
+    <p id="loading">加载中...</p>
     <video id="videoLive" preload="auto" poster=""  x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" x-webkit-airplay="true" playsinline="true">
         <!--<source src="http://221.208.196.19:8080/hls/stream1.m3u8" type="application/x-mpegURL">-->
         <source src="{$live_path}">
@@ -179,12 +187,29 @@
     //播放按钮呗点击
     oPlayBtn.onclick = function () {
         myPlayer.play();
-        this.style.display = oPoster.style.display = "none";
+        this.style.display = oPoster.style.display =  "none";
+        loading.style.display = "block";
     };
     //监听播放
     myPlayer.addEventListener('play', function () {
 //        alert("播放");
+        setTimeout(function(){
+            if (!$('video')[0].duration) {
+                oPlayBtn.style.display = oPoster.style.display =  loading.style.display ="block";
+                loading.style.display = "none";
+                swal({
+                    title: ' ',
+                    text: '直播还未开始哦!',
+                    type: 'error',
+                    confirmButtonText:'确定',
+                    timer:3000
+                });
+                return false
+            } else {
 
+                loading.style.display = "none";
+            }
+        },5000)
     }, false);
     //监听暂停
     myPlayer.addEventListener('pause', function () {
