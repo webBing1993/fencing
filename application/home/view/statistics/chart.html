@@ -22,6 +22,10 @@
 		margin-top: 20px;
 		line-height: 40px;
 	}
+	body .list:nth-child(5){
+		margin-bottom: 10px;
+		padding-bottom: 20px;
+	}
 </style>
 {/block}
 {block name="body"}
@@ -71,6 +75,11 @@
 <script src="/static/flot/radialIndicator.js"></script>
 <script>
 	var myGender = echarts.init(document.getElementById('pie3'));
+	window.onload = function(){
+		$("#cir1 canvas").css({"width":"100%","height":"auto"});
+		$("#cir2 canvas").css({"width":"100%","height":"auto"});
+
+	}
 $(function() {
 	//大饼图数据：data1、data2、data3，条形图数据：data4、data5，环形图数据：data6
 	//党组织总数量表

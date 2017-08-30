@@ -68,33 +68,37 @@ body {
   border-radius: 6px;
 }
 .cir {
-  position: relative;
   width: 100%;
-  height: 140px;
+  height: 42vw;
   margin: 20px auto;
 }
 .cir span {
   position: absolute;
-  bottom:-10px;
+  bottom:10px;
   color: #b2b2b2;
 }
 .cir .m {
-  left: 55px;
+  left:0;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
 }
 .cir .f {
-  left: calc(60% + 25px);
+  right: 0;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
 }
 .cir #cir1 {
-  position: absolute;
-  top: 0;
-  left: 30px;
+  display: inline-block;
   width: 50%;
+  text-align: center;
 }
 .cir #cir2 {
-  position: absolute;
-  top: 0;
-  left: calc(60% - 10px);
+  display: inline-block;
+  float: right;
   width: 50%;
+  text-align: center;
 }
 .rad-prg {
   margin: 20px 0;
