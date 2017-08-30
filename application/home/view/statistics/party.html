@@ -29,33 +29,20 @@
 {block name="body"}
 <!--tab-->
 <div class="tabs clear">
-    <div class="tab"><span>文字型</span></div>
+    <div class="tab"><span class="active">文字型</span></div>
     <div class="tab"><span>图表型</span></div>
 </div>
-<iframe src="" frameborder="0"  id="tab0" ></iframe>
+<iframe src="/home/statistics/form.html" frameborder="0"  id="tab0" ></iframe>
 <iframe src="" frameborder="0"  id="tab1" ></iframe>
 {/block}
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    var c = 1;
     $(function(){
         var WH = $(window).height();
         var WW = $(window).width();
-        var co = getCookie("type");
-        if(co == 11 || co == 12){
-            c = co - 10;
-        }
-        if(c == 1){
-            $('#tab'+(c-1))[0].src='/home/statistics/form.html';
-            $("iframe").css("margin-top","44px");
-        }else if(c == 2){
-            $("iframe").css("margin-top","20px");
-            $('#tab'+(c-1))[0].src='/home/statistics/chart.html';
-        }
-        $('#tab'+(c-1)).height(WH);
-        $('#tab'+(c-1)).show();
-        $('.tabs>.tab').eq(c-1).find('span').addClass('active');
+        $('#tab0').height(WH);
+        $("iframe").css("margin-top","44px");
         //tab切换
         $('.tabs>.tab ').on('click',function(){
             $("iframe").css("margin-top","44px");
@@ -74,7 +61,6 @@
             $('#tab'+eq).height(WH);
             $('#tab'+eq).show();
             //使用示例
-            setCookie("type",eq+11);
         });
         isOut();
     });
