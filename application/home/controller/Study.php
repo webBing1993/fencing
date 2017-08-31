@@ -147,7 +147,7 @@ class Study extends Base {
                 //浏览不存在则存入pb_browse表
                 $con = array(
                     'user_id' => $userId,
-                    'learn_id' => $id,
+                    'study_id' => $id,
                 );
                 $history = Browse::get($con);
                 if(!$history && $id != 0){

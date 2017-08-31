@@ -120,6 +120,15 @@ class Data extends Admin
     }
     // 获取 数量
     public function get_count($where='',$type='d'){
-        return  Browse::where($where)->whereTime('create_time',$type)->count();
+        if ($type == 'm') {
+            $beginThismonth=mktime(0,0,0,date('m'),1,date('Y'));
+            $endThismonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+            $where['create_time'] = ['between',[$beginThismonth,$endThismonth]];
+            $count = Browse::where($where)->count();
+            return $count;
+        } else {
+            return  Browse::where($where)->whereTime('create_time',$type)->count();
+        }
     }
+
 }
