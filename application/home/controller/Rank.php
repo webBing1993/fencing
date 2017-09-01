@@ -470,8 +470,11 @@ class Rank extends Base {
         $browse = Browse::where($map)->select();
         $list1 = array();
         foreach ($browse as $value){
-            $k = $value['user_id'];
-            $list1[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['user_id'];
+                $list1[$k][] = $value;
+            }
         }
         $new1 = array();
         foreach ($list1 as $u => $val){
@@ -484,8 +487,11 @@ class Rank extends Base {
         $comment = Comment::where($map)->select();
         $list2 = array();
         foreach ($comment as $value){
-            $k = $value['uid'];
-            $list2[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['uid'];
+                $list2[$k][] = $value;
+            }
         }
         $new2 = array();
         foreach ($list2 as $u => $val){
@@ -498,8 +504,11 @@ class Rank extends Base {
         $like = Like::where($map)->select();
         $list3 = array();
         foreach ($like as $value){
-            $k = $value['uid'];
-            $list3[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['uid'];
+                $list3[$k][] = $value;
+            }
         }
         $new3 = array();
         foreach ($list3 as $u => $val){
@@ -512,8 +521,11 @@ class Rank extends Base {
         $answer = Answers::where(['create_time' => array('egt',$t)])->select();
         $list4 = array();
         foreach($answer as $value){
-            $k = $value['userid'];
-            $list4[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['userid'];
+                $list4[$k][] = $value;
+            }
         }
         $news4 = array();
         foreach($list4 as $u => $val){
@@ -630,8 +642,11 @@ class Rank extends Base {
         $browse_m = Browse::where($map)->select();
         $list1_m = array();
         foreach ($browse_m as $value){
-            $k = $value['user_id'];
-            $list1_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['user_id'];
+                $list1_m[$k][] = $value;
+            }
         }
         $new1_m = array();
         foreach ($list1_m as $u => $val){
@@ -644,8 +659,11 @@ class Rank extends Base {
         $comment_m = Comment::where($map)->select();
         $list2_m = array();
         foreach ($comment_m as $value){
-            $k = $value['uid'];
-            $list2_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['uid'];
+                $list2_m[$k][] = $value;
+            }
         }
         $new2_m = array();
         foreach ($list2_m as $u => $val){
@@ -659,8 +677,11 @@ class Rank extends Base {
         $like_m = Like::where($map)->select();
         $list3_m = array();
         foreach ($like_m as $value){
-            $k = $value['uid'];
-            $list3_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['uid'];
+                $list3_m[$k][] = $value;
+            }
         }
         $new3_m = array();
         foreach ($list3_m as $u => $val){
@@ -673,8 +694,11 @@ class Rank extends Base {
         $answer_m = Answers::where(['create_time' => array('between',[$start,$end])])->select();
         $list4_m = array();
         foreach($answer_m as $value){
-            $k = $value['userid'];
-            $list4_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if (!empty($User)){
+                $k = $value['userid'];
+                $list4_m[$k][] = $value;
+            }
         }
         $news4_m = array();
         foreach($list4_m as $u => $val){
