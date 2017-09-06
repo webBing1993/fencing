@@ -148,7 +148,7 @@ $(function() {
 				strokeColor: "rgba(26,179,148,0.8)",
 				highlightFill: "rgba(26,179,148,0.75)",
 				highlightStroke: "rgba(26,179,148,1)",
-				data: [55,85,74,62,304,16,67,81,46,34]
+				data: [52,71,78,57,349,22,65,64,46,30]
 			}
 		]
 
@@ -295,8 +295,8 @@ $(function() {
 		roundCorner : true,
 		percentage: true
 	});
-	$(".m").append(Math.round(384 * data6.male/100)+"人");
-	$(".f").append(Math.round(384 * data6.female/100)+"人");
+	$(".m").append('642'+"人");
+	$(".f").append('191'+"人");
 });
 
 	//修改提示信息
@@ -319,8 +319,8 @@ $(function() {
 					},
 				},
 				data:[
-					{value:801, name:'关注：'+Math.round((801 / 824)*100)+'%'},
-					{value:23, name:'未关注：'+Math.round((23 / 824)*100)+'%'},
+					{value:801, name:'关注：'+Math.round(('{$msg.concernnum}'/ '{$msg.usernum}' )*100)+'%'},
+					{value:23, name:'未关注：'+Math.round(('{$msg.nonnum}' / '{$msg.usernum}')*100)+'%'},
 				]
 			}
 		]

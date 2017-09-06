@@ -134,24 +134,24 @@ class Statistics extends Base {
 //        );
 
         $msg = array(
-            'usernum' => 824, //总人数
+            'usernum' => 833, //总人数
             'concernnum' => 801, //关注人数
             'avgage' => 35, //平均年龄,
             'agepercent1' => 60,
-            'agepercent2' => 300,
+            'agepercent2' => 308,
             'agepercent3' => 305,
-            'agepercent4' => 100,
+            'agepercent4' => 101,
             'agepercent5' => 59,
-            'male' => '78%',
-            'female' => '22%',
-            'edu1' => 0,
-            'edu2' => 0,
-            'edu3' => 41,
-            'edu4' => 169,
-            'edu5' => 421,
-            'edu6' => 188,
+            'male' => '77%',
+            'female' => '23%',
+            'edu1' => 41,
+            'edu2' => 289,
+            'edu3' => 276,
+            'edu4' => 36,
+            'edu5' => 113,
+            'edu6' => 68,
             'edu7' => 3,
-            'edu8' => 2,
+            'edu8' => 0,
         );
 
         $this->assign('msg',$msg);
@@ -216,25 +216,25 @@ class Statistics extends Base {
 //        );
 
         $msg = array(
-            'usernum' => 824, //总人数
+            'usernum' => 833, //总人数
             'concernnum' => 801, //关注人数
-            'nonnum' => 23, //未关注人数
+            'nonnum' => 30, //未关注人数
             'avgage' => 35, //平均年龄,
             'agepercent1' => 60,
-            'agepercent2' => 300,
+            'agepercent2' => 308,
             'agepercent3' => 305,
-            'agepercent4' => 100,
+            'agepercent4' => 101,
             'agepercent5' => 59,
-            'male' => '78',
-            'female' => '22',
-            'edu1' => 0,
-            'edu2' => 0,
-            'edu3' => 41,
-            'edu4' => 169,
-            'edu5' => 421,
-            'edu6' => 188,
+            'male' => '77',
+            'female' => '23',
+            'edu1' => 41,
+            'edu2' => 289,
+            'edu3' => 276,
+            'edu4' => 36,
+            'edu5' => 113,
+            'edu6' => 68,
             'edu7' => 3,
-            'edu8' => 2,
+            'edu8' => 0,
         );
 
         $this->assign('msg',$msg);
