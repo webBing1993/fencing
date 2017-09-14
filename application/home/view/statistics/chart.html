@@ -140,7 +140,7 @@ $(function() {
 
 	// 党组织总人数表
 	var data1 = {
-		labels: ["椒江区", "黄岩区", "路桥区", "临海市", "温岭市","玉环市","天台市","仙居县","三门县","开发区"],
+		labels: ["椒江区", "黄岩区", "路桥区", "临海市", "温岭市","玉环市","天台县","仙居县","三门县","开发区","温岭监管局"],
 		datasets: [
 			{
 				label: "各支部人数",
@@ -148,7 +148,7 @@ $(function() {
 				strokeColor: "rgba(26,179,148,0.8)",
 				highlightFill: "rgba(26,179,148,0.75)",
 				highlightStroke: "rgba(26,179,148,1)",
-				data: [52,71,78,57,349,22,65,64,46,30]
+				data: [{$msg.party1},{$msg.party2},{$msg.party3},{$msg.party4},{$msg.party5},{$msg.party6},{$msg.party7},{$msg.party8},{$msg.party9},{$msg.party10},{$msg.party11}]
 			}
 		]
 
