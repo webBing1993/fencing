@@ -86,8 +86,11 @@ class Rank extends Base {
         $browse = Browse::where($map)->select();
         $list1 = array();
         foreach ($browse as $value){
-            $k = $value['user_id'];
-            $list1[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if ($User){
+                $k = $value['user_id'];
+                $list1[$k][] = $value;
+            }
         }
         $new1 = array();
         foreach ($list1 as $u => $val){
@@ -100,8 +103,11 @@ class Rank extends Base {
         $comment = Comment::where($map)->select();
         $list2 = array();
         foreach ($comment as $value){
-            $k = $value['uid'];
-            $list2[$k][] = $value;
+            $User = WechatUser::where('userid',$value['uid'])->find();
+            if ($User){
+                $k = $value['uid'];
+                $list2[$k][] = $value;
+            }
         }
         $new2 = array();
         foreach ($list2 as $u => $val){
@@ -114,8 +120,11 @@ class Rank extends Base {
         $like = Like::where($map)->select();
         $list3 = array();
         foreach ($like as $value){
-            $k = $value['uid'];
-            $list3[$k][] = $value;
+            $User = WechatUser::where('userid',$value['uid'])->find();
+            if ($User){
+                $k = $value['uid'];
+                $list3[$k][] = $value;
+            }
         }
         $new3 = array();
         foreach ($list3 as $u => $val){
@@ -128,8 +137,11 @@ class Rank extends Base {
         $answer = Answers::where(['create_time' => array('egt',$t)])->select();
         $list4 = array();
         foreach($answer as $value){
-            $k = $value['userid'];
-            $list4[$k][] = $value;
+            $User = WechatUser::where('userid',$value['userid'])->find();
+            if ($User){
+                $k = $value['userid'];
+                $list4[$k][] = $value;
+            }
         }
         $news4 = array();
         foreach($list4 as $u => $val){
@@ -226,8 +238,11 @@ class Rank extends Base {
         $browse_m = Browse::where($map)->select();
         $list1_m = array();
         foreach ($browse_m as $value){
-            $k = $value['user_id'];
-            $list1_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['user_id'])->find();
+            if ($User){
+                $k = $value['user_id'];
+                $list1_m[$k][] = $value;
+            }
         }
         $new1_m = array();
         foreach ($list1_m as $u => $val){
@@ -241,8 +256,11 @@ class Rank extends Base {
         $comment_m = Comment::where($map)->select();
         $list2_m = array();
         foreach ($comment_m as $value){
-            $k = $value['uid'];
-            $list2_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['uid'])->find();
+            if ($User){
+                $k = $value['uid'];
+                $list2_m[$k][] = $value;
+            }
         }
         $new2_m = array();
         foreach ($list2_m as $u => $val){
@@ -256,8 +274,11 @@ class Rank extends Base {
         $like_m = Like::where($map)->select();
         $list3_m = array();
         foreach ($like_m as $value){
-            $k = $value['uid'];
-            $list3_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['uid'])->find();
+            if ($User){
+                $k = $value['uid'];
+                $list3_m[$k][] = $value;
+            }
         }
         $new3_m = array();
         foreach ($list3_m as $u => $val){
@@ -270,8 +291,11 @@ class Rank extends Base {
         $answer_m = Answers::where(['create_time' => array('between',[$start,$end])])->select();
         $list4_m = array();
         foreach($answer_m as $value){
-            $k = $value['userid'];
-            $list4_m[$k][] = $value;
+            $User = WechatUser::where('userid',$value['userid'])->find();
+            if ($User){
+                $k = $value['userid'];
+                $list4_m[$k][] = $value;
+            }
         }
         $news4_m = array();
         foreach($list4_m as $u => $val){
@@ -487,7 +511,7 @@ class Rank extends Base {
         $comment = Comment::where($map)->select();
         $list2 = array();
         foreach ($comment as $value){
-            $User = WechatUser::where('userid',$value['user_id'])->find();
+            $User = WechatUser::where('userid',$value['uid'])->find();
             if (!empty($User)){
                 $k = $value['uid'];
                 $list2[$k][] = $value;
@@ -504,7 +528,7 @@ class Rank extends Base {
         $like = Like::where($map)->select();
         $list3 = array();
         foreach ($like as $value){
-            $User = WechatUser::where('userid',$value['user_id'])->find();
+            $User = WechatUser::where('userid',$value['uid'])->find();
             if (!empty($User)){
                 $k = $value['uid'];
                 $list3[$k][] = $value;
@@ -521,7 +545,7 @@ class Rank extends Base {
         $answer = Answers::where(['create_time' => array('egt',$t)])->select();
         $list4 = array();
         foreach($answer as $value){
-            $User = WechatUser::where('userid',$value['user_id'])->find();
+            $User = WechatUser::where('userid',$value['userid'])->find();
             if (!empty($User)){
                 $k = $value['userid'];
                 $list4[$k][] = $value;
@@ -659,7 +683,7 @@ class Rank extends Base {
         $comment_m = Comment::where($map)->select();
         $list2_m = array();
         foreach ($comment_m as $value){
-            $User = WechatUser::where('userid',$value['user_id'])->find();
+            $User = WechatUser::where('userid',$value['uid'])->find();
             if (!empty($User)){
                 $k = $value['uid'];
                 $list2_m[$k][] = $value;
@@ -677,7 +701,7 @@ class Rank extends Base {
         $like_m = Like::where($map)->select();
         $list3_m = array();
         foreach ($like_m as $value){
-            $User = WechatUser::where('userid',$value['user_id'])->find();
+            $User = WechatUser::where('userid',$value['uid'])->find();
             if (!empty($User)){
                 $k = $value['uid'];
                 $list3_m[$k][] = $value;
@@ -690,11 +714,12 @@ class Rank extends Base {
             $cen['score'] = $count;
             $new3_m[] = $cen;
         }
+
         // 本月答题
         $answer_m = Answers::where(['create_time' => array('between',[$start,$end])])->select();
         $list4_m = array();
         foreach($answer_m as $value){
-            $User = WechatUser::where('userid',$value['user_id'])->find();
+            $User = WechatUser::where('userid',$value['userid'])->find();
             if (!empty($User)){
                 $k = $value['userid'];
                 $list4_m[$k][] = $value;
@@ -741,6 +766,7 @@ class Rank extends Base {
             }
         }
         $final2_m = array_merge($final2_m,$new3_m,$center_m);
+
         // final2 与第四组比较同理,结果存入 final3
         $final3_m = array();
         foreach($final2_m as $y => $l){
@@ -755,6 +781,7 @@ class Rank extends Base {
             }
         }
         $final3_m = array_merge($final3_m,$news4_m,$final2_m);
+
         $finals_m = array();
         foreach ($final3_m as $key=>$value){
             $department_m = Db::table('pb_wechat_department_user')
@@ -762,10 +789,12 @@ class Rank extends Base {
                 ->join('pb_wechat_department b','a.departmentid = b.id','LEFT')
                 ->where('a.userid',$value['userid'])
                 ->find();
-            $value['id'] = $department_m['id'];
-            $value['name'] = $department_m['name'];
-            unset($value['userid']);
-            $finals_m[$key] = $value;
+            if (!empty($department_m['id']) && !empty($department_m['name'])){
+                $value['id'] = $department_m['id'];
+                $value['name'] = $department_m['name'];
+                unset($value['userid']);
+                $finals_m[$key] = $value;
+            }
         }
         //合并相同值，获得部门值
         $item_m = array();
