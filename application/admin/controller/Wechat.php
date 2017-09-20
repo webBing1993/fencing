@@ -82,6 +82,7 @@ class Wechat extends Admin
      * 同步通讯录用户
      */
     public function synchronizeUser() {
+        ini_set('max_execution_time', '60');
         $Wechat = new QYWechat(Config::get('party'));
         if($Wechat->errCode != 40001) {
             return $this->error("同步出错");
@@ -97,30 +98,27 @@ class Wechat extends Admin
                 $num++;
                 $user['department'] = json_encode($user['department']);
                 $user['order'] = json_encode($user['order']);
-//                foreach ($user['extattr']['attrs'] as $value) {
-//                    switch ($value['name']){
-//                        case "出生日期":
-//                            $user['birthday'] = $value['value'];
-//                            if(!empty($value['value'])) {
-//                                $user['age'] = date("Y",time()) - substr($value['value'],0,4);
-//                            }else{
-//                                $user['age'] = null;
-//                            }
-//                            break;
-//                        case "所属支部":
-//                            $user['branch'] = $value['value'];
-//                            break;
-//                        case "学历":
-//                            $user['education'] = $value['value'];
-//                            break;
-//                        case "入党时间":
-//                            $user['partytime'] = $value['value'];
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                }
-//                $user['extattr'] = json_encode($user['extattr']);
+                foreach ($user['extattr']['attrs'] as $val) {
+                    switch ($val['name']){
+                        case "出生日期":
+                            $user['birthday'] = $val['value'];
+                            if (!empty($val['value'])){
+                                if (date("Y",time()) - substr($val['value'],0,4) < 100 && date("Y",time()) - substr($val['value'],0,4) > 0){
+                                    $user['age'] = date("Y",time()) - substr($val['value'],0,4);
+                                }else{
+                                    $user['age'] = 0;
+                                }
+                            }
+                            break;
+                        case "学历":
+                            $user['education'] = $val['value'];
+                            break;
+                        case "入党时间":
+                            $user['partytime'] = $val['value'];
+                            break;
+                    }
+                }
+                $user['extattr'] = json_encode($user['extattr']);
                 if(WechatUser::get(['userid'=>$user['userid']])) {
                     WechatUser::where(['userid'=>$user['userid']])->update($user);
                 } else {
