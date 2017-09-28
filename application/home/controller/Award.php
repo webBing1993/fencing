@@ -194,17 +194,17 @@ class Award extends Base
      */
     public function award(){
         $this->checkRole();
-//        $this->check_time();
-//        $id = input('get.id');
+        $this->check_time();
+        $id = input('get.id');
         $userId = session('userId');
-//        $res = AwardModel::where(['id' => $id])->find();
-//        if (empty($res) || $res['score'] != 3){
-//            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
-//        }
-//        $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
-//        if ($result){
-//            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
-//        }
+        $res = AwardModel::where(['id' => $id])->find();
+        if (empty($res) || $res['score'] != 3){
+            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
+        }
+        $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
+        if ($result){
+            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
+        }
         // 概率计算
         $list = Db::name('award_stuff')->where(['type' => 0,'status' => 0])->field('id,sum')->select();
         $arr = array();
@@ -238,7 +238,7 @@ class Award extends Base
         $stuff_id = $arr[$index];
         dump($stuff_id);
         $this->assign('stuff_id',$stuff_id);
-//        $this->assign('award_id',$id);
+        $this->assign('award_id',$id);
         return $this->fetch();
     }
     /**
