@@ -11,6 +11,8 @@ use app\admin\model\Question;
 use app\home\model\Award as AwardModel;
 use app\home\model\WechatUser;
 use think\Db;
+use think\Url;
+
 /**
  * Class Award
  * @package app\home\controller  抽奖活动
@@ -196,11 +198,11 @@ class Award extends Base
         $userId = session('userId');
         $res = AwardModel::where(['id' => $id])->find();
         if (empty($res) || $res['score'] != 3){
-            return $this->error('抱歉~~系统参数丢掉了');
+            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
         }
         $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
         if ($result){
-            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~');
+            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
         }
         return $this->fetch();
     }
