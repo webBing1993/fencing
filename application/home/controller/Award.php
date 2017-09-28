@@ -193,21 +193,35 @@ class Award extends Base
      * 抽奖 页面
      */
     public function award(){
-        $this->check_time();
-        $id = input('get.id');
-        $userId = session('userId');
-        $res = AwardModel::where(['id' => $id])->find();
-        if (empty($res) || $res['score'] != 3){
-            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
+//        $this->check_time();
+//        $id = input('get.id');
+//        $userId = session('userId');
+//        $res = AwardModel::where(['id' => $id])->find();
+//        if (empty($res) || $res['score'] != 3){
+//            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
+//        }
+//        $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
+//        if ($result){
+//            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
+//        }
+        // 概率计算
+        $list = Db::name('award_stuff')->where(['type' => 0,'status' => 0])->field('id')->select();
+        $arr = array();
+        foreach($list as $value){
+            array_push($arr,$value);
         }
-        $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
-        if ($result){
-            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
-        }
-        $this->assign('award_id',$id);
+        $index = mt_rand(0,count($arr)-1); // 随机索引
+        $stuff_id = $arr[$index];
+        $this->assign('stuff_id',$stuff_id['id']);
+//        $this->assign('award_id',$id);
         return $this->fetch();
     }
+    /**
+     * 存储抽奖记录
+     */
+    public function push(){
 
+    }
     /**
      * @return mixed  活动结束页面
      */
