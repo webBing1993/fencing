@@ -225,8 +225,12 @@ class Award extends Base
                         array_push($arr,$value['id']);
                     }
                 }elseif ($num >1 && $num <= 5){
-                    array_push($arr,$value['id']);
+                    for($k=0;$k<20;$k++){
+                        array_push($arr,$value['id']);
+                    }
                 }
+            }else{
+                array_push($arr,$value['id']);
             }
         }
         shuffle($arr); // 随机打乱数组
