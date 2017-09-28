@@ -250,6 +250,9 @@ class Award extends Base
         $userId = session('userId');
         $stuff_id = input('post.stuff_id/d'); // 奖品id
         $award_id = input('post.award_id/d');  // 答题记录id
+        if (empty($stuff_id) || empty($award_id)){
+            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
+        }
         $map = array(
             'stuff_id' => $stuff_id,
             'award_id' => $award_id,
