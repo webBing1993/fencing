@@ -22,7 +22,7 @@
 	{/volist}
 </div>
 {eq name="visit" value="0"}
-<div class="submit" data-toggle="modal" data-target="#modal">确认提交</div>
+<div class="submit">确认提交</div>
 {/eq}
 <!--模态框-->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -60,8 +60,15 @@ $(function(){
 			success:function(data){
 				$('.score').html(data.url.score);
 				$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
-				var link='scan';
-				$('#link').attr('href',link+'/id/'+data.url.id);
+				$('#modal').modal('show');
+				$("#modal").unbind("click");
+				if(data.url.award==1){
+					$("#link").html("去抽奖");
+					$('#link').attr('href','award/id/'+data.url.id);
+				}else if(data.url.award==0){
+					$('#link').attr('href','scan/id/'+data.url.id);
+				}
+
 			}
 		});
 	});
@@ -71,7 +78,13 @@ $(function(){
 		it.addClass('checked');
 		it.siblings('label' ).removeClass('checked');
 	});
-
 })
+
+window.onpageshow = function (e) {
+	if (e.persisted) {
+			window.location.reload(true);
+	}
+}
+
 </script>
 {/block}
