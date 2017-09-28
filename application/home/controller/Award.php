@@ -216,10 +216,12 @@ class Award extends Base
      */
     public function check_time(){
         $date = Db::name('award')->order('id asc')->value('create_time');
-        $time = strtotime(date('Y-m-d',time()));
-        $first = strtotime(date('Y-m-d',$date)) + 10*24*60*60;
-        if ($time > $first){
-            $this->redirect('Award/null');
+        if (!empty($date)){
+            $time = strtotime(date('Y-m-d',time()));
+            $first = strtotime(date('Y-m-d',$date)) + 10*24*60*60;
+            if ($time > $first){
+                $this->redirect('Award/null');
+            }
         }
     }
 }
