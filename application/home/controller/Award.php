@@ -193,9 +193,10 @@ class Award extends Base
      * 抽奖 页面
      */
     public function award(){
+        $this->checkRole();
 //        $this->check_time();
 //        $id = input('get.id');
-//        $userId = session('userId');
+        $userId = session('userId');
 //        $res = AwardModel::where(['id' => $id])->find();
 //        if (empty($res) || $res['score'] != 3){
 //            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
@@ -205,14 +206,34 @@ class Award extends Base
 //            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
 //        }
         // 概率计算
-        $list = Db::name('award_stuff')->where(['type' => 0,'status' => 0])->field('id')->select();
+        $list = Db::name('award_stuff')->where(['type' => 0,'status' => 0])->field('id,sum')->select();
         $arr = array();
         foreach($list as $value){
-            array_push($arr,$value);
+            // 已经选中的奖品
+            $res = Db::name('award_record')->where(['userid' => $userId,'stuff_id' => $value['id']])->find();
+            if (!$res){
+                //  剩余数量偏多的  概率大一点
+                $sum = Db::name('award_record')->where(['stuff_id' => $value['id'],'status' =>0])->count();
+                $num = $value['sum'] - $sum;
+                if ($num > 10){
+                    for($i=0;$i<100;$i++){
+                        array_push($arr,$value['id']);
+                    }
+                }elseif ($num >5 && $num <= 10){
+                    //  剩余数量偏少的  概率小一点
+                    for($k=0;$k<50;$k++){
+                        array_push($arr,$value['id']);
+                    }
+                }elseif ($num >1 && $num <= 5){
+                    array_push($arr,$value['id']);
+                }
+            }
         }
-        $index = mt_rand(0,count($arr)-1); // 随机索引
+        shuffle($arr); // 随机打乱数组
+        $index = rand(0,count($arr)-1); // 随机索引
         $stuff_id = $arr[$index];
-        $this->assign('stuff_id',$stuff_id['id']);
+        dump($stuff_id);
+        $this->assign('stuff_id',$stuff_id);
 //        $this->assign('award_id',$id);
         return $this->fetch();
     }
@@ -220,7 +241,28 @@ class Award extends Base
      * 存储抽奖记录
      */
     public function push(){
-
+        $this->checkRole();
+        $this->check_time();
+        $userId = session('userId');
+        $stuff_id = input('post.stuff_id/d'); // 奖品id
+        $award_id = input('post.award_id/d');  // 答题记录id
+        $map = array(
+            'stuff_id' => $stuff_id,
+            'award_id' => $award_id,
+            'userid' => $userId,
+            'status' => 0
+        );
+        $res =  $sum = Db::name('award_record')->where($map)->find();
+        if (empty($res)){
+            $data = array(
+                'stuff_id' => $stuff_id,
+                'award_id' => $award_id,
+                'userid' => $userId,
+                'status' => 0,
+                'create_time' => time()
+            );
+            Db::name('award_record')->insert($data);
+        }
     }
     /**
      * @return mixed  活动结束页面
