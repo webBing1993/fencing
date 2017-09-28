@@ -204,6 +204,7 @@ class Award extends Base
         if ($result){
             return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
         }
+        $this->assign('award_id',$id);
         return $this->fetch();
     }
 
