@@ -7,12 +7,10 @@
  */
 
 namespace app\home\controller;
-
-
 use think\Controller;
-use app\home\model\Years;
 use com\wechat\TPQYWechat;
 use think\Config;
+use think\Db;
 
 class Cronjob extends Controller {
     /**
@@ -98,6 +96,52 @@ class Cronjob extends Controller {
             return $sContent;
         }else{
             return false;
+        }
+    }
+    /**
+     * 每天推送 答题 
+     */
+    public function push_award(){
+        $date = Db::name('award')->order('id asc')->value('create_time');
+        $time = strtotime(date('Y-m-d',time()));
+        if (strtotime(date('Y-m-d',$date))){
+
+        }
+        dump($res);
+        exit;
+        //推送消息的详情
+        $Wechat = new TPQYWechat(Config::get('party'));
+        $title = '答题抽大奖...';
+        $content = "不赚白不赚";
+        $path = "http://tzgxpb.0571ztnet.com/home/images/user/relax.jpg";//图片链接
+        $url = "http://tzgxpb.0571ztnet.com/home/Award/index";  //答题页面链接
+        $send = array(
+            "articles" => array(
+                array(
+                    "title" => $title,
+                    "description" => $content,
+                    "url" => $url,
+                    "picurl" => $path,
+                )
+            )
+        );
+        //发送
+        $message = array(
+            'touser' => '17557289172',
+//           'touser' =>"@all",
+            "msgtype" => 'news',
+            "agentid" => 1000002,
+            "news" => $send,
+            "safe" => "0"
+        );
+        $Wechat->sendMessage($message);
+        $award = Db::name('award')->order('id desc')->select();
+        $arr = array();
+        foreach($award as $value){
+            $res = $value['userid']."_".date('Y-m-d',$value['create_time']);
+            if (!in_array($res,$arr)){
+                $arr[$value['userid']] = $res;
+            }
         }
     }
 }
