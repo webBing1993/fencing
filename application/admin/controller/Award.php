@@ -23,6 +23,10 @@ class Award extends Admin
             'status' => 0,
         );
         $list = $this->lists('AwardStuff',$map);
+        foreach($list as $value){
+            $res = AwardRecord::where(['stuff_id' => $value['id'],'status' =>0])->count();
+            $value['remain'] = $value['sum'] - $res;
+        }
         int_to_string($list,array(
             'type' => array(0 => "常规奖品",1 => "终极奖品"),
             'status' => array( 0 => "已发布"),
