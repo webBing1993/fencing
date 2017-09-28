@@ -192,7 +192,16 @@ class Award extends Base
      */
     public function award(){
         $this->check_time();
-        
+        $id = input('get.id');
+        $userId = session('userId');
+        $res = AwardModel::where(['id' => $id])->find();
+        if (empty($res) || $res['score'] != 3){
+            return $this->error('抱歉~~系统参数丢掉了');
+        }
+        $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
+        if ($result){
+            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~');
+        }
         return $this->fetch();
     }
 

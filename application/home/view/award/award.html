@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-    <title>jQuery九宫格抽奖</title>
+    <title>答题抽奖</title>
     <style type="text/css">
         * { margin: 0; padding: 0; }
         table { border-spacing: 0; border-collapse: collapse; text-align: center; }
@@ -62,21 +62,21 @@
 <div class="draw" id="lottery">
     <table>
         <tr>
-            <td class="item lottery-unit lottery-unit-0">
+            <td class="item lottery-unit lottery-unit-0" data-id="2">
                 <div class="img">
                     <img src="/home/images/award/img1.png" alt="">
                 </div>
                 <span class="name">虚拟主机</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-1">
+            <td class="item lottery-unit lottery-unit-1" data-id="3">
                 <div class="img">
                     <img src="/home/images/award/img2.png" alt="">
                 </div>
                 <span class="name">VPS</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-2">
+            <td class="item lottery-unit lottery-unit-2" data-id="4">
                 <div class="img">
                     <img src="/home/images/award/img3.png" alt="">
                 </div>
@@ -87,7 +87,7 @@
             <td class="gap-2" colspan="5"></td>
         </tr>
         <tr>
-            <td class="item lottery-unit lottery-unit-7">
+            <td class="item lottery-unit lottery-unit-7" data-id="5">
                 <div class="img">
                     <img src="/home/images/award/img4.png" alt="">
                 </div>
@@ -96,7 +96,7 @@
             <td class="gap"></td>
             <td class=""><a class="draw-btn" href="javascript:">立即抽奖</a></td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-3">
+            <td class="item lottery-unit lottery-unit-3" data-id="6">
                 <div class="img">
                     <img src="/home/images/award/img5.png" alt="">
                 </div>
@@ -107,21 +107,21 @@
             <td class="gap-2" colspan="5"></td>
         </tr>
         <tr>
-            <td class="item lottery-unit lottery-unit-6">
+            <td class="item lottery-unit lottery-unit-6" data-id="6">
                 <div class="img">
                     <img src="/home/images/award/img7.png" alt="">
                 </div>
                 <span class="name">.com域名</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-5">
+            <td class="item lottery-unit lottery-unit-5" data-id="5">
                 <div class="img">
                     <img src="/home/images/award/img6.png" alt="">
                 </div>
                 <span class="name">CDN加速</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-4">
+            <td class="item lottery-unit lottery-unit-4"data-id="6" >
                 <div class="img">
                     <img src="/home/images/award/img8.png" alt="">
                 </div>
@@ -184,7 +184,7 @@
             if (lottery.times < lottery.cycle) {
                 lottery.speed -= 10;
             } else if (lottery.times == lottery.cycle) {
-                var index = 1;
+                var index = 0;
                 // var index = Math.random() * (lottery.count) | 0; //静态演示，随机产生一个奖品序号，实际需请求接口产生
                 lottery.prize = index;
             } else {
