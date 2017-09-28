@@ -1,0 +1,56 @@
+* { margin: 0; padding: 0; }
+table { border-spacing: 0; border-collapse: collapse; text-align: center; }
+.draw {
+    width: 71%;
+    margin: 0 auto;
+    padding: 35px;
+    background-image: url(/home/images/award/bg.png);
+    background-size: cover;
+    margin-top: 10%;
+}
+.draw .item {
+    width: 23.5vw;
+    height: 23.8vw;
+    background: url(/home/images/award/bg1.png) no-repeat;
+    background-size: 23.5vw 23.8vw;
+}
+.draw .item.active { background-image: url(/home/images/award/bg2.png); }
+.draw .img {
+    display: table-cell;
+    width: 23.5vw;
+    height: 13vw;
+    vertical-align: middle;
+    text-align: center;
+}
+tbody{
+    background: #d80015;
+}
+.draw .img img { vertical-align: top;    width: 12vw; }
+.draw .gap { width: 2px; }
+.draw .gap-2 { height: 2px; }
+.draw .name {
+    display: block;
+    font-size: 1.2rem;
+}
+.draw .draw-btn {
+    display: block;
+    height: 23.8vw;
+    line-height: 23.8vw;
+    border-radius: 20px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #f0ff00;
+    background-color: #fe4135;
+    text-decoration: none;
+}
+.drawing{ background-color: #fe8d85!important; }
+* {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+/*模态框*/
+#modal{
+    margin-top: 50%;
+}

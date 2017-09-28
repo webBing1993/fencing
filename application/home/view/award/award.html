@@ -1,60 +1,8 @@
 {extend name="public/common"}
 
 {block name="style"}
+<link rel="stylesheet" href="/home/css/award/award.css">
     <title>答题抽奖</title>
-    <style type="text/css">
-        * { margin: 0; padding: 0; }
-        table { border-spacing: 0; border-collapse: collapse; text-align: center; }
-        .draw {
-            width: 71%;
-            margin: 0 auto;
-            padding: 35px;
-            background-image: url(/home/images/award/bg.png);
-            background-size: cover;
-            margin-top: 10%;
-        }
-        .draw .item {
-            width: 23.5vw;
-            height: 23.8vw;
-            background: url(/home/images/award/bg1.png) no-repeat;
-            background-size: 23.5vw 23.8vw;
-        }
-        .draw .item.active { background-image: url(/home/images/award/bg2.png); }
-        .draw .img {
-            display: table-cell;
-            width: 23.5vw;
-            height: 13vw;
-            vertical-align: middle;
-            text-align: center;
-        }
-        tbody{
-           background: #d80015;
-        }
-        .draw .img img { vertical-align: top;    width: 12vw; }
-        .draw .gap { width: 2px; }
-        .draw .gap-2 { height: 2px; }
-        .draw .name {
-            display: block;
-            font-size: 1.2rem;
-        }
-        .draw .draw-btn {
-            display: block;
-            height: 23.8vw;
-            line-height: 23.8vw;
-            border-radius: 20px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #f0ff00;
-            background-color: #fe4135;
-            text-decoration: none;
-        }
-        .drawing{ background-color: #fe8d85!important; }
-        * {
-             -webkit-box-sizing: content-box;
-            -moz-box-sizing: content-box;
-            box-sizing: content-box;
-        }
-    </style>
 {/block}
 
 {block name="body"}
@@ -130,10 +78,27 @@
         </tr>
     </table>
 </div>
+
+<!--模态框-->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>恭喜您，获得<span></span></div>
+                <div class="text-center">可在<span style="color:#f00">我的奖品</span>中查看抽中的奖品</div>
+            </div>
+        </div>
+    </div>
+</div>
 {/block}
 
 {block name="script"}
 <script>
+ $(function(){
+     if("{$state}"==1){
+            $(".draw-btn").css("background","#fe8d85");
+     }
+ })
     var lottery = {
         index: -1,    //当前转动到哪个位置，起点位置
         count: 0,     //总共有多少个位置
@@ -177,9 +142,9 @@
         if (lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index) {
             var stuff_id = $("#lottery").find('.lottery-unit.lottery-unit-' + lottery.index).attr("data-id");
             var award_id =  parseInt(window.location.href.split("id/")[1]);
-
+            $('#modal').modal('show');
             $.post("{:Url('Award/push')}", {stuff_id:stuff_id,award_id:award_id}, function(data) {
-
+                    console.log(data)
 
             }, "json");
             clearTimeout(lottery.timer);
@@ -190,7 +155,12 @@
             if (lottery.times < lottery.cycle) {
                 lottery.speed -= 10;
             } else if (lottery.times == lottery.cycle) {
-                 var index = "{$stuff_id}"; //静态演示，随机产生一个奖品序号，实际需请求接口产生
+                for(i=0;i<$("#lottery").find(".lottery-unit").length;i++){
+                    if("{$stuff_id}" == $("#lottery").find('.lottery-unit.lottery-unit-' + i).attr("data-id")){
+                        break;
+                    }
+                }
+                 var index =i; //静态演示，随机产生一个奖品序号，实际需请求接口产生
                 lottery.prize = index;
             } else {
                 if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
@@ -212,6 +182,9 @@
     window.onload = function(){
         lottery.init('lottery');
         $('.draw-btn').click(function() {
+            if("{$state}"==1){
+                return false;
+            }
             if(flag == 1){
                 return false;
             }else{
