@@ -203,7 +203,9 @@ class Award extends Base
         }
         $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
         if ($result){
-            return $this->error('您已经完成抽奖,再次抽奖请先去答题~~',Url('Award/index'));
+            $state = 1; // 已经抽奖
+        }else{
+            $state = 0;  // 未抽奖
         }
         // 概率计算
         $list = Db::name('award_stuff')->where(['type' => 0,'status' => 0])->field('id,sum')->select();
@@ -236,9 +238,9 @@ class Award extends Base
         shuffle($arr); // 随机打乱数组
         $index = rand(0,count($arr)-1); // 随机索引
         $stuff_id = $arr[$index];
-        dump($stuff_id);
         $this->assign('stuff_id',$stuff_id);
         $this->assign('award_id',$id);
+        $this->assign('state',$state);
         return $this->fetch();
     }
     /**
