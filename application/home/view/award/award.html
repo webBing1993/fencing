@@ -90,6 +90,17 @@
         </div>
     </div>
 </div>
+
+<!--模态框-->
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="padding: 3.5rem;">
+                <div style="text-align: center">您已经抽过奖了~下次再来吧</div>
+            </div>
+        </div>
+    </div>
+</div>
 {/block}
 
 {block name="script"}
@@ -183,6 +194,7 @@
         lottery.init('lottery');
         $('.draw-btn').click(function() {
             if("{$state}"==1){
+                $('#modal2').modal('show');
                 return false;
             }
             if(flag == 1){
