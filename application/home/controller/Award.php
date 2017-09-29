@@ -26,24 +26,20 @@ class Award extends Base
         $this->checkRole();
         $this->anonymous();
         $userid = session('userId');
-        $six_y = strtotime(date('Y-m-d 09:00:00'))-15*60*60;  // 前一天 18:00 时间戳
-        $nine = strtotime(date('Y-m-d 09:00:00'));  // 当日 9:00  时间戳
+        $nine_m = strtotime(date('Y-m-d 09:00:00'));  // 当日 9:00  时间戳
         $twelve = strtotime(date('Y-m-d 12:00:00'));  // 当日 12:00  时间戳
         $six = strtotime(date('Y-m-d 18:00:00'));  // 当日 18:00  时间戳
-        $nine_t = strtotime(date('Y-m-d 18:00:00'))+15*60*60;  // 次日 9:00  时间戳
+        $nine_e = strtotime(date('Y-m-d 21:00:00'));  // 当日 21:00  时间戳
         $this->check_time();
-        if (time() >= $nine && time() < $twelve){
+        if (time() > $nine_m && time() <= $twelve){
             // 早九点  到  中十二点 中间段
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>=',$nine],['<',$twelve],'and')->find();
-        }else if (time() >= $twelve && time() < $six){
-            // 中十二点  到  晚六点 中间段
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>=',$twelve],['<',$six],'and')->find();
-        }else if (time() >= $six && time() < $nine_t){
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$nine_m],['<=',$twelve],'and')->find();
+        }else if (time() > $six && time() <= $nine_e){
             // 晚六点  到 次日 九点
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>=',$six],['<',$nine_t],'and')->find();
-        }else if (time() >= $six_y && time() < $nine){
-            // 作晚六点  到  今日 九点
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>=',$six_y],['<',$nine],'and')->find();
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$six],['<=',$nine_e],'and')->find();
+        }else{
+            // 其他时间段
+            $this->redirect('Award/null');
         }
         if(empty($award)){   // 没有数据
             $ques = AwardModel::where('userid',$userid)->select();
