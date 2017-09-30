@@ -2,13 +2,21 @@
 
 {block name="style"}
 <title>答题抽奖</title>
-<link rel="stylesheet" href="/home/css/constitution/course.css">
+<link rel="stylesheet" href="/home/css/award/course.css">
+<style>
+	.modal-body h4{
+		text-indent: 2em;
+		font-weight: normal;
+		font-size: 1.4rem;
+		line-height:2rem;
+	}
+</style>
 {/block}
 
 {block name="body"}
 <div class="banner">
-	<img src="/home/images/test/3.png" alt="每日一课banner" class="banner-img">
-	<span class="tag">答题抽奖</span>
+	<img src="/home/images/award/rule.png" alt="规则" class="rule">
+	<img src="/home/images/award/banner.jpg" alt="答题抽好礼" class="banner-img">
 </div>
 <div class="lists">
 	{volist name="question" id="vo" key="n"}
@@ -17,20 +25,22 @@
 		{volist name="vo->Option" id="value" key="k"}
 		<label>{if condition="($k eq 1) AND ($value neq ' ')"}A{elseif condition="($k eq 2) AND ($value neq ' ')"}B{elseif condition="($k eq 3 )AND ($value neq ' ')"}C{elseif condition="($k eq 4 )AND ($value neq ' ')"/}D{/if}.{$value|substr=###,'2'}</label>
 		{/volist}
-		<div class="number">{$n} / 3</div>
 	</div>
 	{/volist}
 </div>
 {eq name="visit" value="0"}
-<div class="submit">确认提交</div>
+<div class="submit">
+<img src="/home/images/award/submit.png">
+	<span>确认提交</span>
+</div>
 {/eq}
 <!--模态框-->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<div>正确答案 : <span id="true1"></span></div>
 				<div class="text-center">本次得分：<span class="score"></span> 分</div>
+				<div><span id="true1"></span></div>
 			</div>
 			<div class="modal-footer">
 				<a href="" id="link">查看详情</a>
@@ -38,35 +48,78 @@
 		</div>
 	</div>
 </div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<img src="/home/images/rank/close.png" alt="规则" data-dismiss="modal" aria-hidden="true" style="width:12vw;height:12vw" id="close">
+		<div class="modal-content" style="margin:6vw auto">
+			<div style="width: 0;height: 6.4vw;border-right: 2px solid rgba(237, 218, 145, 0.63);margin: -6.4vw auto 0;"></div>
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel" style="text-align: center">
+					<b>积分规则</b>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<h4>
+					1.活动时间：2017年10月5日-2017年10月14日；
+				</h4>
+				<h4>
+					2.活动期间内，每位“台州个协党建” 企业号的用户即可参与每日答题。系统每日两次在企业号内推送通知参与活动。活动中系统将抽选三道题进行提问，每轮只供一次答题机会。本轮中，凡是参与活动的用户即可赢取2个积分，而全部答对即可赢取抽奖机会，中奖率 100%；
+				</h4>
+				<h4>
+					3.若用户连续参与10天的每日活动，在活动结束前的最后一天将会赢得一次大奖抽奖机会，中奖率100%；
+				</h4>
+				<h4>
+					4.在活动结束后，活动方会对获奖的用户进行公示。获奖用户可在活动结束后获得“台州移动”提供的相关奖品；
+				</h4>
+				<h4>
+					5.更多内容，请关注“台州个协党建”微信号，将有精彩信息提醒；
+				</h4>
+				<h4>
+					6.“台州个协党建”微信号保留在法律范围内对上述规则进行解释的权利。
+				</h4>
+			</div>
+			<!--<div class="modal-footer">-->
+			<!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+			<!--</div>-->
+		</div>
+	</div>
+</div><!-- /.modal -->
 {/block}
 
 {block name="script"}
 <script>
 $(function(){
+	console.log($("label").css("font-size"))
 	//提交
 	$('.submit').on('click',function(e){
 		var data = [];
 		$('.list').each(function(){
 			var id = $(this ).attr('data-tab');
-			var answer = $(this ).find('.checked' ).index();
+			var answer = $(this ).find('.checked').index();
 			data.push([id,answer]);
 			});
-//		console.log(data);
+//		console.log(id);
 //		$('#modal').modal('show');
 		$.ajax({
 			type:"post",
 			url:"{:Url('Award/commit')}",
 			data:{'data':data},
 			success:function(data){
+				console.log(data)
 				$('.score').html(data.url.score);
-				$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
+//				$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
 				$('#modal').modal('show');
 				$("#modal").unbind("click");
 				if(data.url.award==1){
+					$("#true1").html("恭喜您答对全部题目，点击下方进入抽奖环节")
 					$("#link").html("去抽奖");
 					$('#link').attr('href','award/id/'+data.url.id);
 				}else if(data.url.award==0){
 					$('#link').attr('href','scan/id/'+data.url.id);
+					$("#true1").html("很抱歉，您未能全部答对问题，希望下次再接再厉")
 				}
 
 			}
@@ -78,6 +131,10 @@ $(function(){
 		it.addClass('checked');
 		it.siblings('label' ).removeClass('checked');
 	});
+});
+
+$(".rule").click(function(){
+	$('#myModal').modal('show');
 })
 
 window.onpageshow = function (e) {

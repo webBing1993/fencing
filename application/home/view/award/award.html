@@ -2,33 +2,50 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/css/award/award.css">
+<link rel="stylesheet" href="/home/css/award/liMarquee.css">
     <title>答题抽奖</title>
+<style>
+    .modal-body h4{
+        text-indent: 2em;
+        font-weight: normal;
+        font-size: 1.4rem;
+        line-height:2rem;
+    }
+    #close{
+         position: relative;
+         left: 50%;
+         margin-left: -6vw;
+     }
+
+</style>
 {/block}
 
 {block name="body"}
-
+<img src="/home/images/award/banner.png" style="width:100%;">
 <div class="draw" id="lottery">
-    <table>
+    <table style="    position: relative;
+    left: 13.5vw;
+    top: 37vw;">
         <tr>
             <td class="item lottery-unit lottery-unit-0" data-id="2">
                 <div class="img">
-                    <img src="/home/images/award/img1.png" alt="">
+                    <img src="/home/images/award/10.png" alt="">
                 </div>
-                <span class="name">虚拟主机</span>
+                <span class="name">三等奖</span>
             </td>
             <td class="gap"></td>
             <td class="item lottery-unit lottery-unit-1" data-id="3">
                 <div class="img">
-                    <img src="/home/images/award/img2.png" alt="">
+                    <img src="/home/images/award/50.png" alt="">
                 </div>
-                <span class="name">VPS</span>
+                <span class="name">一等奖</span>
             </td>
             <td class="gap"></td>
             <td class="item lottery-unit lottery-unit-2" data-id="4">
                 <div class="img">
-                    <img src="/home/images/award/img3.png" alt="">
+                    <img src="/home/images/award/20.png" alt="">
                 </div>
-                <span class="name">.top域名</span>
+                <span class="name">二等奖</span>
             </td>
         </tr>
         <tr>
@@ -37,18 +54,18 @@
         <tr>
             <td class="item lottery-unit lottery-unit-7" data-id="5">
                 <div class="img">
-                    <img src="/home/images/award/img4.png" alt="">
+                    <img src="/home/images/award/join.png" alt="" style="width: 10vw;">
                 </div>
-                <span class="name">免费主机1年</span>
+                <span class="name">参与奖</span>
             </td>
             <td class="gap"></td>
-            <td class=""><a class="draw-btn" href="javascript:">立即抽奖</a></td>
+            <td class=""><a class="draw-btn" href="javascript:"><span>立即<br>抽奖</span></a></td>
             <td class="gap"></td>
             <td class="item lottery-unit lottery-unit-3" data-id="6">
                 <div class="img">
-                    <img src="/home/images/award/img5.png" alt="">
+                    <img src="/home/images/award/10.png" alt="">
                 </div>
-                <span class="name">.com域名</span>
+                <span class="name">三等奖</span>
             </td>
         </tr>
         <tr>
@@ -57,27 +74,41 @@
         <tr>
             <td class="item lottery-unit lottery-unit-6" data-id="6">
                 <div class="img">
-                    <img src="/home/images/award/img7.png" alt="">
+                    <img src="/home/images/award/20.png" alt="">
                 </div>
-                <span class="name">.com域名</span>
+                <span class="name">二等奖</span>
             </td>
             <td class="gap"></td>
             <td class="item lottery-unit lottery-unit-5" data-id="5">
                 <div class="img">
-                    <img src="/home/images/award/img6.png" alt="">
+                    <img src="/home/images/award/10.png" alt="">
                 </div>
-                <span class="name">CDN加速</span>
+                <span class="name">三等奖</span>
             </td>
             <td class="gap"></td>
             <td class="item lottery-unit lottery-unit-4"data-id="6" >
                 <div class="img">
-                    <img src="/home/images/award/img8.png" alt="">
+                    <img src="/home/images/award/join.png" alt="" style="width: 10vw;">
                 </div>
-                <span class="name">20元快云币</span>
+                <span class="name">参与奖</span>
             </td>
         </tr>
     </table>
 </div>
+<div class="button">
+   <img src="/home/images/award/button.png" class="rule" onclick="show()">
+    <span onclick="show()">游戏规则</span>
+    <img src="/home/images/award/button.png" class="myprise" onclick="prize()">
+    <span onclick="prize()">我的奖品</span>
+</div>
+
+
+<div id="div1" class="rotation">
+    <div id="dowebok">
+        <span>Smoothslides – 可平移的jQuery幻灯片插件</span>
+    </div>
+</div>
+
 
 <!--模态框-->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -101,15 +132,53 @@
         </div>
     </div>
 </div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <img src="/home/images/rank/close.png" alt="规则" data-dismiss="modal" aria-hidden="true" style="width:12vw;height:12vw" id="close">
+        <div class="modal-content" style="margin:6vw auto">
+            <div style="width: 0;height: 6.4vw;border-right: 2px solid rgba(237, 218, 145, 0.63);margin: -6.4vw auto 0;"></div>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center">
+                    <b>积分规则</b>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <h4>
+                    1.活动时间：2017年10月5日-2017年10月14日；
+                </h4>
+                <h4>
+                    2.活动期间内，每位“台州个协党建” 企业号的用户即可参与每日答题。系统每日两次在企业号内推送通知参与活动。活动中系统将抽选三道题进行提问，每轮只供一次答题机会。本轮中，凡是参与活动的用户即可赢取2个积分，而全部答对即可赢取抽奖机会，中奖率 100%；
+                </h4>
+                <h4>
+                    3.若用户连续参与10天的每日活动，在活动结束前的最后一天将会赢得一次大奖抽奖机会，中奖率100%；
+                </h4>
+                <h4>
+                    4.在活动结束后，活动方会对获奖的用户进行公示。获奖用户可在活动结束后获得“台州移动”提供的相关奖品；
+                </h4>
+                <h4>
+                    5.更多内容，请关注“台州个协党建”微信号，将有精彩信息提醒；
+                </h4>
+                <h4>
+                    6.“台州个协党建”微信号保留在法律范围内对上述规则进行解释的权利。
+                </h4>
+            </div>
+            <!--<div class="modal-footer">-->
+            <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div><!-- /.modal -->
 {/block}
 
 {block name="script"}
+<script src="/home/js/jquery.liMarquee.js"></script>
 <script>
- $(function(){
-     if("{$state}"==1){
-            $(".draw-btn").css("background","#fe8d85");
-     }
- })
+    $(function(){
+        $('#dowebok').liMarquee();
+    });
     var lottery = {
         index: -1,    //当前转动到哪个位置，起点位置
         count: 0,     //总共有多少个位置
@@ -213,5 +282,17 @@
 
         });
     };
+
+
+    function show(){
+        $('#myModal').modal('show');
+    }
+
+    function prize(){
+        window.location.href="/home/award/prize.html"
+    }
+
+
+
 </script>
 {/block}

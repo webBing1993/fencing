@@ -288,4 +288,13 @@ class Award extends Base
             }
         }
     }
+
+    /**
+     * @return mixed  我的奖品
+     */
+    public function prize(){
+
+        return $this->fetch();
+    }
+
 }

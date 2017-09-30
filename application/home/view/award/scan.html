@@ -2,14 +2,13 @@
 
 {block name="style"}
 <title>答题抽奖</title>
-<link rel="stylesheet" href="/home/css/learn/course.css">
+<link rel="stylesheet" href="/home/css/award/scan.css">
 {/block}
 
 {block name="body"}
 <div class="activity">
     <div class="banner">
-        <img src="/home/images/test/3.png" alt="每日一课banner" class="banner-img">
-        <span class="tag">答题抽奖</span>
+        <img src="/home/images/award/banner.jpg" alt="答题抽好礼" class="banner-img">
     </div>
     <div class="lists">
         {volist name="question" id="vo" key="n"}
@@ -20,7 +19,6 @@
             {/volist}
             <div class="note">
                 <span class="true">正确答案：<i>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</i></span>
-                <span class="number">{$n} / 3</span>
             </div>
         </div>
         {/volist}

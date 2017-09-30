@@ -1,31 +1,39 @@
 * { margin: 0; padding: 0; }
+body{
+    background: url(/home/images/award/bodybg.png) no-repeat;
+    width: 100%;
+    background-size: 100% 100%;
+    height: 100vh;
+}
 table { border-spacing: 0; border-collapse: collapse; text-align: center; }
 .draw {
-    width: 71%;
     margin: 0 auto;
-    padding: 35px;
     background-image: url(/home/images/award/bg.png);
     background-size: cover;
-    margin-top: 10%;
+    margin-top: 2%;
+    height:112vw;
+
 }
 .draw .item {
-    width: 23.5vw;
-    height: 23.8vw;
+    width: 23.6vw;
+    height: 20vw;
     background: url(/home/images/award/bg1.png) no-repeat;
-    background-size: 23.5vw 23.8vw;
+    background-size: 23.6vw 20vw;
 }
-.draw .item.active { background-image: url(/home/images/award/bg2.png); }
+.draw .item.active { background-image: url(/home/images/award/bg2.png);opacity: 0.99 }
 .draw .img {
     display: table-cell;
-    width: 23.5vw;
-    height: 13vw;
+    width: 23.6vw;
+    height: 8vw;
     vertical-align: middle;
     text-align: center;
+    position: relative;
+    top: -0.5rem;
 }
 tbody{
     background: #d80015;
 }
-.draw .img img { vertical-align: top;    width: 12vw; }
+.draw .img img { vertical-align: top;    width: 16vw; }
 .draw .gap { width: 2px; }
 .draw .gap-2 { height: 2px; }
 .draw .name {
@@ -33,24 +41,75 @@ tbody{
     font-size: 1.2rem;
 }
 .draw .draw-btn {
+    width: 23.6vw;
+    height: 20vw;
+    background: url(/home/images/award/go.png) no-repeat;
     display: block;
-    height: 23.8vw;
-    line-height: 23.8vw;
-    border-radius: 20px;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #f0ff00;
-    background-color: #fe4135;
-    text-decoration: none;
+    background-size:23.6vw 20vw;
+    color: #f00;
+    font-weight: bold;
+}
+.draw-btn span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+    padding-top:0.5rem;
 }
 .drawing{ background-color: #fe8d85!important; }
 * {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /*模态框*/
 #modal,#modal2{
     margin-top: 50%;
+}
+.button{
+    text-align: center;
+}
+.button img{
+    width:29.4vw;
+}
+.button .rule{
+     /*margin-right:3.5rem;*/
+    position: absolute;
+    left:10vw;
+ }
+.button .myprise{
+    /*margin-left:3.5rem;*/
+    position: absolute;
+    right:10vw;
+
+}
+.button span:nth-child(2){
+    position: absolute;
+    left: 15vw;
+    line-height: 10.67vw;
+    font-size: 1.4rem;
+    color: #fff;
+    width: 20vw;
+
+}
+.button span:last-child{
+    position: absolute;
+    right: 15vw;
+    line-height: 10.67vw;
+    font-size: 1.4rem;
+    color: #fff;
+    width: 20vw;
+}
+
+.rotation{
+    background: #ff5661;
+    height:10vw;
+    width:100vw;
+    line-height:10vw;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    color: #fff;
+    white-space:nowrap;overflow:hidden
 }
