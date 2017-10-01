@@ -111,3 +111,23 @@
     font-size: 1.6rem;
     line-height: 30px;
 }
+
+.banner .rule{
+    position: absolute;
+    width: 10.8vw;
+    right: 0.2rem;
+    top: 0.2rem;
+}
+
+#close{
+    position: relative;
+    left: 50%;
+    margin-left: -6vw;
+}
+.modal-body h4{
+    text-indent: 2em;
+    font-weight: normal;
+    font-size: 1.4rem;
+    line-height:2rem;
+}
+

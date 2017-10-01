@@ -119,15 +119,40 @@ $(function(){
 				console.log(data)
 				$('.score').html(data.url.score);
 //				$('#true1').html('<br>1.'+data.url.right[1]+'，2.'+data.url.right[2]+'，3.'+data.url.right[3]);
-				$('#modal').modal('show');
-				$("#modal").unbind("click");
+//				$('#modal').modal('show');
+//				$("#modal").unbind("click");
 				if(data.url.award==1){
-					$("#true1").html("恭喜您答对全部题目，点击下方进入抽奖环节")
-					$("#link").html("去抽奖");
-					$('#link').attr('href','award/id/'+data.url.id);
+//					$("#true1").html("恭喜您答对全部题目，点击下方进入抽奖环节")
+//					$("#link").html("去抽奖");
+//					$('#link').attr('href','award/id/'+data.url.id);
+
+					swal({
+						title: "<p style='font-size: 1.6rem;color: #333;'>本次回答中您答对了 <span style='color: #ff3b30;'>" +data.url.score+ "</span> 题<p>",
+						text: "恭喜您答对全部题目，点击去抽奖进入抽奖环节",
+						html: true,
+						type:"success",
+						showConfirmButton: true,
+						confirmButtonText:"去抽奖"
+					},function(){
+						window.location.href="award/id/"+data.url.id
+					});
+
 				}else if(data.url.award==0){
-					$('#link').attr('href','scan/id/'+data.url.id);
-					$("#true1").html("很抱歉，您未能全部答对问题，希望下次再接再厉")
+//					$('#link').attr('href','scan/id/'+data.url.id);
+//					$("#true1").html("很抱歉，您未能全部答对问题，希望下次再接再厉")
+
+					swal({
+						title: "<p style='font-size: 1.6rem;color: #333;'>本次回答中您答对了 <span style='color: #ff3b30;'>" +data.url.score+ "</span> 题<p>",
+						text: "很抱歉,您未能全部答对问题，希望下次再接再厉",
+						html: true,
+						type:"error",
+						showConfirmButton: true,
+						confirmButtonText:"查看详情"
+					},function(){
+						window.location.href="scan/id/"+data.url.id
+					});
+
+
 				}
 
 			}

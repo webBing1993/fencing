@@ -8,6 +8,7 @@
 {block name="body"}
 <div class="activity">
     <div class="banner">
+        <img src="/home/images/award/rule.png" alt="规则" class="rule">
         <img src="/home/images/award/banner.jpg" alt="答题抽好礼" class="banner-img">
     </div>
     <div class="lists">
@@ -24,8 +25,50 @@
         {/volist}
     </div>
 </div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <img src="/home/images/rank/close.png" alt="规则" data-dismiss="modal" aria-hidden="true" style="width:12vw;height:12vw" id="close">
+        <div class="modal-content" style="margin:6vw auto">
+            <div style="width: 0;height: 6.4vw;border-right: 2px solid rgba(237, 218, 145, 0.63);margin: -6.4vw auto 0;"></div>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center">
+                    <b>积分规则</b>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <h4>
+                    1.活动时间：2017年10月5日-2017年10月14日；
+                </h4>
+                <h4>
+                    2.活动期间内，每位“台州个协党建” 企业号的用户即可参与每日答题。系统每日两次在企业号内推送通知参与活动。活动中系统将抽选三道题进行提问，每轮只供一次答题机会。本轮中，凡是参与活动的用户即可赢取2个积分，而全部答对即可赢取抽奖机会，中奖率 100%；
+                </h4>
+                <h4>
+                    3.若用户连续参与10天的每日活动，在活动结束前的最后一天将会赢得一次大奖抽奖机会，中奖率100%；
+                </h4>
+                <h4>
+                    4.在活动结束后，活动方会对获奖的用户进行公示。获奖用户可在活动结束后获得“台州移动”提供的相关奖品；
+                </h4>
+                <h4>
+                    5.更多内容，请关注“台州个协党建”微信号，将有精彩信息提醒；
+                </h4>
+                <h4>
+                    6.“台州个协党建”微信号保留在法律范围内对上述规则进行解释的权利。
+                </h4>
+            </div>
+            <!--<div class="modal-footer">-->
+            <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div><!-- /.modal -->
 {/block}
 
 {block name="script"}
-
+<script>
+    $(".rule").click(function(){
+        $('#myModal').modal('show');
+    })
+</script>
 {/block}

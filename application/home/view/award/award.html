@@ -27,21 +27,21 @@
     left: 13.5vw;
     top: 37vw;">
         <tr>
-            <td class="item lottery-unit lottery-unit-0" data-id="2">
+            <td class="item lottery-unit lottery-unit-0" data-id="3">
                 <div class="img">
                     <img src="/home/images/award/10.png" alt="">
                 </div>
                 <span class="name">三等奖</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-1" data-id="3">
+            <td class="item lottery-unit lottery-unit-1" data-id="1">
                 <div class="img">
                     <img src="/home/images/award/50.png" alt="">
                 </div>
                 <span class="name">一等奖</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-2" data-id="4">
+            <td class="item lottery-unit lottery-unit-2" data-id="2">
                 <div class="img">
                     <img src="/home/images/award/20.png" alt="">
                 </div>
@@ -52,7 +52,7 @@
             <td class="gap-2" colspan="5"></td>
         </tr>
         <tr>
-            <td class="item lottery-unit lottery-unit-7" data-id="5">
+            <td class="item lottery-unit lottery-unit-7" data-id="4">
                 <div class="img">
                     <img src="/home/images/award/join.png" alt="" style="width: 10vw;">
                 </div>
@@ -61,7 +61,7 @@
             <td class="gap"></td>
             <td class=""><a class="draw-btn" href="javascript:"><span>立即<br>抽奖</span></a></td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-3" data-id="6">
+            <td class="item lottery-unit lottery-unit-3" data-id="3">
                 <div class="img">
                     <img src="/home/images/award/10.png" alt="">
                 </div>
@@ -72,21 +72,21 @@
             <td class="gap-2" colspan="5"></td>
         </tr>
         <tr>
-            <td class="item lottery-unit lottery-unit-6" data-id="6">
+            <td class="item lottery-unit lottery-unit-6" data-id="2">
                 <div class="img">
                     <img src="/home/images/award/20.png" alt="">
                 </div>
                 <span class="name">二等奖</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-5" data-id="5">
+            <td class="item lottery-unit lottery-unit-5" data-id="3">
                 <div class="img">
                     <img src="/home/images/award/10.png" alt="">
                 </div>
                 <span class="name">三等奖</span>
             </td>
             <td class="gap"></td>
-            <td class="item lottery-unit lottery-unit-4"data-id="6" >
+            <td class="item lottery-unit lottery-unit-4"data-id="4" >
                 <div class="img">
                     <img src="/home/images/award/join.png" alt="" style="width: 10vw;">
                 </div>
@@ -177,6 +177,7 @@
 {block name="script"}
 <script src="/home/js/jquery.liMarquee.js"></script>
 <script>
+    var award_id =  parseInt(window.location.href.split("id/")[1]);
     $(function(){
         $('#dowebok').liMarquee();
     });
@@ -222,7 +223,6 @@
         lottery.roll(); //转动过程调用的是lottery的roll方法，这里是第一次调用初始化
         if (lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index) {
             var stuff_id = $("#lottery").find('.lottery-unit.lottery-unit-' + lottery.index).attr("data-id");
-            var award_id =  parseInt(window.location.href.split("id/")[1]);
             var awards = $("#lottery").find('.lottery-unit.lottery-unit-' + lottery.index).find("span").html();
             if(awards=="一等奖"){
                 $("#specialAward").html("50元话费");
@@ -236,7 +236,6 @@
             $("#awards").html(awards);
             $('#modal').modal('show');
             $.post("{:Url('Award/push')}", {stuff_id:stuff_id,award_id:award_id}, function(data) {
-                    console.log(data)
 
             }, "json");
             clearTimeout(lottery.timer);
@@ -247,13 +246,12 @@
             if (lottery.times < lottery.cycle) {
                 lottery.speed -= 10;
             } else if (lottery.times == lottery.cycle) {
-                for(i=0;i<$("#lottery").find(".lottery-unit").length;i++){
-                    if("{$stuff_id}" == $("#lottery").find('.lottery-unit.lottery-unit-' + i).attr("data-id")){
-                        break;
+                $.post("{:Url('Award/award')}", {award_id:award_id}, function(data) {
+                    if(data.code==1){
+                        var index =data.data;
+                        lottery.prize = index;
                     }
-                }
-                 var index =i; //静态演示，随机产生一个奖品序号，实际需请求接口产生
-                lottery.prize = index;
+                }, "json");
             } else {
                 if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
                     lottery.speed += 110;
