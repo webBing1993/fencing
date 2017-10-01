@@ -9,6 +9,7 @@
 namespace app\home\controller;
 use app\admin\model\Question;
 use app\home\model\Award as AwardModel;
+use app\home\model\AwardBrowse;
 use app\home\model\WechatUser;
 use think\Db;
 use think\Url;
@@ -19,29 +20,47 @@ use think\Url;
  */
 class Award extends Base
 {
+    public static $ENDTIME = '2017-10-15 00:00:00'; // 活动结束时间
+    public static $STARTTIME = '2017-10-1 9:00:00'; // 活动开始时间
+
     /**
      * 答题页面
      */
-    public function index(){
-        $this->checkRole();
+    public function index()
+    {
+        $this->checkRole(); // 游客禁止
         $this->anonymous();
+        $this->checkTime(); // 活动是否过期
+        $this->assign('firstTime',0); //该时段默认不是第一次进入
+
         $userid = session('userId');
-        $nine_m = strtotime(date('Y-m-d 09:00:00'));  // 当日 9:00  时间戳
-        $twelve = strtotime(date('Y-m-d 12:00:00'));  // 当日 12:00  时间戳
-        $six = strtotime(date('Y-m-d 18:00:00'));  // 当日 18:00  时间戳
-        $nine_e = strtotime(date('Y-m-d 21:00:00'));  // 当日 21:00  时间戳
-        $this->check_time();
-        if (time() > $nine_m && time() <= $twelve){
-            // 早九点  到  中十二点 中间段
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$nine_m],['<=',$twelve],'and')->find();
-        }else if (time() > $six && time() <= $nine_e){
-            // 晚六点  到 次日 九点
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$six],['<=',$nine_e],'and')->find();
-        }else{
-            // 其他时间段
-            $this->redirect('Award/null');
+        $nine = strtotime(date('Y-m-d 09:00:00'));  // 当日 9:00  时间戳
+        $fifteen = strtotime(date('Y-m-d 15:30:00'));  // 当日 15:30  时间戳
+        $yesterday = $fifteen - 60*60*24; //昨天 15:30 时间戳
+
+        // 当日早9点到下午3点半之间
+        if (time() > $nine && time() <= $fifteen){
+
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$nine],['<=',$fifteen],'and')->find();
+        } else if (time() > $fifteen){
+
+            // 晚六点后
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$fifteen])->find();
+        } else {
+
+            // 昨天3点半之后到早9点之前
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$yesterday],['<=',$nine],'and')->find();
         }
-        if(empty($award)){   // 没有数据
+
+        if(empty($award)){
+            // 每个时间段首次进去加2积分
+            $res = $this->checkFirstTime($userid);
+            if ($res) {
+                WechatUser::where('userid',$userid)->setInc('score', 2);
+                $this->assign('firstTime',1);
+            }
+
+            // 没有数据
             $ques = AwardModel::where('userid',$userid)->select();
             $ars = array();
             foreach($ques as $value){
@@ -81,7 +100,7 @@ class Award extends Base
             }
             $this->assign('question',$question);
             return $this->fetch();
-        }else{  //  有数据  获取 改用户 已经答过的题目
+        } else {  //  有数据  获取 改用户 已经答过的题目
             $Qid = json_decode($award->question_id);
             $rights=json_decode($award->value);
             $re = array();
@@ -92,13 +111,14 @@ class Award extends Base
             $this->assign('question',$re);
             return $this->fetch('scan');
         }
+
     }
     /*
      * 每日一课 提交
      */
     public function commit(){
         $this->checkRole();
-        $this->check_time();
+        $this->checkTime();
         // 获取用户提交数据
         $data = input('post.');
         $arr = $data['data'];
@@ -169,7 +189,7 @@ class Award extends Base
     public function scan(){
         $this->checkRole();
         $this->anonymous();
-        $this->check_time();
+        $this->checkTime();
         $id = input('id');
         if (empty($id)){
             return $this->error('系统错误');
@@ -275,20 +295,50 @@ class Award extends Base
     public function null(){
         return $this->fetch();
     }
+
     /**
      * 检查活动是否结束
      */
-    public function check_time(){
-        $date = Db::name('award')->order('id asc')->value('create_time');
-        if (!empty($date)){
-            $time = strtotime(date('Y-m-d',time()));
-            $first = strtotime(date('Y-m-d',$date)) + 10*24*60*60;
-            if ($time > $first){
-                $this->redirect('Award/null');
-            }
+    public function checkTime()
+    {
+        $endTime = strtotime(self::$ENDTIME);
+        $startTime = strtotime(self::$STARTTIME);
+        if (time() > $endTime || $startTime > time()) {
+            $this->redirect('Award/null');
         }
     }
 
+    /**
+     * 检查每个时间段是不是第一次进来
+     */
+    public function checkFirstTime($uid)
+    {
+        $nine = strtotime(date('Y-m-d 09:00:00'));  // 当日 9:00  时间戳
+        $fifteen = strtotime(date('Y-m-d 15:30:00'));  // 当日 15:30  时间戳
+        $yesterday = $fifteen - 60*60*24;
+        if (time() > $nine && time() <= $fifteen) {
+
+            // 当日早9点到下午3点半之间
+           $res = AwardBrowse::where('user_id',$uid)->where('create_time',['>',$nine],['<=',$fifteen],'and')->find();
+        } else if (time() > $fifteen) {
+
+            // 晚六点后
+            $res = AwardBrowse::where('userid',$uid)->where('create_time',['>',$fifteen])->find();
+        } else {
+            // 昨天3点半之后到早9点之前
+            $res = AwardBrowse::where('userid',$uid)->where('create_time',['>',$yesterday],['<=',$nine],'and')->find();
+        }
+
+        if (empty($res)) {
+            AwardBrowse::create(['user_id' => $uid]);
+
+            return true;
+        } else {
+
+            return false;
+        }
+
+    }
     /**
      * @return mixed  我的奖品
      */
@@ -296,5 +346,6 @@ class Award extends Base
 
         return $this->fetch();
     }
+
 
 }

@@ -20,9 +20,9 @@ return [
     // 数据库名
     'database'    => 'tzgxpb',
     // 数据库用户名
-    'username'    => 'root',
+    'username'    => 'guest',
     // 数据库密码
-    'password'    => '',
+    'password'    => '123456',
     // 数据库连接端口
     'hostport'    => '3306',
     // 数据库连接参数
