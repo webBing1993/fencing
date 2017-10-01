@@ -167,7 +167,6 @@ class Award extends Base
         $users = session('userId');
         //将分数添加至用户积分排名
         $wechatModel = new WechatUser();
-        $wechatModel->where('userid',$users)->setInc('score',2);
         //  存储 表
         $Answers = new AwardModel();
         $Answers->userid = $users;
@@ -178,7 +177,7 @@ class Award extends Base
         $Answers->create_time = time();
         $res = $Answers->save();
         if($res){
-            return $this->success('提交成功',array('id' =>$res,'score'=>$score,'right'=>$Right,'award' => $award));
+            return $this->success('提交成功',array('id'=>$res,'score'=>$score,'right'=>$Right,'award' => 1));
         }else{
             return $this->error('提交失败');
         }
@@ -210,61 +209,46 @@ class Award extends Base
      */
     public function award(){
         $this->checkRole();
-        $this->check_time();
-        $id = input('get.id');
+        $this->checkTime();
         $userId = session('userId');
-        $res = AwardModel::where(['id' => $id])->find();
-        if (empty($res) || $res['score'] != 3){
-            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
-        }
-        $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
-        if ($result){
-            $state = 1; // 已经抽奖
-        }else{
-            $state = 0;  // 未抽奖
-        }
-        // 概率计算
-        $list = Db::name('award_stuff')->where(['type' => 0,'status' => 0])->field('id,sum')->select();
-        $arr = array();
-        foreach($list as $value){
-            // 已经选中的奖品
-            $res = Db::name('award_record')->where(['userid' => $userId,'stuff_id' => $value['id']])->find();
-            if (!$res){
-                //  剩余数量偏多的  概率大一点
-                $sum = Db::name('award_record')->where(['stuff_id' => $value['id'],'status' =>0])->count();
-                $num = $value['sum'] - $sum;
-                if ($num > 10){
-                    for($i=0;$i<100;$i++){
-                        array_push($arr,$value['id']);
-                    }
-                }elseif ($num >5 && $num <= 10){
-                    //  剩余数量偏少的  概率小一点
-                    for($k=0;$k<50;$k++){
-                        array_push($arr,$value['id']);
-                    }
-                }elseif ($num >1 && $num <= 5){
-                    for($k=0;$k<20;$k++){
-                        array_push($arr,$value['id']);
-                    }
-                }
-            }else{
-                array_push($arr,$value['id']);
+
+        if (IS_POST) {
+            $id = input('award_id');
+            $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
+            if ($result) {
+
+                return $this->error('该次答题已经抽过奖!');
+            } else {
+                $res = $this->random($id);
+
+                return $this->success('抽奖成功!',null,$res);
             }
+
+        } else {
+            $id = input('get.id');
+            $res = AwardModel::where(['id' => $id])->find();
+//            if (empty($res) || $res['score'] != 3){
+//                return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
+//            }
+            $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
+            if ($result){
+                $state = 1; // 已经抽奖
+            }else{
+                $state = 0;  // 未抽奖
+            }
+
+            $this->assign('state',$state);
+            return $this->fetch();
         }
-        shuffle($arr); // 随机打乱数组
-        $index = rand(0,count($arr)-1); // 随机索引
-        $stuff_id = $arr[$index];
-        $this->assign('stuff_id',$stuff_id);
-        $this->assign('award_id',$id);
-        $this->assign('state',$state);
-        return $this->fetch();
+
+
     }
     /**
      * 存储抽奖记录
      */
     public function push(){
         $this->checkRole();
-        $this->check_time();
+        $this->checkTime();
         $userId = session('userId');
         $stuff_id = input('post.stuff_id/d'); // 奖品id
         $award_id = input('post.award_id/d');  // 答题记录id
@@ -347,5 +331,91 @@ class Award extends Base
         return $this->fetch();
     }
 
+    /**
+     * 奖品随机抽取
+     */
+    private function random($id)
+    {
+        $nine = strtotime(date('Y-m-d 09:00:00'));  // 当日 9:00  时间戳
+        $fifteen = strtotime(date('Y-m-d 15:30:00'));  // 当日 15:30  时间戳
+        $yesterday = $fifteen - 60*60*24; //昨天 15:30 时间戳
+        $yesterdayNine = $nine - 60*60*24; //昨天 9:00 时间戳
+        $userid = session('userId');
+
+        //先判断本时间段有没有抽到奖
+        $map =[
+            'userid' => $userid,
+            'stuff_id' => ['lt',4],
+            'type' => 1
+        ];
+        if (time() < $nine) {
+
+            // 9点钟之前判断昨天9点后有没有中奖
+            $map['create_time'] = ['egt',$yesterdayNine];
+        } else if (time() >= $fifteen) {
+
+            // 15点钟之前判断今天9点后有没有中奖
+            $map['create_time'] = ['egt',$nine];
+        }
+        $result = Db::name('award_record')->where($map)->find();
+        if ($result) {
+            // 第一次抽到奖了 直接送个幸运奖
+            $rand = 4;
+        } else {
+            unset($map['userid']);
+
+            // 随机抽出奖品
+            while(true){
+
+                $rand = rand(1,20);
+                // 一等奖
+                if ($rand<=4) {
+
+                    $map['stuff_id'] = 1;
+                    $count = Db::name('award_record')->where($map)->count();
+                    if ($count < 4) {
+                        $rand = $map['stuff_id'];
+                        break;
+                    }
+                } else if ($rand<=24) {
+
+                    // 二等奖
+                    $map['stuff_id'] = 2;
+                    $count = Db::name('award_record')->where($map)->count();
+                    if ($count < 20) {
+                        $rand = $map['stuff_id'];
+                        break;
+                    }
+                } else if ($rand<=104) {
+
+                    // 三等奖
+                    $map['stuff_id'] = 3;
+                    $count = Db::name('award_record')->where($map)->count();
+                    if ($count < 80) {
+                        $rand = $map['stuff_id'];
+                        break;
+                    }
+                }
+
+            }
+        }
+
+        $data = array(
+            'stuff_id' => $rand,
+            'award_id' => $id,
+            'userid' => $userid,
+            'type' => 1,
+            'status' => 0,
+            'create_time' => time()
+        );
+        Db::name('award_record')->insert($data);
+
+        // 幸运奖送10积分
+        if ($rand == 4) {
+            WechatUser::where('userid',$userid)->setInc('score', 10);
+        }
+
+        return $rand;
+    }
 
 }
