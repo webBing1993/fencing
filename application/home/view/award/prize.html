@@ -78,6 +78,9 @@
     <span>我的奖品</span>
  </div>
 <div class="prizelist">
+    {eq name="$list" value=''}
+
+    {else/}
     <ul>
         {volist name="$list" id="vo"}
         <li>
@@ -102,6 +105,7 @@
         </li>
         {/volist}
     </ul>
+    {/eq}
     <div class="paging">
             <span class="pageone">上一页</span>
             <span class="pagenum">0 1</span>
