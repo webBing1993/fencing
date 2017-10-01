@@ -45,21 +45,21 @@ class Award extends Base
         } else if (time() > $fifteen){
 
             // 晚六点后
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$fifteen])->find();
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$fifteen],'and')->select();
         } else {
 
             // 昨天3点半之后到早9点之前
             $award = AwardModel::where('userid',$userid)->where('create_time',['>',$yesterday],['<=',$nine],'and')->find();
         }
 
-        if(empty($award)){
+        if (empty($award)) {
+
             // 每个时间段首次进去加2积分
             $res = $this->checkFirstTime($userid);
             if ($res) {
                 WechatUser::where('userid',$userid)->setInc('score', 2);
                 $this->assign('firstTime',1);
             }
-
             // 没有数据
             $ques = AwardModel::where('userid',$userid)->select();
             $ars = array();
@@ -307,10 +307,10 @@ class Award extends Base
         } else if (time() > $fifteen) {
 
             // 晚六点后
-            $res = AwardBrowse::where('userid',$uid)->where('create_time',['>',$fifteen])->find();
+            $res = AwardBrowse::where('user_id',$uid)->where('create_time',['>',$fifteen],'and')->find();
         } else {
             // 昨天3点半之后到早9点之前
-            $res = AwardBrowse::where('userid',$uid)->where('create_time',['>',$yesterday],['<=',$nine],'and')->find();
+            $res = AwardBrowse::where('user_id',$uid)->where('create_time',['>',$yesterday],['<=',$nine],'and')->find();
         }
 
         if (empty($res)) {
