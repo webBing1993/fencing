@@ -92,7 +92,15 @@
 {block name="script"}
 <script>
 $(function(){
-	console.log($("label").css("font-size"))
+	{eq name="firstTime" value="1"}
+	swal({
+		title: "",
+		text: "感谢您参与本次活动,赠送您2个积分",
+		type:"success",
+		showConfirmButton: true,
+		confirmButtonText:"确定"
+	});
+	{/eq}
 	//提交
 	$('.submit').on('click',function(e){
 		var data = [];

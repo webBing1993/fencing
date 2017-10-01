@@ -105,7 +105,7 @@
 
 <div id="div1" class="rotation">
     <div id="dowebok">
-        <span>Smoothslides – 可平移的jQuery幻灯片插件</span>
+        <span>恭喜王 ** 获得特等奖 iphone X 一部</span>
     </div>
 </div>
 
@@ -115,8 +115,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <div>恭喜您，获得<span></span></div>
-                <div class="text-center">可在<span style="color:#f00">我的奖品</span>中查看抽中的奖品</div>
+                <div style="text-align: center;font-size: 1.5rem">恭喜您，获得<span id="awards" style="color: #f00;"></span></div>
+                <div style="text-align: center;font-size: 1.7rem;padding: 0.8rem" id="specialAward"></div>
+                <div class="text-center" style="font-size: 1.5rem">查看奖品和更多请前往<span style="color:#f00">个人中心</span></div>
             </div>
         </div>
     </div>
@@ -222,6 +223,17 @@
         if (lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index) {
             var stuff_id = $("#lottery").find('.lottery-unit.lottery-unit-' + lottery.index).attr("data-id");
             var award_id =  parseInt(window.location.href.split("id/")[1]);
+            var awards = $("#lottery").find('.lottery-unit.lottery-unit-' + lottery.index).find("span").html();
+            if(awards=="一等奖"){
+                $("#specialAward").html("50元话费");
+            }else if(awards=="二等奖"){
+                $("#specialAward").html("20元话费");
+            }else if(awards=="三等奖"){
+                $("#specialAward").html("10元话费");
+            }else {
+                $("#specialAward").html("10积分");
+            }
+            $("#awards").html(awards);
             $('#modal').modal('show');
             $.post("{:Url('Award/push')}", {stuff_id:stuff_id,award_id:award_id}, function(data) {
                     console.log(data)
@@ -267,6 +279,7 @@
                 return false;
             }
             if(flag == 1){
+                $('#modal2').modal('show');
                 return false;
             }else{
                 if (click) { //click控制一次抽奖过程中不能重复点击抽奖按钮，后面的点击不响应

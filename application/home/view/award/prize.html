@@ -2,12 +2,136 @@
 
 {block name="style"}
 <title>我的奖品</title>
+<style>
+    body{
+        background: #fffadc;
+    }
+    .banner{
+        width:100%;
+        text-align: center;
+        margin-top: 5%;
+    }
+    .banner img{
+        width: 90vw;
+        height: 12.8vw;
+    }
+    .banner span{
+        color: #fe7e00;
+        position: absolute;
+        left: 50vw;
+        width: 40vw;
+        font-size: 1.7rem;
+        margin-left: -20vw;
+        line-height: 9.8vw;
+    }
+    .prizelist ul{
+        padding: 3vw 4vw;
+    }
+    .prizelist ul li{
+        border-bottom:1px dashed #fe8601;
+        color: #fe8601;
+        font-size: 1.6rem;
+        padding-bottom: 1vw;
+        margin: 4vw 0;
+    }
+    .prizelist ul li span:nth-child(2){
+        float: right;
+    }
+    .prizelist ul li span:nth-child(3){
+        float: right;
+        right:0;
+        margin-right: 2rem;
+    }
+    .paging{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom:6vw;
+    }
+    .paging span{
+        display: flex;
+        margin: 0 auto;
+        font-size: 1.5rem;
+    }
+    .paging .pageone{
+        background: #e8e8e8;
+        color: #fff;
+        padding: 0.2rem 0.8rem;
+        border-radius: 3px;
+    }
+    .paging .pagetwo{
+        background: #ffc78a;
+        color: #ff8b00;
+        padding: 0.2rem 0.8rem;
+        border-radius: 3px;
+    }
+    .paging .pagenum{
+        color: #ff8b00;
+    }
+</style>
 {/block}
 
 {block name="body"}
+<div class="banner">
+    <img src="/home/images/award/prizebanner.png">
+    <span>我的奖品</span>
+ </div>
+<div class="prizelist">
+    <ul>
+        <li>
+            <span>2017年10月02日</span>
+            <span>20元话费</span>
+            <span>二等奖</span>
+        </li>
+        <li>
+            <span>2017年10月02日</span>
+            <span>20元话费</span>
+            <span>二等奖</span>
+        </li>
+        <li>
+            <span>2017年10月02日</span>
+            <span>20元话费</span>
+            <span>二等奖</span>
+        </li>
+        <li>
+            <span>2017年10月02日</span>
+            <span>20元话费</span>
+            <span>二等奖</span>
+        </li>
+        <li>
+            <span>2017年10月02日</span>
+            <span>20元话费</span>
+            <span>二等奖</span>
+        </li> <li>
+        <span>2017年10月02日</span>
+        <span>20元话费</span>
+        <span>二等奖</span>
+    </li>
+        <li>
+            <span>2017年10月02日</span>
+            <span>20元话费</span>
+            <span>二等奖</span>
+        </li>
+        <li>
+            <span>2017年10月02日</span>
+            <span>20元话费</span>
+            <span>二等奖</span>
+        </li>
+    </ul>
+    <div class="paging">
+            <span class="pageone">上一页</span>
+            <span class="pagenum">0 1</span>
+            <span class="pagetwo">下一页</span>
 
+    </div>
+</div>
 {/block}
 
 {block name="script"}
+<script>
+    $(".pageone").click(function(){
 
+    })
+</script>
 {/block}

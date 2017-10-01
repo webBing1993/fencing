@@ -56,7 +56,6 @@ tbody{
     font-size: 5vw;
     padding-top:0.5rem;
 }
-.drawing{ background-color: #fe8d85!important; }
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -107,9 +106,19 @@ tbody{
     height:10vw;
     width:100vw;
     line-height:10vw;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     text-align: center;
     color: #fff;
     white-space:nowrap;overflow:hidden
+}
+@media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2){
+    .draw {
+        margin: 0 auto;
+        background-image: url(/home/images/award/bg.png);
+        background-size: cover;
+         margin-top:0;
+        height: 105vw;
+    }
+
 }
