@@ -16,6 +16,39 @@
          left: 50%;
          margin-left: -6vw;
      }
+    .awards{
+        text-align: center;
+        color: #f99000;
+        position: absolute;
+        top: 20vw;
+        text-align: center;
+        font-size: 1.7rem;
+        left: 50%;
+        width: 60vw;
+        margin-left: -30vw;
+    }
+
+    #specialAward{
+        position: absolute;
+        top: 28vw;
+        color: #ff9900;
+        font-size: 1.7rem;
+        width: 60vw;
+        left: 50%;
+        margin-left: -30vw;
+        text-align: center;
+    }
+    .checkprize{
+        position: absolute;
+        top: 36vw;
+        color: #ff9900;
+        font-size: 1.5rem;
+        width: 80vw;
+        left: 50%;
+        margin-left: -40vw;
+        text-align: center;
+    }
+
 
 </style>
 {/block}
@@ -112,28 +145,12 @@
 
 <!--模态框-->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div style="text-align: center;font-size: 1.5rem">恭喜您，获得<span id="awards" style="color: #f00;"></span></div>
-                <div style="text-align: center;font-size: 1.7rem;padding: 0.8rem" id="specialAward"></div>
-                <div class="text-center" style="font-size: 1.5rem">查看奖品和更多请前往<span style="color:#f00">个人中心</span></div>
-            </div>
-        </div>
-    </div>
+   <div  style="background: url(/home/images/award/alert.png);background-size: 100% 100%;width: 100%;height: 48vw;"></div>
+    <img src="/home/images/award/alertbanner.png" style="    position: absolute;top: 0;width: 80%;left: 10%;">
+    <p class="awards">恭喜您获得<span id="awards"></span></p>
+    <p id="specialAward"></p>
+    <p class="checkprize">查看产品和更多请前往个人中心</p>
 </div>
-
-<!--模态框-->
-<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body" style="padding: 3.5rem;">
-                <div style="text-align: center">您已经抽过奖了~下次再来吧</div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -225,13 +242,13 @@
             var stuff_id = $("#lottery").find('.lottery-unit.lottery-unit-' + lottery.index).attr("data-id");
             var awards = $("#lottery").find('.lottery-unit.lottery-unit-' + lottery.index).find("span").html();
             if(awards=="一等奖"){
-                $("#specialAward").html("50元话费");
+                $("#specialAward").html("奖项内容：50元话费");
             }else if(awards=="二等奖"){
-                $("#specialAward").html("20元话费");
+                $("#specialAward").html("奖项内容：20元话费");
             }else if(awards=="三等奖"){
-                $("#specialAward").html("10元话费");
+                $("#specialAward").html("奖项内容：10元话费");
             }else {
-                $("#specialAward").html("10积分");
+                $("#specialAward").html("奖项内容：10积分");
             }
             $("#awards").html(awards);
             $('#modal').modal('show');
@@ -248,7 +265,20 @@
             } else if (lottery.times == lottery.cycle) {
                 $.post("{:Url('Award/award')}", {award_id:award_id}, function(data) {
                     if(data.code==1){
-                        var index =data.data;
+                        if(data.data==1){
+                            var arr = [1]
+                            var i = Math.floor((Math.random()*arr.length));
+                        }else if(data.data==2){
+                            var arr = [2,6]
+                            var i = Math.floor((Math.random()*arr.length));
+                        }else if(data.data==3){
+                            var arr = [0,3,5]
+                            var i = Math.floor((Math.random()*arr.length));
+                        }else if(data.data==4){
+                            var arr = [4,7]
+                            var i = Math.floor((Math.random()*arr.length));
+                        }
+                        var index =arr[i];
                         lottery.prize = index;
                     }
                 }, "json");
@@ -273,11 +303,23 @@
         lottery.init('lottery');
         $('.draw-btn').click(function() {
             if("{$state}"==1){
-                $('#modal2').modal('show');
+                swal({
+                    title: "",
+                    text: "您已经抽过奖了~下次再来吧",
+                    type:"error",
+                    showConfirmButton: true,
+                    confirmButtonText:"确定"
+                });
                 return false;
             }
             if(flag == 1){
-                $('#modal2').modal('show');
+                swal({
+                    title: "",
+                    text: "您已经抽过奖了~下次再来吧",
+                    type:"error",
+                    showConfirmButton: true,
+                    confirmButtonText:"确定"
+                });
                 return false;
             }else{
                 if (click) { //click控制一次抽奖过程中不能重复点击抽奖按钮，后面的点击不响应
