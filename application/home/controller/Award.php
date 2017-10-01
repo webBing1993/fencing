@@ -45,7 +45,7 @@ class Award extends Base
         } else if (time() > $fifteen){
 
             // 晚六点后
-            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$fifteen],'and')->select();
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$fifteen],'and')->find();
         } else {
 
             // 昨天3点半之后到早9点之前
@@ -326,7 +326,15 @@ class Award extends Base
     /**
      * @return mixed  我的奖品
      */
-    public function prize(){
+    public function prize()
+    {
+        $userid = session('userId');
+        $map = [
+            'userid' => $userid,
+            'type' => 1
+        ];
+        $list = Db::name('award_record')->where($map)->select();
+        $this->assign('list',$list);
 
         return $this->fetch();
     }
