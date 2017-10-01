@@ -116,9 +116,36 @@ class Award extends Base
     /*
      * 每日一课 提交
      */
-    public function commit(){
+    public function commit()
+    {
         $this->checkRole();
         $this->checkTime();
+
+
+        $userid = session('userId');
+        $nine = strtotime(date('Y-m-d 09:00:00'));  // 当日 9:00  时间戳
+        $fifteen = strtotime(date('Y-m-d 15:30:00'));  // 当日 15:30  时间戳
+        $yesterday = $fifteen - 60*60*24; //昨天 15:30 时间戳
+
+        // 当日早9点到下午3点半之间
+        if (time() > $nine && time() <= $fifteen){
+
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$nine],['<=',$fifteen],'and')->find();
+        } else if (time() > $fifteen){
+
+            // 晚六点后
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$fifteen],'and')->find();
+        } else {
+
+            // 昨天3点半之后到早9点之前
+            $award = AwardModel::where('userid',$userid)->where('create_time',['>',$yesterday],['<=',$nine],'and')->find();
+        }
+        if ($award) {
+
+            return $this->error('该时段已经答过题!');
+        }
+
+
         // 获取用户提交数据
         $data = input('post.');
         $arr = $data['data'];
@@ -243,40 +270,12 @@ class Award extends Base
 
 
     }
-    /**
-     * 存储抽奖记录
-     */
-    public function push(){
-        $this->checkRole();
-        $this->checkTime();
-        $userId = session('userId');
-        $stuff_id = input('post.stuff_id/d'); // 奖品id
-        $award_id = input('post.award_id/d');  // 答题记录id
-        if (empty($stuff_id) || empty($award_id)){
-            return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
-        }
-        $map = array(
-            'stuff_id' => $stuff_id,
-            'award_id' => $award_id,
-            'userid' => $userId,
-            'status' => 0
-        );
-        $res =  $sum = Db::name('award_record')->where($map)->find();
-        if (empty($res)){
-            $data = array(
-                'stuff_id' => $stuff_id,
-                'award_id' => $award_id,
-                'userid' => $userId,
-                'status' => 0,
-                'create_time' => time()
-            );
-            Db::name('award_record')->insert($data);
-        }
-    }
+
     /**
      * @return mixed  活动结束页面
      */
     public function null(){
+
         return $this->fetch();
     }
 
@@ -323,6 +322,7 @@ class Award extends Base
         }
 
     }
+
     /**
      * @return mixed  我的奖品
      */
@@ -428,5 +428,6 @@ class Award extends Base
 
         return $rand;
     }
+
 
 }
