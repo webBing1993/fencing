@@ -238,6 +238,7 @@ class Award extends Base
         $this->checkRole();
         $this->checkTime();
         $userId = session('userId');
+        $zero = strtotime(date('Y-m-d 00:00:00'));  // 当日 0:00  时间戳
 
         if (IS_POST) {
             $id = input('award_id');
@@ -258,13 +259,15 @@ class Award extends Base
 //                return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
 //            }
             $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
+            $roll = Db::name('award_record')->where(['type'=>1])->limit('10')->select();
             if ($result){
                 $state = 1; // 已经抽奖
             }else{
                 $state = 0;  // 未抽奖
             }
-
             $this->assign('state',$state);
+            $this->assign('roll',$roll);
+
             return $this->fetch();
         }
 

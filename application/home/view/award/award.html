@@ -135,12 +135,26 @@
     <span onclick="prize()">我的奖品</span>
 </div>
 
-
+{neq name="roll" value=""}
 <div id="div1" class="rotation">
     <div id="dowebok">
-        <span>恭喜王 ** 获得特等奖 iphone X 一部</span>
+        {volist name="roll" id="vo"}
+        <span>
+             {if condition="$vo.stuff_id eq '1'"}
+            恭喜 {$vo.userid|get_name} 获得一等奖话费50元
+            {elseif condition="($vo.stuff_id == 2)"/}
+            恭喜 {$vo.userid|get_name} 获得二等奖话费20元
+            {elseif condition="$vo.stuff_id eq 3"/}
+            恭喜 {$vo.userid|get_name} 获得三等奖话费10元
+            {elseif condition="$vo.stuff_id eq 4"/}
+            恭喜 {$vo.userid|get_name} 获得参与奖10积分
+            {/if}
+        </span>
+        <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+        {/volist}
     </div>
 </div>
+{/neq}
 
 
 <!--模态框-->
