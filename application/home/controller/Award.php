@@ -21,7 +21,7 @@ use think\Url;
 class Award extends Base
 {
     public static $ENDTIME = '2017-10-15 00:00:00'; // 活动结束时间
-    public static $STARTTIME = '2017-10-1 9:00:00'; // 活动开始时间
+    public static $STARTTIME = '2017-10-5 9:00:00'; // 活动开始时间
 
     /**
      * 答题页面
@@ -204,7 +204,7 @@ class Award extends Base
         $Answers->create_time = time();
         $res = $Answers->save();
         if($res){
-            return $this->success('提交成功',array('id'=>$res,'score'=>$score,'right'=>$Right,'award' => 1));
+            return $this->success('提交成功',array('id'=>$res,'score'=>$score,'right'=>$Right,'award' => $award));
         }else{
             return $this->error('提交失败');
         }
@@ -255,11 +255,11 @@ class Award extends Base
         } else {
             $id = input('get.id');
             $res = AwardModel::where(['id' => $id])->find();
-//            if (empty($res) || $res['score'] != 3){
-//                return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
-//            }
+            if (empty($res) || $res['score'] != 3){
+                return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
+            }
             $result = Db::name('award_record')->where(['award_id' => $id,'userid' => $userId])->find();
-            $roll = Db::name('award_record')->where(['type'=>1])->limit('10')->select();
+            $roll = Db::name('award_record')->where(['type'=>1,'create_time'=>['egt',$zero]])->limit('10')->select();
             if ($result){
                 $state = 1; // 已经抽奖
             }else{
@@ -333,8 +333,7 @@ class Award extends Base
     {
         $userid = session('userId');
         $map = [
-            'userid' => $userid,
-            'type' => 1
+            'userid' => $userid
         ];
         $list = Db::name('award_record')->where($map)->select();
         $this->assign('list',$list);
