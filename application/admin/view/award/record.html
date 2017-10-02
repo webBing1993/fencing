@@ -50,8 +50,38 @@
                             <tr>
                                 <td><input type="checkbox" class="i-checks" name="input[]"></td>
                                 <td>{$vo->user->name}</td>
-                                <td>{$vo.type}</td>
-                                <td>{$vo.name}</td>
+                                <td>{$vo.type == 1?'普通奖品':'终极奖品'}</td>
+                                <td>
+                                    {eq name="vo.type" value="1"}
+                                    {if condition="$vo.stuff_id eq '1'"}
+                                    <span>一等奖</span>
+                                    <span>话费50元</span>
+                                    {elseif condition="$vo.stuff_id == 2"/}
+                                    <span>二等奖</span>
+                                    <span>话费20元</span>
+                                    {elseif condition="$vo.stuff_id eq 3"/}
+                                    <span>三等奖</span>
+                                    <span>话费10元</span>
+                                    {elseif condition="$vo.stuff_id eq 4"/}
+                                    <span>参与奖</span>
+                                    <span>积分10分</span>
+                                    {/if}
+                                    {else/}
+                                    {if condition="$vo.stuff_id eq '1'"}
+                                    <span>一等奖</span>
+                                    <span>手机一台</span>
+                                    {elseif condition="$vo.stuff_id == 2"/}
+                                    <span>二等奖</span>
+                                    <span>话费500元</span>
+                                    {elseif condition="$vo.stuff_id eq 3"/}
+                                    <span>三等奖</span>
+                                    <span>话费100元</span>
+                                    {elseif condition="$vo.stuff_id eq 4"/}
+                                    <span>参与奖</span>
+                                    <span>积分20分</span>
+                                    {/if}
+                                    {/eq}
+                                </td>
                                 <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
                                 <td>
                                     <a href="{:Url('Award/dele?id='.$vo['id'])}" class="confirm ajax-del">删除</a>
