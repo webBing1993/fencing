@@ -159,8 +159,8 @@ class Cronjob extends Controller {
             //推送消息的详情
         if(time() < strtotime($ENDTIME) && time() > strtotime($STARTTIME)) {
 
-            $title = '答题抽大奖...';
-            $content = "不赚白不赚";
+            $title = '@所有人，您已获得一次答题抽奖的机会';
+            $content = "喜迎十九大，好礼送不停。点击进入活动页面，答题有机会领取好礼！";
             $path = "http://tzgxpb.0571ztnet.com/home/images/user/relax.jpg";//图片链接
             $url = "http://tzgxpb.0571ztnet.com/home/Award/index";  //答题页面链接
             $send = array(
