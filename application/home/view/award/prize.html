@@ -84,11 +84,11 @@
     <ul>
         {volist name="$list" id="vo"}
         <li>
-            {if condition="2 eq '1'"}
+            {if condition="$vo.stuff_id eq '1'"}
             <span>{$vo.create_time|date="Y年m月d日",###}</span>
             <span>一等奖</span>
             <span>话费50元</span>
-            {elseif condition="($vo['id'] == 2)"/}
+            {elseif condition="$vo.stuff_id == 2"/}
             <span>{$vo.create_time|date="Y年m月d日",###}</span>
             <span>二等奖</span>
             <span>话费20元</span>
@@ -101,7 +101,6 @@
             <span>参与奖</span>
             <span>积分10分</span>
             {/if}
-
         </li>
         {/volist}
     </ul>
