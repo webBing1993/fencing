@@ -57,7 +57,7 @@
     <span>我的奖品</span>
  </div>
 <div class="prizelist">
-    {eq name="$list" value=''}
+    {empty name="$list" value=""}
         <p class="noprize">您还没有抽到奖品哦~</p>
     {else/}
     <ul>
@@ -103,7 +103,7 @@
         </li>
         {/volist}
     </ul>
-    {/eq}
+    {/empty}
 </div>
 {/block}
 
