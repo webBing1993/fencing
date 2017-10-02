@@ -102,58 +102,63 @@ class Cronjob extends Controller {
      * 每天推送 答题 
      */
     public function push_award(){
+        static $ENDTIME = '2017-10-15 00:00:00'; // 活动结束时间
+        static $STARTTIME = '2017-10-5 8:59:00'; // 活动开始时间
+
         $Wechat = new TPQYWechat(Config::get('party'));
-        $date = Db::name('award')->order('id asc')->value('create_time');
-        $time = strtotime(date('Y-m-d',time()));
-        $first_start = strtotime(date('Y-m-d',$date)) + 10*24*60*60;
-        $first_end = strtotime(date('Y-m-d',$date)) + 11*24*60*60;
-        if ($first_start < $time && $time < $first_end){
-            // 第十一天   推送 终极 抽奖
-            $award = Db::name('award')->order('id desc')->select();
-            $arr = array();
-            foreach($award as $value){  // 获取 连续十天参加活动的人员
-                $res = $value['userid']."_".date('Y-m-d',$value['create_time']);
-                if (isset($arr[$value['userid']])){
-                    if (!in_array($res,$arr[$value['userid']])){
-                        $arr[$value['userid']][] = $res;
-                    }
-                }else{
-                    $arr[$value['userid']][] = $res;
-                }
-            }
-            $user_arr = array();
-            foreach($arr as $key => $value){
-                if (count($value) >=10){
-                    array_push($user_arr,$key);
-                }
-            }
+//        $date = Db::name('award')->order('id asc')->value('create_time');
+//        $time = strtotime(date('Y-m-d',time()));
+//        $first_start = strtotime(date('Y-m-d',$date)) + 10*24*60*60;
+//        $first_end = strtotime(date('Y-m-d',$date)) + 11*24*60*60;
+//        if ($first_start < $time && $time < $first_end){
+//            // 第十一天   推送 终极 抽奖
+//            $award = Db::name('award')->order('id desc')->select();
+//            $arr = array();
+//            foreach($award as $value){  // 获取 连续十天参加活动的人员
+//                $res = $value['userid']."_".date('Y-m-d',$value['create_time']);
+//                if (isset($arr[$value['userid']])){
+//                    if (!in_array($res,$arr[$value['userid']])){
+//                        $arr[$value['userid']][] = $res;
+//                    }
+//                }else{
+//                    $arr[$value['userid']][] = $res;
+//                }
+//            }
+//            $user_arr = array();
+//            foreach($arr as $key => $value){
+//                if (count($value) >=10){
+//                    array_push($user_arr,$key);
+//                }
+//            }
+//            //推送消息的详情
+//            $title = '您有机会抽取超级大奖';
+//            $content = "赶快去试试手气";
+//            $path = "http://tzgxpb.0571ztnet.com/home/images/user/relax.jpg";//图片链接
+//            $url = "http://tzgxpb.0571ztnet.com/home/Award/index";  //终极抽奖页面链接
+//            $send = array(
+//                "articles" => array(
+//                    array(
+//                        "title" => $title,
+//                        "description" => $content,
+//                        "url" => $url,
+//                        "picurl" => $path,
+//                    )
+//                )
+//            );
+//            //发送
+//            $message = array(
+//                'touser' => '17557289172',
+////           'touser' =>implode('|',$user_arr),
+//                "msgtype" => 'news',
+//                "agentid" => 1000002,
+//                "news" => $send,
+//                "safe" => "0"
+//            );
+//            $Wechat->sendMessage($message);
+//        }else{}
             //推送消息的详情
-            $title = '您有机会抽取超级大奖';
-            $content = "赶快去试试手气";
-            $path = "http://tzgxpb.0571ztnet.com/home/images/user/relax.jpg";//图片链接
-            $url = "http://tzgxpb.0571ztnet.com/home/Award/index";  //终极抽奖页面链接
-            $send = array(
-                "articles" => array(
-                    array(
-                        "title" => $title,
-                        "description" => $content,
-                        "url" => $url,
-                        "picurl" => $path,
-                    )
-                )
-            );
-            //发送
-            $message = array(
-                'touser' => '17557289172',
-//           'touser' =>implode('|',$user_arr),
-                "msgtype" => 'news',
-                "agentid" => 1000002,
-                "news" => $send,
-                "safe" => "0"
-            );
-            $Wechat->sendMessage($message);
-        }else{
-            //推送消息的详情
+        if(time() < strtotime($ENDTIME) && time() > strtotime($STARTTIME)) {
+
             $title = '答题抽大奖...';
             $content = "不赚白不赚";
             $path = "http://tzgxpb.0571ztnet.com/home/images/user/relax.jpg";//图片链接
@@ -170,8 +175,8 @@ class Cronjob extends Controller {
             );
             //发送
             $message = array(
-                'touser' => '17557289172',
-//           'touser' =>"@all",
+//                'touser' => '15700004138',
+                'touser' =>"@all",
                 "msgtype" => 'news',
                 "agentid" => 1000002,
                 "news" => $send,
@@ -179,5 +184,6 @@ class Cronjob extends Controller {
             );
             $Wechat->sendMessage($message);
         }
+
     }
 }
