@@ -377,7 +377,7 @@ class Award extends Base
             // 随机抽出奖品
             while(true){
 
-                $rand = rand(1,200);
+                $rand = random_int(1,100);
                 // 一等奖
                 if ($rand<=4) {
 
@@ -387,7 +387,7 @@ class Award extends Base
                         $rand = $map['stuff_id'];
                         break;
                     }
-                } else if ($rand<=24) {
+                } else if ($rand<=14) {
 
                     // 二等奖
                     $map['stuff_id'] = 2;
@@ -396,7 +396,7 @@ class Award extends Base
                         $rand = $map['stuff_id'];
                         break;
                     }
-                } else if ($rand<=104) {
+                } else if ($rand<=54) {
 
                     // 三等奖
                     $map['stuff_id'] = 3;
