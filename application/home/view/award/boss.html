@@ -280,7 +280,7 @@
             if (lottery.times < lottery.cycle) {
                 lottery.speed -= 10;
             } else if (lottery.times == lottery.cycle) {
-                $.post("{:Url('Award/award')}", {award_id:award_id}, function(data) {
+                $.post("{:Url('Award/boss')}", {award_id:award_id}, function(data) {
                     if(data.code==1){
                         if(data.data==1){
                             var arr = [1]
@@ -357,6 +357,10 @@
     function show(){
         $('#myModal').modal('show');
     }
+
+    $(".modal").click(function(){
+        window.location.reload();
+    })
 
     function prize(){
         window.location.href="/home/award/prize.html"

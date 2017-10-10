@@ -494,7 +494,7 @@ class Award extends Base
         ];
         // 随机抽出奖品
         while(true){
-            $rand = random_int(1,100);
+            $rand = mt_rand(1,100);
             // 一等奖
             if ($rand<=1) {  // 1%
                 $map['stuff_id'] = 1;
