@@ -434,7 +434,115 @@ class Award extends Base
      * 终极抽奖 页面
      */
     public function boss(){
-        return $this->fetch();
+        $this->checkRole();
+        $this->checkTime();
+        $userId = session('userId');
+        $zero = strtotime(date('Y-m-d 00:00:00'));  // 当日 0:00  时间戳
+
+        if (IS_POST) {
+            $result = Db::name('award_record')->where(['type' => 2,'userid' => $userId])->find();
+            if ($result) {
+                return $this->error('您已经抽过奖!');
+            } else {
+                $res = $this->randoms();
+                return $this->success('抽奖成功!',null,$res);
+            }
+
+        } else {
+            $award = Db::name('award')->order('id desc')->select();
+            $arr = array();
+            foreach($award as $value){  // 获取 连续十天参加活动的人员
+                $res = $value['userid']."_".date('Y-m-d',$value['create_time']);
+                if (isset($arr[$value['userid']])){
+                    if (!in_array($res,$arr[$value['userid']])){
+                        $arr[$value['userid']][] = $res;
+                    }
+                }else{
+                    $arr[$value['userid']][] = $res;
+                }
+            }
+            $user_arr = array();
+            foreach($arr as $key => $value){
+                if (count($value) >=10){
+                    array_push($user_arr,$key);
+                }
+            }
+            if (!in_array($userId,$user_arr)){
+                return $this->error('抱歉~~您不是终极大奖资格者',Url('Award/null'));
+            }
+            $result = Db::name('award_record')->where(['type' => 2,'userid' => $userId])->find();
+            $roll = Db::name('award_record')->where(['type'=>2,'create_time'=>['egt',$zero]])->limit('10')->select();
+            if ($result){
+                $state = 1; // 已经抽奖
+            }else{
+                $state = 0;  // 未抽奖
+            }
+            $this->assign('state',$state);
+            $this->assign('roll',$roll);
+
+            return $this->fetch();
+        }
+    }
+    /**
+     * 终极奖品  随机抽取
+     */
+    private function randoms()
+    {
+        $userid = session('userId');
+        $map =[
+            'type' => 2
+        ];
+        // 随机抽出奖品
+        while(true){
+            $rand = random_int(1,100);
+            // 一等奖
+            if ($rand<=1) {  // 1%
+                $map['stuff_id'] = 1;
+                $count = Db::name('award_record')->where($map)->count();  // 已经抽到的奖品数
+                if ($count < 1) {
+                    $rand = $map['stuff_id'];
+                    break;
+                }
+            } else if ($rand<=6) {  // 5%
+
+                // 二等奖
+                $map['stuff_id'] = 2;
+                $count = Db::name('award_record')->where($map)->count();
+                if ($count < 10) {
+                    $rand = $map['stuff_id'];
+                    break;
+                }
+            } else if ($rand<=31) {  // 25%
+
+                // 三等奖
+                $map['stuff_id'] = 3;
+                $count = Db::name('award_record')->where($map)->count();
+                if ($count < 50) {
+                    $rand = $map['stuff_id'];
+                    break;
+                }
+            } else {  // 70%
+                $rand = 4;
+                break;
+            }
+
+        }
+
+        $data = array(
+            'stuff_id' => $rand,
+            'award_id' => null,
+            'userid' => $userid,
+            'type' => 2,
+            'status' => 0,
+            'create_time' => time()
+        );
+        Db::name('award_record')->insert($data);
+
+        // 幸运奖送20积分
+        if ($rand == 4) {
+            WechatUser::where('userid',$userid)->setInc('score', 20);
+        }
+        return $rand;
     }
 
 }
