@@ -430,6 +430,11 @@ class Award extends Base
 
         return $rand;
     }
-
+    /**
+     * 终极抽奖 页面
+     */
+    public function boss(){
+        return $this->fetch();
+    }
 
 }
