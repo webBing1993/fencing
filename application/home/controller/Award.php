@@ -435,9 +435,7 @@ class Award extends Base
      */
     public function boss(){
         $this->checkRole();
-        $this->checkTime();
         $userId = session('userId');
-        $zero = strtotime(date('Y-m-d 00:00:00'));  // 当日 0:00  时间戳
 
         if (IS_POST) {
             $result = Db::name('award_record')->where(['type' => 2,'userid' => $userId])->find();
@@ -471,7 +469,7 @@ class Award extends Base
                 return $this->error('抱歉~~您不是终极大奖资格者',Url('Award/null'));
             }
             $result = Db::name('award_record')->where(['type' => 2,'userid' => $userId])->find();
-            $roll = Db::name('award_record')->where(['type'=>2,'create_time'=>['egt',$zero]])->limit('10')->select();
+            $roll = Db::name('award_record')->where(['type'=>2])->order('id desc')->limit(10)->select();
             if ($result){
                 $state = 1; // 已经抽奖
             }else{
