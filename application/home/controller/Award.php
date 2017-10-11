@@ -254,7 +254,7 @@ class Award extends Base
 
         } else {
             $id = input('get.id');
-            $res = AwardModel::where(['id' => $id])->find();
+            $res = AwardModel::where(['userid' => $userId,'id' => $id])->find();
             if (empty($res) || $res['score'] != 3){
                 return $this->error('抱歉~~系统参数丢掉了',Url('Award/index'));
             }
