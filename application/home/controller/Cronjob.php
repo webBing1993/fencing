@@ -104,9 +104,10 @@ class Cronjob extends Controller {
     public function push_award(){
         static $ENDTIME = '2017-10-15 00:00:00'; // 活动结束时间
         static $STARTTIME = '2017-10-5 8:59:00'; // 活动开始时间
-        static $FINAL_START = '2017-10-16 8:59:00';  // 终极抽奖开始时间
-        static $FINAL_END = '2017-10-16 12:00:00'; // 终极抽奖 结束时间
+        static $FINAL_START = '2017-10-16 8:58:00';  // 终极抽奖开始时间
+        static $FINAL_END = '2017-10-16 11:00:00'; // 终极抽奖 结束时间
         $Wechat = new TPQYWechat(Config::get('party'));
+
         //推送消息的详情
         if(time() < strtotime($ENDTIME) && time() > strtotime($STARTTIME)) {
             $title = '@所有人，您已获得一次答题抽奖的机会';
@@ -171,7 +172,7 @@ class Cronjob extends Controller {
             //发送
             $message = array(
                 'touser' => '15036667391',
-//           'touser' =>implode('|',$user_arr),
+//                'touser' =>implode('|',$user_arr),
                 "msgtype" => 'news',
                 "agentid" => 1000002,
                 "news" => $send,
