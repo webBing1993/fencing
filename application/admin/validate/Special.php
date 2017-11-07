@@ -11,8 +11,8 @@ class Special extends Validate{
     protected $rule = [
         'front_cover' => 'require',
         'title' => 'require',
-        'content' => 'require',
         'publisher' => 'require',
+        'content' => 'require',
     ];
     protected $message = [
         'title.require' => '标题不能为空',
@@ -20,8 +20,4 @@ class Special extends Validate{
         'publisher.require' => '发布人不能为空',
         'front_cover.require' => '封面图片不能为空',
         ];
-    protected $scene = [
-        'act' => ['title','front_cover'],
-        'other' => ['title','content','publisher','front_cover'],
-    ];
 }

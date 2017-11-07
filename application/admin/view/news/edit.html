@@ -299,6 +299,11 @@
             return false;
         });
     })
-
+    $("select" ).chosen({
+        no_results_text: "没有找到该选项",
+        allow_single_de: true,
+        width:'100%',
+        max_selected_options:'100'
+    });
 </script>
 {/block}
