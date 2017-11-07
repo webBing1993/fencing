@@ -13,7 +13,7 @@ use app\admin\model\Picture;
 use think\Config;
 use app\admin\model\Company as CompanyModel;
 /*
- * 党员之家  控制器
+ * 志愿之家  控制器
  */
 class Company extends Admin{
     /*

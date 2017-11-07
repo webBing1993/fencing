@@ -6,8 +6,6 @@
  * Time: 14:41
  */
 namespace app\admin\controller;
-
-use think\Controller;
 use app\admin\model\Picture;
 use app\admin\model\Push;
 use com\wechat\TPQYWechat;
