@@ -27,8 +27,9 @@ class News extends Admin {
         );
         $list = $this->lists('News',$map);
         int_to_string($list,array(
-            'type' => array(1=>"新闻聚焦",2=>"各地动态",3=>"政策文件"),
+            'type' => array(1=>"基层动态",2=>"党建动态"),
             'status' => array(0 =>"已发布",1=>"已发布"),
+            'recommend' => [0 => "否" , 1 => "是"]
         ));
 
         $this->assign('list',$list);
@@ -114,13 +115,10 @@ class News extends Admin {
             foreach($infoes as $value){
                 switch ($value['type']){
                     case 1:
-                        $value['title'] = '【新闻聚焦】'.$value['title'];
+                        $value['title'] = '【基层动态】'.$value['title'];
                         break;
                     case 2:
-                        $value['title'] = '【各地动态】'.$value['title'];
-                        break;
-                    case 3:
-                        $value['title'] = '【政策文件】'.$value['title'];
+                        $value['title'] = '【党建动态】'.$value['title'];
                         break;
                     default;
                 }
@@ -129,7 +127,7 @@ class News extends Admin {
         }else{
             //新闻消息列表
             $map = array(
-                'class' => 1,  // 党建动态
+                'class' => 1,  // 箬横动态
                 'status' => array('egt',-1)
             );
             $list=$this->lists('Push',$map);
@@ -141,13 +139,10 @@ class News extends Admin {
                 $msg = NewsModel::where('id',$value['focus_main'])->find();
                 switch ($msg['type']){
                     case 1:
-                        $value['type'] = '新闻聚焦';
+                        $value['type'] = '基层动态';
                         break;
                     case 2:
-                        $value['type'] = '各地动态';
-                        break;
-                    case 3:
-                        $value['type'] = '政策文件';
+                        $value['type'] = '党建动态';
                         break;
                     default;
                 }
@@ -164,13 +159,10 @@ class News extends Admin {
             foreach($infoes as $value){
                 switch ($value['type']){
                     case 1:
-                        $value['title'] = '【新闻聚焦】'.$value['title'];
+                        $value['title'] = '【基层动态】'.$value['title'];
                         break;
                     case 2:
-                        $value['title'] = '【各地动态】'.$value['title'];
-                        break;
-                    case 3:
-                        $value['title'] = '【政策文件】'.$value['title'];
+                        $value['title'] = '【党建动态】'.$value['title'];
                         break;
                     default;
                 }
@@ -198,7 +190,7 @@ class News extends Admin {
         $str1 = strip_tags($info1['content']);
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
-        $pre = '【党建动态】';
+        $pre = '【箬横动态】';
         $url1 = hostUrl."/home/News/detail/id/".$info1['id'].".html";
         $image1 = Picture::get($info1['front_cover']);
         $path1 = hostUrl.$image1['path'];
@@ -219,7 +211,7 @@ class News extends Admin {
                 $str2 = strip_tags($info2['content']);
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
-                $pre1 = '【党建动态】';
+                $pre1 = '【箬横动态】';
                 $url2 = hostUrl."/home/News/detail/id/".$info2['id'].".html";
                 $image2 = Picture::get($info2['front_cover']);
                 $path2 = hostUrl.$image2['path'];
@@ -260,7 +252,7 @@ class News extends Admin {
         if($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
-            $data['class'] = 1;  // 党建动态
+            $data['class'] = 1;  // 箬横动态
             $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);

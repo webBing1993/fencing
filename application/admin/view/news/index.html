@@ -9,7 +9,7 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>党建动态</h2>
+        <h2>箬横动态</h2>
         <ol class="breadcrumb">
             <li>
                 新闻管理
@@ -32,7 +32,7 @@
                 <div class="ibox-title">
                     <h5>新闻列表</h5>
                     <div class="ibox-tools">
-                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('News/add')}">添加新闻</a>
+                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('News/add')}">添加</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -46,6 +46,7 @@
                                 <th>发布人</th>
                                 <th>创建人 </th>
                                 <th>创建时间</th>
+                                <th>是否推荐</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -59,6 +60,7 @@
                                 <td>{$vo.publisher}</td>
                                 <td>{$vo->user->nickname}</td>
                                 <td>{$vo.create_time|time_format='Y-m-d'}</td>
+                                <td>{$vo.recommend_text}</td>
                                 <td>{$vo.status_text}</td>
                                 <td>
                                     <a href="{:Url('News/edit?id='.$vo['id'])}">修改</a>

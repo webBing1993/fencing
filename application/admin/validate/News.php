@@ -15,8 +15,8 @@ class News extends Validate {
     protected $rule = [
         'front_cover'  =>  'require',
         'title' =>  'require',
-        'content'  =>  'require',
         'publisher'  =>  'require',
+        'content'  =>  'require',
     ];
 
     protected $message = [
