@@ -16,7 +16,7 @@ use think\Config;
 
 /**
  * Class Notice
- * @package 通知公告
+ * @package  支部活动
  */
 class Notice extends Admin {
     /**
