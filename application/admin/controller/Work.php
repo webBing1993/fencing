@@ -6,13 +6,7 @@ namespace app\admin\controller;
  * Date: 2017/7/18
  * Time: 8:58
  */
-use app\admin\model\WechatDepartment;
-use app\admin\model\Appraise;
-use app\admin\model\AppraiseOptions;
-use app\admin\model\WechatUser;
-use app\admin\model\AppraiseAnswer;
 use app\admin\model\Work as WorkModel;
-use think\Db;
 
 /**
  * Class Work
