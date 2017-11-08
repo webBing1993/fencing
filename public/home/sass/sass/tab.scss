@@ -1,0 +1,50 @@
+
+$tab-height:10vw;
+$tab-top:0;
+$tab-background:#BF0301;
+$tab-color:#e8e8e8;
+$tab-size:0.4rem;
+
+
+/*tab*/
+#tab{
+  position: fixed;
+  top:$tab-top;
+  height:$tab-height;
+  background:$tab-background;
+  color: $tab-color;
+  font-size:$tab-size;
+  padding: 1px 0;
+  z-index: 999;
+  a{
+    position: relative;
+    line-height:$tab-height;
+  }
+  &:after{
+    display: inline-block;
+    content: '';
+    width: 1px;
+    height: 4vw;
+    background: #aaa;
+    position: absolute;
+    top: 3vw;
+    left:33vw;
+  }
+  &:last-child:after{
+    display: none;
+  }
+}
+
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+  color: #e1a469;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item:last-child{
+  border-right: none;
+}
+.mui-segmented-control .mui-control-item{
+  line-height: 10vw;
+}
+#refreshContainer{
+  margin-top: 10vw;
+}

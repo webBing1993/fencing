@@ -1,0 +1,35 @@
+@import "common";
+
+$list-height:22vw;
+
+
+.list{
+  ul{
+    a{
+      display: block;
+      position: relative;
+      padding: 2vw 3vw;
+      height:$list-height;
+      border-bottom: $border-bottom;
+      p{
+        font-size: $title-size;
+        color: $title-color;
+        @include line-clamp;
+      }
+      span{
+        position: absolute;
+        bottom:2vw;
+        font-size: $title-size;
+        color: $title-color;
+        &:nth-child(2){
+          position: absolute;
+          width:70%;
+          @include clamp;
+        }
+        &:nth-child(3){
+          right:3vw;
+        }
+      }
+    }
+  }
+}

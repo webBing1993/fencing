@@ -1,0 +1,38 @@
+@import "common";
+
+.list{
+  ul{
+    a{
+      position: relative;
+      display: block;
+      padding: 2vw 3vw;
+      border-bottom: $border-bottom;
+      overflow: hidden;
+      img{
+        float: left;
+        width:24vw;
+        height:16vw;
+        margin-right: 2vw;
+      }
+      p{
+        font-size: $title-size;
+        color: $title-color;
+        @include line-clamp;
+      }
+      span{
+        font-size: $span-size;
+        color: $span-color;
+        &:nth-child(3){
+          width: $span-3-width;
+          bottom: 2vw;
+          @include clamp;
+      }
+        &:nth-child(4){
+          position: absolute;
+          right: 3vw;
+          bottom: 2vw;
+        }
+      }
+    }
+  }
+}
