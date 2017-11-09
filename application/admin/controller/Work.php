@@ -27,6 +27,9 @@ class Work extends Admin
             'status' => array('eq', 0),
         );
         $list = $this->lists('Work', $map);
+        int_to_string($list, array(
+            'type' => array(1 => "三会一课", 2 => "志愿之家"),
+        ));
         //dump($list);
         //exit();
 
