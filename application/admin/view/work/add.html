@@ -59,7 +59,19 @@
                 </div>
                 <div class="ibox-content all">
                     <form action="" id="form" class="form-horizontal" method="post">
-
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>封面图片:</label>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="imggroup">
+                                    <img src="{$msg.front_cover||default=''|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
+                                    <input type="file" class="imgfile" accept="image/jpg, image/png,image/jpeg">
+                                    <input type="hidden" name="front_cover" class="img"  value="{$msg.front_cover || default = ''}" required="">
+                                </div>
+                                <b>推荐尺寸：750*375px</b>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>会议标题:</label>
@@ -69,12 +81,26 @@
                                        value="">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>会议类型:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <select name="type" id="type" class="form-control">
+                                    <option value="1">三会一课</option>
+                                    <option value="2">志愿之家</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label" id="timeRange">
                                 <label>开始时间:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入会议开始时间" class="form-control form_title datetimepicker"
+                                <input type="text" placeholder="请输入会议开始时间"
+                                       class="form-control form_title datetimepicker"
                                        name="meet_time" value="">
                             </div>
                         </div>
@@ -83,7 +109,8 @@
                                 <label>结束时间:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入会议结束时间" class="form-control form_title datetimepicker"
+                                <input type="text" placeholder="请输入会议结束时间"
+                                       class="form-control form_title datetimepicker"
                                        name="meet_endtime" value="">
                             </div>
                         </div>
@@ -151,7 +178,7 @@
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
 <script>
     //标题显示高亮
-    $(document).ready(function(){
+    $(document).ready(function () {
         highlight_subnav("{:Url('Work/index')}");
 
         $('.i-checks').iCheck({
@@ -217,30 +244,73 @@
     })
 
 
+    //上传图片
+    var plus = $('.plus');
+    var imgnum = 1;
+    plus.on('click',function(){
+        var it = $(this);
+        it.hide().next().fadeIn();
+        imgnum = 3;
+        if(!it.hasClass('plus2')){
+            plus.eq(1).fadeIn();
+            imgnum = 2
+        }
+    });
+    $(".imgfile").on("change",function(){
+        var size = ($(this)[0].files[0].size / 1024).toFixed(2);
+        var imgBox = $(this);
+        if(size <= 2048){
+            var img = $(this)[0].files[0];
+            var formData = new FormData();
+            var pic=$(this);
+            formData.append("picture",img);
+            $.ajax({
+                type:"post",
+                url:"{:Url('File/uploadPicture')}",
+                data:formData,
+                processData : false,
+                contentType : false,
+                success:function(msg){
+                    var msg = $.parseJSON(msg);
+                    var path = msg.data.path;
+                    if(msg['code'] == 1){
+                        imgBox.siblings(".img").val(msg.data["id"]);
+                        //显示图片缩略图
+                        pic.parent().find("img" ).attr({src:path});
+                    } else {
+                        warning({msg:msg['msg']});
+                        return;
+                    }
+                }
+            });
+        } else {
+            warning({msg:"您选择的图片超过2mb，请重新选择"});
+            return;
+        }
+    });
 
-   /* id: $("input[name='id']").val(),
-            title: $("input[name='title']").val(),
-            meet_time:$("input[name='meet_time']").val(),
-            staff:$("textarea[name='staff']").val(),
-            meet_home: $("input[name='meet_home']").val(),
-            publisher: $("input[name='publisher']").val(),*/
+    var ue = UE.getEditor('container',{
+        initialFrameHeight:400
+    });
     //发布
     $(".post-put").off('click').on("click", function () {
         var it = $(this);
         var data = {
             id: $("input[name='id']").val(),
+            front_cover:$("input[name='front_cover']").val(),
             title: $("input[name='title']").val(),
-            meet_time:$("input[name='meet_time']").val(),
-            meet_endtime:$("input[name='meet_endtime']").val(),
-            branch:$("input[name='branch']").val(),
-            tel:$("input[name='tel']").val(),
+            type: $("select[name='type']").val(),
+            meet_time: $("input[name='meet_time']").val(),
+            meet_endtime: $("input[name='meet_endtime']").val(),
+            branch: $("input[name='branch']").val(),
+            tel: $("input[name='tel']").val(),
             meet_home: $("input[name='meet_home']").val(),
             publisher: $("input[name='publisher']").val(),
             //           type:2
         };
         $.ajax({
             type: "post",
-            url:"{:Url('Work/add2')}",
+            url: "{:Url('Work/add2')}",
             data: data,
             success: function (data) {
                 if (data.code == 1) {

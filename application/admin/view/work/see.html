@@ -67,7 +67,17 @@
                 </div>
                 <div class="ibox-content all">
                     <form action="" id="form" class="form-horizontal" method="post">
-
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>会议封面:</label>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="imggroup">
+                                    <img src="{$data2.path}" alt='图片' class='thumbnail imgbox'>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>会议标题:</label>
@@ -75,6 +85,15 @@
                             <div class="col-lg-11">
                                 <input type="text" readonly="readonly"  class="form-control form_title" name="title"
                                        value="{$data.title}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>会议类型:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" readonly="readonly"  class="form-control form_title" name="title"
+                                       value="{$list.type}">
                             </div>
                         </div>
                         <div class="form-group">
