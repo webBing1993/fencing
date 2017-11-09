@@ -1,0 +1,86 @@
+@import "tab";
+@import "common";
+@import "title-pos-time";
+
+
+#tab{
+  top:50vw;
+  a{
+    &:after{
+      left:49vw;
+    }
+  }
+}
+
+#refreshContainer {
+  margin-top: 58vw;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+  color: #fff;
+  background: #ffa626;
+}
+
+.banners{
+  z-index: 99;
+  height: 50vw;
+  position: relative;
+  .banner{
+    width: 100%;
+    height: 50vw;
+    img{
+      display: inline-block;
+      width: 100%;
+      height: 50vw;
+    }
+    a{
+      display: inline-block;
+      width: 100%;
+      height: 50vw;
+    }
+    .title_{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 0.8rem;
+      padding-left: 0.24rem;
+      padding-right: 0.24rem;
+      background-color: rgba(0, 0, 0, 0.4);
+      line-height: 0.8rem;
+      font-size: 0.32rem;
+      color: #fff;
+      span{
+        position: absolute;
+        bottom: 0;
+        width: 80%;
+        height: 0.8rem;
+        padding-left: 0.24rem;
+        padding-right: 0.24rem;
+        line-height: 0.8rem;
+        font-size: 0.32rem;
+        color: #fff;
+        @include clamp;
+      }
+    }
+  }
+}
+
+.swiper-pagination-bullet{
+  float: right;
+}
+
+.list{
+  ul{
+    a{
+      span{
+        &:nth-child(4){
+          display: inline-flex;
+          align-items:center;
+          color: $span-color;
+          top:0;
+          right: 2vw;
+        }
+      }
+    }
+  }
+}

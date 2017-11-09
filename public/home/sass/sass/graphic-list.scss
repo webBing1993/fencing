@@ -25,11 +25,13 @@
         &:nth-child(3){
           width: $span-3-width;
           bottom: 2vw;
+          color:$span-color;
           @include clamp;
       }
         &:nth-child(4){
           position: absolute;
           right: 3vw;
+          color:$span-color;
           bottom: 2vw;
         }
       }
