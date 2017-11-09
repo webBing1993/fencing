@@ -134,10 +134,21 @@ class Work extends Admin
     public function modifyxs($id)
     {
         $data = Db::table('pb_work')->where('id', $id)->find();
+        if ($data['type'] == 1) {
+            $list = array(
+                'type' => '三会一课',
+            );
+        } else {
+            $list = array(
+                'type' => '志愿之家',
+            );
+        }
         //查找图片表里的图片
         $data2 = Db::table('pb_picture')->where('id', $data['front_cover'])->find();
         //dump($data);
         //exit();
+        $this->assign('list',$list);
+        //$this->assign('list1',$list1);
         $this->assign('data2', $data2);
         $this->assign('data', $data);
         return $this->fetch();
@@ -165,7 +176,7 @@ class Work extends Admin
             } elseif (empty($data['publisher'])) {
                 return $this->error('发布人不能为空!');
             } else {
-                $list = ['title' => $data['title'], 'meet_time' => $data['meet_time'], 'meet_endtime' => $data['meet_endtime'], 'branch' => $data['branch'], 'tel' => $data['tel'], 'meet_home' => $data['meet_home'], 'publisher' => $data['publisher']];
+                $list = ['title' => $data['title'], 'meet_time' => $data['meet_time'], 'meet_endtime' => $data['meet_endtime'], 'branch' => $data['branch'], 'tel' => $data['tel'], 'meet_home' => $data['meet_home'], 'publisher' => $data['publisher'],'type'=>$data['type']];
                 $data2 = Db::table('pb_work')->where('id', $id)->update($list);
                 if ($data2) {
                     return $this->success('修改成功!', Url('Work/see?id=' . $id));
@@ -191,7 +202,7 @@ class Work extends Admin
             } elseif (empty($data['publisher'])) {
                 return $this->error('发布人不能为空!');
             } else {
-                $list = ['title' => $data['title'], 'meet_time' => $data['meet_time'], 'meet_endtime' => $data['meet_endtime'], 'branch' => $data['branch'], 'tel' => $data['tel'], 'meet_home' => $data['meet_home'], 'publisher' => $data['publisher'], 'front_cover' => $data['front_cover']];
+                $list = ['title' => $data['title'], 'meet_time' => $data['meet_time'], 'meet_endtime' => $data['meet_endtime'], 'branch' => $data['branch'], 'tel' => $data['tel'], 'meet_home' => $data['meet_home'], 'publisher' => $data['publisher'], 'front_cover' => $data['front_cover'],'type'=>$data['type']];
                 $data2 = Db::table('pb_work')->where('id', $id)->update($list);
                 if ($data2) {
                     return $this->success('修改成功!', Url('Work/see?id=' . $id));
@@ -201,7 +212,7 @@ class Work extends Admin
             }
         }
     }
-    
-    
+
+
     
 }

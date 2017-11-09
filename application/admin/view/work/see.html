@@ -102,7 +102,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <input type="text"  readonly="readonly" class="form-control form_title datetimepicker"
-                                       name="meet_time" value="{$data.meet_time}">
+                                       name="meet_time" value="{$data.meet_time|substr=0,16}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -111,7 +111,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <input type="text" readonly="readonly"  class="form-control form_title datetimepicker"
-                                       name="meet_endtime" value="{$data.meet_endtime}">
+                                       name="meet_endtime" value="{$data.meet_endtime|substr=0,16}">
                             </div>
                         </div>
                         <div class="form-group">

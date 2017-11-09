@@ -84,12 +84,23 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label for="type">签到类型:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <select class="form-control" name="type" id="type">
+                                    <option  value="1"  {eq name="$data.type" value="1"} selected="selected"{/eq}>三会一课</option>
+                                    <option value="2"  {eq name="$data.type" value="2"} selected="selected"{/eq}>志愿之家</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-lg-1 text-right control-label" id="timeRange">
                                 <label>开始时间:</label>
                             </div>
                             <div class="col-lg-11">
                                 <input type="text" placeholder="请输入会议开始时间" class="form-control form_title datetimepicker"
-                                       name="meet_time" value="{$data.meet_time}">
+                                       name="meet_time" value="{$data.meet_time|substr=0,16}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -98,7 +109,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <input type="text" placeholder="请输入会议结束时间" class="form-control form_title datetimepicker"
-                                       name="meet_endtime" value="{$data.meet_endtime}">
+                                       name="meet_endtime" value="{$data.meet_endtime|substr=0,16}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -287,6 +298,7 @@
             id: $("input[name='id']").val(),
             front_cover:$("input[name='front_cover']").val(),
             title: $("input[name='title']").val(),
+            type: $("select[name='type']").val(),
             meet_time:$("input[name='meet_time']").val(),
             meet_endtime:$("input[name='meet_endtime']").val(),
             branch:$("input[name='branch']").val(),
