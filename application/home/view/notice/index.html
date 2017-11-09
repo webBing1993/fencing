@@ -1,24 +1,14 @@
 {extend name="public/pure"}
 
 {block name="style"}
-<title>箬横动态</title>
-<link rel="stylesheet" href="/home/sass/stylesheets/news/index.css">
+<title>通知公告</title>
+<link rel="stylesheet" href="/home/sass/stylesheets/notice/index.css">
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 {/block}
 
 {block name="body"}
 <div class="banners">
-    <div class="swiper-container">
-        <div class="imgs swiper-wrapper">
-            <div class="banner swiper-slide">
-                <a href="">
-                    <img src="" alt="">
-                    <div class="title_ limit"><span>的点点滴滴多多多多多多多多多多多多多多多多多多多多多</span></div>
-                </a>
-            </div>
-        </div>
-        <div class="swiper-pagination"></div>
-    </div>
+    <img src="">
 </div>
 <div id="tab" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
     <a class="mui-control-item" href="#item1mobile" data-index="0">
@@ -152,7 +142,7 @@ function addCourse(data,type) {
         var list = lists[i];
         if (type == 0) {
             html +=
-                    '<a href="/home/news/detail/type/1/id/' + list.id + '">' +
+                    '<a href="/home/notice/detail/type/1/id/' + list.id + '">' +
                     '<p>' + list.title + '</p>' +
                     '<span>' + list.publisher + '</span>' +
                     '<span>' + list.create_time + '</span>' +
@@ -160,7 +150,7 @@ function addCourse(data,type) {
                     '</a>'
         } else if (type == 1) {
             html +=
-                    '<a href="/home/news/detail/type/2/id/' + list.id + '">' +
+                    '<a href="/home/notice/detail/type/2/id/' + list.id + '">' +
                     '<p>' + list.title + '</p>' +
                     '<span>' + list.publisher + '</span>' +
                     '<span>' + list.create_time + '</span>' +
