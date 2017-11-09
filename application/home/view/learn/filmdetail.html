@@ -1,0 +1,44 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/learn/filmdetail.css">
+
+{/block}
+
+{block name="body"}
+<div class="scrollDiy">
+	<div class="film">
+		<div class="title limit_"><p>{$detail.title}</p></div>
+		<div class="note">
+			<span>{$detail.content}</span>
+		</div>
+		<div class="content">
+			<iframe height=250 width=510 src='{$detail.net_path}' frameborder=0 allowfullscreen></iframe>
+			<div class="note">
+				<span class="read">{$detail.views}</span>
+			</div>
+		</div>
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+ if(navigator.userAgent.match(/android/i)){
+     $("input").focus(function(){
+         $(".bottom").css("position","absolute")
+         var inputTextBox = document.getElementById('message');
+         setInterval(function(){
+             inputTextBox.scrollIntoView(false);
+         },200)
+     });
+     $("input").blur(function(){
+         $(".bottom").css("position","fixed")
+     })
+ }
+
+
+$('title').text('红色电影');
+
+</script>
+{/block}

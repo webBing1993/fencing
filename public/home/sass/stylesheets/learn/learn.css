@@ -1,0 +1,117 @@
+html,body{
+    height: 100%;
+}
+/*tab*/
+/*tab*/
+#tab{
+    padding: 1px 0;
+    position: fixed;
+    top:0;
+    height:10vw;
+}
+.mui-segmented-control .mui-control-item{
+    line-height: 10vw;
+}
+.mui-slider-indicator.mui-segmented-control {
+    z-index: 999;
+    background: #BF0301;
+    color: #e8e8e8;
+    font-size: 0.4rem;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+    color: #e1a469;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item{
+    border: none;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item>span{
+    border: none;
+}
+#refreshContainer{
+    margin-top: 10vw;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item{
+    position: relative;
+}
+#tab a:last-child:after{
+    display: none;
+}
+
+body {
+    background: #fde8d7!important;
+}
+
+/*在线答题*/
+.mui-slider-group,#item3mobile,.party{
+    height:100%;
+ }
+.party{
+    background: #fde8d7!important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+.start:visited,.continue:visited{
+    color:#fff;
+}
+.start,.continue{
+    display: block;
+    width: 40vw;
+    height:1.2rem;
+    background: #d61920;
+    line-height: 1.2rem;
+    font-size: 0.48rem;
+    text-align: center;
+    color:#ffffff;
+    text-decoration: none;
+    -webkit-border-radius:7px;
+    border-radius:7px;
+    box-shadow:5px 5px 0 #a11108 ;
+}
+.start{
+
+    margin-top: calc(50vh - 0.6rem);
+    margin-left: 30vw;
+}
+.continue{
+    position: absolute;
+    top:90px;
+
+}
+.start:active,.continue:active{
+    color:#ffffff;
+    box-shadow: none ;
+}
+.start:active{
+    top:5px;
+    left:5px;
+}
+.continue:active{
+    top:95px;
+    left:5px;
+}
+
+.times{
+    width: 30%;
+    font-size: 0.32rem;
+    text-align: right;
+    color:#d10000;
+    position: fixed;
+    right:8%;
+    bottom: 110px;
+}
+.times span{
+    font-size: 0.38rem;
+}
+
+.foot{
+    width: 100%;
+    height: 23vh;
+    position: fixed;
+    z-index: 3;
+    bottom: 0;
+    background: url(/home/images/copy_b.png) no-repeat;
+    background-size: cover;
+}

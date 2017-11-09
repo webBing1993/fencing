@@ -1,0 +1,65 @@
+.lists .list {
+  display: inline-block;
+  width: 100vw;
+  height: 22vw;
+  padding: 4vw;
+  border-bottom: 1px solid #f1f1f1;
+}
+.lists .list .music-img {
+  display: inline-block;
+  width: 14vw;
+  height: 14vw;
+  margin-right: 4vw;
+  border: 0;
+  vertical-align: top;
+}
+.lists .list .content {
+  display: inline-block;
+  width: 72vw;
+  position: relative;
+  height: 100%;
+}
+.lists .list .content .title {
+  width: 100%;
+  /*height: 12vw;*/
+  color: #333333;
+  font-size: .37rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.lists .list .content .note {
+  color: #999999;
+  font-size: .32rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.lists .list .content .note .scan {
+  background: url('/home/images/common/scan_.png') 0 center no-repeat;
+  background-size:3.2vw 3.2vw;
+  padding-left: 4.8vw;
+}
+.tip {
+  height: 10vw;
+  text-align: center;
+  line-height: 10vw;
+  color: #c1c1c1;
+}
+/*加载动画*/
+.loading {
+  width: 100%;
+  height: 40px;
+}
+.typing_loader {
+  width: 1.5vw;
+  height: 1.5vw;
+  border-radius: 50%;
+  -webkit-animation: typing 1s linear infinite alternate;
+  -moz-animation: Typing 1s linear infinite alternate;
+  animation: typing 1s linear infinite alternate;
+  position: relative;
+  top: 4.7vw;
+  left: calc( 50vw - 4vw);
+}
+

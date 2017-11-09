@@ -91,7 +91,7 @@
   }
 }
 a:active {
-  background-color: #f7f7f7;
+  /*background-color: #f7f7f7;*/
 }
 body {
   overflow-x: hidden;
@@ -106,32 +106,40 @@ body {
 }
 .tabs {
   width: 100vw;
-  height: 13.75vw;
-  padding: 1.4vw 0;
+  height: 8.268vw;
   background: #f1f1f1;
-  line-height: 13.75vw;
+  line-height: 8vw;
+  border-bottom:1px solid #e5e5e5;
 }
 .tabes{
   background: #ffffff;
-  line-height: 6vw;
+  height: 8vw;
 }
 .tabs .tabes .tab {
-  display: inline-block;
-  width: 31vw;
-  height: 100%;
+  display: block;
+  width: 33.3vw;
+  height: 8vw;
   color: #333333;
   font-size: 0.4rem;
-  line-height: 11vw;
   text-align: center;
+  float: left;
+  text-decoration: none;
 }
-/*.tabs .tabes .tab:first-child {
+
+.tabs .tabes .tab:first-child {
   border-right: 1px solid #e5e5e5;
 }
 .tabs .tabes .tab:nth-child(2) {
   border-right: 1px solid #e5e5e5;
-}*/
+}
 .tabs .tabes .active {
-  color: #fd6743;
+  color: #ffffff;
+  background: #3574e6;
+}
+.tabs .tabes .tab:active{
+  background:#000000;
+  color: #ffffff;
+  opacity:0.2;
 }
 .listbox {
   position: relative;

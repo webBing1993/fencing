@@ -1,0 +1,88 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/learn/musicdetail.css">
+
+{/block}
+
+{block name="body"}
+<div class="scrollDiy">
+	<div class="music">
+		<div class="title limit_"><p>{$detail.title}</p></div>
+		<div class="time">
+			<span>{$detail.create_time|time_format='Y-m-d'}</span>
+		</div>
+		<div class="content">
+			<div id="content">
+				{$detail.content}
+			</div>
+			<div class="note">
+				<span class="read">{$detail.views}</span>
+			</div>
+		</div>
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+
+//iframe替换
+function iframe(){
+	//	var body = document.getElementById('content');
+	//	body.innerHTML = body.innerHTML.replace(/<pre([^<>]*)>([^<>]*)<\/pre>/gi, '<div$1>$2</div>');
+	var root = document.getElementById('content');
+	traverseNodes(root);
+	function display(node){
+		var reg = new RegExp("</iframe>");
+		var obj = node.nodeValue;
+		if(reg.test(obj)){
+			var iframe = $(node ).parent().text();
+			var bro = $(node).parent().parent();
+			$(node).parent().remove();
+			var play = 0;
+			var u = navigator.userAgent;
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+			if(isiOS){
+				iframe = iframe.replace(/auto=0/g,'auto=1');
+			}else{
+				iframe = iframe.replace(/auto=1/g,'auto=0');
+			}
+			bro.after(iframe);
+		}
+	}
+	function traverseNodes(node){
+		//判断是否是元素节点
+		if(node.nodeType == 1){
+			display(node);
+			//判断是否有属性节点
+			for(var i=0;i<node.attributes.length;i++){
+				//得到属性节点
+				var attr = node.attributes.item(i);
+				if(attr.specified){
+					//存在
+					display(attr);
+				}
+			}
+			//判断该元素节点是否有子节点
+			if(node.hasChildNodes){
+				//得到所有的子节点
+				var sonnodes = node.childNodes;
+				//遍历
+				for (var j = 0; j < sonnodes.length; j++) {
+					//得到具体的某个子节点
+					var sonnode = sonnodes.item(j);
+					//递归遍历
+					traverseNodes(sonnode);
+				}
+			}
+		}else{
+			display(node);
+		}
+	}
+}
+$('title').text('红色音乐');
+iframe();
+
+</script>
+{/block}

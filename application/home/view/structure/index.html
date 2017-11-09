@@ -6,13 +6,13 @@
 
 {block name="body"}
 <div class="banner">
-	<img src="/home/images/banner/1.jpg" alt="组织架构banner" class="banner-img">
+	<img src="/home/images/bookbg.jpg" alt="组织架构banner" class="banner-img">
 </div>
 <div class="tabs">
 	<div class="tabes">
-		<span class="tab active">组织介绍</span>
-		<span class="tab">组织架构</span>
-		<span class="tab">全景展示</span>
+		<a class="tab active">组织介绍</a>
+		<a class="tab">组织架构</a>
+		<a class="tab">全景展示</a>
 	</div>
 </div>
 <div class="listbox">
@@ -82,8 +82,8 @@
 	</div>
 	<!--全景展示-->
 	<div class="vr box hidden">
+		<div class="title">德清地理信息小镇党群服务中心全景展示</div>
 		<a href="http://720yun.com/t/e3cjO5mvuO2?pano_id=2107800">
-			<div class="title">德清地理信息小镇党群服务中心全景展示</div>
 			<img src="/home/images/vr.jpg" alt="vr封面">
 		</a>
 	</div>
@@ -107,13 +107,18 @@ $(function(){
 		var t = $(this ).text();
 		var href = '/home/structure/detail?party='+t+'';
 		$(this ).attr('href', href);
-	})
+	});
+/*	$(".tabs .tabes .tab").hover(function(){
+	    console.log(1)
+	    $(this).css({"background": "#000000","color":"#ffffff","opacity":"0.2"})
+	},function(){
+	    console.log(2)
+        $(this).css({"background": "#3574e6","color":"#ffffff","opacity":"1"})
+	})*/
 
 });
 function slide(){
 	$('.list .party1').on('click',function(){
-	    console.log($(this));
-	    console.log($(".list").length	)
 		var it = $(this);
 		var detail = it.next('.detail1');
 		if(detail.hasClass('down')){
@@ -126,6 +131,7 @@ function slide(){
 		detail.toggleClass('down');
 	});
 }
+
 
 </script>
 {/block}

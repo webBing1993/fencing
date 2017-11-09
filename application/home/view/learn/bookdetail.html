@@ -1,0 +1,77 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/learn/bookdetail.css">
+
+{/block}
+{block name="body"}
+<div class="scrollDiy">
+	<div class="book">
+		<div class="title limit_">{$detail.title}</div>
+		<div class="note">
+			<span>{$detail.create_time|time_format='Y-m-d'}</span>
+		</div>
+		<div class="content">
+			<img src="{$detail.front_cover|get_cover='Y-m-d'}" alt="书籍封面" class="book-img">
+			<div class="detail">
+				{$detail.name}&emsp;著<br>
+				{$detail.press}<br>
+				{$detail.publication_date} 出版
+			</div>
+			<div class="reads" onclick="isread({$detail.id})">读过此书</div>
+			<!--点击后-->
+
+			<div class="brief">【作品简介】</div>
+			<div class="bookdetail">
+				{$detail.works_introduction}
+			</div>
+			<div class="brief">【作者简介】</div>
+			<!--作者简介-->
+			<div class="authordetail clear">
+				<div class="msg fl" >
+					<img src="{$detail.header|get_cover='path'}" alt="作者头像" class="authorimg">
+					<div class="name">{$detail.name}</div>
+					<div class="time">{$detail.birth_and_death}</div>
+				</div>
+				<div class="text fl">
+					{$detail.author_introduction}
+				</div>
+			</div>
+			<div class="words">
+				{$detail.famous_remark}
+			</div>
+			<!--/作者简介-->
+			<div class="note">
+				<span class="read">{$detail.views}</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+{/block}
+
+{block name="script"}
+<script>
+	var scrollNow = true;//判断下拉请求是否执行中.false为正在请求
+//读过此书
+function isread(bookid){
+	var read = $('.reads');
+	if(!read.hasClass('isread')){
+		read.addClass('isread');
+			$.ajax({
+				type:"post",
+				url:"{:Url('Redcollection/is_read')}",
+				data:{
+					id:bookid,
+				},
+				success:function(data){
+
+				}
+			})
+	}
+}
+
+$('title').text('经典书籍');
+
+</script>
+{/block}
