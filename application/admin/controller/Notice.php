@@ -32,15 +32,23 @@ class Notice extends Admin {
             'status' => array(1=>"已发布"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
+        $list2['type']=$list['0']['type'];
+        //dump($list2);
+        //exit();
+        $this->assign('list2',$list2);
+        
         $this->assign('list',$list);
         return $this->fetch();
     }
     /**
      * 活动安排 添加
      */
-    public function indexadd(){
+    public function indexadd($type){
+        $this->assign('type',$type);
         if(IS_POST) {
             $data = input('post.');
+            //dump($data);
+            //exit();
             $result = $this->validate($data,'Notice');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if (true !== $result) {
@@ -60,7 +68,11 @@ class Notice extends Admin {
                 }
                 $res = $noticeModel->save($data);
                 if ($res){
-                    return $this->success("新增安排成功",Url('Notice/index'));
+                    if ($data['type']==1) {
+                        return $this->success("添加活动安排成功", Url('Notice/index'));
+                    }else{
+                        return $this->success("添加会议纪要成功", Url('Notice/meeting'));
+                    }
                 }else{
                     return $this->error($noticeModel->getError());
                 }
@@ -94,7 +106,11 @@ class Notice extends Admin {
                 $data['end_time'] = strtotime($data['end_time']);
                 $res = $noticeModel->save($data,['id'=>$data['id']]);
                 if ($res){
-                    return $this->success("修改安排成功",Url('Notice/index'));
+                    if ($data['type']==1) {
+                        return $this->success("修改活动安排成功", Url('Notice/index'));
+                    }else{
+                        return $this->success("修改固定活动成功", Url('Notice/meeting'));
+                    }
                 }else{
                     return $this->get_update_error_msg($noticeModel->getError());
                 }
@@ -135,96 +151,15 @@ class Notice extends Admin {
                 'status' => array(1=>"已发布"),
                 'recommend' => array(0 => "否" ,1 => "是")
             ));
+        $list2['type']=$list['0']['type'];
+        //dump($list2);
+        //exit();
+        $this->assign('list2',$list2);
             $this->assign('list',$list);
-            return $this->fetch();
+            return $this->fetch('Notice/index');
 
     }
-    //会议纪要添加
-    public function meetingadd(){
-        if(IS_POST) {
-            $data = input('post.');
-            //dump($data);
-            //exit();
-            $result = $this->validate($data,'Notice');  // 验证  数据
-            $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            if (true !== $result) {
-                return $this->error($result);
-            }else{
-                $noticeModel = new NoticeModel();
-                $data['start_time'] = strtotime($data['start_time']);
-                $data['end_time'] = strtotime($data['end_time']);
-                if (!empty($data['start_time']) && empty($data['end_time'])){
-                    return $this->error('请添加结束时间');
-                }
-                if (empty($data['start_time']) && !empty($data['end_time'])){
-                    return $this->error('请添加开始时间');
-                }
-                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
-                    return $this->error('结束时间有错误');
-                }
-                $res = $noticeModel->save($data);
-                if ($res){
-                    return $this->success("会议纪要添加成功",Url('Notice/meeting'));
-                }else{
-                    return $this->error($noticeModel->getError());
-                }
-            }
-        }else {
-            return $this->fetch();
-        }
-    }
-      //会议纪要删除
-    public function meetingdel(){
-        $id = input('id');
-        if (empty($id)){
-            return $this->error('系统参数错误');
-        }
-        $map['status'] = "-1";
-        $info = NoticeModel::where('id',$id)->update($map);
-        if($info) {
-            return $this->success("删除成功");
-        }else{
-            return $this->error("删除失败");
-        }
-    }
-
-    /**
-     * 会议纪要 修改
-     */
-    public function meetingedit(){
-        if(IS_POST) {
-            $data = input('post.');
-            $result = $this->validate($data,'Notice');  // 验证  数据
-            $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            if (true !== $result) {
-                return $this->error($result);
-            }else{
-                $noticeModel = new NoticeModel();
-                if (!empty($data['start_time']) && empty($data['end_time'])){
-                    return $this->error('请添加结束时间');
-                }
-                if (empty($data['start_time']) && !empty($data['end_time'])){
-                    return $this->error('请添加开始时间');
-                }
-                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
-                    return $this->error('结束时间有错误');
-                }
-                $data['start_time'] = strtotime($data['start_time']);
-                $data['end_time'] = strtotime($data['end_time']);
-                $res = $noticeModel->save($data,['id'=>$data['id']]);
-                if ($res){
-                    return $this->success("修改纪要成功",Url('Notice/meeting'));
-                }else{
-                    return $this->get_update_error_msg($noticeModel->getError());
-                }
-            }
-        }else{
-            $id = input('id');
-            $msg = NoticeModel::get($id);
-            $this->assign('msg',$msg);
-            return $this->fetch();
-        }
-    }
+   
     /**
      * 活动展示
      */
@@ -238,6 +173,11 @@ class Notice extends Admin {
             'status' => array(1=>"已发布"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
+
+        $list2['type']=$list['0']['type'];
+        //dump($list2);
+        //exit();
+        $this->assign('list2',$list2);
         $this->assign('list',$list);
         return $this->fetch();
     }
@@ -245,50 +185,34 @@ class Notice extends Admin {
     /**
      * 活动展示 添加
      */
-    public function showadd(){
+    public function showadd($type){
+       $this->assign('type',$type);
         if(IS_POST) {
             $data = input('post.');
-            $result = $this->validate($data,'Notice');  // 验证  数据
+    //dump($data);
+            //exit();
+
+            $result = $this->validate($data,'Activity');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if (true !== $result) {
                 return $this->error($result);
             }else{
                 $noticeModel = new NoticeModel();
-                $data['start_time'] = strtotime($data['start_time']);
-                $data['end_time'] = strtotime($data['end_time']);
-                if (!empty($data['start_time']) && empty($data['end_time'])){
-                    return $this->error('请添加结束时间');
-                }
-                if (empty($data['start_time']) && !empty($data['end_time'])){
-                    return $this->error('请添加开始时间');
-                }
-                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
-                    return $this->error('结束时间有错误');
-                }
+
                 $res = $noticeModel->save($data);
                 if ($res){
-                    return $this->success("新增活动展示成功",Url('Notice/show'));
+                    if ($data['type']==2) {
+                        return $this->success("添加活动成功", Url('Notice/show'));
+                    }else{
+                        return $this->success("添加活动成功", Url('Notice/activity'));
+                    }
                 }else{
                     return $this->error($noticeModel->getError());
                 }
             }
         }else {
-            return $this->fetch();
-        }
-    }
 
-    //活动展示删除
-    public function showdel(){
-        $id = input('id');
-        if (empty($id)){
-            return $this->error('系统参数错误');
-        }
-        $map['status'] = "-1";
-        $info = NoticeModel::where('id',$id)->update($map);
-        if($info) {
-            return $this->success("删除成功");
-        }else{
-            return $this->error("删除失败");
+            return $this->fetch();
         }
     }
 
@@ -296,28 +220,27 @@ class Notice extends Admin {
      * 活动展示 修改
      */
     public function showedit(){
+        //$data = input('post.');
+        //dump($data);
+        //exit();
         if(IS_POST) {
             $data = input('post.');
-            $result = $this->validate($data,'Notice');  // 验证  数据
+
+            $result = $this->validate($data,'Activity');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if (true !== $result) {
                 return $this->error($result);
             }else{
                 $noticeModel = new NoticeModel();
-                if (!empty($data['start_time']) && empty($data['end_time'])){
-                    return $this->error('请添加结束时间');
-                }
-                if (empty($data['start_time']) && !empty($data['end_time'])){
-                    return $this->error('请添加开始时间');
-                }
-                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
-                    return $this->error('结束时间有错误');
-                }
-                $data['start_time'] = strtotime($data['start_time']);
-                $data['end_time'] = strtotime($data['end_time']);
+
                 $res = $noticeModel->save($data,['id'=>$data['id']]);
                 if ($res){
-                    return $this->success("修改活动成功",Url('Notice/show'));
+                    if ($data['type']==2) {
+                        return $this->success("修改活动成功", Url('Notice/show'));
+                    }else{
+                        return $this->success("修改活动成功", Url('Notice/activity'));
+                    }
+
                 }else{
                     return $this->get_update_error_msg($noticeModel->getError());
                 }
@@ -343,61 +266,14 @@ class Notice extends Admin {
             'status' => array(1=>"已发布"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
+        //dump($list);
+        //exit();
+       $list2['type']=$list['0']['type'];
+        //dump($list2);
+        //exit();
+        $this->assign('list2',$list2);
         $this->assign('list',$list);
-        return $this->fetch();
-    }
-
-    /**
-     * 固定活动 添加
-     */
-    public function activityadd(){
-        if(IS_POST) {
-            $data = input('post.');
-            $result = $this->validate($data,'Activity');  // 验证  数据
-            $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            if (true !== $result) {
-                return $this->error($result);
-            }else{
-                $noticeModel = new NoticeModel();
-
-                $res = $noticeModel->save($data);
-                if ($res){
-                    return $this->success("新增活动成功",Url('Notice/activity'));
-                }else{
-                    return $this->error($noticeModel->getError());
-                }
-            }
-        }else {
-            return $this->fetch();
-        }
-    }
-
-    /**
-     * 活动安排 修改
-     */
-    public function activityedit(){
-        if(IS_POST) {
-            $data = input('post.');
-            $result = $this->validate($data,'Activity');  // 验证  数据
-            $data['create_user'] = $_SESSION['think']['user_auth']['id'];
-            if (true !== $result) {
-                return $this->error($result);
-            }else{
-                $noticeModel = new NoticeModel();
-                $res = $noticeModel->save($data,['id'=>$data['id']]);
-                if ($res){
-                    return $this->success("修改活动成功",Url('Notice/activity'));
-                }else{
-                    return $this->get_update_error_msg($noticeModel->getError());
-                }
-            }
-        }else{
-            $id = input('id');
-            $msg = NoticeModel::get($id);
-            $this->assign('msg',$msg);
-            return $this->fetch();
-        }
+        return $this->fetch('Notice/show');
     }
     
-
 }

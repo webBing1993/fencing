@@ -48,6 +48,7 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>支部活动</h2>
+        {if condition="($type == 1)"}
         <ol class="breadcrumb">
             <li>
                 <a href="{:Url('Notice/index')}">主页</a>
@@ -56,6 +57,18 @@
                 <strong>新增</strong>
             </li>
         </ol>
+        {else /}
+        <ol class="breadcrumb">
+            <li>
+                <a href="{:Url('Notice/meeting')}">主页</a>
+            </li>
+            <li class="active">
+                <strong>新增</strong>
+            </li>
+        </ol>
+        {/if}
+
+
     </div>
     <div class="col-lg-2">
 
@@ -74,7 +87,7 @@
                         <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
                     </div>
                 </div>
-                <div class="ibox-content all">
+                <div class="ibox-content all" data-type="{$type}">
                     <form id="form" class="form-horizontal" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
@@ -86,7 +99,7 @@
                                     <input type="file" class="imgfile" accept="image/png , image/jpg ,image/jpeg ,image/gif">
                                     <input type="hidden" name="front_cover" class="img"  value="" required="">
                                 </div>
-                                <b>推荐尺寸：500*400px</b>
+                                <b>推荐尺寸：90*60px</b>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -105,7 +118,7 @@
                             <div class="col-lg-11">
                                 <div class=" float-e-margins">
                                     <div class="ibox-content no-padding borders">
-                                        <textarea  placeholder="请输入简介..." class="text form-control form_title" name="description"></textarea>
+                                        <textarea  placeholder="请输入简介...(可为空)" class="text form-control form_title" name="description"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -204,10 +217,29 @@
 <script src="/admin/js/chosen.jquery.js"></script>
 <!--时间日历-->
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
-<script>
-    //导航高亮
-    highlight_subnav("{:Url('Notice/index')}");
 
+<script>
+    if ({$type}==1){
+        $(document).ready(function(){
+            highlight_subnav("{:Url('Notice/index')}");
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    }else{
+        $(document).ready(function(){
+            highlight_subnav("{:Url('Notice/meeting')}");
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+
+    }
+</script>
+
+<script>
     //上传图片
     $(document ).ready(function () {
         var plus = $('.plus');
@@ -258,11 +290,12 @@
         var ue = UE.getEditor('container',{
             initialFrameHeight:400
         });
+        var type = $(".ibox-content").attr("data-type");
         $(".post-add").off('click').on("click",function(){
             var it = $(this);
 
             var data = {
-                type:1,
+                type:type,
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
                 telephone:$("input[name='tel']").val(),
