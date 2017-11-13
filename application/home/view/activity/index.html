@@ -1,0 +1,266 @@
+{extend name="public/common"}
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/activity/index.css">
+{/block}
+
+{block name="body"}
+<!-- 图片-->
+<div class="banner">
+    <img src="/home/images/learn.png">
+</div>
+<!--头部导航-->
+<div id="tab" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+    <a class="mui-control-item" href="#item1mobile" data-index="0">
+        <span>三会一课</span>
+    </a>
+    <a class="mui-control-item" href="#item2mobile" data-index="1">
+        <span>会议纪要</span>
+    </a>
+    <a class="mui-control-item" href="#item3mobile" data-index="2">
+        <span>固定活动</span>
+    </a>
+</div>
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+   <div class="mui-scroll">
+       <div class="mui-slider-group">
+           <div id="item1mobile" class="mui-slider-item mui-control-content">
+               <!--安排活动-->
+               <div class="notice">
+                   <a class="more" href="#">
+                       <span>安排活动</span>
+                       <span>更多>></span>
+                   </a>
+                   <div class="list">
+                       <ul>
+                           <!--安排活动开始  循环-->
+                           <a href="#">
+                               <p>风打开了就是费劲独立思考发</p>
+                               <p>资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量</p>
+                               <span>这款裤子再看再看再看</span>
+                               <span>2017-11-10</span>
+                               <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                           </a>
+                           <!--安排活动结束  循环-->
+                       </ul>
+                   </div>
+               </div>
+               <!--活动展示-->
+               <div class="meeting">
+                   <a class="more" href="#">
+                       <span>活动展示</span>
+                       <span></span>
+                   </a>
+                   <div class="list">
+                       <ul>
+                           <!--活动展示开始  循环-->
+                           <a href="#">
+                               <img src="">
+                               <p>多的点点滴滴鹅鹅鹅鹅鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯咯咯咯过过过过过过过过过过过过</p>
+                               <span>2017-11-10</span>
+                               <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                               <span>多的东方东风的</span>
+                           </a>
+                           <!--活动展示结束  循环-->
+                       </ul>
+                   </div>
+               </div>
+           </div>
+           <div id="item2mobile" class="mui-slider-item mui-control-content">
+               <!--安排活动-->
+               <div class="notice1">
+                   <div class="list">
+                       <ul>
+                           <!--安排活动开始  循环-->
+                           <a href="#">
+                               <p style="font-weight: bold;">资料了资料资料整理了张了张嘴理论重量</p>
+                               <span>这款裤子再看再看再看</span>
+                               <span style="width:25%;">2017-11-10</span>
+                               <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+
+                           </a>
+                           <!--安排活动结束  循环-->
+                       </ul>
+                   </div>
+               </div>
+           </div>
+           <div id="item3mobile" class="mui-slider-item mui-control-content">
+               <!--活动展示-->
+               <div class="meeting">
+                   <div class="list">
+                       <ul>
+                           <!--活动展示开始  循环-->
+                           <a href="#">
+                               <img src="">
+                               <p>多的点点滴滴鹅鹅鹅鹅鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯咯咯咯过过过过过过过过过过过过</p>
+                               <span>2017-11-9</span>
+                               <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                               <span>多的东方东风的</span>
+                           </a>
+                           <!--活动展示结束  循环-->
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+{/block}
+{block name="script"}
+<script src="/home/js/reset.js"></script>
+<script>
+    $("title").text("支部活动");
+    $(function(){
+        //tab初始化和数据存储
+        c = getCookie("c")?getCookie("c"):0;
+        $("#tab a").eq(c).addClass('mui-active');
+        $(".mui-slider-group>div").eq(c).addClass('mui-active');
+    });
+    //加载是否需要上拉加载
+    window.onload = function(){
+        if(c==0){
+            if($(".meeting .list a").length<10){
+                mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+            }else{
+                mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+            }
+        }else if(c==1){
+            if($(".notice .list a").length<10){
+                mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+            }else{
+                mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+            }
+        }else if( c==2 ){
+            if($(".meeting .list a").length<10){
+                mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+            }else{
+                mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+            }
+        }
+
+    };
+    //初始化下拉加载
+    mui.init({
+        pullRefresh: {
+            container: '#refreshContainer',
+            up: {
+                callback: loadScroll
+            }
+        }
+    });
+    function loadScroll(){
+        if( c==0 ){
+            var len = $(".meeting .list a").length;
+        }else if( c==1 ){
+            var len = $(".notice .list a").length;
+        }else if( c==2 ){
+            var len = $(".meeting .list a").length;
+        }
+        $.ajax({
+            type:"post",
+            url:"",
+            data:{
+                length:len,
+                type:c
+            },
+            beforeSend: function(XMLHttpRequest){
+            },
+            success:function(data){
+                if(data.code == 1){
+                    addMeets(data,c);
+                    var dataLen =data.data.length;
+                    if(data.data.length == 10){
+                        mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+                    }else{
+                        mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                    }
+                }else{
+                    mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                }
+            }
+        });
+    }
+    function addMeets(data,type){
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++){
+            var list = lists[i];
+            if(type==0){
+                html+= '<a href="#">' +
+                    '<img src="">' +
+                    '<p></p>' +
+                    '<span>2017-11-9</span>' +
+                    '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
+                    '<span>多的东方东风的</span>' +
+                    '</a>';
+
+            }
+            if(type==1){
+                html+='<a href="#">' +
+                    '<p></p>' +
+                    '<span>2017-11-9</span>' +
+                    '<span>多的东方东风的</span>' +
+                    '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
+                    '</a>';
+
+            }
+            if(type==2){
+                html+='<a href="#">' +
+                    '<img src="">' +
+                    '<p></p>' +
+                    '<span>2017-11-9</span>' +
+                    '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
+                    '<span>多的东方东风的</span>' +
+                    '</a>';
+
+            }
+        }
+        if(type==0){
+            $(".meeting .list ul" ).append(html);
+        }else if(type==1){
+            $(".notice .list ul" ).append(html);
+        }else if(type==2){
+            $(".meeting .list ul" ).append(html);
+        }
+    }
+    //tab点击事件
+    mui('#tab').on('tap', 'a', function(e) {
+        mui('#refreshContainer').pullRefresh().refresh(true);
+        mui('#refreshContainer').scroll().scrollTo(0,0);
+        mui('#refreshContainer').pullRefresh().refresh(true);
+        c = this.getAttribute("data-index");
+        if(c==0){
+            if($(".meeting .list a").length<10){
+                mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+            }else{
+                mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+            }
+        }else if(c==1){
+            if($(".notice .list a").length<10){
+                mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+            }else{
+                mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+            }
+        }else if(c==2){
+            if($(".meeting .list a").length<10){
+                mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+            }else{
+                mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+            }
+        }
+        setCookie('c',c);
+    });
+
+    mui("#refreshContainer").on("touchstart","a",function(){
+        $(this).css("backgroundColor","rgba(0,0,0,.1)");
+    }).on("touchend","a", function () {
+        $(this).css("backgroundColor","#fff");
+    });
+
+    mui("#refreshContainer").on("tap","a",function(){
+        var url = this.getAttribute("href");
+        window.location.href = url;
+    })
+</script>
+{/block}

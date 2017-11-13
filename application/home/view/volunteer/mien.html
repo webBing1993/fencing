@@ -1,0 +1,116 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>团队介绍</title>
+<link rel="stylesheet" href="/home/sass/stylesheets/volunteer/mien.css">
+
+{/block}
+{block name="body"}
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="mui-slider-group">
+            <div class="banner"><img src="/home/images/banner/06.png" alt=""></div>
+            <div class="main">
+                <div class="lists">
+                    {volist name="list" id="vo"}
+                    <div class="list color1">
+                        <a href="{:Url('Volunteer/team?id='.$vo['id'])}">
+                            <div class="img"><img src="{$vo.front_cover|get_cover='path'}" alt=""></div>
+                            <div class="name">{$vo.name}</div>
+                            <div class="notes">活动：<span>{$vo.times}</span>次</div>
+                        </a>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+
+    $(function () {
+        $("title").text("志愿服务");
+    });
+
+    window.onload = function () {
+        if ($(".lists .list").length < 6) {
+            mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+        } else {
+            mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+        }
+    };
+    mui.init({
+        pullRefresh : {
+            container: "#refreshContainer",
+            up : {
+                callback : loadScroll
+            }
+        }
+    });
+    function loadScroll() {
+        var len = $(".lists .list").length;
+        $.ajax({
+            type: "post",
+            url: "{:Url('Volunteer/index')}",
+            data: {
+                length: len
+            },
+            beforeSend: function(XMLHttpRequest){
+            },
+            success:function(data){
+                addCourse(data);
+                if(data.code == 1){
+                    var dataLen =data.data.length;
+                    if(data.data.length == 6){
+                        mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+                    }else{
+                        mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                    }
+                }else{
+                    mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                }
+            }
+        })
+    }
+    function addCourse(data) {
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        console.log(len);
+        for(var i = 0; i< len;i++){
+            var list = lists[i];
+            html +=
+                '<div class="list color1">'
+                +'<a href="/home/volunteer/team/id/'
+                +list.id
+                +'.html">'
+                +'<div class="img"><img src="'
+                +list.path
+                +'" alt=""></div>'
+                +'<div class="name">'
+                +list.name
+                +'</div>'
+                +'<div class="notes">活动：<span>'
+                +list.times
+                +'</span>次</div>'
+                +'</a>'
+                +'</div>';
+        }
+        $(".lists" ).append(html);
+    }
+    mui("#refreshContainer").on("touchstart","a",function(){
+        $(this).css("backgroundColor","rgba(0,0,0,.1)");
+    }).on("touchend","a", function () {
+        $(this).css("backgroundColor","#fff");
+    });
+    mui("#refreshContainer").on("tap","a",function(){
+        var url = this.getAttribute("href");
+        window.location.href = url;
+    })
+
+</script>
+
+{/block}

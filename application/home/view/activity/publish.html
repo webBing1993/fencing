@@ -1,0 +1,287 @@
+{extend name="public/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/activity/publish.css">
+<link rel="stylesheet" href="/home/sass/stylesheets/activity/mui.picker.min.css">
+<style>
+    #popover,#popover .mui-table-view{
+        height:40vw;
+        max-height: 400px;
+    }
+    .mui-table-view-cell>a:not(.mui-btn){
+        font-size: 0.36rem;
+        margin:-5px -11px;
+        text-align: center;
+    }
+    .mui-dtpicker-header button {
+        font-size: 0.36rem;
+        padding: 0.13rem 0.26rem;
+    }
+    .mui-dtpicker-title h5 {
+        display: inline-block;
+        width: 20%;
+        margin: 0;
+        padding: 0.26rem;
+        text-align: center;
+        border-top: solid 1px #ddd;
+        background-color: #f0f0f0;
+        border-bottom: solid 1px #ccc;
+        font-size: 0.32rem;
+    }
+</style>
+{/block}
+
+{block name="body"}
+<div class="main">
+    <div class="list">
+        <ul>
+            <li>
+                标题
+                <input type="text" placeholder="请输入标题" value="" name="title">
+            </li>
+            <li class="type1">
+                时间
+                <input type="input" placeholder="请输入参与时间" name="time" id="date" readonly>
+            </li>
+            <li class="type1">
+                地点
+                <input type="text" placeholder="请输入参与地点" name="address" value="">
+            </li>
+            <li class="type1">
+                参会人
+                <input type="text" placeholder="请输入参会人或参与支部" name="people" value="">
+            </li>
+            <div class="content">
+                <textarea placeholder="请输入本次会议纪要,谈谈你的感触!(图片选填,最多四张，不限字数)" name="content"></textarea>
+                <div class="imgs clear">
+                    <div class="img fl hide"></div>
+                    <div class="img fl hide"></div>
+                    <div class="img fl hide"></div>
+                    <div class="img fl hide"></div>
+                    <div class="add fl"></div>
+                </div>
+                <div style="color: #666;font-size: 0.32rem">（您最多上传3张图片，图片小于3M）</div>
+                <input type="file" class="hide" id="upimg" accept="image/jpg, image/png, image/gif, image/jpeg">
+                <input type="hidden" name="id" value="">
+            </div>
+
+        </ul>
+
+    </div>
+
+</div>
+<div class="bottom">
+   <!-- <span class="warning">你的会议纪要发送成功后,将进入后台审核,审核通过后在个人中心提醒并在会议纪要模块中查看,谢谢！</span>
+    <div class="goreview">确认上传</div>-->
+</div>
+{/block}
+
+{block name="script"}
+<script src="/home/js/publish.js"></script>
+<script src="/home/js/mui.picker.min.js"></script>
+<script>
+    var type =  parseInt(window.location.href.split("publish/type/")[1]);
+    var c =  parseInt(window.location.href.split("style/")[1]);
+    var index =  parseInt(window.location.href.split("?")[1]);
+    $(function(){
+        imgresize();
+    });
+
+    window.onload = function(){
+            var dtpicker = new mui.DtPicker({
+                "type": "datetime",
+                "value": ""
+            });
+            document.querySelector('#date').addEventListener('tap', function () {
+                dtpicker.show(function (e) {
+                    document.getElementById('date').value = e.text;
+                })
+            })
+    };
+
+
+    options = {
+        scrollY: true, //是否竖向滚动
+        scrollX: false, //是否横向滚动
+        startX: 0, //初始化时滚动至x
+        startY: 0, //初始化时滚动至y
+        indicators: false, //是否显示滚动条
+        deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
+        bounce: true //是否启用回弹
+    };
+
+    mui('.mui-scroll-wrapper').scroll({
+        deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+    });
+
+  ``}
+
+    //去上传
+    $(".goreview").click(function(){
+        var single = false;
+        var templet = $("#openPopover2").html();
+        var userid = "";
+        if(type==1){
+            var data={
+                class:0,
+                title:$("input[name='title']").val(),
+                content:$("textarea[name='content']").val(),
+                userid:userid,
+                id:$("input[name='id']").val(),
+                type:type,
+                status:0
+            };
+            for(var key in data){
+                if(data["title"]!= ''&& data["content"]!=""){
+                    single = true;
+                    continue;
+                }
+            }
+        }else if(type==2){
+            var _class = $("#openPopover").html();
+            var data={
+                title:$("input[name='title']").val(),
+                content:$("textarea[name='content']").val(),
+                address:$("input[name='address']").val(),
+                time:$("input[name='time']").val(),
+                people:$("input[name='people']").val(),
+                id:$("input[name='id']").val(),
+                compere:$("input[name='compere']").val(),
+                userid:userid,
+                type:type,
+                status:0
+            };
+            switch (_class){
+                case "支部委员大会":
+                    data["class"] = 1;
+                    break;
+                case "党支部委员会":
+                    data["class"] = 2;
+                    break;
+                case "党小组会":
+                    data["class"] = 3;
+                    break;
+                case "党课":
+                    data["class"] = 4;
+                    break;
+            }
+            for(var key in data){
+                if(data["title"]!= ''&& data["content"]!=""&& data["place"]!=""&& data["date"]!=""&& data["number"]!=""&& data["host"]!=""){
+
+                    single = true;
+                    continue;
+                }
+            }
+        }else if(type==3){
+            var _class = $("#openPopover3").html();
+            var data={
+                title:$("input[name='title']").val(),
+                content:$("textarea[name='content']").val(),
+                userid:userid,
+                id:$("input[name='id']").val(),
+                type:type,
+                status:0
+            };
+            for(var key in data){
+                if(data["title"]!= ''&& data["content"]!=""){
+//                    if(data["content"].length<300){
+//                        swal({
+//                            title: ' ',
+//                            text: '内容不少于500字',
+//                            type: 'error',
+//                            showConfirmButton:false,
+//                            timer:1500
+//                        });
+//                        return;
+//                    }
+                    single = true;
+                    continue;
+                }
+            }
+            if(_class=="培训计划"){
+                data["class"] = 5;
+            }else{
+                data["class"] = 6;
+                    if(data["content"].length<1500){
+                        swal({
+                            title: ' ',
+                            text: '内容不少于1500字',
+                            type: 'error',
+                            showConfirmButton:false,
+                            timer:1500
+                        });
+                        return;
+                    }
+            }
+        }else if(type==4){
+            var data={
+                class:0,
+                title:$("input[name='title']").val(),
+                content:$("textarea[name='content']").val(),
+                userid:userid,
+                id:$("input[name='id']").val(),
+                type:type,
+                status:0
+            };
+            for(var key in data){
+                if(data["title"]!= ''&& data["content"]!=""){
+                    single = true;
+                    continue;
+                }
+            }
+        }
+        if(single){
+            data['list_images']=[];
+            if(templet == "普通型"){
+                data["templet"] = 1;
+            }else{
+                data["templet"] = 2;
+            }
+            $(".img img").each(function(){
+                if($(this).data("tab")){
+                    data['list_images'].push($(this).data("tab")+"")  ;
+                }
+            })
+            console.log(data)
+//            data['list_image'] = [$('.img:nth-child(1) img').attr('data-tab'),$('.img:nth-child(2) img').attr('data-tab'),$('.img:nth-child(3) img').attr('data-tab')];
+            $.ajax({
+                type:"post",
+                url: "{:Url('Learn/publish')}",
+                data:data,
+                success:function(data){
+                    if(data.code == 1){
+                        swal({
+                            title: "提交成功",
+                            text: '审核后可在个人中心——我的发布中查看',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: "确定",
+                            allowOutsideClick:false
+                        });
+                        setTimeout(function(){
+                            window.history.go(-1);
+                        },1500)
+                    }else{
+                        swal({
+                            title: ' ',
+                            text: data.msg,
+                            type: 'error',
+                            showConfirmButton:false,
+                            timer:1500
+                        });
+                    }
+                }
+            });
+        }else{
+            swal({
+                title: ' ',
+                text: '信息输入不完整',
+                type: 'error',
+                showConfirmButton:false,
+                timer:1500
+            });
+        }
+    });
+</script>
+
+{/block}

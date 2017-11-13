@@ -1,0 +1,75 @@
+/*banner*/
+.banner {
+    width: 100vw;
+    height: 50vw;
+}
+.banner img {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+/*main*/
+.lists {
+    padding: 0 4vw;
+}
+.lists .list {
+    width: 43.4vw;
+    padding: .8vw;
+    border-width: 1px;
+    border-style: solid;
+    display: inline-block;
+    margin-top: 5.4vw;
+    border-radius: 1.6vw;
+}
+.lists .list a {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+.lists .list:nth-of-type(2n-1) {
+    margin-right: 2vw;
+}
+.lists .list:nth-of-type(2n) {
+    margin-left: 2vw;
+}
+.lists .list .img {
+    width: 100%;
+    display: inline-block;
+    height: 26.7vw;
+}
+.lists .list .img img {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    border-radius: 1.6vw;
+}
+.lists .list .name {
+    font-size: .4rem;
+    color: #333;
+    padding-top: 1.2vw;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.lists .list .notes {
+    color: #666;
+    font-size: .37rem;
+    padding: 1.6vw 0;
+}
+.lists .list .notes span {
+    color: red;
+}
+.color1 {
+    border-color: red;
+}
+.color1:hover {
+    box-shadow: 0 0 1.6vw red;
+}
+.color2 {
+    border-color: orange;
+    box-shadow: 0 0 1.6vw orange;
+}
+.color3 {
+    border-color: blue;
+    box-shadow: 0 0 1.6vw blue;
+}

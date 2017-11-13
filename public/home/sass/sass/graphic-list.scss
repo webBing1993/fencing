@@ -14,9 +14,11 @@
         height:16vw;
         margin-right: 2vw;
       }
+
       p{
         font-size: $title-size;
         color: $title-color;
+        line-height: 0.5rem;
         @include line-clamp;
       }
       span{

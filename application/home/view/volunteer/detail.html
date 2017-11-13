@@ -1,0 +1,30 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>党员详情页</title>
+<link rel="stylesheet" href="/home/sass/stylesheets/volunteer/detail.css">
+{/block}
+<!--css一处 scrollDiy标签一对 tofixed()注释  scrollNow 跟scrollDiy滚动绑定-->
+{block name="body"}
+<div class="scrollDiy">
+    <div class="article">
+        <div class="title limit_"><p>{$detail.title}</p></div>
+        <div class="note clear">
+            <span class="fl">{$detail.publisher}</span>
+            <span class="fr">{$detail.create_time|time_format='Y-m-d'}</span>
+        </div>
+        <div class="content">
+            {$detail.content}
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="script"}
+<script>
+    $(function () {
+        $("title").text("志愿服务");
+    });
+</script>
+{/block}

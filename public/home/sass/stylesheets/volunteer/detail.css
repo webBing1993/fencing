@@ -1,0 +1,133 @@
+.scrollDiy{
+    position: absolute;
+    top:0;
+    bottom:0;
+    overflow-y: scroll;
+    /* 增加该属性，可以增加弹性 */
+    -webkit-overflow-scrolling: touch;
+    width:100%;
+}
+@charset "utf-8";
+/*public*/
+.t_b {
+    font-size: .48rem;
+    font-weight: 600;
+}
+.banner{
+    width: 100vw;
+    height: 50vw;
+}
+.banner .banner-img{
+    height: 100%;
+    width: 100%;
+}
+.uecontent *{
+    width: 100%;
+}
+.title{
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+/*文章*/
+.article {
+    width: 100%;
+    padding-left: 3.5vw;
+    padding-right: 3.5vw;
+    padding-top: 3.5vw;
+}
+.article .title {
+    color: #333333;
+    font-size: .48rem;
+    font-weight: 600;
+}
+.article .title p {
+    width: auto;
+    display: inline-block;
+    text-align: left;
+    color: #333;
+    font-size: .48rem;
+}
+.article .note {
+    color: #999999;
+    font-size: .36rem;
+    height: 1rem;
+    line-height: 1rem;
+}
+.article .note span {
+    /*margin-right: 10px;*/
+}
+.article .note_ span {
+    margin-right: 0;
+}
+.article .content {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 4vw;
+}
+.article .content * {
+    max-width: 100%!important;
+    font-size: .4rem;
+    color: #333;
+    text-indent: 2em;
+}
+.article .content img {
+    display: block;
+    max-width: 100%!important;
+    margin-bottom: 3.5vw;
+}
+.article .content .video {
+    position: relative;
+    width: 100%;
+    height: 53.4vw;
+    margin-bottom: 2.7vw;
+    background: rgba(208, 208, 208, 0.5);
+}
+.article .content .video video {
+    width: 100%;
+    height: 53.4vw;
+}
+.article .content .video .play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -6.7vw;
+    margin-top: -6.7vw;
+    width: 13.4vw;
+    height: 13.4vw;
+    opacity: 0.5;
+    display: none;
+}
+.article .content .video iframe {
+    width: 100%;
+    height: 100%;
+}
+.article .content .note {
+    color: #999999;
+    font-size: 1.4rem;
+}
+.article .content .note span {
+    height: 10.7vw;
+    display: inline-block;
+    margin-right: 2.7vw;
+    line-height: 10.7vw;
+}
+.article .content .note_ span{
+    margin-right: 0;
+}
+/*加载动画*/
+.loading {
+    width: 100%;
+    height: 10.7vw;
+}
+.typing_loader {
+    width: 1.6vw;
+    height: 1.6vw;
+    border-radius: 50%;
+    -webkit-animation: typing 1s linear infinite alternate;
+    -moz-animation: Typing 1s linear infinite alternate;
+    animation: typing 1s linear infinite alternate;
+    position: relative;
+    top: 4.6vw;
+    left: 44.6vw;
+}

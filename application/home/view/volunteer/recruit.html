@@ -1,0 +1,157 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title></title>
+<link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
+<link rel="stylesheet" href="/home/sass/stylesheets/volunteer/recruit.css">
+{/block}
+
+{block name="body"}
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="mui-slider-group">
+            <div class="banners">
+                <div class="swiper-container">
+                    <div class="imgs swiper-wrapper">
+                        {volist name="list.top" id="vo1"}
+                        <div class="banner swiper-slide">
+                            <a href="{:Url('Volunteer/detail?id='.$vo1['id'])}">
+                                <img src="{$vo1.front_cover|get_cover='path'}" alt="">
+                                <div class="title_ limit">{$vo1.title}</div>
+                            </a>
+                        </div>
+                        {/volist}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <!--新闻列表-->
+            <div class="lists">
+                {volist name="list.list" id="vo2"}
+                <a class="list clear" href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
+                    <div class="fl">
+                        <img src="{$vo2.front_cover|get_cover='path'}" alt="" style="width: 28.2vw;height: 18.8vw">
+                    </div>
+                    <div class="fr lr">
+                        <div class="title limit_">{$vo2.title}</div>
+                        <div class="clear">
+                            <span class="fl">{$vo2.create_time|time_format='Y-m-d'}</span>
+                            <span class="fr">详情</span>
+                        </div>
+                    </div>
+                </a>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="script"}
+<script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
+<script>
+
+    $(function () {
+        $("title").text("志愿服务");
+        if ($(".mui-scroll").height() == 0) {
+            $("#refreshContainer").css({
+                background: 'url("/home/images/activity/nomessage.png") center no-repeat',
+                backgroundSize: "50vw",
+            });
+        }
+    });
+
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: 1500
+    });
+
+    window.onload = function () {
+        if ($(".lists a").length < 7) {
+            mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+        } else {
+            mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+        }
+    };
+    mui.init({
+        pullRefresh : {
+            container: "#refreshContainer",
+            up : {
+                contentrefresh: '正在加载...',
+                callback : loadScroll
+            }
+        }
+    });
+
+    function loadScroll() {
+        var len = $('.lists a').length;
+        var id = window.location.href.split("pid/")[1].split(".html")[0];
+        $.ajax({
+            type: "post",
+            url: "{:Url('Volunteer/more')}",
+            data: {
+                length: len,
+                pid: id
+            },
+            beforeSend: function(XMLHttpRequest){
+            },
+            success:function(data){
+                addCourse(data);
+                console.log(data);
+                if(data.code == 1){
+                    var dataLen =data.data.length;
+                    if(data.data.length == 7){
+                        mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+                    }else{
+                        mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                    }
+                }else{
+                    mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                }
+            }
+        })
+    }
+    function addCourse(data) {
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++){
+            var list = lists[i];
+            html +=
+                '<a href="/home/volunteer/detail/id/'
+                +list.id
+                +'.html" class="list clear">'+
+                '<div class="fl">'+
+                '<img src="'+list.path+'" alt="图片" style="width: 28.2vw;height: 18.8vw">'+
+                '</div>'+
+                '<div class="fr lr">'+
+                '<div class="title limit_">'+list.title+'</div>'+
+                '<div class="clear">'+
+                '<span class="fl">'+list.time+'</span>'+
+                '<span class="fr">详情</span>'+
+                '</div>'+
+                '</div>'+
+                '</a>'
+        }
+        $(".lists" ).append(html);
+    }
+
+    mui("#refreshContainer").on("touchstart","a",function(){
+        $(this).css("backgroundColor","rgba(0,0,0,.1)");
+    }).on("touchend","a", function () {
+        $(this).css("backgroundColor","#fff");
+    });
+
+    mui("#refreshContainer").on("tap","a",function(){
+        var url = this.getAttribute("href");
+        window.location.href = url;
+    });
+
+
+</script>
+{/block}
