@@ -1,0 +1,108 @@
+@import "tab";
+@import "common";
+@import "graphic-list";
+@import "title-pos-time";
+
+
+#tab{
+  top:50vw;
+  a{
+    &:after{
+      left:49vw;
+    }
+  }
+}
+#refreshContainer {
+  margin-top: 58vw;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+  color: #fff;
+  background: #ffa626;
+
+}
+.banner{
+  height:50vw;
+}
+.banner img{
+  position: relative;
+  z-index: 99;
+  width: 100%;
+  height:50vw;
+}
+#tab{
+  background:#ffffff!important;
+}
+#tab a{
+  text-decoration: none!important;
+}
+.notice a{
+  text-decoration: none!important;
+}
+.meeting a{
+  text-decoration: none!important;
+}
+.notice a p:nth-child(1){
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  margin-bottom: 1vw;
+  color: #000;
+  font-weight: bold;
+}
+.notice a:active,.notice a:visited{
+  color: #f00;
+  background: #e5e5e5;
+  text-decoration: none!important;
+}
+
+.notice a p:nth-child(2){
+  margin-bottom: 0;
+  color: #666;
+  height:1rem;
+}
+.notice a span:nth-child(4){
+  position: inherit;
+  float: right;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+  background: #803cd6!important;
+  text-decoration: none!important;
+}
+.list ul a{
+  clear: both;
+}
+.more{
+  display: block;
+  width:100%;
+  font-size: 0.32rem;
+  color: #f00;
+  padding:3vw;
+}
+.meeting a:active,.meeting a:visited{
+  color: #090;
+  background: #e5e5e5;
+  text-decoration: none!important;
+}
+.meeting .more{
+  color: #090;
+}
+.more span:last-child{
+  float: right;
+}
+.list ul a span:nth-child(3){
+  font-size: 0.32rem;
+  color: #666;
+  right: -17vw!important;
+  bottom: 3vw!important;
+}
+.list ul a span:nth-child(4){
+  bottom: 3vw!important;
+}
+.list ul a span:nth-child(5){
+  bottom: 3vw!important;
+}
+
+

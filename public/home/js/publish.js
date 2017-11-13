@@ -2,14 +2,14 @@
  * Created by Administrator on 2017/9/6 0006.
  */
 
-$(function(){
+var a =$(function(){
     //图片预览
     $('.add' ).on('click',function(){
         var imglen = $('.img img' ).length;
         var this_ = $(this );
         $('#upimg').click().off("change").on('change',function(){
             var size = ($(this)[0].files[0].size / 1024).toFixed(2);
-            if(size <= 3072){
+            if(size <= 5120){
                 var img = $(this)[0].files[0];
                 var formData = new FormData();
                 formData.append("picture",img);
@@ -27,7 +27,6 @@ $(function(){
                     success:function(data){
                         swal.close();
                         var msg = $.parseJSON(data);
-                        console.log(msg)
                         if(msg.code == 1){
                             if(this_.hasClass('add')){
                                 //图片添加
@@ -73,12 +72,12 @@ function imgresize(){
         var img4 = $('.img4 img');
         img.each(function(){
             if($(this).width() == $(this).height()){
-                $(this).height('2rem');
-                $(this).width('2rem');
+                $(this).height('20vw');
+                $(this).width('20vw');
             }else if($(this).width() > $(this).height()){
-                $(this).height('2rem' ).css({'left':-$(this).width()/2+font/2});
+                $(this).height('20vw' ).css({'left':-$(this).width()/2+font/2});
             }else{
-                $(this).width('2rem').css({'top':-$(this).height()/2+font/2});
+                $(this).width('20vw').css({'top':-$(this).height()/2+font/2});
             }
         });
     },100);

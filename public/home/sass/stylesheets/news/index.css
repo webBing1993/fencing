@@ -1,43 +1,3 @@
-/*
-* 图片轮播
-*/
-.banner{
-  position: relative;
-  width: 100%;
-  height: 50vw;
-}
-.banner a {
-  width: 100%;
-  height: 100%;
-  display: inline-block;
-}
-.banner img{
-  width: 100%;
-  height: 100%;
-}
-.banner .title_{
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 10.7vw;
-  padding-left: 3.5vw;
-  padding-right: 3.5vw;
-  background-color: rgba(51, 51, 51, 0.6);
-  line-height: 10.7vw;
-  font-size: .38rem;
-  color: #ffffff;
-}
-.swiper-pagination-bullet {
-  background-color: #000;
-  float:right;
-}
-.swiper-pagination-bullet-active {
-  background-color: #fff !important;
-}
-.swiper-pagination {
-  margin-bottom:2vw;
-  text-align: right;
-}
 /*tab*/
 #tab {
   position: absolute;
@@ -150,3 +110,42 @@
   bottom: 6.4vw;
 }
 
+.banners {
+  z-index: 99;
+  height: 50vw;
+  position: relative;
+}
+
+.banner {
+  width: 100%;
+  height: 50vw;
+}
+
+.banner img {
+  width: 100%;
+  height: 50vw;
+}
+
+.banner .title_ {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 8vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.32rem;
+  padding-right: 2.4vw;
+  padding-left: 2.4vw;
+}
+
+.swiper-pagination {
+  margin-bottom: 1vw;
+}
+
+.swiper-pagination-bullet {
+  float: right;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ffffff !important;
+}

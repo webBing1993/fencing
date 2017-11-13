@@ -61,25 +61,30 @@
                     <div class="add fl"></div>
                 </div>
                 <div style="color: #666;font-size: 0.32rem">（您最多上传3张图片，图片小于3M）</div>
-                <input type="file" class="hide" id="upimg" accept="image/jpg, image/png, image/gif, image/jpeg">
+                <input type="file" class="hide" id="upimg" name="upload" accept="image/*">
                 <input type="hidden" name="id" value="">
             </div>
-
         </ul>
-
     </div>
+    <span class="warning">你的会议纪要发送成功后,将进入后台审核,审核通过后在个人中心提醒并在会议纪要模块中查看,谢谢！</span>
+    <div class="goreview">确认上传</div>
+</div>
 
-</div>
-<div class="bottom">
-   <!-- <span class="warning">你的会议纪要发送成功后,将进入后台审核,审核通过后在个人中心提醒并在会议纪要模块中查看,谢谢！</span>
-    <div class="goreview">确认上传</div>-->
-</div>
 {/block}
 
 {block name="script"}
 <script src="/home/js/publish.js"></script>
 <script src="/home/js/mui.picker.min.js"></script>
 <script>
+    var u = navigator.userAgent, app = navigator.appVersion;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    //alert('是否是Android：'+isAndroid);
+    //alert('是否是iOS：'+isiOS);
+
+    if(isAndroid){
+        $ ("input[name='file']").attr('capture','camera');
+    }
     var type =  parseInt(window.location.href.split("publish/type/")[1]);
     var c =  parseInt(window.location.href.split("style/")[1]);
     var index =  parseInt(window.location.href.split("?")[1]);
@@ -98,8 +103,6 @@
                 })
             })
     };
-
-
     options = {
         scrollY: true, //是否竖向滚动
         scrollX: false, //是否横向滚动
@@ -113,8 +116,18 @@
     mui('.mui-scroll-wrapper').scroll({
         deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
     });
-
-  ``}
+    /*当点击input时防止底部被顶上到键盘顶部*/
+    var h = document.body.scrollHeight;
+    var H = 100;
+    window.onresize = function(){
+        if (document.body.scrollHeight < h - H ) {
+            document.getElementsByClassName("goreview")[0].style.display = "none";
+            document.getElementsByClassName("warning")[0].style.display = "none";
+        }else{
+            document.getElementsByClassName("goreview")[0].style.display = "block";
+            document.getElementsByClassName("warning")[0].style.display = "block";
+        }
+    };
 
     //去上传
     $(".goreview").click(function(){
