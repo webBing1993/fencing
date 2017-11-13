@@ -1,0 +1,68 @@
+{extend name="public/pure"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/graphic-video.css">
+{/block}
+
+{block name="body"}
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+            {empty name="$info"}
+            <div class="default"><img src="/home/images/common/nomessage.png" alt="暂无消息"> </div>
+            {else/}
+            {notempty name="$top"}
+            <div class="banner">
+                <div class="tag">—— 精品推荐 ——</div>
+                <!--精彩专题-->
+                {volist name="top" id="re"}
+                <div class="box">
+                    {eq name="re.type" value="2"}
+                    <a href="{:Url('Learn/article?id='.$re['id'])}" class="box_up">
+                        {else/}
+                        <a href="{:Url('Learn/video?id='.$re['id'])}" class="box_up">
+                            {/eq}
+                            <img src="{$re.front_cover}" alt="图片">
+                            <div class="title">{$re.title}</div>
+                            <div class="note clear">
+                                <span class="fl">{$re.publisher}</span>
+                                <span class="fr">{$re.create_time}</span>
+                            </div>
+                        </a>
+                        <div class="box_down">
+                            <div class="clear">
+                                <span class="scan">{$re.views}</span>
+                                <div class="fr next">下一篇</div>
+                            </div>
+                        </div>
+                        <!--模糊层-->
+                        <img src="{$re.front_cover}" alt="背景" class="bg">
+                </div>
+                {/volist}
+            </div>
+            {/notempty}
+            <!--课程列表-->
+            <div class="lists">
+                <div class="tag"> —— 更多课程 —— </div>
+                <!--图文课程-->
+                {volist name="info" id="vo"}
+                {eq name="vo.type" value="2"}
+                <a href="{:Url('Learn/article?id='.$vo['id'])}" class="list lesson">
+                    <div class="tab">图文</div>
+                    {else/}
+                    <a href="{:Url('Learn/video?id='.$vo['id'])}" class="list lesson">
+                        <div class="tab">视频</div>
+                        {/eq}
+                        <img src="{$vo.front_cover}" alt="图片" class="img">
+                        <div class="title limit">{$vo.title}</div>
+                        <span class="study">{$vo.views}人阅读过</span>
+                    </a>
+                    {/volist}
+            </div>
+            {/empty}
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+
+{/block}

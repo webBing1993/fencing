@@ -19,20 +19,22 @@ use app\home\model\Like;
 use think\Db;
 
 class Learn extends Base{
+
     /**
      * 两学一做
      */
-    public function index(){
-        $this->anonymous();
-        //数据列表
-        $map2 = array(
-            'status' => array('egt',0),
-        );
-        $list2 = LearnModel::where($map2) ->order('id desc') ->limit(5)->select();  // 列表
-        $link = Db::table('pb_paper')->where($map2)->field('content')->find();
-        $this->assign('link',$link['content']);
-        $this ->assign('list2',$list2);
+    public function lesson(){
+//        $this->anonymous();
+//        //数据列表
+//        $map2 = array(
+//            'status' => array('egt',0),
+//        );
+//        $list2 = LearnModel::where($map2) ->order('id desc') ->limit(5)->select();  // 列表
+//        $link = Db::table('pb_paper')->where($map2)->field('content')->find();
+//        $this->assign('link',$link['content']);
+//        $this ->assign('list2',$list2);
         return $this->fetch();
+
     }
     /**
      * 主页加载更多

@@ -114,7 +114,6 @@
   height: 50vw;
 }
 
-
 .swiper-container-horizontal > .swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
   bottom: calc(3vw - 4px);
 }
@@ -163,4 +162,12 @@
 
 .swiper-pagination-bullet-active {
   background-color: #ffffff !important;
+}
+
+.default img {
+  width: 16vw;
+  position: absolute;
+  left: 50%;
+  margin-top: 30%;
+  margin-left: -8vw;
 }
