@@ -2,7 +2,6 @@
 @import "common";
 @import "graphic-list";
 
-
 #tab{
   top:50vw;
   a{
@@ -43,6 +42,12 @@
     }
   }
 }
+.swiper-slide.banner{
+  height:50vw;
+}
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
+  bottom:calc(3vw - 4px);
+}
 .banners{
   z-index: 99;
   height: 50vw;
@@ -67,9 +72,7 @@
   font-size: 0.32rem;
   padding-right: 2.4vw;
   padding-left: 2.4vw;
-  line-height: 6.5vw;
-  margin-bottom: 2vw;
-;
+  line-height: 6vw;
 }
 .title_>span{
   width: 75%;
@@ -79,15 +82,10 @@
   text-overflow: ellipsis;
   white-space: nowrap
 }
-.swiper-pagination{
-  margin-bottom: 1vw;
-
-}
 .swiper-pagination-bullet{
  float:right;
 }
 .swiper-pagination-bullet-active{
-
   background-color: #ffffff!important;
 }
 

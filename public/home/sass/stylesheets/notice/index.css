@@ -6,7 +6,6 @@
   background: #f7f7f7;
   color: #333;
   font-size: 0.4rem;
-  padding: 1px 0;
   z-index: 999;
 }
 #tab a {
@@ -92,48 +91,12 @@
 .banners {
   z-index: 99;
   height: 50vw;
+  width: 100vw;
   position: relative;
 }
-.banners .banner {
+.banners img {
   width: 100%;
   height: 50vw;
-}
-.banners .banner img {
-  display: inline-block;
-  width: 100%;
-  height: 50vw;
-}
-.banners .banner a {
-  display: inline-block;
-  width: 100%;
-  height: 50vw;
-}
-.banners .banner .title_ {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 0.8rem;
-  padding-left: 0.24rem;
-  padding-right: 0.24rem;
-  background-color: rgba(0, 0, 0, 0.4);
-  line-height: 0.8rem;
-  font-size: 0.32rem;
-  color: #fff;
-}
-.banners .banner .title_ span {
-  position: absolute;
-  bottom: 0;
-  width: 80%;
-  height: 0.8rem;
-  padding-left: 0.24rem;
-  padding-right: 0.24rem;
-  line-height: 0.8rem;
-  font-size: 0.32rem;
-  color: #fff;
-  display: inline-block;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .swiper-pagination-bullet {
@@ -146,4 +109,12 @@
   color: #666;
   top: 0;
   right: 2vw;
+}
+
+.default img {
+  width: 16vw;
+  position: absolute;
+  left: 50%;
+  margin-top: 30%;
+  margin-left: -8vw;
 }

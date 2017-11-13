@@ -6,7 +6,6 @@
   background: #f7f7f7;
   color: #333;
   font-size: 0.4rem;
-  padding: 1px 0;
   z-index: 999;
 }
 #tab a {
@@ -110,6 +109,14 @@
   bottom: 6.4vw;
 }
 
+.swiper-slide.banner {
+  height: 50vw;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: calc(3vw - 4px);
+}
+
 .banners {
   z-index: 99;
   height: 50vw;
@@ -136,8 +143,7 @@
   font-size: 0.32rem;
   padding-right: 2.4vw;
   padding-left: 2.4vw;
-  line-height: 6.5vw;
-  margin-bottom: 2vw;
+  line-height: 6vw;
 }
 
 .title_ > span {
@@ -147,10 +153,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.swiper-pagination {
-  margin-bottom: 1vw;
 }
 
 .swiper-pagination-bullet {

@@ -2,13 +2,13 @@
 
 {block name="style"}
 <title>通知公告</title>
-<link rel="stylesheet" href="/home/sass/stylesheets/notice/index.css">
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
+<link rel="stylesheet" href="/home/sass/stylesheets/notice/index.css">
 {/block}
 
 {block name="body"}
 <div class="banners">
-    <img src="">
+    <img src="/home/images/notice/1.jpg">
 </div>
 <div id="tab" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
     <a class="mui-control-item" href="#item1mobile" data-index="0">
@@ -25,28 +25,40 @@
             <div id="item1mobile" class="mui-slider-item mui-control-content">
                 <!--政策解读开始-->
                 <div class="list policy">
+                    {empty name="policy"}
+                        <div class="default"><img src="/home/images/common/nomessage.png" alt="暂无消息"> </div>
+                    {else/}
                     <ul>
-                        <a href="">
-                            <p>多的点点滴滴鹅鹅鹅鹅鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯咯咯咯过过过过过过过过过过过过</p>
-                            <span>多的东方东风的</span>
-                            <span>2017-11-9</span>
-                            <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-                        </a>
+                        {volist name="policy" id="po"}
+                            <a href="{:Url('notice/detail?type=1&id='.$po['id'])}">
+                                <p>{$po.title}</p>
+                                <span>{$po.publisher}</span>
+                                <span>{$po.create_time}</span>
+                                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                            </a>
+                        {/volist}
                     </ul>
+                    {/empty}
                 </div>
                 <!--政策解读结束-->
             </div>
             <div id="item2mobile" class="mui-slider-item mui-control-content">
                 <!--通知公告开始-->
                 <div class="list notice">
+                    {empty name="notice"}
+                        <div class="default"><img src="/home/images/common/nomessage.png" alt="暂无消息"></div>
+                    {else/}
                     <ul>
-                        <a href="">
-                            <p>多的点点滴滴鹅过过过过过过</p>
-                            <span>多的东方东风的</span>
-                            <span>2017-11-9</span>
-                            <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-                        </a>
+                        {volist name="notice" id="no"}
+                            <a href="{:Url('notice/detail?type=2&id='.$no['id'])}">
+                                <p>{$no.title}</p>
+                                <span>{$no.publisher}</span>
+                                <span>{$no.create_time}</span>
+                                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                            </a>
+                        {/volist}
                     </ul>
+                    {/empty}
                 </div>
                 <!--通知公告结束-->
             </div>
@@ -62,29 +74,19 @@ $(function(){
     c = getCookie("c")?getCookie("c"):0;
     $("#tab a").eq(c).addClass('mui-active');
     $(".mui-slider-group>div").eq(c).addClass('mui-active');
-
-    //轮播
-    var mySwiper = new Swiper('.swiper-container', {
-        autoplay: 3000,
-        loop:true,
-        autoplayDisableOnInteraction:false,
-        pagination : '.swiper-pagination',
-        observer:true,
-        observeParents:true
-    });
-})
+});
 
 
 //首页加载是否需要上拉加载
 window.onload = function() {
     if(c==0){
-        if ($(".policy a").length < 7) {
+        if ($(".policy ul a").length < 7) {
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         } else {
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
         }
     }else if(c==1){
-        if ($(".notice a").length < 7) {
+        if ($(".notice ul a").length < 7) {
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         } else {
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -104,9 +106,9 @@ mui.init({
 
 function loadScroll(){
     if(c==0){
-        var len = $(".policy a").length;
+        var len = $(".policy ul a").length;
     }else if(c==1){
-        var len = $(".notice a").length;
+        var len = $(".notice ul a").length;
     }
     $.ajax({
         type:"post",
@@ -120,7 +122,6 @@ function loadScroll(){
         success:function(data){
             addCourse(data,c);
             if(data.code == 1){
-                var dataLen =data.data.length;
                 if(data.data.length == 7){
                     mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
                 }else{
@@ -183,7 +184,7 @@ mui('#tab').on('tap', 'a', function(e) {
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
         }
     }
-    setCookie("c",c)
+    setCookie("c",c);
 });
 
 mui("#refreshContainer").on("touchstart","a",function(){
@@ -196,6 +197,6 @@ mui("#refreshContainer").on("touchstart","a",function(){
 mui("#refreshContainer").on("tap","a",function(){
     var url = this.getAttribute("href");
     window.location.href = url;
-})
+});
 </script>
 {/block}
