@@ -66,8 +66,8 @@
             </div>
         </ul>
     </div>
-    <span class="warning">你的会议纪要发送成功后,将进入后台审核,审核通过后在个人中心提醒并在会议纪要模块中查看,谢谢！</span>
     <div class="goreview">确认上传</div>
+    <p>注：点击保存将保存至个人中心-我的草稿；点击去审核，审核通过后将在相应栏目发布，并保存至我的发布。</p>
 </div>
 
 {/block}
@@ -84,6 +84,18 @@
 
     if(isAndroid){
         $ ("input[name='file']").attr('capture','camera');
+        /*当点击input时防止底部被顶上到键盘顶部*/
+        var h = document.body.scrollHeight;
+        var H = 100;
+        window.onresize = function(){
+            if (document.body.scrollHeight < h - H ) {
+                document.getElementsByClassName("goreview")[0].style.display = "none";
+                document.getElementsByClassName("warning")[0].style.display = "none";
+            }else{
+                document.getElementsByClassName("goreview")[0].style.display = "block";
+                document.getElementsByClassName("warning")[0].style.display = "block";
+            }
+        };
     }
     var type =  parseInt(window.location.href.split("publish/type/")[1]);
     var c =  parseInt(window.location.href.split("style/")[1]);
@@ -116,18 +128,7 @@
     mui('.mui-scroll-wrapper').scroll({
         deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
     });
-    /*当点击input时防止底部被顶上到键盘顶部*/
-    var h = document.body.scrollHeight;
-    var H = 100;
-    window.onresize = function(){
-        if (document.body.scrollHeight < h - H ) {
-            document.getElementsByClassName("goreview")[0].style.display = "none";
-            document.getElementsByClassName("warning")[0].style.display = "none";
-        }else{
-            document.getElementsByClassName("goreview")[0].style.display = "block";
-            document.getElementsByClassName("warning")[0].style.display = "block";
-        }
-    };
+
 
     //去上传
     $(".goreview").click(function(){

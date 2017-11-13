@@ -106,12 +106,14 @@
   display: block;
   position: absolute;
   right: 1vw;
-  bottom: 6.4vw;
+  bottom: 7vw;
+  line-height: 6vw;
 }
 
 .swiper-slide.banner {
   height: 50vw;
 }
+
 
 .swiper-container-horizontal > .swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
   bottom: calc(3vw - 4px);

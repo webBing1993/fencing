@@ -2,14 +2,14 @@
  * Created by Administrator on 2017/9/6 0006.
  */
 
-var a =$(function(){
+$(function(){
     //图片预览
     $('.add' ).on('click',function(){
         var imglen = $('.img img' ).length;
         var this_ = $(this );
         $('#upimg').click().off("change").on('change',function(){
             var size = ($(this)[0].files[0].size / 1024).toFixed(2);
-            if(size <= 5120){
+            if(size <= 3072){
                 var img = $(this)[0].files[0];
                 var formData = new FormData();
                 formData.append("picture",img);

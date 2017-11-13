@@ -2,53 +2,53 @@ body,html{
     overflow-x: hidden;
 }
 body {
-    background-color: #f1f1f1;
+    background-color: #fff;
 }
 .main {
     background-color: #fff;
 }
 .list ul li{
-    height:1.2rem;
+    height:12vw;
     border-bottom: 1px solid #f1f1f1;
     font-size: 0.42rem;
-    padding: 0.1rem 0;
-    padding-bottom: 0.2rem;
-    line-height: 1.2rem;
-    padding-left: 0.3rem;
+    padding: 1vw 0;
+    padding-bottom: 2vw;
+    line-height: 12vw;
+    padding-left: 3vw;
     overflow: hidden;
 }
 
 .triangle-down {
     width: 0;
     height: 0;
-    border-left: 0.15rem solid transparent;
-    border-right: 0.15rem solid transparent;
+    border-left: 1.5vw solid transparent;
+    border-right: 1.5vw solid transparent;
     border-top: 0.2rem solid #999;
     position: absolute;
-    right: 0.2rem;
-    margin-top: 0.5rem;
+    right: 2vw;
+    margin-top: 5vw;
 }
 .mui-table-view-cell>a:not(.mui-btn){
     font-size: 0.36rem;
-    margin:0.1rem;
+    margin:1vw;
     text-align: center;
 }
 .list ul li input{
     border: none;
-    height:1rem;
-    line-height: 1rem;
+    height:10vw;
+    line-height: 10vw;
     width: 80%;
     float: right;
     text-align: right;
     right:0;
-    padding: 0 0.6rem;
+    padding: 0 6vw;
     -webkit-user-select: text;
     -user-select: text;
 }
 
 input[type="date"]{
     width:45%!important;
-    margin-right:-0.5rem!important;
+    margin-right:-5vw!important;
 }
 
 .list ul li input::-webkit-input-placeholder{
@@ -64,14 +64,14 @@ input[type="date"]:before{
     color:#999;
     font-size: 0.38rem;
     position: absolute;
-    right:0.5rem;
+    right:5vw;
 }
 
 .list ul textarea{
     border: none;
     height: 30vw;
-    margin: 0.2rem 0;
-    padding-left: 0.3rem;
+    margin: 2vw 0;
+    padding-left: 3vw;
 }
 @media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2){
     .list ul textarea{
@@ -93,10 +93,10 @@ textarea{
 .content .img{
     display: inline-block;
     position: relative;
-    width: 2rem;
-    height: 2rem;
-    margin-left: 0.3rem;
-    margin-bottom: 0.3rem;
+    width: 20vw;
+    height: 20vw;
+    margin-left: 3vw;
+    margin-bottom: 3vw;
     overflow: hidden;
     background: #d9d9d9;
     border: 2px solid #d9d9d9;
@@ -109,10 +109,10 @@ textarea{
 }
 
 .content .add,.content .add2,.content .add3{
-    width: 2rem;
-    height: 2rem;
-    margin-left: 0.2rem;
-    margin-bottom: 0.2rem;
+    width: 20vw;
+    height: 20vw;
+    margin-left: 2vw;
+    margin-bottom: 2vw;
     border: 2px solid #d9d9d9;
     font-size: 2rem;
     color: #d9d9d9;
@@ -121,49 +121,31 @@ textarea{
     justify-content: center;
     position: relative;
     background: url("/home/images/add.png") no-repeat;
-    background-size: 2rem 2rem;
+    background-size: 20vw 20vw;
 }
 .imgs.clear{
     display: flex;
 }
 
-
-.bottom{
-    width: 100vw;
-    height: 28%;
-    position: absolute;
-    background: #f1f1f1;
-    bottom: 0;
-}
-.warning{
-    position: absolute;
-    bottom:14vw;
-    width: 88vw;
-    line-height: 5vw;
-    left:6vw;
-    background: #e5e5e5;
-    color: #999999;
-    font-size: 0.34rem;
-    letter-spacing:1px;
-
-}
 .save,.goreview{
-    width:100vw;
+    width:56vw;
     height:10vw;
-    margin: 0 auto;
+    background: #fc6c62;
+    border-radius: 5px;
+    color: #fff;
+    margin: 5vw auto;
     text-align: center;
     font-size: 0.36rem;
     line-height: 10vw;
-    position: fixed;
-    bottom:0;
-
 }
 .goreview{
-    background: #2aca76;
-    color: #ffffff;
+    background: #fff;
+    color: #fc6c62;
+    border: 1px solid #fc6c62;
 }
 .goreview+p{
     font-size: 0.36rem;
     color: #999;
     padding: 1vw 3vw;
+    line-height: 4vw;
 }

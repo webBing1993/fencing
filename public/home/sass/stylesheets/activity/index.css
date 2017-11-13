@@ -6,7 +6,6 @@
   background: #f7f7f7;
   color: #333;
   font-size: 0.4rem;
-  padding: 1px 0;
   z-index: 999;
 }
 #tab a {
@@ -225,7 +224,8 @@
 }
 
 .meeting .list ul a span:nth-child(4) {
-  bottom: 3vw !important;
+  right: 1vw !important;
+  bottom: 7vw !important;
 }
 
 .meeting .list ul a span:nth-child(5) {
@@ -281,5 +281,14 @@
 
 .notice .list ul a span:nth-child(5) {
   right: 3vw;
-  bottom: 3vw !important;
+  bottom: 8vw !important;
+}
+
+.summary .list ul a span:nth-child(4) {
+  bottom: 8vw !important;
+}
+
+.fixed .list ul a span:nth-child(4) {
+  right: 1vw !important;
+  bottom: 8vw !important;
 }
