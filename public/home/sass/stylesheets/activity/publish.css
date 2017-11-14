@@ -130,15 +130,20 @@ textarea{
 }
 
 .save,.goreview{
-    width: 56vw;
-    height: 1rem;
+    width:56vw;
+    height:10vw;
     background: #fc6c62;
     border-radius: 5px;
     color: #fff;
     margin: 5vw auto;
     text-align: center;
     font-size: 0.36rem;
-    line-height: 1rem;
+    line-height: 10vw;
+}
+.goreview{
+    background: #fff;
+    color: #fc6c62;
+    border: 1px solid #fc6c62;
 }
 .goreview+p{
     font-size: 0.32rem;

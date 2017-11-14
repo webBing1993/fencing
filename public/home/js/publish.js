@@ -17,8 +17,8 @@ $(function(){
                     type:"post",
                     url:"/home/File/uploadPicture",
                     data:formData,
-                    processData : false,
-                    contentType : false,
+                    processData : false, // 告诉jQuery不要去处理发送的数据
+                    contentType : false,  // 告诉jQuery不要去设置Content-Type请求头
                     beforeSend: function(XMLHttpRequest){
 //							swal('');
 //							swal.showLoading();
@@ -28,6 +28,7 @@ $(function(){
                         swal.close();
                         var msg = $.parseJSON(data);
                         if(msg.code == 1){
+
                             if(this_.hasClass('add')){
                                 //图片添加
                                 if(imglen == 3){

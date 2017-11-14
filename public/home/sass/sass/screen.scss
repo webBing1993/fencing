@@ -4,3 +4,10 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "compass/reset";
+
+a{
+  text-decoration: none;
+  &:active,&:hover,&:visited{
+    text-decoration: none;
+  }
+}

@@ -54,20 +54,20 @@
             <div class="content">
                 <textarea placeholder="请输入本次会议纪要,谈谈你的感触!(图片选填,最多四张，不限字数)" name="content"></textarea>
                 <div class="imgs clear">
-                    <div class="img fl hide"></div>
-                    <div class="img fl hide"></div>
-                    <div class="img fl hide"></div>
-                    <div class="img fl hide"></div>
+                    <div class="img fl hide" data-tab="0"></div>
+                    <div class="img fl hide" data-tab="1"></div>
+                    <div class="img fl hide" data-tab="2"></div>
+                    <div class="img fl hide" data-tab="3"></div>
                     <div class="add fl"></div>
                 </div>
-                <div style="color: #666;font-size: 0.32rem">（您最多上传4张图片，图片小于3M）</div>
+                <div style="color: #666;font-size: 0.32rem">（您最多上传3张图片，图片小于3M , 点击当前图片可以删除）</div>
                 <input type="file" class="hide" id="upimg" name="upload" accept="image/*">
                 <input type="hidden" name="id" value="">
             </div>
         </ul>
     </div>
     <div class="goreview">确认上传</div>
-    <p>您的会议纪要上传成功后，将进入后台审核，审核通过后在个人中心提醒并在会议纪要模块中查看，谢谢！</p>
+    <p>注：点击保存将保存至个人中心-我的草稿；点击去审核，审核通过后将在相应栏目发布，并保存至我的发布。</p>
 </div>
 
 {/block}
@@ -76,7 +76,18 @@
 <script src="/home/js/publish.js"></script>
 <script src="/home/js/mui.picker.min.js"></script>
 <script>
-    var type=1;
+    var u = navigator.userAgent, app = navigator.appVersion;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    //alert('是否是Android：'+isAndroid);
+    //alert('是否是iOS：'+isiOS);
+
+    if(isAndroid){
+        $ ("input[name='file']").attr('capture','camera');
+    }
+    var type =  parseInt(window.location.href.split("publish/type/")[1]);
+    var c =  parseInt(window.location.href.split("style/")[1]);
+    var index =  parseInt(window.location.href.split("?")[1]);
     $(function(){
         imgresize();
     });
@@ -106,6 +117,38 @@
         deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
     });
 
+    // 删除当前选择的上传图片
+    $(".imgs div.img").on("click",function(){
+        var Id = $(this).attr("data-tab");
+        var This = $(this);
+        swal({
+            title: "是否删除当前图片",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            confirmButtonColor: "#ec6c62"
+        }, function() {
+            $.ajax({
+                type: "post",
+                url: "",
+                data: {
+                    id:Id
+                },
+                processData : false, // 告诉jQuery不要去处理发送的数据
+                contentType : false,  // 告诉jQuery不要去设置Content-Type请求头
+                success:function (data) {
+                    var msg = $.parseJSON(data);
+                    if(msg.code == 1){
+                        if(!This.hasClass("hide")){
+                            This.remove();
+                            This.append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
+                        }
+                    }
+                }
+            })
+        });
+    });
 
     //去上传
     $(".goreview").click(function(){
