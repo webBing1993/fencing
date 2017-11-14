@@ -52,6 +52,7 @@
                                 <!--<th>浏览量</th>
                                 <th>点赞量</th>
                                 <th>评论量</th>-->
+                                <th>推送</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -68,6 +69,11 @@
                                <!-- <td>{$vo.views}</td>
                                 <td>{$vo.likes}</td>
                                 <td>{$vo.comments}</td>-->
+                                {eq name="$vo.push" value="0"}
+                                <td> <a href="{:Url('push','id='.$vo.id)}" class="ajax-get confirm label label-info">开始推送</a></td>
+                                {else/}
+                                <td><span class="label label-info" style="background: #999">已推送</span></td>
+                                {/eq}
                                 <td>
                                     <a href="{:Url('Work/see?id='.$vo['id'])}">查看内容</a>
                                     &emsp;<a href="{:Url('Work/del?id='.$vo['id'])}" class="confirm ajax-del">删除</a>

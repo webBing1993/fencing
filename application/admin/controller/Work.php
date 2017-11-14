@@ -9,9 +9,9 @@ namespace app\admin\controller;
  */
 use app\admin\model\Work as WorkModel;
 use think\Db;
-use think\Controller;
-use think\Url;
-
+use app\admin\model\Picture;
+use think\Config;
+use com\wechat\TPQYWechat;
 /**
  * Class Work
  * @package app\admin\controller  签到管理  控制器
@@ -24,7 +24,7 @@ class Work extends Admin
     public function index()
     {
         $map = array(
-            'status' => array('eq', 0),
+            'status' => array('egt', 0),
         );
         $list = $this->lists('Work', $map);
         int_to_string($list, array(
@@ -42,7 +42,7 @@ class Work extends Admin
      */
     public function del($id)
     {
-        $data = Db::table('pb_work')->where('id', $id)->update(['status' => '1']);
+        $data = Db::table('pb_work')->where('id', $id)->update(['status' => '-1']);
         if ($data) {
             return $this->success('删除成功');
         } else {
@@ -212,7 +212,55 @@ class Work extends Admin
             }
         }
     }
+    /**
+     * 推送
+     */
+    public function push(){
+        $id = input('id');
+        if (empty($id)){
+            return $this->error('系统错误,参数不存在');
+        }
+        $info = WorkModel::where(['id' => $id])->find();
+        $content = "截止时间 : ".$info['meet_endtime'];
+        if ($info['type'] == 1){
+            $pre = '【三会一课】';
+        }else{
+            $pre = '【志愿之家】';
+        }
+        $url = "http://".$_SERVER['HTTP_HOST']."/home/Notice/detail/id/".$info['id'].".html";
+        $image = Picture::get($info['front_cover']);
+        $path = "http://".$_SERVER['HTTP_HOST'].$image['path'];
+        $information = array(
+            'title' => $pre.$info['title'],
+            'description' => $content,
+            'url'  => $url,
+            'picurl' => $path
+        );
+        $send = array(
+            "articles" => array(
+                0 => $information
+            )
+        );
+        $message = array(
+            "touser" => "17557289172",
+            "msgtype" => 'news',
+            "agentid" =>1000009,
+            "news" => $send,
+        );
+        //发送给企业号
+        $Wechat = new TPQYWechat(Config::get('sign'));
+        $msg = $Wechat->sendMessage($message);
 
-
-    
+        if($msg['errcode'] == 0){
+            //保存到推送列表
+            $result = WorkModel::where('id',$id)->update(['push' => 1]);
+            if($result){
+                return $this->success('发送成功');
+            }else{
+                $this->error('发送失败');
+            }
+        }else{
+            $this->error($Wechat->errMsg);
+        }
+    }
 }
