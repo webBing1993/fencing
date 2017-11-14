@@ -224,14 +224,28 @@
   color: #f00;
 }
 
-.notice .list ul a {
-  display: block;
-  position: relative;
-  padding: 2vw 3vw;
-  border-bottom: 1px solid #f1f1f1;
-  height: 20vw;
+@media screen and (min-width: 736px) and (max-width: 1024px) {
+  .notice .list ul a {
+    display: block;
+    position: relative;
+    padding: 2vw 3vw;
+    border-bottom: 1px solid #f1f1f1;
+    height: 20vw;
+  }
 }
-
+@media screen and (min-width: 736px) and (max-width: 1024px) {
+  .notice .list ul a span:nth-child(5) {
+    color: #666;
+    right: 1vw;
+    /*bottom: 10vw;*/
+    top: 0;
+    height: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
 @media screen and (max-width: 736px) {
   .notice .list ul a {
     display: block;
@@ -241,13 +255,39 @@
     height: 25vw;
   }
 }
-@media screen and (min-width: 1024px) and (max-width: 1280px) {
+@media screen and (max-width: 736px) {
+  .notice .list ul a span:nth-child(5) {
+    color: #666;
+    right: 1vw;
+    /*bottom: 10vw;*/
+    top: 0;
+    height: 25vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
   .notice .list ul a {
     display: block;
     position: relative;
     padding: 2vw 3vw;
     border-bottom: 1px solid #f1f1f1;
-    height: 20vw;
+    height: 17vw;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+  .notice .list ul a span:nth-child(5) {
+    color: #666;
+    right: 1vw;
+    /*bottom: 10vw;*/
+    top: 0;
+    height: 17vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 }
 .notice a p:nth-child(1) {
@@ -286,18 +326,6 @@
   font-size: 0.32rem;
   color: #666;
   right: 3vw;
-}
-
-.notice .list ul a span:nth-child(5) {
-  color: #666;
-  right: 1vw;
-  /*bottom: 10vw;*/
-  top: 0;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 .summary .list ul a span:nth-child(3) {

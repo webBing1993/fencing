@@ -54,10 +54,10 @@
             <div class="content">
                 <textarea placeholder="请输入本次会议纪要,谈谈你的感触!(图片选填,最多四张，不限字数)" name="content"></textarea>
                 <div class="imgs clear">
-                    <div class="img fl hide" data-tab="0"></div>
-                    <div class="img fl hide" data-tab="1"></div>
-                    <div class="img fl hide" data-tab="2"></div>
-                    <div class="img fl hide" data-tab="3"></div>
+                    <div class="img fl hide"></div>
+                    <div class="img fl hide"></div>
+                    <div class="img fl hide"></div>
+                    <div class="img fl hide"></div>
                     <div class="add fl"></div>
                 </div>
                 <div style="color: #666;font-size: 0.32rem">（您最多上传3张图片，图片小于3M , 点击当前图片可以删除）</div>
@@ -119,7 +119,7 @@
 
     // 删除当前选择的上传图片
     $(".imgs div.img").on("click",function(){
-        var Id = $(this).attr("data-tab");
+        var Id = $(this).find("img").attr("data-tab");
         var This = $(this);
         swal({
             title: "是否删除当前图片",
@@ -141,7 +141,7 @@
                     var msg = $.parseJSON(data);
                     if(msg.code == 1){
                         if(!This.hasClass("hide")){
-                            This.remove();
+                            This.find("img").remove();
                             This.append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
                         }
                     }
