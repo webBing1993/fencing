@@ -7,8 +7,6 @@
  */
 
 namespace app\home\controller;
-
-use app\user\controller\Index;
 use app\home\model\Comment;
 use app\home\model\Like;
 use app\user\model\WechatUser;
@@ -16,7 +14,7 @@ use think\Config;
 use think\Controller;
 use com\wechat\TPQYWechat;
 use think\Db;
-use think\Input;
+use app\home\model\Picture;
 use app\home\model\Browse;
 use app\home\model\Answers;
 
@@ -54,14 +52,6 @@ class Base extends Controller {
                 session('jsapiticket', $Wechat->getJsTicket()); // 官方7200,设置7000防止误差
             }
         }
-    }
-   
-    /**
-     * 微信官方认证URL
-     */
-    public function oauth(){
-        $Wechat = new TPQYWechat(Config::get('party'));
-        $Wechat->valid();
     }
 
     /**
@@ -115,50 +105,17 @@ class Base extends Controller {
         $this->assign('p3',$carousel_pic3);
 
     }
-    /**
-     * 用户登入获取信息(登陆方法在index控制器中)
-     */
-    public function login(){
-        // 获取用户信息
-        $Wechat = new TPQYWechat(Config::get('party'));
-        $result = $Wechat->getUserId(input('code'), Config::get('party.agentid'));
-        if(isset($result['UserId'])) {
-            $user = $Wechat->getUserInfo($result['UserId']);
-
-            // 添加本地数据
-            $UserAPI = new Index();
-            $localUser = $UserAPI->checkWechatUser($result['UserId']);
-            if($localUser) {
-                $UserAPI->updateWechatUser($user);
-            } else {
-                $UserAPI->addWechatUser($user);
-            }
-
-            session("userId", $result['UserId']);
-            session("nickname", isset($user['nickname'])?:"");
-            session("header", isset($user['header'])?:"");
-
-            $this->redirect("Structure/index");
-        } else {
-            return $this->error("企业成员未授权");
-        }
-    }
 
     /**
      * 点赞，$type,$aid
      * type值：
      * 0 评论点赞
-     * 1 news  党建动态
-     * 2 notice 通知公告
-     * 3 learn  党建风采
-     * 4 company 党员之家 交流互动
-     * 5 opinion 意见反馈
-     * 6 special 专题模块
-     * 7 work 支部工作
-     * 8 study 两学一做
-     * 9 redfilm 红色电影
-     * 10 redbook  红色书籍
-     * 11 redmusic  红色音乐
+     * 1
+     * 2
+     * 3
+     * 4
+     * 5
+     * 6
      */
     public function like(){
         $uid = session('userId'); //点赞人
@@ -169,37 +126,22 @@ class Base extends Controller {
                 $table = "comment";
                 break;
             case 1:
-                $table = "news";
+                $table = "";
                 break;
             case 2:
-                $table = "notice";
+                $table = "";
                 break;
             case 3:
-                $table = "learn";
+                $table = "";
                 break;
             case 4:
-                $table = "company";
+                $table = "";
                 break;
             case 5:
-                $table = "opinion";
+                $table = "";
                 break;
             case 6:
-                $table = "special";
-                break;
-            case 7:
-                $table = "work";
-                break;
-            case 8:
-                $table = "study";
-                break;
-            case 9:
-                $table = "redfilm";
-                break;
-            case 10:
-                $table = "redbook";
-                break;
-            case 11:
-                $table = "redmusic";
+                $table = "";
                 break;
             default:
                 return $this->error("无该数据表");
@@ -301,61 +243,36 @@ class Base extends Controller {
     /**
      * 评论，$type,$aid,$content
      * type值：
-     * 1 news  党建动态
-     * 2 notice 通知公告
-     * 3 learn  党建风采
-     * 4 company 党员之家
-     * 5 opinion  意见反馈
-     * 6 special 专题模块
-     * 7 work  支部工作
-     * 8 study  两学一做
-     * 9 redfilm 红色电影
-     * 10 redbook  红色书籍
-     * 11 redmusic  红色音乐
-     * 12 live 直播
+     * 1
+     * 2
+     * 3
+     * 4
+     * 5
+     * 6
      */
     public function comment(){
         if(IS_POST){
             $uid = session('userId');
             $type = input('type');
             $aid = input('aid');
-            $live = input('live');
             switch ($type) {    //根据类别获取表明
                 case 1:
-                    $table = "news";
+                    $table = "";
                     break;
                 case 2:
-                    $table = "notice";
+                    $table = "";
                     break;
                 case 3:
-                    $table = "learn";
+                    $table = "";
                     break;
                 case 4:
-                    $table = "company";
+                    $table = "";
                     break;
                 case 5:
-                    $table = "opinion";
+                    $table = "";
                     break;
                 case 6:
-                    $table = "special";
-                    break;
-                case 7:
-                    $table = "work";
-                    break;
-                case 8:
-                    $table = "study";
-                    break;
-                case 9:
-                    $table = "redfilm";
-                    break;
-                case 10:
-                    $table = "redbook";
-                    break;
-                case 11:
-                    $table = "redmusic";
-                    break;
-                case 12:
-                    $table = "live";
+                    $table = "";
                     break;
                 default:
                     return $this->error("无该数据表");
@@ -453,9 +370,6 @@ class Base extends Controller {
             'type' => input('type'),
             'aid' => input('aid'),
         );
-        if (input('type') == 12) {
-            $map['create_time'] = ['egt',strtotime(date('Y-m-d'))];
-        }
         //敏感词屏蔽
         $badword = array(
             '法轮功','法轮','FLG','六四','6.4','flg'
@@ -514,5 +428,91 @@ class Base extends Controller {
         }else{
             return false;
         }
+    }
+    /**
+     * 获取数据详情 ，$type,$id
+     * type值：
+     * 1
+     * 2
+     * 3
+     * 4
+     * 5
+     */
+    public function content($type,$id){
+        $userId = session('userId');
+        switch ($type) {    //根据类别获取表明
+            case 1:
+                $table = "";
+                break;
+            case 2:
+                $table = "";
+                break;
+            case 3:
+                $table = "";
+                break;
+            case 4:
+                $table = "";
+                break;
+            case 5:
+                $table = "";
+                break;
+            default:
+                return $this->error("无该数据表");
+                break;
+        }
+        //活动基本信息
+        $list = Db::name($table)->find(['id' => $id]);
+        if (empty($list)){
+            $this ->error('该内容不存在或已删除!');
+        }
+        //浏览加一
+        Db::name($table)->where('id',$id)->setInc('views');
+        if($userId != "visitor"){
+            //浏览不存在则存入pb_browse表
+            $con = array(
+                'user_id' => $userId,
+                $table.'_id' => $id,
+            );
+            $history = Browse::get($con);
+            if(!$history && $id != 0){
+                $s['score'] = array('exp','`score`+1');
+                if ($this->score_up()){
+                    // 未满 15 分
+                    Browse::create($con);
+                    WechatUser::where('userid',$userId)->update($s);
+                }
+            }
+        }
+        $list['user'] = $userId;
+        //分享图片及链接及描述
+        if (isset($list['front_cover'])){ // 封面图
+            if (empty($list['front_cover'])){
+                $list['share_image'] = '/home/images/common/default.png';  // 默认
+            }else{
+                $image = Picture::where('id',$list['front_cover'])->find();
+                $list['share_image'] = "http://".$_SERVER['SERVER_NAME'].$image['path'];
+            }
+        }else{
+            $list['share_image'] = '/home/images/common/default.png';  // 默认
+        }
+        if (isset($list['description'])){
+            if (empty($list['description'])){
+                $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+            }else{
+                $list['desc'] = $list['description'];
+            }
+        }else{
+            $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+        }
+        $list['link'] = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'];
+        //获取 文章点赞
+        $likeModel = new Like;
+        $like = $likeModel->getLike($type,$id,$userId);
+        $list['is_like'] = $like;
+        //获取 评论
+        $commentModel = new Comment();
+        $comment = $commentModel->getComment($type,$id,$userId);
+        $list['comment'] = $comment;
+        return $list;
     }
 }
