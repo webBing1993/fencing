@@ -101,7 +101,7 @@ class Company extends Admin
     {
         $data = Db::table('pb_company')->where('id', $id)->update(['status' => '-1']);
         if ($data) {
-            return $this->success('删除成功！', Url('Company/recruitdel'));
+            return $this->success('删除成功！', Url('Company/recruit'));
         } else {
             return $this->error('删除失败!');
         }
@@ -142,25 +142,30 @@ class Company extends Admin
     }
 
     //志愿风采展
-    public function show(){
+    public function show($id){
         $map = array(
             'status' => array('eq', 0),
+            'type'=>array('eq',$id),
         );
         $list = $this->lists('Companys', $map);
         int_to_string($list, array(
             'status' => array( 0 => "已发布"),
         ));
+       
         $this->assign('list', $list);
-        
+        $this->assign('id',$id);
         
         return $this->fetch();
     }
 
     //添加
-    public function showadd()
+    public function showadd($type)
     {
+        $this->assign('type',$type);
         if (IS_POST) {
             $data = input('post.');
+            //dump($data);
+            //exit();
             $result = $this->validate($data, 'Companys');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
@@ -168,7 +173,7 @@ class Company extends Admin
                 $data['create_user'] = $_SESSION['think']['user_auth']['id'];
                 $res=Db::table('pb_companys')->insert($data);
                 if ($res) {
-                        return $this->success("添加风采成功!", Url('Company/show'));
+                        return $this->success("添加风采成功!",Url('Company/show?id='.$type));
                 } else {
                     return $this->error("添加失败!");
                 }
@@ -198,7 +203,7 @@ class Company extends Admin
 
                 $res = Db::table('pb_companys')->where('id',$id)->update($data1);
                 if ($res) {
-                        return $this->success("修改风采展示成功!", Url('Company/show'));
+                        return $this->success("修改风采展示成功!",Url('Company/show?id='.$data1['type']));
                 } else {
                     return $this->error("修改失败!");
                 }
@@ -216,6 +221,78 @@ class Company extends Admin
         } else {
             return $this->error('删除失败!');
         }
+    }
+    //风采展标题显示
+    public function showbt(){
+        $map = array(
+            'status' => array('eq', 0),
+        );
+        $list = $this->lists('Companyst', $map);
+        int_to_string($list, array(
+            'status' => array( 0 => "已发布"),
+        ));
+        $this->assign('list', $list);
+        
+        return $this->fetch();
+    }
+    
+    //添加
+    public function showbtadd(){
+        if (IS_POST) {
+            $data = input('post.');
+            $result = $this->validate($data, 'Companys');  // 验证  数据
+            if (true !== $result) {
+                return $this->error($result);
+            } else {
+                //$data['create_user'] = $_SESSION['think']['user_auth']['id'];
+                $res=Db::table('pb_companyst')->insert($data);
+                if ($res) {
+                    return $this->success("添加风采成功!", Url('Company/showbt'));
+                } else {
+                    return $this->error("添加失败!");
+                }
+            }
+        } else {
+            return $this->fetch();
+        }
+    }
+    //风采展修改
+    public function showbtedit($id){
+        $list=Db::table('pb_companyst')->where('id',$id)->find();
+        $data = Db::table('pb_picture')->where('id', $list['front_cover'])->find();
+
+        $this->assign('list',$list);
+        $this->assign('data',$data);
+        if (IS_POST) {
+            $data1 = input('post.');
+            //dump($data);
+            //exit();
+            $result = $this->validate($data1, 'Companys');  // 验证  数据
+            if (true !== $result) {
+                return $this->error($result);
+            } else {
+                $res = Db::table('pb_companyst')->where('id',$id)->update($data1);
+                if ($res) {
+                    return $this->success("修改风采展示成功!", Url('Company/showbt'));
+                } else {
+                    return $this->error("修改失败!");
+                }
+            }
+        } else {
+            return $this->fetch();
+        }
+    }
+
+    //风采展标题删除
+    public function showbtdel($id){
+        $data = Db::table('pb_companyst')->where('id', $id)->update(['status' => '-1']);
+        if ($data) {
+            return $this->success('删除成功！', Url('Company/showbt'));
+        } else {
+            return $this->error('删除失败!');
+        }
+
+
     }
 
 }

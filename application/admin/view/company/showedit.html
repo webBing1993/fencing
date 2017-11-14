@@ -57,7 +57,7 @@
                                 class="fa fa-reply"></i> 返回</a>
                     </div>
                 </div>
-                <div class="ibox-content all">
+                <div class="ibox-content all" data-type="{$list.type}">
                     <form id="form" class="form-horizontal" method="post">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
@@ -71,7 +71,7 @@
                                            accept="image/jpg, image/png, image/gif, image/jpeg">
                                     <input type="hidden" name="list_image" class="img" value="{$list.front_cover}" required="">
                                 </div>
-                                <b>推荐尺寸：320*240px</b>
+                                <b>推荐尺寸：90*60px</b>
                             </div>
                         </div>
                         <div class="form-group">
@@ -129,6 +129,17 @@
 <script src="/static/ueditor/ueditor.all.min.js"></script>
 <script src="/admin/js/chosen.jquery.js"></script>
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
+<script>
+    $(document).ready(function(){
+        highlight_subnav("{:Url('Company/showbt')}");
+
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+
+</script>
 <script>
     $(function () {
         $(".datetimepicker").datetimepicker({
@@ -200,8 +211,10 @@
         //发布
         $(".post-put").off('click').on("click", function () {
             var it = $(this);
+            var type = $(".ibox-content").attr("data-type");
             var data = {
                 id: $("input[name='id']").val(),
+                type:type,
                 front_cover: $("input[name='list_image']").val(),
                 title: $("input[name='title']").val(),
                 content: ue.getContent(),

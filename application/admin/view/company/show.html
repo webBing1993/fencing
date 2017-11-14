@@ -15,7 +15,7 @@
                 志愿风采展
             </li>
             <li class="active">
-                <strong><a href="{:Url('Company/show')}">主页</a></strong>
+                <strong><a href="{:Url('Company/showbt')}">主页</a></strong>
             </li>
         </ol>
     </div>
@@ -32,7 +32,7 @@
                 <div class="ibox-title">
                     <h5>列表</h5>
                     <div class="ibox-tools">
-                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('Company/showadd')}">添加风采</a>
+                        <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('Company/showadd?type='.$id)}">添加活动</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -58,9 +58,7 @@
                                 <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
                                 <td>{$vo.status_text}</td>
                                 <td>
-                                    {eq name="$vo.is_enroll" value="0"}
                                     <a href="{:Url('Company/showedit?id='.$vo['id'])}">修改</a>
-                                    {/eq}
                                     <a href="{:Url('Company/showdel?id='.$vo['id'])}" class="confirm ajax-del">删除</a>
                                 </td>
                             </tr>

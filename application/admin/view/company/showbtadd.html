@@ -33,7 +33,7 @@
                 志愿风采展
             </li>
             <li>
-                <a href="{:Url('Company/show')}">主页</a>
+                <a href="{:Url('Company/showbt')}">主页</a>
             </li>
         </ol>
     </div>
@@ -54,7 +54,7 @@
                         <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
                     </div>
                 </div>
-                <div class="ibox-content all" data-type="{$type}">
+                <div class="ibox-content all">
                     <form id="form" class="form-horizontal" method="post">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
@@ -139,7 +139,7 @@
             radioClass: 'iradio_square-green'
         });
 
-        highlight_subnav("{:Url('Company/show')}");
+        highlight_subnav("{:Url('Company/showbt')}");
         //上传图片
         var plus = $('.plus');
         var imgnum = 1;
@@ -192,10 +192,8 @@
         //发布
         $(".post-put").off('click').on("click",function(){
             var it=$(this);
-            var type = $(".ibox-content").attr("data-type");
             var data = {
-                //id:$("input[name='id']").val(),
-                type:type,
+                id:$("input[name='id']").val(),
                 front_cover:$("input[name='list_image']").val(),
                 title:$("input[name='title']").val(),
                 content:ue.getContent(),
