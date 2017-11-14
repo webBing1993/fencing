@@ -26,11 +26,11 @@
 }
 
 .mui-segmented-control .mui-control-item {
-  line-height: 10vw;
+  line-height: 8vw;
 }
 
 #refreshContainer {
-  margin-top: 10vw;
+  margin-top: 8vw;
 }
 
 .list ul a {
@@ -351,4 +351,12 @@
 .fixed .list ul a span:nth-child(3) {
   bottom: 2vw;
   text-align: right;
+}
+
+.default img {
+  width: 16vw;
+  position: absolute;
+  left: 50%;
+  margin-top: 30%;
+  margin-left: -8vw;
 }

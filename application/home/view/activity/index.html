@@ -1,6 +1,7 @@
 {extend name="public/common"}
 {block name="style"}
 <link rel="stylesheet" href="/home/sass/stylesheets/activity/index.css">
+<title>支部活动</title>
 {/block}
 
 {block name="body"}
@@ -66,38 +67,45 @@
                </div>
            </div>
            <div id="item2mobile" class="mui-slider-item mui-control-content">
-               <!--安排活动-->
+               <!--会议纪要-->
                <div class="summary">
                    <div class="list">
+                       {empty name="summary"}
+                        <div class="default"><img src="/home/images/common/nomessage.png"></div>
+                       {else/}
                        <ul>
-                           <!--安排活动开始  循环-->
-                           <a href="#">
-                               <p style="font-weight: bold;">资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量</p>
-                               <span>这款裤子再看再看再看</span>
-                               <span>2017-11-10</span>
+                           {volist name="summary" id="su"}
+                           <a href="{:Url('Activity/detail2?type=2&id='.$su['id'])}">
+                               <p style="font-weight: bold;">{$su.title}</p>
+                               <span>{$su.publisher}</span>
+                               <span>{$su.create_time}</span>
                                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-
                            </a>
-                           <!--安排活动结束  循环-->
+                           {/volist}
                        </ul>
+                       {/empty}
                    </div>
                </div>
            </div>
            <div id="item3mobile" class="mui-slider-item mui-control-content">
-               <!--活动展示-->
+               <!--固定活动-->
                <div class="fixed">
                    <div class="list">
+                       {empty name="fixed" id="fi"}
+                        <div class="default"><img src="/home/images/common/nomessage.png"></div>
+                       {else/}
                        <ul>
-                           <!--活动展示开始  循环-->
-                           <a href="#">
-                               <img src="">
-                               <p>多的点点滴滴鹅鹅鹅鹅鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯咯咯咯过过过过过过过过过过过过</p>
-                               <span>2017-11-9</span>
+                           {volist name="fixed" id="fi"}
+                           <a href="{:Url('Activity/detail?type=2&id='.$fi['id'])}">
+                               <img src="{$fi.front_cover}">
+                               <p>{$fi.title}</p>
+                               <span>{$fi.create_time}</span>
                                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-                               <span>多的东方东风的</span>
+                               <span>{$fi.publisher}</span>
                            </a>
-                           <!--活动展示结束  循环-->
+                           {/volist}
                        </ul>
+                       {/empty}
                    </div>
                </div>
            </div>
@@ -109,7 +117,6 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    $("title").text("支部活动");
     $(function(){
         //tab初始化和数据存储
         c = getCookie("c")?getCookie("c"):0;
@@ -119,19 +126,19 @@
     //加载是否需要上拉加载
     window.onload = function(){
         if(c==0){
-            if($(".meeting .list a").length<10){
+            if($(".meeting .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
         }else if(c==1){
-            if($(".notice .list a").length<10){
+            if($(".notice .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
         }else if( c==2 ){
-            if($(".meeting .list a").length<10){
+            if($(".fixed .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -154,7 +161,7 @@
         }else if( c==1 ){
             var len = $(".notice .list a").length;
         }else if( c==2 ){
-            var len = $(".meeting .list a").length;
+            var len = $(".fixed .list a").length;
         }
         $.ajax({
             type:"post",
@@ -169,7 +176,7 @@
                 if(data.code == 1){
                     addMeets(data,c);
                     var dataLen =data.data.length;
-                    if(data.data.length == 10){
+                    if(data.data.length == 7){
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
                     }else{
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -187,31 +194,34 @@
         for(var i = 0; i< len;i++){
             var list = lists[i];
             if(type==0){
-                html+= '<a href="#">' +
-                    '<img src="">' +
-                    '<p></p>' +
-                    '<span>2017-11-9</span>' +
+                html+=
+                    '<a href="/home/activity/detail/type/1/id/' + list.id + '">' +
+                    '<img src="'+list.front_cover+'">' +
+                    '<p>'+list.title+'</p>' +
+                    '<span>'+list.create_time+'</span>' +
                     '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
-                    '<span>多的东方东风的</span>' +
+                    '<span>'+list.publisher+'</span>' +
                     '</a>';
 
             }
             if(type==1){
-                html+='<a href="#">' +
-                    '<p></p>' +
-                    '<span>2017-11-9</span>' +
-                    '<span>多的东方东风的</span>' +
+                html+=
+                    '<a href="/home/activity/detail2/type/2/id/' + list.id + '">' +
+                    '<p>'+list.title+'</p>' +
+                    '<span>'+list.create_time+'</span>' +
+                    '<span>'+list.publisher+'</span>' +
                     '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
                     '</a>';
 
             }
             if(type==2){
-                html+='<a href="#">' +
-                    '<img src="">' +
-                    '<p></p>' +
-                    '<span>2017-11-9</span>' +
+                html+=
+                    '<a href="/home/activity/detail/type/2/id/' + list.id + '">' +
+                    '<img src="'+list.front_cover+'">' +
+                    '<p>'+list.title+'</p>' +
+                    '<span>'+list.create_time+'</span>' +
                     '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
-                    '<span>多的东方东风的</span>' +
+                    '<span>'+list.publisher+'</span>' +
                     '</a>';
 
             }
@@ -221,7 +231,7 @@
         }else if(type==1){
             $(".notice .list ul" ).append(html);
         }else if(type==2){
-            $(".meeting .list ul" ).append(html);
+            $(".fixed .list ul" ).append(html);
         }
     }
     //tab点击事件
@@ -231,19 +241,19 @@
         mui('#refreshContainer').pullRefresh().refresh(true);
         c = this.getAttribute("data-index");
         if(c==0){
-            if($(".meeting .list a").length<10){
+            if($(".meeting .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
         }else if(c==1){
-            if($(".notice .list a").length<10){
+            if($(".notice .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
         }else if(c==2){
-            if($(".meeting .list a").length<10){
+            if($(".fixed .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
