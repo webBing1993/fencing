@@ -1,0 +1,37 @@
+@import "tab";
+@import "common";
+@import "graphic-list";
+@import "compass/css3";
+
+#tab{
+  a{
+    &:after{
+      left:49vw;
+    }
+  }
+}
+
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+  color: #fff;
+  background: #ffa626;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.list{
+  ul{
+    a{
+      img{
+        @include border-radius(3px);
+      }
+      span{
+        &:nth-child(3){
+          position: absolute;
+        }
+      }
+    }
+  }
+}

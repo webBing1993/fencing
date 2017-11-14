@@ -23,13 +23,14 @@ use think\Controller;
 use app\home\model\News as NewsModel;
 /**
  * Class News
- * @package 党建动态
+ * @package 箬横动态
  */
 class News extends Base {
     /**
      * 主页
      */
     public function index(){
+
         //列表
         return $this->fetch();
     }

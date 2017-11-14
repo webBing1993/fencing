@@ -19,28 +19,23 @@ use think\Db;
 
 /**
  * Class Notice
- * @package  鸡毛传帖
+ * @package  通知公告
  */
 class Notice extends Base {
     /**
      * 主页
      */
     public function index(){
-        $this->anonymous(); //判断是否是游客
+
         return $this->fetch();
     }
 
     /**
-     * 更多  通知
+     * 详情页
      */
-    public function leadlistmore(){
-        $len = input('length');
-        $type = input('type');
-    }
-    /**
-     *  相关通知  活动通知 详细页
-     */
-    public function forumnotice(){
-    }
+    public function detail(){
 
+        return $this->fetch();
+
+    }
 }

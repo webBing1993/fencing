@@ -2,7 +2,6 @@
 
 {block name="style"}
 <title>通知公告</title>
-<link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/sass/stylesheets/notice/index.css">
 {/block}
 
@@ -68,7 +67,6 @@
 
 {block name="script"}
 <script src="/home/js/reset.js"></script>
-<script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script>
 $(function(){
     c = getCookie("c")?getCookie("c"):0;
@@ -132,7 +130,7 @@ function loadScroll(){
             }
         }
     })
-}
+};
 
 function addCourse(data,type) {
     var html = '';
@@ -163,7 +161,7 @@ function addCourse(data,type) {
     } else if (type == 1) {
         $(".notice ul").append(html);
     }
-}
+};
 
 //tab点击事件
 mui('#tab').on('tap', 'a', function(e) {
@@ -192,7 +190,6 @@ mui("#refreshContainer").on("touchstart","a",function(){
 }).on("touchend","a", function () {
     $(this).css("backgroundColor","#fff");
 });
-
 
 mui("#refreshContainer").on("tap","a",function(){
     var url = this.getAttribute("href");
