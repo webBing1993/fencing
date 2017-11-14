@@ -30,7 +30,7 @@ $(function(){
                         if(msg.code == 1){
                             if(this_.hasClass('add')){
                                 // 图片添加
-                                if(imglen == 3){
+                                if(imglen == 0){
                                     $('.add' ).fadeOut();
                                 }
                                 $('.img').eq(imglen).removeClass('hide' )

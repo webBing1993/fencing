@@ -83,6 +83,11 @@ class Volunteer extends Base{
             return $this->error("加载失败");
         }*/
     }
-
+    /*
+        *  发布和填写
+        */
+    public  function publish(){
+        return $this ->fetch();
+    }
 
 }

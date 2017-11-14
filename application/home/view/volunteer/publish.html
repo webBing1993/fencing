@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<link rel="stylesheet" href="/home/sass/stylesheets/activity/publish.css">
+<link rel="stylesheet" href="/home/sass/stylesheets/volunteer/publish.css">
 <link rel="stylesheet" href="/home/sass/stylesheets/activity/mui.picker.min.css">
 <style>
     #popover,#popover .mui-table-view{
@@ -48,11 +48,19 @@
                 <input type="text" placeholder="请输入参与地点" name="address" value="">
             </li>
             <li class="type1">
-                参会人
-                <input type="text" placeholder="请输入参会人或参与支部" name="people" value="">
+                联系人
+                <input type="text" placeholder="请输入联系人姓名" name="people" value="">
+            </li>
+            <li class="type1">
+                联系方式
+                <input type="text" placeholder="请输入联系人电话" name="people" value="">
+            </li>
+            <li class="type1">
+                招募人数
+                <input type="text" placeholder="请输入最多招募人数" name="people" value="">
             </li>
             <div class="content">
-                <textarea placeholder="请输入本次会议纪要,谈谈你的感触!(图片选填,最多四张，不限字数)" name="content"></textarea>
+                <textarea placeholder="请输入招募内容" name="content"></textarea>
                 <div class="imgs clear">
                     <div class="img fl hide"></div>
                     <div class="img fl hide"></div>
@@ -60,20 +68,19 @@
                     <div class="img fl hide"></div>
                     <div class="add fl"></div>
                 </div>
-                <div style="color: #666;font-size: 0.32rem">（您最多上传3张图片，图片小于3M , 点击当前图片可以删除）</div>
+                <div style="color: #666;font-size: 0.32rem">（您最多上传1张图片,可不传, 点击当前图片可以删除）</div>
                 <input type="file" class="hide" id="upimg" name="upload" accept="image/*">
                 <input type="hidden" name="id" value="">
             </div>
         </ul>
     </div>
-    <div class="goreview">确认上传</div>
-    <p>注：点击保存将保存至个人中心-我的草稿；点击去审核，审核通过后将在相应栏目发布，并保存至我的发布。</p>
+    <div class="goreview">提交</div>
 </div>
 
 {/block}
 
 {block name="script"}
-<script src="/home/js/publish.js"></script>
+<script src="/home/js/publishs.js"></script>
 <script src="/home/js/mui.picker.min.js"></script>
 <script>
     var u = navigator.userAgent, app = navigator.appVersion;
@@ -84,6 +91,9 @@
 
     if(isAndroid){
         $ ("input[name='file']").attr('capture','camera');
+        /*window.onresize(){
+             var h =
+        }*/
     }
     var type =  parseInt(window.location.href.split("publish/type/")[1]);
     var c =  parseInt(window.location.href.split("style/")[1]);
@@ -93,15 +103,15 @@
     });
 
     window.onload = function(){
-            var dtpicker = new mui.DtPicker({
-                "type": "datetime",
-                "value": ""
-            });
-            document.querySelector('#date').addEventListener('tap', function () {
-                dtpicker.show(function (e) {
-                    document.getElementById('date').value = e.text;
-                })
+        var dtpicker = new mui.DtPicker({
+            "type": "datetime",
+            "value": ""
+        });
+        document.querySelector('#date').addEventListener('tap', function () {
+            dtpicker.show(function (e) {
+                document.getElementById('date').value = e.text;
             })
+        })
     };
     options = {
         scrollY: true, //是否竖向滚动
@@ -235,16 +245,16 @@
                 data["class"] = 5;
             }else{
                 data["class"] = 6;
-                    if(data["content"].length<1500){
-                        swal({
-                            title: ' ',
-                            text: '内容不少于1500字',
-                            type: 'error',
-                            showConfirmButton:false,
-                            timer:1500
-                        });
-                        return;
-                    }
+                if(data["content"].length<1500){
+                    swal({
+                        title: ' ',
+                        text: '内容不少于1500字',
+                        type: 'error',
+                        showConfirmButton:false,
+                        timer:1500
+                    });
+                    return;
+                }
             }
         }else if(type==4){
             var data={
@@ -274,7 +284,7 @@
                 if($(this).data("tab")){
                     data['list_images'].push($(this).data("tab")+"")  ;
                 }
-            })
+            });
             console.log(data)
 //            data['list_image'] = [$('.img:nth-child(1) img').attr('data-tab'),$('.img:nth-child(2) img').attr('data-tab'),$('.img:nth-child(3) img').attr('data-tab')];
             $.ajax({
