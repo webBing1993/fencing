@@ -3,22 +3,7 @@
 @import "title-pos-time";
 
 
-#tab{
-  top:50vw;
-  a{
-    &:after{
-      left:49vw;
-    }
-  }
-}
-#refreshContainer {
-  margin-top: 58vw;
-}
 
-.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
-  color: #fff;
-  background: #ffa626;
-}
 .list ul a {
   height: 19vw;
 }
@@ -63,6 +48,16 @@
     flex-direction: column;
     top: 0;
 
+  }
+}
+
+.default {
+  img{
+    width: 16vw;
+    position: absolute;
+    left: 50%;
+    margin-top: 50%;
+    margin-left: -8vw;
   }
 }
 
