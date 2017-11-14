@@ -26,6 +26,10 @@
        <div class="mui-slider-group">
            <div id="item1mobile" class="mui-slider-item mui-control-content">
                <!--安排活动-->
+               {if condition="$notice eq null && $meeting eq null"}
+               <div class="default"><img src="/home/images/common/nomessage.png" alt="暂无消息"> </div>
+               {else/}
+               {notempty name="notice"}
                <div class="notice">
                    <a class="more" href="{:Url('Activity/morelist')}">
                        <span>安排活动</span>
@@ -33,38 +37,41 @@
                    </a>
                    <div class="list">
                        <ul>
-                           <!--安排活动开始  循环-->
-                           <a href="#">
-                               <p>风打开了就是费劲独立思考发</p>
-                               <p>资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量资料了资料资料整理了张了张嘴理论重量</p>
-                               <span>这款裤子再看再看再看</span>
-                               <span>2017-11-10</span>
+                           {volist name="notice" id="no"}
+                           <a href="{:Url('Activity/detail2?type=1&id='.$no['id'])}">
+                               <p>{$no.title}</p>
+                               <p>{$no.description}</p>
+                               <span>{$no.publisher}</span>
+                               <span>{$no.create_time}</span>
                                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                            </a>
-                           <!--安排活动结束  循环-->
+                           {/volist}
                        </ul>
                    </div>
                </div>
-               <!--活动展示-->
+               {/notempty}
+               {notempty name="meeting"}
                <div class="meeting">
-                   <div class="more" href="#">
+                   <div class="more">
                        <span>活动展示</span>
                        <span></span>
                    </div>
                    <div class="list">
                        <ul>
-                           <!--活动展示开始  循环-->
-                           <a href="#">
-                               <img src="">
-                               <p>多的点点滴滴鹅鹅鹅鹅鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯鹅鹅人咯咯咯咯咯咯过过过过过过过过过过过过</p>
-                               <span>2017-11-10</span>
+                           {volist name="meeting" id="mee"}
+                           <a href="{:Url('Activity/detail?type=1&id='.$mee['id'])}">
+                               <img src="{$mee.front_cover}">
+                               <p>{$mee.title}</p>
+                               <span>{$mee.create_time}</span>
                                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-                               <span>多的东方东风的</span>
+                               <span>{$mee.publisher}</span>
                            </a>
-                           <!--活动展示结束  循环-->
+                           {/volist}
                        </ul>
                    </div>
                </div>
+               {/notempty}
+               {/if}
            </div>
            <div id="item2mobile" class="mui-slider-item mui-control-content">
                <!--会议纪要-->
@@ -132,7 +139,7 @@
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
         }else if(c==1){
-            if($(".notice .list a").length<7){
+            if($(".summary .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -159,7 +166,7 @@
         if( c==0 ){
             var len = $(".meeting .list a").length;
         }else if( c==1 ){
-            var len = $(".notice .list a").length;
+            var len = $(".summary .list a").length;
         }else if( c==2 ){
             var len = $(".fixed .list a").length;
         }
@@ -229,7 +236,7 @@
         if(type==0){
             $(".meeting .list ul" ).append(html);
         }else if(type==1){
-            $(".notice .list ul" ).append(html);
+            $(".summary .list ul" ).append(html);
         }else if(type==2){
             $(".fixed .list ul" ).append(html);
         }
@@ -247,7 +254,7 @@
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
         }else if(c==1){
-            if($(".notice .list a").length<7){
+            if($(".summary .list a").length<7){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
