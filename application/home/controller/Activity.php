@@ -18,6 +18,15 @@ class Activity extends Base
 
         return $this ->fetch();
     }
+
+    /*
+    *  更多活动
+    */
+    public  function morelist(){
+
+        return $this ->fetch();
+    }
+
     /*
      *  发布和填写
      */
