@@ -171,6 +171,7 @@ class Company extends Admin
                 return $this->error($result);
             } else {
                 $data['create_user'] = $_SESSION['think']['user_auth']['id'];
+                $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
                 $res=Db::table('pb_companys')->insert($data);
                 if ($res) {
                         return $this->success("添加风采成功!",Url('Company/show?id='.$type));
@@ -244,7 +245,7 @@ class Company extends Admin
             if (true !== $result) {
                 return $this->error($result);
             } else {
-                //$data['create_user'] = $_SESSION['think']['user_auth']['id'];
+                $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
                 $res=Db::table('pb_companyst')->insert($data);
                 if ($res) {
                     return $this->success("添加风采成功!", Url('Company/showbt'));
