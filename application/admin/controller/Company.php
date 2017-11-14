@@ -216,17 +216,6 @@ class Company extends Admin
         } else {
             return $this->error('删除失败!');
         }
+    }
 
-    }
-    
-    //风采展查看详情
-    public function see($id){
-        $list=Db::table('pb_companys')->where('id',$id)->find();
-        $data = Db::table('pb_picture')->where('id', $list['front_cover'])->find();
-        //dump($list);
-        $this->assign('list',$list);
-        $this->assign('data',$data);
-        
-        return $this->fetch();
-    }
 }

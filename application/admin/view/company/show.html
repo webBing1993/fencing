@@ -58,7 +58,6 @@
                                 <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
                                 <td>{$vo.status_text}</td>
                                 <td>
-                                    <a href="{:Url('Company/see?id='.$vo['id'])}">查看详情</a>
                                     {eq name="$vo.is_enroll" value="0"}
                                     <a href="{:Url('Company/showedit?id='.$vo['id'])}">修改</a>
                                     {/eq}
