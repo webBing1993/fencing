@@ -182,7 +182,6 @@
             success:function(data){
                 if(data.code == 1){
                     addMeets(data,c);
-                    var dataLen =data.data.length;
                     if(data.data.length == 7){
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
                     }else{
