@@ -14,7 +14,7 @@
 
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
   color: #fff;
-  background: #ffa626;
+  background: #259b24;
 }
 
 p {
@@ -30,8 +30,32 @@ p {
       span{
         &:nth-child(3){
           position: absolute;
+          margin-left: -6px;
+        }
+        &:nth-child(5){
+          position: absolute;
+          top:7vw;
+          right:2vw;
+          height:6vw;
+          line-height:6vw;
         }
       }
     }
+  }
+}
+
+@media screen and (device-width: 320px){
+  .list ul a span:nth-child(3),.list ul a span:nth-child(4){
+    bottom:1vw;
+  }
+}
+
+.default {
+  img{
+    width: 16vw;
+    position: absolute;
+    left: 50%;
+    margin-top: 50%;
+    margin-left: -8vw;
   }
 }
