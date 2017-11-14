@@ -72,6 +72,7 @@ input[type="date"]:before{
     height: 30vw;
     margin: 2vw 0;
     padding-left: 3vw;
+    line-height:0.5rem ;
 }
 @media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2){
     .list ul textarea{
@@ -80,8 +81,9 @@ input[type="date"]:before{
 }
 
 textarea::-webkit-input-placeholder{
-    font-size: 0.38rem;
+    font-size: 0.36rem;
     color: #999;
+    line-height:0.5rem;
 }
 textarea{
     font-size: 0.38rem;
@@ -128,24 +130,19 @@ textarea{
 }
 
 .save,.goreview{
-    width:56vw;
-    height:10vw;
+    width: 56vw;
+    height: 1rem;
     background: #fc6c62;
     border-radius: 5px;
     color: #fff;
     margin: 5vw auto;
     text-align: center;
     font-size: 0.36rem;
-    line-height: 10vw;
-}
-.goreview{
-    background: #fff;
-    color: #fc6c62;
-    border: 1px solid #fc6c62;
+    line-height: 1rem;
 }
 .goreview+p{
-    font-size: 0.36rem;
+    font-size: 0.32rem;
     color: #999;
     padding: 1vw 3vw;
-    line-height: 4vw;
+    line-height: 5vw;
 }

@@ -19,6 +19,14 @@ use app\home\model\Like;
 use think\Db;
 
 class Learn extends Base{
+    /**
+     * 网上党校主页
+     */
+    public function index(){
+
+        return $this->fetch();
+
+    }
 
     /**
      * 两学一做
