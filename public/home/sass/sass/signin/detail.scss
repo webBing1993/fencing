@@ -1,10 +1,69 @@
 @import "common";
 @import "compass/css3";
 
-
+body{
+  background-color: #fff;
+}
 .banner{
   img{
     width:100vw;
     height:50vw;
   }
+}
+
+.list{
+  padding: 2vw 3vw;
+  ul {
+    li {
+      min-height: 10vw;
+      font-size: 0.34rem;
+      border-bottom: 1px solid #f1f1f1;
+      display: flex;
+      align-items: center;
+      p {
+        margin-bottom: 0;
+        width: 85%;
+        font-size: 0.34rem;
+        text-align: right;
+        margin-left: 0.5rem;
+        span {
+          width: auto;
+          text-align: left;
+          margin-left: 0;
+          display: inline-block;
+        }
+      }
+      span {
+        display: inline-block;
+        width: 85%;
+        color: #666;
+        text-align: right;
+        margin-left: 0.5rem;
+      }
+      &:first-child {
+        span {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+      &:nth-child(2) {
+        span {
+          width: 81%;
+        }
+      }
+    }
+  }
+}
+
+.sign{
+  position: absolute;
+  bottom:0;
+  height:1rem;
+  background: #259b24;
+  color: #fff;
+  line-height: 1rem;
+  text-align: center;
+  font-size: 0.36rem;
+  width:100vw;
 }
