@@ -12,12 +12,12 @@
 <div class="content" ontouchstart="" onmouseover="">
 	<!--<img src="/home/images/game2.png" alt="" class="text">-->
 	{if condition='$info eq null'}
-	<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
+	<a class="start" href="{:Url('Learn/answer')}">开始答题</a>
 	{elseif condition='$exist eq 0'/}
-	<a class="start" href="{:Url('Constitution/goon')}">继续答题</a>
-	<a class="continue" href="{:Url('Constitution/answer')}">重新开始</a>
+	<a class="start" href="{:Url('Learn/goon')}">继续答题</a>
+	<a class="continue" href="{:Url('Learn/answer')}">重新开始</a>
 	{else/}
-	<a class="start" href="{:Url('Constitution/answer')}">开始答题</a>
+	<a class="start" href="{:Url('Learn/answer')}">开始答题</a>
 	{/if}
 </div>
 
