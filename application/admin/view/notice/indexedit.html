@@ -311,6 +311,7 @@
         $(".post-add").on("click",function(){
             /*重组轮播图，删除多余字符串（i是键值，1表示几位开始*/
             var it=$(this);
+            var type = $(".ibox-content").attr("data-type");
             var data = {
                 id:$("input[name='id']").val(),
                 type:type,
