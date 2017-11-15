@@ -13,8 +13,12 @@ use think\Model;
 
 class News extends Model {
     //首页获取已推送的数据
-    public function get_list($length,$len){
-        $details = $this ->where(['status' => 1]) ->order('create_time desc') ->limit($length,$len) ->select();
-        return $details;
+    public function get_list($where,$length=0){
+        $list = $this->where($where)->order('create_time','desc')->limit($length,10)->select();
+        foreach($list as $value){
+            $value['create_time'] = date('Y-m-d',$value['create_time']);
+            $value['front_cover'] = Picture::where('id',$value['front_cover'])->value('path');
+        }
+        return $list;
     }
 }
