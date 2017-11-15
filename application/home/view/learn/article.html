@@ -2,7 +2,7 @@
 
 {block name="style"}
 <title>两学一做</title>
-<link rel="stylesheet" href="/home/css/details-template/detail.css">
+<link rel="stylesheet" href="/home/sass/stylesheets/details-template/detail.css">
 {/block}
 
 {block name="body"}
@@ -17,7 +17,7 @@
 		<div class="content">
 			<div class="article-content">{$detail.content}</div>
 			<div class="like">
-				<span class="read">{$detail.views}</span>
+				<span class="read">{$detail.views +1}</span>
 				{eq name="visit" value="0"}
 				{eq name="detail.is_like" value="1"}
 				<span class="isgood good_ notvisitor"  data-type="3" data-id="{$detail.id}">{$detail.likes}</span>
@@ -33,7 +33,7 @@
 		<div class="comment">
 			<div class="sum">共<span>{$detail.comments}</span>条评论</div>
 			<div class="lists">
-				{volist name="comment" id="co"}
+				{volist name="$detail.comment" id="co"}
 				<div class="list clear">
 					<div class="fl">
 						<img src="{$co.header}" alt="用户" class="user">
@@ -71,7 +71,7 @@
 {block name="script"}
 <script>
 	window.onload = function(){
-		if($(".list").length<7){
+		if($(".list").length<10){
 			mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
 		}else{
 			mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -206,7 +206,7 @@
 				if(data.code == 1){
 					addComment(data);
 					var dataLen =data.data.length;
-					if(data.data.length == 7){
+					if(data.data.length == 10){
 						mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 					}else{
 						mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -235,7 +235,7 @@
 					'<div class="content">' + list.content + '</div>' +
 					'<div class="time">' + list.time + '</div>' +
 					'</div>';
-			if ({$visit} == 0){
+			if ("{$visit}" == 0){
 				if(list.is_like == 0){
 					html+='<div class="fr isgood good notvisitor"  data-type="0" data-id='+list.id+'>'+list.likes+'</div>'
 				}else{
@@ -255,9 +255,9 @@
 	//---微信接口JS-SDK的调用
 	wx.config({
 		debug: false,
-		appId: '{$jsSign.appId}', // 必填，公众号的唯一标识
+		appId: '{$jsSign.appid}', // 必填，公众号的唯一标识
 		timestamp: "{$jsSign['timestamp']}", // 必填，生成签名的时间戳，切记时间戳是整数型，别加引号
-		nonceStr: '{$jsSign.nonceStr}', // 必填，生成签名的随机串
+		nonceStr: '{$jsSign.noncestr}', // 必填，生成签名的随机串
 		signature: '{$jsSign.signature}', // 必填，签名，见附录1
 		jsApiList: [
 			'checkJsApi',

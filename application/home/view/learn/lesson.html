@@ -8,7 +8,7 @@
 {block name="body"}
 <div id="refreshContainer" class="mui-content mui-scroll-wrapper">
     <div class="mui-scroll">
-            {empty name="$info"}
+            {empty name="$list"}
             <div class="default"><img src="/home/images/common/nomessage.png" alt="暂无消息"> </div>
             {else/}
             {notempty name="$top"}
@@ -45,7 +45,7 @@
             <div class="lists">
                 <div class="tag"> —— 更多课程 —— </div>
                 <!--图文课程-->
-                {volist name="info" id="vo"}
+                {volist name="list" id="vo"}
                 {eq name="vo.type" value="2"}
                 <a href="{:Url('Learn/article?id='.$vo['id'])}" class="list lesson">
                     <div class="tab">图文</div>
@@ -72,12 +72,10 @@
 
     //首页加载是否需要上拉加载
     window.onload = function() {
-        if(c==0){
-            if ($(".lists a").length < 7) {
-                mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
-            } else {
-                mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
-            }
+        if ($(".lists a").length < 10) {
+            mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+        } else {
+            mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
         }
     };
 
@@ -110,7 +108,7 @@
         var len = $(".lists a").length;
         $.ajax({
             type:"post",
-            url:"{:Url('Learn/more')}",
+            url:"{:Url('Learn/indexmore')}",
             data:{
                 length:len
             },

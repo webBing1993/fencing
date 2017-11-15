@@ -112,7 +112,7 @@ class Base extends Controller {
      * 0 评论点赞
      * 1 special 通知公告
      * 2 news  箬横动态
-     * 3
+     * 3 study 两学一做
      * 4
      * 5
      * 6
@@ -132,7 +132,7 @@ class Base extends Controller {
                 $table = "news";
                 break;
             case 3:
-                $table = "";
+                $table = "study";
                 break;
             case 4:
                 $table = "";
@@ -245,7 +245,7 @@ class Base extends Controller {
      * type值：
      * 1 special 通知公告
      * 2 news    箬横动态
-     * 3
+     * 3 study  两学一做
      * 4
      * 5
      * 6
@@ -263,7 +263,7 @@ class Base extends Controller {
                     $table = "news";
                     break;
                 case 3:
-                    $table = "";
+                    $table = "study";
                     break;
                 case 4:
                     $table = "";
@@ -434,7 +434,7 @@ class Base extends Controller {
      * type值：
      * 1 special 通知公告
      * 2 news    箬横动态
-     * 3
+     * 3 study 两学一做
      * 4
      * 5
      */
@@ -448,7 +448,7 @@ class Base extends Controller {
                 $table = "news";
                 break;
             case 3:
-                $table = "";
+                $table = "study";
                 break;
             case 4:
                 $table = "";
