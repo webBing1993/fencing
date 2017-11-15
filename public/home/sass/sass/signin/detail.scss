@@ -55,9 +55,42 @@ body{
     }
   }
 }
+.people{
+  padding: 2vw 3vw;
+  font-size: 0.34rem;
+  margin-bottom: 1rem;
+  &:after{
+    display: block;
+    content: '';
+    clear: both;
+  }
+  ul{
+    margin-top: 0.2rem;
+    &:after{
+      display: block;
+      content: '';
+      clear: both;
+    }
+    li{
+      float: left;
+      text-align: center;
+      width:20%;
+      img{
+        width:10vw;
+        height:10vw;
+        @include border-radius(50%);
+      }
+      p{
+        color: #333;
+        font-size:0.38rem;
+        margin-bottom: 2vw;
+      }
+    }
+  }
+}
 
 .sign{
-  position: absolute;
+  position: fixed;
   bottom:0;
   height:1rem;
   background: #259b24;
