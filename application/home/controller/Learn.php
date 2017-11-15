@@ -284,42 +284,88 @@ class Learn extends Base{
    */
 
 
-    public function learn(){
-        //主页信息
-        // 手机党校
-       /* $Learn = new LearnModel();
-        $map = array(
-            'recommend' => 1,
-            'status' => ['egt',1]
-        );
-        $top = $Learn->get_list($map,0,true);
-        $info = $Learn->get_list(['status' => ['egt',1]],0);
-        $this->assign('top',$top);
-        $this->assign('info',$info);
-        // 党章
-        $list = Constitution::all();
-        $this->assign('list',$list);*/
-        return $this->fetch();
+    /**
+     * 排行榜
+     */
+    public function rank(){
+        $this->anonymous();
+        $type = input('type');  //获取类型，1为常规模式排行 2为互动模式排行
 
+        $wechatModel = new WechatUser();
+        $userId = session('userId');
+        $personal = $wechatModel->where('userid',$userId)->find();    //获取个人信息
+
+        //传统模式
+        $map['trad_score'] = array('neq',0);
+        $trad = $wechatModel->where($map)->order('trad_score desc')->limit(50)->select();
+        foreach ($trad as $key => $value) {
+            if($value['userid'] == $userId) {
+                $personal['trad_rank'] = $key+1;     //该用户传统排名
+            }
+        }
+        //游戏模式
+        $map1['game_score'] = array('neq',0);
+        $game = $wechatModel->where($map1)->order('game_score desc')->limit(50)->select();
+        foreach ($game as $key => $value) {
+            if($value['userid'] == $userId) {
+                $personal['game_rank'] = $key+1;     //该用户游戏排名
+            }
+        }
+        if(isset($personal['trad_rank'])) {
+            $personal['trad_rank'] = "第".$personal['trad_rank']."名";
+        }else {
+            $personal['trad_rank'] = "无";
+        }
+        if(isset($personal['game_rank'])) {
+            $personal['game_rank'] = "第".$personal['game_rank']."名";
+        }else {
+            $personal['game_rank'] = "无";
+        }
+        $this->assign('per',$personal);
+        $this->assign('trad',$trad);
+        $this->assign('game',$game);
+        $this->assign('type',$type);
+
+        return $this->fetch();
     }
-    // 手机党校 加载更多
-    public function more(){
-       /* $len = input('post.length');
-        $Learn = new LearnModel();
-        $list =  $Learn->get_list(['status' => ['egt',1]],$len);
-        return $this->success('加载成功','',$list);*/
+
+    /**
+     * 互动模式主页
+     */
+    public function game(){
+        //获取该用户的的信息
+        $users=$users=session('userId');
+        $info = Answer::get(['userid'=>$users]);
+        if($info) {
+            $exist=$info->exist;
+            $this->assign('exist',$exist);
+            $this->assign('info',$info);
+        }else {
+            $this->assign('exist',"");
+            $this->assign('info',"");
+        }
+
+        return $this->fetch();
     }
+
     /**
      * 答题页面
      */
     public function answer(){
-      /*  //取单选
+        //取单选
         $arr=Question::all(['type'=>0]);
         foreach($arr as $value){
             $ids[]=$value->id;
         }
         //获取用户已经得到的题目
-        $lists=array();
+        $users=$users=session('userId');
+        $List=Answer::get(['userid'=>$users]);
+        if($List !==null){
+            $list=$List->question_id;
+            $lists=json_decode($list);
+        }else{
+            $lists=array();
+        }
         //随机获取单选的题目
         $num=20;//题目数目
         $data=array();
@@ -359,28 +405,101 @@ class Learn extends Base{
             $questions[]=Question::get($value);
         }
         $this->assign('question',$question);
-        $this->assign('questions',$questions);*/
+        $this->assign('questions',$questions);
+        return $this->fetch();
+    }
+    /*
+     * 用户题目保存
+     */
+    public function save(){
+        //获取用户提交信息
+        $data=input('post.');
+        //将题目ID数目json编码
+        $questions=json_encode($data['arrId']);
+        //将用户提交答案数组json编码
+        $rights=json_encode($data['arr']);
+        $users=session('userId');
+        //若该用户已经存在则更新
+        if(Answer::get(['userid'=>session('userId')])){
+            $answer=Answer::get(['userid'=>session('userId')]);
+            $answer->question_id=$questions;
+            $answer->value=$rights;
+            $answer->exist=0;
+            if($answer->save()){
+                return $this->success('保存成功');
+            }else{
+                return $this->error('保存失败');
+            };
+        }
+        //若该用户不存在则添加
+        $Answer=new Answer();
+        $Answer->userid=$users;
+        $Answer->question_id=$questions;
+        $Answer->value=$rights;
+        $Answer->exist=0;
+
+        if($Answer->save()){
+            return $this->success('保存成功');
+        }else{
+            return $this->error('保存失败');
+        }
+    }
+    /*
+     * 继续答题
+     */
+    public function goon(){
+        //获取该用户的已经保存的信息
+        $users=$users=session('userId');
+        $Info=Answer::get(['userid'=>$users]);
+        //用户信息不存在,则报错跳转
+        if(empty($Info)){
+            return $this->error('用户信息不存在错误',Url('Constitution/game'));
+        }
+        //获取的题目ID,将json格式转化为数组
+        $arr=json_decode($Info->question_id,true);
+        //获取单选和多选的题目
+        foreach($arr as $key=>$value){
+            if($key>19){
+                $arr2[]=Question::get($value);
+            }else{
+                $arr1[]=Question::get($value);
+            }
+        }
+        //获取的题目答案,将json格式转化为数组
+        $rights=json_decode($Info->value,true);
+        //获取单选和多选的答案
+        foreach($rights as $key=>$value){
+            if($key<20){
+                $right1[]=$value;
+            }else{
+                $right2[]=$value;
+            }
+        }
+        $this->assign('right1',$right1);
+        $this->assign('right2',$right2);
+        $this->assign('arr1',$arr1);
+        $this->assign('arr2',$arr2);
         return $this->fetch();
     }
     /*
      * 用户题目提交
      */
     public function submits(){
-       /* //获取用户提交信息
+        //获取用户提交信息
         $data=input('post.');
-        $score=0;;
+        $score=0;
         //判断题目的对错,并改变分数
         foreach($data['arrId'] as $key=>$value){
             $question=Question::get($value);
-            if($key <20){  // 前20单选
-                if($data['arr'][$key]==json_decode($question->value)){
+            if($key <20){
+                if($data['arr'][$key]==$question->value){
                     $status[$key]=1;
                     $score++;
                 }else{
                     $status[$key]=0;
                 }
             }else{
-                if(json_encode($data['arr'][$key])==$question->value){
+                if($data['arr'][$key]===explode(':',$question->value)){
                     $status[$key]=1;
                     $score++;
                 }else{
@@ -392,7 +511,24 @@ class Learn extends Base{
         $questions=json_encode($data['arrId']);
         $rights=json_encode($data['arr']);
         $status=json_encode($status);
-        $users= md5(uniqid()); //不重复随机id
+        $users=session('userId');
+        //将分数添加至用户积分排名
+        $wechatModel = new WechatUser();
+        $wechatModel->where('userid',session('userId'))->setInc('game_score',$score);
+        //若该用户存在则修改数据
+        if(Answer::get(['userid'=>session('userId')])){
+            $answer=Answer::get(['userid'=>session('userId')]);
+            $answer->question_id=$questions;
+            $answer->value=$rights;
+            $answer->status=$status;
+            $answer->score=$score;
+            $answer->exist=1;
+            if($answer->save()){
+                return $this->success('提交成功');
+            }else{
+                return $this->error('提交失败');
+            };
+        }
         //若该用户不存在则添加数据
         $Answer=new Answer();
         $Answer->userid=$users;
@@ -401,24 +537,33 @@ class Learn extends Base{
         $Answer->status=$status;
         $Answer->score=$score;
         $Answer->exist=1;
-        if($id = $Answer->save()){
-            return $this->success('提交成功','',['score' => $score ,'id' => $id]);
+        if($Answer->save()){
+            return $this->success('提交成功');
         }else{
             return $this->error('提交失败');
-        }*/
+        }
+
+    }
+    /*
+     * 查看分数
+     */
+    public function score(){
+        $Answer=Answer::get(['userid'=>session('userId')]);
+        $WechatUser=WechatUser::get(['userid'=>session('userId')]);
+        $num=$WechatUser->game_score;
+        $score=$Answer->score;
+        $this->assign('num',$num);
+        $this->assign('score',$score);
+        return $this->fetch();
     }
     /*
      * 查看错题
      */
     public function errors(){
-      /*  $id = input('id/d');
-        $Answer=Answer::get(['id'=>$id]);
-        if (empty($Answer)){
-            return $this->error('系统参数错误',Url('Learn/answer'));
-        }
+        $Answer=Answer::get(['userid'=>session('userId')]);
         $arr=json_decode($Answer->status,true);
         $lists=json_decode($Answer->question_id,true);
-        $rights=json_decode($Answer->value);
+        $rights=json_decode($Answer->value,true);
         foreach($arr as $key=>$value){
             if($value == 0){
                 $Question=Question::get($lists[$key]);
@@ -434,7 +579,7 @@ class Learn extends Base{
         $this->assign('question',$re);
         $this->assign('questions',$res);
         $this->assign('right1',$right1);
-        $this->assign('right2',$right2);*/
+        $this->assign('right2',$right2);
         return $this->fetch();
     }
 }

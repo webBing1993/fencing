@@ -1,13 +1,13 @@
 {extend name="public/common"}
 
 {block name="style"}
-<link rel="stylesheet" href="/home/css/learn/answer.css">
-<link rel="stylesheet" href="/home/css/learn/game.css">
+<link rel="stylesheet" href="/home/css/answer.css">
 {/block}
 
 {block name="body"}
 <div class="lists">
     <!--单选题-->
+
     {foreach $question as $y=>$vo}
     <div class="single list" data-id="{$vo->id}">
         <div class="question">
@@ -23,7 +23,7 @@
             <label class="opt">{$value|substr=###,'2'}</label>
         </label>
         {/volist}
-        <div class="answer">正确答案：<span>{$vo->Right}</span></div>
+        <div class="answer">正确答案：<span>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</span></div>
         <div class="sum"><span class="num">{$y+1}</span>/30</div>
     </div>
     {/foreach}
@@ -44,7 +44,7 @@
             <label class="opt">{$value|substr=###,'2'}</label>
         </label>
         {/volist}
-        <div class="answer">正确答案：<span>{$vo->Right}</span></div>
+        <div class="answer">正确答案：<span>{$vo->Right|implode=###,"&nbsp;&nbsp;&nbsp;"}</span></div>
         <div class="sum"><span class="num">{$t+1}</span>/30</div>
     </div>
     {/foreach}
@@ -54,34 +54,6 @@
 {/block}
 
 {block name="script"}
-<script src="/home/js/reset.js"></script>
-<script>
-    $(function() {
-        $("title").text("在线答题");
-        $('.option').css({'top': '5px', 'line-height': '18px'});
-        $('.opt').css({'margin-left': '6px'});
-    });
-    isOut();
-    //防止恶意刷新
-    function pushHistory(){
-        var sta = {
-            title: "title"
-        };
-        if( window.history.state === null )
-        {
-            window.history.pushState( sta, "title" );
-        }
-    }
-    //退出提示
-    function isOut(){
-        pushHistory();
-        setTimeout(function(){
-            window.addEventListener("popstate", function(e) {
-                localStorage.setItem("c", 2);
-                window.history.go(-3);
-            }, false);
-        },200)
-    }
-</script>
+
 
 {/block}
