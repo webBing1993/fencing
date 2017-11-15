@@ -85,7 +85,7 @@ class Notice extends Admin {
      * 活动安排 修改
      */
     public function indexedit(){
-        if(IS_POST) {
+        if(IS_POST) {     
             $data = input('post.');
             $result = $this->validate($data,'Notice');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
