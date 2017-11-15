@@ -102,6 +102,9 @@
   float: right;
 }
 
+.list ul a {
+  height: 20vw;
+}
 .list ul a span:nth-child(4) {
   display: inline-flex;
   align-items: center;
