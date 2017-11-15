@@ -181,23 +181,11 @@ class User extends Base {
         return $this->fetch();
     }
     /**
-     * 意见反馈
+     * 我得签到
      */
-    public function feedback() {
+    public function checkin() {
+
         return $this->fetch();
     }
-    /*
-     * 意见反馈  提交
-     */
-    public function feedbackup(){
-        $data['content'] = input('post.content');
-        $data['userid'] = session('userId');
-        $Feedback = new Feedback();
-        $res = $Feedback->save($data);
-        if ($res){
-            return $this->success('提交成功');
-        }else{
-            return $this->error('提交失败');
-        }
-    }
+
 }
