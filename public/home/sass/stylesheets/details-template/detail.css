@@ -291,3 +291,8 @@
 .bottom .send:active {
     background: #fafafa;
 }
+
+.mui-pull-bottom-pocket {
+    height: 0.8rem;
+    bottom: 0.8rem;
+}

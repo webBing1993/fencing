@@ -3,6 +3,14 @@
 {block name="style"}
 <title>两学一做</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/details-template/detail.css">
+<style>
+	.lists {
+		padding-bottom: 1.2rem;
+	}
+	.content .video{
+		text-align: center;
+	}
+</style>
 {/block}
 
 {block name="body"}
@@ -39,6 +47,7 @@
 				{/eq}
 			</div>
 	</div>
+	</div>
 		<div class="comment">
 			<div class="sum">共<span>{$detail.comments}</span>条评论</div>
 			<div class="lists">
@@ -65,7 +74,7 @@
 				{/volist}
 			</div>
 		</div>
-  </div>
+</div>
 </div>
 
 {eq name="visit" value="0"}
