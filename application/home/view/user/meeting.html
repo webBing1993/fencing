@@ -1,0 +1,112 @@
+{extend name="public/pure"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/user/meeting.css">
+<title>会议纪要</title>
+{/block}
+
+{block name="body"}
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="list meeting">
+            {empty name="meeting"}
+                <div class="default"><img src="/home/images/common/nomessage.png"></div>
+            {else/}
+                <ul>
+                {volist name="meeting" id="mee"}
+                    <a href="{:Url('user/meetingdetail?id='.$mee['id'])}">
+                        <img src="{$mee.front_cover}">
+                        <p>{$mee.title}</p>
+                        <span>未通过</span>
+                        <span>{$mee.create_time}</span>
+                        <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                    </a>
+                {/volist}
+                </ul>
+            {/empty}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+
+//首页加载是否需要上拉加载
+window.onload = function() {
+        if ($(".meeting ul a").length < 7) {
+            mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+        } else {
+            mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+        }
+};
+
+//初始化下拉加载
+mui.init({
+    pullRefresh: {
+        container: '#refreshContainer',
+        up: {
+            callback: loadScroll
+        }
+    }
+});
+
+function loadScroll(){
+        var len = $(".meeting ul a").length;
+    $.ajax({
+        type:"post",
+        url:"{:Url('Profile/more')}",
+        data:{
+            length:len
+        },
+        beforeSend: function(XMLHttpRequest){
+        },
+        success:function(data){
+            addCourse(data,c);
+            if(data.code == 1){
+                if(data.data.length == 7){
+                    mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+                }else{
+                    mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                }
+            }else{
+                mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+            }
+        }
+    })
+}
+
+function addCourse(data,type) {
+    var html = '';
+    var lists = data.data;
+    var len = lists.length;
+    for (var i = 0; i < len; i++) {
+        var list = lists[i];
+            html +=
+            '<a href="/home/news/detail/type/1/id/' + list.id + '">' +
+            '<img src="'+list.front_cover+'">'+
+            '<p>' + list.title + '</p>' +
+            '<span>' + list.publisher + '</span>' +
+            '<span>' + list.create_time + '</span>' +
+            '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
+            '</a>'
+        }
+    $(".meeting ul").append(html);
+}
+
+
+//点击背景触发active
+mui("#refreshContainer").on("touchstart","a",function(){
+    $(this).css("backgroundColor","rgba(0,0,0,.1)");
+}).on("touchend","a", function () {
+    $(this).css("backgroundColor","#fff");
+});
+
+//页面点击事件
+mui("#refreshContainer").on("tap","a",function(){
+    var url = this.getAttribute("href");
+    window.location.href = url;
+})
+</script>
+{/block}

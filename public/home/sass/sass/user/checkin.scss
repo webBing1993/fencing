@@ -5,21 +5,37 @@ body{
   background-color: #000;
   height:100%;
 }
-.content{
-  .code{
-    width:8rem;
-    height:8rem;
-    position:absolute;
-    top:50%;
-    left:50%;
-    margin-left: -4rem;
-    margin-top:-4rem;
+.content {
+  .code {
+    width: 9rem;
+    height: 9rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -4.5rem;
+    margin-top: -4.5rem;
     background-color: #fff;
     @include border-radius(15px);
-    #qrcode{
-      width:6rem;
-      height:6rem;
+    #qrcode {
+      width: 7rem;
+      height: 7rem;
       margin-left: 1rem;
       margin-top: 1rem;
+    }
+    p{
+      text-align: center;
+      color: #333;
+      margin-bottom: 0;
+      margin-top: 10px;
+    }
+    .header{
+      width:2rem;
+      height:2rem;
+      position: absolute;
+      top:50%;
+      left:50%;
+      margin-top: -1rem;
+      margin-left: -1rem;
+    }
   }
 }

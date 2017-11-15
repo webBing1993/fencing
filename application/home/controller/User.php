@@ -181,9 +181,17 @@ class User extends Base {
         return $this->fetch();
     }
     /**
-     * 我得签到
+     * 我的签到
      */
     public function checkin() {
+
+        return $this->fetch();
+    }
+
+    /**
+     * 会议纪要
+     */
+    public function meeting() {
 
         return $this->fetch();
     }
