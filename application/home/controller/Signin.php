@@ -11,7 +11,7 @@ namespace app\home\controller;
 
 class Signin extends Base {
     /**
-     * 主页
+     * 签到主页
      */
     public function index(){
 
@@ -19,7 +19,7 @@ class Signin extends Base {
     }
 
     /**
-     * 详情页
+     * 签到详情页
      */
     public function detail(){
 

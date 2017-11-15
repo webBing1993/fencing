@@ -31,12 +31,11 @@ class News extends Base {
      */
     public function index(){
 
-        //列表
         return $this->fetch();
     }
 
     /**
-     * 新闻内容页
+     * 详情页
      */
     public function detail(){
         $this->anonymous();
