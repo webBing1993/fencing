@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title></title>
 <link rel="stylesheet" href="/home/sass/stylesheets/details-template/detail.css">
 <style>
     .mui-pull-bottom-pocket {
@@ -22,17 +23,14 @@
                 <span class="time">{$detail.create_time|time_format="Y-m-d"}</span>
             </div>
             <div class="content">
-                {volist name="detail.images" id="li"}
-                <img src="{$li|get_cover='path'}">
-                {/volist}
                 <div class="article-content">{$detail.content}</div>
                 <div class="like">
-                    <span class="read">{$detail.views}</span>
+                    <span class="read">{$detail.views + 1}</span>
                     {eq name="visit" value="0"}
                     {eq name="detail.is_like" value="1"}
-                    <span class="isgood good_ notvisitor"  data-type="3" data-id="{$detail.id}">{$detail.likes}</span>
+                    <span class="isgood good_ notvisitor"  data-type="1" data-id="{$detail.id}">{$detail.likes}</span>
                     {else/}
-                    <span class="isgood good notvisitor"  data-type="3" data-id="{$detail.id}">{$detail.likes}</span>
+                    <span class="isgood good notvisitor"  data-type="1" data-id="{$detail.id}">{$detail.likes}</span>
                     {/eq}
                     {else/}
                     <span class="isgood good">{$detail.likes}</span>
@@ -43,7 +41,7 @@
         <div class="comment">
             <div class="sum">共<span>{$detail.comments}</span>条评论</div>
             <div class="lists">
-                {volist name="comment" id="co"}
+                {volist name="$detail.comment" id="co"}
                 <div class="list clear">
                     <div class="fl">
                         <img src="{$co.header}" alt="用户" class="user">
@@ -69,7 +67,7 @@
     </div>
 </div>
 {eq name="visit" value="0"}
-<div class="bottom clear" onclick="send(this,3,{$detail['id']})">
+<div class="bottom clear" onclick="send(this,1,{$detail['id']})">
     <div class="myword fl">
         <input type="text" placeholder="说说你的感想！" id="send" disabled>
     </div>
@@ -81,7 +79,7 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    var type =  parseInt(window.location.href.split("type")[1]);
+    var type =  parseInt(window.location.href.split("type/")[1]);
     if(type==1){
         $("title").text("政策解读");
     }else if(type==2){
@@ -89,7 +87,7 @@
     }
 
     window.onload = function(){
-        if($(".list").length<7){
+        if($(".list").length<10){
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         }else{
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -213,7 +211,7 @@
             type:"post",
             url:"{:Url('Base/morecomment')}",
             data:{
-                type:3,
+                type:1,
                 aid:id,
                 length:len
             },
@@ -224,7 +222,7 @@
                 if(data.code == 1){
                     addComment(data);
                     var dataLen =data.data.length;
-                    if(data.data.length == 7){
+                    if(data.data.length == 10){
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
                     }else{
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -253,7 +251,7 @@
                         '<div class="content">' + list.content + '</div>' +
                         '<div class="time">' + list.time + '</div>' +
                         '</div>';
-            if ({$visit} == 0){
+            if ("{$visit}" == 0){
                 if(list.is_like == 0){
                     html+='<div class="fr isgood good notvisitor"  data-type="0" data-id='+list.id+'>'+list.likes+'</div>'
                 }else{

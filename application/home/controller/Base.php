@@ -110,7 +110,7 @@ class Base extends Controller {
      * 点赞，$type,$aid
      * type值：
      * 0 评论点赞
-     * 1
+     * 1 special 通知公告
      * 2
      * 3
      * 4
@@ -126,7 +126,7 @@ class Base extends Controller {
                 $table = "comment";
                 break;
             case 1:
-                $table = "";
+                $table = "special";
                 break;
             case 2:
                 $table = "";
@@ -243,7 +243,7 @@ class Base extends Controller {
     /**
      * 评论，$type,$aid,$content
      * type值：
-     * 1
+     * 1 special 通知公告
      * 2
      * 3
      * 4
@@ -257,7 +257,7 @@ class Base extends Controller {
             $aid = input('aid');
             switch ($type) {    //根据类别获取表明
                 case 1:
-                    $table = "";
+                    $table = "special";
                     break;
                 case 2:
                     $table = "";
@@ -432,7 +432,7 @@ class Base extends Controller {
     /**
      * 获取数据详情 ，$type,$id
      * type值：
-     * 1
+     * 1 special 通知公告
      * 2
      * 3
      * 4
@@ -442,7 +442,7 @@ class Base extends Controller {
         $userId = session('userId');
         switch ($type) {    //根据类别获取表明
             case 1:
-                $table = "";
+                $table = "special";
                 break;
             case 2:
                 $table = "";
