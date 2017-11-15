@@ -94,12 +94,12 @@
 
 /*article content */
 .article-content p,.article-content p span,.article-content{
-    font-size: 0.38rem;
+    font-size: 0.4rem;
     color: #333;
 }
 .article .content * {
     max-width: 100%!important;
-    line-height: 0.5rem!important;
+    line-height: 0.6rem!important;
 }
 .article .content {
     width: 100%;
@@ -127,7 +127,6 @@
 }
 .article .content .like span {
     height: 0.5rem;
-    display: inline-block;
     margin-right: 0.3rem;
     line-height:0.6rem;
 }
@@ -139,20 +138,25 @@
 }
 .article .content .like .read {
     background: url('/home/images/detail/scan_.png') 0 center no-repeat;
-    background-size: 0.36rem 0.36rem;
+    background-size: 0.38rem 0.38rem;
     padding-left: 0.53rem;
+    height:0.38rem;
+    line-height:0.38rem;
 }
 .article .content .like .good {
     background: url('/home/images/detail/good.png') 0 center no-repeat;
-    background-size: 0.36rem 0.36rem;
+    background-size: 0.38rem 0.38rem;
     padding-left:  0.53rem;
+    height:0.38rem;
+    line-height:0.38rem;
 }
 .article .content .like .good_ {
     animation: shake 300ms ease;
     -webkit-animation: shake 300ms ease;
     background: url('/home/images/detail/good_.png') 0 center no-repeat;
-    background-size: 0.36rem 0.36rem;
+    background-size: 0.38rem 0.38rem;
     padding-left: 0.53rem;
+    height:0.38rem;
 }
 
 
@@ -196,6 +200,7 @@
     color: #999;
     font-size: 0.38rem;
     margin-left: 15vw;
+    margin-bottom: 0.2rem;
     width: 80%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -208,6 +213,7 @@
     margin-top: 1vw;
     margin-bottom: 1vw;
     padding-left: 15vw;
+    line-height:0.5rem;
 }
 .comment .lists .list .mid .time {
     font-size: 0.32rem;
@@ -228,10 +234,11 @@
     background: url('/home/images/detail/good_.png') 0 center no-repeat;
 }
 .comment .lists .list .isgood {
-    background-size: 0.36rem 0.36rem;
+    height:0.38rem;
+    background-size: 0.38rem 0.38rem;
     padding-left: 0.53rem;
     position: absolute;
-    top:0.28rem;
+    top:0.29rem;
     right:0;
 }
 /*底部*/

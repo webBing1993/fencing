@@ -133,7 +133,7 @@ body.stop-scrolling {
     margin-bottom: 17px;
     font-size: 18px;
     box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.06);
-    padding: 0 12px;
+    padding: 10px 12px;
     display: none;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;

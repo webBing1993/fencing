@@ -24,11 +24,15 @@
 		<i class="fa fa-angle-right fr"></i>
 	</a>
 	<a href="{:Url('Rank/index')}" class="list clear">
-		<span>个人排行榜</span>
+		<span>我的签到</span>
 		<i class="fa fa-angle-right fr"></i>
 	</a>
 	<a href="{:Url('Rank/department')}" class="list clear">
-		<span>党小组排行榜</span>
+		<span>学习排行榜</span>
+		<i class="fa fa-angle-right fr"></i>
+	</a>
+	<a href="{:Url('Rank/department')}" class="list clear">
+		<span>会议纪要</span>
 		<i class="fa fa-angle-right fr"></i>
 	</a>
 </div>
@@ -38,8 +42,6 @@
 {block name="script"}
 <script>
 $(function(){
-	//模块标题
-	$('title' ).text('个人中心');
 	//头像大小
 	var up = $('.up' );
 	var path = up.attr('data-tab');
