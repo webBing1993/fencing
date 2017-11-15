@@ -8,15 +8,9 @@
 
 namespace app\home\controller;
 use app\home\model\WechatUser;
-use think\Controller;
 use app\admin\model\Question;
-use app\home\model\Answers;
-use app\home\model\Browse;
-use app\home\model\Comment;
-use app\admin\model\Picture;
+use app\home\model\Answer;
 use app\home\model\Study;
-use app\home\model\Like;
-use think\Db;
 
 class Learn extends Base{
     /**
@@ -282,8 +276,6 @@ class Learn extends Base{
    /*
     *  在线答题
    */
-
-
     /**
      * 排行榜
      */

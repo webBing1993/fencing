@@ -16,7 +16,6 @@ use com\wechat\TPQYWechat;
 use think\Db;
 use app\home\model\Picture;
 use app\home\model\Browse;
-use app\home\model\Answers;
 
 class Base extends Controller {
     public function _initialize(){
@@ -413,16 +412,10 @@ class Base extends Controller {
             'uid' => $userid,
             'score' => 1
         );
-        $map2 = array(
-            'create_time' => ['egt',$con],
-            'userid' => $userid
-        );
         $browse = Browse::where($map)->count(); //  浏览得分
         $like = Like::where($map1)->count();  // 点赞得分
         $comment = Comment::where($map1)->count();  // 评论得分
-        $Answer = Answers::where($map2)->find();
-        $answer = $Answer['score'];  // 答题得分
-        $num = $browse + $like + $comment + $answer;
+        $num = $browse + $like + $comment;
         if ($num < 15){
             return true;
         }else{
