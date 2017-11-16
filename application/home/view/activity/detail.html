@@ -24,7 +24,7 @@
                     <span class="time">{$detail.create_time|time_format="Y-m-d"}</span>
                 </div>
                 <div class="content">
-                    {volist name="detail.images" id="li"}
+                    {volist name="detail.front_cover" id="li"}
                     <img src="{$li|get_cover='path'}">
                     {/volist}
                     <div class="article-content">{$detail.content}</div>
@@ -37,9 +37,9 @@
                         <span class="read">{$detail.views}</span>
                         {eq name="visit" value="0"}
                         {eq name="detail.is_like" value="1"}
-                        <span class="isgood good_ notvisitor"  data-type="9" data-id="{$detail.id}">{$detail.likes}</span>
+                        <span class="isgood good_ notvisitor"  data-type="4" data-id="{$detail.id}">{$detail.likes}</span>
                         {else/}
-                        <span class="isgood good notvisitor"  data-type="9" data-id="{$detail.id}">{$detail.likes}</span>
+                        <span class="isgood good notvisitor"  data-type="4" data-id="{$detail.id}">{$detail.likes}</span>
                         {/eq}
                         {else/}
                         <span class="isgood good">{$detail.likes}</span>
@@ -50,7 +50,7 @@
             <div class="comment">
                 <div class="sum">共<span>{$detail.comments}</span>条评论</div>
                 <div class="lists">
-                    {volist name="comment" id="co"}
+                    {volist name="$detail.comment" id="co"}
                     <div class="list clear">
                         <div class="fl">
                             <img src="{$co.header}" alt="用户" class="user">
@@ -76,7 +76,7 @@
         </div>
     </div>
     {eq name="visit" value="0"}
-    <div class="bottom clear" onclick="send(this,9,{$detail['id']})">
+    <div class="bottom clear" onclick="send(this,4,{$detail['id']})">
         <div class="myword fl">
             <input type="text" placeholder="说说你的感想！" id="send" disabled>
         </div>
@@ -267,7 +267,7 @@
             type:"post",
             url:"{:Url('Base/morecomment')}",
             data:{
-                type:9,
+                type:4,
                 aid:id,
                 length:len
             },

@@ -55,6 +55,19 @@ class Activity extends Base
         $this->jssdk();
         $id = input('id/d');
         $info = $this->content(4,$id);
+        $list=Db::table('pb_picture')->where('id',$info['front_cover'])->find();
+        //dump($list);
+        //exit();
+        $this->assign('list',$list);
+        $this->assign('detail',$info);
+        return $this->fetch();
+
+    }
+    public function detail(){
+        $this->anonymous();
+        $this->jssdk();
+        $id = input('id/d');
+        $info = $this->content(4,$id);
         //dump($info);
         //exit();
         $this->assign('detail',$info);
@@ -66,16 +79,18 @@ class Activity extends Base
      * 列表加载更多
      */
     public function more(){
-        $Special = new Special();
+        $Notice = new Notice();
         $len = input('length');
         $c = input('type');
         if ($c == 0){
-            $type = 1;  //政策解读
+            $type = 2;  //活动展示
+        }elseif ($c==1){
+            $type = 3; //会议纪要
         }else{
-            $type = 2; //通知公告
+            $type=4;//固定活动
         }
         $map = ['status' => ['egt',0] , 'type' => $type];
-        $list = $Special->get_list($map,$len);
+        $list = $Notice->get_list($map,$len);
         if ($list){
             return $this->success('加载成功','',$list);
         }else{

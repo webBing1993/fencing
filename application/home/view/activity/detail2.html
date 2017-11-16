@@ -17,17 +17,20 @@
 <div class="main">
     <div id="refreshContainer" class="mui-content mui-scroll-wrapper">
         <div class="mui-scroll">
-            <!--轮播图-->
             <div class="swiper-container banner">
                 <div class="swiper-wrapper">
-                    {volist name="detail.front_cover" id="li"}
                     <div class="swiper-slide">
+<<<<<<< Updated upstream
                         <!--支持循环，需要重复图片节点-->
                         <div class="mui-slider-item">
                             <img src="{$li|get_cover='path'}">
+=======
+                        <div class="mui-slider-item">
+                            <img src="{$list.path}">
+>>>>>>> Stashed changes
                         </div>
                     </div>
-                    {/volist}
+
                 </div>
             </div>
             <div class="view">
@@ -104,46 +107,6 @@
 <script>
     var type =  parseInt(window.location.href.split("?")[1]);
 
-    $(function(){
-        function IsPC() {
-            var userAgentInfo = navigator.userAgent;
-            var Agents = ["Android", "iPhone",
-                "SymbianOS", "Windows Phone",
-                "iPad", "iPod"];
-            var flag = true;
-            for (var v = 0; v < Agents.length; v++) {
-                if (userAgentInfo.indexOf(Agents[v]) > 0) {
-                    flag = false;
-                    break;
-                }
-            }
-            return flag;
-        }
-
-        flag = IsPC();
-        if(flag){
-            $(".main").css({"width":"640px","left":"50%","margin-left":"-320px","height":"90vh","margin-top":"5vh","position":"relative"});
-            $(".article .title p").css("font-size","17px");
-            $(".article .note").css("font-size","14px");
-            $(".comment .sum").css({"font-size":"14px","height":"30px","line-height":"30px"});
-            $(".article-content p, .article-content p span, .article-content").css("font-size","16px");
-            $(".banner").css({"width":"680px","height":"320px","margin":"0 auto"});
-            $(".banner img").css({"width":"640px","height":"320px","margin":"0 auto"});
-            $(".article").css("padding-top","15px");
-            $(".comment .lists .list .fl img").css({"width":"60px","height":"60px"});
-            $(".comment .lists .list .mid .name").css({"margin-left":"0","font-size":"16px"});
-            $(".comment .lists .list .mid .content").css({"padding-left":"0","font-size":"14px","margin-top":"5px","margin-bottom":"5px"})
-            $(".comment .lists .list .mid .time").css({"margin-left":"0","font-size":"14px","line-height":"20px"});
-            $(".bottom").css({"width":"640px","height":"70px","padding":"15px","left":"50%","margin-left":"-320px"});
-            $(".bottom .myword input").css({"width":"600px","font-size":"14px","margin-top":"5px"});
-            $(".lists").css("padding-bottom","30px");
-            $(".article .content .like span").addClass("linePc");
-        }
-    });
-
-
-
-
     window.onload = function(){
         if(flag){
             $(".mui-pull .mui-pull-caption").css("font-size","15px");
@@ -166,7 +129,6 @@
 
 
     //tab点击事件
-
     mui('#refreshContainer').on('tap', '.notvisitor', function(e) {
         var type = this.getAttribute("data-type");
         var id = this.getAttribute("data-id");
@@ -235,31 +197,17 @@
                                 var data = msg.data;
                                 var userid = "'"+data.create_user+"'";
                                 var html = '';
-                                if(flag) {
-                                    html += '<div class="list clear">' +
-                                            '<div class="fl">' +
-                                            '<img src="' + data.header + '" alt="用户头像" class="user" style="width:60px;height:60px;">' +
-                                            '</div>' +
-                                            '<div class="fl mid">' +
-                                            '<div class="name limit" style="margin-left:0;font-size:16px">' + data.nickname + '</div>' +
-                                            '<div class="content" style="padding-left:0;font-size:15px;margin-top:5px;margin-bottom:5px">' + inputValue + '</div>' +
-                                            '<div class="time" style="margin-left:0;font-size:14px;line-height:20px">' + data.time + '</div>' +
-                                            '</div>' +
-                                            '<div class="fr isgood good notvisitor" data-type="0" data-id=' + data.id + '>' + data.likes + '</div>' +
-                                            '</div>';
-                                }else{
-                                    html += '<div class="list clear">' +
-                                            '<div class="fl">' +
-                                            '<img src="' + data.header + '" alt="用户头像" class="user">' +
-                                            '</div>' +
-                                            '<div class="fl mid">' +
-                                            '<div class="name limit">' + data.nickname + '</div>' +
-                                            '<div class="content" >' + inputValue + '</div>' +
-                                            '<div class="time">' + data.time + '</div>' +
-                                            '</div>' +
-                                            '<div class="fr isgood good notvisitor" data-type="0" data-id=' + data.id + '>' + data.likes + '</div>' +
-                                            '</div>';
-                                }
+                                html += '<div class="list clear">' +
+                                        '<div class="fl">' +
+                                        '<img src="' + data.header + '" alt="用户头像" class="user">' +
+                                        '</div>' +
+                                        '<div class="fl mid">' +
+                                        '<div class="name limit">' + data.nickname + '</div>' +
+                                        '<div class="content" >' + inputValue + '</div>' +
+                                        '<div class="time">' + data.time + '</div>' +
+                                        '</div>' +
+                                        '<div class="fr isgood good notvisitor" data-type="0" data-id=' + data.id + '>' + data.likes + '</div>' +
+                                        '</div>';
                                 $('.lists' ).prepend(html);
                                 inputValue="";
                                 var sum = $('.sum span' );
@@ -326,27 +274,15 @@
         for(var i = 0; i< len;i++){
             var list = lists[i];
             var userid = "'"+list.create_user+"'";
-            if(flag) {
-                html += '<div class="list clear">' +
-                        '<div class="fl">' +
-                        '<img src="' + list.header + '" alt="用户" class="user">' +
-                        '</div>' +
-                        '<div class="fl mid">' +
-                        '<div class="name limit">' + list.nickname + '</div>' +
-                        '<div class="content" >' + list.content + '</div>' +
-                        '<div class="time">' + list.time + '</div>' +
-                        '</div>';
-            }else{
-                html += '<div class="list clear">' +
-                        '<div class="fl">' +
-                        '<img src="' + list.header + '" alt="用户" class="user" style="width:60px;height:60px;">' +
-                        '</div>' +
-                        '<div class="fl mid">' +
-                        '<div class="name limit" style="margin-left:0;font-size:16px">' + list.nickname + '</div>' +
-                        '<div class="content" style="padding-left:0;font-size:15px;margin-top:5px;margin-bottom:5px">' + list.content + '</div>' +
-                        '<div class="time"  style="margin-left:0;font-size:14px;line-height:20px">' + list.time + '</div>' +
-                        '</div>';
-            }
+            html += '<div class="list clear">' +
+                    '<div class="fl">' +
+                    '<img src="' + list.header + '" alt="用户" class="user">' +
+                    '</div>' +
+                    '<div class="fl mid">' +
+                    '<div class="name limit">' + list.nickname + '</div>' +
+                    '<div class="content" >' + list.content + '</div>' +
+                    '<div class="time">' + list.time + '</div>' +
+                    '</div>';
             if ({$visit} == 0){
                 if(list.is_like == 0){
                     html+='<div class="fr isgood good notvisitor"  data-type="0" data-id='+list.id+'>'+list.likes+'</div>'
