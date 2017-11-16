@@ -1,19 +1,20 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>在线答题</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/game.css">
 {/block}
 
 {block name="body"}
 <div class="top clear">
-    <div class="tab fl"><a href="{:Url('Constitution/game')}">在线答题</a></div>
-    <div class="tab fl"><a href="{:Url('Constitution/rank?type=2')}">积分排行</a></div>
+    <div class="tab fl"><a href="{:Url('Learn/game')}">在线答题</a></div>
+    <div class="tab fl"><a href="{:Url('Learn/rank?type=2')}">积分排行</a></div>
 </div>
-<a class="bg" href="{:Url('Constitution/game')}"></a>
+<a class="bg" href="{:Url('Learn/game')}"></a>
 <div class="score">
     <span>{$score}</span>
     <span>{$num}</span>
-    <a href="{:Url('Constitution/errors')}"  alt="查看错题"></a>
+    <a href="{:Url('Learn/errors')}"  alt="查看错题"></a>
 </div>
 <!--<div class="content">-->
     <!--<p class="start clear">我的得分:<span style="font-size: large"></span></p>-->

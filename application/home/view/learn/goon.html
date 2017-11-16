@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>在线答题</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/answer.css">
 {/block}
 
@@ -153,7 +154,7 @@ $(function(){
         var answer =getAnswer();
         $.ajax({
             type:"post",
-            url:"{:Url('Constitution/save')}",
+            url:"{:Url('Learn/save')}",
             data:{arr:answer,arrId:getDataID()},
             success:function(e){
                 suc.fadeIn();
@@ -178,7 +179,7 @@ $(function(){
         if(isAll){
             $.ajax({
                 type:"post",
-                url:"{:Url('Constitution/submits')}",
+                url:"{:Url('Learn/submits')}",
                 data:{arr:answer,arrId:getDataID()},
                 success:function(e){
                     suc.fadeIn();
@@ -187,7 +188,7 @@ $(function(){
                         timer.fadeOut();
                         up.text('提交成功');
                         setTimeout(function(){
-                            window.location.href= "{:Url('Constitution/score')}";
+                            window.location.href= "{:Url('Learn/score')}";
                         },1000)
                     },2000);
                 }
@@ -197,7 +198,7 @@ $(function(){
             if(msg){
                 $.ajax({
                     type:"post",
-                    url:"{:Url('Constitution/submits')}",
+                    url:"{:Url('Learn/submits')}",
                     data:{arr:answer,arrId:getDataID()},
                     success:function(e){
                         suc.fadeIn();
@@ -206,7 +207,7 @@ $(function(){
                             timer.fadeOut();
                             up.text('提交成功');
                             setTimeout(function(){
-                                window.location.href= "{:Url('Constitution/score')}";
+                                window.location.href= "{:Url('Learn/score')}";
                             },1000)
                         },2000);
                     }

@@ -11,7 +11,7 @@ use app\home\model\WechatUser;
 use app\admin\model\Question;
 use app\home\model\Answer;
 use app\home\model\Study;
-
+use app\home\model\Redfilm;
 class Learn extends Base{
     /**
      * 网上党校主页
@@ -79,7 +79,6 @@ class Learn extends Base{
      *  红色珍藏
      */
 
-
     public function redcollection(){
 
         return $this ->fetch();
@@ -88,9 +87,9 @@ class Learn extends Base{
      * 红色电影
      */
     public function redfilm() {
-   /*     $Model = new Redfilm();
+        $Model = new Redfilm();
         $list = $Model->getIndexList();
-        $this->assign('list',$list);*/
+        $this->assign('list',$list);
         return $this->fetch();
     }
 
@@ -98,7 +97,7 @@ class Learn extends Base{
      * 经典电影更多
      */
     public function morefilm() {
- /*       $Model = new Redfilm();
+        $Model = new Redfilm();
         if(IS_POST) {
             //加载更多
             $len = input('length');
@@ -112,7 +111,7 @@ class Learn extends Base{
             $list = $Model->getMoreList();
             $this->assign('list',$list);
 
-        }*/
+        }
         return $this->fetch();
     }
 
@@ -325,6 +324,7 @@ class Learn extends Base{
      * 互动模式主页
      */
     public function game(){
+        $this->checkRole();
         //获取该用户的的信息
         $users=$users=session('userId');
         $info = Answer::get(['userid'=>$users]);
@@ -344,6 +344,7 @@ class Learn extends Base{
      * 答题页面
      */
     public function answer(){
+        $this->checkRole();
         //取单选
         $arr=Question::all(['type'=>0]);
         foreach($arr as $value){

@@ -2,6 +2,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>在线答题</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/answer.css">
 {/block}
 
@@ -154,7 +155,7 @@
 		var answer =getAnswer();
 		$.ajax({
 			type:"post",
-			url:"{:Url('Constitution/save')}",
+			url:"{:Url('Learn/save')}",
 			data:{arr:answer,arrId:getDataID()},
 			success:function(e){
 				suc.fadeIn();
@@ -180,7 +181,7 @@
 		if(isAll){
 			$.ajax({
 				type:"post",
-				url:"{:Url('Constitution/submits')}",
+				url:"{:Url('Learn/submits')}",
 				data:{arr:answer,arrId:getDataID()},
 				success:function(e){
 					suc.fadeIn();
