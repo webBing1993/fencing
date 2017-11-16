@@ -1,0 +1,196 @@
+@import "common";
+@import "tab";
+@import "compass/css3";
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+  background: #f00;
+}
+
+
+.list,.Audited  {
+  overflow: hidden;
+}
+.list ul,.Audited ul{
+  padding-left: 0.3rem;
+}
+.list li{
+  overflow: hidden;
+  width: 145%;
+  border-bottom: 1px solid #ddd;
+}
+.Audited li{
+  width:100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.list li a,.Audited li a {
+  display: block;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  overflow: hidden;
+  position: relative;
+  height:calc(16vw + 0.6rem);
+}
+
+.list li i,.Audited li i {
+  float: right;
+  width: 15%;
+  text-align: center;
+  background: #f00;
+  color: #fff;
+  height:calc(16vw + 0.6rem);
+  line-height:calc(16vw + 0.6rem);
+  font-style: normal;
+  font-size: 0.38rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.list li i:last-child{
+  float: right;
+  width: 15%;
+  text-align: center;
+  background: #090;
+  color: #fff;
+  right: 15%;
+}
+.Audited .refuse{
+  right: 0;
+  width: 0.8rem;
+  background: #f00;
+}
+.Audited .pass{
+  right: 0;
+  width: 0.8rem;
+  background: #090;
+}
+.Audited .refuse:after,.Audited .pass:after{
+  display: block;
+  content: '';
+  background: url("/home/images/review/refuse.png");
+  background-size: 0.5rem 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: calc((16vw + 0.6rem) / 2 - 0.25rem);
+  margin-left: 0.15rem;
+}
+.Audited .pass:after{
+  background: url("/home/images/review/pass.png");
+  background-size: 0.5rem 0.5rem;
+}
+
+.swipeleft {
+  transform: translateX(-30%);
+  -webkit-transform: translateX(-30%);
+}
+
+.list ul a span:nth-child(4),.Audited ul a span:nth-child(4)  {
+  float: inherit;
+}
+
+
+/*审核列表*/
+ul li a img {
+  width: 24vw;
+  height: 16vw;
+  float: left;
+  margin-top: 0.3rem;
+}
+
+ul li a span:nth-child(2) {
+  color: #333;
+  font-size: 0.36rem;
+  margin-left: 25vw;
+  display: inline-block;
+  margin-top: 0.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  width: calc(100% - 1rem - 50%);
+}
+
+.Audited ul li a span:nth-child(2) {
+  color: #333;
+  font-size: 0.36rem;
+  margin-left: 25vw;
+  display: inline-block;
+  margin-top: 0.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  width: calc(100% - 36vw);
+  line-height: 0.42rem;
+}
+.Audited ul li p{
+  font-size: 0.32rem;
+  margin-left: 25vw;
+}
+.Audited ul li a p:nth-child(3){
+  position: absolute;
+  bottom:6vw;
+}
+.Audited ul li a p:nth-child(4){
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  bottom: 0.2rem;
+  width: 40%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Audited ul li a span:nth-child(5){
+  display: inline-block;
+  position: absolute;
+  right:1rem;
+  bottom:0.2rem;
+  color: #999;
+  font-size: 0.32rem;
+}
+
+
+ul li a span:nth-child(3) {
+  position: absolute;
+  bottom: 0.3rem;
+  left: 25vw;
+  color: #999;
+  font-size: 0.32rem;
+  width: 33%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+ul li a span:nth-child(4) {
+  position: absolute;
+  bottom: 0.3rem;
+  right: 35%;
+  color: #999;
+  font-size: 0.32rem;
+}
+
+@media screen and (device-width: 320px){
+  ul li a span:nth-child(3),ul li a span:nth-child(4){
+    bottom: 0.2rem;
+  }
+
+}
+.Audited li a span:nth-child(4) {
+  right: 15%;
+}
+
+.mui-icon-forward {
+  position: absolute;
+  right: 32%;
+  top: 8vw;
+  color: #999;
+  width: 0.66rem;
+  height: 0.66rem;
+  font-size: 0.32rem;
+}
