@@ -8,7 +8,7 @@ $(function(){
         var imglen = $('.img img' ).length;
         var this_ = $(this );
         $('#upimg').click().off("change").on('change',function(){
-            var size = ($(this)[0].files[0].size / 1024).toFixed(2);
+            var size = ($(this)[0].files[0].size/ 1024).toFixed(2);
             if(size <= 3072){
                 var img = $(this)[0].files[0];
                 var formData = new FormData();

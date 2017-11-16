@@ -58,7 +58,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 .gra .avatarbox .name{
 	width: 70px;
 	text-align: center;
-	font-size: 1.4rem;
+	font-size: 0.37rem;
 	margin-top: 6px;
 	display: inline-block;
 	text-overflow: ellipsis;
@@ -80,7 +80,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 .ranking .tradtion,.ranking .game{
 	width: calc(50% - 1px );
 	text-align: center;
-	font-size: 1.3rem;
+	font-size: 0.34rem;
 }
 .ranking .line{
 	width: 2px;
@@ -107,7 +107,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 }
 .my .name_,.my .scores{
 	display: inline-block;
-	font-size: 1.3rem;
+	font-size: 0.34rem;
 }
 .name_ span{
 	display: block;
@@ -156,7 +156,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 	width: calc(50% - 40px);
 	height: 50px;
 	line-height: 50px;
-	font-size: 1.5rem;
+	font-size: 0.4rem;
 	text-align: center;
 	color: rgba(193, 193, 193, 0.51);
 	margin: auto 20px;
@@ -182,7 +182,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 }
 .list .num_ {
 	width: 30px;
-	font-size: 1.4rem;
+	font-size: 0.37rem;
 	margin-left: 25px;
 }
 .list .avatar_{
@@ -194,7 +194,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 	overflow: hidden;
 }
 .list .name_,.list .scores{
-	font-size: 1.3rem;
+	font-size: 0.34rem;
 }
 .list .name_{
 	width: 32vw;
@@ -215,17 +215,17 @@ table { border-collapse: collapse; background-color: #ffffff; }
 	/*排名颜色*/
 .list:nth-child(1) .num_{
 	color: #e6d841;
-	font-size: 2.2rem;
+	font-size: 0.58rem;
 	font-weight: bold;
 }
 .list:nth-child(2) .num_{
 	color:#c4c4c4;
-	font-size: 2.2rem;
+	font-size: 0.58rem;
 	font-weight: bold;
 }
 .list:nth-child(3) .num_{
 	color: #a67e3e;
-	font-size: 2.2rem;
+	font-size: 0.58rem;
 	font-weight: bold;
 }
 .list:nth-child(1) .avatar_{

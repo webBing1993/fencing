@@ -9,18 +9,17 @@
 <div id="refreshContainer" class="mui-content mui-scroll-wrapper">
     <div class="mui-scroll">
         <div class="mui-slider-group">
-            <div class="banner"><img src="/home/images/banner/06.png" alt=""></div>
+            <div class="banner"><img src="/home/images/volunteer/06.jpg" alt=""></div>
             <div class="main">
                 <div class="lists">
-                    {volist name="list" id="vo"}
                     <div class="list color1">
-                        <a href="{:Url('Volunteer/team?id='.$vo['id'])}">
-                            <div class="img"><img src="{$vo.front_cover|get_cover='path'}" alt=""></div>
-                            <div class="name">{$vo.name}</div>
-                            <div class="notes">活动：<span>{$vo.times}</span>次</div>
+                        <a href="#">
+                            <div class="img"><img src="/home/images/volunteer/06.jpg" alt=""></div>
+                            <div class="name">朝阳志愿者服务中心</div>
+                            <div class="notes">活动：<span></span>次</div>
                         </a>
+
                     </div>
-                    {/volist}
                 </div>
             </div>
         </div>
@@ -34,6 +33,7 @@
     $(function () {
         $("title").text("志愿服务");
     });
+
 
     window.onload = function () {
         if ($(".lists .list").length < 6) {
@@ -109,7 +109,8 @@
     mui("#refreshContainer").on("tap","a",function(){
         var url = this.getAttribute("href");
         window.location.href = url;
-    })
+    });
+
 
 </script>
 

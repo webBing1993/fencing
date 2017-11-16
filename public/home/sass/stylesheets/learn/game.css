@@ -50,7 +50,7 @@ body{
 	height: 45px;
 	line-height: 45px;
 	color:#ffffff;
-	font-size: 1.5rem;
+	font-size: 0.4rem;
 	text-align: center;
 	/*padding-left: calc((100vw - 180px)/6);*/
 	/*padding-right: calc((100vw - 180px)/6);*/
@@ -62,7 +62,7 @@ body{
 	width: 100%;
 	text-align: center;
 	line-height: 500px;
-	font-size: 2.0rem;
+	font-size: 0.53rem;
 }
 .text{
 	width: 222px;
@@ -96,7 +96,7 @@ body{
 	height:45px;
 	background: #d61920;
 	line-height: 45px;
-	font-size: 2.0rem;
+	font-size: 0.53rem;
 	text-align: center;
 	color:#ffffff;
 	text-decoration: none;
@@ -131,7 +131,7 @@ body{
 .score{
 	width: 325px;
 	height: 250px;
-	background: url("/home/images/sco1.png");
+	background: url("/home/images/learn/sco1.png");
 	background-size: 100% 100%;
 	position: fixed;
 	top:calc((100% - 300px)/2);;
@@ -142,7 +142,7 @@ body{
 	top:83px;
 	left:210px ;
 	color:#d10000;
-	font-size: 30px;
+	font-size: 0.8rem;
 	font-weight: 600;
 }
 .score span:nth-child(2){

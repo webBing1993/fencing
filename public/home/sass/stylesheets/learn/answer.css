@@ -53,7 +53,7 @@ body{
 .list{
 	width: 100%;
 	border-bottom: 1px solid #d10000;
-	font-size: 1.4rem;
+	font-size: 0.37rem;
 	padding-top: 20px;
 }
 .list:last-child{
@@ -73,7 +73,7 @@ body{
 	color:#ffffff;
 	line-height: 18px;
 	text-align: center;
-	font-size: 1.2rem;
+	font-size: 0.32rem;
 }
 .list .option_{
 	display: block;
@@ -104,7 +104,7 @@ body{
 .list .opt{
 	width: calc(100% - 70px);
 	margin-left: 20px;
-	font-size: 14px;
+	font-size: 0.37rem;
 	font-weight: 400;
 	line-height: 20px;
 }
@@ -120,7 +120,7 @@ body{
 }
 .sum .num{
 	color:#d10000;
-	font-size: 1.8rem;
+	font-size: 0.48rem;
 }
 .foot{
 	width: 100%;
@@ -132,7 +132,7 @@ body{
 	height: 45px;
 	line-height: 45px;
 	text-align: center;
-	font-size: 1.8rem;
+	font-size: 0.48rem;
 	border: none;
 	color: #ffffff;
 	display: inline-block;
@@ -215,7 +215,7 @@ body{
 	position: fixed;
 	top:43%;
 	color:#ffffff;
-	font-size: 2.0rem;
+	font-size: 0.53rem;
 	text-align: center;
 	margin-top: 20px;
 }

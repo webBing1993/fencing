@@ -18,7 +18,7 @@
   height: 7vw;
   background: #ffffff;
   color: #fc4f42;
-  font-size: 1.6rem;
+  font-size: 0.42rem;
   line-height: 7vw;
   text-align: center;
   box-shadow: 1px 3px 8px rgba(153, 153, 153, 0.48);
@@ -58,7 +58,7 @@
 .lists .list .title {
   width: 100%;
   color: #333333;
-  font-size: 1.6rem;
+  font-size: 0.42rem;
   line-height: 20px;
   margin-bottom: 8px;
 }
@@ -66,7 +66,7 @@
   display: block;
   width: 100%;
   color: #333333;
-  font-size: 1.5rem;
+  font-size: 0.4rem;
   line-height: 24px;
   font-weight: normal;
 }
@@ -88,7 +88,7 @@
   margin: 0 auto;
   text-align: right;
   color: #999999;
-  font-size: 1.2rem;
+  font-size: 0.32rem;
   line-height: 14px;
 }
 .submit {
@@ -98,7 +98,7 @@
   background: #fc4f42;
   text-align: center;
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 0.4rem;
   line-height: 9vw;
   -webkit-border-radius: 6px;
   border-radius: 6px;
@@ -120,6 +120,6 @@
 }
 #modal .modal-content .modal-footer a {
   color: #fc4f42;
-  font-size: 1.6rem;
+  font-size: 0.42rem;
   line-height: 30px;
 }
