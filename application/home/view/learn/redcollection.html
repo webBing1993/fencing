@@ -1,113 +1,269 @@
 {extend name="public/common"}
 {block name="style"}
 <title>红色珍藏</title>
-<link rel="stylesheet" href="/home/sass/stylesheets/learn/redcollection.css">
+<link rel="stylesheet" href="/home/sass/stylesheets/redcollection/index.css">
 {/block}
 {block name="body"}
 <!--tab-->
-<div class="header">
-    <div class="tabs clear">
-        <div class="tab"><span>红色电影</span></div>
-        <div class="tab"><span>红色文学</span></div>
-        <div class="tab"><span>红色歌曲</span></div>
+<div id="tab" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+    <a class="mui-control-item" href="#item1mobile" data-index="0">
+        <span>红色电影</span>
+    </a>
+    <a class="mui-control-item" href="#item2mobile" data-index="1">
+        <span>红色文学</span>
+    </a>
+    <a class="mui-control-item" href="#item3mobile" data-index="2">
+        <span>红色歌曲</span>
+    </a>
+</div>
+
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="mui-slider-group">
+            <!--红色电影-->
+            <div id="item1mobile" class="mui-slider-item mui-control-content">
+                <div class="search">
+                    <div>
+                        <span class="fa fa-search"></span>
+                        <input type="text" placeholder="输入电影名称">
+                    </div>
+                </div>
+                <div class="results">
+                </div>
+                <div class="banner swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <a href="#" class="list">
+                                <img src="" alt="" class="banner-img">
+                                <div class="banner-bg"></div>
+                                <div class="banner-info limit"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <div class="lists-title">最新上映</div>
+                <div class="lists clear">
+                    <a href="#" class="list fl clear">
+                        <img src="" alt="红色电影" class="list-img">
+                        <div class="list-title limit">后端电话发货</div>
+                        <div class="list-summary limit">后端电话发货</div>
+                    </a>
+                </div>
+                <div class="lists-title clear listsline">
+                    经典热播
+                    <a href="" class="fr">更多>></a>
+                </div>
+                <div class="lists clear redfilm">
+                    <!--循环开始-->
+                    <a href="" class="list fl clear">
+                        <img src="" alt="红色电影" class="list-img">
+                        <div class="list-title limit"></div>
+                        <div class="list-summary limit"></div>
+                    </a>
+                    <!--循环结束-->
+                </div>
+            </div>
+            <!--红色文学-->
+            <div id="item2mobile" class="mui-slider-item mui-control-content">
+                <div class="banner_">
+                    <img src="/home/images/bookbg.jpg" alt="红色书籍banner" class="banner-img">
+                    <div class="search_">
+                        <div>
+                            <span class="fa fa-search"></span>
+                            <input type="text" placeholder="搜索书籍名字、作者名字">
+                        </div>
+                        <div class="results"></div>
+                    </div>
+                </div>
+                <div class="listbox">
+                    <div class="books active">
+                        <!--经典书籍列表 循环开始-->
+                        <a href="" class="list clearfix">
+                            <img src="}" alt="书籍封面">
+                            <div class="content">
+                                <span class="title limit"></span>
+                                <span class="author limit">作者：罚款扣分</span>
+                                <span class="read">读过：罚款扣分</span>
+                            </div>
+                            <span class="fa fa-angle-right"></span>
+                        </a>
+                        <!--经典书籍列表 循环结束-->
+                    </div>
+                </div>
+            </div>
+            <!--红色歌曲-->
+            <div id="item3mobile" class="mui-slider-item mui-control-content">
+                <div class="lists redmusic">
+                    <!--循环开始-->
+                    <a href="#" class="list">
+                        <img src="" alt="红色歌曲" class="music-img">
+                        <div class="content">
+                            <div class="title limit_">1111111</div>
+                            <div class="note clear">
+                                <span class="scan fl">fffff</span>
+                                <span class="fr">ffff</span>
+                            </div>
+                        </div>
+                    </a>
+                    <!--循环结束-->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<iframe src="" frameborder="0"  id="tab0" ></iframe>
-<iframe src="" frameborder="0"  id="tab1" ></iframe>
-<iframe src="" frameborder="0"  id="tab2" ></iframe>
 {/block}
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    $(function () {
-        $("title").text("红色珍藏");
-        // 退出缓存
-        isOut();
-    });
-    var c =  parseInt(window.location.href.split("redcollection/c/")[1]);
-    console.log(window.location.href)
-    $(function(){
-        var WH = $(window).height();
-//        $('iframe').height(WH - 45);
-        var co = getCookie("type");
-        if(co == 11 || co == 12 || co == 13){
-            c = co - 10;
-        }
-        if(c == 1){
-            $('#tab'+(c-1))[0].src='/home/learn/redfilm.html';
-        }else if(c == 2){
-            $('#tab'+(c-1))[0].src='/home/learn/redliterature.html';
-        }else if(c == 3){
-            $('#tab'+(c-1))[0].src='/home/learn/redmusic.html';
-        }
-        $('#tab'+(c-1)).height(WH - 45);
-        $('#tab'+(c-1)).show();
-        $('.tabs>.tab').eq(c-1).find('span').addClass('active');
-        //tab切换
-        $('.tabs>.tab ').on('click',function(){
-            var ntc = $('.notices' );
-            var eq = $(this ).index();
-            $(this ).siblings('.tab' ).find('span').removeClass('active');
-            $(this ).find('span' ).addClass('active');
-            //先全部隐藏
-            $('iframe').css('display','none');
-            $('iframe').height(0);
-            if(eq == 0){
-                $('#tab'+eq)[0].src='/home/learn/redfilm.html';
-            }else if(eq == 1){
-                $('#tab'+eq)[0].src='/home/learn/redliterature.html';
-            }else if(eq == 2){
-                $('#tab'+eq)[0].src='/home/learn/redmusic.html';
-            }
-            $('#tab'+eq).height(WH - 45);
-            $('#tab'+eq).show();
-            //使用示例
-            setCookie("type",eq+11);
-        });
-    });
 
-    //退出清理tab缓存
-    function isOut(){
-        pushHistory();
-        setTimeout(function(){
-            window.addEventListener("popstate", function(e) {
-                delCookie("type");
-                window.location.href = "/home/index/index.html";
-                console.log(window.location.href);
-                return false;
-            }, false);
-        },200)
-    }
-    //防止恶意刷新
-    function pushHistory(){
-        var sta = {
-            title: "title"
-        };
-        if( window.history.state === null )
-        {
-            window.history.pushState( sta, "title" );
-        }
-    }
-    function setCookie(name,value){
-        var Days = 30;
-        var exp = new Date();
-        exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        document.cookie = name + "="+ value + ";expires=" + exp.toGMTString();
-    }
-    function getCookie(name){
-        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-        if(arr=document.cookie.match(reg))
-            return arr[2];
-        else
-            return null;
-    }
-    function delCookie(name){
-        var exp = new Date();
-        exp.setTime(exp.getTime() - 1);
-        var cval=getCookie(name);
-        if(cval!=null)
-            document.cookie= name + "="+cval+";expires="+exp.toGMTString();
-    }
+       //轮播
+       var mySwiper = new Swiper('.swiper-container', {
+           autoplay: 3000,
+           loop:true,
+           pagination : '.swiper-pagination',
+           paginationType : 'bullets',
+           autoplayDisableOnInteraction:false
+       });
+       $(function(){
+           //tab初始化和数据存储
+           c = getCookie("c")?getCookie("c"):0;
+           $("#tab a").eq(c).addClass('mui-active');
+           $(".mui-slider-group>div").eq(c).addClass('mui-active');
+       });
+       window.onload = function(){
+           if(c==0){
+               if($(" .redfilm  a").length<10){
+                   mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+               }else{
+                   mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+               }
+           }else if(c==1){
+               if($(".books  a").length<10){
+                   mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+               }else{
+                   mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+               }
+           }else if( c==2 ){
+               if($(".redmusic a").length<10){
+                   mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+               }else{
+                   mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+               }
+           }
+
+       };
+       //初始化下拉加载
+       mui.init({
+           pullRefresh: {
+               container: '#refreshContainer',
+               up: {
+                   callback: loadScroll
+               }
+           }
+       });
+       function loadScroll(){
+           if( c==0 ){
+               var len = $(".redfilm a").length;
+           }else if( c==1 ){
+               var len = $(".books a").length;
+           }else if( c==2 ){
+               var len = $(".redmusic a").length;
+           }
+           $.ajax({
+               type:"post",
+               url:"",
+               data:{
+                   length:len,
+                   type:c
+               },
+               beforeSend: function(XMLHttpRequest){
+               },
+               success:function(data){
+                   if(data.code == 1){
+                       addMeets(data,c);
+                       if(data.data.length == 10){
+                           mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+                       }else{
+                           mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                       }
+                   }else{
+                       mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+                   }
+               }
+           });
+       }
+       function addMeets(data,type){
+           var html = '';
+           var lists = data.data;
+           var len = lists.length;
+           for(var i = 0; i< len;i++){
+               var list = lists[i];
+               if(type==0){
+                   html+='<a href="" class="list fl clear">' +
+                       '<img src="" alt="红色电影" class="list-img">' +
+                       '<div class="list-title limit"></div>' +
+                       '<div class="list-summary limit"></div></a>'
+
+               }
+               if(type==1){
+                   html+=
+                       '<a href="/home/activity/detail2/type/2/id/' + list.id + '">' +
+                       '<p>'+list.title+'</p>' +
+                       '<span>'+list.create_time+'</span>' +
+                       '<span>'+list.publisher+'</span>' +
+                       '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
+                       '</a>';
+
+               }
+               if(type==2){
+                   html+=
+                       '<a href="/home/activity/detail/type/2/id/' + list.id + '">' +
+                       '<img src="'+list.front_cover+'">' +
+                       '<p>'+list.title+'</p>' +
+                       '<span>'+list.create_time+'</span>' +
+                       '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
+                       '<span>'+list.publisher+'</span>' +
+                       '</a>';
+
+               }
+           }
+           if(type==0){
+               $(".meeting .list ul" ).append(html);
+           }else if(type==1){
+               $(".summary .list ul" ).append(html);
+           }else if(type==2){
+               $(".fixed .list ul" ).append(html);
+           }
+       }
+       //tab点击事件
+       mui('#tab').on('tap', 'a', function(e) {
+           mui('#refreshContainer').pullRefresh().refresh(true);
+           mui('#refreshContainer').scroll().scrollTo(0,0);
+           mui('#refreshContainer').pullRefresh().refresh(true);
+           c = this.getAttribute("data-index");
+           if(c==0){
+               if($(".meeting .list a").length<7){
+                   mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+               }else{
+                   mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+               }
+           }else if(c==1){
+               if($(".summary .list a").length<7){
+                   mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+               }else{
+                   mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+               }
+           }else if(c==2){
+               if($(".fixed .list a").length<7){
+                   mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+               }else{
+                   mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+               }
+           }
+           setCookie('c',c);
+       });
+
 
 </script>
 {/block}

@@ -23,7 +23,9 @@
                     {volist name="detail.front_cover" id="li"}
                     <div class="swiper-slide">
                         <!--支持循环，需要重复图片节点-->
-                        <div class="mui-slider-item"><img src="{$li|get_cover='path'}"></div>
+                        <div class="mui-slider-item">
+                            <img src="{$li|get_cover='path'}">
+                        </div>
                     </div>
                     {/volist}
                 </div>
