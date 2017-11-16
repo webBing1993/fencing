@@ -29,7 +29,7 @@ class Activity extends Base
 
         $this->assign('leftone',$leftone); // 活动安排
         $this->assign('lefttwo',$lefttwo); // 活动展示
-        $this->assign('center',$center); // 会议纪要
+        $this->assign('center',$center); // 会议纪要       
         $this->assign('right',$right);  // 固定活动
         return $this->fetch();
     }
