@@ -427,8 +427,8 @@ class Base extends Controller {
      * type值：
      * 1 special 通知公告
      * 2 news    箬横动态
-     * 3 study 两学一做
-     * 4
+     * 3 study   两学一做
+     * 4 notice  支部活动
      * 5
      */
     public function content($type,$id){
@@ -444,7 +444,7 @@ class Base extends Controller {
                 $table = "study";
                 break;
             case 4:
-                $table = "";
+                $table = "notice";
                 break;
             case 5:
                 $table = "";
