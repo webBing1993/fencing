@@ -37,7 +37,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 	width: 100%;
 	height: 180px;
 	/*background:-webkit-gradient(linear, left bottom, right top, from(#e4672d), to(#e9ad2c));*/
-	background: url("/home/images/bg_rank.jpg") no-repeat;
+	background: url("/home/images/learn/bg_rank.jpg") no-repeat;
 	background-size: 100% 100%;
 	color:#ffffff;
 }
@@ -246,6 +246,6 @@ table { border-collapse: collapse; background-color: #ffffff; }
 	position: fixed;
 	z-index: 5;
 	bottom: 0;
-	background: url("/home/images/game3.png");
+	background: url("/home/images/learn/game3.png");
 	background-size: 100% 100%;
 }

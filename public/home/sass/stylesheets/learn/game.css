@@ -78,7 +78,7 @@ body{
 	position: fixed;
 	z-index: -1;
 	bottom: 0;
-	background: url("/home/images/game1.png");
+	background: url("/home/images/learn/game1.png");
 	background-size: 100% 100%;
 
 }
@@ -154,7 +154,7 @@ body{
 	left:90px ;
 	width: 148px;
 	height: 52px;
-	background: url("/home/images/sco2.png");
+	background: url("/home/images/learn/sco2.png");
 	background-size: 100% 100%;
 }
 .bg{

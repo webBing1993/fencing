@@ -64,6 +64,7 @@ body{
 	width: calc(100% - 26px);
 	padding-bottom: 20px;
 	margin: 0 auto;
+	line-height: 5vw;
 }
 .list .type{
 	width: 40px;
