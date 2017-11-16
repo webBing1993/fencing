@@ -81,7 +81,7 @@ class Learn extends Base{
 
     public function redcollection(){
 
-        return $this ->fetch();
+        return $this->fetch();
     }
     /**
      * 红色电影

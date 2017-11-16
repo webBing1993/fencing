@@ -93,6 +93,7 @@
                        {/empty}
                    </div>
                </div>
+
            </div>
            <div id="item3mobile" class="mui-slider-item mui-control-content">
                <!--固定活动-->
@@ -119,7 +120,10 @@
        </div>
    </div>
 </div>
-
+<!--悬浮按钮-->
+<div class="btn_">
+    <a href=""></a>
+</div>
 {/block}
 {block name="script"}
 <script src="/home/js/reset.js"></script>
@@ -138,18 +142,21 @@
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
+            $(".btn_").hide()
         }else if(c==1){
             if($(".summary .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
+            $(".btn_").show()
         }else if( c==2 ){
             if($(".fixed .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
+            $(".btn_").hide()
         }
 
     };
@@ -252,18 +259,21 @@
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
+            $(".btn_").hide()
         }else if(c==1){
             if($(".summary .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
+            $(".btn_").show()
         }else if(c==2){
             if($(".fixed .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
+            $(".btn_").hide()
         }
         setCookie('c',c);
     });

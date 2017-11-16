@@ -388,3 +388,13 @@
   margin-top: 30%;
   margin-left: -8vw;
 }
+.btn_{
+  position: fixed;
+  top: 150vw;
+  right: 5vw;
+  width:10vw;
+  height: 10vw;
+  background: #000000;
+  z-index: 5;
+  display:none;
+}
