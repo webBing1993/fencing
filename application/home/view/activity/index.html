@@ -26,10 +26,10 @@
        <div class="mui-slider-group">
            <div id="item1mobile" class="mui-slider-item mui-control-content">
                <!--安排活动-->
-               {if condition="$notice eq null && $meeting eq null"}
+               {if condition="$leftone eq null && $lefttwo eq null"}
                <div class="default"><img src="/home/images/common/nomessage.png" alt="暂无消息"> </div>
                {else/}
-               {notempty name="notice"}
+               {notempty name="leftone"}
                <div class="notice">
                    <a class="more" href="{:Url('Activity/morelist')}">
                        <span>安排活动</span>
@@ -37,12 +37,12 @@
                    </a>
                    <div class="list">
                        <ul>
-                           {volist name="notice" id="no"}
+                           {volist name="leftone" id="no"}
                            <a href="{:Url('Activity/detail2?type=1&id='.$no['id'])}">
                                <p>{$no.title}</p>
                                <p>{$no.description}</p>
                                <span>{$no.publisher}</span>
-                               <span>{$no.create_time}</span>
+                               <span>{$no.create_time|time_format='Y-m-d'}</span>
                                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                            </a>
                            {/volist}
@@ -50,7 +50,7 @@
                    </div>
                </div>
                {/notempty}
-               {notempty name="meeting"}
+               {notempty name="lefttwo"}
                <div class="meeting">
                    <div class="more">
                        <span>活动展示</span>
@@ -58,8 +58,8 @@
                    </div>
                    <div class="list">
                        <ul>
-                           {volist name="meeting" id="mee"}
-                           <a href="{:Url('Activity/detail?type=1&id='.$mee['id'])}">
+                           {volist name="lefttwo" id="mee"}
+                           <a href="{:Url('Activity/detail2?type=2&id='.$mee['id'])}">
                                <img src="{$mee.front_cover}">
                                <p>{$mee.title}</p>
                                <span>{$mee.create_time}</span>
@@ -77,11 +77,11 @@
                <!--会议纪要-->
                <div class="summary">
                    <div class="list">
-                       {empty name="summary"}
+                       {empty name="center"}
                         <div class="default"><img src="/home/images/common/nomessage.png"></div>
                        {else/}
                        <ul>
-                           {volist name="summary" id="su"}
+                           {volist name="center" id="su"}
                            <a href="{:Url('Activity/detail2?type=2&id='.$su['id'])}">
                                <p style="font-weight: bold;">{$su.title}</p>
                                <span>{$su.publisher}</span>
@@ -98,12 +98,12 @@
                <!--固定活动-->
                <div class="fixed">
                    <div class="list">
-                       {empty name="fixed" id="fi"}
+                       {empty name="right" id="fi"}
                         <div class="default"><img src="/home/images/common/nomessage.png"></div>
                        {else/}
                        <ul>
-                           {volist name="fixed" id="fi"}
-                           <a href="{:Url('Activity/detail?type=2&id='.$fi['id'])}">
+                           {volist name="right" id="fi"}
+                           <a href="{:Url('Activity/detail2?type=2&id='.$fi['id'])}">
                                <img src="{$fi.front_cover}">
                                <p>{$fi.title}</p>
                                <span>{$fi.create_time}</span>
