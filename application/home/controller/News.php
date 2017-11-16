@@ -7,19 +7,6 @@
  */
 
 namespace app\home\controller;
-use app\home\model\Browse;
-use app\home\model\Collect;
-use app\home\model\Comment;
-use app\home\model\Learn;
-use app\home\model\Like;
-use app\home\model\Notice;
-use app\home\model\Opinion;
-use app\home\model\Picture;
-use app\home\model\Redbook;
-use app\home\model\Redfilm;
-use app\home\model\Redmusic;
-use app\home\model\WechatUser;
-use think\Controller;
 
 use app\home\model\News as NewsModel;
 /**

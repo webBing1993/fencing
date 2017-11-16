@@ -109,7 +109,7 @@ class Notice extends Admin {
                     if ($data['type']==1) {
                         return $this->success("修改活动安排成功", Url('Notice/index'));
                     }else{
-                        return $this->success("修改固定活动成功", Url('Notice/meeting'));
+                        return $this->success("修改会议纪要成功", Url('Notice/meeting'));
                     }
                 }else{
                     return $this->get_update_error_msg($noticeModel->getError());
@@ -144,7 +144,7 @@ class Notice extends Admin {
 
             $map = array(
                 'type' => 3,
-                'status' => array('egt',1),
+                'status' => array('eq',1),
             );
             $list = $this->lists('Notice',$map);
             int_to_string($list,array(
@@ -236,9 +236,9 @@ class Notice extends Admin {
                 $res = $noticeModel->save($data,['id'=>$data['id']]);
                 if ($res){
                     if ($data['type']==2) {
-                        return $this->success("修改活动成功", Url('Notice/show'));
+                        return $this->success("修改活动展示成功", Url('Notice/show'));
                     }else{
-                        return $this->success("修改活动成功", Url('Notice/activity'));
+                        return $this->success("修改固定活动成功", Url('Notice/activity'));
                     }
 
                 }else{

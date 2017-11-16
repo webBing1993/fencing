@@ -34,7 +34,7 @@
                     {/volist}
                     {/notempty}
                     <div class="like">
-                        <span class="read">{$detail.views}</span>
+                        <span class="read">{$detail.views+1}</span>
                         {eq name="visit" value="0"}
                         {eq name="detail.is_like" value="1"}
                         <span class="isgood good_ notvisitor"  data-type="4" data-id="{$detail.id}">{$detail.likes}</span>

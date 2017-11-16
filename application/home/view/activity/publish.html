@@ -41,7 +41,7 @@
             </li>
             <li class="type1">
                 时间
-                <input type="input" placeholder="请输入参与时间" name="time" id="date" readonly>
+                <input type="input" placeholder="请输入参与时间" name="start_time" id="date" readonly>
             </li>
             <li class="type1">
                 地点
@@ -49,7 +49,7 @@
             </li>
             <li class="type1">
                 参会人
-                <input type="text" placeholder="请输入参会人或参与支部" name="people" value="">
+                <input type="text" placeholder="请输入参会人或参与支部" name="publisher" value="">
             </li>
             <div class="content">
                 <textarea placeholder="请输入本次会议纪要,谈谈你的感触!(图片选填,最多四张，不限字数)" name="content"></textarea>
@@ -93,15 +93,15 @@
     });
 
     window.onload = function(){
-            var dtpicker = new mui.DtPicker({
-                "type": "datetime",
-                "value": ""
-            });
-            document.querySelector('#date').addEventListener('tap', function () {
-                dtpicker.show(function (e) {
-                    document.getElementById('date').value = e.text;
-                })
+        var dtpicker = new mui.DtPicker({
+            "type": "datetime",
+            "value": ""
+        });
+        document.querySelector('#date').addEventListener('tap', function () {
+            dtpicker.show(function (e) {
+                document.getElementById('date').value = e.text;
             })
+        })
     };
     options = {
         scrollY: true, //是否竖向滚动
@@ -153,9 +153,9 @@
     $(".goreview").click(function() {
         var Imgarr = [];
         $(".imgs .img").each(function(){
-          if(!$(this).hasClass("hide")){
-               Imgarr.push($(this).find("img").attr("data-tab"))
-          }
+            if(!$(this).hasClass("hide")){
+                Imgarr.push($(this).find("img").attr("data-tab"))
+            }
         });
         swal({
             title: "提示",
@@ -167,17 +167,19 @@
         }, function (isConfirm) {
             if (isConfirm) {
                 var data = {
+                    type:3,
                     title: $("input[name='title']").val(),
-                    time: $("input[name='time']").val(),
+                    start_time: $("input[name='start_time']").val(),
                     address: $("input[name='address']").val(),
-                    people: $("input[name='people']").val(),
+                    publisher: $("input[name='publisher']").val(),
                     content: $("textarea[name='content']").val(),
-                    img:Imgarr,
+                    front_cover:Imgarr,
+
                 };
             }
             $.ajax({
                 type: "post",
-                url: "{:Url('User/tutoredit')}",
+                url: "{:Url('Activity/publish')}",
                 data: data,
                 dataType: "Json",
                 success: function (data) {

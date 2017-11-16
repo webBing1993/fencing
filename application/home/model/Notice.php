@@ -21,4 +21,14 @@ class Notice extends Model {
         }
         return $list;
     }
+
+
+    //获取后台用户名称
+    public function user(){
+        return $this->hasOne('Member','id','create_user');
+    }
+
+    public function name(){
+        return $this->hasOne('WechatUser','userid','userid');
+    }
 }

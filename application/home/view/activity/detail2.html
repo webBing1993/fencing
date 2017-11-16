@@ -19,27 +19,22 @@
         <div class="mui-scroll">
             <div class="swiper-container banner">
                 <div class="swiper-wrapper">
+                    {volist name="detail.front_cover" id="vo"}
                     <div class="swiper-slide">
-<<<<<<< Updated upstream
-                        <!--支持循环，需要重复图片节点-->
                         <div class="mui-slider-item">
-                            <img src="{$li|get_cover='path'}">
-=======
-                        <div class="mui-slider-item">
-                            <img src="{$list.path}">
->>>>>>> Stashed changes
+                            <img src="{$vo|get_cover='path'}">
                         </div>
                     </div>
-
+                    {/volist}
                 </div>
             </div>
             <div class="view">
-                <span class="read">{$detail.views}</span>
+                <span class="read">{$detail.views+1}</span>
             </div>
             <div class="article">
                 <div class="title"><p>{$detail.title}</p></div>
                 <div class="note clear">
-                    <span class="publish">{$detail.publisher}</span>
+                    <span class="publish">{$detail.userid}</span>
                     <span class="time"> {$detail.create_time|time_format="Y-m-d"}</span>
                 </div>
                 <div class="content">
@@ -107,10 +102,13 @@
 <script>
     var type =  parseInt(window.location.href.split("?")[1]);
 
+
+
+
+
+
     window.onload = function(){
-        if(flag){
-            $(".mui-pull .mui-pull-caption").css("font-size","15px");
-        }
+
         if($(".list").length<7){
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         }else{
@@ -129,6 +127,7 @@
 
 
     //tab点击事件
+
     mui('#refreshContainer').on('tap', '.notvisitor', function(e) {
         var type = this.getAttribute("data-type");
         var id = this.getAttribute("data-id");
