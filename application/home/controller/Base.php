@@ -112,9 +112,10 @@ class Base extends Controller {
      * 1 special 通知公告
      * 2 news  箬横动态
      * 3 study 两学一做
-     * 4
-     * 5
-     * 6
+     * 4 notice 支部活动
+     * 5 redfilm 红色电影
+     * 6 redbook 红色文学
+     * 7 redmusic 红色音乐
      */
     public function like(){
         $uid = session('userId'); //点赞人
@@ -134,13 +135,16 @@ class Base extends Controller {
                 $table = "study";
                 break;
             case 4:
-                $table = "";
+                $table = "notice";
                 break;
             case 5:
-                $table = "";
+                $table = "redfilm";
                 break;
             case 6:
-                $table = "";
+                $table = "redbook";
+                break;
+            case 7:
+                $table = "redmusic";
                 break;
             default:
                 return $this->error("无该数据表");
@@ -245,9 +249,10 @@ class Base extends Controller {
      * 1 special 通知公告
      * 2 news    箬横动态
      * 3 study  两学一做
-     * 4
-     * 5
-     * 6
+     * 4 notice 支部活动
+     * 5 redfilm 红色电影
+     * 6 redbook 红色文学
+     * 7 redmusic 红色音乐
      */
     public function comment(){
         if(IS_POST){
@@ -265,13 +270,16 @@ class Base extends Controller {
                     $table = "study";
                     break;
                 case 4:
-                    $table = "";
+                    $table = "notice";
                     break;
                 case 5:
-                    $table = "";
+                    $table = "redfilm";
                     break;
                 case 6:
-                    $table = "";
+                    $table = "redbook";
+                    break;
+                case 7:
+                    $table = "redmusic";
                     break;
                 default:
                     return $this->error("无该数据表");
@@ -429,7 +437,9 @@ class Base extends Controller {
      * 2 news    箬横动态
      * 3 study   两学一做
      * 4 notice  支部活动
-     * 5
+     * 5 redfilm 红色电影
+     * 6 redbook 红色文学
+     * 7 redmusic 红色音乐
      */
     public function content($type,$id){
         $userId = session('userId');
@@ -447,7 +457,13 @@ class Base extends Controller {
                 $table = "notice";
                 break;
             case 5:
-                $table = "";
+                $table = "redfilm";
+                break;
+            case 6:
+                $table = "redbook";
+                break;
+            case 7:
+                $table = "redmusic";
                 break;
             default:
                 return $this->error("无该数据表");

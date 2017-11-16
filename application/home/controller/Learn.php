@@ -119,13 +119,13 @@ class Learn extends Base{
      * 电影详情
      */
     public function filmdetail() {
-/*        $this->jssdk();
+        $this->jssdk();
         $id = input('id');
         if (empty($id)){
             $this ->error('参数错误!');
         }
-        $detail = $this->content(7,$id);
-        $this->assign('detail',$detail);*/
+        $detail = $this->content(5,$id);
+        $this->assign('detail',$detail);
         return $this->fetch();
     }
 
@@ -133,7 +133,7 @@ class Learn extends Base{
      * 电影搜索
      */
     public function filmserch() {
-/*        $val = input('val');
+        $val = input('val');
         if($val) {
             $map = array(
                 'title' => array('like','%'.$val.'%'),
@@ -148,7 +148,7 @@ class Learn extends Base{
             }
         }else {
             return $this->error("查询条件不能为空");
-        }*/
+        }
     }
 
     /**
