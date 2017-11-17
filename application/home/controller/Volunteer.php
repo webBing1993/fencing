@@ -89,5 +89,17 @@ class Volunteer extends Base{
     public  function publish(){
         return $this ->fetch();
     }
+    /*
+     * 点亮微心愿
+     * */
+    public  function wishes(){
+        return $this->fetch();
+    }
+    /*
+     * 志愿者招募
+     * */
+    public  function  enlist(){
+        return $this->fetch();
+    }
 
 }

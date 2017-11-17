@@ -1,0 +1,87 @@
+
+@import "common";
+@import "graphic-list";
+
+
+#tab{
+  top:50vw;
+  a{
+    &:after{
+      left:49vw;
+    }
+  }
+}
+#refreshContainer {
+  margin-top: 58vw;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+  color: #fff;
+  background: #ffa626;
+}
+.list {
+  ul {
+    a {
+      span {
+        &:nth-child(3) {
+          position: absolute;
+          bottom:2vw;
+        }
+        &:nth-child(4) {
+          position: absolute;
+          right: 7vw;
+        }
+        &:nth-child(5) {
+          width: 2vw;
+          height: 6vw;
+          display:block;
+          position: absolute;
+          right: 1vw;
+          bottom: 7vw;
+          line-height: 6vw;
+        }
+      }
+    }
+  }
+}
+.swiper-slide.banner{
+  height:50vw;
+}
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
+  bottom:calc(3vw - 4px);
+}
+
+.default {
+  img{
+    width: 16vw;
+    position: absolute;
+    left: 50%;
+    margin-top: 30%;
+    margin-left: -8vw;
+  }
+}
+
+.banner {
+  z-index: 99;
+  height: 50vw;
+  width: 100vw;
+  position: relative;
+}
+.banner img {
+  width: 100%;
+  height: 50vw;
+}
+.btn_{
+  width: 10vw;
+  height: 10vw;
+  background: #000000;
+  position: fixed;
+  bottom: 40vw;
+  right: 10vw;
+  z-index: 8;
+}
+.btn_ a{
+  display: block;
+  width: 10vw;
+  height: 10vw;
+}

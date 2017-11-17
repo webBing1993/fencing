@@ -17,7 +17,7 @@
 .lists .list {
     position: relative;
     width: 42.137vw;
-    height: 48vw;
+    height: 54.67vw;
     display: inline-block;
     border-radius: 1.5vw;
 
@@ -75,4 +75,21 @@
 .color3 {
     border-color: blue;
     box-shadow: 0 0 1.6vw blue;
+}
+.view{
+    width:100%;
+    height: 7vw;
+    background: #e31b1b;
+    position: absolute;
+    bottom:0;
+    border-radius: 0 0 1.5vw 1.5vw;
+    text-align: center;
+    line-height:7vw;
+    z-index: 5;
+}
+.view a{
+    display: block;
+    width:100%;
+    height: 7vw;
+    color: #ffffff;
 }
