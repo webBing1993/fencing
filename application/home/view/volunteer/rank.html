@@ -1,13 +1,255 @@
 {extend name="public/pure"}
 
 {block name="style"}
-
+<link rel="stylesheet" href="/home/sass/stylesheets/volunteer/rank.css">
 {/block}
 
 {block name="body"}
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="banner">
+            <img src="/home/images/volunteer/rankbanner.png">
+        </div>
+        <div id="tab" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <a class="mui-control-item" href="#item1mobile" data-index="0">
+                <span>党员志愿者</span>
+            </a>
+            <a class="mui-control-item" href="#item2mobile" data-index="1">
+                <span>群众志愿者</span>
+            </a>
+        </div>
 
+
+
+        <div class="mui-slider-group">
+
+            <div id="item1mobile" class="mui-slider-item mui-control-content">
+
+                <div id="tab2" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                    <a class="mui-control-item" href="#item3mobile" data-index="0">
+                        <span>月榜</span>
+                    </a>
+                    <a class="mui-control-item" href="#item4mobile" data-index="1">
+                        <span>总榜</span>
+                    </a>
+                </div>
+
+                <div class="mui-slider-group">
+
+                    <div id="item3mobile" class="mui-slider-item mui-control-content">
+
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">111</span>
+                                    <span class="score">200分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">222</span>
+                                    <span class="score">99分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">3333</span>
+                                    <span class="score">2分</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+
+                    </div>
+
+                    <div id="item4mobile" class="mui-slider-item mui-control-content">
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">444</span>
+                                    <span class="score">200分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">555</span>
+                                    <span class="score">99分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">666</span>
+                                    <span class="score">2分</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="item2mobile" class="mui-slider-item mui-control-content">
+                <div id="tab3" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                    <a class="mui-control-item" href="#item5mobile" data-index="0">
+                        <span>月榜</span>
+                    </a>
+                    <a class="mui-control-item" href="#item6mobile" data-index="1">
+                        <span>总榜</span>
+                    </a>
+                </div>
+
+                <div class="mui-slider-group">
+
+                    <div id="item5mobile" class="mui-slider-item mui-control-content">
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">1</span>
+                                    <span class="score">200分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">2</span>
+                                    <span class="score">99分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">3</span>
+                                    <span class="score">2分</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div id="item6mobile" class="mui-slider-item mui-control-content">
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">4</span>
+                                    <span class="score">200分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">5</span>
+                                    <span class="score">99分</span>
+                                </li>
+                                <li>
+                                    <span class="number">1</span>
+                                    <img src="/home/images/user/rank.png">
+                                    <span class="name">6</span>
+                                    <span class="score">2分</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 {/block}
 
 {block name="script"}
+<script src="/home/js/reset.js"></script>
+<script>
+    $(function(){
+        c = getCookie("c")?getCookie("c"):0;
+        index = getCookie("index")?getCookie("index"):0;
+        $("#tab a").eq(c).addClass('mui-active');
+        if(c==0){
+            $("#item1mobile").find("#tab2 a").eq(index).addClass('mui-active');
+            $("#item1mobile").find(".mui-slider-group>div").eq(index).addClass('mui-active');
 
+        }else{
+            $("#item2mobile").find("#tab3 a").eq(index).addClass('mui-active');
+            $("#item2mobile").find(".mui-slider-group>div").eq(index).addClass('mui-active');
+        }
+
+        $("#refreshContainer>.mui-scroll>.mui-slider-group>div").eq(c).addClass('mui-active');
+    });
+
+    //首页加载是否需要上拉加载
+    window.onload = function() {
+        mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+    };
+
+    //初始化下拉加载
+    mui.init({
+        pullRefresh: {
+            container: '#refreshContainer',
+            up: {
+                callback: loadScroll
+            }
+        }
+    });
+
+    function loadScroll(){
+        mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+    }
+
+    //tab切换事件
+    mui('#tab').on('tap', 'a', function(e) {
+        c = this.getAttribute("data-index");
+        if(c==0){
+            $("#item1mobile").find("#tab2 a").removeClass('mui-active');
+            $("#item1mobile").find("#tab2 a").eq(index).addClass('mui-active');
+            $("#item1mobile").find(".mui-slider-group>div").removeClass('mui-active');
+            $("#item1mobile").find(".mui-slider-group>div").eq(index).addClass('mui-active');
+
+        }else{
+            $("#item2mobile").find("#tab3 a").removeClass('mui-active');
+            $("#item2mobile").find("#tab3 a").eq(index).addClass('mui-active');
+            $("#item2mobile").find(".mui-slider-group>div").removeClass('mui-active');
+            $("#item2mobile").find(".mui-slider-group>div").eq(index).addClass('mui-active');
+        }
+        mui('#refreshContainer').pullRefresh().scrollTo(0,0);
+        mui('#refreshContainer').scroll().scrollTo(0,0);
+        mui('#refreshContainer').pullRefresh().refresh(true);
+        setCookie("c",c)
+    });
+
+    //tab切换事件
+    mui('#tab2').on('tap', 'a', function(e) {
+        mui('#refreshContainer').pullRefresh().scrollTo(0,0);
+        mui('#refreshContainer').scroll().scrollTo(0,0);
+        mui('#refreshContainer').pullRefresh().refresh(true);
+        index = this.getAttribute("data-index");
+        setCookie("index",index)
+    });
+
+    //tab切换事件
+    mui('#tab3').on('tap', 'a', function(e) {
+        mui('#refreshContainer').pullRefresh().scrollTo(0,0);
+        mui('#refreshContainer').scroll().scrollTo(0,0);
+        mui('#refreshContainer').pullRefresh().refresh(true);
+        index = this.getAttribute("data-index");
+        setCookie("index",index)
+    });
+
+</script>
 {/block}
