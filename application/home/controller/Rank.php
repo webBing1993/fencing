@@ -10,7 +10,7 @@ namespace app\home\controller;
 use app\home\model\Browse;
 use app\home\model\Comment;
 use app\home\model\Like;
-use app\home\model\Answers;
+use app\home\model\Answer;
 use app\home\model\WechatUser;
 use think\Controller;
 use think\Db;
@@ -134,7 +134,7 @@ class Rank extends Base {
             $new3[] = $cen;
         }
         // 本周答题
-        $answer = Answers::where(['create_time' => array('egt',$t)])->select();
+        $answer = Answer::where(['create_time' => array('egt',$t)])->select();
         $list4 = array();
         foreach($answer as $value){
             $User = WechatUser::where('userid',$value['userid'])->find();
@@ -288,7 +288,7 @@ class Rank extends Base {
             $new3_m[] = $cen;
         }
         // 本月答题
-        $answer_m = Answers::where(['create_time' => array('between',[$start,$end])])->select();
+        $answer_m = Answer::where(['create_time' => array('between',[$start,$end])])->select();
         $list4_m = array();
         foreach($answer_m as $value){
             $User = WechatUser::where('userid',$value['userid'])->find();
@@ -542,7 +542,7 @@ class Rank extends Base {
             $new3[] = $cen;
         }
         // 本周答题
-        $answer = Answers::where(['create_time' => array('egt',$t)])->select();
+        $answer = Answer::where(['create_time' => array('egt',$t)])->select();
         $list4 = array();
         foreach($answer as $value){
             $User = WechatUser::where('userid',$value['userid'])->find();
@@ -716,7 +716,7 @@ class Rank extends Base {
         }
 
         // 本月答题
-        $answer_m = Answers::where(['create_time' => array('between',[$start,$end])])->select();
+        $answer_m = Answer::where(['create_time' => array('between',[$start,$end])])->select();
         $list4_m = array();
         foreach($answer_m as $value){
             $User = WechatUser::where('userid',$value['userid'])->find();
