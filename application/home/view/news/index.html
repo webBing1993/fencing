@@ -7,31 +7,29 @@
 {/block}
 
 {block name="body"}
+{notempty name="$top"}
 <div class="banners">
     <div class="swiper-container">
         <div class="imgs swiper-wrapper">
             <!--轮播开始-->
+            {volist name="$top" id="tp"}
             <div class="banner swiper-slide">
                 <a href="#">
-                    <img src="/home/images/55.jpg" alt="">
+                    <img src="{$tp.front_cover}" alt="">
                     <div class="title_ limit">
-                        <span>付款口干口苦刚看过</span>
+                        <span>{$tp.title}</span>
                     </div>
                 </a>
             </div>
-            <div class="banner swiper-slide">
-                <a href="#">
-                    <img src="/home/images/55.jpg" alt="">
-                    <div class="title_ limit">
-                        <span>付款口多的点点滴滴多多多多多多呃呃鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅鹅干口苦刚看过</span>
-                    </div>
-                </a>
-            </div>
+            {/volist}
          <!--轮播结束-->
         </div>
+        {volist name="$top" id="tp"}
         <div class="swiper-pagination"></div>
+        {/volist}
     </div>
 </div>
+{/notempty}
 <div id="tab" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
     <a class="mui-control-item" href="#item1mobile" data-index="0">
         <span>基层动态</span>
@@ -95,6 +93,8 @@
     <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
     <script>
         $(function(){
+            var height = $("#tab").height() + $(".banners").height();
+            $("#refreshContainer").css("margin-top",height);
             c = getCookie("c")?getCookie("c"):0;
             $("#tab a").eq(c).addClass('mui-active');
             $(".mui-slider-group>div").eq(c).addClass('mui-active');

@@ -211,7 +211,7 @@
     border-radius: 50%;
 }
 .comment .lists .list .mid {
-    width: 85%;
+    width: 100%;
     margin-top: 0.28rem;
 }
 .comment .lists .list .mid .name {

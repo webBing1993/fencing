@@ -82,7 +82,7 @@ body {
   margin-bottom: 2vw;
 }
 
-.sign {
+#sign {
   position: fixed;
   bottom: 0;
   height: 1rem;

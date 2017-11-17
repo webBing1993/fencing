@@ -11,6 +11,15 @@ use app\home\model\VolunteerDetail;
 
 
 class Volunteer extends Base{
+    /*
+     *  志愿之家主页
+     * */
+    public function index(){
+
+        return $this->fetch();
+
+    }
+
 
     /*
      *  志愿服务
@@ -101,5 +110,15 @@ class Volunteer extends Base{
     public  function  enlist(){
         return $this->fetch();
     }
+
+    /*
+      * 志愿者排行
+      * */
+    public  function  rank(){
+
+        return $this->fetch();
+    }
+
+
 
 }
