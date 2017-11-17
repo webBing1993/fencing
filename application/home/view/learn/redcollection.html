@@ -32,7 +32,7 @@
                 <div class="banner swiper-container">
                     <div class="swiper-wrapper">
                         <!--轮播开始-->
-                        {volist name="list.top" id="top"}
+                        {volist name="film.top" id="top"}
                         <div class="swiper-slide">
                             <a href="{:Url('Learn/filmdetail?id='.$top['id'])}" class="list">
                                 <img src="{$top.front_cover|get_cover='path'}" alt="{$top.title}" class="banner-img">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="lists-title">最新上映</div>
                 <div class="lists clear">
-                    {volist name="list.new" id="new"}
+                    {volist name="film.new" id="new"}
                     <a href="{:Url('Learn/filmdetail?id='.$new['id'])}" class="list fl clear">
                         <img src="{$new.front_cover|get_cover='path'}" alt="红色电影" class="list-img">
                         <div class="list-title limit">{$new.title}</div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="lists clear redfilm">
                     <!--循环开始-->
-                    {volist name="list.hot" id="hot"}
+                    {volist name="film.hot" id="hot"}
                     <a href="{:Url('Learn/filmdetail?id='.$hot['id'])}" class="list fl clear">
                         <img src="{$hot.front_cover|get_cover='path'}" alt="红色电影" class="list-img">
                         <div class="list-title limit">{$hot.title}</div>
@@ -86,7 +86,7 @@
                 <div class="listbox">
                     <div class="books active">
                         <!--经典书籍列表 循环开始-->
-                        {volist name="list" id="vo"}
+                        {volist name="book" id="vo"}
                         <a href="{:Url('Redcollection/bookdetail?id='.$vo['id'])}" class="list clearfix">
                             <img src="{$vo.front_cover|get_cover='path'}" alt="书籍封面">
                             <div class="content">
@@ -105,14 +105,14 @@
             <div id="item3mobile" class="mui-slider-item mui-control-content">
                 <div class="lists redmusic">
                     <!--循环开始-->
-                    {volist name="list" id="vo"}
+                    {volist name="music" id="vo"}
                     <a href="{:Url('Redcollection/musicdetail?id='.$vo['id'])}" class="list">
                         <img src="{$vo.front_cover|get_cover='path'}" alt="红色歌曲" class="music-img">
                         <div class="content">
                             <div class="title limit_">{$vo.title}</div>
                             <div class="note clear">
                                 <span class="scan fl">{$vo.views}</span>
-                                <span class="fr">{$vo.create_time|time_format='Y-m-d'}</span>
+                                <span class="fr time">{$vo.create_time|time_format='Y-m-d'}</span>
                             </div>
                         </div>
                     </a>

@@ -12,6 +12,10 @@ use app\admin\model\Question;
 use app\home\model\Answer;
 use app\home\model\Study;
 use app\home\model\Redfilm;
+use app\home\model\Redbook;
+use app\home\model\RedbookRead;
+use app\home\model\Redmusic;
+use app\home\model\Redremark;
 class Learn extends Base{
     /**
      * 网上党校主页
@@ -80,8 +84,20 @@ class Learn extends Base{
      */
 
     public function redcollection(){
-
-        return $this->fetch();
+        // 红色电影
+        $Film = new Redfilm();
+        $film = $Film->getIndexList();
+        $this->assign('film',$film); //  红色电影
+        // 红色文学
+        $Book = new Redbook();
+        $book = $Book->getIndexList(); // 红色文学
+        $this->assign('book',$book);
+        // 红色语录
+        // 红色音乐
+        $Music = new Redmusic();
+        $list = $Music->getIndexList();
+        $this->assign('music',$list);
+        return $this ->fetch();
     }
     /**
      * 红色电影
