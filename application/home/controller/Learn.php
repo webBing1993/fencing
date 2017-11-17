@@ -206,7 +206,6 @@ class Learn extends Base{
             $this ->error('参数错误!');
         }
         $detail = $this->content(6,$id);
-        dump($detail);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
