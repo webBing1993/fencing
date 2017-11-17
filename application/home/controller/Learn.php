@@ -169,7 +169,7 @@ class Learn extends Base{
             $this ->error('参数错误!');
         }
         $detail = $this->content(7,$id);
-        $this->assign('detail',$detail);
+        $this->assign('music',$detail);
         return $this->fetch();
     }
 
@@ -206,7 +206,7 @@ class Learn extends Base{
             $this ->error('参数错误!');
         }
         $detail = $this->content(6,$id);
-        $this->assign('detail',$detail);
+        $this->assign('book',$detail);
         return $this->fetch();
     }
 

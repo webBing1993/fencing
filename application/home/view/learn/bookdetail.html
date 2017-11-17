@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>红色珍藏</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/bookdetail.css">
 {/block}
 {block name="body"}
@@ -49,12 +50,12 @@
 			</div>
 			<!--/作者简介-->
 			<div class="note">
-				<span class="read">{$book.views}</span>
+				<span class="read">{$book.views +1 }</span>
 				{eq name="visit" value="0"}
 				{eq name="book.is_like" value="0"}
-				<span class="isgood good" onclick="isGood(this,10,{$book.id})">{$book.likes}</span>
+				<span class="isgood good" onclick="isGood(this,6,{$book.id})">{$book.likes}</span>
 				{else/}
-				<span class="isgood good_" onclick="isGood(this,10,{$book.id})">{$book.likes}</span>
+				<span class="isgood good_" onclick="isGood(this,6,{$book.id})">{$book.likes}</span>
 				{/eq}
 				{else/}
 				<span class="isgood good">{$book.likes}</span>
@@ -65,7 +66,7 @@
 	<div class="comment">
 		<div class="sum">共<span>{$book.comments}</span>条评论</div>
 		<div class="lists">
-			{volist name="comment" id="co"}
+			{volist name="$book.comment" id="co"}
 			<div class="list clear">
 				<div class="fl">
 					<img src="{$co.header}" alt="用户" class="user">
@@ -93,7 +94,7 @@
 		</div>
 	</div>
 	{eq name="visit" value="0"}
-	<div class="bottom clear" onclick="send(this,10,{$book.id})">
+	<div class="bottom clear" onclick="send(this,6,{$book.id})">
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！" id="message" disabled>
 		</div>
@@ -229,12 +230,12 @@ $('title').text('经典书籍');
     //加载更多评论
     function loadScroll(){
         var len = $(".list" ).length;
-        var id = {$detail['id']};
+        var id = {$book['id']};
         $.ajax({
             type:"post",
             url:"{:Url('Base/morecomment')}",
             data:{
-                type:1,
+                type:6,
                 aid:id,
                 length:len
             },
@@ -288,71 +289,6 @@ $('title').text('经典书籍');
         }
         $(".lists" ).append(html);
     }
-    //--------------------------------------------------------------------------
-    //
-    //	Class style
-    //
-    //--------------------------------------------------------------------------
-    //fix兼容
-    function tofixed(){
-        var u = navigator.userAgent;
-        var word = $('.myword input');
-        var bottom =$('.bottom');
-        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-        if(isiOS){
-            //兼容ios7
-            $(document).scrollTop(1);
-            word.focus(function(){
-                var noInputViewHeight = $(window).height() - bottom.height();
-                var contentHeight = $(document).height() - bottom.height();
-                contentHeight = contentHeight > noInputViewHeight ? contentHeight : noInputViewHeight;
-                setTimeout(function(){
-                    var inputTopHeight = bottom.offset().top - $(window).scrollTop()+1;
-                    var inputTopPos = bottom.offset().top + inputTopHeight+1;
-                    inputTopPos = inputTopPos > contentHeight ? contentHeight : inputTopPos;
-                    bottom.css({'position':'absolute', 'top':inputTopPos });
-                    $(window).on('touchstart', function(){
-                        word.blur();
-                    });
-                }, 100);
-            });
-            word.on('blur',function(){
-                //输入框失焦后还原初始状态
-                var a =$(window).height()-45;
-                bottom.css({'position': 'fixed','top':'','bottom':'0'});
-            })
-        }
-    }
-    $('title').text('经典书籍');
-    $(function(){
-        timer();
-        setInterval(timer,5000);
-        //reset
-        var len = $(".list" ).length;
-        if(len >= 5){
-            $('.tip' ).text('上拉加载更多');
-            //上拉加载评论
-            loadScroll();
-        }
-        //ios fix兼容
-//	tofixed();
-    })
-
-    //计时
-    var timer = function(){
-        var iid = {$insert_id};
-        $.ajax({
-            type:"post",
-            url:"{:Url('Redcollection/bookdetail')}",
-            data:{
-                insert_id:iid
-            },
-            success:function(){
-
-            }
-        })
-    }
-
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
@@ -377,9 +313,9 @@ $('title').text('经典书籍');
     wx.ready(function () {
         //分享到朋友圈
         wx.onMenuShareTimeline({
-            title: '{$detail.title}',
-            link: '{$detail.link}',
-            imgUrl: '{$detail.share_image}',
+            title: '{$book.title}',
+            link: '{$book.link}',
+            imgUrl: '{$book.share_image}',
             success: function () {
                 // 用户确认分享后执行的回调函数
             },
@@ -389,10 +325,10 @@ $('title').text('经典书籍');
         });
         //分享给朋友
         wx.onMenuShareAppMessage({
-            title: '{$detail.title}', // 分享标题
-            desc: '{$detail.desc}', // 分享描述
-            link: '{$detail.link}', // 分享链接
-            imgUrl: '{$detail.share_image}', // 分享图标
+            title: '{$book.title}', // 分享标题
+            desc: '{$book.desc}', // 分享描述
+            link: '{$book.link}', // 分享链接
+            imgUrl: '{$book.share_image}', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {

@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>红色音乐</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/musicdetail.css">
 <style>
 	.scrollDiy{
@@ -28,13 +29,13 @@
 				{$music.content}
 			</div>
 			<div class="note">
-				<span class="read">{$music.views}</span>
+				<span class="read">{$music.views +1 }</span>
 				{eq name="visit" value="0"}
 				{eq name="music.is_like" value="0"}
-				<span class="isgood good" onclick="isGood(this,11,{$music.id})">{$music.likes}</span>
+				<span class="isgood good" onclick="isGood(this,7,{$music.id})">{$music.likes}</span>
 				<!--点过赞good_-->
 				{else/}
-				<span class="isgood good_" onclick="isGood(this,11,{$music.id})">{$music.likes}</span>
+				<span class="isgood good_" onclick="isGood(this,7,{$music.id})">{$music.likes}</span>
 				{/eq}
 				{else/}
 				<span class="isgood good">{$music.likes}</span>
@@ -45,7 +46,7 @@
 	<div class="comment">
 		<div class="sum">共<span>{$music.comments}</span>条评论</div>
 		<div class="lists">
-			{volist name="comment" id="co"}
+			{volist name="$music.comment" id="co"}
 			<div class="list clear">
 				<div class="fl">
 					<img src="{$co.header}" alt="用户" class="user">
@@ -73,7 +74,7 @@
 		</div>
 	</div>
 	{eq name="visit" value="0"}
-	<div class="bottom clear" onclick="send(this,11,{$music.id})">
+	<div class="bottom clear" onclick="send(this,7,{$music.id})">
 		<div class="myword fl">
 			<input type="text" placeholder="说说你的感想！" id="message" disabled>
 		</div>
@@ -245,12 +246,12 @@ mui.init({
 //加载更多评论
 function loadScroll(){
     var len = $(".list" ).length;
-    var id = {$detail['id']};
+    var id = {$music['id']};
     $.ajax({
         type:"post",
         url:"{:Url('Base/morecomment')}",
         data:{
-            type:1,
+            type:7,
             aid:id,
             length:len
         },
@@ -328,9 +329,9 @@ function addComment(data){
     wx.ready(function () {
         //分享到朋友圈
         wx.onMenuShareTimeline({
-            title: '{$detail.title}',
-            link: '{$detail.link}',
-            imgUrl: '{$detail.share_image}',
+            title: '{$music.title}',
+            link: '{$music.link}',
+            imgUrl: '{$music.share_image}',
             success: function () {
                 // 用户确认分享后执行的回调函数
             },
@@ -340,10 +341,10 @@ function addComment(data){
         });
         //分享给朋友
         wx.onMenuShareAppMessage({
-            title: '{$detail.title}', // 分享标题
-            desc: '{$detail.desc}', // 分享描述
-            link: '{$detail.link}', // 分享链接
-            imgUrl: '{$detail.share_image}', // 分享图标
+            title: '{$music.title}', // 分享标题
+            desc: '{$music.desc}', // 分享描述
+            link: '{$music.link}', // 分享链接
+            imgUrl: '{$music.share_image}', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
