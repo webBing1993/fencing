@@ -11,17 +11,19 @@
         <div class="list">
             <ul>
                 <!--循环开始-->
+                {volist name="data" id="vo"}
                 <a href="#">
-                    <img src="">
-                    <!--内容-->
-                    <p>付款咖喱咖啡四大金刚</p>
+                    <img src="{$vo.image}">
+                    <!--标题-->
+                    <p>{$vo.title}</p>
                     <span>
-                        <span>1</span> / 1人
+                        <span>{$vo.receive_number}</span> / {$vo.demand_number}人
                     </span>
                     <!--时间-->
-                    <span> 打发</span>
+                    <span> {$vo.create_time}</span>
                     <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                 </a>
+                {/volist}
                 <!--循环结束-->
             </ul>
         </div>
@@ -29,7 +31,7 @@
 </div>
 <!--悬浮按钮-->
 <div id="publish">
-    <a href="#"></a>
+    <a href="{:Url('Volunteer/publish?type='.$type)}"></a>
 </div>
 {/block}
 {block name="script"}
@@ -60,8 +62,9 @@
         var len = $(".list ul a").length;
         $.ajax({
             type:"post",
-            url:"{:Url('Profile/more')}",
+            url:"{:Url('Volunteer/vomore')}",
             data:{
+                type:1,
                 length:len
             },
             beforeSend: function(XMLHttpRequest){
@@ -90,9 +93,9 @@
             html +=
                 '<a href="#">' +
                 '<img src="">' +
-                '<p>付款咖喱咖啡四大金刚</p>' +
-                '<span><span>1</span> / 1人</span>' +
-                '<span> 打发</span>' +
+                '<p>'+list.title+'</p>' +
+                '<span><span>'+list.receive_number+'</span> / '+list.demand_number+'人</span>' +
+                '<span>'+list.create_time+'</span>' +
                 '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
                 '</a>'
         }

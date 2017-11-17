@@ -6,7 +6,7 @@ $(function(){
     //图片预览
     $('.add' ).on('click',function(){
         var imglen = $('.img img' ).length;
-        var this_ = $(this );
+        var this_ = $(this);
         $('#upimg').click().off("change").on('change',function(){
             var size = ($(this)[0].files[0].size/ 1024).toFixed(2);
             if(size <= 3072){
@@ -41,8 +41,6 @@ $(function(){
                                 this_.append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
                             }
                             imgresize();
-                        } else {
-                            return;
                         }
                     }
                 });

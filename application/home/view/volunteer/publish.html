@@ -164,10 +164,115 @@
 
     //去上传
     $(".goreview").click(function(){
-        var single = false;
-        var templet = $("#openPopover2").html();
-        var userid = "";
-        if(type==1){
+        if(type == 1){
+            var Imgarr = [];
+            $(".imgs .img").each(function(){
+                if(!$(this).hasClass("hide")){
+                    Imgarr.push($(this).find("img").attr("data-tab"))
+                }
+            });
+            swal({
+                title: "提示",
+                text: "确认提交您的信息？",
+                showCancelButton: true,
+                confirmButtonColor: "#f99300",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消"
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    var data = {
+                        title: $("input[name='title']").val(),
+                        create_time: $("input[name='start_time']").val(),
+                        activity_home: $("input[name='address']").val(),
+                        userid: $("input[name='publisher']").val(),
+                        content: $("textarea[name='content']").val(),
+                        tel:$("input[name='phone']").val(),
+                        demand_number:$("input[name='number']").val(),
+                        image:Imgarr,
+                    };
+                }
+                $.ajax({
+                    type: "post",
+                    url: "{:Url('Volunteer/publish')}",
+                    data: data,
+                    Id:type,
+                    dataType: "Json",
+                    success: function (data) {
+                        if (data.code) {
+                            swal({
+                                title: '',
+                                text: data.msg,
+                                type: 'success',
+                                showConfirmButton: false
+                            });
+                            setTimeout(function () {
+                                history.go(-1);
+                            }, 1500);
+                        } else {
+                            swal({
+                                title: '',
+                                text: data.msg,
+                                type: 'error',
+                                showConfirmButton: false
+                            });
+                        }
+                    }
+
+                })
+            })
+
+        }
+        /*if(type == 1){
+            var data ={
+                title: $("input[name='title']").val(),
+                create_time: $("input[name='start_time']").val(),
+                activity_home: $("input[name='address']").val(),
+                userid: $("input[name='publisher']").val(),
+                content: $("textarea[name='content']").val(),
+                tel:$("input[name='phone']").val(),
+                demand_number:$("input[name='number']").val(),
+                image:Imgarr,
+            };
+            $.ajax({
+                type:"post",
+                url: "{:Url('Volunteer/publish')}",
+                data:data,
+                Id:type,
+                success:function(data){
+                    if(data.code == 1){
+                        swal({
+                            title: "提交成功",
+                            text: '审核后可在个人中心——我的发布中查看',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: "确定",
+                            allowOutsideClick:false
+                        });
+                        setTimeout(function(){
+                            window.history.go(-1);
+                        },1500)
+                    }else{
+                        swal({
+                            title: ' ',
+                            text: data.msg,
+                            type: 'error',
+                            showConfirmButton:false,
+                            timer:1500
+                        });
+                    }
+                }
+            });
+        }else {
+            swal({
+                title: ' ',
+                text: '信息输入不完整',
+                type: 'error',
+                showConfirmButton:false,
+                timer:1500
+            });
+
+        }*/
+        /*if(type==2){
             var data ={
                 title: $("input[name='title']").val(),
                 start_time: $("input[name='start_time']").val(),
@@ -215,56 +320,7 @@
                 timer:1500
             });
 
-        }
-        if(type==2){
-            var data ={
-                title: $("input[name='title']").val(),
-                start_time: $("input[name='start_time']").val(),
-                address: $("input[name='address']").val(),
-                publisher: $("input[name='publisher']").val(),
-                content: $("textarea[name='content']").val(),
-                phone:$("input[name='phone']").val(),
-                number:$("input[name='number']").val(),
-                front_cover:Imgarr,
-            };
-            $.ajax({
-                type:"post",
-                url: "{:Url('Learn/publish')}",
-                data:data,
-                success:function(data){
-                    if(data.code == 1){
-                        swal({
-                            title: "提交成功",
-                            text: '审核后可在个人中心——我的发布中查看',
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonText: "确定",
-                            allowOutsideClick:false
-                        });
-                        setTimeout(function(){
-                            window.history.go(-1);
-                        },1500)
-                    }else{
-                        swal({
-                            title: ' ',
-                            text: data.msg,
-                            type: 'error',
-                            showConfirmButton:false,
-                            timer:1500
-                        });
-                    }
-                }
-            });
-        }else {
-            swal({
-                title: ' ',
-                text: '信息输入不完整',
-                type: 'error',
-                showConfirmButton:false,
-                timer:1500
-            });
-
-        }
+        }*/
     });
 
 </script>

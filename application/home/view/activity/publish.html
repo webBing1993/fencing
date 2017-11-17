@@ -60,7 +60,7 @@
                     <div class="img fl hide"></div>
                     <div class="add fl"></div>
                 </div>
-                <div style="color: #666;font-size: 0.32rem">（您最多上传3张图片，图片小于3M , 点击当前图片可以删除）</div>
+                <div style="color: #666;font-size: 0.32rem">（您最多上传四张图片，图片小于3M , 点击当前图片可以删除）</div>
                 <input type="file" class="hide" id="upimg" name="upload" accept="image/*">
                 <input type="hidden" name="id" value="">
             </div>
@@ -119,7 +119,6 @@
 
     // 删除当前选择的上传图片
     $(".imgs div.img").on("click",function(){
-        var Id = $(this).find("img").attr("data-tab");
         var This = $(this);
         swal({
             title: "是否删除当前图片",
@@ -129,7 +128,13 @@
             cancelButtonText: "取消",
             confirmButtonColor: "#ec6c62"
         }, function() {
-            $.ajax({
+            if(!This.hasClass("hide")){
+                This.find("img").attr("data-tab","");
+                This.find("img").remove();
+                This.addClass("hide");
+                $(".add").show()
+            }
+          /*  $.ajax({
                 type: "post",
                 url: "",
                 data: {
@@ -140,12 +145,10 @@
                 success:function (data) {
                     var msg = $.parseJSON(data);
                     if(msg.code == 1){
-                        if(!This.hasClass("hide")){
-                            This.find("img").remove();
-                        }
+
                     }
                 }
-            })
+            })*/
         });
     });
 

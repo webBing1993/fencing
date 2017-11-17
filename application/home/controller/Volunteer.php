@@ -8,7 +8,8 @@
 namespace app\home\controller;
 use app\home\model\Volunteer as VolunteerModel;
 use app\home\model\VolunteerDetail;
-
+use app\home\model\Company;
+use think\Db;
 
 class Volunteer extends Base{
     /*
@@ -22,23 +23,16 @@ class Volunteer extends Base{
 
 
     /*
-     *  志愿服务
+     *  志愿风采展
      * */
     public function mien(){
-     /*   $Model = new VolunteerModel();
-        if(IS_POST) {
-            $len = input('length');
-            $res = $Model->getIndexList($len);
-            if($res) {
-                return $this->success("加载成功","",$res);
-            }else {
-                return $this->error("加载失败");
-            }
-        }else {
-            $list = $Model->getIndexList();
-            $this->assign('list',$list);
+        $Company = new Company();
+        $mapp = ['status' => ['egt', 1], 'type' => 1];
+        $data = $Company->get_list($mapp);
+        $this->assign('data',$data);
+        return $this->fetch();
 
-        }*/
+
         return $this->fetch();
     }
 
@@ -96,18 +90,76 @@ class Volunteer extends Base{
         *  发布和填写
         */
     public  function publish(){
+        if (IS_POST) {
+            $userId = session('userId');
+            $data = input('post.');
+            dump($data);
+            exit();
+            $data['images'] = json_encode($data['front_cover']);
+            $data['userid'] = $userId;
+            $data['start_time'] = strtotime($data['start_time']);
+            $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
+            $res = Db::table('pb_notice')->insert($data);
+
+            if ($res) {
+                return $this->success("发布成功！");
+            } else {
+                return $this->error('发布失败！');
+            }
+        } else {
+            return $this->fetch();
+        }
+
+
         return $this ->fetch();
     }
     /*
      * 点亮微心愿
      * */
     public  function wishes(){
+        //$data=Db::table('pb_company')->where('type',1)->where('status',1)->order('create_time desc')->select();
+        $Company = new Company();
+        $mapp = ['status' => ['egt', 1], 'type' => 1];
+        $data = $Company->get_list($mapp);
+        $type=1;
+        $this->assign('type',$type);
+        $this->assign('data',$data);
         return $this->fetch();
     }
+
+    /**
+     * 微心愿加载更多
+     */
+    public function vomore()
+    {
+        $Company = new Company();
+        $len = input('length');
+       $type=input('type');
+        $map = ['status' => ['egt', 1], 'type' =>$type];
+        $list = $Company->get_list($map, $len);
+        if ($list) {
+            return $this->success('加载成功', '', $list);
+        } else {
+            return $this->error('加载失败');
+        }
+    }
+
+
+
+    //心愿详情页
+
+    
+    
     /*
      * 志愿者招募
      * */
     public  function  enlist(){
+        $Company = new Company();
+        $mapp = ['status' => ['egt', 1], 'type' => 2];
+        $data = $Company->get_list($mapp);
+        $type=2;
+        $this->assign('type',$type);
+        $this->assign('data',$data);
         return $this->fetch();
     }
 

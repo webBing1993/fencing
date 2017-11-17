@@ -21,7 +21,6 @@ class News extends Base {
         $NewsModel = new NewsModel();
         $map = ['status' => ['eq',0],'type' => 1];
         $left = $NewsModel->get_list($map);
-        //dump($left);
         $mapp = ['status' => ['eq',0],'type' => 2];
         $right = $NewsModel->get_list($mapp);
         $this->assign('left',$left); // 基层建设

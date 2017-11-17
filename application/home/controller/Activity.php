@@ -19,30 +19,26 @@ class Activity extends Base
     public function index()
     {
         $Notice = new Notice();
-        $mapp = ['status' => ['egt', 0], 'type' => 1];
+        $mapp = ['status' => ['egt', 1], 'type' => 1];
         $leftone = Db::table('pb_notice')->where($mapp)->order('create_time desc')->limit(2)->select();//活动安排
-        $mapp = ['status' => ['egt', 0], 'type' => 2];//活动展示
+        $mapp = ['status' => ['egt', 1], 'type' => 2];//活动展示
         $lefttwo = $Notice->get_list($mapp);
-        $mapp = ['status' => ['egt', 0], 'type' => 3];//会议纪要
+        $mapp = ['status' => ['egt', 1], 'type' => 3];//会议纪要
         $center = $Notice->get_list($mapp);
         //dump($center);
-        //循环遍历三维数组$arr3
+        //循环遍历
         foreach ($center as $v) {
             $list = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
             $v['userid'] = $list['name'];
-
         }
         //dump($center);exit();
-
-        $mapp = ['status' => ['egt', 0], 'type' => 4];//固定活动
+        $mapp = ['status' => ['egt', 1], 'type' => 4];//固定活动
         $right = $Notice->get_list($mapp);
         //dump($right);exit();
-
         $this->assign('leftone', $leftone); // 活动安排
         $this->assign('lefttwo', $lefttwo); // 活动展示
         $this->assign('center', $center); // 会议纪要
         $this->assign('right', $right);  // 固定活动
-
         return $this->fetch();
     }
 
@@ -68,8 +64,8 @@ class Activity extends Base
         $this->jssdk();
         $id = input('id/d');
         $info = $this->content(4, $id);
-        if ($info['front_cover']) {
-            $info['front_cover'] = json_decode($info['front_cover']);
+        if ($info['images']) {
+            $info['images'] = json_decode($info['images']);
         }
 
         $list = Db::table('pb_wechat_user')->where('userid', $info['userid'])->find();
@@ -129,13 +125,8 @@ class Activity extends Base
             $data = input('post.');
             //print_r($data);
             //exit();
-            $data['front_cover'] = json_encode($data['front_cover']);
-            $result = $this->validate($data, 'Publish');  // 验证  数据
+            $data['images'] = json_encode($data['front_cover']);
             $data['userid'] = $userId;
-            /*$data['create_user'] = $_SESSION['think']['user_auth']['id'];*/
-            if (true !== $result) {
-                return $this->error($result);
-            } else {
                 $data['start_time'] = strtotime($data['start_time']);
                 $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
                 $res = Db::table('pb_notice')->insert($data);
@@ -145,7 +136,6 @@ class Activity extends Base
                 } else {
                     return $this->error('发布失败！');
                 }
-            }
         } else {
             return $this->fetch();
         }

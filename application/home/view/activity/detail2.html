@@ -19,13 +19,27 @@
         <div class="mui-scroll">
             <div class="swiper-container banner">
                 <div class="swiper-wrapper">
-                    {volist name="detail.front_cover" id="vo"}
+
+                    {if condition="(!empty($detail['images']))"}
+                    {volist name="detail.images" id="vo"}
                     <div class="swiper-slide">
                         <div class="mui-slider-item">
                             <img src="{$vo|get_cover='path'}">
                         </div>
                     </div>
                     {/volist}
+                    {else /}
+
+                    <div class="swiper-slide">
+                        <div class="mui-slider-item">
+                            <img src="{$detail.front_cover|get_cover='path'}">
+                        </div>
+                    </div>
+
+                    {/if}
+
+
+
                 </div>
             </div>
             <div class="view">
@@ -34,7 +48,11 @@
             <div class="article">
                 <div class="title"><p>{$detail.title}</p></div>
                 <div class="note clear">
+                    {if condition="(!empty($detail['create_user']))"}
+                    <span class="publish">{$detail.publisher}</span>
+                    {else /}
                     <span class="publish">{$detail.userid}</span>
+                    {/if}
                     <span class="time"> {$detail.create_time|time_format="Y-m-d"}</span>
                 </div>
                 <div class="content">

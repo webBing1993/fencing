@@ -64,7 +64,7 @@
                                 <td>{$vo.end_time|time_format='Y-m-d H:i'}</td>
                                 {/empty}
                                 <td>{$vo->publisher}</td>
-                                <td>{$vo.recommend_text}</td>
+                                <td>{$vo.status_text}</td>
                                 <td>{$vo.create_time|time_format='Y-m-d'}</td>
                                 <td>
                                     <a href="{:Url('Notice/indexedit?id='.$vo['id'])}">修改</a>

@@ -144,11 +144,11 @@ class Notice extends Admin {
 
             $map = array(
                 'type' => 3,
-                'status' => array('eq',1),
+                'status' => array('egt',0),
             );
             $list = $this->lists('Notice',$map);
             int_to_string($list,array(
-                'status' => array(1=>"已发布"),
+                'status' => array(0=>"待审核",1=>"已发布"),
                 'recommend' => array(0 => "否" ,1 => "是")
             ));
         $list2['type']=$list['0']['type'];
