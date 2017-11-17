@@ -87,7 +87,7 @@
                     <div class="books active">
                         <!--经典书籍列表 循环开始-->
                         {volist name="book" id="vo"}
-                        <a href="{:Url('Redcollection/bookdetail?id='.$vo['id'])}" class="list clearfix">
+                        <a href="{:Url('Learn/bookdetail?id='.$vo['id'])}" class="list clearfix">
                             <img src="{$vo.front_cover|get_cover='path'}" alt="书籍封面">
                             <div class="content">
                                 <span class="title limit">{$vo.title}</span>
@@ -106,7 +106,7 @@
                 <div class="lists redmusic">
                     <!--循环开始-->
                     {volist name="music" id="vo"}
-                    <a href="{:Url('Redcollection/musicdetail?id='.$vo['id'])}" class="list">
+                    <a href="{:Url('Learn/musicdetail?id='.$vo['id'])}" class="list">
                         <img src="{$vo.front_cover|get_cover='path'}" alt="红色歌曲" class="music-img">
                         <div class="content">
                             <div class="title limit_">{$vo.title}</div>

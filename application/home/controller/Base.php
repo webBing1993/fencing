@@ -506,12 +506,20 @@ class Base extends Controller {
         }
         if (isset($list['description'])){
             if (empty($list['description'])){
-                $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+                if (!isset($list['content'])){
+                    $list['desc'] = '查看详情';
+                }else{
+                    $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+                }
             }else{
                 $list['desc'] = $list['description'];
             }
         }else{
-            $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+            if (!isset($list['content'])){
+                $list['desc'] = '查看详情';
+            }else{
+                $list['desc'] = str_replace('&nbsp;','',strip_tags($list['content']));
+            }
         }
         $list['link'] = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'];
         //获取 文章点赞

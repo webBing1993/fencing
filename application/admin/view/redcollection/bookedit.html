@@ -24,6 +24,8 @@
     .imgbox2{
         height: 150px;
         width: 150px;
+        display:block;
+        border:1px solid #ddd;
     }
     .imgfile2 {
         height: 150px;
@@ -38,7 +40,7 @@
         <h2>红色书籍</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="{:Url('Redcollection/book')}">书籍列表</a>
+                <a href="{:Url('L/book')}">书籍列表</a>
             </li>
             <li class="active">
                 <strong>{eq name="msg" value=""}新增{else/}修改{/eq}</strong>

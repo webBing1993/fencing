@@ -100,16 +100,6 @@ class Learn extends Base{
         return $this ->fetch();
     }
     /**
-     * 红色电影
-     */
-    public function redfilm() {
-        $Model = new Redfilm();
-        $list = $Model->getIndexList();
-        $this->assign('list',$list);
-        return $this->fetch();
-    }
-
-    /**
      * 经典电影更多
      */
     public function morefilm() {
@@ -135,6 +125,7 @@ class Learn extends Base{
      * 电影详情
      */
     public function filmdetail() {
+        $this->anonymous();
         $this->jssdk();
         $id = input('id');
         if (empty($id)){
@@ -168,27 +159,17 @@ class Learn extends Base{
     }
 
     /**
-     * 红色音乐
-     */
-    public function redmusic() {
-      /*  $Model = new Redmusic();
-        $list = $Model->getIndexList();
-        $this->assign('list',$list);*/
-        return $this->fetch();
-
-    }
-
-    /**
      * 音乐详情
      */
     public function musicdetail() {
-/*        $this->jssdk();
+        $this->anonymous();
+        $this->jssdk();
         $id = input('id');
         if (empty($id)){
             $this ->error('参数错误!');
         }
-        $detail = $this->content(8,$id);
-        $this->assign('detail',$detail);*/
+        $detail = $this->content(7,$id);
+        $this->assign('detail',$detail);
         return $this->fetch();
     }
 
@@ -196,7 +177,7 @@ class Learn extends Base{
      * 加载更多音乐
      */
     public function moremusic() {
-   /*     $len = input('length');
+        $len = input('length');
         $musicModel = new Redmusic();
         $map = array(
             'status' => 1,
@@ -211,42 +192,22 @@ class Learn extends Base{
             return $this->success("加载成功","",$list);
         }else{
             return $this->error("加载失败");
-        }*/
-    }
-
-    /**
-     * 红色文学
-     */
-    public function redliterature() {
-   /*     $Model = new Redbook();
-        if(IS_POST) {
-            $len = input('length');
-            $res = $Model->getIndexList($len);
-            if($res) {
-                return $this->success("加载成功","",$res);
-            }else {
-                return $this->error("加载失败");
-            }
-        }else {
-            $list = $Model->getIndexList();
-            $this->assign('list',$list);
-
-        }*/
-        return $this->fetch();
+        }
     }
 
     /**
      * 书籍详情
      */
     public function bookdetail() {
-        /*$Model = new Redbook();
+        $this->anonymous();
+        $this->jssdk();
         $id = input('id');
         if (empty($id)){
             $this ->error('参数错误!');
         }
-        $Model->where('id',$id)->setInc('views');
-        $detail = $Model->get($id);
-        $this->assign('detail',$detail);*/
+        $detail = $this->content(6,$id);
+        dump($detail);
+        $this->assign('detail',$detail);
         return $this->fetch();
     }
 
@@ -254,7 +215,7 @@ class Learn extends Base{
      * 书籍搜索
      */
     public function booksearch() {
-/*        $val = input('val');
+        $val = input('val');
         if($val) {
             $map = array(
                 'title' => array('like','%'.$val.'%'),
@@ -272,20 +233,20 @@ class Learn extends Base{
             }
         }else {
             return $this->error("查询条件不能为空");
-        }*/
+        }
     }
 
     /**
      * 是否读过
      */
     public function is_read() {
-      /*  $id = input('id');
+        $id = input('id');
         $res = Redbook::where('id',$id)->setInc('have_read');
         if($res){
             return $this->success("成功读过此书");
         }else{
             return $this->error("新增失败");
-        }*/
+        }
     }
 
    /*
