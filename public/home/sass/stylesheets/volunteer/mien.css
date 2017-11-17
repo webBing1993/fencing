@@ -93,3 +93,7 @@
     height: 7vw;
     color: #ffffff;
 }
+a:active{
+
+    background: rgba(0,0,0,0.1);
+}

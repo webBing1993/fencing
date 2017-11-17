@@ -103,7 +103,7 @@
   height: 50vw;
 }
 
-.btn_ {
+#publish {
   width: 10vw;
   height: 10vw;
   background: #000000;
@@ -113,7 +113,7 @@
   z-index: 8;
 }
 
-.btn_ a {
+publish a {
   display: block;
   width: 10vw;
   height: 10vw;

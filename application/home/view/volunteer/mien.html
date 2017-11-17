@@ -7,19 +7,22 @@
 {/block}
 {block name="body"}
 <div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+
     <div class="mui-scroll">
         <div class="mui-slider-group">
             <div class="banner"><img src="/home/images/volunteer/06.jpg" alt=""></div>
             <div class="main">
                 <div class="lists">
+                    <!--循环开始-->
                     <div class="list color1">
-                        <a href="#">
+                        <a href="#" class="con">
                             <div class="img"><img src="/home/images/volunteer/06.jpg" alt=""></div>
                             <div class="name">朝阳志愿者服务中心</div>
                             <div class="notes">活动：<span>12</span>次</div>
                         </a>
-                        <div class="view"><a href="#">查看活动</a></div>
+                        <div class="view"><a href="#" class="btn_">查看活动</a></div>
                     </div>
+                    <!--循环结束-->
                 </div>
             </div>
         </div>
@@ -96,16 +99,25 @@
                 +'<div class="notes">活动：<span>'
                 +list.times
                 +'</span>次</div>'
-                +'</a>'
+                +'</a>' +
+                '<div class="view">' +
+                '<a href="#" >查看活动</a>' +
+                '</div>'
                 +'</div>';
         }
         $(".lists" ).append(html);
     }
-    mui("#refreshContainer").on("touchstart","a",function(){
+    mui("#refreshContainer").on("touchstart",".btn_",function(){
         $(this).css("backgroundColor","rgba(0,0,0,.1)");
-    }).on("touchend","a", function () {
+    }).on("touchend",".btn_", function () {
+        $(this).css("backgroundColor","#e31b1b");
+    });
+    mui("#refreshContainer").on("touchstart",".con",function(){
+        $(this).css("backgroundColor","rgba(0,0,0,.1)");
+    }).on("touchend",".con", function () {
         $(this).css("backgroundColor","#fff");
     });
+
     mui("#refreshContainer").on("tap","a",function(){
         var url = this.getAttribute("href");
         window.location.href = url;

@@ -28,12 +28,15 @@
     </div>
 </div>
 <!--悬浮按钮-->
-<div class="btn_">
+<div id="publish">
     <a href="#"></a>
 </div>
 {/block}
 {block name="script"}
+<script src="/home/js/reset.js"></script>
 <script>
+    // 拖拽
+    moveanyway();
     //首页加载是否需要上拉加载
     window.onload = function() {
         if ($(".list ul a").length < 10) {
