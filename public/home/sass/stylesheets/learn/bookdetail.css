@@ -83,12 +83,12 @@
   color: #333333;
   text-align: center;
   line-height: 40px;
-  font-size: 1.8rem;
+  font-size: 0.48rem;
   font-weight: 600;
 }
 .book .note {
   color: #999999;
-  font-size: 1.2rem;
+  font-size: 0.32rem;
   line-height: 30px;
 }
 .book .note span {
@@ -132,7 +132,7 @@
   background: #f03b41;
   margin: 5vw 0;
   color: #ffffff;
-  font-size: 1.4rem;
+  font-size: 0.37rem;
   line-height: 9vw;
   text-align: center;
 }
@@ -160,7 +160,7 @@
   padding: 4vw;
   background: #fcfcfc;
   line-height: 24px;
-  font-size: 1.3rem;
+  font-size: 0.34rem;
 }
 .book .content .bookdetail span {
   background: transparent!important;
@@ -184,7 +184,7 @@
 }
 .book .content .authordetail .msg .name {
   color: #97080f;
-  font-size: 1.8rem;
+  font-size: 0.48rem;
   line-height: 50px;
 }
 .book .content .authordetail .msg .time {
@@ -212,7 +212,7 @@
 }
 .book .content .note {
   color: #666666;
-  font-size: 14px;
+  font-size: 0.37rem;
   float: right;
 }
 .book .content .note span {
@@ -251,7 +251,7 @@
   background: #fcfcfc;
   border-top: 1px solid #f1f1f1;
   border-bottom: 1px solid #f1f1f1;
-  font-size: 1.2rem;
+  font-size: 0.32rem;
   line-height: 30px;
 }
 .comment .lists .list {
@@ -286,7 +286,7 @@
   margin-bottom: 2vw;
 }
 .comment .lists .list .mid .time {
-  font-size: 1.2rem;
+  font-size: 0.32rem;
   line-height: 20px;
   color: #999;
 }
@@ -334,7 +334,7 @@
 .bottom .collect {
   width: 60px;
   height: 100%;
-  font-size: 1.2rem;
+  font-size: 0.32rem;
   text-align: center;
   background-size: 20px 20px;
   padding-top: 24px;
