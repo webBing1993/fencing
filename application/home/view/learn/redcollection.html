@@ -295,22 +295,22 @@
            window.location.href = url;
        });
        //搜索--红色电影
-       var search = $('.search input');
-       var lock = false;
-       search.on('compositionstart',function(){
-           lock = true;
+       var search1 = $('.search input');
+       var lock1 = false;
+       search1.on('compositionstart',function(){
+           lock1 = true;
        });
-       search.on('compositionend',function(){
-           lock = false;
+       search1.on('compositionend',function(){
+           lock1 = false;
        });
-       search.on('input',function(){
+       search1.on('input',function(){
            var this_ = this;
-           if(!lock){
+           if(!lock1){
                var val = $(this_ ).val();
                if (val == "") {
-                   $('.results').hide();
+                   $('#item1mobile .results').hide();
                }else {
-                   $('.results').show();
+                   $('#item1mobile .results').show();
                }
                var html = '';
                $.ajax({
@@ -330,28 +330,28 @@
                        for(var obj in result){
                            html+= '<a href=\"/home/Redcollection/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
                        }
-                       $('.results' ).html(html);
+                       $('#item1mobile .results' ).html(html);
                    }
                });
            }
        });
        //搜索--红色文学
-       var search = $('.search_ input');
-       var lock = false;
-       search.on('compositionstart',function(){
-           lock = true;
+       var search2 = $('.search_ input');
+       var lock2 = false;
+       search2.on('compositionstart',function(){
+           lock2 = true;
        });
-       search.on('compositionend',function(){
-           lock = false;
+       search2.on('compositionend',function(){
+           lock2 = false;
        });
-       search.on('input',function(){
+       search2.on('input',function(){
            var this_ = this;
-           if(!lock){
+           if(!lock2){
                var val = $(this_ ).val();
                if (val == "") {
-                   $('.results').hide();
+                   $('#item2mobile .results').hide();
                }else {
-                   $('.results').show();
+                   $('#item2mobile .results').show();
                }
                var html = '';
                $.ajax({
@@ -370,7 +370,7 @@
                        for(var obj in result){
                            html+= '<a href=\"/home/Redcollection/bookdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
                        }
-                       $('.results' ).html(html);
+                       $('#item2mobile .results' ).html(html);
                    }
                });
            }

@@ -2,7 +2,7 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/bookdetail.css">
-
+<link rel="stylesheet" href="/home/sass/stylesheets/details-template/detail.css">
 {/block}
 {block name="body"}
 <div class="scrollDiy">
@@ -48,6 +48,61 @@
 	</div>
 
 </div>
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<div class="article">
+			<div class="title"><p>{$detail.title}</p></div>
+			<div class="content">
+				<div class="article-content">{$detail.content}</div>
+				<div class="like">
+					<span class="read">{$detail.views + 1}</span>
+					{eq name="visit" value="0"}
+					{eq name="detail.is_like" value="1"}
+					<span class="isgood good_ notvisitor"  data-type="1" data-id="{$detail.id}">{$detail.likes}</span>
+					{else/}
+					<span class="isgood good notvisitor"  data-type="1" data-id="{$detail.id}">{$detail.likes}</span>
+					{/eq}
+					{else/}
+					<span class="isgood good">{$detail.likes}</span>
+					{/eq}
+				</div>
+			</div>
+		</div>
+		<div class="comment">
+			<div class="sum">共<span>{$detail.comments}</span>条评论</div>
+			<div class="lists">
+				{volist name="$detail.comment" id="co"}
+				<div class="list clear">
+					<div class="fl">
+						<img src="{$co.header}" alt="用户" class="user">
+					</div>
+					<div class="fl mid">
+						<div class="name limit">{$co.nickname}</div>
+						<div class="content" >{$co.content}</div>
+						<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+					</div>
+					{eq name="visit" value="0"}
+					{eq name="co.is_like" value="1"}
+					<div class="fr isgood good_ notvisitor"  data-type="0" data-id="{$co.id}">{$co.likes}</div>
+					{else/}
+					<div class="fr isgood good notvisitor"  data-type="0" data-id="{$co.id}">{$co.likes}</div>
+					{/eq}
+					{else/}
+					<div class="fr isgood good">{$co.likes}</div>
+					{/eq}
+				</div>
+				{/volist}
+			</div>
+		</div>
+	</div>
+</div>
+{eq name="visit" value="0"}
+<div class="bottom clear" onclick="send(this,1,{$detail['id']})">
+	<div class="myword fl">
+		<input type="text" placeholder="说说你的感想！" id="send" disabled>
+	</div>
+</div>
+{/eq}
 {/block}
 
 {block name="script"}
