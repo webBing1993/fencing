@@ -174,7 +174,7 @@ body {
   /*height: 8vw;*/
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   overflow: hidden;
 }
 .listsline {
