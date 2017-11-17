@@ -2,51 +2,103 @@
 
 {block name="style"}
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/bookdetail.css">
-<link rel="stylesheet" href="/home/sass/stylesheets/details-template/detail.css">
 {/block}
 {block name="body"}
 <div class="scrollDiy">
 	<div class="book">
-		<div class="title limit_">{$detail.title}</div>
+		<div class="title limit_">{$book.title}</div>
 		<div class="note">
-			<span>{$detail.create_time|time_format='Y-m-d'}</span>
+			<span>{$book.create_time|time_format='Y-m-d'}</span>
 		</div>
 		<div class="content">
-			<img src="{$detail.front_cover|get_cover='Y-m-d'}" alt="书籍封面" class="book-img">
+			<img src="{$book.front_cover|get_cover='path'}" alt="书籍封面" class="book-img">
 			<div class="detail">
-				{$detail.name}&emsp;著<br>
-				{$detail.press}<br>
-				{$detail.publication_date} 出版
+				{$book.name}&emsp;著<br>
+				{$book.press}<br>
+				{$book.publication_date}出版
 			</div>
-			<div class="reads" onclick="isread({$detail.id})">读过此书</div>
+			{eq name="visit" value="0"}
+			{eq name="book.is_read" value="0"}
+			<div class="reads" onclick="isread({$book['id']})">读过此书</div>
 			<!--点击后-->
-
+			{else/}
+			<div class="reads isread">读过此书</div>
+			{/eq}
+			{else/}
+			<div class="reads isread">读过此书</div>
+			{/eq}
 			<div class="brief">【作品简介】</div>
 			<div class="bookdetail">
-				{$detail.works_introduction}
+				{$book.works_introduction}
 			</div>
 			<div class="brief">【作者简介】</div>
 			<!--作者简介-->
 			<div class="authordetail clear">
 				<div class="msg fl" >
-					<img src="{$detail.header|get_cover='path'}" alt="作者头像" class="authorimg">
-					<div class="name">{$detail.name}</div>
-					<div class="time">{$detail.birth_and_death}</div>
+					<img src="{$book.header|get_cover='path'}" alt="作者头像" class="authorimg">
+					<div class="name">{$book.name}</div>
+					<div class="time">{$book.birth_and_death}</div>
 				</div>
 				<div class="text fl">
-					{$detail.author_introduction}
+					{$book.author_introduction}
 				</div>
 			</div>
 			<div class="words">
-				{$detail.famous_remark}
+				{$book.famous_remark}
+				<div class="author">——— {$book.name}</div>
 			</div>
 			<!--/作者简介-->
 			<div class="note">
-				<span class="read">{$detail.views}</span>
+				<span class="read">{$book.views}</span>
+				{eq name="visit" value="0"}
+				{eq name="book.is_like" value="0"}
+				<span class="isgood good" onclick="isGood(this,10,{$book.id})">{$book.likes}</span>
+				{else/}
+				<span class="isgood good_" onclick="isGood(this,10,{$book.id})">{$book.likes}</span>
+				{/eq}
+				{else/}
+				<span class="isgood good">{$book.likes}</span>
+				{/eq}
 			</div>
 		</div>
 	</div>
-
+	<div class="comment">
+		<div class="sum">共<span>{$book.comments}</span>条评论</div>
+		<div class="lists">
+			{volist name="comment" id="co"}
+			<div class="list clear">
+				<div class="fl">
+					<img src="{$co.header}" alt="用户" class="user">
+				</div>
+				<div class="fl mid">
+					<div class="name limit">{$co.nickname}</div>
+					<div class="content" >{$co.content}</div>
+					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+				</div>
+				{eq name="visit" value="0"}
+				{eq name="co.is_like" value="1"}
+				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{else/}
+				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
+				{/eq}
+				{else/}
+				<div class="fr isgood good">{$co.likes}</div>
+				{/eq}
+			</div>
+			{/volist}
+		</div>
+		<div class="tip"></div>
+		<div class="loading hide">
+			<div class="typing_loader"></div>
+		</div>
+	</div>
+	{eq name="visit" value="0"}
+	<div class="bottom clear" onclick="send(this,10,{$book.id})">
+		<div class="myword fl">
+			<input type="text" placeholder="说说你的感想！" id="message" disabled>
+		</div>
+	</div>
+	{/eq}
 </div>
 
 {/block}
@@ -236,6 +288,71 @@ $('title').text('经典书籍');
         }
         $(".lists" ).append(html);
     }
+    //--------------------------------------------------------------------------
+    //
+    //	Class style
+    //
+    //--------------------------------------------------------------------------
+    //fix兼容
+    function tofixed(){
+        var u = navigator.userAgent;
+        var word = $('.myword input');
+        var bottom =$('.bottom');
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if(isiOS){
+            //兼容ios7
+            $(document).scrollTop(1);
+            word.focus(function(){
+                var noInputViewHeight = $(window).height() - bottom.height();
+                var contentHeight = $(document).height() - bottom.height();
+                contentHeight = contentHeight > noInputViewHeight ? contentHeight : noInputViewHeight;
+                setTimeout(function(){
+                    var inputTopHeight = bottom.offset().top - $(window).scrollTop()+1;
+                    var inputTopPos = bottom.offset().top + inputTopHeight+1;
+                    inputTopPos = inputTopPos > contentHeight ? contentHeight : inputTopPos;
+                    bottom.css({'position':'absolute', 'top':inputTopPos });
+                    $(window).on('touchstart', function(){
+                        word.blur();
+                    });
+                }, 100);
+            });
+            word.on('blur',function(){
+                //输入框失焦后还原初始状态
+                var a =$(window).height()-45;
+                bottom.css({'position': 'fixed','top':'','bottom':'0'});
+            })
+        }
+    }
+    $('title').text('经典书籍');
+    $(function(){
+        timer();
+        setInterval(timer,5000);
+        //reset
+        var len = $(".list" ).length;
+        if(len >= 5){
+            $('.tip' ).text('上拉加载更多');
+            //上拉加载评论
+            loadScroll();
+        }
+        //ios fix兼容
+//	tofixed();
+    })
+
+    //计时
+    var timer = function(){
+        var iid = {$insert_id};
+        $.ajax({
+            type:"post",
+            url:"{:Url('Redcollection/bookdetail')}",
+            data:{
+                insert_id:iid
+            },
+            success:function(){
+
+            }
+        })
+    }
+
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
