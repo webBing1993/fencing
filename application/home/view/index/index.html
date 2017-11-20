@@ -148,7 +148,7 @@
                 if(data.code == 1){
                     addLists(data);
                     var dataLen =data.data.length;
-                    if(data.data.length == 6){
+                    if(data.data.length == 12){
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
                     }else{
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -168,7 +168,6 @@
         for(var i = 0; i< len;i++){
             var list = lists[i];
             var link = '';
-            var type_name ='';
             if(list.class == 1){
                 class_name = '【箬横动态】';
                 link = '/home/news/detail/id/'+list.id;
@@ -179,16 +178,10 @@
                     link = '/home/learn/article/id/'+list.id;
                 }else if(list.type == 1){
                     link = '/home/learn/video/id/'+list.id;
-                }else{
-                    link = '/home/learn/detail/id/'+list.id;
                 }
             }else if(list.class == 3){
                 class_name = '【志愿之家】';
-                if(list.type == 2){
-                    link = '/home/Activity/detail/id/'+list.id;
-                }else{
-                    link = '/home/Activity/showdetails/id/'+list.id;
-                }
+                link = '/home/Volunteer/detail/id/'+list.id;
             }
             if(list.publisher.length >9){
                 list.publisher = list.publisher.substring(0,9)+'...';
