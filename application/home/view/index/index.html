@@ -62,7 +62,7 @@
         <div class="list recommend">
             <ul>
 
-                <a href="">
+                <a href="" data-type="">
                     <img src="">
                     <p>大幅度发分啊阿斯顿第三方</p>
                     <span>【箬横动态】</span>
@@ -111,18 +111,16 @@
 
     //上拉加载更多
     function loadScroll(){
-        var news_len = $('.notice .list[data-type=1]').length;
-        var learn_len = $('.notice .list[data-type=2]').length;
-        var notice_len = $('.notice .list[data-type=3]').length;
-        var party_len = $('.notice .list[data-type=4]').length;
+        var news_len = $('.recommend .a[data-type=1]').length;
+        var learn_len = $('.recommend .a[data-type=2]').length;
+        var volunteer_len = $('.recommend .a[data-type=3]').length;
         $.ajax({
             type:"get",
             url: "{:Url('Index/moreDataList')}",
             data:{
                 news: news_len,
                 learn: learn_len,
-                notice: notice_len,
-                party: party_len,
+                volunteer: volunteer_len
             },
             beforeSend: function(XMLHttpRequest){
             },
@@ -152,8 +150,8 @@
             var link = '';
             var type_name ='';
             if(list.class == 1){
-                class_name = '【第一聚焦】';
-                link = '/home/focus/detail/id/'+list.id;
+                class_name = '【箬横动态】';
+                link = '/home/news/detail/id/'+list.id;
             }else if(list.class == 2){
                 class_name = '【两学一做】';
                 //1视频 2文字
@@ -165,32 +163,25 @@
                     link = '/home/learn/detail/id/'+list.id;
                 }
             }else if(list.class == 3){
-                class_name = '【组织活动】';
+                class_name = '【志愿之家】';
                 if(list.type == 2){
                     link = '/home/Activity/detail/id/'+list.id;
                 }else{
                     link = '/home/Activity/showdetails/id/'+list.id;
-                }
-            }else if(list.class == 4){
-                class_name = '【三会一课】';
-                if(list.type == 1){
-                    link = '/home/lesson/noticedetail/id/'+list.id;
-                }else{
-                    link = '/home/lesson/meetingdetail/id/'+list.id;
                 }
             }
             if(list.publisher.length >9){
                 list.publisher = list.publisher.substring(0,9)+'...';
             }
             html +=
-                    '<a href="">'+
-                    '<img src="">'+
-                    '<p>大幅度发分啊阿斯顿第三方</p>'+
-                    '<span>【箬横动态】</span>'+
-                    '<span>2017-11-20</span>'+
+                    '<a href="'+link+'" data-type='+list.class+'>'+
+                    '<img src="'+list.path+'" alt="图片">'+
+                    '<p>'+list.title+'</p>'+
+                    '<span>'+class_name+'</span>'+
+                    '<span>'+list.time+'</span>'+
                     '</a>
         }
-        $('.notice').append(html);
+        $('.recommend ul').append(html);
     }
 
     mui("#refreshContainer").on("touchstart","a",function(){
