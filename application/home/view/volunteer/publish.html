@@ -53,11 +53,11 @@
             </li>
             <li class="type1">
                 联系方式
-                <input type="text" placeholder="请输入联系人电话" name="people" value="">
+                <input type="text" placeholder="请输入联系人电话" name="tel" value="">
             </li>
             <li class="type1">
                 招募人数
-                <input type="text" placeholder="请输入最多招募人数" name="people" value="">
+                <input type="text" placeholder="请输入最多招募人数" name="demand_number" value="">
             </li>
             <div class="content">
                 <textarea placeholder="请输入招募内容" name="content"></textarea>
@@ -182,12 +182,12 @@
                 if (isConfirm) {
                     var data = {
                         title: $("input[name='title']").val(),
-                        create_time: $("input[name='start_time']").val(),
+                        create_time: $("input[name='time']").val(),
                         activity_home: $("input[name='address']").val(),
                         userid: $("input[name='publisher']").val(),
                         content: $("textarea[name='content']").val(),
-                        tel:$("input[name='phone']").val(),
-                        demand_number:$("input[name='number']").val(),
+                        tel:$("input[name='tel']").val(),
+                        demand_number:$("input[name='demand_number']").val(),
                         image:Imgarr,
                     };
                 }
