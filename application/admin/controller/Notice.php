@@ -25,11 +25,11 @@ class Notice extends Admin {
     public function index(){
         $map = array(
             'type' => 1,
-            'status' => array('egt',1),
+            'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(1=>"已发布"),
+            'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
         $list2['type']=$list['0']['type'];
@@ -148,7 +148,7 @@ class Notice extends Admin {
             );
             $list = $this->lists('Notice',$map);
             int_to_string($list,array(
-                'status' => array(0=>"待审核",1=>"已发布"),
+                'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
                 'recommend' => array(0 => "否" ,1 => "是")
             ));
         $list2['type']=$list['0']['type'];
@@ -166,11 +166,11 @@ class Notice extends Admin {
     public function show(){
         $map = array(
             'type' => 2,
-            'status' => array('egt',1),
+            'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(1=>"已发布"),
+            'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
 
@@ -259,11 +259,11 @@ class Notice extends Admin {
     public function activity(){
         $map = array(
             'type' => 4,
-            'status' => array('egt',1),
+            'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
         int_to_string($list,array(
-            'status' => array(1=>"已发布"),
+            'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
         //dump($list);
