@@ -13,8 +13,8 @@ class Structure extends Base{
      * 组织架构主页
      */
     public function index(){
-        $msg = $this ->statistics();
-        $this ->assign('msg',$msg);
+//        $msg = $this ->statistics();
+//        $this ->assign('msg',$msg);
         return $this->fetch();
     }
     /*
