@@ -96,6 +96,7 @@
         }*/
     }
     var type =  parseInt(window.location.href.split("publish/type/")[1]);
+    console.log(type);
     var c =  parseInt(window.location.href.split("style/")[1]);
     var index =  parseInt(window.location.href.split("?")[1]);
     $(function(){
@@ -189,6 +190,7 @@
                         tel:$("input[name='tel']").val(),
                         demand_number:$("input[name='demand_number']").val(),
                         image:Imgarr,
+                        type:type,
                     };
                 }
                 $.ajax({
@@ -247,6 +249,7 @@
                         tel:$("input[name='tel']").val(),
                         demand_number:$("input[name='demand_number']").val(),
                         image:Imgarr,
+                        type:type,
                     };
                 }
                 $.ajax({
