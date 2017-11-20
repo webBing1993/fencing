@@ -79,15 +79,11 @@
     var u = navigator.userAgent, app = navigator.appVersion;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-    //alert('是否是Android：'+isAndroid);
-    //alert('是否是iOS：'+isiOS);
 
     if(isAndroid){
         $ ("input[name='file']").attr('capture','camera');
     }
-    var type =  parseInt(window.location.href.split("publish/type/")[1]);
-    var c =  parseInt(window.location.href.split("style/")[1]);
-    var index =  parseInt(window.location.href.split("?")[1]);
+
     $(function(){
         imgresize();
     });
@@ -134,21 +130,6 @@
                 This.addClass("hide");
                 $(".add").show()
             }
-          /*  $.ajax({
-                type: "post",
-                url: "",
-                data: {
-                    id:Id
-                },
-                processData : false, // 告诉jQuery不要去处理发送的数据
-                contentType : false,  // 告诉jQuery不要去设置Content-Type请求头
-                success:function (data) {
-                    var msg = $.parseJSON(data);
-                    if(msg.code == 1){
-
-                    }
-                }
-            })*/
         });
     });
 
@@ -177,36 +158,36 @@
                     publisher: $("input[name='publisher']").val(),
                     content: $("textarea[name='content']").val(),
                     front_cover:Imgarr,
-
                 };
-            }
-            $.ajax({
-                type: "post",
-                url: "{:Url('Activity/publish')}",
-                data: data,
-                dataType: "Json",
-                success: function (data) {
-                    if (data.code) {
-                        swal({
-                            title: '',
-                            text: data.msg,
-                            type: 'success',
-                            showConfirmButton: false
-                        });
-                        setTimeout(function () {
-                            history.go(-1);
-                        }, 1500);
-                    } else {
-                        swal({
-                            title: '',
-                            text: data.msg,
-                            type: 'error',
-                            showConfirmButton: false
-                        });
+                $.ajax({
+                    type: "post",
+                    url: "{:Url('Activity/publish')}",
+                    data: data,
+                    dataType: "Json",
+                    success: function (data) {
+                        if (data.code) {
+                            swal({
+                                title: '',
+                                text: "提交成功",
+                                type: 'success',
+                                showConfirmButton: false
+                            });
+                            setTimeout(function () {
+                                history.go(-1);
+                            }, 1500);
+                        } else {
+                            swal({
+                                title: '',
+                                text: "提交失败",
+                                type: 'error',
+                                showConfirmButton: false
+                            });
+                        }
                     }
-                }
 
-            })
+                })
+            }
+
         })
     })
 </script>

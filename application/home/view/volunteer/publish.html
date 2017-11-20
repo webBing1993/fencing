@@ -95,8 +95,6 @@
              var h =
         }*/
     }
-    var type =  parseInt(window.location.href.split("publish/type/")[1]);
-    console.log(type);
     var c =  parseInt(window.location.href.split("style/")[1]);
     var index =  parseInt(window.location.href.split("?")[1]);
     $(function(){
@@ -145,33 +143,13 @@
                 This.addClass("hide");
                 $(".add").show();
             }
-          /*  $.ajax({
-                type: "post",
-                url: "",
-                data: {
-                    id:Id
-                },
-                processData : false, // 告诉jQuery不要去处理发送的数据
-                contentType : false,  // 告诉jQuery不要去设置Content-Type请求头
-                success:function (data) {
-                    var msg = $.parseJSON(data);
-                    if(msg.code == 1){
-
-                    }
-                }
-            })*/
         });
     });
 
     //去上传
     $(".goreview").click(function(){
-        if(type == 1){
-            var Imgarr = "";
-            $(".imgs .img").each(function(){
-                if(!$(this).hasClass("hide")){
-                    Imgarr = $(this).find("img").attr("data-tab")
-                }
-            });
+        var type =  parseInt(window.location.href.split("publish/type/")[1]);
+         var imgId = $(".imgs .img").find("img").attr("data-tab");
             swal({
                 title: "提示",
                 text: "确认提交您的信息？",
@@ -189,101 +167,38 @@
                         content: $("textarea[name='content']").val(),
                         tel:$("input[name='tel']").val(),
                         demand_number:$("input[name='demand_number']").val(),
-                        image:Imgarr,
-                        type:type,
+                        image:imgId,
+                        type:type
                     };
-                }
-                $.ajax({
-                    type: "post",
-                    url: "{:Url('Volunteer/publish')}",
-                    data: data,
-                    Id:type,
-                    dataType: "Json",
-                    success: function (data) {
-                        if (data.code) {
-                            swal({
-                                title: '',
-                                text: data.msg,
-                                type: 'success',
-                                showConfirmButton: false
-                            });
-                            setTimeout(function () {
-                                history.go(-1);
-                            }, 1500);
-                        } else {
-                            swal({
-                                title: '',
-                                text: data.msg,
-                                type: 'error',
-                                showConfirmButton: false
-                            });
+                    $.ajax({
+                        type: "post",
+                        url: "{:Url('Volunteer/publish')}",
+                        data: data,
+                        dataType: "Json",
+                        success: function (data) {
+                            if (data.code==1) {
+                                swal({
+                                    title: '',
+                                    text: "提交成功",
+                                    type: 'success',
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () {
+                                    history.go(-1);
+                                }, 1500);
+                            } else {
+                                swal({
+                                    title: '',
+                                    text: "提交失败",
+                                    type: 'error',
+                                    showConfirmButton: false
+                                });
+                            }
                         }
-                    }
 
-                })
-            })
-
-        }
-        if(type == 2){
-            var Imgarr = "";
-            $(".imgs .img").each(function(){
-                if(!$(this).hasClass("hide")){
-                    Imgarr = $(this).find("img").attr("data-tab")
+                    })
                 }
-            });
-            swal({
-                title: "提示",
-                text: "确认提交您的信息？",
-                showCancelButton: true,
-                confirmButtonColor: "#f99300",
-                confirmButtonText: "确定",
-                cancelButtonText: "取消"
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    var data = {
-                        title: $("input[name='title']").val(),
-                        start_time: $("input[name='time']").val(),
-                        activity_home: $("input[name='address']").val(),
-                        //userid: $("input[name='publisher']").val(),
-                        content: $("textarea[name='content']").val(),
-                        tel:$("input[name='tel']").val(),
-                        demand_number:$("input[name='demand_number']").val(),
-                        image:Imgarr,
-                        type:type,
-                    };
-                }
-                $.ajax({
-                    type: "post",
-                    url: "{:Url('Volunteer/publish')}",
-                    data: data,
-                    Id:type,
-                    dataType: "Json",
-                    success: function (data) {
-                        if (data.code) {
-                            swal({
-                                title: '',
-                                text: data.msg,
-                                type: 'success',
-                                showConfirmButton: false
-                            });
-                            setTimeout(function () {
-                                history.go(-1);
-                            }, 1500);
-                        } else {
-                            swal({
-                                title: '',
-                                text: data.msg,
-                                type: 'error',
-                                showConfirmButton: false
-                            });
-                        }
-                    }
-
-                })
             })
-
-        }
-
     });
 
 </script>
