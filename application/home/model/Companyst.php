@@ -17,7 +17,7 @@ class Companyst extends Model{
         $list = $this->where($where)->order('create_time','desc')->limit($length,10)->select();
         foreach($list as $value){
             $value['create_time'] = date('Y-m-d',$value['create_time']);
-            $value['image'] = Picture::where('id',$value['image'])->value('path');
+            $value['front_cover'] = Picture::where('id',$value['front_cover'])->value('path');
         }
         return $list;
     }

@@ -17,7 +17,7 @@
                     {volist name="data" id="vo"}
                     <div class="list color1">
                         <a href="http://sx.pb.cn/home/volunteer/team.html" class="con">
-                            <div class="img"><img src="/home/images/volunteer/06.jpg" alt=""></div>
+                            <div class="img"><img src="{$vo.front_cover}" alt=""></div>
                             <div class="name">{$vo.title}</div>
                             <div class="notes">活动：<span>{$vo.number}</span>次</div>
                         </a>
@@ -93,7 +93,7 @@
                 +list.id
                 +'.html">'
                 +'<div class="img"><img src="'
-                +list.path
+                +list.front_cover
                 +'" alt=""></div>'
                 +'<div class="name">'
                 +list.title
