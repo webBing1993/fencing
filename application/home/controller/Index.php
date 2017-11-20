@@ -7,129 +7,115 @@
  */
 
 namespace app\home\controller;
-use app\home\model\Message;
-use app\home\model\WechatUser;
-use com\wechat\TPQYWechat;
-use think\Config;
-use think\Controller;
-use app\user\controller\Index as APIIndex;
-use think\Log;
-use app\home\model\Learn as LearnModel;
+use app\home\model\Study;
 use app\home\model\News;
-use app\home\model\Notice as NoticeModel;
-
+use app\home\model\Companys;
+use app\home\model\Picture;
 /**
  * 党建主页
  */
 class Index extends Base {
     public function index(){
-        $details = $this ->lists();
-        $this ->assign('details',$details);
-        //判断是否是游客
         $this->anonymous();
-        $this ->assign('user',session('userId'));
+        $len = array('news' => 0,'study' => 0,'volunteer' => 0);
+        $list = $this ->getDataList($len);
+        $this ->assign('list',$list['data']);
         return $this->fetch();
     }
-    
+
     /**
-     * 首页获取不同模块数据
+     * 获取数据列表 箬横动态  news  两学一做  study  志愿风采展  companys
+     * @param $len
      */
-    public function lists($length = 0){
-//        //不是get请求默认初始数据
-//        if (empty($length)) {
-//            $length = array();
-//            $length['learn'] = 0;  //  党建风采
-//            $length['new'] = 0;   // 党建动态
-//            $length['notice'] = 0;  // 通知公告
-//        }else{
-//            $length = json_decode($length);
-//            $length['learn'] = $length[0];
-//            $length['new'] = $length[1];
-//            $length['notice'] = $length[2];
-//        }
-//        $data = array();
-//        //记录上一条缺几条的数据
-//        $more = 0;
-//        $new = new  News();
-//        $learn = new LearnModel();
-//        $notice = new NoticeModel();
-//        //党员动态
-//        $data['new'] = $new ->get_list($length['new'],2);
-//        if (count($data['new']) < 2) {
-//            $more += 2 - count($data['new']);
-//        }
-//        //支部动态
-//        $data['notice'] = $notice ->get_list($length['notice'],2+$more);
-//        if (count($data['notice']) < (2+$more)) {
-//            $more = $more + 2 - count($data['notice']);
-//        }else{
-//            $more = 0;
-//        }
-//        //两学一做
-//        $data['learn'] = $learn ->get_list($length['learn'],2+$more);
-//        if (count($data['learn']) < (2+$more)) {
-//            $more = $more + 2 - count($data['learn']);
-//        }else{
-//            $more = 0;
-//        }
-//        //数据不够6条,反过来再取一遍
-//        if( count($data['learn']) + count($data['notice']) + count($data['new']) < 6){
-//            //先去支部动态取
-//            if (count($data['notice']) >= 2) {
-//                $record = $notice ->get_list(count($data['notice'])+$length['notice'],$more);
-//                //数据如果不够再补
-//                if (count($record) < $more) {
-//                    $more += $more - count($record);
-//                    if($record){
-//                        $data['notice'] = array_merge($data['notice'],$record);
-//                    }
-//                    $record = $new ->get_list(count($data['new'])+$length['new'],$more);
-//                    if($record){
-//                        $data['new'] = array_merge($data['new'],$record);
-//                    }
-//                } else {
-//                    if($record){
-//                        $data['notice'] = array_merge($data['notice'],$record);
-//                    }
-//                }
-//            } else if (count($data['new']) == 2){
-//            //支部动态不够,再党员动态取
-//                $record = $new ->get_list(count($data['new'])+$length['new'],$more);
-//                if($record){
-//                    $data['new'] = array_merge($data['new'],$record);
-//                }
-//            }
-//        }
-//        //对应增加类型
-//        $data['new'] = $this->add_field($data['new'], 'new');
-//        $data['notice'] = $this->add_field($data['notice'], 'notice');
-//        $data['learn'] = $this->add_field($data['learn'], 'learn');
-//        return $data;
-//    }
-//
-//    /**
-//     * 给列表数据增加类型
-//     */
-//    public function add_field($data,$field){
-//        foreach($data as $k =>$v){
-//            $v['genre'] = $field;
-//        }
-//        return $data;
-//    }
-//
-//    public function more(){
-//        $length = input('get.length');
-//        $details = $this ->lists($length);
-//        foreach($details as $key => $value) {
-//            foreach ($value as $k => $v) {
-//                if ($v['front_cover']) {
-//                    $v['front_cover'] = get_cover($v['front_cover'], 'path');
-//                } else {
-//                    $v['front_cover'] = '/home/images/common/1.jpg';
-//                }
-//                $v['time'] = date('Y-m-d',$v['create_time']);
-//            }
-//        }
-//        return $details;
+    public function getDataList($len)
+    {
+        //从第几条开始取数据
+        $count1 = $len['news'];   // 箬横动态
+        $count2 = $len['study'];  // 两学一做
+        $count3 = $len['volunteer'];  //志愿风采展
+        $news = new News();
+        $study = new Study();
+        $companys = new Companys();
+        $news_check = false; // 数据状态 true为取空
+        $study_check = false;
+        $companys_check = false;
+        $all_list = array();
+        //获取数据  取满12条 或者取不出数据退出循环
+        while(true)
+        {
+            // 箬横动态
+            if (!$news_check && count($all_list) < 12){
+                $res1 = $news->getDataList($count1);
+                if (empty($res1)){
+                    $news_check = true;
+                }else{
+                    $count1 ++ ;
+                    $all_list = $this->changeTpye($all_list,$res1,1);
+                }
+            }
+            // 两学一做
+            if(!$study_check &&
+                count($all_list) < 12)
+            {
+                $res2 = $study ->getDataList($count2);
+                if(empty($res2))
+                {
+                    $study_check = true;
+                }else {
+                    $count2 ++;
+                    $all_list = $this ->changeTpye($all_list,$res2,2);
+                }
+            }
+            // 志愿风采展
+            if(!$companys_check &&
+                count($all_list) < 12)
+            {
+                $res3 = $companys ->getDataList($count3);
+                if(empty($res3))
+                {
+                    $companys_check = true;
+                }else {
+                    $count3 ++;
+                    $all_list = $this ->changeTpye($all_list,$res3,3);
+                }
+            }
+            if(count($all_list) >= 12 || ($news_check && $study_check && $companys_check))
+            {
+                break;
+            }
+        }
+        if (count($all_list) != 0)
+        {
+            return ['code' => 1,'msg' => '获取成功','data' => $all_list];
+        }else{
+            return ['code' => 0,'msg' => '获取失败','data' => $all_list];
+        }
+    }
+    /**
+     * 进行数据区分
+     * @param $list
+     * @param $type 1 箬横动态  2 两学一做  3 志愿风采展
+     */
+    private function changeTpye($all,$list,$type){
+        $list['class'] = $type;
+        array_push($all,$list);
+        return $all;
+    }
+    /**
+     * 首页加载更多新闻列表
+     * @return array
+     */
+    public function moreDataList(){
+        $this ->anonymous();
+        $len = input('post.');
+        $list = $this ->getDataList($len);
+        //转化图片路径 时间戳
+        foreach ($list['data'] as $k => $v)
+        {
+            $img_path = Picture::get($list['data'][$k]['front_cover']);
+            $list['data'][$k]['time'] = date('Y-m-d',$v['create_time']);
+            $list['data'][$k]['path'] = $img_path['path'];
+        }
+        return $list;
     }
 }

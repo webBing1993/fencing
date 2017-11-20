@@ -60,16 +60,36 @@
         </div>
         <!--新闻通知-->
         <div class="list recommend">
+            {empty name="$list"}
+            <div class="default"><img src="/home/images/common/nomessage.png"></div>
+            {else/}
             <ul>
-
-                <a href="" data-type="">
-                    <img src="">
-                    <p>大幅度发分啊阿斯顿第三方</p>
+                {volist name="$list" id="lo"}
+                <a {eq name="lo.class" value="1"} href="{:Url('News/detail?id='.$lo['id'])}" {/eq} {eq name="lo.class" value="2"}
+                {eq name="lo.type" value="1"}
+                href="{:Url('Learn/video?id='.$lo['id'])}"
+                {else/}
+                href="{:Url('Learn/article?id='.$lo['id'])}"
+                {/eq}
+                {/eq}
+                {eq name="lo.class" value="3"} href="{:Url('Volunteer/detail?id='.$lo['id'])}"
+                {/eq} data-type="">
+                    <img src="{$lo.front_cover|get_cover='path'}">
+                    <p>{$lo.title}</p>
+                    {eq name="lo.class" value="1"}
                     <span>【箬横动态】</span>
-                    <span>2017-11-20</span>
+                    {/eq}
+                    {eq name="lo.class" value="2"}
+                    <span>【两学一做】</span>
+                    {/eq}
+                    {eq name="lo.class" value="3"}
+                    <span>【志愿之家】</span>
+                    {/eq}
+                    <span>{$lo.create_time|time_format='Y-m-d'}</span>
                 </a>
-
+                {/volist}
             </ul>
+            {/empty}
         </div>
     </div>
 </div>
@@ -115,11 +135,11 @@
         var learn_len = $('.recommend .a[data-type=2]').length;
         var volunteer_len = $('.recommend .a[data-type=3]').length;
         $.ajax({
-            type:"get",
+            type:"post",
             url: "{:Url('Index/moreDataList')}",
             data:{
                 news: news_len,
-                learn: learn_len,
+                study: learn_len,
                 volunteer: volunteer_len
             },
             beforeSend: function(XMLHttpRequest){
