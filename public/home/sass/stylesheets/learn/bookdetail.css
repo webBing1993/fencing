@@ -111,11 +111,11 @@
 }
 .book .content .reads {
   width: 22vw;
-  height: 9vw;
+  height: 1rem;
   background: #f03b41;
   margin: 12vw auto;
   color: #ffffff;
-  line-height: 8vw;
+  line-height: 1rem;
   text-align: center;
   -webkit-border-radius: 6px;
   border-radius: 6px;
@@ -264,9 +264,7 @@
 .comment .lists .list .fl img {
   width: 10.7vw;
   height: 10.7vw;
-  margin-top: 3vw;
   margin-right: 3vw;
-  margin-bottom: 3vw;
   overflow: hidden;
   -webkit-border-radius: 50%;
   border-radius: 50%;
@@ -295,16 +293,21 @@
   color: #999;
 }
 .comment .lists .list .good {
-  background: url('/home/images/learn/good.png') 0 2px no-repeat;
+  background: url('/home/images/learn/good.png') 0 12px no-repeat;
 }
 .comment .lists .list .good_ {
   animation: shake 300ms ease;
   -webkit-animation: shake 300ms ease;
-  background: url('/home/images/learn/good_.png') 0 2px no-repeat;
+  background: url('/home/images/learn/good_.png') 0 12px no-repeat;
 }
 .comment .lists .list .isgood {
   background-size: 15px 15px;
   padding-left: 18px;
+}
+.comment .lists .list span {
+  height: 40px;
+  display: inline-block;
+  line-height: 40px;
 }
 .comment .tip {
   height: 40px;
@@ -322,6 +325,7 @@
   padding:0 3vw;
   background: #ffffff;
   font-family: "Microsoft YaHei", sans-serif;
+  z-index: 5;
 }
 .bottom .star {
   background: url('/home/images/learn/star-border.png') 20px 12px no-repeat;
@@ -378,4 +382,18 @@ input::-webkit-input-placeholder{
   position: relative;
   top: 17px;
   left: calc( 50vw - 15px );
+}
+.fl{
+  float:left;
+}
+.fr{
+  float:right;
+}
+.mui-pull-bottom-pocket{
+  bottom: 11vw;
+}
+@media screen and (min-width:736px) and (max-width:1030px){
+  .mui-pull-bottom-pocket{
+    bottom: 6vw;
+  }
 }

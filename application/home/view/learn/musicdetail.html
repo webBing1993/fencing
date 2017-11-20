@@ -3,84 +3,77 @@
 {block name="style"}
 <title>红色音乐</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/musicdetail.css">
-<style>
-	.scrollDiy{
-		position: absolute;
-		top:0;
-		bottom:0;
-		overflow-y: scroll;
-		/* 增加该属性，可以增加弹性 */
-		-webkit-overflow-scrolling: touch;
-		width:100%;
-	}
-</style>
-
 {/block}
 
 {block name="body"}
-<div class="scrollDiy">
-	<div class="music">
-		<div class="title limit_">{$music.title}</div>
-		<div class="time">
-			<span>{$music.create_time|time_format='Y-m-d'}</span>
-		</div>
-		<div class="content">
-			<div id="content">
-				{$music.content}
-			</div>
-			<div class="note">
-				<span class="read">{$music.views +1 }</span>
-				{eq name="visit" value="0"}
-				{eq name="music.is_like" value="0"}
-				<span class="isgood good" onclick="isGood(this,7,{$music.id})">{$music.likes}</span>
-				<!--点过赞good_-->
-				{else/}
-				<span class="isgood good_" onclick="isGood(this,7,{$music.id})">{$music.likes}</span>
-				{/eq}
-				{else/}
-				<span class="isgood good">{$music.likes}</span>
-				{/eq}
-			</div>
-		</div>
-	</div>
-	<div class="comment">
-		<div class="sum">共<span>{$music.comments}</span>条评论</div>
-		<div class="lists">
-			{volist name="$music.comment" id="co"}
-			<div class="list clear">
-				<div class="fl">
-					<img src="{$co.header}" alt="用户" class="user">
+<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<div class="scrollDiy">
+			<div class="music">
+				<div class="title limit_">{$music.title}</div>
+				<div class="time">
+					<span>{$music.create_time|time_format='Y-m-d'}</span>
 				</div>
-				<div class="fl mid">
-					<div class="name limit">{$co.nickname}</div>
-					<div class="content" >{$co.content}</div>
-					<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+				<div class="content">
+					<div id="content">
+						{$music.content}
+					</div>
+					<div class="note">
+						<span class="read">{$music.views +1 }</span>
+						{eq name="visit" value="0"}
+						{eq name="music.is_like" value="0"}
+						<span class="isgood good notvisitor" data-type="0" data-id="{$music.id}">{$music.likes}</span>
+						<!--点过赞good_-->
+						{else/}
+						<span class="isgood good_ notvisitor" data-type="0" data-id="{$music.id}">{$music.likes}</span>
+						{/eq}
+						{else/}
+						<span class="isgood good">{$music.likes}</span>
+						{/eq}
+					</div>
 				</div>
-				{eq name="visit" value="0"}
-				{eq name="co.is_like" value="1"}
-				<div class="fr isgood good_" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-				{else/}
-				<div class="fr isgood good" onclick="isGood(this,0,{$co.id})">{$co.likes}</div>
-				{/eq}
-				{else/}
-				<div class="fr isgood good">{$co.likes}</div>
-				{/eq}
 			</div>
-			{/volist}
-		</div>
-		<div class="tip"></div>
-		<div class="loading hide">
-			<div class="typing_loader"></div>
+			<div class="comment">
+				<div class="sum">共<span>{$music.comments}</span>条评论</div>
+				<div class="lists">
+					{volist name="$music.comment" id="co"}
+					<div class="list clear">
+						<div class="fl">
+							<img src="{$co.header}" alt="用户" class="user">
+						</div>
+						<div class="fl mid">
+							<div class="name limit">{$co.nickname}</div>
+							<div class="content" >{$co.content}</div>
+							<div class="time">{$co.create_time|time_format="Y-m-d"}</div>
+						</div>
+						{eq name="visit" value="0"}
+						{eq name="co.is_like" value="1"}
+						<span class="fr isgood good_ notvisitor"  data-type="0" data-id="{$co.id}">{$co.likes}</span>
+						{else/}
+						<span class="fr isgood good notvisitor"  data-type="0" data-id="{$co.id}">{$co.likes}</span>
+						{/eq}
+						{else/}
+						<span class="fr isgood good">{$co.likes}</span>
+						{/eq}
+					</div>
+					{/volist}
+				</div>
+				<div class="tip"></div>
+				<div class="loading hide">
+					<div class="typing_loader"></div>
+				</div>
+			</div>
+
 		</div>
 	</div>
-	{eq name="visit" value="0"}
-	<div class="bottom clear" onclick="send(this,7,{$music.id})">
-		<div class="myword fl">
-			<input type="text" placeholder="说说你的感想！" id="message" disabled>
-		</div>
-	</div>
-	{/eq}
 </div>
+{eq name="visit" value="0"}
+<div class="bottom clear" onclick="send(this,7,{$music.id})">
+	<div class="myword fl">
+		<input type="text" placeholder="说说你的感想！" id="message" disabled>
+	</div>
+</div>
+{/eq}
 {/block}
 
 {block name="script"}
@@ -142,6 +135,19 @@ function iframe(){
 }
 $('title').text('红色音乐');
 iframe();
+window.onload = function(){
+    if($(".list").length<7){
+        mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
+    }else{
+        mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
+    }
+};
+//点赞点击事件
+mui('#refreshContainer').on('tap', '.notvisitor', function(e) {
+    var type = this.getAttribute("data-type");
+    var id = this.getAttribute("data-id");
+    isGood(this,type,id);
+});
 //点赞
 var isGood = function(e,type,id){
     //样式变化，移到suc
@@ -213,7 +219,7 @@ var send = function(e,type,id){
                             '<div class="content">' + inputValue + '</div>' +
                             '<div class="time">' + data.time + '</div>' +
                             '</div>' +
-                            '<div class="fr isgood good notvisitor" data-type="0" data-id=' + data.id + '>' + data.likes + '</div>' +
+                            '<span class="fr isgood good notvisitor" data-type="0" data-id=' + data.id + '>' + data.likes + '</span>' +
                             '</div>';
                         $('.lists' ).prepend(html);
                         inputValue="";
@@ -293,12 +299,12 @@ function addComment(data){
             '</div>';
         if ("{$visit}" == 0){
             if(list.is_like == 0){
-                html+='<div class="fr isgood good notvisitor"  data-type="0" data-id='+list.id+'>'+list.likes+'</div>'
+                html+='<span class="fr isgood good notvisitor"  data-type="0" data-id='+list.id+'>'+list.likes+'</span>'
             }else{
-                html+='<div class="fr isgood good_ notvisitor"  data-type="0" data-id='+list.id+'>'+list.likes+'</div>'
+                html+='<sapn class="fr isgood good_ notvisitor"  data-type="0" data-id='+list.id+'>'+list.likes+'</sapn>'
             }
         }else {
-            html+='<div class="fr isgood good">'+list.likes+'</div>'
+            html+='<span class="fr isgood good">'+list.likes+'</span>'
         }
         html+=
             '</div>';
