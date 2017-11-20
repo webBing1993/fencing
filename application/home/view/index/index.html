@@ -73,7 +73,7 @@
                 {/eq}
                 {/eq}
                 {eq name="lo.class" value="3"} href="{:Url('Volunteer/detail?id='.$lo['id'])}"
-                {/eq} data-type="">
+                {/eq} data-type="{$lo.class}">
                     <img src="{$lo.front_cover|get_cover='path'}">
                     <p>{$lo.title}</p>
                     {eq name="lo.class" value="1"}
@@ -131,9 +131,9 @@
 
     //上拉加载更多
     function loadScroll(){
-        var news_len = $('.recommend .a[data-type=1]').length;
-        var learn_len = $('.recommend .a[data-type=2]').length;
-        var volunteer_len = $('.recommend .a[data-type=3]').length;
+        var news_len = $('.recommend a[data-type=1]').length;
+        var learn_len = $('.recommend a[data-type=2]').length;
+        var volunteer_len = $('.recommend a[data-type=3]').length;
         $.ajax({
             type:"post",
             url: "{:Url('Index/moreDataList')}",
@@ -210,6 +210,12 @@
         $(this).css("backgroundColor","#fff");
     });
 
+
+    //页面点击事件
+    mui("#refreshContainer").on("tap","a",function(){
+        var url = this.getAttribute("href");
+        window.location.href = url;
+    });
 
 
 </script>
