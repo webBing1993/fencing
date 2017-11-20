@@ -14,14 +14,16 @@
             <div class="main">
                 <div class="lists">
                     <!--循环开始-->
+                    {volist name="data" id="vo"}
                     <div class="list color1">
                         <a href="#" class="con">
                             <div class="img"><img src="/home/images/volunteer/06.jpg" alt=""></div>
-                            <div class="name">朝阳志愿者服务中心</div>
-                            <div class="notes">活动：<span>12</span>次</div>
+                            <div class="name">{$vo.title}</div>
+                            <div class="notes">活动：<span>{$vo.number}</span>次</div>
                         </a>
                         <div class="view"><a href="#" class="btn_">查看活动</a></div>
                     </div>
+                    {/volist}
                     <!--循环结束-->
                 </div>
             </div>
@@ -57,7 +59,7 @@
         var len = $(".lists .list").length;
         $.ajax({
             type: "post",
-            url: "{:Url('Volunteer/index')}",
+            url: "{:Url('Volunteer/more')}",
             data: {
                 length: len
             },
@@ -94,10 +96,10 @@
                 +list.path
                 +'" alt=""></div>'
                 +'<div class="name">'
-                +list.name
+                +list.title
                 +'</div>'
                 +'<div class="notes">活动：<span>'
-                +list.times
+                +list.number
                 +'</span>次</div>'
                 +'</a>' +
                 '<div class="view">' +
