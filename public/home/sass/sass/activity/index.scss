@@ -265,7 +265,7 @@
 }
 
 /*悬浮按钮*/
-.btn_{
+#publish{
   position: absolute;
   top: 150vw;
   right: 5vw;
@@ -273,4 +273,9 @@
   height: 10vw;
   background: #000000;
   display:none;
+}
+#publish a{
+  display: block;
+  width:10vw;
+  height: 10vw;
 }

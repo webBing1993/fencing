@@ -395,14 +395,18 @@
   margin-top: 30%;
   margin-left: -8vw;
 }
-
-/*悬浮按钮*/
-.btn_ {
-  position: absolute;
-  top: 150vw;
+#publish{
+  position: fixed;
+  bottom: 40vw;
   right: 5vw;
-  width: 10vw;
+  width:10vw;
   height: 10vw;
   background: #000000;
-  display: none;
+  z-index: 5;
+  display:none;
+}
+#publish a{
+  display: block;
+  width:10vw;
+  height: 10vw;
 }

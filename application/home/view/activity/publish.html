@@ -73,7 +73,7 @@
 {/block}
 
 {block name="script"}
-<script src="/home/js/publish.js"></script>
+<!--<script src="/home/js/publish.js"></script>-->
 <script src="/home/js/mui.picker.min.js"></script>
 <script>
     var u = navigator.userAgent, app = navigator.appVersion;
@@ -114,8 +114,10 @@
     });
 
     // 删除当前选择的上传图片
+     var arrIndex = [];
     $(".imgs div.img").on("click",function(){
         var This = $(this);
+        arrIndex.push($(this).index() + 1);
         swal({
             title: "是否删除当前图片",
             showConfirmButton: true,
@@ -128,67 +130,158 @@
                 This.find("img").attr("data-tab","");
                 This.find("img").remove();
                 This.addClass("hide");
-                $(".add").show()
+                $(".add").show();
             }
         });
     });
 
     //去上传
-    $(".goreview").click(function() {
+    $(".goreview").click(function(){
+        var single = false;
         var Imgarr = [];
         $(".imgs .img").each(function(){
             if(!$(this).hasClass("hide")){
                 Imgarr.push($(this).find("img").attr("data-tab"))
             }
         });
-        swal({
-            title: "提示",
-            text: "确认提交您的信息？",
-            showCancelButton: true,
-            confirmButtonColor: "#f99300",
-            confirmButtonText: "确定",
-            cancelButtonText: "取消"
-        }, function (isConfirm) {
-            if (isConfirm) {
-                var data = {
-                    type:3,
-                    title: $("input[name='title']").val(),
-                    start_time: $("input[name='start_time']").val(),
-                    address: $("input[name='address']").val(),
-                    publisher: $("input[name='publisher']").val(),
-                    content: $("textarea[name='content']").val(),
-                    front_cover:Imgarr,
-                };
-                $.ajax({
-                    type: "post",
-                    url: "{:Url('Activity/publish')}",
-                    data: data,
-                    dataType: "Json",
-                    success: function (data) {
-                        if (data.code) {
-                            swal({
-                                title: '',
-                                text: "提交成功",
-                                type: 'success',
-                                showConfirmButton: false
-                            });
-                            setTimeout(function () {
-                                history.go(-1);
-                            }, 1500);
-                        } else {
-                            swal({
-                                title: '',
-                                text: "提交失败",
-                                type: 'error',
-                                showConfirmButton: false
-                            });
-                        }
+        if($("input[name='title']").val() == ""||$("input[name='start_time']").val() == ""||$("input[name='address']").val() == ""||$("input[name='publisher']").val() == ""||$("textarea[name='content']").val()=="" || Imgarr.length==0){
+            single = false
+        }else{
+            single = true
+        }
+        if(single){
+            var data = {
+                type:3,
+                title: $("input[name='title']").val(),
+                start_time: $("input[name='start_time']").val(),
+                address: $("input[name='address']").val(),
+                publisher: $("input[name='publisher']").val(),
+                content: $("textarea[name='content']").val(),
+                front_cover:Imgarr,
+            };
+
+            $.ajax({
+                type:"post",
+                url: "{:Url('Activity/publish')}",
+                data:data,
+                success:function(data){
+                    if(data.code == 1){
+                        swal({
+                            title: "提交成功",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: "确定",
+                            allowOutsideClick:false
+                        });
+                        setTimeout(function(){
+                            window.history.go(-1);
+                        },1500)
+                    }else{
+                        swal({
+                            title: ' ',
+                            text: data.msg,
+                            type: 'error',
+                            showConfirmButton:false,
+                            timer:1500
+                        });
                     }
+                }
+            });
+        }else{
+            swal({
+                title: ' ',
+                text: '信息输入不完整',
+                type: 'error',
+                showConfirmButton:false,
+                timer:1500
+            });
+        }
+    });
 
-                })
-            }
+    $(function(){
+        //图片预览
+        $('.add' ).on('click',function(){
+            var imglen = $('.img img' ).length;
+            var this_ = $(this);
+            $('#upimg').click().off("change").on('change',function(){
+                var size = ($(this)[0].files[0].size/ 1024).toFixed(2);
+                if(size <= 3072){
+                    var img = $(this)[0].files[0];
+                    var formData = new FormData();
+                    formData.append("picture",img);
+                    $.ajax({
+                        type:"post",
+                        url:"/home/File/uploadPicture",
+                        data:formData,
+                        processData : false, // 告诉jQuery不要去处理发送的数据
+                        contentType : false,  // 告诉jQuery不要去设置Content-Type请求头
+                        beforeSend: function(XMLHttpRequest){
+//							swal('');
+//							swal.showLoading();
+                            $('.swal2-confirm' ).css({'background-color':'#c1c1c1','border-left-color':'#c1c1c1','border-right-color':'#c1c1c1'})
+                        },
+                        success:function(data){
+                            swal.close();
+                            var msg = $.parseJSON(data);
+                            if(msg.code == 1){
+                                if(this_.hasClass('add')){
+                                    // 图片添加
+                                    if(imglen == 3){
+                                        $('.add' ).fadeOut();
+                                    }
+                                    if(arrIndex.length!==0){
+                                        console.log(arrIndex)
+                                        $('.img').eq(arrIndex[arrIndex.length-1] -1).removeClass('hide' )
+                                        .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
+                                        arrIndex.pop();
+                                    }else{
+                                        $('.img').eq(imglen).removeClass('hide' )
+                                         .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
+                                    }
 
-        })
-    })
+                                }else{
+                                    // 图片修改
+                                    this_.find('img').remove();
+                                    this_.append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
+                                }
+                                imgresize();
+                            }
+                        }
+                    });
+                } else {
+                    swal({
+                        title: ' ',
+                        text: '您的图片超过3M',
+                        type: 'warning',
+                        showConfirmButton:false,
+                        timer:1500
+                    });
+                }
+            });
+
+        });
+    });
+
+
+    //剪裁图片
+    function imgresize(){
+        var font = parseInt($("html").css("font-size"))*2;
+        setTimeout(function(){
+            var img = $('.img img');
+            var img2 = $('.img2 img');
+            var img3 = $('.img3 img');
+            var img4 = $('.img4 img');
+            img.each(function(){
+                if($(this).width() == $(this).height()){
+                    $(this).height('20vw');
+                    $(this).width('20vw');
+                }else if($(this).width() > $(this).height()){
+                    $(this).height('20vw' ).css({'left':-$(this).width()/2+font/2});
+                }else{
+                    $(this).width('20vw').css({'top':-$(this).height()/2+font/2});
+                }
+            });
+        },100);
+    }
 </script>
 {/block}

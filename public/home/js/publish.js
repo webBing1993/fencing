@@ -33,6 +33,14 @@ $(function(){
                                 if(imglen == 3){
                                     $('.add' ).fadeOut();
                                 }
+                                var arr = [];
+                                arr = $("#upimg").attr("data-index")?$("#upimg").attr("data-index").split(","):[];
+                                if(arr){
+                                    $('.img').eq(arr[arr.length-1]).removeClass('hide' )
+                                    .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
+                                    arr.pop();
+                                    console.log(arr)
+                                }
                                 $('.img').eq(imglen).removeClass('hide' )
                                     .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
                             }else{

@@ -80,13 +80,18 @@
   padding-top: 13px;
 }
 .music .title {
-  color: #333333;
   font-size: 0.48rem;
   font-weight: 600;
+  text-align: center;
+}
+.music .title p{
+  color: #333;
+  display: inline-block;
+  text-align: left;
 }
 .music .time {
   width: 100%;
-  color: #999999;
+  color: #999;
   font-size: 0.32rem;
   line-height: 26px;
   border-bottom: 1px solid #f1f1f1;
@@ -107,6 +112,7 @@
 }
 .music .content * {
   max-width: 100%!important;
+  font-size:0.38rem;
 }
 .music .content p span {
   background: transparent!important;
@@ -152,78 +158,85 @@
   padding-left: 18px;
 }
 /*评论*/
-.comment {
-  padding-bottom: 50px;
+.comment{
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
 }
 .comment .sum {
-  height: 30px;
-  padding-left: 10px;
+  height: 0.6rem;
+  padding-left: 0.3rem;
   background: #fcfcfc;
   border-top: 1px solid #f1f1f1;
   border-bottom: 1px solid #f1f1f1;
   font-size: 0.32rem;
-  line-height: 30px;
+  line-height: 0.6rem;
 }
 .comment .lists .list {
   width: 100%;
-  padding-left: 13px;
-  padding-right: 13px;
-  min-height: 100px;
+  min-height:80px;
   border-bottom: 1px solid #f1f1f1;
+  position: relative;
+  overflow: hidden;
 }
 .comment .lists .list .fl img {
-  width: 10.7vw;
-  height: 10.7vw;
+  float: left;
+  height: 12vw;
+  width: 12vw;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  margin-right: 0.28rem;
   overflow: hidden;
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
 .comment .lists .list .mid {
-  width: 73%;
+  width: 100%;
+  margin-top: 0.28rem;
 }
 .comment .lists .list .mid .name {
-  width: 100%;
-  margin-top: 3vw;
-  color: #999999;
+  color: #999;
+  font-size: 0.38rem;
+  margin-left: 15vw;
+  margin-bottom: 0.2rem;
+  width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .comment .lists .list .mid .content {
   width: 100%;
   word-break: break-all;
-  margin-top: 2vw;
-  margin-bottom: 2vw;
+  font-size: 0.38rem;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  padding-left: 15vw;
+  line-height:0.5rem;
 }
 .comment .lists .list .mid .time {
   font-size: 0.32rem;
-  line-height: 20px;
+  line-height: 5.3vw;
   color: #999;
+  margin-left:15vw;
 }
 .comment .lists .list .fr {
-  margin-top:3vw;
-  color: #999;
+  color: #999999;
+  font-size: 0.32rem;
 }
 .comment .lists .list .good {
-  background: url('/home/images/learn/good.png') 0 12px no-repeat;
+  background: url('/home/images/detail/good.png') 0 center no-repeat;
 }
 .comment .lists .list .good_ {
   animation: shake 300ms ease;
   -webkit-animation: shake 300ms ease;
-  background: url('/home/images/learn/good_.png') 0 12px no-repeat;
+  background: url('/home/images/detail/good_.png') 0 center no-repeat;
 }
-
 .comment .lists .list .isgood {
-  background-size: 15px 15px;
-  padding-left: 18px;
-}
-.comment .lists .list span {
-  height: 40px;
-  display: inline-block;
-  line-height: 40px;
-}
-.comment .tip {
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  color: #c1c1c1;
+  height:0.38rem;
+  background-size: 0.38rem 0.38rem;
+  padding-left: 0.53rem;
+  position: absolute;
+  top:0.29rem;
+  right:0;
 }
 /*底部*/
 .bottom {
@@ -292,12 +305,6 @@ input::-webkit-input-placeholder{
   position: relative;
   top: 17px;
   left: calc( 50vw - 15px );
-}
-.fl{
-  float:left;
-}
-.fr{
-  float:right;
 }
 .mui-pull-bottom-pocket{
   bottom: 14vw;

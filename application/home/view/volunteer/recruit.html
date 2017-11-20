@@ -26,21 +26,17 @@
                 </div>
             </div>
             <!--新闻列表-->
-            <div class="lists">
+            <div class="lists list">
+                <ul>
                 {volist name="list" id="vo2"}
-                <a class="list clear" href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
-                    <div class="fl">
-                        <img src="{$vo2.front_cover|get_cover='path'}" alt="" style="width: 28.2vw;height: 18.8vw">
-                    </div>
-                    <div class="fr lr">
-                        <div class="title limit_">{$vo2.title}</div>
-                        <div class="clear">
-                            <span class="fl">{$vo2.create_time|time_format='Y-m-d'}</span>
-                            <span class="fr">详情</span>
-                        </div>
-                    </div>
+                <a href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
+                    <img src="{$vo2.front_cover|get_cover='path'}">
+                    <p>{$vo2.title}</p>
+                    <span>{$vo2.create_time|time_format='Y-m-d'}</span>
+                    <span class="fr">详情</span>
                 </a>
                 {/volist}
+                </ul>
             </div>
         </div>
     </div>
@@ -89,13 +85,11 @@
 
     function loadScroll() {
         var len = $('.lists a').length;
-        var id = window.location.href.split("pid/")[1].split(".html")[0];
         $.ajax({
             type: "post",
             url: "{:Url('Volunteer/more')}",
             data: {
                 length: len,
-                pid: id
             },
             beforeSend: function(XMLHttpRequest){
             },
@@ -122,22 +116,16 @@
         for(var i = 0; i< len;i++){
             var list = lists[i];
             html +=
-                '<a href="/home/volunteer/detail/id/'
-                +list.id
-                +'.html" class="list clear">'+
-                '<div class="fl">'+
-                '<img src="'+list.path+'" alt="图片" style="width: 28.2vw;height: 18.8vw">'+
-                '</div>'+
-                '<div class="fr lr">'+
-                '<div class="title limit_">'+list.title+'</div>'+
-                '<div class="clear">'+
-                '<span class="fl">'+list.time+'</span>'+
-                '<span class="fr">详情</span>'+
-                '</div>'+
-                '</div>'+
-                '</a>'
+            '<a href="/home/volunteer/detail/id/'
+            +list.id
+            +'.html">' +
+            '<img src="'+list.front_cover+'">' +
+            '<p>'+list.title+'</p>' +
+            '<span>'+list.create_time+'</span>' +
+            '<span class="fr">详情</span> ' +
+            '</a>';
         }
-        $(".lists" ).append(html);
+        $(".lists ul" ).append(html);
     }
 
     mui("#refreshContainer").on("touchstart","a",function(){

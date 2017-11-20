@@ -33,7 +33,7 @@ $(function(){
                                 if(imglen == 0){
                                     $('.add' ).fadeOut();
                                 }
-                                $('.img').eq(imglen).removeClass('hide' )
+                                    $('.img').eq(imglen).removeClass('hide' )
                                     .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
                             }else{
                                 // 图片修改

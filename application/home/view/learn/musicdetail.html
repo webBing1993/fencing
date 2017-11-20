@@ -10,7 +10,7 @@
 	<div class="mui-scroll">
 		<div class="scrollDiy">
 			<div class="music">
-				<div class="title limit_">{$music.title}</div>
+				<div class="title limit_"><p>{$music.title}</p></div>
 				<div class="time">
 					<span>{$music.create_time|time_format='Y-m-d'}</span>
 				</div>
@@ -78,7 +78,6 @@
 
 {block name="script"}
 <script>
-
 //iframe替换
 function iframe(){
 	//	var body = document.getElementById('content');

@@ -63,6 +63,7 @@
   border-radius: 2vw;
   padding: 0 4vw 0 8vw;
   margin-top: -4vw;
+  font-size: 0.38rem;
 }
 
 .search .fa-search {
@@ -273,6 +274,7 @@
   -webkit-border-radius: 6px;
   border-radius: 1.4vw;
   padding: 0 4vw 0 8vw;
+  font-size: 0.38rem;
 }
 
 .banner_ .search_ .results .result {
@@ -359,6 +361,7 @@
   width: 100%;
   color: #666666;
   line-height: 8vw;
+  font-size: 0.38rem;
 }
 
 .listbox .books .list .content .title {
@@ -418,6 +421,7 @@
   height: 22vw;
   padding: 4vw;
   border-bottom: 1px solid #f1f1f1;
+  margin-bottom: 0 !important;
 }
 
 #item3mobile .lists .list .music-img {
@@ -465,11 +469,4 @@
   text-align: center;
   line-height: 10vw;
   color: #c1c1c1;
-}
-.fr{
-  float: right;
-}
-.time{
-  display: block;
-  width:30%;
 }
