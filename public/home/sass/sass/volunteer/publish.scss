@@ -1,17 +1,14 @@
-body, html {
+body,html{
   overflow-x: hidden;
 }
-
 body {
   background-color: #fff;
 }
-
 .main {
   background-color: #fff;
 }
-
-.list ul li {
-  height: 12vw;
+.list ul li{
+  height:12vw;
   border-bottom: 1px solid #f1f1f1;
   font-size: 0.42rem;
   padding: 1vw 0;
@@ -31,32 +28,30 @@ body {
   right: 2vw;
   margin-top: 5vw;
 }
-
-.mui-table-view-cell > a:not(.mui-btn) {
+.mui-table-view-cell>a:not(.mui-btn){
   font-size: 0.36rem;
-  margin: 1vw;
+  margin:1vw;
   text-align: center;
 }
-
-.list ul li input {
+.list ul li input{
   border: none;
-  height: 10vw;
+  height:10vw;
   line-height: 10vw;
   width: 80%;
   float: right;
   text-align: right;
-  right: 0;
+  right:0;
   padding: 0 6vw;
   -webkit-user-select: text;
   -user-select: text;
 }
 
-input[type="date"] {
-  width: 45% !important;
-  margin-right: -5vw !important;
+input[type="date"]{
+  width:45%!important;
+  margin-right:-5vw!important;
 }
 
-.list ul li input::-webkit-input-placeholder {
+.list ul li input::-webkit-input-placeholder{
   display: block;
   color: #999;
   text-align: right;
@@ -64,43 +59,40 @@ input[type="date"] {
   font-size: 0.38rem;
 }
 
-input[type="date"]:before {
+input[type="date"]:before{
   content: attr(placeholder);
-  color: #999;
+  color:#999;
   font-size: 0.38rem;
   position: absolute;
-  right: 5vw;
+  right:5vw;
 }
 
-.list ul textarea {
+.list ul textarea{
   border: none;
   height: 30vw;
   margin: 2vw 0;
   padding-left: 3vw;
-  line-height: 0.5rem;
+  line-height:0.5rem ;
 }
-
-@media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2) {
-  .list ul textarea {
+@media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2){
+  .list ul textarea{
     height: 30vw;
   }
 }
-textarea::-webkit-input-placeholder {
+
+textarea::-webkit-input-placeholder{
   font-size: 0.36rem;
   color: #999;
-  line-height: 0.5rem;
+  line-height:0.5rem;
 }
-
-textarea {
+textarea{
   font-size: 0.38rem;
 }
-
-.content {
+.content{
   padding-bottom: 5vw;
   border: 1px solid #f1f1f1;
 }
-
-.content .img {
+.content .img{
   display: inline-block;
   position: relative;
   width: 20vw;
@@ -112,14 +104,13 @@ textarea {
   border: 2px solid #d9d9d9;
   box-sizing: content-box;
 }
-
-.content .img img, .content .img2 img, .content .img3 img {
+.content .img img,.content .img2 img,.content .img3 img{
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.content .add, .content .add2, .content .add3 {
+.content .add,.content .add2,.content .add3{
   width: 20vw;
   height: 20vw;
   margin-left: 2vw;
@@ -134,14 +125,13 @@ textarea {
   background: url("/home/images/add.png") no-repeat;
   background-size: 20vw 20vw;
 }
-
-.imgs.clear {
+.imgs.clear{
   display: flex;
 }
 
-.save, .goreview {
-  width: 56vw;
-  height: 10vw;
+.save,.goreview{
+  width:56vw;
+  height:10vw;
   background: #fc6c62;
   border-radius: 5px;
   color: #fff;
@@ -150,20 +140,34 @@ textarea {
   font-size: 0.36rem;
   line-height: 10vw;
 }
-
-.goreview {
+.goreview{
   background: #fff;
   color: #fc6c62;
   border: 1px solid #fc6c62;
 }
-
-.goreview + p {
+.goreview+p{
   font-size: 0.32rem;
   color: #999;
   padding: 1vw 3vw;
   line-height: 5vw;
 }
 
+
+
+$green: #008744;
+$blue: #0057e7;
+$red: #d62d20;
+$yellow: #ffa700;
+$white: #eee;
+
+// scaling... any units
+$width: 100px;
+
+body {
+  background-color: $white;
+}
+
+// demo-specific
 .showbox {
   position: absolute;
   top: 0;
@@ -171,20 +175,18 @@ textarea {
   left: 0;
   right: 0;
   padding: 5%;
-  background: rgba(0,0,0,0.2);
-  display: none;
 }
+// end demo-specific
 
 .loader {
   position: relative;
   margin: 0 auto;
-  width: 100px;
-  top: 50%;
-}
-.loader:before {
-  content: '';
-  display: block;
-  padding-top: 50%;
+  width: $width;
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
 }
 
 .circular {
@@ -212,6 +214,7 @@ textarea {
     transform: rotate(360deg);
   }
 }
+
 @keyframes dash {
   0% {
     stroke-dasharray: 1, 200;
@@ -226,19 +229,20 @@ textarea {
     stroke-dashoffset: -124px;
   }
 }
+
 @keyframes color {
   100%,
   0% {
-    stroke: #d62d20;
+    stroke: $red;
   }
   40% {
-    stroke: #0057e7;
+    stroke: $blue;
   }
   66% {
-    stroke: #008744;
+    stroke: $green;
   }
   80%,
   90% {
-    stroke: #ffa700;
+    stroke: $yellow;
   }
 }

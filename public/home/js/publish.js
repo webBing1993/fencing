@@ -20,12 +20,11 @@ $(function(){
                     processData : false, // 告诉jQuery不要去处理发送的数据
                     contentType : false,  // 告诉jQuery不要去设置Content-Type请求头
                     beforeSend: function(XMLHttpRequest){
-//							swal('');
-//							swal.showLoading();
+						//$(".showbox").show();
                         $('.swal2-confirm' ).css({'background-color':'#c1c1c1','border-left-color':'#c1c1c1','border-right-color':'#c1c1c1'})
                     },
                     success:function(data){
-                        swal.close();
+                        //$(".showbox").hide();
                         var msg = $.parseJSON(data);
                         if(msg.code == 1){
                             if(this_.hasClass('add')){

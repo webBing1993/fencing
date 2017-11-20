@@ -16,16 +16,15 @@ $(function(){
                 $.ajax({
                     type:"post",
                     url:"/home/File/uploadPicture",
+                    timeout : 3000,
                     data:formData,
                     processData : false, // 告诉jQuery不要去处理发送的数据
                     contentType : false,  // 告诉jQuery不要去设置Content-Type请求头
                     beforeSend: function(XMLHttpRequest){
-//							swal('');
-//							swal.showLoading();
+                        $(".showbox").show();
                         $('.swal2-confirm' ).css({'background-color':'#c1c1c1','border-left-color':'#c1c1c1','border-right-color':'#c1c1c1'})
                     },
                     success:function(data){
-                        swal.close();
                         var msg = $.parseJSON(data);
                         if(msg.code == 1){
                             if(this_.hasClass('add')){
@@ -41,9 +40,21 @@ $(function(){
                                 this_.append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
                             }
                             imgresize();
+                            $(".showbox").hide();
                         } else {
+                            $(".showbox").hide();
                             return;
                         }
+                    },
+                    error : function(){
+                        $(".showbox").hide();
+                        swal({
+                            title: ' ',
+                            text: '上传失败，请重试',
+                            type: 'error',
+                            showConfirmButton:false,
+                            timer:1500
+                        });
                     }
                 });
             } else {
