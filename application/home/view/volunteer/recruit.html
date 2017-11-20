@@ -13,7 +13,7 @@
             <div class="banners">
                 <div class="swiper-container">
                     <div class="imgs swiper-wrapper">
-                        {volist name="list.top" id="vo1"}
+                        {volist name="list" id="vo1"}
                         <div class="banner swiper-slide">
                             <a href="{:Url('Volunteer/detail?id='.$vo1['id'])}">
                                 <img src="{$vo1.front_cover|get_cover='path'}" alt="">
@@ -27,7 +27,7 @@
             </div>
             <!--新闻列表-->
             <div class="lists">
-                {volist name="list.list" id="vo2"}
+                {volist name="list" id="vo2"}
                 <a class="list clear" href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
                     <div class="fl">
                         <img src="{$vo2.front_cover|get_cover='path'}" alt="" style="width: 28.2vw;height: 18.8vw">

@@ -33,7 +33,7 @@ class Company extends Admin
         );
         $list = $this->lists('Company', $map);
         int_to_string($list, [
-            'status' => [0 => "待审核", 1 => "已发布"],
+            'status' => [0=>"待审核",1=>"已发布",2=>"审核未通过"],
         ]);
         $this->assign('list', $list);
         return $this->fetch('Company/recruit');
@@ -43,12 +43,12 @@ class Company extends Admin
     public function recruit()
     {
         $map = array(
-            'status' => array('eq', 1),
+            'status' => array('egt', 0),
             'type' => '2',
         );
         $list = $this->lists('Company', $map);
         int_to_string($list, array(
-            'status' => array(0 => "待审核", 1 => "已发布"),
+            'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
         ));
         //dump($list);
         //exit;
@@ -144,12 +144,12 @@ class Company extends Admin
     //志愿风采展
     public function show($id){
         $map = array(
-            'status' => array('eq', 0),
+            'status' => array('egt', 0),
             'type'=>array('eq',$id),
         );
         $list = $this->lists('Companys', $map);
         int_to_string($list, array(
-            'status' => array( 0 => "已发布"),
+            'status' => array( 0=>"待审核",1=>"已发布",2=>"审核未通过"),
         ));
        
         $this->assign('list', $list);
@@ -226,11 +226,11 @@ class Company extends Admin
     //风采展标题显示
     public function showbt(){
         $map = array(
-            'status' => array('eq', 0),
+            'status' => array('egt', 0),
         );
         $list = $this->lists('Companyst', $map);
         int_to_string($list, array(
-            'status' => array( 0 => "已发布"),
+            'status' => array( 0=>"待审核",1=>"已发布",2=>"审核未通过"),
         ));
         $this->assign('list', $list);
         

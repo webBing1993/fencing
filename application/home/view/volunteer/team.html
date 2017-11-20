@@ -8,12 +8,12 @@
 {block name="body"}
 <div class="banner"><img src="{$detail.front_cover|get_cover='path'}" alt=""></div>
 <div class="main">
-    <div class="title"><p>{$detail.name}</p></div>
+    <div class="title"><p>{$detail.title}</p></div>
     <div class="content">
         {$detail.content}
     </div>
     <div class="btn">
-        <a href="{:Url('Volunteer/recruit?pid='.$detail['id'])}">
+        <a href="{:Url('Volunteer/recruit?type='.$detail['id'])}">
             <span>团&nbsp;&nbsp;队</span>
             <span>风&nbsp;&nbsp;采</span>
         </a>

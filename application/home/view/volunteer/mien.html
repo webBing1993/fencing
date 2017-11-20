@@ -16,7 +16,7 @@
                     <!--循环开始-->
                     {volist name="data" id="vo"}
                     <div class="list color1">
-                        <a href="http://sx.pb.cn/home/volunteer/team.html" class="con">
+                        <a href="{:Url('Volunteer/team?id='.$vo['id'])}" class="con">
                             <div class="img"><img src="{$vo.front_cover}" alt=""></div>
                             <div class="name">{$vo.title}</div>
                             <div class="notes">活动：<span>{$vo.number}</span>次</div>

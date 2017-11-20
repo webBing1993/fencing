@@ -10,6 +10,7 @@ use app\home\model\Volunteer as VolunteerModel;
 use app\home\model\VolunteerDetail;
 use app\home\model\Company;
 use app\home\model\Companyst;
+use app\home\model\Companys;
 use think\Db;
 
 class Volunteer extends Base{
@@ -28,7 +29,7 @@ class Volunteer extends Base{
      * */
     public function mien(){
         $Companyst = new Companyst();
-        $mapp = ['status' => ['egt', 0]];
+        $mapp = ['status' => ['eq', 1]];
         $data = $Companyst->get_list($mapp);
         //循环遍历
         foreach($data as $v){
@@ -43,10 +44,10 @@ class Volunteer extends Base{
      *  团队介绍
      * */
     public function team(){
-       /* $id = input('id');
-        $Model = new VolunteerModel();
-        $detail = $Model->get($id);
-        $this->assign('detail',$detail);*/
+       $id = input('id');
+       //dump($id);exit();
+        $detail=Db::table('pb_companyst')->where('id',$id)->find();
+        $this->assign('detail',$detail);
         return $this->fetch();
     }
 
@@ -54,10 +55,17 @@ class Volunteer extends Base{
      *  团队风采
      * */
     public function recruit(){
-     /*   $Model = new VolunteerDetail();
-        $pid = input('pid');
-        $list = $Model->getRecruitList($pid);
-        $this->assign('list',$list);*/
+        $type = input('type');
+        //dump($type);exit();
+        $list=Db::table('pb_companys')->where('type',$type)->where('status',1)->order('create_time desc')->select();
+        //dump($list);exit();
+       /* $Companys = new Companys();
+        $mapp = ['status' => ['eq',1],'type'=>['eq',$type]];
+        $list = $Companys->get_list($mapp);*/
+
+
+
+        $this->assign('list',$list);
         return $this->fetch();
     }
 
