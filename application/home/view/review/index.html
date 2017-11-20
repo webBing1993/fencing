@@ -63,7 +63,11 @@
                                     {/eq}
                                     <p>审核人：{$ls.review_name}</p>
                                     <span>{$ls.review_time|time_format='Y-m-d'}</span>
+                                    {eq name="ls.status" value="1"}
                                     <i class="pass"></i>
+                                    {else/}
+                                    <i class="refuse"></i>
+                                    {/eq}
                                 </a>
                             </li>
                             {/volist}
@@ -89,13 +93,13 @@ $(function(){
 window.onload = function() {
     skidding();
     if(c==0){
-        if ($(".publish ul a").length < 10) {
+        if ($(".publish ul a").length < 12) {
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         } else {
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
         }
     }else if(c==1){
-        if ($(".Audited ul a").length < 10) {
+        if ($(".Audited ul a").length < 12) {
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         } else {
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -132,7 +136,7 @@ function loadScroll(){
         success:function(data){
             addCourse(data,c);
             if(data.code == 1){
-                if(data.data.length == 10){
+                if(data.data.length == 12){
                     mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
                 }else{
                     mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -151,16 +155,27 @@ function addCourse(data,type) {
     var len = lists.length;
     for (var i = 0; i < len; i++) {
         var list = lists[i];
+        var link ='';
+        if(list.class == 1){
+            link = '/home/review/detail/id/'+list.id;
+            class_name = "[会议纪要]";
+        }else if(list.class == 2) {
+            link = '/home/review/details/id/'+list.id;
+            class_name = "[微心愿]";
+        }else{
+            link = '/home/review/details/id/'+list.id;
+            class_name = "[志愿招募]";
+        }
         if (type == 0) {
-            html +=
+                html +=
                     '<li>' +
                     '<a href="' + link + '"  class="list clear" data-type="' + list.class + '">' +
-                    '<img src="' + list.front_cover + '">' +
+                    '<img src="' + list.path+ '">' +
                     '<span>' + list.title + '</span>' +
-                    '<span>' + class_name + ' 发布人：' + list.publisher + '</span>' +
-                    '<span>' + list.create_time + '</span>' +
+                    '<span>' + class_name + ' 发布人：' + list.name + '</span>' +
+                    '<span>' + list.time + '</span>' +
                     '<span class="mui-icon mui-icon-forward"></span>' +
-                    '<i class="fail" data-id="' + list.id + '" data-class="' + list.class + '" data-type="1">不通过</i><i class="pass"  data-id="' + list.id + '" data-class="' + list.class + '" data-type="1">通&nbsp;过</i>' +
+                    '<i class="fail" data-id="' + list.id + '" data-class="' + list.class + '">不通过</i><i class="pass"  data-id="' + list.id + '" data-class="' + list.class + '">通&nbsp;过</i>' +
                     '</a>' +
                     '</li>';
         } else if (type == 1) {
@@ -171,15 +186,13 @@ function addCourse(data,type) {
                     '<span>'+ list.title + '</span>'+
                     '<p>'+ class_name+ '</p>'+
                     '<p>'+
-                    '	审核人：  '+list.publisher+''+
+                    '	审核人：  '+list.review_name+''+
                     '</p>'+
-                    '<span> '+list.create_time+'</span>';
-                    if (list.review_status == 1){
+                    '<span> '+list.review_time+'</span>';
+                    if (list.status == 1){
                         html+='<i class="pass"></i>';
-                    }else if (list.review_status == 2){
+                    }else if (list.status == 2){
                         html+='<i class="refuse"></i>';
-                    }else if (list.review_status == 0){
-                        html +='<i style="right: 0;width: 0.8rem;background: #ffff00;"></i>';
                     }
                     html +='</a>'+
                     '</li>';
@@ -201,13 +214,13 @@ mui('#tab').on('tap', 'a', function(e) {
     mui('#refreshContainer').pullRefresh().refresh(true);
     c = this.getAttribute("data-index");
     if(c==0){
-        if($(".publish ul li").length<10){
+        if($(".publish ul li").length<12){
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         }else{
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
         }
     }else if(c==1){
-        if($(".Audited ul li").length<10){
+        if($(".Audited ul li").length<12){
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         }else{
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -268,7 +281,7 @@ mui('#item1mobile').on('tap', '.fail', function(e) {
         cancelButtonText: "取消",
         confirmButtonColor: "#ec6c62"
     }, function() {
-        pass(element,id,_class,-1);
+        pass(element,id,_class,2);
     });
 });
 
@@ -304,7 +317,7 @@ var  pass = function(element,id,_class,status){
                     confirmButtonText: "确认"
                 });
                 setTimeout(function(){
-                    location=location;
+                    location.reload();
                 },1500);
             }else{
                 swal({

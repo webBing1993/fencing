@@ -23,11 +23,11 @@ use app\home\model\Notice as NoticeModel;
  */
 class Index extends Base {
     public function index(){
-//        $details = $this ->lists();
-//        $this ->assign('details',$details);
-//        //判断是否是游客
-//        $this->anonymous();
-//        $this ->assign('user',session('userId'));
+        $details = $this ->lists();
+        $this ->assign('details',$details);
+        //判断是否是游客
+        $this->anonymous();
+        $this ->assign('user',session('userId'));
         return $this->fetch();
     }
     

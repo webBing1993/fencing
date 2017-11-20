@@ -130,14 +130,36 @@ class Review extends Base{
     public function moreDataList(){
         $this->checkRole();
         $this ->anonymous();
-        $len = input('get.');
-        $list = $this ->getDataList($len);
+        $len = input('post.');
+        if ($len['type'] == 0){
+            // 待审核
+            unset($len['type']);
+            $list = $this ->getDataList($len,0);
+        }else {
+            // 已审核
+            unset($len['type']);
+            $list = $this->getDataList($len,1);
+            foreach($list['data'] as $key => $value){
+                $list['data'][$key]['review_name'] = "暂无";
+                $list['data'][$key]['review_time'] = time();
+                if ($value['class'] == 1){
+                    // 会议纪要
+                    $list['data'][$key]['review_name'] = Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('name');
+                    $list['data'][$key]['review_time'] = date('Y-m-d',Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('create_time'));
+                }else{
+                    // 志愿
+                    $list['data'][$key]['review_name'] = Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('name');
+                    $list['data'][$key]['review_time'] = date('Y-m-d',Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('create_time'));
+                }
+            }
+        }
         //转化图片路径 时间戳
         foreach ($list['data'] as $k => $v)
         {
             $img_path = Picture::get($list['data'][$k]['front_cover']);
             $list['data'][$k]['time'] = date('Y-m-d',$v['create_time']);
             $list['data'][$k]['path'] = $img_path['path'];
+            $list['data'][$k]['name'] = WechatUser::where('userid',$v['userid'])->value('name');
         }
         return $list;
     }
@@ -159,6 +181,11 @@ class Review extends Base{
     public function details(){
         $this->checkRole();
         $this ->anonymous();
+        $id = input('id');
+        $company = new Company();
+        $info = $company->where('id',$id)->find();
+        $this->assign('detail',$info);
+        return $this->fetch();
 
     }
     /**
