@@ -1,0 +1,39 @@
+body {
+  background-color: #000;
+  height: 100%;
+}
+
+.content .code {
+  width: 9rem;
+  height: 9rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -4.5rem;
+  margin-top: -4.5rem;
+  background-color: #fff;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+}
+.content .code #qrcode {
+  width: 7rem;
+  height: 7rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+.content .code p {
+  text-align: center;
+  color: #333;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+.content .code .header {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -1rem;
+  margin-left: -1rem;
+}
