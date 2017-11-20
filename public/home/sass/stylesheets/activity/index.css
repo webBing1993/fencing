@@ -65,6 +65,7 @@
 .list ul a span:nth-child(3) {
   width: 45%;
   bottom: 2vw;
+  position: absolute;
   color: #666;
   display: inline-block;
   text-overflow: ellipsis;
@@ -80,7 +81,7 @@
 
 @media screen and (device-width: 320px) {
   .list ul a span:nth-child(3), .list ul a span:nth-child(4) {
-    bottom: 0;
+    bottom: 0 !important;
   }
 }
 .list ul a {
@@ -395,18 +396,21 @@
   margin-top: 30%;
   margin-left: -8vw;
 }
-#publish{
+
+/*悬浮按钮*/
+#publish {
+  width: 16vw;
+  height: 16vw;
+  background: url("/home/images/volunteer/note.png");
+  background-size: 16vw 16vw;
   position: fixed;
   bottom: 40vw;
-  right: 5vw;
-  width:10vw;
-  height: 10vw;
-  background: #000000;
-  z-index: 5;
-  display:none;
+  right: 10vw;
+  z-index: 99;
 }
-#publish a{
+
+#publish a {
   display: block;
-  width:10vw;
+  width: 10vw;
   height: 10vw;
 }

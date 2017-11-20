@@ -266,13 +266,14 @@
 
 /*悬浮按钮*/
 #publish{
-  position: absolute;
-  top: 150vw;
-  right: 5vw;
-  width:10vw;
-  height: 10vw;
-  background: #000000;
-  display:none;
+  width: 16vw;
+  height: 16vw;
+  background: url("/home/images/volunteer/note.png");
+  background-size: 16vw 16vw;
+  position: fixed;
+  bottom: 40vw;
+  right: 10vw;
+  z-index: 99;
 }
 #publish a{
   display: block;
