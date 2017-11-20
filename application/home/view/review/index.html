@@ -8,7 +8,7 @@
 {block name="body"}
     <div id="tab" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
         <a class="mui-control-item" href="#item1mobile" data-index="0">
-            <span>发布审核</span>
+            <span>待审核</span>
         </a>
         <a class="mui-control-item" href="#item2mobile" data-index="1">
             <span>已审核</span>
@@ -24,11 +24,11 @@
                         <ul>
                             {volist name="$list" id="lo"}
                             <li>
-                                <a {eq name="$lo.class" value="1"} href=""  {else/} href=""{/eq} class="list clear" data-type="">
-                                    <img src="">
+                                <a {eq name="$lo.class" value="1"} href="{:Url('Review/detail?id='.$lo['id'])}"  {else/} href="{:Url('Review/details?id='.$lo['id'])}"{/eq} class="list clear" data-type="">
+                                    <img src="{$lo.front_cover|get_cover='path'}">
                                     <span>{$lo.title}</span>
-                                    <span>[党建责任] 发布人：分公司的风格</span>
-                                    <span>2017-11-16</span>
+                                    <span>{eq name="$lo.class" value="1"}[会议纪要]{/eq} {eq name="$lo.class" value="2"}[微心愿]{/eq} {eq name="$lo.class" value="3"}[志愿招募]{/eq} 发布人：{$lo.userid|get_name}</span>
+                                    <span>{$lo.create_time|time_format=''}</span>
                                     <span class="mui-icon mui-icon-forward"></span>
                                     <i class="fail" data-id="" data-class="" data-type="1">不通过</i><i class="pass" data-id="" data-class="" data-type="1" >通&nbsp;过</i>
                                 </a>
@@ -43,17 +43,32 @@
                 <div id="item2mobile" class="mui-slider-item mui-control-content">
                     <!--已审核-->
                     <div class="Audited">
+                        {empty name="lists"}
+                        <div class="default"><img src="/home/images/common/nomessage.png"></div>
+                        {else/}
                         <ul>
+                            {volist name="lists" id="ls"}
                             <li>
                                 <a href="#" class="list clear" data-type="">
                                     <img src="">
-                                    <span>的沙发时的发生</span>
-                                   <p>[党建责任]</p><p>审核人：的说法的</p>
-                                    <span>2017-11-16</span>
+                                    <span>{$ls.title}</span>
+                                    {eq name="ls.class" value="1"}
+                                        <p>[会议纪要]</p>
+                                    {/eq}
+                                    {eq name="ls.class" value="2"}
+                                    <p>[微心愿]</p>
+                                    {/eq}
+                                    {eq name="ls.class" value="3"}
+                                    <p>[志愿招募]</p>
+                                    {/eq}
+                                    <p>审核人：{$ls.review_name}</p>
+                                    <span>{$ls.review_time|time_format='Y-m-d'}</span>
                                     <i class="pass"></i>
                                 </a>
                             </li>
+                            {/volist}
                         </ul>
+                        {/empty}
                     </div>
                 </div>
             </div>

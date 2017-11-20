@@ -10,6 +10,8 @@ namespace app\home\controller;
 use app\home\model\Notice;
 use app\home\model\Company;
 use app\home\model\Picture;
+use think\Db;
+
 /**
  * Class Review
  * @package app\home\controller  消息审核
@@ -26,7 +28,18 @@ class Review extends Base{
         $this ->assign('list',$list['data']);
         // 已审核
         $lists = $this->getDataList($len,1);
-        $this->assign('lists',$lists);
+        foreach($lists['data'] as $value){
+            if ($value['class'] == 1){
+                // 会议纪要
+                $value['review_name'] = Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('name');
+                $value['review_time'] = Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('create_time');
+            }else{
+                // 志愿
+                $value['review_name'] = Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('name');
+                $value['review_time'] = Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('create_time');
+            }
+        }
+        $this->assign('lists',$lists['data']);
         return $this->fetch();
     }
     /**
@@ -122,5 +135,20 @@ class Review extends Base{
             $list['data'][$k]['path'] = $img_path['path'];
         }
         return $list;
+    }
+    /**
+     * 会议纪要  详情
+     */
+    public function detail(){
+        $id = input('id');
+        $Notice = new Notice();
+        $info = $Notice->where('id',$id)->find();
+        $this->assign('detail',$info);
+    }
+    /**
+     * 志愿  详情
+     */
+    public function details(){
+
     }
 }
