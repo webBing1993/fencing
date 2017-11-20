@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title></title>
+<title>红色电影</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/details-template/detail.css">
 <style>
 	.mui-pull-bottom-pocket {
@@ -25,9 +25,9 @@
 					<span class="read">{$detail.views + 1}</span>
 					{eq name="visit" value="0"}
 					{eq name="detail.is_like" value="1"}
-					<span class="isgood good_ notvisitor"  data-type="1" data-id="{$detail.id}">{$detail.likes}</span>
+					<span class="isgood good_ notvisitor"  data-type="5" data-id="{$detail.id}">{$detail.likes}</span>
 					{else/}
-					<span class="isgood good notvisitor"  data-type="1" data-id="{$detail.id}">{$detail.likes}</span>
+					<span class="isgood good notvisitor"  data-type="5" data-id="{$detail.id}">{$detail.likes}</span>
 					{/eq}
 					{else/}
 					<span class="isgood good">{$detail.likes}</span>
@@ -64,7 +64,7 @@
 	</div>
 </div>
 {eq name="visit" value="0"}
-<div class="bottom clear" onclick="send(this,1,{$detail['id']})">
+<div class="bottom clear" onclick="send(this,5,{$detail['id']})">
 	<div class="myword fl">
 		<input type="text" placeholder="说说你的感想！" id="send" disabled>
 	</div>
@@ -200,7 +200,7 @@
             type:"post",
             url:"{:Url('Base/morecomment')}",
             data:{
-                type:1,
+                type:5,
                 aid:id,
                 length:len
             },

@@ -22,7 +22,26 @@ class Company extends Model{
         return $list;
     }
 
-
+    /**
+     * 首页获取推荐的数据
+     * @param $length
+     * @param string $push 推送数据获取
+     */
+    public function getDataList($length,$type=0){
+        $map = array(
+            'status' => 0,
+            'type' => $type
+        );
+        $order = 'create_time desc';
+        $limit = "$length,4";
+        $list = $this ->where($map) ->order($order) ->limit($limit) ->select();
+        if(!empty($list))
+        {
+            return $list[0] ->data;
+        }else{
+            return $list;
+        }
+    }
     //获取后台用户名称
     public function user(){
         return $this->hasOne('Member','id','create_user');

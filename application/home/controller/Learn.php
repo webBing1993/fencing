@@ -15,7 +15,7 @@ use app\home\model\Redfilm;
 use app\home\model\Redbook;
 use app\home\model\RedbookRead;
 use app\home\model\Redmusic;
-use app\home\model\Redremark;
+use app\home\model\Picture;
 class Learn extends Base{
     /**
      * 网上党校主页
@@ -174,15 +174,26 @@ class Learn extends Base{
     }
 
     /**
-     * 加载更多音乐
+     * 加载更多 音乐  书籍
      */
     public function moremusic() {
         $len = input('length');
-        $musicModel = new Redmusic();
-        $map = array(
-            'status' => 1,
-        );
-        $list = $musicModel->where($map)->order('create_time desc')->limit($len,8)->select();
+        $type = input('type');
+        if ($type == 1){
+            // 书籍
+            $bookModel = new Redbook();
+            $map = array(
+                'status' => 1,
+            );
+            $list = $bookModel->where($map)->order('create_time desc')->limit($len,10)->select();
+        }else if ($type == 2){
+            // 音乐
+            $musicModel = new Redmusic();
+            $map = array(
+                'status' => 1,
+            );
+            $list = $musicModel->where($map)->order('create_time desc')->limit($len,10)->select();
+        }
         if($list) {
             foreach ($list as $value) {
                 $img = Picture::get($value['front_cover']);

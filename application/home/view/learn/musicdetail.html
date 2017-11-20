@@ -22,10 +22,10 @@
 						<span class="read">{$music.views +1 }</span>
 						{eq name="visit" value="0"}
 						{eq name="music.is_like" value="0"}
-						<span class="isgood good notvisitor" data-type="0" data-id="{$music.id}">{$music.likes}</span>
+						<span class="isgood good notvisitor" data-type="7" data-id="{$music.id}">{$music.likes}</span>
 						<!--点过赞good_-->
 						{else/}
-						<span class="isgood good_ notvisitor" data-type="0" data-id="{$music.id}">{$music.likes}</span>
+						<span class="isgood good_ notvisitor" data-type="7" data-id="{$music.id}">{$music.likes}</span>
 						{/eq}
 						{else/}
 						<span class="isgood good">{$music.likes}</span>
@@ -136,7 +136,7 @@ function iframe(){
 $('title').text('红色音乐');
 iframe();
 window.onload = function(){
-    if($(".list").length<7){
+    if($(".list").length<10){
         mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
     }else{
         mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -264,7 +264,6 @@ function loadScroll(){
         beforeSend: function(XMLHttpRequest){
         },
         success:function(data){
-            console.log(data)
             if(data.code == 1){
                 addComment(data);
                 var dataLen =data.data.length;

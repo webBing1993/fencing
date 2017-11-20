@@ -20,7 +20,7 @@ class Redbook extends Model {
             'status' => 1
         );
         $order = array("create_time desc");
-        $res = $this->where($map)->order($order)->limit($len,8)->select();
+        $res = $this->where($map)->order($order)->limit($len,10)->select();
         foreach ($res as $value) {
             $value['time'] = date("Y-m-d",$value['create_time']);
             $path = Picture::get($value['front_cover']);

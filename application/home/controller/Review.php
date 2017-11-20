@@ -7,7 +7,9 @@
  */
 
 namespace app\home\controller;
-
+use app\home\model\Notice;
+use app\home\model\Company;
+use app\home\model\Picture;
 /**
  * Class Review
  * @package app\home\controller  消息审核
@@ -22,7 +24,6 @@ class Review extends Base{
         $list = $this ->getDataList($len);
         $this ->assign('list',$list['data']);
         return $this->fetch();
-
     }
     /**
      * 获取数据列表 会议纪要 notice  微心愿 company type 1 志愿招募 company type 2
@@ -31,69 +32,55 @@ class Review extends Base{
     public function getDataList($len)
     {
         //从第几条开始取数据
-        $count1 = $len['news'];   // 第一聚焦
-        $count2 = $len['learn'];  // 两学一做
-        $count3 = $len['notice'];  // 组织活动
-        $count4 = $len['party']; // 三会一课
-        $news = new News();
-        $learn = new Learn();
+        $count1 = $len['meeting'];   // 会议纪要
+        $count2 = $len['dream'];  // 微心愿
+        $count3 = $len['volunteer'];  //志愿招募
         $notice = new Notice();
-        $party = new Party();
-        $news_check = false; //新闻数据状态 true为取空
-        $learn_check = false;
-        $notice_check = false;
-        $party_check = false;
+        $company = new Company();
+        $notice_check = false; // 数据状态 true为取空
+        $company1_check = false;
+        $company2_check = false;
         $all_list = array();
-        //获取数据  取满8条 或者取不出数据退出循环
+        //获取数据  取满12条 或者取不出数据退出循环
         while(true)
         {
-            // 第一聚焦
-            if (!$news_check && count($all_list) < 8){
-                $res1 = $news->getDataList($count1);
+            // 会议纪要
+            if (!$notice_check && count($all_list) < 12){
+                $res1 = $notice->getDataList($count1);
                 if (empty($res1)){
-                    $news_check = true;
+                    $notice_check = true;
                 }else{
                     $count1 ++ ;
                     $all_list = $this->changeTpye($all_list,$res1,1);
                 }
             }
-            // 两学一做
-            if(!$learn_check &&
-                count($all_list) < 8)
+            // 微心愿
+            if(!$company1_check &&
+                count($all_list) < 12)
             {
-                $res2 = $learn ->getDataList($count2);
+                $res2 = $company ->getDataList($count2,1);
                 if(empty($res2))
                 {
-                    $learn_check = true;
+                    $company1_check = true;
                 }else {
                     $count2 ++;
                     $all_list = $this ->changeTpye($all_list,$res2,2);
                 }
             }
-            // 组织活动
-            if(!$notice_check &&
-                count($all_list) < 8)
+            // 志愿招募
+            if(!$company2_check &&
+                count($all_list) < 12)
             {
-                $res3 = $notice ->getDataList($count3);
+                $res3 = $company ->getDataList($count3,2);
                 if(empty($res3))
                 {
-                    $notice_check = true;
+                    $company2_check = true;
                 }else {
                     $count3 ++;
                     $all_list = $this ->changeTpye($all_list,$res3,3);
                 }
             }
-            //   三会一课
-            if (!$party_check && count($all_list) < 8){
-                $res4 = $party->getDataList($count4);
-                if (empty($res4)){
-                    $party_check = true;
-                }else{
-                    $count4 ++;
-                    $all_list = $this->changeTpye($all_list,$res4,4);
-                }
-            }
-            if(count($all_list) >= 8 || ($news_check && $notice_check && $learn_check && $party_check))
+            if(count($all_list) >= 12 || ($notice_check && $company1_check && $company2_check))
             {
                 break;
             }
@@ -109,7 +96,7 @@ class Review extends Base{
     /**
      * 进行数据区分
      * @param $list
-     * @param $type 1第一聚焦  2两学一做 3 组织活动 4 三会一课
+     * @param $type 1 会议纪要  2 微心愿 3 志愿招募
      */
     private function changeTpye($all,$list,$type){
         $list['class'] = $type;
