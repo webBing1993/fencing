@@ -9,6 +9,7 @@ namespace app\home\controller;
 use app\home\model\Volunteer as VolunteerModel;
 use app\home\model\VolunteerDetail;
 use app\home\model\Company;
+use app\home\model\Companyst;
 use think\Db;
 
 class Volunteer extends Base{
@@ -26,13 +27,15 @@ class Volunteer extends Base{
      *  志愿风采展
      * */
     public function mien(){
-        $Company = new Company();
-        $mapp = ['status' => ['egt', 1], 'type' => 1];
-        $data = $Company->get_list($mapp);
+        $Companyst = new Companyst();
+        $mapp = ['status' => ['egt', 0]];
+        $data = $Companyst->get_list($mapp);
+        //循环遍历
+        foreach($data as $v){
+            $list = Db::table('pb_companys')->where('type',$v['id'])->count();
+                $v['number']=$list;
+        }
         $this->assign('data',$data);
-        return $this->fetch();
-
-
         return $this->fetch();
     }
 
@@ -74,18 +77,23 @@ class Volunteer extends Base{
     }
 
     /**
-     * 加载更多
+     * 志愿者风采加载更多
      */
-    public function more() {
-     /*   $Model = new VolunteerDetail();
-        $data = input('post.');
-        $res = $Model->getMoreList($data['pid'],$data['length']);
-        if($res) {
-            return $this->success("加载成功","",$res);
-        }else {
-            return $this->error("加载失败");
-        }*/
+    public function more()
+    {
+        $Companyst = new Companyst();
+        $len = input('length');
+        $type=input('type');
+        $map = ['status' => ['egt', 0]];
+        $list = $Companyst->get_list($map, $len);
+        if ($list) {
+            return $this->success('加载成功', '', $list);
+        } else {
+            return $this->error('加载失败');
+        }
     }
+
+
     /*
         *  发布和填写
         */
@@ -93,14 +101,16 @@ class Volunteer extends Base{
         if (IS_POST) {
             $userId = session('userId');
             $data = input('post.');
-            dump($data);
-            exit();
-            $data['images'] = json_encode($data['front_cover']);
+            //dump($data);
+            //exit();
+            //$data['images'] = json_encode($data['front_cover']);
             $data['userid'] = $userId;
             $data['start_time'] = strtotime($data['start_time']);
             $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
-            $res = Db::table('pb_notice')->insert($data);
-
+            $data['status'] = 0;
+            $res = Db::table('pb_company')->insert($data);
+            //dump($res);
+            //exit();
             if ($res) {
                 return $this->success("发布成功！");
             } else {
@@ -111,7 +121,7 @@ class Volunteer extends Base{
         }
 
 
-        return $this ->fetch();
+       // return $this ->fetch();
     }
     /*
      * 点亮微心愿
