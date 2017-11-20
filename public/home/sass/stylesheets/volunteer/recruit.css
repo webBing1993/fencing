@@ -154,3 +154,9 @@
 .swiper-pagination {
     text-align: right;
 }
+.fr{
+    float:right;
+}
+.fl{
+    float:left;
+}
