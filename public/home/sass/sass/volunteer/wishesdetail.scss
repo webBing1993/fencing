@@ -1,0 +1,102 @@
+@import "common";
+@import "compass/css3";
+
+body{
+  background: #fff;
+}
+.detail{
+  margin:3vw 3vw;
+  .title{
+    text-align: center;
+    width:100%;
+    P {
+      color: $title-color;
+      font-size: 0.46rem;
+      font-weight: bold;
+      text-align: left;
+      display: inline-block;
+    }
+  }
+  .time{
+    overflow: hidden;
+    p{
+      float: right;
+    }
+  }
+
+  .information{
+    div{
+      display: flex;
+      align-items:center;
+      p{
+        display: inline-block;
+        font-weight: bold;
+        color: #333;
+        width:30%;
+      }
+      &:first-child{
+        p{
+          display: block;
+        }
+        span{
+          width:100%;
+        }
+      }
+      span{
+        display: inline-block;
+        width:60%;
+        color: #666;
+        font-size: 0.32rem;
+      }
+      &:first-child{
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+  .claim{
+    width:60vw;
+    height:0.8rem;
+    background: #8bc34a;
+    color: #fff;
+    text-align: center;
+    line-height:0.8rem;
+    margin-left: 20vw;
+    margin-top: 5vw;
+    margin-bottom: 0.5rem;
+    @include border-radius(5px);
+  }
+}
+.list{
+  .list-line{
+    height:0.8rem;
+    line-height:0.8rem;
+    background: #f1f1f1;
+    &:before{
+      display: inline-block;
+      content: '';
+      width:0.5rem;
+      height:0.5rem;
+      background: url("/home/images/volunteer/love.png") 0 0 no-repeat;
+      background-size:0.5rem 0.5rem;
+      position: relative;
+      top:0.1rem;
+      left:2vw;
+      margin-right: 0.5rem;
+    }
+  }
+  .list-person{
+    padding:0 3vw;
+      li{
+        display: flex;
+        align-items:center;
+        justify-content: space-between;
+        margin:0.3rem 0;
+        img{
+          width:8vw;
+          height:8vw;
+          @include border-radius(50%);
+        }
+      }
+  }
+}

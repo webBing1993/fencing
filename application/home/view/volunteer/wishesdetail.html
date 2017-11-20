@@ -1,0 +1,100 @@
+{extend name="public/pure"}
+
+{block name="style"}
+<link rel="stylesheet" href="/home/sass/stylesheets/volunteer/wishesdetail.css">
+{/block}
+
+{block name="body"}
+<div class="detail">
+   <div class="title">
+       <p>莫干山镇青年志愿服务公开招募志愿者</p>
+   </div>
+    <div class="time">
+        <p>2017-11-19</p>
+    </div>
+    <div class="information">
+        <div  class="information-content">
+        <p>招募内容：</p>
+        <span>的点点滴滴多多多多多多多多多多多多多多多多多多多多多多多多多多多多多的点点滴滴多多多多多多多多多多多多多多多多多多多多多多多多多多的</span>
+        </div>
+        <div  class="information-time">
+            <p>时间：</p>
+            <span>20171-11-19 19:90</span>
+        </div>
+       <div>
+        <p class="information-place">地点：</p>
+        <span>地方地方的防守打法啥地方啥地方啥地方啥地方啥地方啥地方</span>
+       </div>
+        <div class="information-people">
+        <p>联系人：</p>
+        <span>违法无法违反</span>
+        </div>
+        <div class="information-phone">
+        <p>联系方式：</p>
+        <span>12584575214</span>
+        </div>
+        <div class="information-number">
+        <p>招募人数：</p>
+        <span>23</span>
+        </div>
+       <div class="information-rank">
+       <p>当前排名：</p>
+       <span>3</span>
+       </div>
+    </div>
+    <div class="claim">我要认领</div>
+</div>
+<div class="list">
+    <div class="list-line">认领名单</div>
+    <ul class="list-person">
+        <li>
+            <img src="/home/images/volunteer/index_1.png">
+            <span class="name">多多多</span>
+            <span class="time">2017-11-10</span>
+        </li>
+        <li>
+            <img src="/home/images/volunteer/index_1.png">
+            <span class="name">的多</span>
+            <span class="time">2017-11-10</span>
+        </li>
+        <li>
+            <img src="/home/images/volunteer/index_1.png">
+            <span class="name">的多的</span>
+            <span class="time">2017-11-10</span>
+        </li>
+        <li>
+            <img src="/home/images/volunteer/index_1.png">
+            <span class="name">的多的</span>
+            <span class="time">2017-11-10</span>
+        </li>
+        <li>
+            <img src="/home/images/volunteer/index_1.png">
+            <span class="name">的多的</span>
+            <span class="time">2017-11-10</span>
+        </li>
+    </ul>
+</div>
+
+{/block}
+
+{block name="script"}
+<script>
+    $(".claim").on("click",function(){
+        $ajax({
+            url:"",
+            type:"post",
+            dataType: "Json",
+            data:{
+
+            },
+            success:function(data){
+                if(data.code==1){
+                    addList(data);
+                }
+            }
+        })
+    })
+
+
+</script>
+{/block}

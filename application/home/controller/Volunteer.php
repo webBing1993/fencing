@@ -147,7 +147,11 @@ class Volunteer extends Base{
 
 
     //心愿详情页
+    public function wishesdetail(){
 
+        return $this->fetch();
+
+    }
     
     
     /*
