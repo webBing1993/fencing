@@ -201,20 +201,140 @@ mui('#tab').on('tap', 'a', function(e) {
     mui('#refreshContainer').pullRefresh().refresh(true);
     c = this.getAttribute("data-index");
     if(c==0){
-        if($(".publish ul li").length<7){
+        if($(".publish ul li").length<10){
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         }else{
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
         }
-    }else if(c==2){
-        if($(".Audited ul li").length<7){
+    }else if(c==1){
+        if($(".Audited ul li").length<10){
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         }else{
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
         }
     }
-    setCookie('type',c);
+    setCookie('c',c);
 });
+
+//点击背景触发active
+mui("#refreshContainer").on("touchstart","a",function(){
+    $(this).css("backgroundColor","rgba(0,0,0,.1)");
+}).on("touchend","a", function () {
+    $(this).css("backgroundColor","#fff");
+});
+
+//页面点击事件
+mui("#refreshContainer").on("tap","a",function(){
+    var url = this.getAttribute("href");
+    window.location.href = url;
+});
+
+
+
+//发布审核
+mui('#item1mobile').on('tap', '.pass', function(e) {
+    event.stopPropagation();
+    event.preventDefault();
+    var element = this.parentNode.parentNode;
+    var id = this.getAttribute("data-id");
+    var _class = this.getAttribute("data-class");
+    var _type = this.getAttribute("data-type");
+    swal({
+        title: "",
+        text: "确定通过审核？",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        confirmButtonColor: "#ec6c62"
+    }, function() {
+        pass(element,id,_class,1,_type);
+    });
+});
+
+mui('#item1mobile').on('tap', '.fail', function(e) {
+    event.stopPropagation();
+    event.preventDefault();
+    var element = this.parentNode.parentNode;
+    var id = this.getAttribute("data-id");
+    var _class = this.getAttribute("data-class");
+    var _type = this.getAttribute("data-type");
+    swal({
+        title: "",
+        text: "确定不通过审核？",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        confirmButtonColor: "#ec6c62"
+    }, function() {
+        pass(element,id,_class,2,_type);
+    });
+});
+
+
+mui('#refreshContainer').on('tap', 'a', function(e) {
+    var url = this.getAttribute("href");
+    window.location.href = url;
+});
+
+mui("#refreshContainer").on("touchstart","a",function(){
+    $(this).css("backgroundColor","rgba(0,0,0,.1)");
+}).on("touchend","a", function () {
+    $(this).css("backgroundColor","#fff");
+});
+
+//审核ajax
+var  pass = function(element,id,_class,status,_type){
+    if(_type == 1){
+        var url = "{:Url('Review/review')}";
+    }else{
+        var url = "{:Url('Review/push')}";
+    }
+    $.ajax({
+        type:"post",
+        url: url,
+        data:{
+            id:id,
+            class:_class,
+            status:status
+        },
+        success:function(data){
+            if(data.code==1){
+//                        $(element).remove();
+                swal({
+                    title: "",
+                    text: "审核成功",
+                    type: "success",
+                    confirmButtonText: "确认"
+                });
+                setTimeout(function(){
+                    location=location;
+                },1500);
+            }else{
+                swal({
+                    title: "",
+                    text: data.msg,
+                    type: "error",
+                    confirmButtonText: "确认",
+                    timer:1500
+                });
+            }
+        },
+        error:function(data){
+            swal({
+                title: "",
+                text: data.msg,
+                type: "error",
+                confirmButtonText: "确认",
+                timer:1500
+            });
+        }
+    })
+}
+
 
 
 var skidding = function() {
@@ -258,7 +378,6 @@ var skidding = function() {
         });
     }
 };
-
 
 </script>
 
