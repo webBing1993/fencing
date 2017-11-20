@@ -23,8 +23,8 @@
                         {notempty name="$list"}
                         <ul>
                             {volist name="$list" id="lo"}
-                            <li>
-                                <a {eq name="$lo.class" value="1"} href="{:Url('Review/detail?id='.$lo['id'])}"  {else/} href="{:Url('Review/details?id='.$lo['id'])}"{/eq} class="list clear" data-type="">
+                            <li  data-type="{$lo.class}">
+                                <a {eq name="$lo.class" value="1"} href="{:Url('Review/detail?id='.$lo['id'])}"  {else/} href="{:Url('Review/details?id='.$lo['id'])}"{/eq} class="list clear">
                                     <img src="{$lo.front_cover|get_cover='path'}">
                                     <span>{$lo.title}</span>
                                     <span>{eq name="$lo.class" value="1"}[会议纪要]{/eq} {eq name="$lo.class" value="2"}[微心愿]{/eq} {eq name="$lo.class" value="3"}[志愿招募]{/eq} 发布人：{$lo.userid|get_name}</span>
@@ -115,16 +115,16 @@ mui.init({
 
 
 function loadScroll(){
-    if(c==0){
-        var len = $(".publish ul a").length;
-    }else if(c==1){
-        var len = $(".Audited ul a").length;
-    }
+        var meeting = $('.publish li[data-type=1]').length;
+        var dream = $('.publish li[data-type=2]').length;
+        var volunteer = $('.publish li[data-type=3]').length;
     $.ajax({
         type:"post",
         url:"{:Url('Review/moreDataList')}",
         data:{
-            length:len,
+            meeting: meeting,
+            dream: dream,
+            volunteer: volunteer,
             type:c
         },
         beforeSend: function(XMLHttpRequest){

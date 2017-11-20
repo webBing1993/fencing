@@ -240,6 +240,18 @@
             setCookie("c",c)
         });
 
+        //点击背景触发active
+        mui("#refreshContainer").on("touchstart","a",function(){
+            $(this).css("backgroundColor","rgba(0,0,0,.1)");
+        }).on("touchend","a", function () {
+            $(this).css("backgroundColor","#fff");
+        });
+
+        //页面点击事件
+        mui("#refreshContainer").on("tap","a",function(){
+            var url = this.getAttribute("href");
+            window.location.href = url;
+        });
 
     </script>
     {/block}
