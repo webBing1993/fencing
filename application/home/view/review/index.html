@@ -20,18 +20,24 @@
                 <div id="item1mobile" class="mui-slider-item mui-control-content">
                     <!--发布审核-->
                     <div class="list publish">
+                        {notempty name="$list"}
                         <ul>
+                            {volist name="$list" id="lo"}
                             <li>
-                                <a href=""  class="list clear" data-type="">
+                                <a {eq name="$lo.class" value="1"} href=""  {else/} href=""{/eq} class="list clear" data-type="">
                                     <img src="">
-                                    <span>多嘟嘟嘟嘟嘟嘟嘟嘟嘟嘟嘟嘟嘟嘟嘟嘟多多多</span>
+                                    <span>{$lo.title}</span>
                                     <span>[党建责任] 发布人：分公司的风格</span>
                                     <span>2017-11-16</span>
                                     <span class="mui-icon mui-icon-forward"></span>
                                     <i class="fail" data-id="" data-class="" data-type="1">不通过</i><i class="pass" data-id="" data-class="" data-type="1" >通&nbsp;过</i>
                                 </a>
                             </li>
+                            {/volist}
                         </ul>
+                        {else/}
+                        <div class="default"><img src="/home/images/common/nomessage.png"></div>
+                        {/notempty}
                     </div>
                 </div>
                 <div id="item2mobile" class="mui-slider-item mui-control-content">

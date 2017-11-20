@@ -27,19 +27,28 @@ class Notice extends Model {
      * @param $length
      * @param string $push 推送数据获取
      */
-    public function getDataList($length,$opt=false){
+    public function getDataList($length,$status=0,$opt=false){
         if ($opt){
             $map = array(
-                'status' => 0,
+                'status' => 1,
                 'type' => 3,
                 'recommend' =>1
             );
             $num = 2;
         }else{
-            $map = array(
-                'status' => 0,
-                'type' => 3
-            );
+            if ($status == 0){
+                $map = array(
+                    'userid' => ['neq',''],
+                    'status' => 0,
+                    'type' => 3
+                );
+            }else{
+                $map = array(
+                    'userid' => ['neq',''],
+                    'status' => ['egt',$status],
+                    'type' => 3
+                );
+            }
             $num = 4;
         }
         $order = 'create_time desc';

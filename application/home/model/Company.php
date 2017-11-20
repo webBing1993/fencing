@@ -27,11 +27,20 @@ class Company extends Model{
      * @param $length
      * @param string $push 推送数据获取
      */
-    public function getDataList($length,$type=0){
-        $map = array(
-            'status' => 0,
-            'type' => $type
-        );
+    public function getDataList($length,$status=0,$type=0){
+        if ($status == 0){
+            $map = array(
+                'userid' => ['neq',null],
+                'status' => 0,
+                'type' => $type
+            );
+        }else{
+            $map = array(
+                'userid' => ['neq',null],
+                'status' => ['egt',$status],
+                'type' => $type
+            );
+        }
         $order = 'create_time desc';
         $limit = "$length,4";
         $list = $this ->where($map) ->order($order) ->limit($limit) ->select();

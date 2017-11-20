@@ -21,15 +21,19 @@ class Review extends Base{
     public function index(){
         $this ->anonymous();
         $len = array('meeting' => 0,'dream' => 0,'volunteer' => 0);
-        $list = $this ->getDataList($len);
+        // 待审核
+        $list = $this ->getDataList($len,0);
         $this ->assign('list',$list['data']);
+        // 已审核
+        $lists = $this->getDataList($len,1);
+        $this->assign('lists',$lists);
         return $this->fetch();
     }
     /**
      * 获取数据列表 会议纪要 notice  微心愿 company type 1 志愿招募 company type 2
      * @param $len
      */
-    public function getDataList($len)
+    public function getDataList($len,$status=0)
     {
         //从第几条开始取数据
         $count1 = $len['meeting'];   // 会议纪要
@@ -46,7 +50,7 @@ class Review extends Base{
         {
             // 会议纪要
             if (!$notice_check && count($all_list) < 12){
-                $res1 = $notice->getDataList($count1);
+                $res1 = $notice->getDataList($count1,$status);
                 if (empty($res1)){
                     $notice_check = true;
                 }else{
@@ -58,7 +62,7 @@ class Review extends Base{
             if(!$company1_check &&
                 count($all_list) < 12)
             {
-                $res2 = $company ->getDataList($count2,1);
+                $res2 = $company ->getDataList($count2,$status,1);
                 if(empty($res2))
                 {
                     $company1_check = true;
@@ -71,7 +75,7 @@ class Review extends Base{
             if(!$company2_check &&
                 count($all_list) < 12)
             {
-                $res3 = $company ->getDataList($count3,2);
+                $res3 = $company ->getDataList($count3,$status,2);
                 if(empty($res3))
                 {
                     $company2_check = true;

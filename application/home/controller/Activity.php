@@ -126,6 +126,8 @@ class Activity extends Base
             //print_r($data);
             //exit();
             $data['images'] = json_encode($data['front_cover']);
+            unset($data['front_cover']);
+            $data['front_cover'] = $this->default_pic();
             $data['userid'] = $userId;
                 $data['start_time'] = strtotime($data['start_time']);
                 $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
