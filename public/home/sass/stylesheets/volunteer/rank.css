@@ -1,0 +1,96 @@
+/*tab*/
+#tab {
+  position: absolute;
+  top: 0;
+  height: 8vw;
+  background: #f7f7f7;
+  color: #333;
+  font-size: 0.4rem;
+  z-index: 999;
+}
+#tab a {
+  position: relative;
+  line-height: 8vw;
+  border-right: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
+}
+#tab a:last-child {
+  border-right: none;
+}
+#tab a:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+  color: #fff;
+}
+
+.mui-segmented-control .mui-control-item {
+  line-height: 8vw;
+}
+
+#refreshContainer {
+  margin-top: 8vw;
+}
+
+body {
+  background: #fff;
+}
+
+#refreshContainer {
+  margin-top: 0;
+}
+
+.banner, .banner img {
+  width: 100vw;
+  height: 50vw;
+  z-index: 99;
+  position: relative;
+}
+
+#tab {
+  position: static;
+  background: #f1f1f1;
+}
+#tab .mui-control-item.mui-active {
+  color: #e91616;
+  background: #fff;
+}
+
+#tab2, #tab3 {
+  position: static;
+  margin-top: 2.5vh;
+  background: #f1f1f1;
+  width: 32vw;
+  margin-left: 34vw;
+}
+#tab2 .mui-control-item.mui-active, #tab3 .mui-control-item.mui-active {
+  color: #fff;
+  background: #ffa626;
+}
+
+.list ul li {
+  height: 10.78vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f1f1f1;
+  position: relative;
+}
+.list ul li img {
+  width: 11vw;
+  margin-left: 2.13vw;
+}
+.list ul li .number {
+  margin-left: 4vw;
+  font-weight: bold;
+  font-size: 0.42rem;
+  color: #788;
+}
+.list ul li .name {
+  margin-left: 4vw;
+  font-size: 0.38rem;
+}
+.list ul li .score {
+  position: absolute;
+  right: 2vw;
+}
