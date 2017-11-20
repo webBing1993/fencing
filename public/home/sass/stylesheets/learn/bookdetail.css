@@ -255,6 +255,9 @@
   font-size: 0.32rem;
   line-height: 0.6rem;
 }
+.comment .lists{
+  padding-bottom:20vw;
+}
 .comment .lists .list {
   width: 100%;
   min-height:80px;
@@ -392,10 +395,10 @@ input::-webkit-input-placeholder{
   left: calc( 50vw - 15px );
 }
 .mui-pull-bottom-pocket{
-  bottom: 11vw;
+  bottom: 15vw;
 }
 @media screen and (min-width:736px) and (max-width:1030px){
   .mui-pull-bottom-pocket{
-    bottom: 6vw;
+    bottom: 11vw;
   }
 }

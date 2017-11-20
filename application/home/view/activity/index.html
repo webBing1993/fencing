@@ -125,13 +125,15 @@
    </div>
 </div>
 <!--悬浮按钮-->
-<div class="btn_">
+<div id="publish">
     <a href="{:Url('Activity/publish')}" style="display:inline-block;width:10vw;height:10vw;"></a>
 </div>
 {/block}
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
+    // 拖拽
+    moveanyway();
     $(function(){
         //tab初始化和数据存储
         c = getCookie("c")?getCookie("c"):0;
@@ -146,21 +148,21 @@
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $(".btn_").hide()
+            $("#publish").hide()
         }else if(c==1){
             if($(".summary .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $(".btn_").show()
+            $("#publish").show()
         }else if( c==2 ){
             if($(".fixed .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $(".btn_").hide()
+            $("#publish").hide()
         }
 
     };
@@ -263,21 +265,21 @@
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $(".btn_").hide()
+            $("#publish").hide()
         }else if(c==1){
             if($(".summary .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $(".btn_").show()
+            $("#publish").show()
         }else if(c==2){
             if($(".fixed .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $(".btn_").hide()
+            $("#publish").hide()
         }
         setCookie('c',c);
     });
