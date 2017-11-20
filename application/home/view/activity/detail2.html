@@ -47,12 +47,16 @@
             </div>
             <div class="article">
                 <div class="title"><p>{$detail.title}</p></div>
+
                 <div class="note clear">
                     {if condition="(!empty($detail['create_user']))"}
                     <span class="publish">{$detail.publisher}</span>
                     {else /}
                     <span class="publish">{$detail.userid}</span>
                     {/if}
+                    <span class="time"><br/>{$detail.start_time|time_format="Y-m-d H:i"}/{$detail.end_time|time_format="Y-m-d H:i"}</span><br/>
+                    {$detail.address}<br/>
+                    {$detail.telephone}
                     <span class="time"> {$detail.create_time|time_format="Y-m-d"}</span>
                 </div>
                 <div class="content">

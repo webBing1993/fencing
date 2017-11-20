@@ -105,3 +105,18 @@ body{
       }
   }
 }
+.detail .gray{
+  width: 60vw;
+  height: 0.8rem;
+  background: #d0d0d0;
+  color: #000000;
+  text-align: center;
+  line-height: 0.8rem;
+  margin-left: 20vw;
+  margin-top: 5vw;
+  margin-bottom: 0.5rem;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  display:none;
+}

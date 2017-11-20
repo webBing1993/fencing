@@ -71,7 +71,7 @@ class Activity extends Base
         $list = Db::table('pb_wechat_user')->where('userid', $info['userid'])->find();
         $info['userid'] = $list['name'];
         //dump($info);
-        //exit();
+       // exit();
         //$this->assign('list',$list);
         $this->assign('detail', $info);
         return $this->fetch();
