@@ -11,7 +11,7 @@ use app\home\model\Notice;
 use app\home\model\Company;
 use app\home\model\Picture;
 use think\Db;
-
+use app\home\model\WechatUser;
 /**
  * Class Review
  * @package app\home\controller  消息审核
@@ -21,6 +21,7 @@ class Review extends Base{
      * @return mixed 主页
      */
     public function index(){
+        $this->checkRole();
         $this ->anonymous();
         $len = array('meeting' => 0,'dream' => 0,'volunteer' => 0);
         // 待审核
@@ -28,15 +29,17 @@ class Review extends Base{
         $this ->assign('list',$list['data']);
         // 已审核
         $lists = $this->getDataList($len,1);
-        foreach($lists['data'] as $value){
+        foreach($lists['data'] as $key => $value){
+            $lists['data'][$key]['review_name'] = "暂无";
+            $lists['data'][$key]['review_time'] = time();
             if ($value['class'] == 1){
                 // 会议纪要
-                $value['review_name'] = Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('name');
-                $value['review_time'] = Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('create_time');
+                $lists['data'][$key]['review_name'] = Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('name');
+                $lists['data'][$key]['review_time'] = Db::name('review')->where(['class' => 1 , 'aid' => $value['id']])->value('create_time');
             }else{
                 // 志愿
-                $value['review_name'] = Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('name');
-                $value['review_time'] = Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('create_time');
+                $lists['data'][$key]['review_name'] = Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('name');
+                $lists['data'][$key]['review_time'] = Db::name('review')->where(['class' => 2 , 'aid' => $value['id']])->value('create_time');
             }
         }
         $this->assign('lists',$lists['data']);
@@ -125,6 +128,8 @@ class Review extends Base{
      * @return array
      */
     public function moreDataList(){
+        $this->checkRole();
+        $this ->anonymous();
         $len = input('get.');
         $list = $this ->getDataList($len);
         //转化图片路径 时间戳
@@ -140,15 +145,66 @@ class Review extends Base{
      * 会议纪要  详情
      */
     public function detail(){
+        $this->checkRole();
+        $this ->anonymous();
         $id = input('id');
         $Notice = new Notice();
         $info = $Notice->where('id',$id)->find();
         $this->assign('detail',$info);
+        return $this->fetch();
     }
     /**
      * 志愿  详情
      */
     public function details(){
+        $this->checkRole();
+        $this ->anonymous();
 
+    }
+    /**
+     * 审核
+     */
+    public function review(){
+        $this->checkRole();
+        $this ->anonymous();
+        $userId = session('userId');
+        $user = WechatUser::where('userid', $userId)->find();
+        $username = $user['name'];
+        $msg = input('post.');
+        //新建review数据
+        $data = array(
+            'class' => $msg['class'],
+            'aid' => $msg['id'],
+            'userid' => $userId,
+            'name' => $username,
+            'status' => $msg['status'],
+            'create_time' => time()
+        );
+        Db::name('review')->insert($data);
+        $res = $this->change_status($msg['class'],$msg['id'],$msg['status']);
+        if ($res){
+            return $this->success('审核成功');
+        }else{
+            return $this->error('审核失败');
+        }
+    }
+    /**
+     *  改变状态值
+     */
+    public function change_status($type,$id,$status){
+        switch ($type) {    //根据类别获取表明
+            case 1:
+                $table = "notice";
+                break;
+            case 2:
+            case 3:
+                $table = "company";
+                break;
+            default:
+                return $this->error("无该数据表");
+                break;
+        }
+        $res = Db::name($table)->where(['id' => $id])->update(['status' => $status]);
+        return $res;
     }
 }

@@ -30,7 +30,7 @@
                                     <span>{eq name="$lo.class" value="1"}[会议纪要]{/eq} {eq name="$lo.class" value="2"}[微心愿]{/eq} {eq name="$lo.class" value="3"}[志愿招募]{/eq} 发布人：{$lo.userid|get_name}</span>
                                     <span>{$lo.create_time|time_format=''}</span>
                                     <span class="mui-icon mui-icon-forward"></span>
-                                    <i class="fail" data-id="" data-class="" data-type="1">不通过</i><i class="pass" data-id="" data-class="" data-type="1" >通&nbsp;过</i>
+                                    <i class="fail" data-id="{$lo.id}" data-class="{$lo.class}">不通过</i><i class="pass" data-id="{$lo.id}" data-class="{$lo.class}" >通&nbsp;过</i>
                                 </a>
                             </li>
                             {/volist}
@@ -122,7 +122,7 @@ function loadScroll(){
     }
     $.ajax({
         type:"post",
-        url:"{:Url('Notice/more')}",
+        url:"{:Url('Review/moreDataList')}",
         data:{
             length:len,
             type:c
@@ -238,7 +238,6 @@ mui('#item1mobile').on('tap', '.pass', function(e) {
     var element = this.parentNode.parentNode;
     var id = this.getAttribute("data-id");
     var _class = this.getAttribute("data-class");
-    var _type = this.getAttribute("data-type");
     swal({
         title: "",
         text: "确定通过审核？",
@@ -249,7 +248,7 @@ mui('#item1mobile').on('tap', '.pass', function(e) {
         cancelButtonText: "取消",
         confirmButtonColor: "#ec6c62"
     }, function() {
-        pass(element,id,_class,1,_type);
+        pass(element,id,_class,1);
     });
 });
 
@@ -259,7 +258,6 @@ mui('#item1mobile').on('tap', '.fail', function(e) {
     var element = this.parentNode.parentNode;
     var id = this.getAttribute("data-id");
     var _class = this.getAttribute("data-class");
-    var _type = this.getAttribute("data-type");
     swal({
         title: "",
         text: "确定不通过审核？",
@@ -270,7 +268,7 @@ mui('#item1mobile').on('tap', '.fail', function(e) {
         cancelButtonText: "取消",
         confirmButtonColor: "#ec6c62"
     }, function() {
-        pass(element,id,_class,2,_type);
+        pass(element,id,_class,-1);
     });
 });
 
@@ -287,15 +285,10 @@ mui("#refreshContainer").on("touchstart","a",function(){
 });
 
 //审核ajax
-var  pass = function(element,id,_class,status,_type){
-    if(_type == 1){
-        var url = "{:Url('Review/review')}";
-    }else{
-        var url = "{:Url('Review/push')}";
-    }
+var  pass = function(element,id,_class,status){
     $.ajax({
         type:"post",
-        url: url,
+        url: "{:Url('Review/review')}",
         data:{
             id:id,
             class:_class,
