@@ -142,6 +142,7 @@
                 This.find("img").remove();
                 This.addClass("hide");
                 $(".add").show();
+                $("#upimg").val("");
             }
         });
     });
@@ -176,16 +177,18 @@
                         data: data,
                         dataType: "Json",
                         success: function (data) {
+                            console.log(data)
                             if (data.code==1) {
+                                alert(3)
                                 swal({
                                     title: '',
                                     text: "提交成功",
                                     type: 'success',
                                     showConfirmButton: false
                                 });
-                                setTimeout(function () {
-                                    history.go(-1);
-                                }, 1500);
+//                                setTimeout(function () {
+//                                    history.go(-1);
+//                                }, 1500);
                             } else {
                                 swal({
                                     title: '',
