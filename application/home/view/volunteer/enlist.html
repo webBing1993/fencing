@@ -11,7 +11,9 @@
     <div class="mui-scroll">
         <div class="list">
             <ul>
+                {empty name="data"}
                 <div class="default"><img src="/home/images/common/nomessage.png"></div>
+                {else/}
                 <!--循环开始-->
                 {volist name="data" id="vo"}
                 <a href="{:Url('Volunteer/wishesdetail?id='.$vo['id'])}">
@@ -28,6 +30,7 @@
                 {/volist}
                 <!--循环结束-->
             </ul>
+            {/empty}
         </div>
     </div>
 </div>

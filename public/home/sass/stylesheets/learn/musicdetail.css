@@ -171,6 +171,9 @@
   font-size: 0.32rem;
   line-height: 0.6rem;
 }
+.comment .lists{
+  padding-bottom:20vw;
+}
 .comment .lists .list {
   width: 100%;
   min-height:80px;
