@@ -11,42 +11,16 @@
 </div>
 <!--个人积分排名-->
 <div class="my">
-	{eq name="$per.header" value=""}
 	<img src="{$per.avatar}" alt="头像">
-	{else/}
-	<img src="{$per.header}" alt="头像">
-	{/eq}
-	{eq name="$type" value="1"}
-	<span class="name_">
-		<span>{$per.name}</span>
-		<span class="n">{$per.trad_rank}</span>
-	</span>
-	<span class="scores">{$per.trad_score} 分</span>
-	{else/}
 	<span class="name_">
 		<span>{$per.name}</span>
 		<span class="n">{$per.game_rank}</span>
 	</span>
 	<span class="scores">{$per.game_score} 分</span>
-	{/eq}
 </div>
 <!--列表排名-->
 <div class="listbox">
 	<div class="ranklist">
-		{eq name="$type" value="1"}
-		<div class="lists">
-			{volist name="trad" id="vo"}
-			<div class="list">
-				<span class="num_">{$key+1}</span>
-				{eq name="vo.header" value=""}<img class="avatar_" src="{$vo.avatar}" alt="头像">{else/}<img class="avatar_" src="{$vo.header}" alt="">{/eq}
-				<span class="name_">{$vo.name}</span>
-				<span class="scores"><span class="score_">
-					{$vo.trad_score}
-				</span>分</span>
-			</div>
-			{/volist}
-		</div>
-		{else/}
 		<div class="lists">
 			{volist name="game" id="ga"}
 			<div class="list">
@@ -59,7 +33,6 @@
 			</div>
 			{/volist}
 		</div>
-		{/eq}
 	</div>
 </div>
 <!-- 游戏规则摸态框 -->
@@ -73,11 +46,7 @@
 			<div class="modal-body" style="font-size: 14px">
 
 				<h5>
-					{eq name="$type" value="1"}
-					<b>党章抄写积分规则：</b>您仅可按章节顺序进行抄写，每完成1%的进度计1分，抄写完成1遍总计100分，积分可以不断累计并以个人累计积分高低进行排名。
-					{else/}
 					<b>在线答题积分规则：</b>每次测试共30道题，每答对一题记1分，每次答题的分数可以不断累积并计入积分排行。
-					{/eq}
 				</h5>
 			</div>
 		</div>

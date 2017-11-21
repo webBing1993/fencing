@@ -273,14 +273,6 @@ class Learn extends Base{
         $userId = session('userId');
         $personal = $wechatModel->where('userid',$userId)->find();    //获取个人信息
 
-        //传统模式
-        $map['trad_score'] = array('neq',0);
-        $trad = $wechatModel->where($map)->order('trad_score desc')->limit(50)->select();
-        foreach ($trad as $key => $value) {
-            if($value['userid'] == $userId) {
-                $personal['trad_rank'] = $key+1;     //该用户传统排名
-            }
-        }
         //游戏模式
         $map1['game_score'] = array('neq',0);
         $game = $wechatModel->where($map1)->order('game_score desc')->limit(50)->select();
@@ -289,18 +281,12 @@ class Learn extends Base{
                 $personal['game_rank'] = $key+1;     //该用户游戏排名
             }
         }
-        if(isset($personal['trad_rank'])) {
-            $personal['trad_rank'] = "第".$personal['trad_rank']."名";
-        }else {
-            $personal['trad_rank'] = "无";
-        }
         if(isset($personal['game_rank'])) {
             $personal['game_rank'] = "第".$personal['game_rank']."名";
         }else {
             $personal['game_rank'] = "无";
         }
         $this->assign('per',$personal);
-        $this->assign('trad',$trad);
         $this->assign('game',$game);
         $this->assign('type',$type);
 
