@@ -106,3 +106,11 @@ p {
 .list ul a span:nth-child(3) {
   margin-left: -5px;
 }
+
+.default img {
+  width: 16vw;
+  position: absolute;
+  left: 50%;
+  margin-top: 10vw;
+  margin-left: -8vw;
+}

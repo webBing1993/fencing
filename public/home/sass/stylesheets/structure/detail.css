@@ -401,13 +401,14 @@ body {
 .d_list>.d_tel{
     color: #333333;
     font-size: 0.32rem;
-    width:25vw
+    display: inline-block;
+    line-height: 1.5;
 }
-.d_list>.d_tel>.d_tel_icon{
-    width:26.67vw;
-    padding:2.4vw 2.13vw;
-    margin-right: 1.33vw;
-    background: url("/home/images/structure/tel.png") 50% 50% no-repeat;
-    -webkit-background-size:3.47vw 4.53vw;
-    background-size:3.47vw 4.53vw;
-}
+/*.d_list>.d_tel>.d_tel_icon{*/
+    /*width:26.67vw;*/
+    /*padding:2.4vw 2.13vw;*/
+    /*margin-right: 1.33vw;*/
+    /*background: url("/home/images/structure/tel.png") 50% 50% no-repeat;*/
+    /*-webkit-background-size:3.47vw 4.53vw;*/
+    /*background-size:3.47vw 4.53vw;*/
+/*}*/

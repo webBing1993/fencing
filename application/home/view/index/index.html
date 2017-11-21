@@ -60,10 +60,10 @@
         </div>
         <!--新闻通知-->
         <div class="list recommend">
-            {empty name="$list"}
-            <div class="default"><img src="/home/images/common/nomessage.png"></div>
-            {else/}
             <ul>
+                {empty name="$list"}
+                <div class="default"><img src="/home/images/common/nomessage.png"></div>
+                {else/}
                 {volist name="$list" id="lo"}
                 <a {eq name="lo.class" value="1"} href="{:Url('News/detail?id='.$lo['id'])}" {/eq} {eq name="lo.class" value="2"}
                 {eq name="lo.type" value="1"}
@@ -88,8 +88,9 @@
                     <span>{$lo.create_time|time_format='Y-m-d'}</span>
                 </a>
                 {/volist}
+                {/empty}
             </ul>
-            {/empty}
+
         </div>
     </div>
 </div>
