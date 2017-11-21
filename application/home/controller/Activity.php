@@ -123,11 +123,26 @@ class Activity extends Base
         if (IS_POST) {
             $userId = session('userId');
             $data = input('post.');
-            //print_r($data);
+            //dump($data);
             //exit();
-            $data['images'] = json_encode($data['front_cover']);
-            unset($data['front_cover']);
-            $data['front_cover'] = $this->default_pic();
+            if (!empty($data['images'])){
+                $data['images'] = json_encode($data['images']);
+                //unset($data['front_cover']);
+
+                $data['userid'] = $userId;
+                $data['start_time'] = strtotime($data['start_time']);
+                $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
+                $res = Db::table('pb_notice')->insert($data);
+
+                if ($res) {
+                    return $this->success("发布成功！");
+                } else {
+                    return $this->error('发布失败！');
+                }
+            }
+            //$data['images'] = json_encode($data['image']);
+            //unset($data['front_cover']);
+            //$data['front_cover'] = $this->default_pic();
             $data['userid'] = $userId;
                 $data['start_time'] = strtotime($data['start_time']);
                 $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
