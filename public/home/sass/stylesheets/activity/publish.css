@@ -151,12 +151,6 @@ textarea {
   line-height: 10vw;
 }
 
-.goreview {
-  background: #fff;
-  color: #fc6c62;
-  border: 1px solid #fc6c62;
-}
-
 .goreview + p {
   font-size: 0.32rem;
   color: #999;
