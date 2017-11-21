@@ -97,9 +97,9 @@ body{
 	line-height: 20px;
 	text-align: center;
 	font-weight: 400;
-	position: absolute;
+	/*position: absolute;
 	top:0;
-	left: 0;
+	left: 0;*/
 	/*opacity: 0;*/
 }
 .list .opt{

@@ -146,16 +146,16 @@
   padding-left: 18px;
 }
 .music .content .note .good {
-  background: url('/home/images/learn/good.png') 0 12px no-repeat;
+  background: url('/home/images/detail/good.png') 0 center no-repeat;
 }
 .music .content .note .good_ {
   animation: shake 300ms ease;
   -webkit-animation: shake 300ms ease;
-  background: url('/home/images/learn/good_.png') 0 12px no-repeat;
+  background: url('/home/images/detail/good_.png') 0 center no-repeat;
 }
 .music .content .note .isgood {
-  background-size: 15px 15px;
-  padding-left: 18px;
+  background-size: 0.38rem 0.38rem;
+  padding-left: 0.53rem;
 }
 /*评论*/
 .comment{
@@ -314,6 +314,6 @@ input::-webkit-input-placeholder{
 }
 @media screen and (min-width:736px) and (max-width:1030px){
   .mui-pull-bottom-pocket{
-    bottom: 6vw;
+    bottom: 10vw;
   }
 }

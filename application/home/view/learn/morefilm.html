@@ -19,7 +19,7 @@
 			</div>
 			<div class="lists clear">
 				{volist name="list" id="vo"}
-				<a href="{:Url('Redcollection/filmdetail?id='.$vo['id'])}" class="list fl clear">
+				<a href="{:Url('Learn/filmdetail?id='.$vo['id'])}" class="list fl clear">
 					<img src="{$vo.front_cover|get_cover='path'}" alt="红色电影" class="list-img">
 					<div class="list-title limit">{$vo.title}</div>
 					<div class="list-summary limit">{$vo.introduction}</div>

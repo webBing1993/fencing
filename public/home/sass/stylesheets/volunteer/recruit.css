@@ -78,7 +78,7 @@
   color: #ffffff;
 }
 
-.title_ > span {
+.title_ span {
   width: 75%;
   display: block;
   height: 7vw;
@@ -91,6 +91,16 @@
   width: 16vw;
   position: absolute;
   left: 50%;
-  margin-top: 30%;
+  margin-top: 66%;
   margin-left: -8vw;
+}
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+  .default img {
+    width: 16vw;
+    position: absolute;
+    left: 50%;
+    margin-top: 50%;
+    margin-left: -8vw;
+  }
 }

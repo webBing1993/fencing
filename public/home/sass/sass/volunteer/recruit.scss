@@ -28,18 +28,35 @@
   font-size: .38rem;
   color: #ffffff;
 }
-.title_>span{
-  width: 75%;
-  display: block;
-  height: 7vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap
+.title_ {
+  span{
+    width: 75%;
+    display: block;
+    height: 7vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+  }
 }
-.default img {
-  width: 16vw;
-  position: absolute;
-  left: 50%;
-  margin-top: 30%;
-  margin-left: -8vw;
+.default {
+  img{
+    width: 16vw;
+    position: absolute;
+    left: 50%;
+    margin-top: 66%;
+    margin-left: -8vw;
+  }
+}
+
+@media screen and (min-width:480px) and (max-width:1024px){
+  .default {
+    img{
+      width: 16vw;
+      position: absolute;
+      left: 50%;
+      margin-top: 50%;
+      margin-left: -8vw;
+    }
+  }
+
 }

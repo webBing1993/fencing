@@ -215,6 +215,7 @@
   font-size: 0.37rem;
   float: right;
 }
+
 .book .content .note span {
   height: 40px;
   display: inline-block;
@@ -238,8 +239,8 @@
   background: url('/home/images/learn/good_.png') 0 12px no-repeat;
 }
 .book .content .note .isgood {
-  background-size: 15px 15px;
-  padding-left: 18px;
+  background-size: 0.38rem 0.38rem;
+  padding-left: 0.53rem;
 }
 /*评论*/
 .comment{
