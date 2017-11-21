@@ -125,7 +125,7 @@
    </div>
 </div>
 <!--悬浮按钮-->
-<div id="publish">
+<div id="publish" style="display: none;">
     <a href="{:Url('Activity/publish')}" style="display:inline-block;width:10vw;height:10vw;"></a>
 </div>
 {/block}
@@ -137,6 +137,9 @@
     $(function(){
         //tab初始化和数据存储
         c = getCookie("c")?getCookie("c"):0;
+        if(c==1){
+            $("#publish").show();
+        }
         $("#tab a").eq(c).addClass('mui-active');
         $(".mui-slider-group>div").eq(c).addClass('mui-active');
     });
@@ -148,21 +151,18 @@
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $("#publish").hide()
         }else if(c==1){
             if($(".summary .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $("#publish").show()
         }else if( c==2 ){
             if($(".fixed .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
             }else{
                 mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
             }
-            $("#publish").hide()
         }
 
     };
