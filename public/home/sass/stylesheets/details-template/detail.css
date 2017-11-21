@@ -218,7 +218,7 @@
     width: 100%;
     word-break: break-all;
     font-size: 0.38rem;
-    margin-top: 1vw;
+    margin-top: 3vw;
     margin-bottom: 6vw;
     padding-left: 15vw;
     line-height:0.5rem;
@@ -229,7 +229,7 @@
     color: #999;
     margin-left:15vw;
     position: absolute;
-    bottom:1vw;
+    bottom:5px;
 }
 .comment .lists .list .fr {
     color: #999999;

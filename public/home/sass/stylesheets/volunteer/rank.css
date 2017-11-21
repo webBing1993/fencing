@@ -1,5 +1,5 @@
 /*tab*/
-#tab {
+#tab,#tab2,#tab3{
   position: absolute;
   top: 0;
   height: 8vw;
@@ -83,7 +83,7 @@ body {
 .list ul li .number {
   margin-left: 4vw;
   font-weight: bold;
-  font-size: 0.42rem;
+  font-size: 0.46rem;
   color: #788;
 }
 .list ul li .name {
@@ -93,4 +93,5 @@ body {
 .list ul li .score {
   position: absolute;
   right: 2vw;
+  font-size: 0.38rem;
 }
