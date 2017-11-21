@@ -9,14 +9,14 @@
 {block name="body"}
 <div id="refreshContainer" class="mui-content mui-scroll-wrapper">
     <div class="mui-scroll">
-        {empty name="data"}
+        {empty name="list"}
         <div class="default"><img src="/home/images/common/nomessage.png"></div>
         {else/}
         <div class="mui-slider-group">
             <div class="banners">
                 <div class="swiper-container">
                     <div class="imgs swiper-wrapper">
-                        {volist name="list" id="vo1"}
+                        {volist name="list2" id="vo1"}
                         <div class="banner swiper-slide">
                             <a href="{:Url('Volunteer/detail?id='.$vo1['id'])}">
                                 <img src="{$vo1.front_cover|get_cover='path'}" alt="">
@@ -31,7 +31,6 @@
             <!--新闻列表-->
             <div class="lists list">
                 <ul>
-              }
                 {volist name="list" id="vo2"}
                 <a href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
                     <img src="{$vo2.front_cover|get_cover='path'}">

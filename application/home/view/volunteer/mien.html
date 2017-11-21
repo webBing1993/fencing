@@ -10,12 +10,12 @@
 
     <div class="mui-scroll">
         <div class="mui-slider-group">
+            {empty name="data"}
+            <div class="default"><img src="/home/images/common/nomessage.png"></div>
+            {else/}
             <div class="banner"><img src="/home/images/volunteer/06.jpg" alt=""></div>
             <div class="main">
                 <div class="lists">
-                    {empty name="data"}
-                    <div class="default"><img src="/home/images/common/nomessage.png"></div>
-                    {else/}
                     <!--循环开始-->
                     {volist name="data" id="vo"}
                     <div class="list color1">
@@ -29,8 +29,8 @@
                     {/volist}
                     <!--循环结束-->
                 </div>
-                {/empty}
             </div>
+            {/empty}
         </div>
     </div>
 </div>
@@ -106,7 +106,7 @@
                 +'</span>次</div>'
                 +'</a>' +
                 '<div class="view">' +
-                '<a href="http://sx.pb.cn/home/volunteer/recruit.html" >查看活动</a>' +
+                '<a href="/home/volunteer/recruit/pid/'+list.id+'.html" >查看活动</a>' +
                 '</div>'
                 +'</div>';
         }

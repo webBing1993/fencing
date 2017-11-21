@@ -23,7 +23,6 @@ class Volunteer extends Base{
 
     }
 
-
     /*
      *  志愿风采展
      * */
@@ -36,7 +35,6 @@ class Volunteer extends Base{
             $list = Db::table('pb_companys')->where('type',$v['id'])->count();
                 $v['number']=$list;
         }
-        //dump($data);exit();
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -46,7 +44,6 @@ class Volunteer extends Base{
      * */
     public function team(){
        $id = input('id');
-       //dump($id);exit();
         $detail=Db::table('pb_companyst')->where('id',$id)->find();
         $this->assign('detail',$detail);
         return $this->fetch();
@@ -59,11 +56,9 @@ class Volunteer extends Base{
         $type = input('pid');
         //dump($type);exit();
         $list=Db::table('pb_companys')->where('type',$type)->where('status',1)->order('create_time desc')->limit(10)->select();
-        //dump($list);exit();
-       /* $Companys = new Companys();
-        $mapp = ['status' => ['eq',1],'type'=>['eq',$type]];
-        $list = $Companys->get_list($mapp);
-        dump($list);exit();*/
+        $list2=Db::table('pb_companys')->where('type',$type)->where('status',1)->where('istop',1)->limit(3)->select();
+        //dump($list2);exit();
+        $this->assign('list2',$list2);
         $this->assign('list',$list);
         return $this->fetch();
     }
@@ -76,19 +71,15 @@ class Volunteer extends Base{
     {
         $Companys = new Companys();
         $len = input('length');
-        //dump($len);exit;
         $type=input('pid');
-        //dump($type);exit();
         $map = ['status' => ['eq', 1],'type'=>['eq',$type]];
         $list = $Companys->get_list($map, $len);
-        //dump($list);
         if ($list) {
             return $this->success('加载成功', '', $list);
         } else {
             return $this->error('加载失败');
         }
     }
-
 
     /*
      *  详情
@@ -97,10 +88,7 @@ class Volunteer extends Base{
         $this->anonymous();
         $this->jssdk();
         $id = input('id/d');
-        //dump($id);exit();
         $info = $this->content(8, $id);
-        //dump($info);
-        //exit();
         $this->assign('detail', $info);
         return $this ->fetch();
     }
@@ -115,6 +103,13 @@ class Volunteer extends Base{
         $type=input('type');
         $map = ['status' => ['eq', 1]];
         $list = $Companyst->get_list($map, $len);
+       //dump($list);exit();
+        foreach($list as $v){
+            $list2 = Db::table('pb_companys')->where('type',$v['id'])->count();
+            $v['number']=$list2;
+        }
+        //dump($list);exit();
+
         if ($list) {
             return $this->success('加载成功', '', $list);
         } else {
@@ -130,8 +125,6 @@ class Volunteer extends Base{
         if (IS_POST) {
             $userId = session('userId');
             $data = input('post.');
-            //dump($data);
-            //exit();
             //$data['images'] = json_encode($data['front_cover']);
             $data['front_cover'] = $this->default_pic();
             $data['userid'] = $userId;
@@ -139,8 +132,6 @@ class Volunteer extends Base{
             $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
             $data['status'] = 0;
             $res = Db::table('pb_company')->insert($data);
-            //dump($res);
-            //exit();
             if ($res) {
                 return $this->success("发布成功！");
             } else {
@@ -154,7 +145,6 @@ class Volunteer extends Base{
      * 点亮微心愿
      * */
     public  function wishes(){
-        //$data=Db::table('pb_company')->where('type',1)->where('status',1)->order('create_time desc')->select();
         $Company = new Company();
         $mapp = ['status' => ['eq', 1], 'type' => 1];
         $data = $Company->get_list($mapp);
@@ -162,7 +152,6 @@ class Volunteer extends Base{
             $list = Db::table('pb_company_recruit')->where('rid',$v['id'])->count();
             $v['receive_number']=$list;
         }
-        //dump($data);exit();
         $type=1;
         $this->assign('type',$type);
         $this->assign('data',$data);
@@ -183,7 +172,6 @@ class Volunteer extends Base{
             $list2 = Db::table('pb_company_recruit')->where('rid', $v['id'])->count();
             $v['receive_number'] = $list2;
         }
-       //dump($list);exit();
         if ($list) {
             return $this->success('加载成功', '', $list);
         } else {
@@ -197,46 +185,35 @@ class Volunteer extends Base{
     public function wishesdetail(){
 
         $id=input('id');
-        //$type=input('type');
-        //dump($type);exit();
         $list3=Db::table('pb_company_recruit')->where('rid',$id)->select();
         if (empty($list3)){
-            //dump($id);exit();
             $data = Db::table('pb_company')->where('id', $id)->find();
             $list5=Db::table('pb_picture')->where('id', $data['image'])->find();
             $data['image']=$list5['path'];
             $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
-            //dump($list);exit();
             foreach ($list as $key => $v) {
                 $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
                 $list[$key]['userid'] = $list2['name'];
                 $list[$key]['image'] = $list2['avatar'];
             }
-            
-            //dump($data);exit();
             $this->assign('list', $list);
             $this->assign('data', $data);
             return $this->fetch();
         }else{
             $data = Db::table('pb_company')->where('id', $id)->find();
             $list5=Db::table('pb_picture')->where('id', $data['image'])->find();
-
             $data['image']=$list5['path'];
-            //dump($data);exit();
             $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
-            //dump($list);exit();
             foreach ($list as $key => $v) {
                 $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
                 $list[$key]['userid'] = $list2['name'];
                 $list[$key]['image'] = $list2['avatar'];
             }
             $data['receive_number']=Db::table('pb_company_recruit')->where('rid', $id)->count();
-            //dump($data);exit();
             $this->assign('list', $list);
             $this->assign('data', $data);
             return $this->fetch('Volunteer/wishesdetail2');
         }
-
     }
 
     //心愿领取
@@ -256,7 +233,6 @@ class Volunteer extends Base{
             } else {
                 return $this->error('领取失败!');
             }
-
     }
     
     /*
