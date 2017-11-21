@@ -36,6 +36,7 @@ body{
       left:50%;
       margin-top: -1rem;
       margin-left: -1rem;
+      @include border-radius(50%);
     }
   }
 }
