@@ -7,7 +7,7 @@
  */
 namespace app\home\model;
 use think\Model;
-
+use app\home\model\Picture;
 class Companys extends Model{
     /**
      * 加载更多

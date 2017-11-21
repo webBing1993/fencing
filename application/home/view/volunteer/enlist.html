@@ -13,7 +13,7 @@
             <ul>
                 <!--循环开始-->
                 {volist name="data" id="vo"}
-                <a href="{:Url('Volunteer/wishesdetail?type=2&id='.$vo['id'])}">
+                <a href="{:Url('Volunteer/wishesdetail?id='.$vo['id'])}">
                     <img src="{$vo.image}">
                     <!--标题-->
                     <p>{$vo.title}</p>
@@ -86,14 +86,13 @@
     };
 
     function addCourse(data) {
-        console.log(data)
         var html = '';
         var lists = data.data;
         var len = lists.length;
         for (var i = 0; i < len; i++) {
             var list = lists[i];
             html +=
-                    '<a href="/home/volunteer/wishesdetail/type/2/id/' + list.id + '">' +
+                    '<a href="#">' +
                     '<img src="'+list.image+'">' +
                     '<p>'+list.title+'</p>' +
                     '<span><span>'+list.receive_number+'</span> / '+list.demand_number+'人</span>' +

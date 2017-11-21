@@ -67,7 +67,7 @@
     });
 
     window.onload = function () {
-        if ($(".lists a").length < 7) {
+        if ($(".lists a").length < 10) {
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         } else {
             mui('#refreshContainer').pullRefresh().enablePullupToRefresh();
@@ -98,7 +98,7 @@
                 console.log(data);
                 if(data.code == 1){
                     var dataLen =data.data.length;
-                    if(data.data.length == 7){
+                    if(data.data.length == 10){
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
                     }else{
                         mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);

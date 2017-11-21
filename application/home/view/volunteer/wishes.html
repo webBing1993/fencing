@@ -13,7 +13,7 @@
             <ul>
                 <!--循环开始-->
                 {volist name="data" id="vo"}
-                <a href="{:Url('Volunteer/wishesdetail?type=1&id='.$vo['id'])}">
+                <a href="{:Url('Volunteer/wishesdetail?id='.$vo['id'])}">
                     <img src="{$vo.image}">
                     <!--标题-->
                     <p>{$vo.title}</p>
