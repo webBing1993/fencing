@@ -210,42 +210,45 @@
 .book .content .words .author {
   text-align: right;
 }
-.book .content .note {
+ .note {
   color: #666666;
   font-size: 0.37rem;
   float: right;
+
 }
 
-.book .content .note span {
+ .note span {
   height: 40px;
   display: inline-block;
   margin-right: 10px;
   line-height: 40px;
 }
-.book .content .note span:last-child{
+.note span:last-child{
   margin-right: 0 ;
 }
-.book .content .note .read {
+ .note .read {
   background: url('/home/images/learn/scan_.png') 0 12px no-repeat;
   background-size: 15px 15px;
   padding-left: 18px;
 }
-.book .content .note .good {
+ .note .good {
   background: url('/home/images/learn/good.png') 0 12px no-repeat;
 }
-.book .content .note .good_ {
+ .note .good_ {
   animation: shake 300ms ease;
   -webkit-animation: shake 300ms ease;
   background: url('/home/images/learn/good_.png') 0 12px no-repeat;
 }
-.book .content .note .isgood {
+ .note .isgood {
   background-size: 0.38rem 0.38rem;
   padding-left: 0.53rem;
+  margin-right: 3vw!important;
 }
 /*评论*/
 .comment{
   padding-left: 0.3rem;
   padding-right: 0.3rem;
+  padding-top: 9vw;
 }
 .comment .sum {
   height: 0.6rem;

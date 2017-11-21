@@ -50,20 +50,21 @@
 						{$book.famous_remark}
 						<div class="author">——— {$book.name}</div>
 					</div>
-					<!--/作者简介-->
-					<div class="note">
-						<span class="read">{$book.views +1 }</span>
-						{eq name="visit" value="0"}
-						{eq name="book.is_like" value="0"}
-						<span class="fr isgood good_ notvisitor"  data-type="0" data-id="{$book.id}">{$book.likes}</span>
-						{else/}
-						<span class="fr isgood good_ notvisitor"  data-type="0" data-id="{$book.id}">{$book.likes}</span>
-						{/eq}
-						{else/}
-						<span class="isgood good">{$book.likes}</span>
-						{/eq}
-					</div>
+
 				</div>
+			</div>
+			<!--/作者简介-->
+			<div class="note">
+				<span class="read">{$book.views +1 }</span>
+				{eq name="visit" value="0"}
+				{eq name="book.is_like" value="0"}
+				<span class="fr isgood good_ notvisitor"  data-type="0" data-id="{$book.id}">{$book.likes}</span>
+				{else/}
+				<span class="fr isgood good_ notvisitor"  data-type="0" data-id="{$book.id}">{$book.likes}</span>
+				{/eq}
+				{else/}
+				<span class="isgood good">{$book.likes}</span>
+				{/eq}
 			</div>
 			<div class="comment">
 				<div class="sum">共<span>{$book.comments}</span>条评论</div>
