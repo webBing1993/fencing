@@ -175,6 +175,7 @@ body {
   left: 0;
   right: 0;
   padding: 5%;
+  background: rgba(0,0,0,0.3);
   display: none;
 }
 // end demo-specific
@@ -183,10 +184,11 @@ body {
   position: relative;
   margin: 0 auto;
   width: $width;
+  margin-top: 70%;
   &:before {
     content: '';
     display: block;
-    padding-top: 100%;
+    padding-top: 50%;
   }
 }
 
