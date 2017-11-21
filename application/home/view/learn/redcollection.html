@@ -294,6 +294,7 @@
            var url = this.getAttribute("href");
            window.location.href = url;
        });
+
        //搜索--红色电影
        var search1 = $('.search input');
        var lock1 = false;
@@ -328,7 +329,7 @@
                                '<div class="result limit">无搜索结果</div>'
                        }
                        for(var obj in result){
-                           html+= '<a href=\"/home/Redcollection/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
+                           html+= '<a href=\"/home/Learn/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
                        }
                        $('#item1mobile .results' ).html(html);
                    }
@@ -356,7 +357,7 @@
                var html = '';
                $.ajax({
                    type:"post",
-                   url: "{:Url('Redcollection/booksearch')}",
+                   url: "{:Url('Learn/booksearch')}",
                    data:{
                        val:val
                    },
@@ -368,7 +369,7 @@
                                '<div class="result limit">无搜索结果</div>'
                        }
                        for(var obj in result){
-                           html+= '<a href=\"/home/Redcollection/bookdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
+                           html+= '<a href=\"/home/Learn/bookdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
                        }
                        $('#item2mobile .results' ).html(html);
                    }
