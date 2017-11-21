@@ -7,8 +7,9 @@
  */
 
 namespace app\home\controller;
+use app\home\model\Apply;
+use app\home\Model\WechatUser;
 //签到
-
 class Signin extends Base {
     /**
      * 签到主页
@@ -34,6 +35,7 @@ class Signin extends Base {
         $userid = input('user_id');
         $result = Apply::where(array('notice_id'=>$id,'userid'=>$userid))->find();
         if($result){
+            // 已经签到
             $Wechat = WechatUser::where(['userid'=>$userid])->find();
             return array('status'=>0,'header'=>$Wechat['avatar'],'name'=>$Wechat['name']);
         }else{

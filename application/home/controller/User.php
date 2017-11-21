@@ -168,9 +168,11 @@ class User extends Base {
      * 会议详情
      */
     public function meetingdetail(){
+        $this->jssdk();
         $id = input('get.id/d');
         $notice = new Notice();
         $info = $notice->where('id',$id)->find();
-        $this->assign('info',$info);
+        $this->assign('detail',$info);
+        return $this->fetch();
     }
 }

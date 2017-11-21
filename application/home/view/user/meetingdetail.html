@@ -49,20 +49,20 @@
                 <div class="title"><p>{$detail.title}</p></div>
 
                 <div class="note clear">
-                    <span class="publish">{$detail.publisher}</span>
+                    <span class="publish">{$detail.userid|get_name}</span>
                     <span class="time">{$detail.create_time|time_format="Y-m-d"}</span>
                 </div>
 
 
                 <div class="message">
-                    {notempty name="detail.time"}
-                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}/{$detail.end_time|time_format="Y-m-d H:i"}</div>
+                    {notempty name="detail.start_time"}
+                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}</div>
                     {/notempty}
                     {notempty name="detail.address"}
                     <div class="content address" >{$detail.address}</div>
                     {/notempty}
-                    {notempty name="detail.userid"}
-                    <div class="content people" >{$detail.userid}</div>
+                    {notempty name="detail.publisher"}
+                    <div class="content people" >{$detail.publisher}</div>
                     {/notempty}
                     {notempty name="detail.telephone"}
                     <div class="content tel">{$detail.telephone}</div>
@@ -71,11 +71,6 @@
 
                 <div class="content">
                     <div class="article-content">{$detail.content}</div>
-                    {notempty name="$detail.files"}
-                    {volist name="detail.files" id="de"}
-                    <a href="{$de.url}" style="display: block; font-size: 0.38rem;margin-top: 0.2rem">{$de.name}</a>
-                    {/volist}
-                    {/notempty}
                 </div>
             </div>
         </div>
