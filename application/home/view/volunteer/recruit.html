@@ -28,6 +28,7 @@
             <!--新闻列表-->
             <div class="lists list">
                 <ul>
+                <div class="default"><img src="/home/images/common/nomessage.png"></div>
                 {volist name="list" id="vo2"}
                 <a href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
                     <img src="{$vo2.front_cover|get_cover='path'}">
