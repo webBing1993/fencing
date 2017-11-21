@@ -49,18 +49,8 @@
 		<span class="fr">{$user.mobile}</span>
 	</div>
 	<div class="list clear">
-		<span class="fl">学历</span>
-		<span class="fr">{$user.education}</span>
-	</div>
-	{eq name="$user.party" value="1"}
-	<div class="list clear">
-		<span class="fl">入党时间</span>
-		<span class="fr">{$user.partytime|time_format="Y-m-d"}</span>
-	</div>
-	{/eq}
-	<div class="list clear">
-		<span class="fl">党龄</span>
-		<span class="fr">{$user.department}</span>
+		<span class="fl">部门</span>
+		<span class="fr">{$user.branch}</span>
 	</div>
 </div>
 <!-- 二维码 -->
@@ -70,7 +60,7 @@
 			<div class="code">
 				<div id="qrcode"></div>
 			</div>
-			<img src="{$user.headimgurl}" alt="个人头像" class="header">
+			<img src="{$user.avatar}" alt="个人头像" class="header">
 		</div>
 	</div>
 </div>

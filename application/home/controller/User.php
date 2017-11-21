@@ -7,18 +7,13 @@
  */
 
 namespace app\home\controller;
-use app\home\model\News;
-use app\home\model\Notice;
-use app\home\model\Browse;
-use app\home\model\Feedback;
+use app\home\model\Picture;
 use app\home\model\WechatDepartment;
 use app\home\model\WechatDepartmentUser;
 use app\home\model\WechatUser;
 use app\home\model\WechatUserTag;
-use think\Controller;
 use think\Db;
-use com\wechat\TPQYWechat;
-use think\Config;
+use app\home\model\Notice;
 use think\Request;
 /**
  * Class User
@@ -80,31 +75,6 @@ class User extends Base {
              $Depart = WechatDepartment::where('id',$Departid['departmentid'])->find();
             $user['branch'] = $Depart->name;
         }
-        $Notice = new Notice();
-        $map = array(
-            'status' =>array('egt',0)
-        );
-        $activityAll = $Notice->where($map)->count(); // 相关通知 总数
-        $news = News::where(['status' => ['egt',0]])->count();  // 党建动态 
-        $Brower = new Browse();
-        $map1 = array(
-            'user_id' => $userId,
-            'notice_id' => array('exp',"is not null")
-        );
-        $map2 = array(
-            'user_id' => $userId,
-            'news_id' => array('exp',"is not null")
-        );
-        $num = $Brower->where($map1)->count(); // 浏览notice总记录
-        $num1 = $Brower->where($map2)->count();  // 党建动态  总记录
-        $user['activity'] = array(
-            'all' => $activityAll,
-            'num' => $num,
-        );
-        $user['news'] = array(
-            'all' => $news,
-            'num' => $num1,
-        );
         $this->assign('user',$user);
         $request = Request::instance() ->domain();
         $this ->assign('request',$request);
@@ -152,31 +122,6 @@ class User extends Base {
             $Depart = WechatDepartment::where('id',$Departid['departmentid'])->find();
             $user['branch'] = $Depart->name;
         }
-        $Notice = new Notice();
-        $map = array(
-            'status' =>array('egt',0)
-        );
-        $activityAll = $Notice->where($map)->count(); // 相关通知 总数
-        $news = News::where(['status' => ['egt',0]])->count();  // 党建动态 
-        $Brower = new Browse();
-        $map1 = array(
-            'user_id' => $id,
-            'notice_id' => array('exp',"is not null")
-        );
-        $map2 = array(
-            'user_id' => $id,
-            'news_id' => array('exp',"is not null")
-        );
-        $num = $Brower->where($map1)->count(); // 浏览notice总记录
-        $num1 = $Brower->where($map2)->count();  // 党建动态  总记录
-        $user['activity'] = array(
-            'all' => $activityAll,
-            'num' => $num,
-        );
-        $user['news'] = array(
-            'all' => $news,
-            'num' => $num1,
-        );
         $this->assign('user',$user);
         return $this->fetch();
     }
@@ -184,7 +129,10 @@ class User extends Base {
      * 我的签到
      */
     public function checkin() {
-
+        $userId = session('userId');
+        $user = WechatUser::where('userid',$userId)->find();
+        $this->assign('img',$user['avatar']);
+        $this->assign('id',$userId);
         return $this->fetch();
     }
 
@@ -192,8 +140,37 @@ class User extends Base {
      * 会议纪要
      */
     public function meeting() {
-
+        $userId = session('userId');
+        $map = ['type' => 3 ,'status' => ['egt',0] , 'userid' => $userId];
+        $list = Db::name('notice')->where($map)->order('create_time','desc')->limit(12)->select();
+        $this->assign('meeting',$list);
         return $this->fetch();
     }
-
+    /**
+     * 会议 更多
+     */
+    public function more(){
+        $len = input('length');
+        $userId = session('userId');
+        $map = ['type' => 3 ,'status' => ['egt',0] , 'userid' => $userId];
+        $list = Db::name('notice')->where($map)->order('create_time','desc')->limit($len,12)->select();
+        foreach($list as $key => $value){
+            $list[$key]['time'] = date('Y-m-d',$value['create_time']);
+            $list[$key]['path'] = Picture::where('id',$value['front_cover'])->value('path');
+        }
+        if ($list){
+            return $this->success('加载成功','',$list);
+        }else{
+            return $this->error('加载失败');
+        }
+    }
+    /**
+     * 会议详情
+     */
+    public function meetingdetail(){
+        $id = input('get.id/d');
+        $notice = new Notice();
+        $info = $notice->where('id',$id)->find();
+        $this->assign('info',$info);
+    }
 }

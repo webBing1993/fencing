@@ -30,7 +30,6 @@ class Company extends Model{
     public function getDataList($length,$status=0,$type=0){
         if ($status == 0){
             $map = array(
-                'userid' => ['neq',null],
                 'status' => 0,
                 'type' => $type
             );
