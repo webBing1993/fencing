@@ -105,12 +105,16 @@ textarea {
   position: relative;
   width: 20vw;
   height: 20vw;
-  margin-left: 3vw;
+  margin-left: 1vw;
   margin-bottom: 3vw;
   overflow: hidden;
   background: #d9d9d9;
   border: 2px solid #d9d9d9;
   box-sizing: content-box;
+}
+
+.content .img:first-child {
+  margin-left: 2vw;
 }
 
 .content .img img, .content .img2 img, .content .img3 img {
@@ -120,8 +124,8 @@ textarea {
 }
 
 .content .add, .content .add2, .content .add3 {
-  width: 20vw;
-  height: 20vw;
+  width: calc(20vw  + 4px);
+  height: calc(20vw  + 4px);
   margin-left: 2vw;
   margin-bottom: 2vw;
   border: 2px solid #d9d9d9;

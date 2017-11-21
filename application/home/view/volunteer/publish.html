@@ -4,6 +4,40 @@
 <link rel="stylesheet" href="/home/sass/stylesheets/volunteer/publish.css">
 <link rel="stylesheet" href="/home/sass/stylesheets/activity/mui.picker.min.css">
 <style>
+    @keyframes shake {
+        0% {
+            transform: rotate(1deg);
+        }
+        30% {
+            transform: rotate(-20deg);
+        }
+        50% {
+            transform: rotate(20deg);
+        }
+        70% {
+            transform: rotate(-20deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+    @-webkit-keyframes shake {
+        0% {
+            transform: rotate(1deg);
+        }
+        30% {
+            transform: rotate(-20deg);
+        }
+        50% {
+            transform: rotate(20deg);
+        }
+        70% {
+            transform: rotate(-20deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
     #popover,#popover .mui-table-view{
         height:40vw;
         max-height: 400px;
@@ -27,6 +61,19 @@
         background-color: #f0f0f0;
         border-bottom: solid 1px #ccc;
         font-size: 0.32rem;
+    }
+    .closed{
+        display: inline-block;
+        background: url("/home/images/common/close.png");
+        width: 6vw;
+        height: 6vw;
+        background-size: 6vw 6vw;
+        position: relative;
+        z-index: 9999;
+        margin-left: -15px;
+        margin-top: -10px;
+        animation: shake 800ms ease;
+        -webkit-animation: shake 800ms ease;
     }
 </style>
 {/block}
@@ -136,7 +183,7 @@
     });
 
     // 删除当前选择的上传图片
-    $(".imgs div.img").on("click",function(){
+    $(".imgs .closed").on("click",function(e){
         var Id = $(this).find("img").attr("data-tab");
         var This = $(this);
         swal({
@@ -148,8 +195,9 @@
             confirmButtonColor: "#ec6c62"
         }, function() {
             if(!This.hasClass("hide")){
-                This.find("img").remove();
-                This.addClass("hide");
+                This.prev(".img").find("img").remove();
+                This.prev(".img").addClass("hide");
+                This.remove();
                 $(".add").show();
                 $("#upimg").val("");
             }

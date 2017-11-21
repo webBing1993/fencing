@@ -111,8 +111,8 @@ textarea{
 }
 
 .content .add,.content .add2,.content .add3{
-  width: 20vw;
-  height: 20vw;
+  width: calc(20vw  + 4px);
+  height: calc(20vw  + 4px);
   margin-left: 2vw;
   margin-bottom: 2vw;
   border: 2px solid #d9d9d9;
@@ -164,7 +164,7 @@ $white: #eee;
 $width: 100px;
 
 body {
-  background-color: $white;
+  background-color: #fff;
 }
 
 // demo-specific

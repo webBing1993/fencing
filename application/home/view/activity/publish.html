@@ -4,6 +4,40 @@
 <link rel="stylesheet" href="/home/sass/stylesheets/activity/publish.css">
 <link rel="stylesheet" href="/home/sass/stylesheets/activity/mui.picker.min.css">
 <style>
+    @keyframes shake {
+        0% {
+            transform: rotate(1deg);
+        }
+        30% {
+            transform: rotate(-20deg);
+        }
+        50% {
+            transform: rotate(20deg);
+        }
+        70% {
+            transform: rotate(-20deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+    @-webkit-keyframes shake {
+        0% {
+            transform: rotate(1deg);
+        }
+        30% {
+            transform: rotate(-20deg);
+        }
+        50% {
+            transform: rotate(20deg);
+        }
+        70% {
+            transform: rotate(-20deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
     #popover,#popover .mui-table-view{
         height:40vw;
         max-height: 400px;
@@ -27,6 +61,19 @@
         background-color: #f0f0f0;
         border-bottom: solid 1px #ccc;
         font-size: 0.32rem;
+    }
+    .closed{
+        display: inline-block;
+        background: url("/home/images/common/close.png");
+        width: 6vw;
+        height: 6vw;
+        background-size: 6vw 6vw;
+        position: relative;
+        z-index: 9999;
+        margin-left: -15px;
+        margin-top: -12px;
+        animation: shake 800ms ease;
+        -webkit-animation: shake 800ms ease;
     }
 </style>
 {/block}
@@ -122,7 +169,8 @@
 
     // 删除当前选择的上传图片
      var arrIndex = [];
-    $(".imgs div.img").on("click",function(){
+    $(".imgs .closed").on("click",function(e){
+        e.stopPropagation();
         var This = $(this);
         arrIndex.push($(this).index() + 1);
         swal({
@@ -134,9 +182,10 @@
             confirmButtonColor: "#ec6c62"
         }, function() {
             if(!This.hasClass("hide")){
-                This.find("img").attr("data-tab","");
-                This.find("img").remove();
-                This.addClass("hide");
+                This.prev(".img").find("img").attr("data-tab","");
+                This.prev(".img").find("img").remove();
+                This.prev(".img").addClass("hide");
+                This.remove();
                 $(".add").show();
                 $("#upimg").val("");
             }
@@ -237,11 +286,14 @@
                                     }
                                     if(arrIndex.length!==0){
                                         $('.img').eq(arrIndex[arrIndex.length-1] -1).removeClass('hide' )
-                                        .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
+                                        .after("<span class='closed'></span>")
+                                        .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>')
                                         arrIndex.pop();
                                     }else{
-                                        $('.img').eq(imglen).removeClass('hide' )
-                                         .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
+                                        $('.img').eq(imglen).removeClass('hide')
+                                         .after("<span class='closed'></span>")
+                                         .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>')
+                                         
                                     }
 
                                 }else{
@@ -252,6 +304,28 @@
                                 imgresize();
                                 $(".showbox").hide();
                             }
+                            $(".imgs .closed").on("click",function(e){
+                                e.stopPropagation();
+                                var This = $(this);
+                                arrIndex.push($(this).index() + 1);
+                                swal({
+                                    title: "是否删除当前图片",
+                                    showConfirmButton: true,
+                                    showCancelButton: true,
+                                    confirmButtonText: "确定",
+                                    cancelButtonText: "取消",
+                                    confirmButtonColor: "#ec6c62"
+                                }, function() {
+                                    if(!This.hasClass("hide")){
+                                        This.prev(".img").find("img").attr("data-tab","");
+                                        This.prev(".img").find("img").remove();
+                                        This.prev(".img").addClass("hide");
+                                        This.remove();
+                                        $(".add").show();
+                                        $("#upimg").val("");
+                                    }
+                                });
+                            });
                         },
                         error:function(){
                             $(".showbox").hide();

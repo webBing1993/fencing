@@ -33,6 +33,7 @@ $(function(){
                                     $('.add' ).fadeOut();
                                 }
                                     $('.img').eq(imglen).removeClass('hide' )
+                                    .after("<span class='closed'></span>")
                                     .append('<img src='+msg.data.path+' alt="图片" data-tab='+msg.data.id+'>');
                             }else{
                                 // 图片修改
@@ -45,6 +46,26 @@ $(function(){
                             $(".showbox").hide();
                             return;
                         }
+                        $(".imgs .closed").on("click",function(e){
+                            var Id = $(this).find("img").attr("data-tab");
+                            var This = $(this);
+                            swal({
+                                title: "是否删除当前图片",
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: "确定",
+                                cancelButtonText: "取消",
+                                confirmButtonColor: "#ec6c62"
+                            }, function() {
+                                if(!This.hasClass("hide")){
+                                    This.prev(".img").find("img").remove();
+                                    This.prev(".img").addClass("hide");
+                                    This.remove();
+                                    $(".add").show();
+                                    $("#upimg").val("");
+                                }
+                            });
+                        });
                     },
                     error : function(){
                         $(".showbox").hide();
