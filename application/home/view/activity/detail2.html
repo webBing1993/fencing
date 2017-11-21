@@ -49,16 +49,32 @@
                 <div class="title"><p>{$detail.title}</p></div>
 
                 <div class="note clear">
-                    {if condition="(!empty($detail['create_user']))"}
                     <span class="publish">{$detail.publisher}</span>
-                    {else /}
-                    <span class="publish">{$detail.userid}</span>
-                    {/if}
-                    <span class="time">{$detail.start_time|time_format="Y-m-d H:i"}/{$detail.end_time|time_format="Y-m-d H:i"}</span>
-                    {$detail.address}
-                    {$detail.telephone}
-                    <span class="time"> {$detail.create_time|time_format="Y-m-d"}</span>
+                    <span class="time">{$detail.create_time|time_format="Y-m-d"}</span>
                 </div>
+
+
+                <div class="message">
+                    {notempty name="detail.time"}
+                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}/{$detail.end_time|time_format="Y-m-d H:i"}</div>
+                    {/notempty}
+                    {notempty name="detail.address"}
+                    <div class="content address" >{$detail.address}</div>
+                    {/notempty}
+                    {notempty name="detail.userid"}
+                    <div class="content people" >{$detail.userid}</div>
+                    {/notempty}
+                    {notempty name="detail.telephone"}
+                    <div class="content tel">{$detail.telephone}</div>
+                    {/notempty}
+                </div>
+
+
+
+
+
+
+
                 <div class="content">
                     <div class="article-content">{$detail.content}</div>
                     {notempty name="$detail.files"}
