@@ -68,12 +68,15 @@
         width: 6vw;
         height: 6vw;
         background-size: 6vw 6vw;
-        position: relative;
+        position: absolute;
         z-index: 9999;
-        margin-left: -15px;
-        margin-top: -12px;
+        margin-left: -4vw;
+        margin-top: -3vw;
         animation: shake 800ms ease;
         -webkit-animation: shake 800ms ease;
+    }
+    .sweet-alert h2{
+        font-size: 20px;
     }
 </style>
 {/block}
@@ -101,13 +104,21 @@
             <div class="content">
                 <textarea placeholder="请输入本次会议纪要,谈谈你的感触!(图片选填,最多四张，不限字数)" name="content"></textarea>
                 <div class="imgs clear">
+                    <div>
                     <div class="img fl hide"></div>
-                    <div class="img fl hide"></div>
-                    <div class="img fl hide"></div>
-                    <div class="img fl hide"></div>
+                    </div>
+                    <div>
+                        <div class="img fl hide"></div>
+                    </div>
+                    <div>
+                        <div class="img fl hide"></div>
+                    </div>
+                    <div>
+                        <div class="img fl hide"></div>
+                    </div>
                     <div class="add fl"></div>
                 </div>
-                <div style="color: #666;font-size: 0.32rem">（您最多上传四张图片，图片小于3M , 点击当前图片可以删除）</div>
+                <div style="color: #666;font-size: 0.32rem">（您最多上传四张图片，图片小于5M）</div>
                 <input type="file" class="hide" id="upimg" name="upload" accept="image/*">
                 <input type="hidden" name="id" value="">
             </div>
@@ -167,30 +178,7 @@
         deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
     });
 
-    // 删除当前选择的上传图片
-     var arrIndex = [];
-    $(".imgs .closed").on("click",function(e){
-        e.stopPropagation();
-        var This = $(this);
-        arrIndex.push($(this).index() + 1);
-        swal({
-            title: "是否删除当前图片",
-            showConfirmButton: true,
-            showCancelButton: true,
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            confirmButtonColor: "#ec6c62"
-        }, function() {
-            if(!This.hasClass("hide")){
-                This.prev(".img").find("img").attr("data-tab","");
-                This.prev(".img").find("img").remove();
-                This.prev(".img").addClass("hide");
-                This.remove();
-                $(".add").show();
-                $("#upimg").val("");
-            }
-        });
-    });
+
 
     //去上传
     $(".goreview").click(function(){
@@ -257,6 +245,7 @@
 
     $(function(){
         //图片预览
+        var arrIndex = [];
         $('.add' ).on('click',function(){
             var imglen = $('.img img' ).length;
             var this_ = $(this);
@@ -304,28 +293,6 @@
                                 imgresize();
                                 $(".showbox").hide();
                             }
-                            $(".imgs .closed").on("click",function(e){
-                                e.stopPropagation();
-                                var This = $(this);
-                                arrIndex.push($(this).index() + 1);
-                                swal({
-                                    title: "是否删除当前图片",
-                                    showConfirmButton: true,
-                                    showCancelButton: true,
-                                    confirmButtonText: "确定",
-                                    cancelButtonText: "取消",
-                                    confirmButtonColor: "#ec6c62"
-                                }, function() {
-                                    if(!This.hasClass("hide")){
-                                        This.prev(".img").find("img").attr("data-tab","");
-                                        This.prev(".img").find("img").remove();
-                                        This.prev(".img").addClass("hide");
-                                        This.remove();
-                                        $(".add").show();
-                                        $("#upimg").val("");
-                                    }
-                                });
-                            });
                         },
                         error:function(){
                             $(".showbox").hide();
@@ -350,6 +317,30 @@
             });
 
         });
+
+
+            $(".imgs").on("click",".closed",function(e){
+                var This = $(this);
+                swal({
+                    title: "是否删除当前图片",
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    confirmButtonColor: "#ec6c62"
+                }, function() {
+                    if(!This.hasClass("hide")){
+                        arrIndex.push(This.parent().index()+1);
+                        This.prev(".img").find("img").attr("data-tab","");
+                        This.prev(".img").find("img").remove();
+                        This.prev(".img").addClass("hide");
+                        This.remove();
+                        $(".add").show();
+                        $("#upimg").val("");
+                    }
+                });
+            });
+
     });
 
 

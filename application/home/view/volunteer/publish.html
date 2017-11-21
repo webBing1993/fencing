@@ -70,10 +70,13 @@
         background-size: 6vw 6vw;
         position: relative;
         z-index: 9999;
-        margin-left: -15px;
-        margin-top: -10px;
+        margin-left: -4vw;
+        margin-top: -3vw;
         animation: shake 800ms ease;
         -webkit-animation: shake 800ms ease;
+    }
+    .sweet-alert h2{
+        font-size: 20px;
     }
 </style>
 {/block}
@@ -115,7 +118,7 @@
                     <div class="img fl hide"></div>
                     <div class="add fl"></div>
                 </div>
-                <div style="color: #666;font-size: 0.32rem">（您最多上传1张图片, 点击当前图片可以删除）</div>
+                <div style="color: #666;font-size: 0.32rem">（您最多上传1张图片,图片小于5M）</div>
                 <input type="file" class="hide" id="upimg" name="upload" accept="image/*">
                 <input type="hidden" name="id" value="">
             </div>
