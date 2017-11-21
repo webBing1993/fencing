@@ -9,6 +9,7 @@
 namespace app\home\controller;
 use app\home\model\Apply;
 use app\home\Model\WechatUser;
+use app\home\Model\Work;
 //签到
 class Signin extends Base {
     /**
@@ -42,12 +43,25 @@ class Signin extends Base {
             $Wechat = WechatUser::where(['userid'=>$userid])->find();
             if($Wechat){
                 $data = array(
-                    'notice_id' => $id,
+                    'sign_id' => $id,
                     'userid' =>$userid,
-                    'status' =>0
+                    'score' => 0,
+                    'status' =>0,
+                    'create_time' => time()
                 );
+                $work = new Work();
                 $Apply = new Apply();
-                $res = $Apply->save($data);
+                $type = $work->where('id',$id)->value('type');  // 1 三会一课  2 志愿之家
+                if ($type == 1){
+                    $res = $Apply->save($data);
+                }else{
+                    $score = $Apply->where(['userid' => $userid])->whereTime('create_time','d')->sum('score');
+                    if ($score < 2){
+                        $res = $Apply->save(['sign_id' => $id,'userid' => $userid,'score' => 1,'status' => 0,'create_time' => time()]);
+                    }else{
+                        $res = $Apply->save(['sign_id' => $id,'userid' => $userid,'score' => 0,'status' => 0,'create_time' => time()]);
+                    }
+                }
                 if($res){
                     $Wechat = WechatUser::where(['userid'=>$userid])->find();
                     return array('status'=>1,'header'=>$Wechat['avatar'],'name'=>$Wechat['name']);
