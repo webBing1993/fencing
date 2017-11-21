@@ -28,13 +28,15 @@ class Notice extends Admin {
             'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
+        //dump($list);exit();
         int_to_string($list,array(
             'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
-        $list2['type']=$list['0']['type'];
-        //dump($list2);
-        //exit();
+        $list2=1;
+       /*/$list2['type']=$list['0']['type'];
+        dump($list2);
+        //exit();*/
         $this->assign('list2',$list2);
         
         $this->assign('list',$list);
@@ -151,7 +153,7 @@ class Notice extends Admin {
                 'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
                 'recommend' => array(0 => "否" ,1 => "是")
             ));
-        $list2['type']=$list['0']['type'];
+        $list2=3;
         //dump($list2);
         //exit();
         $this->assign('list2',$list2);
@@ -174,7 +176,7 @@ class Notice extends Admin {
             'recommend' => array(0 => "否" ,1 => "是")
         ));
 
-        $list2['type']=$list['0']['type'];
+        $list2=2;
         //dump($list2);
         //exit();
         $this->assign('list2',$list2);
@@ -189,8 +191,8 @@ class Notice extends Admin {
        $this->assign('type',$type);
         if(IS_POST) {
             $data = input('post.');
-    //dump($data);
-            //exit();
+          //dump($data);
+           // exit();
 
             $result = $this->validate($data,'Activity');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
@@ -262,13 +264,14 @@ class Notice extends Admin {
             'status' => array('egt',0),
         );
         $list = $this->lists('Notice',$map);
+        //dump($list);exit();
         int_to_string($list,array(
             'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
             'recommend' => array(0 => "否" ,1 => "是")
         ));
         //dump($list);
         //exit();
-       $list2['type']=$list['0']['type'];
+       $list2=4;
         //dump($list2);
         //exit();
         $this->assign('list2',$list2);
