@@ -59,7 +59,7 @@ class Company extends Admin
 
     //查看招募的用户
     public function recruitname($id){
-        $data=Db::table('pb_company_recruit_receive')->where('rid',$id)->select();
+        $data=Db::table('pb_company_recruit')->where('rid',$id)->select();
         $list=Db::table('pb_company')->where('id',$id)->find();
         //dump($data);
         $this->assign('data',$data);
@@ -73,6 +73,7 @@ class Company extends Admin
         $this->assign('type',$type);
         if (IS_POST) {
             $data = input('post.');
+            dump($data);exit();
             $result = $this->validate($data, 'Company');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
