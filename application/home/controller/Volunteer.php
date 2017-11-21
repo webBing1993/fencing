@@ -36,6 +36,7 @@ class Volunteer extends Base{
             $list = Db::table('pb_companys')->where('type',$v['id'])->count();
                 $v['number']=$list;
         }
+        //dump($data);exit();
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -93,14 +94,14 @@ class Volunteer extends Base{
      *  详情
      * */
     public function detail(){
-     $this->jssdk();
-        $id = input('id');
-        if (empty($id)){
-            $this ->error('参数错误!');
-        }
-        $detail = Db::table('pb_companys')->where('id',$id)->where('status',1)->find();
-        $this->assign('detail',$detail);
-
+        $this->anonymous();
+        $this->jssdk();
+        $id = input('id/d');
+        //dump($id);exit();
+        $info = $this->content(8, $id);
+        //dump($info);
+        //exit();
+        $this->assign('detail', $info);
         return $this ->fetch();
     }
 

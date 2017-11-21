@@ -22,7 +22,7 @@
                             <div class="name">{$vo.title}</div>
                             <div class="notes">活动：<span>{$vo.number}</span>次</div>
                         </a>
-                        <div class="view"><a href="http://sx.pb.cn/home/volunteer/recruit.html" class="btn_">查看活动</a></div>
+                        <div class="view"><a href="{:Url('Volunteer/recruit?pid='.$vo['id'])}" class="btn_">查看活动</a></div>
                     </div>
                     {/volist}
                     <!--循环结束-->
