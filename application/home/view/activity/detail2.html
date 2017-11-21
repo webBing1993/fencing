@@ -3,6 +3,7 @@
 {block name="style"}
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/sass/stylesheets/details-template/banner-detail.css">
+<title></title>
 <style>
     .mui-pull-bottom-pocket {
         height: 0.8rem;
@@ -125,13 +126,12 @@
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script src="/home/js/reset.js"></script>
 <script>
-    var type =  parseInt(window.location.href.split("?")[1]);
-
-
-
-
-
-
+    var type =  parseInt(window.location.href.split("/type/")[1]);
+    if(type==1){
+        $("title").text("三会一课");
+    }else if(type==2){
+        $("title").text("会议纪要");
+    }
     window.onload = function(){
 
         if($(".list").length<7){

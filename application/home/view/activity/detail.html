@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title>党建动态</title>
+<title></title>
 <link rel="stylesheet" href="/home/sass/stylesheets/details-template/detail.css">
 <style>
     .mui-pull-bottom-pocket {
@@ -85,9 +85,12 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    var type =  parseInt(window.location.href.split("?")[1]);
-
-
+    var type =  parseInt(window.location.href.split("/type/")[1]);
+    if(type==1){
+        $("title").text("三会一课");
+    }else if(type==2){
+        $("title").text("固定活动");
+    }
     $(function(){
         function IsPC() {
             var userAgentInfo = navigator.userAgent;
