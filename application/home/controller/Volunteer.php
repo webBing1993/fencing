@@ -156,6 +156,11 @@ class Volunteer extends Base{
         $Company = new Company();
         $mapp = ['status' => ['eq', 1], 'type' => 1];
         $data = $Company->get_list($mapp);
+        foreach($data as $v){
+            $list = Db::table('pb_company_recruit')->where('rid',$v['id'])->count();
+            $v['receive_number']=$list;
+        }
+        //dump($data);exit();
         $type=1;
         $this->assign('type',$type);
         $this->assign('data',$data);
@@ -198,7 +203,8 @@ class Volunteer extends Base{
                 $list[$key]['userid'] = $list2['name'];
                 $list[$key]['image'] = $list2['avatar'];
             }
-            //dump($list);exit();
+            
+            //dump($data);exit();
             $this->assign('list', $list);
             $this->assign('data', $data);
             return $this->fetch();
@@ -211,7 +217,8 @@ class Volunteer extends Base{
                 $list[$key]['userid'] = $list2['name'];
                 $list[$key]['image'] = $list2['avatar'];
             }
-            //dump($list);exit();
+            $data['receive_number']=Db::table('pb_company_recruit')->where('rid', $id)->count();
+            //dump($data);exit();
             $this->assign('list', $list);
             $this->assign('data', $data);
             return $this->fetch('Volunteer/wishesdetail2');
