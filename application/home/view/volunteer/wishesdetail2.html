@@ -12,6 +12,7 @@
     <div class="time">
         <p>{$data.create_time|time_format='Y-m-d'}</p>
     </div>
+    <img src="{$data.image}">
     <div class="information">
         <div  class="information-content">
         <p>招募内容：</p>
@@ -79,7 +80,11 @@
 <script>
     var id = $(".detail").attr("data-id");
 
-
+    if($(".detail").find("img").attr("src")==""){
+        $(".detail").find("img").hide()
+    }else{
+        $(".detail").find("img").show()
+    }
     $(".claim").on("click",function(){
         $.ajax({
             url:"{:Url('Volunteer/receive')}",

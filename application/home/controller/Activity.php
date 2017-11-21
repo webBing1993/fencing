@@ -141,7 +141,7 @@ class Activity extends Base
             }
             //$data['images'] = json_encode($data['image']);
             //unset($data['front_cover']);
-            //$data['front_cover'] = $this->default_pic();
+            $data['front_cover'] = $this->default_pic();
                 $data['userid'] = $userId;
                 $data['start_time'] = strtotime($data['start_time']);
                 $data['create_time'] = strtotime(date("Y-m-d H:i:s"));

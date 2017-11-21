@@ -133,6 +133,7 @@ class Volunteer extends Base{
             //dump($data);
             //exit();
             //$data['images'] = json_encode($data['front_cover']);
+            $data['front_cover'] = $this->default_pic();
             $data['userid'] = $userId;
             $data['start_time'] = strtotime($data['start_time']);
             $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
@@ -178,6 +179,11 @@ class Volunteer extends Base{
        $type=input('type');
         $map = ['status' => ['eq', 1], 'type' =>$type];
         $list = $Company->get_list($map, $len);
+        foreach ($list as $v) {
+            $list2 = Db::table('pb_company_recruit')->where('rid', $v['id'])->count();
+            $v['receive_number'] = $list2;
+        }
+       //dump($list);exit();
         if ($list) {
             return $this->success('加载成功', '', $list);
         } else {
@@ -197,6 +203,8 @@ class Volunteer extends Base{
         if (empty($list3)){
             //dump($id);exit();
             $data = Db::table('pb_company')->where('id', $id)->find();
+            $list5=Db::table('pb_picture')->where('id', $data['image'])->find();
+            $data['image']=$list5['path'];
             $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
             //dump($list);exit();
             foreach ($list as $key => $v) {
@@ -211,6 +219,10 @@ class Volunteer extends Base{
             return $this->fetch();
         }else{
             $data = Db::table('pb_company')->where('id', $id)->find();
+            $list5=Db::table('pb_picture')->where('id', $data['image'])->find();
+
+            $data['image']=$list5['path'];
+            //dump($data);exit();
             $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
             //dump($list);exit();
             foreach ($list as $key => $v) {
@@ -254,6 +266,10 @@ class Volunteer extends Base{
         $Company = new Company();
         $mapp = ['status' => ['eq', 1], 'type' => 2];
         $data = $Company->get_list($mapp);
+        foreach($data as $v){
+            $list = Db::table('pb_company_recruit')->where('rid',$v['id'])->count();
+            $v['receive_number']=$list;
+        }
         $type=2;
         $this->assign('type',$type);
         $this->assign('data',$data);

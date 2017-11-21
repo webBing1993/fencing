@@ -12,7 +12,7 @@
     <div class="time">
         <p>{$data.create_time|time_format='Y-m-d'}</p>
     </div>
-   <img src="/home/images/learn.png">
+   <img src="{$data.image}">
     <div class="information">
         <div  class="information-content">
         <p>招募内容：</p>
@@ -79,11 +79,11 @@
 <script>
     var id = $(".detail").attr("data-id");
     var type = $(".list-person").attr("data-type");
-/*    if($(".detail").find("img").attr("src")==""){
+    if($(".detail").find("img").attr("src")==""){
         $(".detail").find("img").hide()
     }else{
         $(".detail").find("img").show()
-    }*/
+    }
 
 
     $(".claim").on("click",function(){

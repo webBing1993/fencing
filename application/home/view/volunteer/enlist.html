@@ -75,7 +75,6 @@
             beforeSend: function(XMLHttpRequest){
             },
             success:function(data){
-                console.log(data)
                 addCourse(data);
                 if(data.code == 1){
                     if(data.data.length == 10){
@@ -97,7 +96,7 @@
         for (var i = 0; i < len; i++) {
             var list = lists[i];
             html +=
-                    '<a href="/home/volunteer/wishesdetail/type/1/id/' + list.id + '">' +
+                    '<a href="/home/volunteer/wishesdetail/type/2/id/' + list.id + '">' +
                     '<img src="'+list.image+'">' +
                     '<p>'+list.title+'</p>' +
                     '<span><span>'+list.receive_number+'</span> / '+list.demand_number+'人</span>' +
