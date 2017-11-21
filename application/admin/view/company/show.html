@@ -44,6 +44,7 @@
                                 <th>标题</th>
                                 <th>发布人</th>
                                 <th>创建时间</th>
+                                <th>是否推荐</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -56,6 +57,7 @@
 
                                 <td>{$vo.publisher}</td>
                                 <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
+                                <td>{$vo.istop_text}</td>
                                 <td>{$vo.status_text}</td>
                                 <td>
                                     <a href="{:Url('Company/showedit?id='.$vo['id'])}">修改</a>

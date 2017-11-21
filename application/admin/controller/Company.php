@@ -151,6 +151,7 @@ class Company extends Admin
         $list = $this->lists('Companys', $map);
         int_to_string($list, array(
             'status' => array( 0=>"待审核",1=>"已发布",2=>"审核未通过"),
+            'istop'=>array(0=>"否",1=>"是"),
         ));
        
         $this->assign('list', $list);
@@ -194,7 +195,7 @@ class Company extends Admin
         $this->assign('data',$data);
         if (IS_POST) {
             $data1 = input('post.');
-            //dump($data);
+            //dump($data1);
             //exit();
             $result = $this->validate($data1, 'Companys');  // 验证  数据
             if (true !== $result) {
