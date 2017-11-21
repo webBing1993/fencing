@@ -1,24 +1,248 @@
+body,html{
+  overflow-x: hidden;
+}
+body {
+  background-color: #fff;
+}
+.main {
+  background-color: #fff;
+}
+.list ul li{
+  height:12vw;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 0.42rem;
+  padding: 1vw 0;
+  padding-bottom: 2vw;
+  line-height: 12vw;
+  padding-left: 3vw;
+  overflow: hidden;
+}
 
-@import "common";
+.triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 1.5vw solid transparent;
+  border-right: 1.5vw solid transparent;
+  border-top: 0.2rem solid #999;
+  position: absolute;
+  right: 2vw;
+  margin-top: 5vw;
+}
+.mui-table-view-cell>a:not(.mui-btn){
+  font-size: 0.36rem;
+  margin:1vw;
+  text-align: center;
+}
+.list ul li input{
+  border: none;
+  height:10vw;
+  line-height: 10vw;
+  width: 80%;
+  float: right;
+  text-align: right;
+  right:0;
+  padding: 0 6vw;
+  -webkit-user-select: text;
+  -user-select: text;
+}
 
+input[type="date"]{
+  width:45%!important;
+  margin-right:-5vw!important;
+}
 
+.list ul li input::-webkit-input-placeholder{
+  display: block;
+  color: #999;
+  text-align: right;
+  right: 10vw;
+  font-size: 0.38rem;
+}
 
-#tab{
-  top:50vw;
-  a{
-    &:after{
-      left:49vw;
-    }
+input[type="date"]:before{
+  content: attr(placeholder);
+  color:#999;
+  font-size: 0.38rem;
+  position: absolute;
+  right:5vw;
+}
+
+.list ul textarea{
+  border: none;
+  height: 30vw;
+  margin: 2vw 0;
+  padding-left: 3vw;
+  line-height:0.5rem ;
+}
+@media screen and (device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2){
+  .list ul textarea{
+    height: 30vw;
   }
 }
-#refreshContainer {
-  margin-top: 58vw;
+
+textarea::-webkit-input-placeholder{
+  font-size: 0.36rem;
+  color: #999;
+  line-height:0.5rem;
+}
+textarea{
+  font-size: 0.38rem;
+}
+.content{
+  padding-bottom: 5vw;
+  border: 1px solid #f1f1f1;
+}
+.content .img{
+  display: inline-block;
+  position: relative;
+  width: 20vw;
+  height: 20vw;
+  margin-left: 3vw;
+  margin-bottom: 3vw;
+  overflow: hidden;
+  background: #d9d9d9;
+  border: 2px solid #d9d9d9;
+  box-sizing: content-box;
+}
+.content .img img,.content .img2 img,.content .img3 img{
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+.content .add,.content .add2,.content .add3{
+  width: 20vw;
+  height: 20vw;
+  margin-left: 2vw;
+  margin-bottom: 2vw;
+  border: 2px solid #d9d9d9;
+  font-size: 2rem;
+  color: #d9d9d9;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: url("/home/images/add.png") no-repeat;
+  background-size: 20vw 20vw;
+}
+.imgs.clear{
+  display: flex;
+}
+
+.save,.goreview{
+  width:56vw;
+  height:10vw;
+  background: #fc6c62;
+  border-radius: 5px;
   color: #fff;
-  background: #ffa626;
-
+  margin: 5vw auto;
+  text-align: center;
+  font-size: 0.36rem;
+  line-height: 10vw;
+}
+.goreview{
+  background: #fff;
+  color: #fc6c62;
+  border: 1px solid #fc6c62;
+}
+.goreview+p{
+  font-size: 0.32rem;
+  color: #999;
+  padding: 1vw 3vw;
+  line-height: 5vw;
 }
 
 
+$green: #008744;
+$blue: #0057e7;
+$red: #d62d20;
+$yellow: #ffa700;
+$white: #eee;
+
+// scaling... any units
+$width: 100px;
+
+body {
+  background-color: #fff;
+}
+
+// demo-specific
+.showbox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5%;
+  display: none;
+}
+// end demo-specific
+
+.loader {
+  position: relative;
+  margin: 0 auto;
+  width: $width;
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+}
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100%;
+  transform-origin: center center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes color {
+  100%,
+  0% {
+    stroke: $red;
+  }
+  40% {
+    stroke: $blue;
+  }
+  66% {
+    stroke: $green;
+  }
+  80%,
+  90% {
+    stroke: $yellow;
+  }
+}

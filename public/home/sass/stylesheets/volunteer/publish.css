@@ -164,6 +164,10 @@ textarea {
   line-height: 5vw;
 }
 
+body {
+  background-color: #eee;
+}
+
 .showbox {
   position: absolute;
   top: 0;
@@ -171,7 +175,6 @@ textarea {
   left: 0;
   right: 0;
   padding: 5%;
-  background: rgba(0,0,0,0.2);
   display: none;
 }
 
@@ -179,12 +182,11 @@ textarea {
   position: relative;
   margin: 0 auto;
   width: 100px;
-  top: 50%;
 }
 .loader:before {
   content: '';
   display: block;
-  padding-top: 50%;
+  padding-top: 100%;
 }
 
 .circular {
