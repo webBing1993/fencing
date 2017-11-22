@@ -1,6 +1,7 @@
 <?php
 namespace app\home\model;
 use think\Model;
+use app\home\model\Picture;
 /**
  * Created by PhpStorm.
  * User: 老王
@@ -9,7 +10,17 @@ use think\Model;
  */
 class Work extends Model
 {
-    protected $insert = [
-        'create_time' => NOW_TIME,
-    ];
+    /**
+     * 加载更多
+     */
+    //首页获取已推送的数据
+    public function get_list($where,$length=0){
+        $list = $this->where($where)->order('create_time','desc')->limit($length,10)->select();
+        foreach($list as $value){
+            //$value['create_time'] = date('Y-m-d',$value['create_time']);
+            //$value['meet_endtime'] = strtotime($value['meet_endtime']);
+            $value['front_cover'] = Picture::where('id',$value['front_cover'])->value('path');
+        }
+        return $list;
+    }
 }

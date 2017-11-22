@@ -19,16 +19,16 @@
             <div id="item1mobile" class="mui-slider-item mui-control-content">
                 <!--最新签到开始-->
                 <div class="list newsign">
-                    {empty name="new"}
+                    {empty name="left"}
                     <div class="default"><img src="/home/images/common/nomessage.png"></div>
                     {else/}
                     <ul>
-                        {volist name="new" id="ne"}
-                        <a href="{:Url('Sign/detail?type=1&id='.$ne['id'])}">
+                        {volist name="left" id="ne"}
+                        <a href="{:Url('Signin/detail?type=1&id='.$ne['id'])}">
                             <img src="{$ne.front_cover}">
                             <p>{$ne.title}</p>
                             <span>【{$ne.publisher}】</span>
-                            <span>{$ne.create_time}</span>
+                            <span>{$ne.create_time|substr=0,10}</span>
                             <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                         </a>
                         {/volist}
@@ -40,16 +40,16 @@
             <div id="item2mobile" class="mui-slider-item mui-control-content">
                 <!--历史签到开始-->
                 <div class="list oldsign">
-                    {empty name="old"}
+                    {empty name="right"}
                     <div class="default"><img src="/home/images/common/nomessage.png"></div>
                     {else/}
                     <ul>
-                        {volist name="old" id="ol"}
-                        <a href="{:Url('Sign/detail?type=2&id='.$ol['id'])}">
+                        {volist name="right" id="ol"}
+                        <a href="{:Url('Signin/detail?type=2&id='.$ol['id'])}">
                             <img src="{$ol.front_cover}">
                             <p>{$ol.title}</p>
                             <span>【{$ol.publisher}】</span>
-                            <span>{$ol.create_time}</span>
+                            <span>{$ol.create_time|substr=0,10}</span>
                             <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                         </a>
                         {/volist}
@@ -106,7 +106,7 @@
         }
         $.ajax({
             type:"post",
-            url:"{:Url('Profile/more')}",
+            url:"{:Url('Signin/more')}",
             data:{
                 length:len,
                 type:c
@@ -145,7 +145,7 @@
                         '</a>'
             } else if (type == 1) {
                 html +=
-                        '<a href="/home/sginin/detail/type/2/id/' + list.id + '">' +
+                        '<a href="/home/signin/detail/type/2/id/' + list.id + '">' +
                         '<img src="'+list.front_cover+'">'+
                         '<p>' + list.title + '</p>' +
                         '<span>' + list.publisher + '</span>' +

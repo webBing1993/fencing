@@ -12,86 +12,35 @@
     <ul>
         <li>
             名称
-            <span>的点点滴滴多多多多多多多多多多多多多多多多多多多多多的点点滴滴多多多多多多多多多多多多多多多多多多</span>
+            <span>{$data.title}</span>
         </li>
         <li>
             主办方
-            <span>的点多多ffff多多多</span>
+            <span>{$data.publisher}</span>
         </li>
         <li>
             时间
-            <span>2017-11-15 10:00 到 2017-11-16 12:30</span>
+            <span>{$data.meet_time|substr=0,16}&nbsp;到&nbsp;{$data.meet_endtime|substr=0,16}</span>
         </li>
         <li>
             地点
-            <p><span>的点点滴滴多多多多多多多多多多多多多多多多多多多多多的点点滴滴多多多多多多多多多多多多多多多多多多</span></p>
+            <p><span>{$data.meet_home}</span></p>
         </li>
         <li>
             电话
-            <span>18584741236</span>
+            <span>{$data.tel}</span>
         </li>
     </ul>
 </div>
 <div class="people">
     参会人
     <ul>
+        {volist name="data2" id="vo"}
         <li>
-            <img src="/home/images/learn.png">
-            <p>嘟嘟</p>
+            <img src="{$vo.image}">
+            <p>{$vo.userid}</p>
         </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟嘟嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟嘟嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是的嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟是嘟</p>
-        </li>
-        <li>
-            <img src="/home/images/learn.png">
-            <p>嘟嘟</p>
-        </li>
-
+       {/volist}
     </ul>
 
 </div>

@@ -8,23 +8,65 @@
 
 namespace app\home\controller;
 use app\home\model\Apply;
-use app\home\Model\WechatUser;
-use app\home\Model\Work;
+use app\home\model\WechatUser;
+use app\home\model\Work;
+use think\Db;
 //签到
 class Signin extends Base {
     /**
      * 签到主页
      */
     public function index(){
-
+        $Work = new Work();
+        $data=date("Y-m-d H:i:s");
+        //dump($data);exit();
+        $map = ['status' => ['eq',0],'meet_endtime'=>['egt',$data]];
+        $left = $Work->get_list($map);
+        //dump($left);exit();
+        $map = ['status' => ['eq',0],'meet_endtime'=>['lt',$data]];
+        $right = $Work->get_list($map);
+        //dump($right);exit();
+        $this->assign('left',$left); // 最新签到
+        $this->assign('right',$right);  // 历史签到
         return $this->fetch();
+        
     }
+    //上拉加载
+    public function more()
+    {
+        $Work = new Work();
+        $len = input('length');
+        $data=date("Y-m-d H:i:s");
+        //dump($data);exit();
+        $map = ['status' => ['eq',0],'meet_endtime'=>['lt',$data]];
+        $list = $Work->get_list($map, $len);
+        //dump($list);exit();
+        if ($list) {
+            return $this->success('加载成功', '', $list);
+        } else {
+            return $this->error('加载失败');
+        }
+    }
+    
 
     /**
      * 签到详情页
      */
     public function detail(){
+        $id=input('id');
+        $data=Db::table('pb_work')->where('id',$id)->find();
+        //dump($data);exit();
+        $data2=Db::table('pb_apply')->where('sign_id',$id)->select();
+        //dump($data2);exit();
+        foreach ($data2 as $key=>$v) {
+            $list = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
+            $data2[$key]['userid'] = $list['name'];
+            $data2[$key]['image'] = $list['avatar'];
+        }
+        //dump($data2);exit();
 
+        $this->assign('data',$data);//详情内容
+        $this->assign('data2',$data2);//签到人员
         return $this->fetch();
 
     }
