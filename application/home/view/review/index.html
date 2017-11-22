@@ -119,9 +119,18 @@ mui.init({
 
 
 function loadScroll(){
-        var meeting = $('.publish li[data-type=1]').length;
-        var dream = $('.publish li[data-type=2]').length;
-        var volunteer = $('.publish li[data-type=3]').length;
+    var meeting;
+    var dream;
+    var volunteer;
+    if (c == 0){
+        meeting = $('.publish li[data-type=1]').length;
+        dream = $('.publish li[data-type=2]').length;
+        volunteer = $('.publish li[data-type=3]').length;
+    }else{
+        meeting = $('.Audited li[data-type=1]').length;
+        dream = $('.Audited li[data-type=2]').length;
+        volunteer = $('.Audited li[data-type=3]').length;
+    }
     $.ajax({
         type:"post",
         url:"{:Url('Review/moreDataList')}",
