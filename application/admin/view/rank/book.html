@@ -13,7 +13,7 @@
 {block name="page-header"}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>积分排行</h2>
+        <h2>积分干预</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{:Url('Rank/index')}">详情列表</a>
@@ -51,15 +51,13 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>操作人</th>
                                 <th>操作内容</th>
-                                <th>创建时间</th>
+                                <th>操作时间</th>
                             </tr>
                             </thead>
                             <tbody>
                             {volist name="list" id="vo"}
                             <tr>
-                                <td>{$vo->cuser->nickname}</td>
                                 <td>{$vo.content}</td>
                                 <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
                             </tr>
