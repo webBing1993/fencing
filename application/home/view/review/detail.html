@@ -41,14 +41,11 @@
 
                 </div>
             </div>
-            <div class="view">
-                <span class="read">0</span>
-            </div>
             <div class="article">
                 <div class="title"><p>{$detail.title}</p></div>
                 <div class="note clear">
                     {if condition="(!empty($detail['create_user']))"}
-                    <span class="publish">{$detail.publisher}</span>
+                    <span class="publish">{$detail.userId}</span>
                     {else /}
                     <span class="publish">{$detail.userid|get_name}</span>
                     {/if}
