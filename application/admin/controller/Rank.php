@@ -7,6 +7,8 @@
  */
 
 namespace app\admin\controller;
+use app\admin\model\WechatDepartment;
+use app\admin\model\WechatDepartmentUser;
 use app\admin\model\WechatUserTag;
 use app\admin\model\WechatUser;
 use think\Db;
@@ -20,57 +22,27 @@ class Rank extends Admin
      * 首页
      */
     public function index(){
-        $search = input('search');
-        // 获取考核人员列表
+        $beginThismonth=mktime(0,0,0,date('m'),1,date('Y'));  // 当前月
+        $endThismonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+        // 获取签到人员列表
         $map = array(
-            'tagid' => 1,
-
+            'status' => 0,
+            'create_time' => ['between',[$beginThismonth,$endThismonth]]
         );
-        if ($search != '') {
-            $where['name'] = ['like','%'.$search.'%'];
-            $arr = WechatUser::where($where)->column('userid');
-            $map = array(
-                'tagid' => 1,
-                'userid' => ['in',$arr]
-            );
-        }
-        $list = WechatUserTag::where($map)->select();
+        $list = Db::name('apply')->field('userid,sum(score) as sums')->where($map)->group('userid')->select();
         foreach($list as $key => $value){
-            $User = WechatUser::where('userid',$value->userid)->find();
-            if (!empty($User)){
-                $score1 = $User['score_party'];  // 党风廉政 4
-                $score2 = $User['score_satisfaction'];  // 满意度测评积分 40
-                $score3 = $User['score_work'];  // 两新党建 2
-                $Arr = Db::name('score')->where('userid',$value->userid)->whereTime('create_time','y')->select();
-                $score4 = 0;
-                foreach($Arr as $val){
-                    $score4 += ($val['score_up'] / $val['score_down']);
-                }
-                $value['score'] = $score1 + $score2 + $score3 + $score4;
-                $value['name'] = $User['name'];
-                $value['party'] = $score1;
-                $value['satisfaction'] = $score2;
-                $value['work'] = $score3;
-                $value['push'] = $score4;
-            }else{
-               unset($list[$key]);
+            $User = WechatUser::where('userid',$value['userid'])->find();
+            if ($User){
+                $list[$key]['name'] = $User['name'];
+                $department_id = WechatDepartmentUser::where('userid',$value['userid'])->value('departmentid');
+                $list[$key]['department'] = WechatDepartment::where('id',$department_id)->value('name');
+            }else {
+                $list[$key]['name'] = '暂无';
+                $list[$key]['department'] = "暂无";
             }
         }
-        $arr = array();
-        foreach($list as $key => $value){
-            $arr[] = $value;
-        }
-        // 冒泡排序  大数向前排列
-        for($i = 1;$i < count($arr); $i++){
-            for ($k = 0;$k < count($arr)-$i;$k++){
-                if ($arr[$k]['score'] < $arr[$k+1]['score']){
-                    $temp = $arr[$k+1];
-                    $arr[$k+1] = $arr[$k];
-                    $arr[$k] = $temp;
-                }
-            }
-        }
-        $this->assign('list',$arr);
+        dump($list);
+        $this->assign('list',$list);
         return $this->fetch();
     }
     /**
