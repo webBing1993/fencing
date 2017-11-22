@@ -35,7 +35,7 @@ table { border-collapse: collapse; background-color: #ffffff; }
 .gra{
 	position: relative;
 	width: 100%;
-	height: 180px;
+	height: 50vw;
 	/*background:-webkit-gradient(linear, left bottom, right top, from(#e4672d), to(#e9ad2c));*/
 	background: url("/home/images/learn/bg_rank.jpg") no-repeat;
 	background-size: 100% 100%;
@@ -93,41 +93,41 @@ table { border-collapse: collapse; background-color: #ffffff; }
 .my{
 	position: relative;
 	width: 100%;
-	height: 60px;
-	line-height: 60px;
+	height: 16vw;
+	line-height: 16vw;
 	border-bottom: 4px solid #efeff4;
 }
 .my img{
-	width: 40px;
-	height: 40px;
+	width: 10.68vw;
+	height: 10.68vw;
 	-webkit-border-radius:50%;
 	border-radius:50%;
-	margin: 10px 15px auto 56px;
+	margin: 2.67vw 4vw auto 14.93vw;
 	overflow: hidden;
 }
 .my .name_,.my .scores{
 	display: inline-block;
-	font-size: 0.34rem;
+	font-size: 0.38rem;
 }
 .name_ span{
 	display: block;
-	height: 36px;
+	height: 9.6vw;
 	width: 32vw;
 	margin-right:5vw;
-	line-height: 36px;
+	line-height: 9.6vw;
 }
 .my .name_ .n{
-	height: 12px;
+	height: 3.2vw;
 	line-height: 12px;
 	color:#999999;
 }
 .my .scores{
 	position: absolute;
-	top:20px;
+	top:5.34vw;
 	right: 6vw;
 	width: 25vw;
-	height: 20px;
-	line-height: 20px;
+	height: 5.34vw;
+	line-height: 5.34vw;
 	text-align: right;
  }
 /*排名列表*/
@@ -172,8 +172,8 @@ table { border-collapse: collapse; background-color: #ffffff; }
 }
 .list{
 	position: relative;
-	height: 60px;
-	line-height: 60px;
+	height: 16vw;
+	line-height: 16vw;
 	color:#333333;
 	border-bottom: 1px solid #efeff4;
 }
@@ -181,20 +181,20 @@ table { border-collapse: collapse; background-color: #ffffff; }
 	border-bottom: none;
 }
 .list .num_ {
-	width: 30px;
+	width: 8vw;
 	font-size: 0.37rem;
-	margin-left: 25px;
+	margin-left: 6.67vw;
 }
 .list .avatar_{
-	width: 40px;
-	height: 40px;
+	width: 10.68vw;
+	height: 10.68vw;
 	-webkit-border-radius:50%;
 	border-radius:50%;
-	margin: 10px 15px auto 0;
+	margin: 2.67vw 4vw auto 0;
 	overflow: hidden;
 }
 .list .name_,.list .scores{
-	font-size: 0.34rem;
+	font-size: 0.38rem;
 }
 .list .name_{
 	width: 32vw;
