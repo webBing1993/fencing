@@ -249,3 +249,9 @@ table { border-collapse: collapse; background-color: #ffffff; }
 	background: url("/home/images/learn/game3.png");
 	background-size: 100% 100%;
 }
+.modal-title{
+	font-size:0.37rem!important;
+}
+.modal-body{
+	font-size:0.37rem!important;
+}
