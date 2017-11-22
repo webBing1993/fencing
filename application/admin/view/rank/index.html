@@ -57,8 +57,9 @@
                     <div class="ibox-tools">
                         <div class="ibox-date">
                         <select class="year">
-                            <option>2016</option>
-                            <option>2017</option>
+                            {volist name="$years" id="y"}
+                            <option>{$y.year}</option>
+                            {/volist}
                         </select>
                         <select class="month">
                             <option>1月</option>
@@ -239,7 +240,7 @@
         var year = $(".year").val();
         var month = parseInt($(".month").val());
         $.ajax({
-            url:"",
+            url:"{:Url('Rank/index')}",
             type:"post",
             data:{
                 year:year,

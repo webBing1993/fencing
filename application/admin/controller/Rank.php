@@ -9,8 +9,8 @@
 namespace app\admin\controller;
 use app\admin\model\WechatDepartment;
 use app\admin\model\WechatDepartmentUser;
-use app\admin\model\WechatUserTag;
 use app\admin\model\WechatUser;
+use app\admin\model\Apply;
 use think\Db;
 /**
  * Class Rank
@@ -23,14 +23,13 @@ class Rank extends Admin
      */
     public function index(){
         if (IS_POST){
-
-        }else{
-            $mouth = date('m',time());  // 当前月份
+            $year = input('year');
+            $mouth = input('month');
             // 获取签到人员列表
             $map = array(
+                "FROM_UNIXTIME(create_time,'%Y%c')"  => $year.$mouth,
                 'type' => 2,
                 'status' => 0,
-                'mouth' => $mouth
             );
             $list = Db::name('apply')->field('userid,sum(score) as sums')->where($map)->group('userid')->select();
             foreach($list as $key => $value){
@@ -56,6 +55,45 @@ class Rank extends Admin
                     $list[$key]['base'] = 0;
                 }
             }
+            return $this->success('加载成功','',$list);
+        }else{
+            $year = date('Y',time());  // 年
+            $mouth = date('m',time());  // 当前月份
+            // 获取签到人员列表
+            $map = array(
+                "FROM_UNIXTIME(create_time,'%Y%c')"  => $year.$mouth,
+                'type' => 2,
+                'status' => 0,
+            );
+            $list = Db::name('apply')->field('userid,sum(score) as sums')->where($map)->group('userid')->select();
+            foreach($list as $key => $value){
+                // 干预分数
+                $info = Db::name('handle')->where(['userid' => $value['userid'],'mouth' => $mouth])->select();
+                $sum = 0;
+                foreach($info as $v){
+                    $sum += $v['score'];
+                }
+                $list[$key]['sum'] = $value['sums'] + $sum;
+                $list[$key]['mouth'] = $mouth;
+                $User = WechatUser::where('userid',$value['userid'])->find();
+                if ($User){
+                    $list[$key]['name'] = $User['name'];
+                    $department_id = WechatDepartmentUser::where('userid',$value['userid'])->value('departmentid');
+                    $list[$key]['department'] = WechatDepartment::where('id',$department_id)->value('name');
+                    //基础分
+                    $list[$key]['base'] = $User['volunteer_base'];
+                }else {
+                    $list[$key]['name'] = '暂无';
+                    $list[$key]['department'] = "暂无";
+                    //基础分
+                    $list[$key]['base'] = 0;
+                }
+            }
+            //获取全部共同数据年份
+            $years = Apply::all(function($query){
+                $query->group("FROM_UNIXTIME(create_time,'%Y')")->field("FROM_UNIXTIME(create_time,'%Y') as year");
+            });
+            $this->assign('years',$years);
             $this->assign('list',$list);
             return $this->fetch();
         }
@@ -93,26 +131,7 @@ class Rank extends Admin
         $list =  $this->lists('Handle',$where);
         foreach($list as $value){
             $name = WechatUser::where('userid',$value['userid'])->value('name');
-            switch ($value['class']){
-                case 1:
-                    $pre = "党风廉政";
-                    $num = 1;
-                    break;
-                case 2:
-                    $pre = "满意度测评积分";
-                    $num = 1;
-                    break;
-                case 3:
-                    $pre = "两新党建";
-                    $num = 1;
-                    break;
-            }
-            if ($value['type'] == 1){
-                $ps = "减去";
-            }else{
-                $ps = "增加";
-            }
-            $value['content'] = "对用户：【".$name."】的【".$pre.'】【'.$ps."】".$num." 分";
+            $value['content'] = "对用户：【".$name."】人工干预 【 ".$value['score']." 】 分";
         }
         $this->assign('list',$list);
         return $this->fetch();
@@ -123,37 +142,24 @@ class Rank extends Admin
     public function handle(){
         $data = input('post.');
         $userid = $data['userid'];
-        $class = $data['class'];  // 1 党风廉政 4分 2 满意度测评 3 两新党建
+        $mouth = $data['month'];  // 月份
         $type = $data['type'];  // 1 减  2 加
         $User = WechatUser::where('userid',$userid)->find();
         if (empty($User)){
             return $this->error('操作失败');
         }
-        switch ($class){
-            case 1:
-                $field = 'score_party';
-                $num = 1;
-                break;
-            case 2:
-                $field = 'score_satisfaction';
-                $num = 1;
-                break;
-            case 3:
-                $field = 'score_work';
-                $num = 1;
-                break;
-        }
-        $create_user = $_SESSION['think']['user_auth']['id'];
         if ($type == 1){
             // 减分
-            $res = WechatUser::where('userid',$userid)->setDec($field,$num);
+            $res = WechatUser::where('userid',$userid)->setDec('volunteer_score');
+            $num = -1;
         }else{
             // 加分
-            $res = WechatUser::where('userid',$userid)->setInc($field,$num);
+            $res = WechatUser::where('userid',$userid)->setInc('volunteer_score');
+            $num = 1;
         }
         if ($res){
             // 存日志
-            Db::name('handle')->insert(['userid' => $userid,'class' => $class,'type' => $type,'create_time' => time(),'create_user' => $create_user]);
+            Db::name('handle')->insert(['userid' => $userid,'mouth' => $mouth,'score' => $num,'create_time' => time()]);
             return  $this->success('操作成功');
         }else{
             return $this->error('操作失败');
