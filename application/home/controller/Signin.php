@@ -57,6 +57,7 @@ class Signin extends Base {
                 }else{
                     $score = $Apply->where(['userid' => $userid])->whereTime('create_time','d')->sum('score');
                     if ($score < 2){
+                        WechatUser::where('userid',$userid)->setInc('volunteer_score');
                         $res = $Apply->save(['sign_id' => $id,'userid' => $userid,'score' => 1,'status' => 0,'create_time' => time()]);
                     }else{
                         $res = $Apply->save(['sign_id' => $id,'userid' => $userid,'score' => 0,'status' => 0,'create_time' => time()]);
