@@ -3,6 +3,8 @@
 @import "graphic-list";
 
 #tab{
+  position: static;
+  top:auto;
   a{
     &:after{
       left:49vw;
