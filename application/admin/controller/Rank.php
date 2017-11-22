@@ -22,28 +22,60 @@ class Rank extends Admin
      * 首页
      */
     public function index(){
-        $beginThismonth=mktime(0,0,0,date('m'),1,date('Y'));  // 当前月
-        $endThismonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
-        // 获取签到人员列表
-        $map = array(
-            'status' => 0,
-            'create_time' => ['between',[$beginThismonth,$endThismonth]]
-        );
-        $list = Db::name('apply')->field('userid,sum(score) as sums')->where($map)->group('userid')->select();
-        foreach($list as $key => $value){
-            $User = WechatUser::where('userid',$value['userid'])->find();
-            if ($User){
-                $list[$key]['name'] = $User['name'];
-                $department_id = WechatDepartmentUser::where('userid',$value['userid'])->value('departmentid');
-                $list[$key]['department'] = WechatDepartment::where('id',$department_id)->value('name');
-            }else {
-                $list[$key]['name'] = '暂无';
-                $list[$key]['department'] = "暂无";
+        if (IS_POST){
+
+        }else{
+            $mouth = date('m',time());  // 当前月份
+            // 获取签到人员列表
+            $map = array(
+                'type' => 2,
+                'status' => 0,
+                'mouth' => $mouth
+            );
+            $list = Db::name('apply')->field('userid,sum(score) as sums')->where($map)->group('userid')->select();
+            foreach($list as $key => $value){
+                // 干预分数
+                $info = Db::name('handle')->where(['userid' => $value['userid'],'mouth' => $mouth])->select();
+                $sum = 0;
+                foreach($info as $v){
+                    $sum += $v['score'];
+                }
+                $list[$key]['sum'] = $value['sums'] + $sum;
+                $list[$key]['mouth'] = $mouth;
+                $User = WechatUser::where('userid',$value['userid'])->find();
+                if ($User){
+                    $list[$key]['name'] = $User['name'];
+                    $department_id = WechatDepartmentUser::where('userid',$value['userid'])->value('departmentid');
+                    $list[$key]['department'] = WechatDepartment::where('id',$department_id)->value('name');
+                    //基础分
+                    $list[$key]['base'] = $User['volunteer_base'];
+                }else {
+                    $list[$key]['name'] = '暂无';
+                    $list[$key]['department'] = "暂无";
+                    //基础分
+                    $list[$key]['base'] = 0;
+                }
             }
+            $this->assign('list',$list);
+            return $this->fetch();
         }
-        dump($list);
+    }
+    /**
+     * 积分详情
+     */
+    public function detail($mouth,$userid){
+        $map = array(
+            'type' => 2,
+            'mouth' => $mouth,
+            'userid' => $userid,
+        );
+        $list = $this->lists('Apply',$map);
+        foreach($list as $value){
+            $info = Db::name('work')->where('id',$value['sign_id'])->find();
+            $value['title']  = $info['title'];
+        }
         $this->assign('list',$list);
-        return $this->fetch();
+        return  $this->fetch();
     }
     /**
      * 操作日志

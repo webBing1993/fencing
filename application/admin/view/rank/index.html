@@ -3,9 +3,8 @@
 {block name="style"}
 <style>
     .shadow{width: 100%;height: 100%;position: absolute;left: 0;top: 0;background: rgba(0,0,0,0.4);z-index: 88;}
-    input[name='jg'],input[name='xt'],input[name='my']{width:40px;text-align: center;margin:0 10px;}
-    input[name='up'],input[name='float'],input[name='low'],input[name='work']{width:40px;text-align: center;margin:0 10px;}
-    .minus,.add,.add1,.add2 b{cursor: pointer;display: inline-block;
+    input[name='zy']{width:40px;text-align: center;margin:0 10px;}
+    .minus,.add b{cursor: pointer;display: inline-block;
         width: 20px;
         text-align: center;}
     .table tr th,.table tr td{
@@ -84,9 +83,12 @@
                         <div  style="padding-right:17px">
                         <table class="table table-striped">
                             <tr>
-                                <th width="15%">姓名</th>
+                                <th width="10%">姓名</th>
                                 <th width="15%">部门</th>
+                                <th width="5%">基础分</th>
                                 <th width="5%">签到积分</th>
+                                <th width="5%">干预后积分</th>
+                                <th width="15%">操作</th>
                             </tr>
                             </table>
                         </div>
@@ -95,9 +97,15 @@
                             <tbody>
                             {volist name="list" id="vo"}
                             <tr>
-                                <td width="15%">{$vo.name}</td>
+                                <td width="10%">{$vo.name}</td>
                                 <td width="15%">{$vo.department}</td>
+                                <td width="5%">{$vo.base}</td>
                                 <td width="5%">{$vo.sums}</td>
+                                <td width="5%">{$vo.sum}</td>
+                                <td width="15%">
+                                    <span class="minus" data-id="{$vo.userid}" data-moth="{$vo.mouth}" style="font-size: 20px"><b>-</b></span><input value="{$vo.sum}" name="zy" readonly><span class="add" style="font-size: 20px"><b>+</b></span>&emsp;&emsp;&emsp;
+                                    <span><a href="{:Url('Rank/detail?mouth='.$vo.mouth.'&userid='.$vo['userid'])}">查看详情</a></span>
+                                </td>
                             </tr>
                             {/volist}
                             </tbody>
@@ -153,26 +161,6 @@
             }
         })
 
-        $(".add").each(function(){
-            var val = $(this).parent().children("input").val();
-            if(val>=2){
-                $(this).css("visibility","hidden");
-            }
-        })
-
-        $(".add1").each(function(){
-            var val = $(this).parent().children("input").val();
-            if(val>=40){
-                $(this).css("visibility","hidden");
-            }
-        })
-
-        $(".add2").each(function(){
-            var val = $(this).parent().children("input").val();
-            if(val>=4){
-                $(this).css("visibility","hidden");
-            }
-        })
     });
 
     var reload = false;
