@@ -21,7 +21,7 @@
 						{$book.publication_date}出版
 					</div>
 					{eq name="visit" value="0"}
-					{eq name="book.is_read" value="0"}
+					{eq name="$read" value="0"}
 					<div class="reads bookid" data-id="{$book['id']}">读过此书</div>
 					<!--点击后-->
 					{else/}

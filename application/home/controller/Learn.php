@@ -16,6 +16,8 @@ use app\home\model\Redbook;
 use app\home\model\RedbookRead;
 use app\home\model\Redmusic;
 use app\home\model\Picture;
+use think\Db;
+
 class Learn extends Base{
     /**
      * 网上党校主页
@@ -211,13 +213,23 @@ class Learn extends Base{
      */
     public function bookdetail() {
         $this->anonymous();
+        $userId = session('userId');
         $this->jssdk();
         $id = input('id');
         if (empty($id)){
             $this ->error('参数错误!');
         }
         $detail = $this->content(6,$id);
+        $info = Db::name('redbook_read')->where(['book_id' => $id,'create_user' => $userId])->find();
+        if ($info){
+            // 读过
+            $read= 1;
+        }else{
+            // 未读
+            $read= 0;
+        }
         $this->assign('book',$detail);
+        $this->assign('read',$read);
         return $this->fetch();
     }
 
@@ -251,8 +263,10 @@ class Learn extends Base{
      */
     public function is_read() {
         $id = input('id');
+        $userId = session('userId');
         $res = Redbook::where('id',$id)->setInc('have_read');
         if($res){
+            Db::name('redbook_read')->insert(['book_id' => $id,'create_user' => $userId,'status' => 0,'create_time' => time()]);
             return $this->success("成功读过此书");
         }else{
             return $this->error("新增失败");
