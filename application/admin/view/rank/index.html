@@ -57,10 +57,11 @@
                 <div class="ibox-title">
                     <div class="ibox-tools">
                         <div class="ibox-date">
-                        <select>
+                        <select class="year">
+                            <option>2016</option>
                             <option>2017</option>
                         </select>
-                        <select>
+                        <select class="month">
                             <option>1月</option>
                             <option>2月</option>
                             <option>3月</option>
@@ -90,7 +91,7 @@
                             </table>
                         </div>
                         <div style="width:100%;height:600px;overflow:auto; border-bottom:1px solid #dddddd">
-                            <table class="table table-striped">
+                            <table class="table table-striped person-list">
                             <tbody>
                             {volist name="list" id="vo"}
                             <tr>
@@ -125,6 +126,21 @@
     highlight_subnav("{:Url('Rank/index')}");
 
     $(document).ready(function(){
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth()+1;
+        $(".year option").each(function(){
+            if($(this).val()==year){
+                $(this).attr("selected","selected");
+            }
+        });
+        $(".month option").each(function(){
+            if(parseInt($(this).val())==month){
+                $(this).attr("selected","selected");
+            }
+        });
+
+
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
@@ -284,5 +300,51 @@
             }
         })
     };
+
+
+    //日期选择器
+    $(".year").on("change",function(){
+        dateAjax()
+    });
+
+    $(".month").on("change",function(){
+        dateAjax()
+    });
+
+    var dateAjax = function(){
+        var year = $(".year").val();
+        var month = parseInt($(".month").val());
+        $.ajax({
+            url:"",
+            type:"post",
+            data:{
+                year:year,
+                month:month
+            },
+            success:function(data){
+                if(data.code==1){
+                    addList(data);
+                }
+            }
+        })
+    }
+
+    function addList(data){
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++){
+            var list = lists[i];
+            html+=
+                '<tr>'+
+                '<td width="15%">'+list.name+'</td>'+
+                '<td width="15%">'+list.department+'</td>'+
+                '<td width="5%">'+list.sums+'</td>'+
+                '</tr>'
+
+        }
+        $(".person-list tbody" ).html(html);
+    }
+
 </script>
 {/block}
