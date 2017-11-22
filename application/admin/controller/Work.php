@@ -121,7 +121,6 @@ class Work extends Admin
             $data4[$key]['userid']=$list['name'];
         }
         //dump($data4);exit();
-        $this->assign('list', $list);
         $this->assign('arr', $arr);
         $this->assign('data', $data);
         $this->assign('data2', $data2);
