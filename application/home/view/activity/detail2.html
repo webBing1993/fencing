@@ -55,11 +55,13 @@
                     {notempty name="detail.address"}
                     <div class="content address" >{$detail.address}</div>
                     {/notempty}
-                    {if condition="($detail['type'] == 2)"}
+
+                    {if condition="($detail['type'] == 1)"}
                     {notempty name="detail.publisher"}
-                    <div class="content people" >{$detail.publisher}</div>
+
                     {/notempty}
                     {else /}
+                    <div class="content people" >{$detail.publisher}</div>
                     {/if}
                     {if condition="($detail['type'] == 1)"}
                     {notempty name="detail.telephone"}
