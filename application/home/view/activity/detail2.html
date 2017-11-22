@@ -55,9 +55,12 @@
                     {notempty name="detail.address"}
                     <div class="content address" >{$detail.address}</div>
                     {/notempty}
+                    {if condition="($detail['type'] == 2)"}
                     {notempty name="detail.publisher"}
                     <div class="content people" >{$detail.publisher}</div>
                     {/notempty}
+                    {else /}
+                    {/if}
                     {if condition="($detail['type'] == 1)"}
                     {notempty name="detail.telephone"}
                     <div class="content tel">{$detail.telephone}</div>
@@ -131,8 +134,12 @@
     }else if(type==2){
         $("title").text("会议纪要");
     }
+    $(function(){
+        if($(".message div").length==0){
+            $(".article .message").css({"border-top":"none","border-bottom":"none"})
+        }
+    })
     window.onload = function(){
-
         if($(".list").length<7){
             mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
         }else{
