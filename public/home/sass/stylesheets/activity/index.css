@@ -79,11 +79,11 @@
   bottom: 2vw;
 }
 
-/*@media screen and (device-width: 320px) {
+@media screen and (device-width: 320px) {
   .list ul a span:nth-child(3), .list ul a span:nth-child(4) {
     bottom: 0 !important;
   }
-}*/
+}
 .list ul a {
   display: block;
   position: relative;
@@ -163,12 +163,6 @@
   font-weight: bold;
 }
 
-.notice a:active, .notice a:visited {
-  color: #f00;
-  background: #e5e5e5;
-  text-decoration: none !important;
-}
-
 .notice a p:nth-child(2) {
   margin-bottom: 0;
   color: #666;
@@ -194,6 +188,10 @@
   font-size: 0.32rem;
   color: #f00;
   padding: 3vw;
+}
+
+.notice .more {
+  background: #f1f1f1;
 }
 
 .meeting a:active, .meeting a:visited {

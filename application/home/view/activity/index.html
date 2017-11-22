@@ -284,11 +284,17 @@
         setCookie('c',c);
     });
 
-    mui("#refreshContainer").on("touchstart","a",function(){
+    mui(".list").on("touchstart","a",function(){
         $(this).css("backgroundColor","rgba(0,0,0,.1)");
     }).on("touchend","a", function () {
         $(this).css("backgroundColor","#fff");
     });
+
+//    mui(".notice").on("touchstart",".more",function(){
+//        $(this).css("backgroundColor","rgba(0,0,0,.1)");
+//    }).on("touchend","a", function () {
+//        $(this).css("backgroundColor","#e5e5e5");
+//    });
 
     mui("#refreshContainer").on("tap","a",function(){
         var url = this.getAttribute("href");

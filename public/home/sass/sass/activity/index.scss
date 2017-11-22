@@ -43,11 +43,11 @@
   color: #000;
   font-weight: bold;
 }
-.notice a:active,.notice a:visited{
-  color: #f00;
-  background: #e5e5e5;
-  text-decoration: none!important;
-}
+//.notice a:active,.notice a:visited{
+//  color: #f00;
+//  background: #e5e5e5;
+//  text-decoration: none!important;
+//}
 
 .notice a p:nth-child(2){
   margin-bottom: 0;
@@ -71,6 +71,9 @@
   font-size: 0.32rem;
   color: #f00;
   padding:3vw;
+}
+.notice .more{
+  background: #f1f1f1;
 }
 .meeting a:active,.meeting a:visited{
   color: #090;
