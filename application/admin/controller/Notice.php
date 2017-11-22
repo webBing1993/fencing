@@ -56,15 +56,8 @@ class Notice extends Admin {
             }else{
                 $noticeModel = new NoticeModel();
                 $data['start_time'] = strtotime($data['start_time']);
-                $data['end_time'] = strtotime($data['end_time']);
-                if (!empty($data['start_time']) && empty($data['end_time'])){
-                    return $this->error('请添加结束时间');
-                }
                 if (empty($data['start_time']) && !empty($data['end_time'])){
                     return $this->error('请添加开始时间');
-                }
-                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
-                    return $this->error('结束时间有错误');
                 }
                 $res = $noticeModel->save($data);
                 if ($res){
@@ -94,17 +87,10 @@ class Notice extends Admin {
                 return $this->error($result);
             }else{
                 $noticeModel = new NoticeModel();
-                if (!empty($data['start_time']) && empty($data['end_time'])){
-                    return $this->error('请添加结束时间');
-                }
                 if (empty($data['start_time']) && !empty($data['end_time'])){
                     return $this->error('请添加开始时间');
                 }
-                if (!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] <= $data['start_time']){
-                    return $this->error('结束时间有错误');
-                }
                 $data['start_time'] = strtotime($data['start_time']);
-                $data['end_time'] = strtotime($data['end_time']);
                 $res = $noticeModel->save($data,['id'=>$data['id']]);
                 if ($res){
                     if ($data['type']==1) {
@@ -203,9 +189,9 @@ class Notice extends Admin {
                 $res = $noticeModel->save($data);
                 if ($res){
                     if ($data['type']==2) {
-                        return $this->success("添加活动成功", Url('Notice/show'));
+                        return $this->success("添加活动展示成功", Url('Notice/show'));
                     }else{
-                        return $this->success("添加活动成功", Url('Notice/activity'));
+                        return $this->success("添加固定活动成功", Url('Notice/activity'));
                     }
                 }else{
                     return $this->error($noticeModel->getError());

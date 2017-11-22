@@ -16,7 +16,9 @@ class Notice extends Validate {
         'front_cover' => 'require',
         'title' => 'require',
        'description' => 'require',
+        'attendee' => 'require',
         'publisher' => 'require',
+
         'content' => 'require',
     ];
 
@@ -25,7 +27,9 @@ class Notice extends Validate {
         'front_cover.require' => '图片不能为空',
         'description.require' => '简介不能为空',
         'content.require' => '内容不能为空',
+        'attendee.require' => '参会人不能为空',
         'publisher.require' => '发布人不能为空',
+
     ];
 
 }
