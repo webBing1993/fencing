@@ -38,7 +38,7 @@ body{
 /*导航栏*/
 .top{
 	width: 100vw;
-	height: 45px;
+	height: 12vw;
 	background: #d61920;
 	position: fixed;
 	top:0;
@@ -47,8 +47,8 @@ body{
 
 .top .tab{
 	width: 50%;
-	height: 45px;
-	line-height: 45px;
+	height: 12vw;
+	line-height: 12vw;
 	color:#ffffff;
 	font-size: 0.4rem;
 	text-align: center;
@@ -57,6 +57,7 @@ body{
 }
 .top .tab a{
 	color:#ffffff;
+
 }
 .tip{
 	width: 100%;
@@ -74,7 +75,7 @@ body{
 }
 .foot{
 	width: 100%;
-	height: 103px;
+	height: 26.7vw;
 	position: fixed;
 	z-index: -1;
 	bottom: 0;
@@ -85,17 +86,18 @@ body{
 .content{
 	position: relative;
 	margin-top:35vh;
-	margin-left: calc(50% - 75px);
+	/*margin-left: calc(50% - 75px);*/
+	margin-left:32%;
 }
 .start:visited,.continue:visited{
 	color:#ffffff;
 }
 .start,.continue{
 	display: block;
-	width: 150px;
-	height:45px;
+	width: 40.05vw;
+	height:12vw;
 	background: #d61920;
-	line-height: 45px;
+	line-height: 12vw;
 	font-size: 0.53rem;
 	text-align: center;
 	color:#ffffff;
@@ -111,7 +113,7 @@ body{
 }
 .continue{
 	position: absolute;
-	top:90px;
+	top:24vw;
 
 }
 .start:active,.continue:active{
@@ -129,33 +131,61 @@ body{
 
 /*分数页面*/
 .score{
-	width: 325px;
-	height: 250px;
+	width: 86.77vw;
+	height: 66.75vw;
 	background: url("/home/images/learn/sco1.png");
 	background-size: 100% 100%;
 	position: fixed;
-	top:calc((100% - 300px)/2);;
-	left:calc((100% - 325px)/2);
+	/*top:calc((100% - 300px)/2);;
+	left:calc((100% - 325px)/2);*/
+	top:25%;
+	left:7%;
 }
 .score span{
 	position: absolute;
-	top:83px;
-	left:210px ;
+	top:26vw;
+	left:56.07vw ;
 	color:#d10000;
 	font-size: 0.8rem;
 	font-weight: 600;
 }
 .score span:nth-child(2){
-	top:126px;
+	top:38vw;
 }
 .score a{
 	position: absolute;
-	bottom:20px;
-	left:90px ;
-	width: 148px;
-	height: 52px;
+	bottom:5.34vw;
+	left:24vw ;
+	width: 39.516vw;
+	height: 13.884vw;
 	background: url("/home/images/learn/sco2.png");
 	background-size: 100% 100%;
+}
+@media screen and (min-width:320px) and (max-width:414px){
+	.score span:nth-child(2){
+		top:36vw;
+	}
+	.score span{
+		position: absolute;
+		top:24vw;
+		left:56.07vw ;
+		color:#d10000;
+		font-size: 0.8rem;
+		font-weight: 600;
+	}
+}
+@media screen and (min-width:414px) and (max-width:768px){
+	.score span:nth-child(2){
+		top:36.8vw;
+	}
+	.score span{
+		position: absolute;
+		top:25.5vw;
+		left:56.07vw ;
+		color:#d10000;
+		font-size: 0.8rem;
+		font-weight: 600;
+	}
 }
 .bg{
 	display: block;
