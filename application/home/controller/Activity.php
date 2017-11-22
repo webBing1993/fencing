@@ -25,16 +25,13 @@ class Activity extends Base
         $lefttwo = $Notice->get_list($mapp);
         $mapp = ['status' => ['egt', 1], 'type' => 3];//会议纪要
         $center = $Notice->get_list($mapp);
-        //dump($center);
         //循环遍历
         foreach ($center as $v) {
             $list = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
             $v['userid'] = $list['name'];
         }
-        //dump($center);exit();
         $mapp = ['status' => ['egt', 1], 'type' => 4];//固定活动
         $right = $Notice->get_list($mapp);
-        //dump($right);exit();
         $this->assign('leftone', $leftone); // 活动安排
         $this->assign('lefttwo', $lefttwo); // 活动展示
         $this->assign('center', $center); // 会议纪要
@@ -70,9 +67,6 @@ class Activity extends Base
 
         $list = Db::table('pb_wechat_user')->where('userid', $info['userid'])->find();
         $info['userid'] = $list['name'];
-        //dump($info);
-        //exit();
-        //$this->assign('list',$list);
         $this->assign('detail', $info);
         return $this->fetch();
 
@@ -84,8 +78,7 @@ class Activity extends Base
         $this->jssdk();
         $id = input('id/d');
         $info = $this->content(4, $id);
-        //dump($info);
-        //exit();
+        
         $this->assign('detail', $info);
         return $this->fetch();
 
@@ -123,35 +116,23 @@ class Activity extends Base
         if (IS_POST) {
             $userId = session('userId');
             $data = input('post.');
-            //dump($data);
-            //exit();
-            if (!empty($data['images'])){
+            if (!empty($data['images'])) {
                 $data['images'] = json_encode($data['images']);
-                //unset($data['front_cover']);
-                $data['userid'] = $userId;
-                $data['start_time'] = strtotime($data['start_time']);
-                $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
-                $res = Db::table('pb_notice')->insert($data);
-
-                if ($res) {
-                    return $this->success("发布成功！");
-                } else {
-                    return $this->error('发布失败！');
-                }
+                $data['front_cover'] = $this->default_pic();
+            } else {
+                $data['front_cover'] = $this->default_pic();
             }
-            //$data['images'] = json_encode($data['image']);
-            //unset($data['front_cover']);
-            $data['front_cover'] = $this->default_pic();
-                $data['userid'] = $userId;
-                $data['start_time'] = strtotime($data['start_time']);
-                $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
-                $res = Db::table('pb_notice')->insert($data);
+            
+            $data['userid'] = $userId;
+            $data['start_time'] = strtotime($data['start_time']);
+            $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
+            $res = Db::table('pb_notice')->insert($data);
 
-                if ($res) {
-                    return $this->success("发布成功！");
-                } else {
-                    return $this->error('发布失败！');
-                }
+            if ($res) {
+                return $this->success("发布成功！");
+            } else {
+                return $this->error('发布失败！');
+            }
         } else {
             return $this->fetch();
         }
