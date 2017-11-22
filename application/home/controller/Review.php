@@ -172,6 +172,8 @@ class Review extends Base{
         $id = input('id');
         $Notice = new Notice();
         $info = $Notice->where('id',$id)->find();
+        $info['images']=json_decode($info['images'],true);
+        //dump($info);exit();
         $this->assign('detail',$info);
         return $this->fetch();
     }
