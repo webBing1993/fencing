@@ -159,7 +159,7 @@
   width: 100%;
   padding: 4vw;
   background: #fcfcfc;
-  line-height: 24px;
+  line-height: 6vw;
   font-size: 0.34rem;
 }
 .book .content .bookdetail span {
@@ -185,7 +185,7 @@
 .book .content .authordetail .msg .name {
   color: #97080f;
   font-size: 0.48rem;
-  line-height: 50px;
+  line-height: 12.5vw;
 }
 .book .content .authordetail .msg .time {
   color: #999999;
@@ -195,7 +195,7 @@
   width: 60vw;
   padding: 0 0 5vw 0;
   border-bottom: 1px solid #f1f1f1;
-  line-height: 24px;
+  line-height: 6vw;
 }
 .book .content .authordetail .text span {
   background: transparent!important;
@@ -204,7 +204,7 @@
   width: 92vw;
   padding: 4vw;
   background: #fcfcfc;
-  line-height: 24px;
+  line-height: 6vw;
   text-indent: 2em;
 }
 .book .content .words .author {
@@ -217,10 +217,10 @@
 
 }
 .book .content .note span {
-  height: 40px;
+  height: 10vw;
   display: inline-block;
-  margin-right: 10px;
-  line-height: 40px;
+  margin-right: 2.5vw;
+  line-height: 10vw;
 }
 .book .content .note span:last-child{
   margin-right: 0 ;
@@ -402,4 +402,7 @@ input::-webkit-input-placeholder{
   .mui-pull-bottom-pocket{
     bottom: 11vw;
   }
+}
+.fl{
+  float:left;
 }
