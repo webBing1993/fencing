@@ -12,6 +12,8 @@ use app\home\model\Companyst;
 use app\home\model\Companys;
 use think\Db;
 use com\wechat\TPQYWechat;
+use app\home\model\WechatUserTag;
+use app\home\model\WechatUser;
 use think\Config;
 class Volunteer extends Base{
     /*
@@ -294,7 +296,132 @@ class Volunteer extends Base{
       * 志愿者排行
       * */
     public  function  rank(){
-
+        $this->anonymous();
+        // 获取  党员志愿者
+        $map = array(
+            'tagid' => 2,
+        );
+        $mouth = date('m',time());
+        $arr1 = array(); // 月榜
+        $arr2 = array(); // 总榜
+        $list = WechatUserTag::where($map)->select();
+        foreach($list as $key => $value){
+            $User = WechatUser::where('userid',$value->userid)->find();
+            if (!empty($User)){
+                // 月积分
+                $map = array(
+                    "userid" => $value['userid'],
+                    "mouth"  => $mouth,
+                    'type' => 2,
+                    'status' => 0,
+                );
+                // 签到积分
+                $lists = Db::name('apply')->where($map)->select();
+                $score1 = 0;
+                foreach($lists as $v){
+                    $score1 += $v['score'];
+                }
+                // 干预分数
+                $info = Db::name('handle')->where(['userid' => $value['userid'],'mouth' => $mouth])->select();
+                $score2 = 0;
+                foreach($info as $v){
+                    $score2 += $v['score'];
+                }
+                // 总分
+                $score3 = $User['volunteer_base'] + $User['volunteer_score'];
+                $arr1[$key]['name']=$User['name']; // 名字
+                $arr1[$key]['avatar']=$User['avatar']; // 头像
+                $arr1[$key]['mouth']=$score1 + $score2; // 月榜
+                $arr2[$key]['name']=$User['name']; // 名字
+                $arr2[$key]['avatar']=$User['avatar']; // 头像
+                $arr2[$key]['all']=$score3; // 总榜
+            }else{
+                unset($list[$key]);
+            }
+        }
+        // 冒泡排序  大数向前排列
+        for($i = 1;$i < count($arr1); $i++){
+            for ($k = 0;$k < count($arr1)-$i;$k++){
+                if ($arr1[$k]['mouth'] < $arr1[$k+1]['mouth']){
+                    $temp = $arr1[$k+1];
+                    $arr1[$k+1] = $arr1[$k];
+                    $arr1[$k] = $temp;
+                }
+            }
+        }
+        for($i = 1;$i < count($arr2); $i++){
+            for ($k = 0;$k < count($arr2)-$i;$k++){
+                if ($arr2[$k]['all'] < $arr2[$k+1]['all']){
+                    $temp = $arr2[$k+1];
+                    $arr2[$k+1] = $arr2[$k];
+                    $arr2[$k] = $temp;
+                }
+            }
+        }
+        $this->assign('list',$arr1);
+        $this->assign('lists',$arr2);
+        // 获取  群众志愿者
+        $map2 = array(
+            'tagid' => 3,
+        );
+        $arr3 = array(); // 月榜
+        $arr4 = array(); // 总榜
+        $list2 = WechatUserTag::where($map2)->select();
+        foreach($list2 as $key => $value){
+            $User2 = WechatUser::where('userid',$value->userid)->find();
+            if (!empty($User2)){
+                // 月积分
+                $map3 = array(
+                    "userid" => $value['userid'],
+                    "mouth"  => $mouth,
+                    'type' => 2,
+                    'status' => 0,
+                );
+                // 签到积分
+                $lists2 = Db::name('apply')->where($map3)->select();
+                $score1 = 0;
+                foreach($lists2 as $v){
+                    $score1 += $v['score'];
+                }
+                // 干预分数
+                $info = Db::name('handle')->where(['userid' => $value['userid'],'mouth' => $mouth])->select();
+                $score2 = 0;
+                foreach($info as $v){
+                    $score2 += $v['score'];
+                }
+                // 总分
+                $score3 = $User2['volunteer_base'] + $User2['volunteer_score'];
+                $arr3[$key]['name']=$User2['name']; // 名字
+                $arr3[$key]['avatar']=$User2['avatar']; // 头像
+                $arr3[$key]['mouth']=$score1 + $score2; // 月榜
+                $arr4[$key]['name']=$User2['name']; // 名字
+                $arr4[$key]['avatar']=$User2['avatar']; // 头像
+                $arr4[$key]['all']=$score3; // 总榜
+            }else{
+                unset($list[$key]);
+            }
+        }
+        // 冒泡排序  大数向前排列
+        for($i = 1;$i < count($arr3); $i++){
+            for ($k = 0;$k < count($arr3)-$i;$k++){
+                if ($arr3[$k]['mouth'] < $arr3[$k+1]['mouth']){
+                    $temp = $arr3[$k+1];
+                    $arr3[$k+1] = $arr3[$k];
+                    $arr3[$k] = $temp;
+                }
+            }
+        }
+        for($i = 1;$i < count($arr4); $i++){
+            for ($k = 0;$k < count($arr4)-$i;$k++){
+                if ($arr4[$k]['all'] < $arr4[$k+1]['all']){
+                    $temp = $arr4[$k+1];
+                    $arr4[$k+1] = $arr4[$k];
+                    $arr4[$k] = $temp;
+                }
+            }
+        }
+        $this->assign('list2',$arr3);
+        $this->assign('lists2',$arr4);
         return $this->fetch();
     }
 
