@@ -103,7 +103,7 @@
                                 <td width="5%">{$vo.sums}</td>
                                 <td width="5%">{$vo.sum}</td>
                                 <td width="15%">
-                                    <span class="minus" data-id="{$vo.userid}" data-moth="{$vo.mouth}" style="font-size: 20px"><b>-</b></span><input value="{$vo.sum}" name="zy" readonly><span class="add" style="font-size: 20px"><b>+</b></span>&emsp;&emsp;&emsp;
+                                    <span class="minus" data-id="{$vo.userid}" data-month="{$vo.mouth}" style="font-size: 20px"><b>-</b></span><input value="{$vo.sum}" name="zy" readonly><span class="add" style="font-size: 20px"><b>+</b></span>&emsp;&emsp;&emsp;
                                     <span><a href="{:Url('Rank/detail?mouth='.$vo.mouth.'&userid='.$vo['userid'])}">查看详情</a></span>
                                 </td>
                             </tr>
@@ -160,7 +160,6 @@
                 $(this).css("visibility","hidden");
             }
         })
-
     });
 
     var reload = false;
@@ -168,25 +167,16 @@
         if(!reload) {
             reload = true;
             var id = $(this).data("id");
+            var month = $(this).data("month");
             var val = $(this).parent().children("input").val();
-            var name = $(this).parent().children("input").prop("name");
-            if (name == "jg") {
-                var _class = 1;
-            } else if (name == "my"){
-                var _class = 2;
-            }else if (name == "work"){
-                var _class = 3;
-            }
-
             if (val == 1) {
                 $(this).css("visibility", "hidden");
             } else {
                 $(this).css("visibility", "visible");
             }
-            changeNum(1, id, _class);
+            changeNum(1, id, month);
             $(this).parent().children("input").val(val - 1);
             $(this).parent().children(".add").css("visibility", "visible");
-            $(this).parent().children(".add1").css("visibility", "visible");
         }
     });
 
@@ -195,80 +185,26 @@
             reload = true;
             var id = $(this).parent().children(".minus").data("id");
             var val = $(this).parent().children("input").val();
-            var name = $(this).parent().children("input").prop("name");
-            if (name == "jg") {
-                var _class = 1;
-            } else if (name == "my"){
-                var _class = 2;
-            }else if (name == "work"){
-                var _class = 3;
-            }
+            var month = $(this).parent().children(".minus").data("month");
             if (val == 1) {
                 $(this).css("visibility", "hidden");
             } else {
                 $(this).css("visibility", "visible");
             }
-            changeNum(2, id, _class);
+            changeNum(2, id, month);
             $(this).parent().children("input").val(parseInt(val) + 1);
             $(this).parent().children(".minus").css("visibility", "visible");
         }
     });
 
-
-    $(".add1").click(function(){
-        if(!reload) {
-            reload = true;
-            var name = $(this).parent().children("input").prop("name");
-            if (name == "jg") {
-                var _class = 1;
-            }  else if (name == "my"){
-                var _class = 2;
-            }else if (name == "work"){
-                var _class = 3;
-            }
-            var id = $(this).parent().children(".minus").data("id");
-            var val = $(this).parent().children("input").val();
-            if (val == 39) {
-                $(this).css("visibility", "hidden");
-            } else {
-                $(this).css("visibility", "visible");
-            }
-            changeNum(2, id, _class);
-            $(this).parent().children("input").val(parseInt(val) + 1);
-            $(this).parent().children(".minus").css("visibility", "visible");
-        }
-    });
-    $(".add2").click(function(){
-        if(!reload) {
-            reload = true;
-            var name = $(this).parent().children("input").prop("name");
-            if (name == "jg") {
-                var _class = 1;
-            }  else if (name == "my"){
-                var _class = 2;
-            }else if (name == "work"){
-                var _class = 3;
-            }
-            var id = $(this).parent().children(".minus").data("id");
-            var val = $(this).parent().children("input").val();
-            if (val == 3) {
-                $(this).css("visibility", "hidden");
-            } else {
-                $(this).css("visibility", "visible");
-            }
-            changeNum(2, id, _class);
-            $(this).parent().children("input").val(parseInt(val) + 1);
-            $(this).parent().children(".minus").css("visibility", "visible");
-        }
-    });
-    var changeNum = function(type,id,_class){
+    var changeNum = function(type,id,month){
         $.ajax({
             type:"post",
             url: "{:Url('Rank/handle')}",
             data:{
                 type:type,
                 userid:id,
-                class:_class
+                month:month
             },
             beforeSend: function(XMLHttpRequest){
 
