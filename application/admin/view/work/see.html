@@ -87,15 +87,30 @@
                                        value="{$data.title}">
                             </div>
                         </div>
+
+                        {if condition="($data['type'] == 1)"}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>签到类型:</label>
                             </div>
                             <div class="col-lg-11">
                                 <input type="text" readonly="readonly"  class="form-control form_title" name="title"
-                                       value="{$list.type}">
+                                       value="三会一课">
                             </div>
                         </div>
+                        {else /}
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>签到类型:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" readonly="readonly"  class="form-control form_title" name="title"
+                                       value="志愿之家">
+                            </div>
+                        </div>
+                        {/if}
+
+
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label" id="timeRange">
                                 <label>开始时间:</label>
@@ -157,7 +172,7 @@
                             </div>
 
                             <div class="col-lg-11">
-                                {volist name="arr" id="lo"}
+                                {volist name="data4" id="lo"}
                                 <span style="background:#E0FFFF;line-height:2vw">
                                 {$lo.userid}
                                     </span>&nbsp;&nbsp;

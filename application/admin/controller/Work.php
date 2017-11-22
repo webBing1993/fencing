@@ -106,27 +106,26 @@ class Work extends Admin
     public function see($id)
     {
         $data = Db::table('pb_work')->where('id', $id)->find();
-        if ($data['type'] == 1) {
-            $list = array(
-                'type' => '三会一课',
-            );
-        } else {
-            $list = array(
-                'type' => '志愿之家',
-            );
-        }
         //查找图片表里的图片
         $data2 = Db::table('pb_picture')->where('id', $data['front_cover'])->find();
-        $data1 = Db::table('pb_wechat_user_tag')->where('tagid', $id)->select();
+        $data1 = Db::table('pb_apply')->where('sign_id', $id)->select();
         $arr = array();
         //循环遍历三维数组$arr3
         foreach ($data1 as $value) {
             $arr[] = $value;
         }
+        //查询签到用户
+        $data4 = Db::table('pb_apply')->where('sign_id', $id)->select();
+        foreach($data4 as $key=>$v){
+            $list = Db::table('pb_wechat_user')->where('userid',$v['userid'])->find();
+            $data4[$key]['userid']=$list['name'];
+        }
+        //dump($data4);exit();
         $this->assign('list', $list);
         $this->assign('arr', $arr);
         $this->assign('data', $data);
         $this->assign('data2', $data2);
+        $this->assign('data4', $data4);
         return $this->fetch();
     }
 
