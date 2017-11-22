@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title>红色珍藏</title>
+<title>红色文学</title>
 <link rel="stylesheet" href="/home/sass/stylesheets/learn/bookdetail.css">
 {/block}
 {block name="body"}
@@ -128,7 +128,6 @@
 				})
 		}
 	}
-	$('title').text('经典书籍');
 	//点赞点击事件
 	mui('#refreshContainer').on('tap', '.notvisitor', function(e) {
 		var type = this.getAttribute("data-type");
