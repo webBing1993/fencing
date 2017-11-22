@@ -153,6 +153,7 @@
                                 <input type="text" placeholder="请输入详细地址...(可为空)" class="form-control form_title" name="address" value="">
                             </div>
                         </div>
+                        {if condition="($type == 1)"}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>联系方式:</label>
@@ -161,6 +162,11 @@
                                 <input type="text" placeholder="请输入联系方式...(可为空)" class="form-control form_title" name="tel" value="">
                             </div>
                         </div>
+                        {else /}
+
+                        {/if}
+
+
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>发布人:</label>

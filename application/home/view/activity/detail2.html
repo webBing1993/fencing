@@ -1,7 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
-<title>会仪通知</title>
+<title>会议通知</title>
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/sass/stylesheets/details-template/banner-detail.css">
 <style>
@@ -50,7 +50,7 @@
 
                 <div class="message">
                     {notempty name="detail.start_time"}
-                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}/{$detail.end_time|time_format="Y-m-d H:i"}</div>
+                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}</div>
                     {/notempty}
                     {notempty name="detail.address"}
                     <div class="content address" >{$detail.address}</div>
@@ -58,6 +58,13 @@
                     {notempty name="detail.publisher"}
                     <div class="content people" >{$detail.publisher}</div>
                     {/notempty}
+                    {if condition="($detail['type'] == 1)"}
+                    {notempty name="detail.telephone"}
+                    <div class="content tel">{$detail.telephone}</div>
+                    {/notempty}
+                    {else /}
+
+                    {/if}
                 </div>
 
                 <div class="content">
