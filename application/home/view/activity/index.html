@@ -137,6 +137,7 @@
     $(function(){
         //tab初始化和数据存储
         c = getCookie("c")?getCookie("c"):0;
+        console.log(getCookie("c"))
         if(c==1){
             $("#publish").show();
         }
@@ -212,7 +213,7 @@
         var len = lists.length;
         for(var i = 0; i< len;i++){
             var list = lists[i];
-            if(type==0){
+            if(type==2){
                 html+=
                     '<a href="/home/activity/detail/type/1/id/' + list.id + '">' +
                     '<img src="'+list.front_cover+'">' +
@@ -223,7 +224,7 @@
                     '</a>';
 
             }
-            if(type==1){
+            if(type==3){
                 html+=
                     '<a href="/home/activity/detail2/type/2/id/' + list.id + '">' +
                     '<p>'+list.title+'</p>' +
@@ -233,7 +234,7 @@
                     '</a>';
 
             }
-            if(type==2){
+            if(type==4){
                 html+=
                     '<a href="/home/activity/detail/type/2/id/' + list.id + '">' +
                     '<img src="'+list.front_cover+'">' +

@@ -49,8 +49,6 @@ class Notice extends Admin {
         $this->assign('type',$type);
         if(IS_POST) {
             $data = input('post.');
-            //dump($data);
-            //exit();
             $result = $this->validate($data,'Notice');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if (true !== $result) {
