@@ -115,6 +115,7 @@
                                 </div>
                             </div>
                         </div>
+                        {if condition="($msg['type'] == 1)"}
                         {empty name="msg.start_time"}
                         <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
@@ -139,6 +140,33 @@
                             </div>
                         </div>
                         {/empty}
+                        {else/}
+                        {empty name="msg.start_time"}
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="date">
+                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker" name="start_time"  value=""/>
+                                </div>
+
+                            </div>
+                        </div>
+                        {else/}
+                        <div class="form-group" id="timeRange">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="date">
+                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
+                                </div>
+                            </div>
+                        </div>
+                        {/empty}
+                         {/if}
+                        {if condition="($msg['type'] == 1)"}
                         {empty name="msg.end_time"}
                         <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
@@ -163,6 +191,8 @@
                             </div>
                         </div>
                         {/empty}
+                        {else /}
+                        {/if}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>地址:</label>
@@ -183,16 +213,6 @@
                         {else /}
 
                         {/if}
-
-
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>发布人:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher}">
-                            </div>
-                        </div>
                         {if condition="($msg['type'] == 1)"}
 
                         {else /}
@@ -205,6 +225,16 @@
                             </div>
                         </div>
                         {/if}
+
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>发布人:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher}">
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
