@@ -164,7 +164,7 @@
     });
 
     var reload = false;
-    $(".minus").click(function(){
+    $(".person-list").on("click",".minus",function(){
         if(!reload) {
             reload = true;
             var id = $(this).data("id");
@@ -175,30 +175,39 @@
             } else {
                 $(this).css("visibility", "visible");
             }
-            changeNum(1, id, month);
-            $(this).parent().children("input").val(val - 1);
-            $(this).parent().children(".add").css("visibility", "visible");
+            changeNum(1, id, month,$(this));
+
         }
     });
 
-    $(".add").click(function(){
+    $(".person-list").on("click",".add",function(){
         if(!reload) {
             reload = true;
             var id = $(this).parent().children(".minus").data("id");
             var val = $(this).parent().children("input").val();
             var month = $(this).parent().children(".minus").data("month");
-            if (val == 1) {
-                $(this).css("visibility", "hidden");
-            } else {
-                $(this).css("visibility", "visible");
-            }
-            changeNum(2, id, month);
-            $(this).parent().children("input").val(parseInt(val) + 1);
-            $(this).parent().children(".minus").css("visibility", "visible");
+            changeNum(2, id, month,$(this));
         }
     });
 
-    var changeNum = function(type,id,month){
+    var callback = function(el){
+        var val =  el.parent().children("input").val();
+        var points = el.parent().prev().text();
+        var parent = el.parent();
+        if(el.hasClass("add")){
+            parent.children("input").val(parseInt(val) + 1);
+            parent.prev().text(parseInt(val) + 1)
+            parent.children(".minus").css("visibility", "visible");
+        }else{
+            parent.children("input").val(val - 1);
+            parent.prev().text(parseInt(val) - 1);
+            parent.children(".add").css("visibility", "visible");
+        }
+        reload = false;
+    };
+
+
+    var changeNum = function(type,id,month,el){
         $.ajax({
             type:"post",
             url: "{:Url('Rank/handle')}",
@@ -212,7 +221,7 @@
             },
             success:function(data){
                 if(data.code == 1){
-                    window.location.reload();
+                        callback(el);
                 }else{
                     updateAlert(data.msg, 'error');
                     it.attr('disabled','true');
@@ -228,11 +237,11 @@
 
 
     //日期选择器
-    $(".year").on("change",function(){
+    $(".ibox-date").on("change",".year",function(){
         dateAjax()
     });
 
-    $(".month").on("change",function(){
+    $(".ibox-date").on("change",".month",function(){
         dateAjax()
     });
 
@@ -265,10 +274,23 @@
                 '<td width="15%">'+list.name+'</td>'+
                 '<td width="15%">'+list.department+'</td>'+
                 '<td width="5%">'+list.sums+'</td>'+
+                '<td width="15%">'+
+                '<span class="minus" data-id="'+list.userid+'" data-month="'+list.mouth+'" style="font-size: 20px"><b>-</b></span>'+
+                '<input value="'+list.sum+'" name="zy" readonly>'+
+                '<span class="add" style="font-size: 20px"><b>+</b></span>&emsp;&emsp;&emsp;'+
+                '<span><a href="/admin/rank/detail/mouth/'+list.mouth+'/userid/'+list.userid+'">查看详情</a>'+
+                '</span>'+
+                '</td>'+
                 '</tr>'
 
         }
         $(".person-list tbody" ).html(html);
+        $(".minus").each(function(){
+            var val = $(this).parent().children("input").val();
+            if(val<=0){
+                $(this).css("visibility","hidden");
+            }
+        })
     }
 
 </script>
