@@ -306,6 +306,7 @@
   margin-bottom: 1vw;
   color: #000;
   font-weight: bold;
+  font-size: 0.4rem;
 }
 
 .notice a p:nth-child(2) {

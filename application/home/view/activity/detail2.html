@@ -1,9 +1,9 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>党建动态</title>
 <link rel="stylesheet" href="/static/swiper/swiper-3.3.1.min.css">
 <link rel="stylesheet" href="/home/sass/stylesheets/details-template/banner-detail.css">
-<title></title>
 <style>
     .mui-pull-bottom-pocket {
         height: 0.8rem;
@@ -30,17 +30,12 @@
                     </div>
                     {/volist}
                     {else /}
-
                     <div class="swiper-slide">
                         <div class="mui-slider-item">
                             <img src="{$detail.front_cover|get_cover='path'}">
                         </div>
                     </div>
-
                     {/if}
-
-
-
                 </div>
             </div>
             <div class="view">
@@ -126,12 +121,7 @@
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script src="/home/js/reset.js"></script>
 <script>
-    var type =  parseInt(window.location.href.split("/type/")[1]);
-    if(type==1){
-        $("title").text("三会一课");
-    }else if(type==2){
-        $("title").text("会议纪要");
-    }
+    var type =  parseInt(window.location.href.split("?")[1]);
     window.onload = function(){
 
         if($(".list").length<7){
