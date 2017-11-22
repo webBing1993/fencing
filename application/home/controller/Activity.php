@@ -94,14 +94,14 @@ class Activity extends Base
         $Notice = new Notice();
         $len = input('length');
         $c = input('type');
-        dump($c);exit();
-        if ($c == 1) {
+        //dump($c);exit();
+        if ($c == 3) {
             $type = 1;  //活动安排
-        } elseif ($c == 2) {
+        } elseif ($c == 0) {
             $type = 2; //活动展示
-        } elseif ($c == 3){
+        } elseif ($c == 1){
             $type = 3;//会议纪要
-        }elseif($c==4){
+        }elseif($c==2){
             $type =4;//固定活动
         }
         $map = ['status' => ['eq', 1], 'type' => $type];

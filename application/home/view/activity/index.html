@@ -213,7 +213,7 @@
         var len = lists.length;
         for(var i = 0; i< len;i++){
             var list = lists[i];
-            if(type==2){
+            if(type==0){
                 html+=
                     '<a href="/home/activity/detail/type/1/id/' + list.id + '">' +
                     '<img src="'+list.front_cover+'">' +
@@ -224,7 +224,7 @@
                     '</a>';
 
             }
-            if(type==3){
+            if(type==1){
                 html+=
                     '<a href="/home/activity/detail2/type/2/id/' + list.id + '">' +
                     '<p>'+list.title+'</p>' +
@@ -234,7 +234,7 @@
                     '</a>';
 
             }
-            if(type==4){
+            if(type==2){
                 html+=
                     '<a href="/home/activity/detail/type/2/id/' + list.id + '">' +
                     '<img src="'+list.front_cover+'">' +

@@ -11,12 +11,12 @@
 {/block}
 
 {block name="body"}
-{notempty name="$top"}
+{notempty name="$left"}
 <div class="banners">
     <div class="swiper-container">
         <div class="imgs swiper-wrapper">
             <!--轮播开始-->
-            {volist name="$top" id="tp"}
+            {volist name="$left" id="tp"}
             <div class="banner swiper-slide">
                 <a href="#">
                     <img src="{$tp.front_cover}" alt="">
@@ -28,7 +28,8 @@
             {/volist}
          <!--轮播结束-->
         </div>
-        {volist name="$top" id="tp"}
+
+        {volist name="$right" id="tp"}
         <div class="swiper-pagination"></div>
         {/volist}
     </div>
