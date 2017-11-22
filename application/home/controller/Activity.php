@@ -10,7 +10,9 @@ namespace app\home\controller;
 
 use app\home\model\Notice;
 use think\Db;
-
+use com\wechat\TPQYWechat;
+use think\Config;
+use app\home\model\Picture;
 class Activity extends Base
 {
     /**
@@ -122,14 +124,47 @@ class Activity extends Base
             } else {
                 $data['front_cover'] = $this->default_pic();
             }
-            
             $data['userid'] = $userId;
             $data['start_time'] = strtotime($data['start_time']);
             $data['create_time'] = strtotime(date("Y-m-d H:i:s"));
             $res = Db::table('pb_notice')->insert($data);
-
             if ($res) {
-                return $this->success("发布成功！");
+                // 推送
+                $id = Db::name('notice')->getLastInsID();
+                $str = strip_tags($data['content']);
+                $des = mb_substr($str,0,40);
+                $content = str_replace("&nbsp;","",$des);  //空格符替换成空
+                $pre = '【会议纪要】';
+                $url ="/home/review/detail/id/";
+                $url = "http://".$_SERVER['HTTP_HOST'].$url.$id.".html";
+                $image = Picture::get($data['front_cover']);
+                $path = "http://".$_SERVER['HTTP_HOST'].$image['path'];
+                $information = array(
+                    'title' => $pre.$data['title'],
+                    'description' => $content,
+                    'url'  => $url,
+                    'picurl' => $path
+                );
+                $send = array(
+                    "articles" => array(
+                        0 => $information
+                    )
+                );
+                $message = array(
+                    "totag" => 1,  // 审核组
+//                    "touser" => "17557289172",
+                    "msgtype" => 'news',
+                    "agentid" =>1000004,
+                    "news" => $send,
+                );
+                //发送给企业号
+                $Wechat = new TPQYWechat(Config::get('review'));
+                $msg = $Wechat->sendMessage($message);
+                if($msg['errcode'] == 0){
+                    return $this->success('发送成功');
+                }else{
+                    $this->error($Wechat->errMsg);
+                }
             } else {
                 return $this->error('发布失败！');
             }

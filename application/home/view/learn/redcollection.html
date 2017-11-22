@@ -35,7 +35,7 @@
                         {volist name="film.top" id="top"}
                         <div class="swiper-slide">
                             <a href="{:Url('Learn/filmdetail?id='.$top['id'])}" class="list">
-                                <img src="{$top.front_cover|get_cover='path'}" alt="{$top.title}" class="banner-img">
+                                <img src="{$top.carousel_image|get_cover='path'}" alt="{$top.title}" class="banner-img">
                                 <div class="banner-bg"></div>
                                 <div class="banner-info limit">{$top.title}</div>
                             </a>
