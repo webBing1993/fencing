@@ -37,12 +37,12 @@
 					<div class="brief">【作者简介】</div>
 					<!--作者简介-->
 					<div class="authordetail clear">
-						<div class="msg fl" >
+						<div class="msg rig" >
 							<img src="{$book.header|get_cover='path'}" alt="作者头像" class="authorimg">
 							<div class="name">{$book.name}</div>
 							<div class="time">{$book.birth_and_death}</div>
 						</div>
-						<div class="text fl">
+						<div class="text rig">
 							{$book.author_introduction}
 						</div>
 					</div>
@@ -109,11 +109,11 @@
 <script>
     //读过此书点击事件
     mui('#refreshContainer').on('tap', '.bookid', function(e) {
-        var id = this.getAttribute("data-id");
-        isread(id);
+        var did = this.getAttribute("data-id");
+        isread(did);
     });
 	//读过此书
-	function isread(bookid){
+	function isread(did){
 		var read = $('.reads');
 		if(!read.hasClass('isread')){
 			read.addClass('isread');
@@ -121,9 +121,10 @@
 					type:"post",
 					url:"{:Url('learn/is_read')}",
 					data:{
-						id:bookid,
+						id:did,
 					},
 					success:function(data){
+
 					}
 				})
 		}
