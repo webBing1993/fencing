@@ -169,7 +169,7 @@
     background: url('/home/images/detail/good.png') 0 center no-repeat;
     background-size: 0.38rem 0.38rem;
     padding-left:  0.53rem;
-    height:0.4rem;
+    height:0.43rem;
 }
 .article .content .like .good_ {
     animation: shake 300ms ease;
