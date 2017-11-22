@@ -126,34 +126,34 @@
   width: 100vw!important;
   height: 25vw!important;
 }
- .note {
+.music .content .note {
   color: #666666;
   font-size: 0.37rem;
   float: right;
 }
- .note span {
+.music .content .note span {
   height: 40px;
   display: inline-block;
   margin-right: 10px;
   line-height: 40px;
 }
- .note span:last-child{
-  margin-right: 3vw;
+.music .content .note span:last-child{
+  margin-right: 0;
 }
- .note .read {
+.music .content .note .read {
   background: url('/home/images/learn/scan_.png') 0 12px no-repeat;
   background-size: 15px 15px;
   padding-left: 18px;
 }
- .note .good {
+.music .content .note .good {
   background: url('/home/images/detail/good.png') 0 center no-repeat;
 }
- .note .good_ {
+.music .content .note .good_ {
   animation: shake 300ms ease;
   -webkit-animation: shake 300ms ease;
   background: url('/home/images/detail/good_.png') 0 center no-repeat;
 }
- .note .isgood {
+.music .content .note .isgood {
   background-size: 0.38rem 0.38rem;
   padding-left: 0.53rem;
 }
@@ -161,7 +161,6 @@
 .comment{
   padding-left: 0.3rem;
   padding-right: 0.3rem;
-  padding-top: 9vw;
 }
 .comment .sum {
   height: 0.6rem;
