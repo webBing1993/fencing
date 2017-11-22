@@ -190,15 +190,6 @@ ul li a span:nth-child(2) {
   white-space: nowrap;
 }
 
-@media screen and (device-width: 320px) {
-  .Audited ul li a p:nth-child(4) {
-    bottom: 0;
-  }
-
-  .Audited ul li a p:nth-child(3) {
-    bottom: 5vw;
-  }
-}
 .Audited ul li a span:nth-child(5) {
   display: inline-block;
   position: absolute;
@@ -208,6 +199,15 @@ ul li a span:nth-child(2) {
   font-size: 0.32rem;
 }
 
+@media screen and (device-width: 320px) {
+  .Audited ul li a p:nth-child(4), .Audited ul li a span:nth-child(5) {
+    bottom: 0;
+  }
+
+  .Audited ul li a p:nth-child(3) {
+    bottom: 5vw;
+  }
+}
 ul li a span:nth-child(3) {
   position: absolute;
   bottom: 0.3rem;
