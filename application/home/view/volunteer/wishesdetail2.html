@@ -1,7 +1,11 @@
 {extend name="public/pure"}
 
 {block name="style"}
+{if condition="($data['type'] == 1)"}
+<title>点亮微心愿</title>
+{else /}
 <title>志愿者招募</title>
+{/if}
 <link rel="stylesheet" href="/home/sass/stylesheets/volunteer/wishesdetail.css">
 {/block}
 

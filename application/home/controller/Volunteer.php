@@ -242,6 +242,7 @@ class Volunteer extends Base
                 $list[$key]['userid'] = $list2['name'];
                 $list[$key]['image'] = $list2['avatar'];
             }
+            //dump($data);exit();
             $this->assign('list', $list);
             $this->assign('data', $data);
             return $this->fetch();
