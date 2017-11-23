@@ -11,7 +11,7 @@
     <div class="col-lg-10">
         <h2>志愿之家</h2>
         <ol class="breadcrumb">
-            {if condition="($list['0']['type'] == 2)"}
+            {if condition="($list1 == 2)"}
             <li>
                 志愿者招募
             </li>
@@ -44,7 +44,7 @@
                     <h5>列表</h5>
                     <div class="ibox-tools">
                         <a data-toggle="modal" class="btn btn-sm btn-primary" href="{:Url('Company/recruitadd?type='.$list['0']['type'])}">
-                            {if condition="($list['0']['type'] == 2)"}
+                            {if condition="($list1== 2)"}
                             添加志愿招募
                             {else /}
                             添加微心愿
@@ -114,7 +114,7 @@
 {block name="script"}
 <script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
 <script>
-    if ({$list['0']['type']}==1){
+    if ({$list1}==1){
         $(document).ready(function(){
             highlight_subnav("{:Url('Company/index')}");
             $('.i-checks').iCheck({
