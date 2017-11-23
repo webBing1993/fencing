@@ -79,7 +79,7 @@ body {
 .list ul li img {
   width: 11vw;
   height: 11vw;
-  margin-left: 2.13vw;
+  margin-left: 4vw;
   border-radius: 50%;
   -webkit-border-radius: 50%;
 }
@@ -92,6 +92,7 @@ body {
   font-size: 0.46rem;
   color: #788;
   width: 6vw;
+  text-align: center;
 }
 
 .list ul li .name {

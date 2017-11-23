@@ -31,14 +31,18 @@
     .body .body_body .active p{border-bottom: 0.8vw solid #ee7919;}
     .foot{width: 100vw;}
     .foot .rank{width: 100vw;}
-    .foot .rank ul li{width:100vw;line-height: 16vw;border-bottom: 1px solid #ecebeb;color: #231815;font-weight: 500;}
+    .foot .rank ul li{width:100vw;
+        display: flex;align-items:center;border-bottom: 1px solid #ecebeb;color: #231815;font-weight: 500;
+        line-height:16vw;}
     .foot .rank ul li .ranking{display:inline-block;width:6.7vw;font-size: 0.32rem;margin-left: 4vw;}
-    .foot .rank ul li img{width:9.6vw;height: 9.6vw;border-radius: 4.8vw;margin-left: 1vw;top: 3.2vw;position: relative;}
+    .foot .rank ul li img{width:9.6vw;height: 9.6vw;border-radius: 4.8vw;margin-left: 1vw;position: relative;}
     .foot .rank ul li:nth-child(1) .ranking{color: #eba52c;}
     .foot .rank ul li:nth-child(2) .ranking{color: #c5c5c5;}
     .foot .rank ul li:nth-child(3) .ranking{color: #dd8723;}
     .foot .rank ul li .department{font-size:0.34rem;margin-left: 2.7vw;}
-    .foot .rank ul li .int{font-size: 0.32rem;float: right;margin-right: 5.3vw;}
+    .foot .rank ul li .int{font-size: 0.32rem;float: right;margin-right: 5.3vw;
+        position: absolute;
+        right:0;}
     #score{position:relative;top: -70%;right: -49%;color:#fff;}
     #score img{position: relative;top: 0;right:0;}
     #score span{position: relative;top: 7.5vw;right:12vw;}
@@ -69,9 +73,6 @@
             right: 6vw;
         }
         h5{line-height: 40px;margin: 0}
-        .foot .rank ul li img{
-            margin-top: 5vw
-        }
     }
     .modal-body {
         line-height: 1.5;
