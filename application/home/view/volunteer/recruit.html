@@ -61,16 +61,17 @@
                 backgroundSize: "50vw",
             });
         }
+        var mySwiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            autoplayDisableOnInteraction:false,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: 1500
+        });
     });
 
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        autoplay: 1500
-    });
 
     window.onload = function () {
         if ($(".lists a").length < 10) {
