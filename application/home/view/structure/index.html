@@ -7,7 +7,7 @@
 
 {block name="body"}
 <div class="banner">
-	<img src="/home/images/bookbg.jpg" alt="组织架构banner" class="banner-img">
+	<img src="/home/images/strcture.jpg" alt="组织架构banner" class="banner-img">
 </div>
 <div class="tabs">
 	<div class="tabes">
@@ -25,8 +25,11 @@
 			</p>
 		</div>
 		<div class="box_ charter">
-				<p>箬横镇党群服务中心管理办法</p>
-
+			<div class="party1">
+				<div class="tri"></div>
+				<div class="name1" style="font-size: 0.4rem;color: #333;font-weight: bold;height: 0.8rem;line-height: 0.8rem;padding-left: 0.5rem">箬横镇党群服务中心管理办法</div>
+			</div>
+			<div class="detail1 down" style="padding-top: 5vw;display: none">
 				<span>为加强箬横镇党群服务中心运行管理，提高服务中心使用效率，更好地服务辖区党员群众，特制定如下管理办法。</span>
 				<p>第一章总则</p>
 				<span>第一条  服务中心的功能定位是：“服务、交流、学习、生活”为主线，按照“管理规范，功能齐全、作用明显”的总体要求，着眼于搭建新时期党组织服务党员群众，凝聚党心民心，展现党的先进性平台，达到提高党建区域化水平，增强党组织凝聚力和号召力的目的。</span>
@@ -44,7 +47,9 @@
 				<p>第五章  附则</p>
 				<span>第十条  本规定由箬横镇党群服务中心负责解释说明，并监督执行。</span>
 				<span>第十一条  本规定自党群服务中心正式启用之日起施行。</span>
-			箬横镇党群服务中心
+				<p style="font-size: 0.36rem;color: #666;text-align: right;font-weight: inherit">箬横镇党群服务中心</p>
+			</div>
+
 		</div>
 	</div>
 	<!--组织结构-->
@@ -105,9 +110,9 @@
 	</div>
 	<!--全景展示-->
 	<div class="vr box hidden">
-		<div class="title">德清地理信息小镇党群服务中心全景展示</div>
+		<div class="title">箬横镇党群服务中心全景展示</div>
 		<a href="http://720yun.com/t/e3cjO5mvuO2?pano_id=2107800">
-			<img src="/home/images/vr.jpg" alt="vr封面">
+			<!--<img src="/home/images/vr.jpg" alt="vr封面">-->
 		</a>
 	</div>
 
@@ -142,6 +147,19 @@ $(function(){
 });
 function slide(){
 	$('.list .party1').on('click',function(){
+		var it = $(this);
+		var detail = it.next('.detail1');
+		if(detail.hasClass('down')){
+			detail.slideDown();
+			it.find('.tri').removeClass('toup').addClass('todown');
+		}else{
+			detail.slideUp();
+			it.find('.tri').removeClass('todown').addClass('toup');
+		}
+		detail.toggleClass('down');
+	});
+
+	$('.charter .party1').on('click',function(){
 		var it = $(this);
 		var detail = it.next('.detail1');
 		if(detail.hasClass('down')){
