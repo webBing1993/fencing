@@ -22,9 +22,16 @@ class Signin extends Base {
         //dump($data);exit();
         $map = ['status' => ['eq',0],'meet_endtime'=>['egt',$data]];
         $left = $Work->get_list($map);
+        /*dump($left);exit();
+        int_to_string($left, array(
+            'type' => array(1 => "三会一课", 2 => "志愿之家"),
+        ));*/
         //dump($left);exit();
         $map = ['status' => ['eq',0],'meet_endtime'=>['lt',$data]];
         $right = $Work->get_list($map);
+       /* int_to_string($right, array(
+            'type' => array(1 => "三会一课", 2 => "志愿之家"),
+        ));*/
         //dump($right);exit();
         $this->assign('left',$left); // 最新签到
         $this->assign('right',$right);  // 历史签到

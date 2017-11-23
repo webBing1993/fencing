@@ -28,7 +28,11 @@
                         <a href="{:Url('Signin/detail?type=1&id='.$ne['id'])}">
                             <img src="{$ne.front_cover}">
                             <p>{$ne.title}</p>
-                            <span>【{$ne.publisher}】</span>
+                            {if condition="($ne['type'] == 1)"}
+                            <span>【三会一课】</span>
+                            {else /}
+                            <span>【志愿之家】</span>
+                            {/if}
                             <span>{$ne.create_time|substr=0,10}</span>
                             <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                         </a>
@@ -49,7 +53,13 @@
                         <a href="{:Url('Signin/detail?type=2&id='.$ol['id'])}">
                             <img src="{$ol.front_cover}">
                             <p>{$ol.title}</p>
-                            <span>【{$ol.publisher}】</span>
+                            {if condition="($ol['type'] == 1)"}
+                           <span>【三会一课】</span>
+                            {else /}
+                            <span>【志愿之家】</span>
+                            {/if}
+
+
                             <span>{$ol.create_time|substr=0,10}</span>
                             <span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                         </a>
