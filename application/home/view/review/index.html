@@ -48,8 +48,8 @@
                         {else/}
                         <ul>
                             {volist name="lists" id="ls"}
-                            <li>
-                                <a href="#" class="list clear" data-type="">
+                            <li  data-type="{$ls.class}">
+                                <a href="#" class="list clear">
                                     <img src="{$ls.front_cover|get_cover='path'}">
                                     <span>{$ls.title}</span>
                                     {eq name="ls.class" value="1"}
