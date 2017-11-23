@@ -73,7 +73,7 @@ class Volunteer extends Base
     }
 
     /**
-     * 志愿者风采type值得活动页面加载更多
+     * 志愿者风采活动页面加载更多
      */
     public function lomore()
     {
@@ -122,7 +122,7 @@ class Volunteer extends Base
             return $this->error('加载失败');
         }
     }
-
+ 
     /*
         *  发布和填写
         */

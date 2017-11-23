@@ -53,7 +53,7 @@
 {block name="script"}
 <script src="/static/swiper/swiper-3.3.1.jquery.min.js"></script>
 <script>
-    var id =  parseInt(window.location.href.split("recruit/pid/")[1]);
+    var pid =  parseInt(window.location.href.split("recruit/pid/")[1]);
     $(function () {
         if ($(".mui-scroll").height() == 0) {
             $("#refreshContainer").css({
@@ -94,10 +94,10 @@
         var len = $('.lists a').length;
         $.ajax({
             type: "post",
-            url: "{:Url('Volunteer/more')}",
+            url: "{:Url('Volunteer/lomore')}",
             data: {
                 length: len,
-                id:id
+                pid:pid
             },
             beforeSend: function(XMLHttpRequest){
             },
