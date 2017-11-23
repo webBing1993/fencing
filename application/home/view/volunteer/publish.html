@@ -144,6 +144,12 @@
 <script src="/home/js/publishs.js"></script>
 <script src="/home/js/mui.picker.min.js"></script>
 <script>
+    var type =  parseInt(window.location.href.split("publish/type/")[1]);
+    if(type == 1){
+        $("title").text("点亮微心愿")
+    }else if(type == 2){
+        $("title").text("志愿者招募")
+    }
     var u = navigator.userAgent, app = navigator.appVersion;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
