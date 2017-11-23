@@ -43,7 +43,11 @@
                             <ul>
                                 {volist name="list" id="lo"}
                                 <li>
+                                    {if condition="$i <= 3"}
                                     <span class="number">{$i}</span>
+                                    {else/}
+                                    <span class="number">{$i}</span>
+                                    {/if}
                                     <img src="{$lo.avatar}">
                                     <span class="name">{$lo.name}</span>
                                     <span class="score">{$lo.mouth}分</span>
@@ -60,7 +64,11 @@
                             <ul>
                                 {volist name="lists" id="ls"}
                                 <li>
+                                    {if condition="$i <= 3"}
                                     <span class="number">{$i}</span>
+                                    {else/}
+                                    <span class="number">{$i}</span>
+                                    {/if}
                                     <img src="{$ls.avatar}">
                                     <span class="name">{$ls.name}</span>
                                     <span class="score">{$ls.all}分</span>
@@ -94,7 +102,11 @@
                             <ul>
                                 {volist name="list2" id="loo"}
                                 <li>
+                                    {if condition="$i <= 3"}
                                     <span class="number">{$i}</span>
+                                    {else/}
+                                    <span class="number">{$i}</span>
+                                    {/if}
                                     <img src="{$loo.avatar}">
                                     <span class="name">{$loo.name}</span>
                                     <span class="score">{$loo.mouth}分</span>
@@ -110,7 +122,11 @@
                             <ul>
                                 {volist name="lists2" id="lss"}
                                 <li>
+                                    {if condition="$i <= 3"}
                                     <span class="number">{$i}</span>
+                                    {else/}
+                                    <span class="number">{$i}</span>
+                                    {/if}
                                     <img src="{$lss.avatar}">
                                     <span class="name">{$lss.name}</span>
                                     <span class="score">{$lss.all}分</span>
