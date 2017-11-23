@@ -50,7 +50,7 @@
                             {volist name="lists" id="ls"}
                             <li>
                                 <a href="#" class="list clear" data-type="">
-                                    <img src="">
+                                    <img src="{$ls.front_cover|get_cover='path'}">
                                     <span>{$ls.title}</span>
                                     {eq name="ls.class" value="1"}
                                         <p>[会议纪要]</p>
