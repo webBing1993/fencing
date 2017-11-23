@@ -65,8 +65,8 @@ class Volunteer extends Base
     {
         $type = input('pid');
         $list = Db::table('pb_companys')->where('type', $type)->where('status', 1)->order('create_time desc')->limit(10)->select();
-        $list2 = Db::table('pb_companys')->where('type', $type)->where('status', 1)->where('istop', 1)->limit(3)->select();
-        
+        $list2 = Db::table('pb_companys')->where('type', $type)->where('status', 1)->where('istop', 1)->order('create_time desc')->limit(3)->select();
+        //dump($list2);exit();
         $this->assign('list2', $list2);
         $this->assign('list', $list);
         return $this->fetch();
