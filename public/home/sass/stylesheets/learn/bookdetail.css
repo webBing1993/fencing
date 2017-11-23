@@ -256,15 +256,19 @@
   font-size: 0.32rem;
   line-height: 0.6rem;
 }
-.comment .lists{
-  padding-bottom:20vw;
-}
 .comment .lists .list {
   width: 100%;
-  min-height:80px;
+  min-height:90px;
   border-bottom: 1px solid #f1f1f1;
   position: relative;
   overflow: hidden;
+}
+@media screen and (device-width: 320px){
+
+  .comment .lists .list {
+    min-height: 75px;
+  }
+
 }
 .comment .lists .list .fl img {
   float: left;
@@ -295,8 +299,8 @@
   width: 100%;
   word-break: break-all;
   font-size: 0.38rem;
-  margin-top: 1vw;
-  margin-bottom: 1vw;
+  margin-top: 3vw;
+  margin-bottom: 6vw;
   padding-left: 15vw;
   line-height:0.5rem;
 }
@@ -305,6 +309,8 @@
   line-height: 5.3vw;
   color: #999;
   margin-left:15vw;
+  position: absolute;
+  bottom:5px;
 }
 .comment .lists .list .fr {
   color: #999999;
