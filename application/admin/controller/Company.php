@@ -35,6 +35,8 @@ class Company extends Admin
         int_to_string($list, [
             'status' => [0=>"待审核",1=>"已发布",2=>"审核未通过"],
         ]);
+        $list1=1;
+        $this->assign('list1',$list1);
         $this->assign('list', $list);
         return $this->fetch('Company/recruit');
     }
@@ -50,8 +52,10 @@ class Company extends Admin
         int_to_string($list, array(
             'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
         ));
+        $list1=2;
         //dump($list);
         //exit;
+        $this->assign('list1',$list1);
         $this->assign('list', $list);
 
         return $this->fetch();
