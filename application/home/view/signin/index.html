@@ -139,8 +139,8 @@
                         '<a href="/home/signin/detail/type/1/id/' + list.id + '">' +
                         '<img src="'+list.front_cover+'">'+
                         '<p>' + list.title + '</p>' +
-                        '<span>' + list.publisher + '</span>' +
-                        '<span>' + list.create_time + '</span>' +
+                        '<span>【' +  list.publisher + '】</span>' +
+                        '<span>' + list.create_time.split(" ")[0] + '</span>' +
                         '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
                         '</a>'
             } else if (type == 1) {
@@ -148,8 +148,8 @@
                         '<a href="/home/signin/detail/type/2/id/' + list.id + '">' +
                         '<img src="'+list.front_cover+'">'+
                         '<p>' + list.title + '</p>' +
-                        '<span>' + list.publisher + '</span>' +
-                        '<span>' + list.create_time + '</span>' +
+                        '<span>【' + list.publisher + '】</span>' +
+                        '<span>' +  list.create_time.split(" ")[0] + '</span>' +
                         '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
                         '</a>'
             }
