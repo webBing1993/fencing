@@ -49,15 +49,20 @@ class Notice extends Admin {
         $this->assign('type',$type);
         if(IS_POST) {
             $data = input('post.');
-            $result = $this->validate($data,'Notice');  // 验证  数据
+            //dump($data);exit();
+            if ($data['type']==1) {
+                $result = $this->validate($data, 'Notice');  // 验证  数据
+            }else{
+                $result = $this->validate($data, 'Notices');
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if (true !== $result) {
                 return $this->error($result);
             }else{
                 $noticeModel = new NoticeModel();
-                $data['start_time'] = strtotime($data['start_time']);
-                if (empty($data['start_time']) && !empty($data['end_time'])){
-                    return $this->error('请添加开始时间');
+              $data['start_time'] = strtotime($data['start_time']);
+                if (!empty($data['end_time'])) {
+                    $data['end_time'] = strtotime($data['end_time']);
                 }
                 $res = $noticeModel->save($data);
                 if ($res){
@@ -80,17 +85,20 @@ class Notice extends Admin {
     public function indexedit(){
         if(IS_POST) {     
             $data = input('post.');
-            //dump($data);exit();
-            $result = $this->validate($data,'Notice');  // 验证  数据
+            if ($data['type']==1) {
+                $result = $this->validate($data, 'Notice');  // 验证  数据
+            }else{
+                $result = $this->validate($data, 'Notices');
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if (true !== $result) {
                 return $this->error($result);
             }else{
                 $noticeModel = new NoticeModel();
-                if (empty($data['start_time']) && !empty($data['end_time'])){
-                    return $this->error('请添加开始时间');
-                }
                 $data['start_time'] = strtotime($data['start_time']);
+                if (!empty($data['end_time'])) {
+                    $data['end_time'] = strtotime($data['end_time']);
+                }
                 $res = $noticeModel->save($data,['id'=>$data['id']]);
                 if ($res){
                     if ($data['type']==1) {
