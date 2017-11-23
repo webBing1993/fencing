@@ -76,8 +76,7 @@
                             <div class="col-lg-5">
                                 <div class="imggroup">
                                     <img src="{$data2.path}" alt='图片' class='thumbnail imgbox'>
-                                    <input type="file" class="imgfile"
-                                           accept="image/jpg, image/png, image/gif, image/jpeg">
+                                    <input type="file" class="imgfile" accept="image/jpg, image/png, image/gif, image/jpeg">
                                     <input type="hidden" name="list_image" class="img" value="{$data.image}"
                                            required="">
                                 </div>
@@ -156,8 +155,14 @@
                                 <label>发布人:</label>
                             </div>
                             <div class="col-lg-11">
+                                <!--{if condition="($data['userid'] == '')"}
                                 <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher"
                                        value="{$data.publisher}">
+                                {else /}-->
+                                <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher"
+                                       value="{$data.userid}">
+                                <!--{/if}-->
+
                             </div>
                         </div>
 
