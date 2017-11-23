@@ -29,6 +29,7 @@
     height: 100%;
     display: inline-block;
     border-radius: 1.5vw;
+    font-size:0.34rem;
 
 }
 .lists .list:nth-of-type(2n) {

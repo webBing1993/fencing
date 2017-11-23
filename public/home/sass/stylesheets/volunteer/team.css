@@ -75,6 +75,7 @@
     text-align: center;
     font-size: .42rem;
     text-shadow: 1px 1px 1px red;
+    line-height: 6vw;
 }
 .btn a span:last-of-type {
     margin-top: .8vw;
