@@ -1,6 +1,7 @@
 {extend name="public/common"}
 
 {block name="style"}
+<title>学习排行榜</title>
 <style>
     *{margin: 0;padding: 0;}
     body,html{overflow-x:hidden;}
@@ -209,7 +210,7 @@
     //切换
     $(function(){
         //模块标题
-        $('title' ).text('个人排行榜');
+        $('title' ).text('学习排行榜');
         $("#title").find("li").each(function(){
             $(this).on('click',function(){
                 $(this).addClass("active").siblings().removeClass();
