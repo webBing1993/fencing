@@ -127,6 +127,7 @@ body {
   background: #ffffff;
   color: #666666;
   line-height: 10.8vw;
+  font-size:0.37rem;
 }
 .lists-title:before {
   position: absolute;

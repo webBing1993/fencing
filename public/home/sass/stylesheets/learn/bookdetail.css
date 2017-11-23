@@ -229,8 +229,8 @@
 }
 .book .content .note .read {
   background: url('/home/images/learn/scan_.png') 0 center no-repeat;
-  background-size: 15px 15px;
-  padding-left: 18px;
+  background-size: 2vw 2vw;
+  padding-left: 2.2vw;
 }
 .book .content .note .good {
   background: url('/home/images/learn/good.png') 0 center no-repeat;
