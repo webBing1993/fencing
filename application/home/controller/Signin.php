@@ -36,9 +36,14 @@ class Signin extends Base {
     {
         $Work = new Work();
         $len = input('length');
+        $c=input('type');
+        //dump($c);exit();
         $data=date("Y-m-d H:i:s");
-        //dump($data);exit();
-        $map = ['status' => ['eq',0],'meet_endtime'=>['lt',$data]];
+        if ($c == 0){
+            $map = ['status' => ['eq',0],'meet_endtime'=>['egt',$data]];
+        }else{
+            $map = ['status' => ['eq',0],'meet_endtime'=>['lt',$data]];
+        }
         $list = $Work->get_list($map, $len);
         //dump($list);exit();
         if ($list) {
