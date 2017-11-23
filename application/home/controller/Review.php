@@ -12,6 +12,8 @@ use app\home\model\Company;
 use app\home\model\Picture;
 use think\Db;
 use app\home\model\WechatUser;
+use com\wechat\TPQYWechat;
+use think\Config;
 /**
  * Class Review
  * @package app\home\controller  消息审核
@@ -212,7 +214,43 @@ class Review extends Base{
         Db::name('review')->insert($data);
         $res = $this->change_status($msg['class'],$msg['id'],$msg['status']);
         if ($res){
-            return $this->success('审核成功');
+            // 审核通过   推送至个人中心
+            switch ($msg['class']){
+                case 1:
+                    $pre = "会议纪要";
+                    $title = Db::name('notice')->where('id',$msg['id'])->value('title');
+                    break;
+                case 2:
+                    $pre = "微心愿";
+                    $title = Db::name('company')->where('id',$msg['id'])->value('title');
+                    break;
+                case 3:
+                    $pre = "志愿招募";
+                    $title = Db::name('company')->where('id',$msg['id'])->value('title');
+                    break;
+                default:
+                    $pre = "暂无";
+                    $title = "暂无";
+            }
+            if ($msg['status'] == 1){
+                $content = "恭喜您提交的".$pre."【".$title."】已成功通过审核!";
+            }else{
+                $content = "很遗憾您提交的".$pre."【".$title."】未通过审核！";
+            }
+            $message = array(
+                "touser" => $userId,
+                "msgtype" => 'text',
+                "agentid" =>1000005,
+                "text" => array('content' => $content),
+            );
+            //发送给企业号
+            $Wechat = new TPQYWechat(Config::get('user'));
+            $msg = $Wechat->sendMessage($message);
+            if($msg['errcode'] == 0){
+                return $this->success('审核成功');
+            }else{
+                $this->error($Wechat->errMsg);
+            }
         }else{
             return $this->error('审核失败');
         }
