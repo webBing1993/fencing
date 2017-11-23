@@ -9,6 +9,7 @@
 namespace app\home\controller;
 
 use app\home\model\News as NewsModel;
+use think\Db;
 /**
  * Class News
  * @package 箬横动态
@@ -23,6 +24,14 @@ class News extends Base {
         $left = $NewsModel->get_list($map);
         $mapp = ['status' => ['eq',0],'type' => 2];
         $right = $NewsModel->get_list($mapp);
+        $data=Db::table('pb_news')->where('status',0)->order('create_time desc')->limit(3)->select();
+        //dump($data);exit();
+        foreach ($data as $key=>$v) {
+            $list = Db::table('pb_picture')->where('id', $v['front_cover'])->find();
+            $data[$key]['front_cover'] = $list['path'];
+        }
+
+        $this->assign('data',$data);
         $this->assign('left',$left); // 基层建设
         $this->assign('right',$right);  // 党政建设
         return $this->fetch();

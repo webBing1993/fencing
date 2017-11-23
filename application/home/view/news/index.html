@@ -16,9 +16,9 @@
     <div class="swiper-container">
         <div class="imgs swiper-wrapper">
             <!--轮播开始-->
-            {volist name="$left" id="tp"}
+            {volist name="data" id="tp"}
             <div class="banner swiper-slide">
-                <a href="#">
+                <a href="{:Url('News/detail?id='.$tp['id'])}">
                     <img src="{$tp.front_cover}" alt="">
                     <div class="title_ limit">
                         <span>{$tp.title}</span>
