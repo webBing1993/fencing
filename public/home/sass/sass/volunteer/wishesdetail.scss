@@ -36,25 +36,21 @@ body{
         color: #333;
         width:30%;
         font-size: 0.34rem;
+        min-width: 30%;
       }
       &:first-child{
         p{
-          display: block;
-        }
-        span{
-          width:100%;
+          float: left;
         }
       }
       span{
-        display: inline-block;
-        width:60%;
         color: #666;
         font-size: 0.32rem;
       }
-      &:first-child{
-        display: block;
-        margin-bottom: 0.5rem;
-      }
+    }
+    .information-content{
+      display: inline-block;
+      width:100%;
     }
   }
   .claim{

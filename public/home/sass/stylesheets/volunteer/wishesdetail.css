@@ -34,22 +34,18 @@ body {
   color: #333;
   width: 30%;
   font-size: 0.34rem;
+  min-width: 30%;
 }
 .detail .information div:first-child p {
-  display: block;
-}
-.detail .information div:first-child span {
-  width: 100%;
+  float: left;
 }
 .detail .information div span {
-  display: inline-block;
-  width: 60%;
   color: #666;
   font-size: 0.32rem;
 }
-.detail .information div:first-child {
-  display: block;
-  margin-bottom: 0.5rem;
+.detail .information .information-content {
+  display: inline-block;
+  width: 100%;
 }
 .detail .claim {
   width: 60vw;
