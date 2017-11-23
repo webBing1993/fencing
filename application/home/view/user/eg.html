@@ -1,0 +1,38 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>个人中心</title>
+<link rel="stylesheet" href="/home/sass/stylesheets/user/personal.css">
+{/block}
+
+{block name="body"}
+<div class="lists">
+	<div class="list clear tag">
+		<span class="fl">党员信息</span>
+	</div>
+	<div class="list clear">
+		<span class="fl">姓名</span>
+		<span class="fr">{$user.name}</span>
+	</div>
+	<div class="list clear">
+		<span class="fl">性别</span>
+		<span class="fr">{$user.sex}</span>
+	</div>
+	<div class="list clear">
+		<span class="fl">出生日期</span>
+		<span class="fr">{$user.birthday|time_format="Y-m-d"}</span>
+	</div>
+	<div class="list clear">
+		<span class="fl">手机号</span>
+		<span class="fr">{$user.mobile}</span>
+	</div>
+	<div class="list clear">
+		<span class="fl">所在支部</span>
+		<span class="fr">{$user.branch}</span>
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/static/code/jquery.qrcode.min.js"></script>
+{/block}
