@@ -35,7 +35,7 @@
                 <a href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
                     <img src="{$vo2.front_cover|get_cover='path'}">
                     <p>{$vo2.title}</p>
-                    <span>发布人</span>
+                    <span>{$vo2.publisher}</span>
                     <span class="fr">{$vo2.create_time|time_format='Y-m-d'}</span>
                 </a>
                 {/volist}
