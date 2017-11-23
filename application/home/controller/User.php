@@ -29,25 +29,6 @@ class User extends Base {
         $userId = session('userId');
         $user = WechatUser::where('userid',$userId)->find();
         $this->assign('user',$user);
-        //判断是否签到
-        if($user){
-            //获取当天0点的时间戳
-            $timestamp0=strtotime(date('Y-m-d',time()));
-            $info = WechatUser::where(['userid' =>$userId,'sign_time' =>['EGT',$timestamp0]])->find();
-            //当日未签到为0
-            if($info){
-                $this ->assign('is_sign',$info['sign']);
-            }else{
-                $this ->assign('is_sign',0);
-            }
-        }
-        //  是否 具有  游客模式 权限
-        $Tourist = WechatUserTag::where(['tagid' => 1, 'userid' => $userId])->find();
-        if ($Tourist){
-            $this ->assign('tourist',1);
-        }else{
-            $this ->assign('tourist',0);
-        }
         return $this->fetch();
     }
 
