@@ -196,6 +196,20 @@ body {
   font-size: 0.34rem;
   line-height: 5.5vw;
   color: #333;
+  text-align: justify;
+}
+.listbox .box .box_.charter p{
+  font-size: 0.4rem;
+  font-weight: bold;
+  text-align: center;
+}
+.listbox .box .box_.charter  span{
+  text-indent: 0.8rem;
+  font-size: 0.34rem;
+  color: #666;
+  display: inline-block;
+  text-align: justify;
+  line-height: 1.5;
 }
 .listbox .box .box_ .lists {
   padding: 3.4667vw;
