@@ -13,7 +13,9 @@
     <div class="time">
         <p>{$detail.create_time|time_format='Y-m-d'}</p>
     </div>
+    {notempty name="detail.image"}
     <img src="{$detail.image}">
+    {/notempty}
     <div class="information">
         <div  class="information-content">
         <p>招募内容：</p>
