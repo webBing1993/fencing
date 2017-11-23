@@ -201,11 +201,11 @@ ul li a span:nth-child(2) {
 
 @media screen and (device-width: 320px) {
   .Audited ul li a p:nth-child(4), .Audited ul li a span:nth-child(5) {
-    bottom: 0;
+    bottom: 0.1rem;
   }
 
   .Audited ul li a p:nth-child(3) {
-    bottom: 5vw;
+    bottom: 5.5vw;
   }
 }
 ul li a span:nth-child(3) {
