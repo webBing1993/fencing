@@ -36,6 +36,15 @@ class Company extends Admin
             'status' => [0=>"待审核",1=>"已发布",2=>"审核未通过"],
         ]);
         $list1=1;
+        foreach ($list as $v) {
+            if (!empty($v['userid'])) {
+                $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
+                $v['userid'] = $list2['name'];
+            }else{
+                $v['userid'] = $v['publisher'];
+            }
+        }
+
         $this->assign('list1',$list1);
         $this->assign('list', $list);
         return $this->fetch('Company/recruit');
@@ -55,6 +64,15 @@ class Company extends Admin
         $list1=2;
         //dump($list);
         //exit;
+        foreach ($list as $v) {
+            if (!empty($v['userid'])) {
+            $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
+            $v['userid'] = $list2['name'];
+        }else{
+                $v['userid'] = $v['publisher'];
+            }
+        }
+        //dump($list);exit();
         $this->assign('list1',$list1);
         $this->assign('list', $list);
 
@@ -157,7 +175,7 @@ class Company extends Admin
             'status' => array( 0=>"待审核",1=>"已发布",2=>"审核未通过"),
             'recommend'=>array(0=>"否",1=>"是"),
         ));
-       
+
         $this->assign('list', $list);
         $this->assign('id',$id);
         
