@@ -27,7 +27,7 @@ body {
   align-items: center;
   margin-bottom: 0.5rem;
 }
-.detail .information div p {
+.detail .information div > p {
   margin-bottom: 0;
   display: inline-block;
   font-weight: bold;
@@ -36,12 +36,17 @@ body {
   font-size: 0.34rem;
   min-width: 30%;
 }
-.detail .information div:first-child p {
+.detail .information div:first-child > p {
   float: left;
 }
 .detail .information div span {
   color: #666;
   font-size: 0.32rem;
+}
+.detail .information div span p {
+  color: #666;
+  font-size: 0.32rem;
+  line-height: 1.5;
 }
 .detail .information .information-content {
   display: inline-block;
@@ -111,9 +116,14 @@ body {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  display: none;
 }
 
 .detail > img {
   width: 100%;
   height: 50vw;
+}
+
+p {
+  margin-bottom: 0;
 }
