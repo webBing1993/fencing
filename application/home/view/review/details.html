@@ -14,7 +14,7 @@
         <p>{$detail.create_time|time_format='Y-m-d'}</p>
     </div>
     {notempty name="detail.image"}
-    <img src="{$detail.image}">
+    <img src="{$detail.image|get_cover='path'}">
     {/notempty}
     <div class="information">
         <div  class="information-content">
