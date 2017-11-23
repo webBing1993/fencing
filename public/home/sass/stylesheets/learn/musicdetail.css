@@ -142,8 +142,8 @@
 }
 .music .content .note .read {
   background: url('/home/images/learn/scan_.png') 0 center no-repeat;
-  background-size: 2vw 2vw;
-  padding-left: 2.2vw;
+  background-size: 0.38rem 0.38rem;
+  padding-left: 0.53rem;
 }
 .music .content .note .good {
   background: url('/home/images/detail/good.png') 0 center no-repeat;
@@ -157,6 +157,7 @@
   background-size: 0.38rem 0.38rem;
   padding-left: 0.53rem;
 }
+
 /*评论*/
 .comment{
   padding-left: 0.3rem;
