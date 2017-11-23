@@ -63,8 +63,6 @@ class Company extends Admin
             'status' => array(0=>"待审核",1=>"已发布",2=>"审核未通过"),
         ));
         $list1=2;
-        //dump($list);
-        //exit;
         foreach ($list as $v) {
             if (!empty($v['userid'])) {
             $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
@@ -75,7 +73,7 @@ class Company extends Admin
             $list3 = Db::table('pb_company_recruit')->where('rid', $v['id'])->count();
             $v['receive_number'] = $list3;
         }
-        //dump($list);exit();
+        
         $this->assign('list1',$list1);
         $this->assign('list', $list);
 
@@ -86,7 +84,6 @@ class Company extends Admin
     public function recruitname($id){
         $data=Db::table('pb_company_recruit')->where('rid',$id)->select();
         $list=Db::table('pb_company')->where('id',$id)->find();
-        //dump($data);
         $this->assign('data',$data);
         $this->assign('list',$list);
         return $this->fetch();
@@ -98,7 +95,6 @@ class Company extends Admin
         $this->assign('type',$type);
         if (IS_POST) {
             $data = input('post.');
-            //dump($data);exit();
             $result = $this->validate($data, 'Company');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
@@ -142,8 +138,6 @@ class Company extends Admin
         $this->assign('data2', $data2);
         if (IS_POST) {
             $data1 = input('post.');
-            //dump($data);
-            //exit();
             $result = $this->validate($data1, 'Company');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
@@ -191,8 +185,6 @@ class Company extends Admin
         $this->assign('type',$type);
         if (IS_POST) {
             $data = input('post.');
-            //dump($data);
-            //exit();
             $result = $this->validate($data, 'Companys');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
@@ -220,15 +212,11 @@ class Company extends Admin
         $this->assign('data',$data);
         if (IS_POST) {
             $data1 = input('post.');
-            //dump($data1);
-            //exit();
             $result = $this->validate($data1, 'Companys');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
             } else {
-
                 $data1['create_user'] = $_SESSION['think']['user_auth']['id'];
-
                 $res = Db::table('pb_companys')->where('id',$id)->update($data1);
                 if ($res) {
                         return $this->success("修改风采展示成功!",Url('Company/show?id='.$data1['type']));
@@ -293,8 +281,6 @@ class Company extends Admin
         $this->assign('data',$data);
         if (IS_POST) {
             $data1 = input('post.');
-            //dump($data);
-            //exit();
             $result = $this->validate($data1, 'Companys');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
