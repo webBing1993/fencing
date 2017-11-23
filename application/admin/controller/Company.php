@@ -73,7 +73,7 @@ class Company extends Admin
         $this->assign('type',$type);
         if (IS_POST) {
             $data = input('post.');
-            dump($data);exit();
+            //dump($data);exit();
             $result = $this->validate($data, 'Company');  // 验证  数据
             if (true !== $result) {
                 return $this->error($result);
