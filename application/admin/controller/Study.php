@@ -132,7 +132,7 @@ class Study extends Admin {
         }else{
             //消息列表
             $map = array(
-                'class' => 6, // 两学一做
+                'class' => 3, // 两学一做
                 'status' => array('egt',-1),
             );
             $list = $this->lists('Push',$map);
@@ -181,10 +181,10 @@ class Study extends Admin {
             $pre1 = "【两学一做】";
             switch ($focus1['type']) {
                 case 1:  // 视频
-                    $url1 = hostUrl."/home/study/video/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/learn/video/id/".$focus1['id'].".html";
                     break;
                 case 2:  // 图文
-                    $url1 = hostUrl."/home/study/article/id/".$focus1['id'].".html";
+                    $url1 = hostUrl."/home/learn/article/id/".$focus1['id'].".html";
                     break;
                 default:
                     break;
@@ -213,10 +213,10 @@ class Study extends Admin {
                 $pre = "【两学一做】";
                 switch ($focus['type']) {
                     case 1:
-                        $url = hostUrl."/home/study/video/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/learn/video/id/".$focus['id'].".html";
                         break;
                     case 2:
-                        $url = hostUrl."/home/study/article/id/".$focus['id'].".html";
+                        $url = hostUrl."/home/learn/article/id/".$focus['id'].".html";
                         break;
                     default:
                         break;
@@ -250,11 +250,11 @@ class Study extends Admin {
         }
 
         //发送给服务号
-        $Wechat = new TPQYWechat(Config::get('party'));
+        $Wechat = new TPQYWechat(Config::get('user'));
         $message = array(
             "touser" => toUser,
             "msgtype" => 'news',
-            "agentid" => agentId,
+            "agentid" => agentId,  // 个人中心
             "news" => $send,
             "safe" => "0"
         );
@@ -263,7 +263,7 @@ class Study extends Admin {
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
             $data['status'] = 1;
-            $data['class'] = 6;  // 两学一做
+            $data['class'] = 3;  // 两学一做
             //保存到推送列表
             $s = Push::create($data);
             if ($s){

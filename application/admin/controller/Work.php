@@ -225,7 +225,7 @@ class Work extends Admin
         }else{
             $pre = '【志愿之家】';
         }
-        $url = "http://".$_SERVER['HTTP_HOST']."/home/Notice/detail/id/".$info['id'].".html";
+        $url = "http://".$_SERVER['HTTP_HOST']."/home/signin/detail/id/".$info['id'].".html";
         $image = Picture::get($info['front_cover']);
         $path = "http://".$_SERVER['HTTP_HOST'].$image['path'];
         $information = array(
@@ -240,9 +240,10 @@ class Work extends Admin
             )
         );
         $message = array(
+//            "touser" => "@all",
             "touser" => "17557289172",
             "msgtype" => 'news',
-            "agentid" =>1000009,
+            "agentid" =>1000003,  // 活动签到
             "news" => $send,
         );
         //发送给企业号

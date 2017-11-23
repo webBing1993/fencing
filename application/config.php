@@ -30,15 +30,30 @@ return [
     
     /* 企业配置 */
     'party' => array(
-        'login' => 'http://tzgxpb.0571ztnet.com/home/verify/login',
+        'login' => 'http://rh.0571ztnet.com/home/verify/login',
 //        'token' => 'ZfqkOC4Fhd7D',
 //        'encodingaeskey' => 'SWWdiNibALNG3hZfvqqAzQ48rmibi5KTc1JnqouajTC',
-        'appid' => 'wwe2d5103c1343a8bb',
-        'appsecret' => 'agp2IBdsHpDef0lKv8tdcnDIS0k-iHiR5yoNy_A-J34',
-        'agentid' => 1000002
+        'appid' => 'ww678237a01774a2fb',
+        'appsecret' => 'pyXyO5cw8DfEbFr6dG-veoVo8Lv7izqMZoakYTAymro',
     ),
-    
-
+     /*个人中心*/
+     'user' => array(
+         'appid' => 'ww678237a01774a2fb',
+         'appsecret' => 'HdHeFsMy_5ezrO90p_fSqC_v21nPXucM5WeBpfOVYMA',
+         'agentid' => 1000005
+     ),
+    /*消息审核*/
+    'review' => array(
+        'appid' => 'ww678237a01774a2fb',
+        'appsecret' => 'wzp_OlcYTgH2IjTbjFgA7oLrF8zXHhQXc4Oaz9KVwwo',
+        'agentid' => 1000004
+    ),
+    /*活动签到*/
+    'sign' => array(
+        'appid' => 'ww678237a01774a2fb',
+        'appsecret' => '-njGAjJ7EnSKMXlzSoUxcJO6RDGhYtbVEiY5KSiry3s',
+        'agentid' => 1000003
+    ),
     /* UC用户中心配置 */
     'uc_auth_key' => '(.t!)=JTb_OPCkrD:-i"QEz6KLGq5glnf^[{p;je',
     /*直播地址*/

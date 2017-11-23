@@ -125,7 +125,7 @@ class News extends Admin {
         }else{
             //新闻消息列表
             $map = array(
-                'class' => 1,  // 箬横动态
+                'class' => 2,  // 箬横动态
                 'status' => array('egt',-1)
             );
             $list=$this->lists('Push',$map);
@@ -237,11 +237,11 @@ class News extends Admin {
         }
 
         //发送给企业号
-        $Wechat = new TPQYWechat(Config::get('party'));
+        $Wechat = new TPQYWechat(Config::get('user'));
         $message = array(
             "touser" => toUser,
             "msgtype" => 'news',
-            "agentid" => agentId,  // 消息审核
+            "agentid" => agentId,  // 个人中心
             "news" => $send,
             "safe" => "0"
         );
@@ -250,7 +250,7 @@ class News extends Admin {
         if($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
-            $data['class'] = 1;  // 箬横动态
+            $data['class'] = 2;  // 箬横动态
             $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);

@@ -33,7 +33,7 @@ class Service extends Controller
                 $event = $Wechat->getRev()->getRevEvent();
                 switch ($event['event']) {
                     case 'subscribe':
-                        $replyText = "您好！欢迎关注台州个协党建！";
+                        $replyText = "您好！欢迎关注 两美箬横 党建！";
                         $Wechat->text($replyText)->reply();
 //                        $newsData = array(
 //                            '0'=> array(
@@ -80,36 +80,6 @@ class Service extends Controller
     public function oauth2(){
         $Wechat = new TPWechat(Config::get('news'));
         $Wechat->valid();
-    }
-
-    // 创建订阅号菜单
-    public function menu() {
-        $menu["button"] = array(
-            array(
-                "type"=>"view",
-                "name"=>"第一聚焦",
-                "url"=>"http://party.0571ztnet.com/home/focus/index"
-            ),
-            array(
-                "type"=>"view",
-                "name"=>"活动通知",
-                "url"=>"http://party.0571ztnet.com/home/activity/index"
-            ),
-            array(
-                "type"=>"view",
-                "name"=>"品牌特色",
-                "url"=>"http://party.0571ztnet.com/home/special/index"
-            ),
-        );
-
-        $Wechat = new TPWechat(Config::get('news'));
-        $result = $Wechat->createMenu($menu);
-
-        if($result) {
-            return $this->success('提交成功');
-        } else {
-            return $this->error('错误代码：'.$result['errcode'].'，消息：'.$result['errmsg']);
-        }
     }
 
     public function media() {

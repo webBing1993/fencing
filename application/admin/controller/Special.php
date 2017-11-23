@@ -123,7 +123,7 @@ class Special extends Admin
         }else{
             //新闻消息列表
             $map = array(
-                'class' => 2,  // 通州公告
+                'class' => 2,  // 通知公告
                 'status' => array('egt',-1)
             );
             $list=$this->lists('Push',$map);
@@ -178,7 +178,7 @@ class Special extends Admin
             return $this->error('请选择主图文');
         }else{
             //主图文信息
-            $info1 = NewsModel::where('id',$arr1)->find();
+            $info1 = SpecialModel::where('id',$arr1)->find();
         }
         $update['status'] = '1';
         $title1 = $info1['title'];
@@ -187,7 +187,7 @@ class Special extends Admin
         $des1 = mb_substr($str1,0,40);
         $content1 = str_replace("&nbsp;","",$des1);  //空格符替换成空
         $pre = '【通知公告】';
-        $url1 = hostUrl."/home/News/detail/id/".$info1['id'].".html";
+        $url1 = hostUrl."/home/Notice/detail/id/".$info1['id'].".html";
         $image1 = Picture::get($info1['front_cover']);
         $path1 = hostUrl.$image1['path'];
         $information1 = array(
@@ -208,7 +208,7 @@ class Special extends Admin
                 $des2 = mb_substr($str2,0,40);
                 $content2 = str_replace("&nbsp;","",$des2);  //空格符替换成空
                 $pre1 = '【通知公告】';
-                $url2 = hostUrl."/home/News/detail/id/".$info2['id'].".html";
+                $url2 = hostUrl."/home/Notice/detail/id/".$info2['id'].".html";
                 $image2 = Picture::get($info2['front_cover']);
                 $path2 = hostUrl.$image2['path'];
                 $information2[] = array(
@@ -235,11 +235,11 @@ class Special extends Admin
         }
 
         //发送给企业号
-        $Wechat = new TPQYWechat(Config::get('party'));
+        $Wechat = new TPQYWechat(Config::get('user'));
         $message = array(
             "touser" => toUser,
             "msgtype" => 'news',
-            "agentid" => agentId,  // 消息审核
+            "agentid" => agentId,  // 个人中心
             "news" => $send,
             "safe" => "0"
         );
@@ -248,7 +248,7 @@ class Special extends Admin
         if($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
-            $data['class'] = 1;  // 箬横动态
+            $data['class'] = 2;  // 通知公告
             $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);
