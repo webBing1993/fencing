@@ -235,24 +235,12 @@ class Volunteer extends Base
     //心愿详情页
     public function wishesdetail()
     {
-
+        $userId = session('userId');
+        //dump($userId);exit();
         $id = input('id');
-        $list3 = Db::table('pb_company_recruit')->where('rid', $id)->select();
-        if (empty($list3)) {
-            $data = Db::table('pb_company')->where('id', $id)->find();
-            $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
-            $data['image'] = $list5['path'];
-            $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
-            foreach ($list as $key => $v) {
-                $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
-                $list[$key]['userid'] = $list2['name'];
-                $list[$key]['image'] = $list2['avatar'];
-            }
-            //dump($data);exit();
-            $this->assign('list', $list);
-            $this->assign('data', $data);
-            return $this->fetch();
-        } else {
+        $data11 = Db::table('pb_company')->where('id', $id)->find();
+        $data12 = Db::table('pb_company_recruit')->where('rid', $id)->count();
+        if ($data11['demand_number'] == $data12) {
             $data = Db::table('pb_company')->where('id', $id)->find();
             $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
             $data['image'] = $list5['path'];
@@ -263,12 +251,50 @@ class Volunteer extends Base
                 $list[$key]['image'] = $list2['avatar'];
             }
             $data['receive_number'] = Db::table('pb_company_recruit')->where('rid', $id)->count();
+            $m=5;
+            $this->assign('m',$m);
             $this->assign('list', $list);
             $this->assign('data', $data);
             return $this->fetch('Volunteer/wishesdetail2');
+        } else {
+            //dump($data11);
+            $list3 = Db::table('pb_company_recruit')->where('rid', $id)->where('userid', $userId)->select();
+
+            //dump($list3);exit();
+            if (empty($list3)) {
+                $data = Db::table('pb_company')->where('id', $id)->find();
+                $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
+                $data['image'] = $list5['path'];
+                $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
+                foreach ($list as $key => $v) {
+                    $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
+                    $list[$key]['userid'] = $list2['name'];
+                    $list[$key]['image'] = $list2['avatar'];
+                }
+                //dump($data);exit();
+                
+                $this->assign('list', $list);
+                $this->assign('data', $data);
+                return $this->fetch();
+            } else {
+                $data = Db::table('pb_company')->where('id', $id)->find();
+                $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
+                $data['image'] = $list5['path'];
+                $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
+                foreach ($list as $key => $v) {
+                    $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
+                    $list[$key]['userid'] = $list2['name'];
+                    $list[$key]['image'] = $list2['avatar'];
+                }
+                $data['receive_number'] = Db::table('pb_company_recruit')->where('rid', $id)->count();
+                $m=3;
+                $this->assign('m',$m);
+                $this->assign('list', $list);
+                $this->assign('data', $data);
+                return $this->fetch('Volunteer/wishesdetail2');
+            }
         }
     }
-
     //心愿领取
     public function receive()
     {

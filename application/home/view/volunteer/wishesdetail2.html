@@ -48,11 +48,15 @@
        <span>{$data.receive_number}</span>
        </div>
     </div>
+    {if condition="($m == 5)"}
+    <div class="gray ">已满员</div>
+        {else /}
     {if condition="($data['type'] == 1)"}
     <div class="gray ">已认领</div>
     {else /}
     <div class="gray">已报名</div>
     {/if}
+        {/if}
    <!-- <div class="claim">我要认领</div>-->
 
 
