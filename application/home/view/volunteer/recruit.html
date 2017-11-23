@@ -35,8 +35,8 @@
                 <a href="{:Url('Volunteer/detail?id='.$vo2['id'])}">
                     <img src="{$vo2.front_cover|get_cover='path'}">
                     <p>{$vo2.title}</p>
-                    <span>{$vo2.create_time|time_format='Y-m-d'}</span>
-                    <span class="fr">详情</span>
+                    <span>发布人</span>
+                    <span class="fr">{$vo2.create_time|time_format='Y-m-d'}</span>
                 </a>
                 {/volist}
                 </ul>
@@ -128,7 +128,7 @@
             '<img src="'+list.front_cover+'">' +
             '<p>'+list.title+'</p>' +
             '<span>'+list.create_time+'</span>' +
-            '<span class="fr">详情</span> ' +
+            '<span class="fr">'+list.create_time+'</span> ' +
             '</a>';
         }
         $(".lists ul" ).append(html);
