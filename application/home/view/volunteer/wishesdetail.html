@@ -49,11 +49,7 @@
     {else /}
     <div class="claim">我要报名</div>
     {/if}
-
     <!--<div class="gray ">已认领</div>-->
-
-
-
     <!--<div class="gray">已报名</div>-->
 </div>
 <div class="list">
@@ -86,7 +82,7 @@
         $(".detail").find("img").show()
     }
 
-
+    var num = parseInt($(".information-rank").find("span").text());
     $(".claim").on("click",function(){
         $.ajax({
             url:"{:Url('Volunteer/receive')}",
@@ -98,15 +94,14 @@
 
             },
             success:function(data){
-
                 if(data.code==1){
-                    console.log(data)
                     addList(data);
-                    $(".claim").addClass("gray").removeClass("claim").html("已认领").off("click")
+                    $(".claim").addClass("gray").removeClass("claim").html("已认领").off("click");
+                    $(".information-rank").find("span").text(num+1);
                 }
             }
         })
-    })
+    });
 function addList(data){
     var html = '';
     var list= data.data;
