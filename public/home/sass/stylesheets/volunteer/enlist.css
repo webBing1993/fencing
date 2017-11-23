@@ -4,6 +4,7 @@
   padding: 2vw 3vw;
   border-bottom: 1px solid #f1f1f1;
   overflow: hidden;
+  height: 20vw;
 }
 .list ul a img {
   float: left;
@@ -28,6 +29,7 @@
 .list ul a span:nth-child(3) {
   width: 45%;
   bottom: 2vw;
+  position: absolute;
   color: #666;
   display: inline-block;
   text-overflow: ellipsis;
@@ -41,6 +43,11 @@
   bottom: 2vw;
 }
 
+@media screen and (device-width: 320px) {
+  .list ul a span:nth-child(3), .list ul a span:nth-child(4) {
+    bottom: 0 !important;
+  }
+}
 #tab {
   top: 50vw;
 }
@@ -127,4 +134,15 @@
   display: block;
   width: 10vw;
   height: 10vw;
+}
+.full{
+  position: absolute;
+  width:10vw;
+  height:5vw;
+  background: #FF0000;
+  color:#fff;
+  top: 2vw;
+  left: 3vw;
+  text-align:center;
+  line-height:5vw;
 }
