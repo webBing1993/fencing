@@ -49,9 +49,15 @@
                 </div>
 
                 <div class="message">
+                    {if condition="($detail['type'] == 1)"}
                     {notempty name="detail.start_time"}
-                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}&nbsp;--&nbsp;{$detail.end_time|time_format="Y-m-d H:i"}</div>
+                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}&nbsp;&#45;&#45;&nbsp;{$detail.end_time|time_format="Y-m-d H:i"}</div>
                     {/notempty}
+                    {else /}
+                    {notempty name="detail.start_time"}
+                    <div class="name limit">{$detail.start_time|time_format="Y-m-d H:i"}</div>
+                    {/notempty}
+                    {/if}
                     {notempty name="detail.address"}
                     <div class="content address" >{$detail.address}</div>
                     {/notempty}
