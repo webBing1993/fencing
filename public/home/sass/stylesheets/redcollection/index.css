@@ -73,8 +73,11 @@
   left: 6vw;
   color: #aeaeae;
   margin-top: -1.6vw;
-  height: 3.2vw;
-  line-height: 3.2vw;
+  height: 3.5vw;
+  line-height: 3.5vw;
+  width: 4vw;
+  font-size: 0.37rem;
+  text-align: center;
 }
 
 #item1mobile .results {
@@ -148,6 +151,7 @@
   background: #ffffff;
   color: #666666;
   line-height: 10.8vw;
+  font-size: 0.34rem;
 }
 
 .lists-title:before {
@@ -205,10 +209,11 @@
   font-size: .32rem;
   line-height: 4.1vw;
   /*height: 8vw;*/
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  display: inline-block;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .listsline {
@@ -473,12 +478,14 @@
   position: absolute;
   bottom: 1.5vw;
   width: 100%;
+  line-height: 4vw;
 }
 
 #item3mobile .lists .list .content .note .scan {
   background: url("/home/images/learn/scan_.png") 0 center no-repeat;
   background-size: 3.2vw 3.2vw;
   padding-left: 4.8vw;
+  height: 4vw;
 }
 
 #item3mobile .tip {

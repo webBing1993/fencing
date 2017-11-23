@@ -196,6 +196,7 @@
   padding: 0 0 5vw 0;
   border-bottom: 1px solid #f1f1f1;
   line-height: 6vw;
+  font-size:0.36rem;
 }
 .book .content .authordetail .text span {
   background: transparent!important;
@@ -206,6 +207,7 @@
   background: #fcfcfc;
   line-height: 6vw;
   text-indent: 2em;
+  font-size:0.36rem;
 }
 .book .content .words .author {
   text-align: right;
@@ -226,17 +228,17 @@
   margin-right: 0 ;
 }
 .book .content .note .read {
-  background: url('/home/images/learn/scan_.png') 0 12px no-repeat;
+  background: url('/home/images/learn/scan_.png') 0 center no-repeat;
   background-size: 15px 15px;
   padding-left: 18px;
 }
 .book .content .note .good {
-  background: url('/home/images/learn/good.png') 0 12px no-repeat;
+  background: url('/home/images/learn/good.png') 0 center no-repeat;
 }
 .book .content .note .good_ {
   animation: shake 300ms ease;
   -webkit-animation: shake 300ms ease;
-  background: url('/home/images/learn/good_.png') 0 12px no-repeat;
+  background: url('/home/images/learn/good_.png') 0 center no-repeat;
 }
 .book .content .note .isgood {
   background-size: 0.38rem 0.38rem;
