@@ -103,6 +103,7 @@
                                 <input type="text" placeholder="请输入标题..." class="form-control form_title" name="title" value="{$msg.title}">
                             </div>
                         </div>
+                        {if condition="($msg['type'] == 1)"}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>简介:</label>
@@ -110,11 +111,13 @@
                             <div class="col-lg-11">
                                 <div class=" float-e-margins">
                                     <div class="ibox-content no-padding borders">
-                                        <textarea placeholder="请输入简介...(可为空)" class="text form-control form_title" name="description">{$msg.description}</textarea>
+                                        <textarea placeholder="请输入简介..." class="text form-control form_title" name="description">{$msg.description}</textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {else/}
+                        {/if}
                         {if condition="($msg['type'] == 1)"}
                         {empty name="msg.start_time"}
                         <div class="form-group" id="timeRange">
@@ -123,7 +126,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker" name="start_time"  value=""/>
+                                    <input type="text" placeholder="请输入开始时间..." class="form-control datetimepicker" name="start_time"  value=""/>
                                 </div>
 
                             </div>
@@ -135,7 +138,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
+                                    <input type="text" placeholder="请输入开始时间..." class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +151,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker" name="start_time"  value=""/>
+                                    <input type="text" placeholder="请输入开始时间..." class="form-control datetimepicker" name="start_time"  value=""/>
                                 </div>
 
                             </div>
@@ -160,7 +163,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" placeholder="请输入开始时间...(可为空)" class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
+                                    <input type="text" placeholder="请输入开始时间..." class="form-control datetimepicker " name="start_time"  value="{$msg.start_time|time_format='Y-m-d H:i'}"/>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +177,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" placeholder="请输入结束时间...(可为空)" class="form-control datetimepicker" name="end_time"  value=""/>
+                                    <input type="text" placeholder="请输入结束时间..." class="form-control datetimepicker" name="end_time"  value=""/>
                                 </div>
 
                             </div>
@@ -186,7 +189,7 @@
                             </div>
                             <div class="col-lg-11">
                                 <div class="date">
-                                    <input type="text" placeholder="请输入结束时间...(可为空)" class="form-control datetimepicker " name="end_time"  value="{$msg.end_time|time_format='Y-m-d H:i'}"/>
+                                    <input type="text" placeholder="请输入结束时间..." class="form-control datetimepicker " name="end_time"  value="{$msg.end_time|time_format='Y-m-d H:i'}"/>
                                 </div>
                             </div>
                         </div>
@@ -198,7 +201,7 @@
                                 <label>地址:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入详细地址...(可为空)" class="form-control form_title" name="address" value="{$msg.address}">
+                                <input type="text" placeholder="请输入详细地址..." class="form-control form_title" name="address" value="{$msg.address}">
                             </div>
                         </div>
                         {if condition="($msg['type'] == 1)"}
@@ -207,7 +210,7 @@
                                 <label>联系方式:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入联系方式...(可为空)" class="form-control form_title" name="telephone" value="{$msg.telephone}">
+                                <input type="text" placeholder="请输入联系方式..." class="form-control form_title" name="telephone" value="{$msg.telephone}">
                             </div>
                         </div>
                         {else /}

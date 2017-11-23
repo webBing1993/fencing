@@ -15,7 +15,7 @@ class Notices extends Validate {
     protected $rule = [
         'front_cover' => 'require',
         'title' => 'require',
-       'description' => 'require',
+       /*'description' => 'require',*/
         'start_time' => 'require',
        /* 'end_time' => 'require',*/
         'address' => 'require',
@@ -28,7 +28,7 @@ class Notices extends Validate {
     protected $message = [
         'title.require' => '标题不能为空',
         'front_cover.require' => '图片不能为空',
-        'description.require' => '简介不能为空',
+       /* 'description.require' => '简介不能为空',*/
         'content.require' => '内容不能为空',
         'start_time.require' => '时间不能为空',
        /* 'end_time.require' => '结束时间不能为空',*/

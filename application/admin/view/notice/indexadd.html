@@ -111,6 +111,7 @@
                                 <input type="text" placeholder="请输入标题..." class="form-control form_title" name="title" value="">
                             </div>
                         </div>
+                        {if condition="($type == 1)"}
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>简介:</label>
@@ -123,6 +124,9 @@
                                 </div>
                             </div>
                         </div>
+                        {else /}
+
+                        {/if}
                         {if condition="($type == 1)"}
                         <div class="form-group" id="timeRange">
                             <div class="col-lg-1 text-right control-label">
