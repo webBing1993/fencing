@@ -236,7 +236,7 @@ class Work extends Admin
         );
         $send = array(
             "articles" => array(
-                0 => $information
+                $information
             )
         );
         $message = array(

@@ -160,7 +160,7 @@ class Volunteer extends Base
                 );
                 $send = array(
                     "articles" => array(
-                        0 => $information
+                        $information
                     )
                 );
                 $message = array(
