@@ -197,7 +197,13 @@ class Volunteer extends Base
         foreach ($data as $v) {
             $list = Db::table('pb_company_recruit')->where('rid', $v['id'])->count();
             $v['receive_number'] = $list;
+            if ($v['receive_number']==$v['demand_number']){
+                $v['v']=1;
+            }else{
+                $v['v']=0;
+            }
         }
+        //dump($data);exit();
         $type = 1;
         $this->assign('type', $type);
         $this->assign('data', $data);
@@ -292,6 +298,11 @@ class Volunteer extends Base
         foreach ($data as $v) {
             $list = Db::table('pb_company_recruit')->where('rid', $v['id'])->count();
             $v['receive_number'] = $list;
+            if ($v['receive_number']==$v['demand_number']){
+                $v['v']=1;
+            }else{
+                $v['v']=0;
+            }
         }
         $type = 2;
         $this->assign('type', $type);
