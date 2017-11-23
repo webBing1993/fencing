@@ -27,6 +27,7 @@ class Activity extends Base
         $lefttwo = $Notice->get_list($mapp);
         $mapp = ['status' => ['eq', 1], 'type' => 3];//会议纪要
         $center = $Notice->get_list($mapp);
+        //dump($center);exit();
         //循环遍历
         foreach ($center as $v) {
             $list = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();

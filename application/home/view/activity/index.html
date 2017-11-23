@@ -84,7 +84,7 @@
                            {volist name="center" id="su"}
                            <a href="{:Url('Activity/detail2?type=2&id='.$su['id'])}">
                                <p style="font-weight: bold;">{$su.title}</p>
-                               {if condition="(!empty($su['create_user']))"}
+                               {if condition="(!empty($su['publisher']))"}
                                <span>{$su.publisher}</span>
                                {else /}
                                <span>{$su.userid}</span>

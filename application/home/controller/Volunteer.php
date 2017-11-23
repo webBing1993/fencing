@@ -272,7 +272,8 @@ class Volunteer extends Base
                     $list[$key]['image'] = $list2['avatar'];
                 }
                 //dump($data);exit();
-                
+                $data12 = Db::table('pb_company_recruit')->where('rid', $id)->count();
+                $data['receive_number']=$data12;
                 $this->assign('list', $list);
                 $this->assign('data', $data);
                 return $this->fetch();
@@ -281,12 +282,15 @@ class Volunteer extends Base
                 $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
                 $data['image'] = $list5['path'];
                 $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
+                //dump($list);exit();
                 foreach ($list as $key => $v) {
                     $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
                     $list[$key]['userid'] = $list2['name'];
                     $list[$key]['image'] = $list2['avatar'];
                 }
+
                 $data['receive_number'] = Db::table('pb_company_recruit')->where('rid', $id)->count();
+                //dump($list);exit();
                 $m=3;
                 $this->assign('m',$m);
                 $this->assign('list', $list);

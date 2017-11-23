@@ -84,6 +84,7 @@ class Notice extends Admin
     {
         if (IS_POST) {
             $data = input('post.');
+            //dump($data);exit();
             if ($data['type'] == 1) {
                 $result = $this->validate($data, 'Notice');  // 验证  数据
             } else {
@@ -112,6 +113,13 @@ class Notice extends Admin
         } else {
             $id = input('id');
             $msg = NoticeModel::get($id);
+            if (!empty($msg['userid'])) {
+                $list = Db::table('pb_wechat_user')->where('userid', $msg['userid'])->find();
+                $msg['userid'] = $list['name'];
+            }else{
+                $msg['userid'] = $msg['publisher'];
+            }
+            //dump($msg);exit();
             $this->assign('msg', $msg);
             return $this->fetch();
         }
