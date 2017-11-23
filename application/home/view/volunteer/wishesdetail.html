@@ -83,6 +83,7 @@
     }
 
     var num = parseInt($(".information-rank").find("span").text());
+    var text = $(".claim").text().substr(2,3);
     $(".claim").on("click",function(){
         $.ajax({
             url:"{:Url('Volunteer/receive')}",
@@ -96,7 +97,8 @@
             success:function(data){
                 if(data.code==1){
                     addList(data);
-                    $(".claim").addClass("gray").removeClass("claim").html("已认领").off("click");
+
+                    $(".claim").addClass("gray").removeClass("claim").html("已"+text).off("click");
                     $(".information-rank").find("span").text(num+1);
                 }
             }
