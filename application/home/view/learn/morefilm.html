@@ -51,7 +51,7 @@ $(function(){
 			var html = '';
 			$.ajax({
 				type:"post",
-				url: "{:Url('Redcollection/filmserch')}",
+				url: "{:Url('learn/filmserch')}",
 				data:{
 					val:val
 				},
@@ -64,7 +64,7 @@ $(function(){
 								'<div class="result limit">无搜索结果</div>'
 					}
 					for(var obj in result){
-						html+= '<a href=\"/home/Redcollection/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
+						html+= '<a href=\"/home/learn/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
 					}
 					$('.results' ).html(html);
 				}
@@ -129,7 +129,7 @@ function addCourse(data) {
 	for(var i = 0; i< len;i++){
 		var list = lists[i];
 		html +=
-				'<a href="/home/Redcollection/filmdetail/id/'
+				'<a href="/home/learn/filmdetail/id/'
 				+list.id
 				+'.html" class="list fl clear">'
 				+'<img src="'
