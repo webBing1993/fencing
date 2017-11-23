@@ -46,7 +46,6 @@ body {
 .detail .information div span p {
   color: #666;
   font-size: 0.32rem;
-  line-height: 1.5;
 }
 .detail .information .information-content {
   display: inline-block;
