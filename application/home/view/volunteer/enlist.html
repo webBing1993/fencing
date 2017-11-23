@@ -20,7 +20,7 @@
                     <img src="{$vo.image}">
                     <!--标题-->
                     <p>{$vo.title}</p>
-                    <span>
+                    <span class="num">
                         <span>{$vo.receive_number}</span> / {$vo.demand_number}人
                     </span>
                     <!--时间-->
@@ -105,13 +105,21 @@
                     '<a href="/home/volunteer/wishesdetail/type/2/id/' + list.id + '">' +
                     '<img src="'+list.image+'">' +
                     '<p>'+list.title+'</p>' +
-                    '<span><span>'+list.receive_number+'</span> / '+list.demand_number+'人</span>' +
+                    '<span class="num"><span>'+list.receive_number+'</span> / '+list.demand_number+'人</span>' +
                     '<span>'+list.create_time+'</span>' +
                     '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
                     '<div class="full">已满</div>'+
                     '</a>'
         }
         $(".list ul").append(html);
+        var len = $(".list ul a").length;
+        for(var i=0;i<len;i++){
+            if(parseInt($(".num").eq(i).text().split(" / ")[0]) == parseInt($(".num").eq(i).text().split(" / ")[1].split("人")[0])){
+                $(".list a").eq(i).find(".full").show();
+            }else{
+                $(".list a").eq(i).find(".full").hide();
+            }
+        }
     };
 
     //点击背景触发active
