@@ -79,6 +79,11 @@ body {
 .list ul li img {
   width: 11vw;
   margin-left: 2.13vw;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+.list ul li .number-one,.list ul li .number-two,.list ul li .number-three {
+  width: 6vw;
 }
 .list ul li .number {
   margin-left: 4vw;
