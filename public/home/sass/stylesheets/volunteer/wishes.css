@@ -152,3 +152,9 @@
   text-align: center;
   line-height: 5vw;
 }
+
+@media screen and (device-width: 320px) {
+  .list ul a span:nth-child(3), .list ul a span:nth-child(4) {
+    bottom: 2vw !important;
+  }
+}
