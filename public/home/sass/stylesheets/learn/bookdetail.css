@@ -258,6 +258,9 @@
   font-size: 0.32rem;
   line-height: 0.6rem;
 }
+.comment .lists{
+  padding-bottom:16vw;
+}
 .comment .lists .list {
   width: 100%;
   min-height:90px;
@@ -270,7 +273,6 @@
   .comment .lists .list {
     min-height: 75px;
   }
-
 }
 .comment .lists .list .fl img {
   float: left;
