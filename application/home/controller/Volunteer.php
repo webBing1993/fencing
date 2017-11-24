@@ -131,6 +131,7 @@ class Volunteer extends Base
         if (IS_POST) {
             $userId = session('userId');
             $data = input('post.');
+            //print_r($data);exit();
             $data['front_cover'] = $this->default_pic();
             $data['userid'] = $userId;
             $data['start_time'] = strtotime($data['start_time']);
@@ -242,8 +243,10 @@ class Volunteer extends Base
         $data12 = Db::table('pb_company_recruit')->where('rid', $id)->count();
         if ($data11['demand_number'] == $data12) {
             $data = Db::table('pb_company')->where('id', $id)->find();
-            $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
-            $data['image'] = $list5['path'];
+            if (!empty($data['image'])) {
+                $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
+                $data['image'] = $list5['path'];
+            }
             $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
             foreach ($list as $key => $v) {
                 $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
@@ -263,8 +266,12 @@ class Volunteer extends Base
             //dump($list3);exit();
             if (empty($list3)) {
                 $data = Db::table('pb_company')->where('id', $id)->find();
-                $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
-                $data['image'] = $list5['path'];
+                if (!empty($data['image'])) {
+                    $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
+                    $data['image'] = $list5['path'];
+                }
+                //dump($data);
+                //exit();
                 $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
                 foreach ($list as $key => $v) {
                     $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
@@ -279,8 +286,10 @@ class Volunteer extends Base
                 return $this->fetch();
             } else {
                 $data = Db::table('pb_company')->where('id', $id)->find();
-                $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
-                $data['image'] = $list5['path'];
+                if (!empty($data['image'])) {
+                    $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
+                    $data['image'] = $list5['path'];
+                }
                 $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
                 //dump($list);exit();
                 foreach ($list as $key => $v) {

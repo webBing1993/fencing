@@ -56,8 +56,15 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    // 拖拽
-    moveanyway();
+    if ({$xs}==11){
+        // 拖拽
+        moveanyway();
+    }else{
+
+
+    }
+
+
     //首页加载是否需要上拉加载
     window.onload = function() {
         if ($(".list ul a").length < 10) {
