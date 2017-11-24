@@ -334,7 +334,16 @@ class Volunteer extends Base
                 $v['v']=0;
             }
         }
+        $userId = session('userId');
+        $list = Db::table('pb_wechat_user_tag')->where('userid', $userId)->find();
+        //dump($list);exit();
+        if ($list['tagid']==4){
+            $xs=11;
+        }else{
+            $xs=22;
+        }
         $type = 2;
+        $this->assign('xs',$xs);
         $this->assign('type', $type);
         $this->assign('data', $data);
         return $this->fetch();

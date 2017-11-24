@@ -40,10 +40,18 @@
         </div>
     </div>
 </div>
+{if condition="($xs == 11)"}
 <!--悬浮按钮-->
 <div id="publish">
     <a href="{:Url('Volunteer/publish?type='.$type)}"></a>
 </div>
+{else /}
+
+{/if}
+
+
+
+
 {/block}
 {block name="script"}
 <script src="/home/js/reset.js"></script>
