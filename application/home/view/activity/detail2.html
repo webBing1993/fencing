@@ -44,7 +44,14 @@
             <div class="article">
                 <div class="title"><p>{$detail.title}</p></div>
                 <div class="note clear">
+                    {if condition="($detail['publisher'] == '')"}
+                    <span class="publish">{$detail.userid}</span>
+                    {else /}
                     <span class="publish">{$detail.publisher}</span>
+                    {/if}
+
+
+
                     <span class="time">{$detail.create_time|time_format="Y-m-d"}</span>
                 </div>
 
