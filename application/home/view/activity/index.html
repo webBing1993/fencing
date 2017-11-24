@@ -218,10 +218,10 @@
             var list = lists[i];
 
             var pre;
-            if (list.userid ==''){
-                pre = list.publisher;
-            }else {
+            if (list.publisher == null){
                 pre = list.userid;
+            }else {
+                pre = list.publisher;
             }
             if(type==0){
                 html+=

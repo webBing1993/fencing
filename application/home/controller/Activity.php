@@ -67,7 +67,7 @@ class Activity extends Base
         if ($info['images']) {
             $info['images'] = json_decode($info['images']);
         }
-
+          //dump($info);exit();
         $list = Db::table('pb_wechat_user')->where('userid', $info['userid'])->find();
         $info['userid'] = $list['name'];
         $this->assign('detail', $info);
@@ -107,6 +107,11 @@ class Activity extends Base
         }
         $map = ['status' => ['eq', 1], 'type' => $type];
         $list = $Notice->get_list($map, $len);
+        foreach ($list as $v) {
+            $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
+            $v['userid'] = $list2['name'];
+        }
+        //print_r($list);exit();
         if ($list) {
             return $this->success('加载成功', '', $list);
         } else {
