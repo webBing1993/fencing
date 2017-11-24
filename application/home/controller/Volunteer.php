@@ -171,13 +171,13 @@ class Volunteer extends Base
                     "news" => $send,
                 );
                 //发送给企业号
-//                $Wechat = new TPQYWechat(Config::get('review'));
-//                $msg = $Wechat->sendMessage($message);
-//                if ($msg['errcode'] == 0) {
-//                    return $this->success('发送成功');
-//                } else {
-//                    $this->error($Wechat->errMsg);
-//                }
+                $Wechat = new TPQYWechat(Config::get('review'));
+                $msg = $Wechat->sendMessage($message);
+                if ($msg['errcode'] == 0) {
+                    return $this->success('发送成功');
+                } else {
+                    $this->error($Wechat->errMsg);
+                }
             } else {
                 return $this->error('发布失败！');
             }

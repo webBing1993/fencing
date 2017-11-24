@@ -9,6 +9,7 @@
 namespace app\home\controller;
 use app\home\model\Apply;
 use app\home\model\WechatUser;
+use app\home\model\WechatUserTag;
 use app\home\model\Work;
 use think\Db;
 //签到
@@ -55,6 +56,13 @@ class Signin extends Base {
      */
     public function detail(){
         $id=input('id');
+        $userId = session('userId');
+        $res = WechatUserTag::where(['tagid' => 5,'userid' => $userId])->find();
+        if ($res){
+            $is = 1;
+        }else{
+            $is = 0;
+        }
         $data=Db::table('pb_work')->where('id',$id)->find();
         $data2=Db::table('pb_apply')->where('sign_id',$id)->select();
         foreach ($data2 as $key=>$v) {
@@ -62,9 +70,9 @@ class Signin extends Base {
             $data2[$key]['userid'] = $list['name'];
             $data2[$key]['image'] = $list['avatar'];
         }
-
         $this->assign('data',$data);//详情内容
         $this->assign('data2',$data2);//签到人员
+        $this->assign('is',$is);
         return $this->fetch();
 
     }

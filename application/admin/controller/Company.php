@@ -48,7 +48,7 @@ class Company extends Admin
         }
         $this->assign('list1',$list1);
         $this->assign('list', $list);
-        return $this->fetch('Company/recruit');
+        return $this->fetch('company/recruit');
     }
     
     //志愿招募

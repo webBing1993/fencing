@@ -37,10 +37,10 @@ class Base extends Controller {
             session('header','/home/images/vistor.jpg');
         }else{
             //微信认证
-            $Wechat = new TPQYWechat(Config::get('party'));
+            $Wechat = new TPQYWechat(Config::get('user'));
             // 1用户认证是否登陆
             if(empty($userId)) {
-                $redirect_uri = Config::get("party.login");
+                $redirect_uri = Config::get("user.login");
                 $url = $Wechat->getOauthRedirect($redirect_uri);
                 $this->redirect($url);
             }

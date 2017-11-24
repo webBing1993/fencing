@@ -123,7 +123,7 @@ class Special extends Admin
         }else{
             //新闻消息列表
             $map = array(
-                'class' => 2,  // 通知公告
+                'class' => 1,  // 通知公告
                 'status' => array('egt',-1)
             );
             $list=$this->lists('Push',$map);
@@ -248,7 +248,7 @@ class Special extends Admin
         if($msg['errcode'] == 0){
             $data['focus_vice'] ? $data['focus_vice'] = json_encode($data['focus_vice']) : $data['focus_vice'] = null;
             $data['create_user'] = session('user_auth.username');
-            $data['class'] = 2;  // 通知公告
+            $data['class'] = 1;  // 通知公告
             $data['status'] = 1;
             //保存到推送列表
             $result = Push::create($data);

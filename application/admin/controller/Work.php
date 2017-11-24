@@ -229,8 +229,8 @@ class Work extends Admin
             )
         );
         $message = array(
-//            "touser" => "@all",
-            "touser" => "17557289172",
+            "touser" => "@all",
+//            "touser" => "17557289172",
             "msgtype" => 'news',
             "agentid" =>1000003,  // 活动签到
             "news" => $send,

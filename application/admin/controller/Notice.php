@@ -165,7 +165,7 @@ class Notice extends Admin
 
         $this->assign('list2', $list2);
         $this->assign('list', $list);
-        return $this->fetch('Notice/index');
+        return $this->fetch('notice/index');
     }
 
     /**
@@ -271,7 +271,7 @@ class Notice extends Admin
 
         $this->assign('list2', $list2);
         $this->assign('list', $list);
-        return $this->fetch('Notice/show');
+        return $this->fetch('notice/show');
     }
     
 }

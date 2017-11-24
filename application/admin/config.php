@@ -66,6 +66,6 @@ return [
     'var_session_id' => 'session_id',//修复uploadify插件无法传递session_id的bug
     define('hostUrl','http://rh.0571ztnet.com'),
     define('agentId',1000005),
-//    define('toUser','@all')
-    define('toUser','17557289172')
+    define('toUser','@all')
+//    define('toUser','17557289172')
 ];

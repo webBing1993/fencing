@@ -219,18 +219,22 @@ class Review extends Base{
                 case 1:
                     $pre = "会议纪要";
                     $title = Db::name('notice')->where('id',$msg['id'])->value('title');
+                    $user_id = Db::name('notice')->where('id',$msg['id'])->value('userid');
                     break;
                 case 2:
                     $pre = "微心愿";
                     $title = Db::name('company')->where('id',$msg['id'])->value('title');
+                    $user_id = Db::name('company')->where('id',$msg['id'])->value('userid');
                     break;
                 case 3:
                     $pre = "志愿招募";
                     $title = Db::name('company')->where('id',$msg['id'])->value('title');
+                    $user_id = Db::name('company')->where('id',$msg['id'])->value('userid');
                     break;
                 default:
                     $pre = "暂无";
                     $title = "暂无";
+                    $user_id = '';
             }
             if ($msg['status'] == 1){
                 $content = "恭喜您提交的".$pre."【".$title."】已成功通过审核!";
@@ -238,7 +242,7 @@ class Review extends Base{
                 $content = "很遗憾您提交的".$pre."【".$title."】未通过审核！";
             }
             $message = array(
-                "touser" => $userId,
+                "touser" => $user_id,
                 "msgtype" => 'text',
                 "agentid" =>1000005,
                 "text" => array('content' => $content),

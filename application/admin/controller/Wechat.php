@@ -98,26 +98,26 @@ class Wechat extends Admin
                 $num++;
                 $user['department'] = json_encode($user['department']);
                 $user['order'] = json_encode($user['order']);
-                foreach ($user['extattr']['attrs'] as $val) {
-                    switch ($val['name']){
-                        case "出生日期":
-                            $user['birthday'] = $val['value'];
-                            if (!empty($val['value'])){
-                                if (date("Y",time()) - substr($val['value'],0,4) < 100 && date("Y",time()) - substr($val['value'],0,4) > 0){
-                                    $user['age'] = date("Y",time()) - substr($val['value'],0,4);
-                                }else{
-                                    $user['age'] = 0;
-                                }
-                            }
-                            break;
-                        case "学历":
-                            $user['education'] = $val['value'];
-                            break;
-                        case "入党时间":
-                            $user['partytime'] = $val['value'];
-                            break;
-                    }
-                }
+//                foreach ($user['extattr']['attrs'] as $val) {
+//                    switch ($val['name']){
+//                        case "出生日期":
+//                            $user['birthday'] = $val['value'];
+//                            if (!empty($val['value'])){
+//                                if (date("Y",time()) - substr($val['value'],0,4) < 100 && date("Y",time()) - substr($val['value'],0,4) > 0){
+//                                    $user['age'] = date("Y",time()) - substr($val['value'],0,4);
+//                                }else{
+//                                    $user['age'] = 0;
+//                                }
+//                            }
+//                            break;
+//                        case "学历":
+//                            $user['education'] = $val['value'];
+//                            break;
+//                        case "入党时间":
+//                            $user['partytime'] = $val['value'];
+//                            break;
+//                    }
+//                }
                 $user['extattr'] = json_encode($user['extattr']);
                 if(WechatUser::get(['userid'=>$user['userid']])) {
                     WechatUser::where(['userid'=>$user['userid']])->update($user);

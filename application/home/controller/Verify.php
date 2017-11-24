@@ -16,8 +16,8 @@ class Verify extends Controller{
      */
     public function login(){
         // 获取用户信息
-        $Wechat = new TPQYWechat(config('party'));
-        $result = $Wechat->getUserId(input('code'), config('party.agentid'));
+        $Wechat = new TPQYWechat(config('user'));
+        $result = $Wechat->getUserId(input('code'), config('user.agentid'));
         if(isset($result['UserId'])) {
             $user = $Wechat->getUserInfo($result['UserId']);
             $user['department'] = json_encode($user['department']);
