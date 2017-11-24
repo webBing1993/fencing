@@ -65,7 +65,7 @@
                 <div class="default"><img src="/home/images/common/nomessage.png"></div>
                 {else/}
                 {volist name="$list" id="lo"}
-                <a {eq name="lo.class" value="1"} href="{:Url('News/detail?id='.$lo['id'])}" {/eq} {eq name="lo.class" value="2"}
+                <a {eq name="lo.class" value="1"} href="{:Url('News/detail?type='.$lo['type'].'&id='.$lo['id'])}" {/eq} {eq name="lo.class" value="2"}
                 {eq name="lo.type" value="1"}
                 href="{:Url('Learn/video?id='.$lo['id'])}"
                 {else/}
@@ -171,7 +171,7 @@
             var link = '';
             if(list.class == 1){
                 class_name = '【箬横动态】';
-                link = '/home/news/detail/id/'+list.id;
+                link = '/home/news/detail/type/'+list.type+'/id/'+list.id;
             }else if(list.class == 2){
                 class_name = '【两学一做】';
                 //1视频 2文字

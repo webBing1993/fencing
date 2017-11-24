@@ -153,6 +153,7 @@ class User extends Base {
         $id = input('get.id/d');
         $notice = new Notice();
         $info = $notice->where('id',$id)->find();
+        $info['images']=json_decode($info['images'],true);
         $this->assign('detail',$info);
         return $this->fetch();
     }
