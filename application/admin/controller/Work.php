@@ -30,9 +30,6 @@ class Work extends Admin
         int_to_string($list, array(
             'type' => array(1 => "三会一课", 2 => "志愿之家"),
         ));
-        //dump($list);
-        //exit();
-
         $this->assign('list', $list);
         return $this->fetch();
     }
@@ -63,8 +60,6 @@ class Work extends Admin
     {
         $data = input('post.');
         $data3 = date("Y-m-d H:i:s");
-        //dump($data);
-        //exit();
         $list9 = $data['front_cover'];
         $list8 = $data['type'];
         $list1 = $data['title'];
@@ -120,7 +115,6 @@ class Work extends Admin
             $list = Db::table('pb_wechat_user')->where('userid',$v['userid'])->find();
             $data4[$key]['userid']=$list['name'];
         }
-        //dump($data4);exit();
         $this->assign('arr', $arr);
         $this->assign('data', $data);
         $this->assign('data2', $data2);
@@ -143,10 +137,7 @@ class Work extends Admin
         }
         //查找图片表里的图片
         $data2 = Db::table('pb_picture')->where('id', $data['front_cover'])->find();
-        //dump($data);
-        //exit();
         $this->assign('list',$list);
-        //$this->assign('list1',$list1);
         $this->assign('data2', $data2);
         $this->assign('data', $data);
         return $this->fetch();
@@ -156,8 +147,6 @@ class Work extends Admin
     public function modify($id)
     {
         $data = input('post.');
-        //dump($data);
-        //exit();
         if (empty($data['front_cover'])) {
             if (empty($data['title'])) {
                 return $this->error('会议标题不能为空!');

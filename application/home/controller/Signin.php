@@ -19,20 +19,11 @@ class Signin extends Base {
     public function index(){
         $Work = new Work();
         $data=date("Y-m-d H:i:s");
-        //dump($data);exit();
         $map = ['status' => ['eq',0],'meet_endtime'=>['egt',$data]];
         $left = $Work->get_list($map);
-        /*dump($left);exit();
-        int_to_string($left, array(
-            'type' => array(1 => "三会一课", 2 => "志愿之家"),
-        ));*/
-        //dump($left);exit();
         $map = ['status' => ['eq',0],'meet_endtime'=>['lt',$data]];
         $right = $Work->get_list($map);
-       /* int_to_string($right, array(
-            'type' => array(1 => "三会一课", 2 => "志愿之家"),
-        ));*/
-        //dump($right);exit();
+        
         $this->assign('left',$left); // 最新签到
         $this->assign('right',$right);  // 历史签到
         return $this->fetch();
@@ -44,7 +35,6 @@ class Signin extends Base {
         $Work = new Work();
         $len = input('length');
         $c=input('type');
-        //dump($c);exit();
         $data=date("Y-m-d H:i:s");
         if ($c == 0){
             $map = ['status' => ['eq',0],'meet_endtime'=>['egt',$data]];
@@ -52,7 +42,6 @@ class Signin extends Base {
             $map = ['status' => ['eq',0],'meet_endtime'=>['lt',$data]];
         }
         $list = $Work->get_list($map, $len);
-        //dump($list);exit();
         if ($list) {
             return $this->success('加载成功', '', $list);
         } else {
@@ -67,15 +56,12 @@ class Signin extends Base {
     public function detail(){
         $id=input('id');
         $data=Db::table('pb_work')->where('id',$id)->find();
-        //dump($data);exit();
         $data2=Db::table('pb_apply')->where('sign_id',$id)->select();
-        //dump($data2);exit();
         foreach ($data2 as $key=>$v) {
             $list = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
             $data2[$key]['userid'] = $list['name'];
             $data2[$key]['image'] = $list['avatar'];
         }
-        //dump($data2);exit();
 
         $this->assign('data',$data);//详情内容
         $this->assign('data2',$data2);//签到人员

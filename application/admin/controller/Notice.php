@@ -46,7 +46,6 @@ class Notice extends Admin
         $this->assign('type', $type);
         if (IS_POST) {
             $data = input('post.');
-            //dump($data);exit();
             if ($data['type'] == 1) {
                 $result = $this->validate($data, 'Notice');  // 验证  数据
             } else {
@@ -84,7 +83,6 @@ class Notice extends Admin
     {
         if (IS_POST) {
             $data = input('post.');
-            //dump($data);exit();
             if ($data['type'] == 1) {
                 $result = $this->validate($data, 'Notice');  // 验证  数据
             } else {
@@ -119,7 +117,7 @@ class Notice extends Admin
             }else{
                 $msg['userid'] = $msg['publisher'];
             }
-            //dump($msg);exit();
+            
             $this->assign('msg', $msg);
             return $this->fetch();
         }
@@ -146,7 +144,6 @@ class Notice extends Admin
     //会议纪要
     public function meeting()
     {
-
         $map = array(
             'type' => 3,
             'status' => array('egt', 0),

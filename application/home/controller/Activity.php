@@ -27,7 +27,6 @@ class Activity extends Base
         $lefttwo = $Notice->get_list($mapp);
         $mapp = ['status' => ['eq', 1], 'type' => 3];//会议纪要
         $center = $Notice->get_list($mapp);
-        //dump($center);exit();
         //循环遍历
         foreach ($center as $v) {
             $list = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
@@ -64,10 +63,10 @@ class Activity extends Base
         $this->jssdk();
         $id = input('id/d');
         $info = $this->content(4, $id);
+
         if ($info['images']) {
             $info['images'] = json_decode($info['images']);
         }
-          //dump($info);exit();
         $list = Db::table('pb_wechat_user')->where('userid', $info['userid'])->find();
         $info['userid'] = $list['name'];
         $this->assign('detail', $info);
@@ -111,7 +110,6 @@ class Activity extends Base
             $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
             $v['userid'] = $list2['name'];
         }
-        //print_r($list);exit();
         if ($list) {
             return $this->success('加载成功', '', $list);
         } else {

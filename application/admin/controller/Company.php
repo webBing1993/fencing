@@ -46,7 +46,6 @@ class Company extends Admin
             $list3 = Db::table('pb_company_recruit')->where('rid', $v['id'])->count();
             $v['receive_number'] = $list3;
         }
-        //dump($list);exit();
         $this->assign('list1',$list1);
         $this->assign('list', $list);
         return $this->fetch('Company/recruit');
@@ -140,7 +139,6 @@ class Company extends Admin
         }else{
             $data['userid'] = $data['publisher'];
         }
-        //dump($data);exit();
         $data2 = Db::table('pb_picture')->where('id', $data['image'])->find();
         $this->assign('data', $data);
         $this->assign('data2', $data2);

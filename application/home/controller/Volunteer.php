@@ -66,7 +66,7 @@ class Volunteer extends Base
         $type = input('pid');
         $list = Db::table('pb_companys')->where('type', $type)->where('status', 1)->order('create_time desc')->limit(10)->select();
         $list2 = Db::table('pb_companys')->where('type', $type)->where('status', 1)->where('istop', 1)->order('create_time desc')->limit(3)->select();
-        //dump($list2);exit();
+        
         $this->assign('list2', $list2);
         $this->assign('list', $list);
         return $this->fetch();
@@ -131,7 +131,6 @@ class Volunteer extends Base
         if (IS_POST) {
             $userId = session('userId');
             $data = input('post.');
-            //print_r($data);exit();
             $data['front_cover'] = $this->default_pic();
             $data['userid'] = $userId;
             $data['start_time'] = strtotime($data['start_time']);
@@ -204,7 +203,6 @@ class Volunteer extends Base
                 $v['v']=0;
             }
         }
-        //dump($data);exit();
         $type = 1;
         $this->assign('type', $type);
         $this->assign('data', $data);
@@ -237,7 +235,6 @@ class Volunteer extends Base
     public function wishesdetail()
     {
         $userId = session('userId');
-        //dump($userId);exit();
         $id = input('id');
         $data11 = Db::table('pb_company')->where('id', $id)->find();
         $data12 = Db::table('pb_company_recruit')->where('rid', $id)->count();
@@ -260,25 +257,19 @@ class Volunteer extends Base
             $this->assign('data', $data);
             return $this->fetch('Volunteer/wishesdetail2');
         } else {
-            //dump($data11);
             $list3 = Db::table('pb_company_recruit')->where('rid', $id)->where('userid', $userId)->select();
-
-            //dump($list3);exit();
             if (empty($list3)) {
                 $data = Db::table('pb_company')->where('id', $id)->find();
                 if (!empty($data['image'])) {
                     $list5 = Db::table('pb_picture')->where('id', $data['image'])->find();
                     $data['image'] = $list5['path'];
                 }
-                //dump($data);
-                //exit();
                 $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
                 foreach ($list as $key => $v) {
                     $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
                     $list[$key]['userid'] = $list2['name'];
                     $list[$key]['image'] = $list2['avatar'];
                 }
-                //dump($data);exit();
                 $data12 = Db::table('pb_company_recruit')->where('rid', $id)->count();
                 $data['receive_number']=$data12;
                 $this->assign('list', $list);
@@ -291,15 +282,12 @@ class Volunteer extends Base
                     $data['image'] = $list5['path'];
                 }
                 $list = Db::table('pb_company_recruit')->where('rid', $id)->select();
-                //dump($list);exit();
                 foreach ($list as $key => $v) {
                     $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
                     $list[$key]['userid'] = $list2['name'];
                     $list[$key]['image'] = $list2['avatar'];
                 }
-
                 $data['receive_number'] = Db::table('pb_company_recruit')->where('rid', $id)->count();
-                //dump($list);exit();
                 $m=3;
                 $this->assign('m',$m);
                 $this->assign('list', $list);
@@ -316,7 +304,6 @@ class Volunteer extends Base
         $data = ['rid' => $data1, 'userid' => $userId];
         $data['create_time'] = strtotime(date('Y-m-d H:i:s'));
         $list = Db::table('pb_company_recruit')->insert($data);
-
         $list2 = Db::table('pb_wechat_user')->where('userid', $userId)->find();
         $list2['create_time'] = date('Y-m-d H:i');
         if ($list2) {
@@ -345,7 +332,6 @@ class Volunteer extends Base
         }
         $userId = session('userId');
         $list = Db::table('pb_wechat_user_tag')->where('tagid',4)->where('userid', $userId)->count();
-        //dump($list);exit();
         if ($list==1){
             $xs=11;
         }else{

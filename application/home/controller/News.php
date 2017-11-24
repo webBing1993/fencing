@@ -25,7 +25,6 @@ class News extends Base {
         $mapp = ['status' => ['eq',0],'type' => 2];
         $right = $NewsModel->get_list($mapp);
         $data=Db::table('pb_news')->where('status',0)->order('create_time desc')->limit(3)->select();
-        //dump($data);exit();
         foreach ($data as $key=>$v) {
             $list = Db::table('pb_picture')->where('id', $v['front_cover'])->find();
             $data[$key]['front_cover'] = $list['path'];
@@ -45,11 +44,8 @@ class News extends Base {
         $this->jssdk();
         $id = input('id/d');
         $info = $this->content(2,$id);
-        //dump($info);exit();
+        
         $this->assign('detail',$info);
-
-
-
         return $this->fetch();
     }
 
@@ -60,8 +56,6 @@ class News extends Base {
         $NewsModel = new NewsModel();
         $len = input('length');
         $c = input('type');
-        //dump($c);
-        //exit();
         if ($c == 0){
             $type = 1;  //基层动态
         }else{
