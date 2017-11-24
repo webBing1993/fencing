@@ -77,10 +77,7 @@ function tabRecord(a,b){
 	}
 	//清除tab值
 	pushHistory();
-	window.addEventListener( "popstate", function( e ){
-		delCookie( 'tab' );
-		window.history.go( -1 );
-	}, false );
+
 }
 function pushHistory(){
 	var sta = {
