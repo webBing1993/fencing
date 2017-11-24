@@ -255,7 +255,7 @@ class Volunteer extends Base
             $this->assign('m',$m);
             $this->assign('list', $list);
             $this->assign('data', $data);
-            return $this->fetch('Volunteer/wishesdetail2');
+            return $this->fetch('volunteer/wishesdetail2');
         } else {
             $list3 = Db::table('pb_company_recruit')->where('rid', $id)->where('userid', $userId)->select();
             if (empty($list3)) {
@@ -292,7 +292,7 @@ class Volunteer extends Base
                 $this->assign('m',$m);
                 $this->assign('list', $list);
                 $this->assign('data', $data);
-                return $this->fetch('Volunteer/wishesdetail2');
+                return $this->fetch('volunteer/wishesdetail2');
             }
         }
     }
