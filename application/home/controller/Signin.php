@@ -81,16 +81,17 @@ class Signin extends Base {
      * 签到功能
      */
     public function sign(){
-        $id = input('id');
-        $userid = input('user_id');
-        $result = Apply::where(array('notice_id'=>$id,'userid'=>$userid))->find();
+        $data = input('post.');
+        $id = $data['id'];
+        $userid = $data['user_id'];
+        $result = Apply::where(array('sign_id'=>$id,'userid'=>$userid))->find();
         if($result){
             // 已经签到
-            $Wechat = WechatUser::where(['userid'=>$userid])->find();
+            $Wechat = WechatUser::where('userid',$userid)->find();
             return array('status'=>0,'header'=>$Wechat['avatar'],'name'=>$Wechat['name']);
         }else{
-            $Wechat = WechatUser::where(['userid'=>$userid])->find();
-            if($Wechat){
+            $Wechat = WechatUser::where(['userid' => $userid])->find();
+            if(!empty($Wechat)){
                 $work = new Work();
                 $Apply = new Apply();
                 $type = $work->where('id',$id)->value('type');  // 1 三会一课  2 志愿之家
@@ -101,7 +102,8 @@ class Signin extends Base {
                         'score' => 0,
                         'status' =>0,
                         'type' => $type,
-                        'create_time' => time()
+                        'create_time' => time(),
+                        'mouth' => 0,
                     );
                     $res = $Apply->save($data);
                 }else{
@@ -115,13 +117,13 @@ class Signin extends Base {
                     }
                 }
                 if($res){
-                    $Wechat = WechatUser::where(['userid'=>$userid])->find();
-                    return array('status'=>1,'header'=>$Wechat['avatar'],'name'=>$Wechat['name']);
+                    $User = WechatUser::where(['userid'=>$userid])->find();
+                    return array('status'=>1,'header'=>$User['avatar'],'name'=>$User['name']);
                 }else{
                     return array('status'=>2,'header'=>null,'name'=>null);
                 }
             }else{
-                return array('status'=>2,'header'=>null,'name'=>null);
+                return array('status'=>3,'header'=>null,'name'=>null);
             }
 
         }
