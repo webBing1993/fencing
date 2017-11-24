@@ -335,9 +335,9 @@ class Volunteer extends Base
             }
         }
         $userId = session('userId');
-        $list = Db::table('pb_wechat_user_tag')->where('userid', $userId)->find();
+        $list = Db::table('pb_wechat_user_tag')->where('tagid',4)->where('userid', $userId)->count();
         //dump($list);exit();
-        if ($list['tagid']==4){
+        if ($list==1){
             $xs=11;
         }else{
             $xs=22;
