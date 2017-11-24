@@ -55,6 +55,7 @@ class Signin extends Base {
      * 签到详情页
      */
     public function detail(){
+        $this->jssdk();
         $id=input('id');
         $userId = session('userId');
         $res = WechatUserTag::where(['tagid' => 5,'userid' => $userId])->find();
