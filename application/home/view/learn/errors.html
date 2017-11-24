@@ -55,6 +55,25 @@
 {/block}
 
 {block name="script"}
+<script>
+    isOut();
+    function isOut(){
+        pushHistory();
+        window.addEventListener("popstate", function(e) {
+            window.history.go(-5);
+        }, false);
+    }
 
+    //防止恶意刷新
+    function pushHistory(){
+        var sta = {
+            title: "title"
+        };
+        if( window.history.state === null )
+        {
+            window.history.pushState( sta, "title" );
+        }
+    }
+</script>
 
 {/block}

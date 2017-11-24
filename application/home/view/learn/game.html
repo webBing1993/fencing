@@ -32,5 +32,11 @@
 		//模块标题
 		$('title' ).text('在线答题');
 	});
+
+	window.onpageshow = function(e){
+		if(e.persisted){
+			window.location.reload();
+		}
+	}
 </script>
 {/block}
