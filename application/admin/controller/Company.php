@@ -84,6 +84,12 @@ class Company extends Admin
     public function recruitname($id){
         $data=Db::table('pb_company_recruit')->where('rid',$id)->select();
         $list=Db::table('pb_company')->where('id',$id)->find();
+        if (!empty($data)) {
+            foreach ($data as $key => $v) {
+                $list2 = Db::table('pb_wechat_user')->where('userid', $v['userid'])->find();
+                $data[$key]['userid'] = $list2['name'];
+            }
+        }
         $this->assign('data',$data);
         $this->assign('list',$list);
         return $this->fetch();
