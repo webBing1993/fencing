@@ -94,6 +94,8 @@
                            </a>
                            {/volist}
                        </ul>
+
+
                        {/empty}
                    </div>
                </div>
@@ -210,9 +212,17 @@
     function addMeets(data,type){
         var html = '';
         var lists = data.data;
+        console.log(data);
         var len = lists.length;
         for(var i = 0; i< len;i++){
             var list = lists[i];
+
+            var pre;
+            if (list.userid ==''){
+                pre = list.publisher;
+            }else {
+                pre = list.userid;
+            }
             if(type==0){
                 html+=
                     '<a href="/home/activity/detail/type/1/id/' + list.id + '">' +
@@ -228,7 +238,7 @@
                 html+=
                     '<a href="/home/activity/detail2/type/2/id/' + list.id + '">' +
                     '<p>'+list.title+'</p>' +
-                    '<span>'+list.publisher+'</span>' +
+                    '<span>'+ pre +'</span>' +
                     '<span>'+list.create_time+'</span>' +
                     '<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>' +
                     '</a>';
