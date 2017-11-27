@@ -134,20 +134,19 @@
 {block name="script"}
 <script src="/home/js/reset.js"></script>
 <script>
-    // 拖拽
-    moveanyway();
     $(function(){
         //tab初始化和数据存储
         c = getCookie("c")?getCookie("c"):0;
-        console.log(getCookie("c"))
         if(c==1){
             $("#publish").show();
         }
         $("#tab a").eq(c).addClass('mui-active');
         $(".mui-slider-group>div").eq(c).addClass('mui-active');
+
     });
     //加载是否需要上拉加载
     window.onload = function(){
+        moveanyway();
         if(c==0){
             if($(".meeting .list a").length<10){
                 mui('#refreshContainer').pullRefresh().disablePullupToRefresh();
