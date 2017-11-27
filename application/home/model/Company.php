@@ -35,7 +35,7 @@ class Company extends Model{
             );
         }else{
             $map = array(
-                'userid' => ['neq',null],
+                'userid' => ['neq',''],
                 'status' => ['egt',$status],
                 'type' => $type
             );
