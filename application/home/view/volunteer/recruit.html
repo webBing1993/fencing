@@ -55,12 +55,6 @@
 <script>
     var pid =  parseInt(window.location.href.split("recruit/pid/")[1]);
     $(function () {
-        if ($(".mui-scroll").height() == 0) {
-            $("#refreshContainer").css({
-                background: 'url("/home/images/activity/nomessage.png") center no-repeat',
-                backgroundSize: "50vw",
-            });
-        }
         var mySwiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
@@ -103,7 +97,6 @@
             },
             success:function(data){
                 addCourse(data);
-                console.log(data);
                 if(data.code == 1){
                     var dataLen =data.data.length;
                     if(data.data.length == 10){

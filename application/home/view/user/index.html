@@ -46,6 +46,15 @@
 	</a>
 </div>
 {/eq}
+
+
+<div class="showbox">
+	<div class="loader">
+		<svg class="circular" viewBox="25 25 50 50">
+			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+		</svg>
+	</div>
+</div>
 {/block}
 
 {block name="script"}
@@ -90,6 +99,9 @@ $(function(){
 				data:formData,
 				processData : false,
 				contentType : false,
+				beforeSend: function(XMLHttpRequest){
+					$(".showbox").show();
+				},
 				success:function(data){
 					var msg = $.parseJSON(data);
 					if(msg.code == 1){
@@ -116,8 +128,18 @@ $(function(){
 									confirmButtonText:'确定',
 									timer:2000
 								});
+							},
+							error:function(){
+								swal({
+									title: ' ',
+									text: '上传失败，请重试',
+									type: 'success',
+									confirmButtonText:'确定',
+									timer:2000
+								});
 							}
-						})
+						}),
+						$(".showbox").hide();
 					} else {
 						swal({
 							title: ' ',
@@ -126,6 +148,7 @@ $(function(){
 							confirmButtonText:'确定',
 							timer:2000
 						});
+						$(".showbox").hide();
 						return '';
 					}
 				}
