@@ -44,7 +44,6 @@ class News extends Base {
         $this->jssdk();
         $id = input('id/d');
         $info = $this->content(2,$id);
-        
         $this->assign('detail',$info);
         return $this->fetch();
     }

@@ -67,11 +67,14 @@ class User extends Base {
      */
     public function setHeader(){
         $userId = session('userId');
+        //dump($userId);exit();
         $header = input('header');
+        //dump($header);exit();
         $map = array(
             'header' => $header,
         );
         $info = WechatUser::where('userid',$userId)->update($map);
+        //dump($info);exit();
         if($info){
             return $this->success("修改成功");
         }else{

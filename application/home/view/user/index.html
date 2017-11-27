@@ -13,7 +13,16 @@
 </div>
 {else/}
 <div class="banner">
+
+
+	{if condition="($user['header'] == '')"}
 	<div class="up" data-tab="{$user.avatar}"></div>
+	{else /}
+	<div class="up" data-tab="{$user.header}"></div>
+	{/if}
+
+
+
 	<div class="name">{$user.name}</div>
 	<input type="file" class="hide" id="upload" accept="image/*" name="upload">
 	<input type="hidden" name="header"  value="" required="">
@@ -96,7 +105,7 @@ $(function(){
 						};
 						$.ajax({
 							type:"post",
-							url:"{:Url('Rank/setHeader')}",
+							url:"{:Url('User/setHeader')}",
 							data:{header:msg.data.path},
 							dataType: "Json",
 							success:function(){
