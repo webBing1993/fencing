@@ -24,10 +24,8 @@
             <!--红色电影-->
             <div id="item1mobile" class="mui-slider-item mui-control-content">
                 <div class="search">
-                    <div>
                         <span class="fa fa-search"></span>
-                        <input type="text" placeholder="输入电影名称">
-                    </div>
+                        <input type="text" placeholder="输入电影名称" id="search1">
                 </div>
                 <div class="results"></div>
                 <div class="banner swiper-container">
@@ -77,10 +75,8 @@
                 <div class="banner_">
                     <img src="/home/images/bookbg.jpg" alt="红色书籍banner" class="banner-img">
                     <div class="search_">
-                        <div>
                             <span class="fa fa-search"></span>
-                            <input type="text" placeholder="搜索书籍名字、作者名字">
-                        </div>
+                            <input type="text" placeholder="搜索书籍名字、作者名字" id="search2">
                         <div class="results"></div>
                     </div>
                 </div>
@@ -297,90 +293,85 @@
        });
 
        //搜索--红色电影
-       var search1 = $('.search input');
-       var lock1 = false;
-       search1.on('compositionstart',function(){
-           lock1 = true;
-       });
-       search1.on('compositionend',function(){
-           lock1 = false;
-       });
-       search1.on('input',function(){
-           var this_ = this;
-           if(!lock1){
-               var val = $(this_ ).val();
-               if (val == "") {
-                   $('#item1mobile .results').hide();
-               }else {
-                   $('#item1mobile .results').show();
+       $(function(){
+           //搜索
+           var debounce = function() {
+               var wait = 200;
+               var timeout;
+               return function () {
+                   if (timeout) clearTimeout(timeout);
+                   timeout = setTimeout(function(){
+                       var val = $('.search>#search1').val();
+                       if (val == "") {
+                           $('#item1mobile .results').hide();
+                       }else {
+                           $('#item1mobile .results').show();
+                       }
+                       var html = '';
+                       $.ajax({
+                           type:"post",
+                           url: "{:Url('Learn/filmserch')}",
+                           data:{
+                               val:val
+                           },
+                           beforeSend: function(XMLHttpRequest){},
+                           success:function(data){
+                               var result = data.data;
+                               var url = '';
+                               if(!result){
+                                   html +=
+                                       '<div class="result limit">无搜索结果</div>'
+                               }
+                               for(var obj in result){
+                                   html+= '<a href=\"/home/Learn/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
+                               }
+                               $('#item1mobile .results' ).html(html);
+                           }
+                       });
+                   }, wait);
                }
-               var html = '';
-               $.ajax({
-                   type:"post",
-                   url: "{:Url('Learn/filmserch')}",
-                   data:{
-                       val:val
-                   },
-                   beforeSend: function(XMLHttpRequest){},
-                   success:function(data){
-                       var result = data.data;
-                       var url = '';
-                       if(!data.data){
-                           html +=
-                               '<div class="result limit">无搜索结果</div>'
-                       }
-                       for(var obj in result){
-                           html+= '<a href=\"/home/Learn/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
-                       }
-                       $('#item1mobile .results' ).html(html);
-                   }
-               });
-           }
-       });
+           };
+           document.getElementById('search1').addEventListener('input', debounce(), false);
+
+
        //搜索--红色文学
-       var search2 = $('.search_ input');
-       var lock2 = false;
-       search2.on('compositionstart',function(){
-           lock2 = true;
-       });
-       search2.on('compositionend',function(){
-           lock2 = false;
-       });
-       search2.on('input',function(){
-           var this_ = this;
-           if(!lock2){
-               var val = $(this_ ).val();
-               if (val == "") {
-                   $('#item2mobile .results').hide();
-               }else {
-                   $('#item2mobile .results').show();
+           //搜索
+           var debounce = function() {
+               var wait = 50;
+               var timeout;
+               return function () {
+                   if (timeout) clearTimeout(timeout);
+                   timeout = setTimeout(function(){
+                       var val = $('.search_>#search2').val();
+                       if (val == "") {
+                           $('#item2mobile .results').hide();
+                       }else {
+                           $('#item2mobile .results').show();
+                       }
+                       var html = '';
+                       $.ajax({
+                           type:"post",
+                           url: "{:Url('Learn/booksearch')}",
+                           data:{
+                               val:val
+                           },
+                           beforeSend: function(XMLHttpRequest){},
+                           success:function(data){
+                               var result = data.data;
+                               if(!data.data){
+                                   html +=
+                                       '<div class="result limit">无搜索结果</div>'
+                               }
+                               for(var obj in result){
+                                   html+= '<a href=\"/home/Learn/bookdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
+                               }
+                               $('#item2mobile .results' ).html(html);
+                           }
+                       });
+                   }, wait);
                }
-               var html = '';
-               $.ajax({
-                   type:"post",
-                   url: "{:Url('Learn/booksearch')}",
-                   data:{
-                       val:val
-                   },
-                   beforeSend: function(XMLHttpRequest){},
-                   success:function(data){
-                       var result = data.data;
-                       if(!data.data){
-                           html +=
-                               '<div class="result limit">无搜索结果</div>'
-                       }
-                       for(var obj in result){
-                           html+= '<a href=\"/home/Learn/bookdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
-                       }
-                       $('#item2mobile .results' ).html(html);
-                   }
-               });
-           }
+           };
+           document.getElementById('search2').addEventListener('input', debounce(), false);
        });
-
-
-
-
-
 </script>
 {/block}

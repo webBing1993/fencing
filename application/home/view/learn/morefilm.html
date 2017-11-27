@@ -11,7 +11,7 @@
 		<div class="mui-slider-group">
 			<div class="search">
 				<span class="fa fa-search"></span>
-				<input type="text" placeholder="输入电影名称">
+				<input type="text" placeholder="输入电影名称" id="search1">
 			</div>
 			<div class="results"></div>
 			<div class="lists-title clear">
@@ -36,42 +36,40 @@
 $('title').text('红色电影');
 $(function(){
 	//搜索
-	var search = $('.search>input');
-	var lock = false;
-	search.on('compositionstart',function(){
-		lock = true;
-	});
-	search.on('compositionend',function(){
-		lock = false;
-	});
-	search.on('input',function(){
-		var this_ = this;
-		if(!lock){
-			var val = $(this_ ).val();
-			var html = '';
-			$.ajax({
-				type:"post",
-				url: "{:Url('learn/filmserch')}",
-				data:{
-					val:val
-				},
-				beforeSend: function(XMLHttpRequest){},
-				success:function(data){
-					var result = data.data;
-					var url = '';
-					if(!data.data){
-						html +=
-								'<div class="result limit">无搜索结果</div>'
-					}
-					for(var obj in result){
-						html+= '<a href=\"/home/learn/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
-					}
-					$('.results' ).html(html);
-				}
 
-			});
-		}
-	});
+    var debounce = function() {
+        var wait = 200;
+        var timeout;
+        return function () {
+            if (timeout) clearTimeout(timeout);
+            timeout = setTimeout(function(){
+                var val = $('.search>input').val();
+                var html = '';
+                $.ajax({
+                    type:"post",
+                    url: "{:Url('learn/filmserch')}",
+                    data:{
+                        val:val
+                    },
+                    beforeSend: function(XMLHttpRequest){},
+                    success:function(data){
+                        var result = data.data;
+                        var url = '';
+                        if(!data.data){
+                            html +=
+                                '<div class="result limit">无搜索结果</div>'
+                        }
+                        for(var obj in result){
+                            html+= '<a href=\"/home/learn/filmdetail?id='+obj+'\" class="result limit">'+result[obj]+'</a>';
+                        }
+                        $('.results' ).html(html);
+                    }
+
+                });
+			}, wait);
+        }
+    };
+    document.getElementById('search1').addEventListener('input', debounce(), false);
 });
 
 
