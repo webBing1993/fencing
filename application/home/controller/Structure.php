@@ -24,7 +24,7 @@ class Structure extends Base{
     public function detail(){
         $id = input('id/d');
         $depart_name = WechatDepartment::where(['id' => $id])->value('name');
-        $list = WechatUser::where(['department' => json_encode($id),'position' => ['neq',null]])->field('name,position,mobile')->select();
+        $list = WechatUser::where(['department' => json_encode([$id]),'position' => ['neq','']])->field('name,position,mobile')->select();
         $this->assign('list',$list);
         $this->assign('name',$depart_name);
         return $this->fetch();

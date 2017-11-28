@@ -32,7 +32,7 @@ return [
     'party' => array(
 //        'token' => 'ZfqkOC4Fhd7D',
 //        'encodingaeskey' => 'SWWdiNibALNG3hZfvqqAzQ48rmibi5KTc1JnqouajTC',
-        'appid' => 'ww678237a01774a2fb-------',
+        'appid' => 'ww678237a01774a2fb',
         'appsecret' => 'pyXyO5cw8DfEbFr6dG-veoVo8Lv7izqMZoakYTAymro',
     ),
      /*个人中心*/
@@ -40,19 +40,19 @@ return [
          'login' => 'http://rh.0571ztnet.com/home/verify/login',
 //        'token' => 'ZfqkOC4Fhd7D',
 //        'encodingaeskey' => 'SWWdiNibALNG3hZfvqqAzQ48rmibi5KTc1JnqouajTC',
-         'appid' => 'ww678237a01774a2fb-----',
+         'appid' => 'ww678237a01774a2fb',
          'appsecret' => 'HdHeFsMy_5ezrO90p_fSqC_v21nPXucM5WeBpfOVYMA',
          'agentid' => 1000005
      ),
     /*消息审核*/
     'review' => array(
-        'appid' => 'ww678237a01774a2fb------',
+        'appid' => 'ww678237a01774a2fb',
         'appsecret' => 'wzp_OlcYTgH2IjTbjFgA7oLrF8zXHhQXc4Oaz9KVwwo',
         'agentid' => 1000004
     ),
     /*活动签到*/
     'sign' => array(
-        'appid' => 'ww678237a01774a2fb---------',
+        'appid' => 'ww678237a01774a2fb',
         'appsecret' => '-njGAjJ7EnSKMXlzSoUxcJO6RDGhYtbVEiY5KSiry3s',
         'agentid' => 1000003
     ),

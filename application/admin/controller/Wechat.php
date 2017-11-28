@@ -87,7 +87,6 @@ class Wechat extends Admin
         if($Wechat->errCode != 40001) {
             return $this->error("同步出错");
         }
-
         /* 同步部门 */
         $list = $Wechat->getDepartment();
         /* 同步最顶级部门下面的用户 */
