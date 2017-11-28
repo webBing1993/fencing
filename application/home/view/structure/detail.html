@@ -6,40 +6,25 @@
 {/block}
 {block name="body"}
 <ul class="d_lists">
+    <li>{$name}</li>
+    <li class="d_list">
+    <div class="d_img_box">
+        <div class="d_img">防守打法的</div>
+    </div>
+    <div class="d_name">斯蒂芬斯蒂芬</div>
+    <span class="d_tel">
+        <span class="d_tel_icon">小哥哥党风</span>
+    </span>
+    </li>
 </ul>
 {/block}
 
 {block name="script"}
 <script>
     $('title' ).text('组织架构');
-    var data2 =[
-                        {
-                            "position":"支部书记",
-                            "name":"测试"
-                        },
-                        {
-                            "position":"支部书记",
-                            "name":"测试"
-                        }
-    ];
+
     var bg_color=["#b1e3fc", "#aeefef", "#ffa351", "#9393f5", "#cf88f7", "#65abfa", "#ebcffb", "#76f4f0", "#ffcf6e", "#ff8ff4"];
-    var len = data2.length;
-    var html="";
-    for(var i = 0 ; i < len ;i++){
-        var party = data2[i];
-            html+='<li class="d_list">'+
-                '<div class="d_img_box">'+
-                '<div class="d_img" style="background-color:'+bg_color[Math.floor(Math.random()*10)]+'">'+
-                party.name[0]+'</div>'+
-                '</div>'+
-                '<div class="d_name">'+party.name +'</div>'+
-                '<span class="d_tel">'+
-                '<span class="d_tel_icon"></span>'+
-                party.position+
-                '</span>'+
-                '</li>';
-    }
-    $('.d_lists' ).append(html);
+
 
 </script>
 {/block}
