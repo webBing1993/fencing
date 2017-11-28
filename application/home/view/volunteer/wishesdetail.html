@@ -6,8 +6,6 @@
 {else /}
 <title>志愿者招募</title>
 {/if}
-
-
 <link rel="stylesheet" href="/home/sass/stylesheets/volunteer/wishesdetail.css">
 {/block}
 
@@ -16,6 +14,9 @@
    <div class="title">
        <p>{$data.title}</p>
    </div>
+    <div class="people">
+        <p>发布人</p>
+    </div>
     <div class="time">
         <p>{$data.create_time|time_format='Y-m-d'}</p>
     </div>
@@ -75,7 +76,6 @@
         {/volist}
     </ul>
 </div>
-
 {/block}
 
 {block name="script"}
@@ -98,12 +98,10 @@
             data:{
               rid:id,
               type:type
-
             },
             success:function(data){
                 if(data.code==1){
                     addList(data);
-
                     $(".claim").addClass("gray").removeClass("claim").html("已"+text).off("click");
                     $(".information-rank").find("span").text(num+1);
                 }
@@ -120,7 +118,6 @@ function addList(data){
                 '</li>'
 
         $(".list-person").append(html)
-
 
 }
 
