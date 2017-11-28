@@ -22,30 +22,7 @@ use think\Input;
 class Wechat extends Admin
 {
     public function index() {
-        $xx = substr('1993.10',0,4);
-        $ss = date("Y",time());
-        dump($ss);
-        dump($ss - $xx);
-//        $Wechat = new QYWechat(Config::get('party'));
-//        $list = $Wechat->getDepartment();
-//        dump($list);
-//
-//        foreach ($list['department'] as $key=>$value) {
-//            $users = $Wechat->getUserListInfo($list['department'][$key]['id']);
-//            foreach ($users['userlist'] as $user) {
-//                $user['department'] = json_encode($user['department']);
-//                $user['extattr'] = json_encode($user['extattr']);
-////                dump($user);
-////                if(WechatUser::get(['userid'=>$user['userid']])) {
-////                    WechatUser::where(['userid'=>$user['userid']])->update($user);
-////                } else {
-////                    WechatUser::create($user);
-////                }
-//            }
-//        }
-//
-//        $tags = $Wechat->getTagList();
-////        dump($tags);
+
     }
 
 
@@ -184,6 +161,7 @@ class Wechat extends Admin
         /* 同步标签 */
         WechatTag::where('1=1')->delete();
         $tags = $Wechat->getTagList();
+
         if (isset($tags['taglist'])){
             foreach ($tags['taglist'] as $tag) {
                 if(WechatTag::get(['tagid'=>$tag['tagid']])) {
@@ -198,21 +176,36 @@ class Wechat extends Admin
             foreach ($tags['taglist'] as $value) {
                 $users = $Wechat->getTag($value['tagid']);
                 if(empty($users['userlist'])){
-                    foreach ($users['partylist'] as $user){
-                        $info = $Wechat->getUserListInfo($user);
-                        foreach ($info['userlist'] as $val){
-                            $data = ['tagid' => $value['tagid'],'userid' => $val['userid']];
-                            if(empty(WechatUserTag::where($data)->find())){
-                                WechatUserTag::create($data);
+                    // 同步标签内的部门
+                    if (!empty($users['partylist'])){
+                        foreach ($users['partylist'] as $user){
+                            $info = $Wechat->getUserListInfo($user);
+                            foreach ($info['userlist'] as $val){
+                                $data = ['tagid' => $value['tagid'],'userid' => $val['userid']];
+                                if(empty(WechatUserTag::where($data)->find())){
+                                    WechatUserTag::create($data);
+                                }
                             }
-                        }
-                    };
+                        };
+                    }
                 }else{
                     foreach ($users['userlist'] as $user) {
                         $data = ['tagid'=>$value['tagid'], 'userid'=>$user['userid']];
                         if(empty(WechatUserTag::where($data)->find())){
                             WechatUserTag::create($data);
                         }
+                    }
+                    // 同步标签内的部门
+                    if (!empty($users['partylist'])){
+                        foreach ($users['partylist'] as $user){
+                            $info = $Wechat->getUserListInfo($user);
+                            foreach ($info['userlist'] as $val){
+                                $data = ['tagid' => $value['tagid'],'userid' => $val['userid']];
+                                if(empty(WechatUserTag::where($data)->find())){
+                                    WechatUserTag::create($data);
+                                }
+                            }
+                        };
                     }
                 }
             }
