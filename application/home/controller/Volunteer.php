@@ -252,6 +252,7 @@ class Volunteer extends Base
             }
             $data['receive_number'] = Db::table('pb_company_recruit')->where('rid', $id)->count();
             $m=5;
+            //dump($data);exit();
             $this->assign('m',$m);
             $this->assign('list', $list);
             $this->assign('data', $data);
