@@ -6,6 +6,7 @@
  * Time: 13:21
  */
 namespace app\home\controller;
+use app\home\model\WechatDepartment;
 use app\home\model\WechatUser;
 
 class Structure extends Base{
@@ -13,16 +14,19 @@ class Structure extends Base{
      * 组织架构主页
      */
     public function index(){
-//        $msg = $this ->statistics();
-//        $this ->assign('msg',$msg);
+        $departments = WechatDepartment::where(['id' => ['notin',[1,2]]])->order('order','asc')->field('id,name')->select();
+        $this->assign('msg',$departments);
         return $this->fetch();
     }
     /*
      * 组织架构详情页
      */
     public function detail(){
-        $party = input('party');
-        $this->assign('party',$party);
+        $id = input('id/d');
+        $depart_name = WechatDepartment::where(['id' => $id])->value('name');
+        $list = WechatUser::where(['department' => json_encode($id),'position' => ['neq',null]])->field('name,position,mobile')->select();
+        $this->assign('list',$list);
+        $this->assign('name',$depart_name);
         return $this->fetch();
     }
 }

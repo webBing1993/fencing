@@ -61,38 +61,13 @@
 				<div class="list clear">
 					<div class="party1">
 						<div class="tri"></div>
-						<div class="name1">某某党支部1</div>
+						<div class="name1">温岭市箬横镇人民政府</div>
 					</div>
 					<!--第二层-->
 					<div class="down detail1">
-						<a class="name2 limit" href="{:Url('Structure/detail')}">某某支部1</a>
-						<a class="name2 limit" href="{:Url('Structure/detail')}">某某支部2</a>
-					</div>
-					<!--/第二层-->
-				</div>
-				<!--/第一层-->
-				<!--第一层-->
-				<div class="list clear">
-					<div class="party1">
-						<div class="tri"></div>
-						<div class="name1">某某党支部2</div>
-					</div>
-					<!--第二层-->
-					<div class="down detail1">
-						<a class="name2 limit" href="{:Url('Structure/detail')}">某某支部1</a>
-					</div>
-					<!--/第二层-->
-				</div>
-				<!--/第一层-->
-				<!--第一层-->
-				<div class="list clear">
-					<div class="party1">
-						<div class="tri"></div>
-						<div class="name1">某某党支部3</div>
-					</div>
-					<!--第二层-->
-					<div class="down detail1">
-						<a class="name2 limit" href="{:Url('Structure/detail')}">某某支部1</a>
+						{volist name="msg" id="mm"}
+						<a class="name2 limit" href="{:Url('Structure/detail?id='.$mm['id'])}">{$mm.name}</a>
+						{/volist}
 					</div>
 					<!--/第二层-->
 				</div>
