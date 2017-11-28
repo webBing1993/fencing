@@ -12,55 +12,34 @@
 {block name="script"}
 <script>
     $('title' ).text('组织架构');
-    var party3 = '某某支部1';
-    console.log(party3);
     var data2 =[
-        {
-            "party3":"某某支部1",
-            "detail3":[
-                {
-                    "detail4":[
                         {
                             "position":"支部书记",
                             "name":"测试"
                         },
-                    ]
-                }]
-        },
+                        {
+                            "position":"支部书记",
+                            "name":"测试"
+                        }
     ];
     var bg_color=["#b1e3fc", "#aeefef", "#ffa351", "#9393f5", "#cf88f7", "#65abfa", "#ebcffb", "#76f4f0", "#ffcf6e", "#ff8ff4"];
     var len = data2.length;
+    var html="";
     for(var i = 0 ; i < len ;i++){
         var party = data2[i];
-        if( party.party3 == party3){
-            var detail3 = party.detail3;
-            var len3 = detail3.length;
-            var html = '';
-            for(var j = 0; j < len3 ; j++){
-                console.log(len3)
-                var party4 = detail3[j];
-                var detail4 = party4.detail4;
-                var len4 = detail4.length;
-                for(var m = 0 ;m < len4 ;m++){
-                    html+='<li class="d_list">'+
-                        '<div class="d_img_box">'+
-                        '<div class="d_img" style="background-color:'+bg_color[Math.floor(Math.random()*10)]+'">'+
-                        detail4[m].name[0]+'</div>'+
-                        '</div>'+
-                        '<div class="d_name">'+detail4[m].name +'</div>'+
-                        '<span class="d_tel">'+
-                        '<span class="d_tel_icon"></span>'+
-                        detail4[m].position+
-                        '</span>'+
-                        '</li>';
-                }
-            }
-            $('.d_lists' ).append(html);
-
-        }else{
-//            console.log('百分百名字错了'+ party3 + '后：'+ party.party3)
-        }
+            html+='<li class="d_list">'+
+                '<div class="d_img_box">'+
+                '<div class="d_img" style="background-color:'+bg_color[Math.floor(Math.random()*10)]+'">'+
+                party.name[0]+'</div>'+
+                '</div>'+
+                '<div class="d_name">'+party.name +'</div>'+
+                '<span class="d_tel">'+
+                '<span class="d_tel_icon"></span>'+
+                party.position+
+                '</span>'+
+                '</li>';
     }
+    $('.d_lists' ).append(html);
 
 </script>
 {/block}

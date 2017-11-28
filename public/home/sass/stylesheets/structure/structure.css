@@ -248,7 +248,7 @@ body {
   background-size: 2.67vw 2.67vw;
 }
 .listbox .box .box_ .lists .detail1 {
-  display: none;
+  display: block;
   width: 100%;
 }
 .listbox .box .box_ .lists .detail1 .name2 {
@@ -261,6 +261,9 @@ body {
   line-height: 12vw;
   border-bottom: 1px solid #f1f1f1;
   text-decoration: none;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 @media screen and (max-width: 320px) {
   .listbox .box .box_ .lists .detail1 .name2 {
