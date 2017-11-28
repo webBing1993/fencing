@@ -412,3 +412,11 @@ body {
     /*-webkit-background-size:3.47vw 4.53vw;*/
     /*background-size:3.47vw 4.53vw;*/
 /*}*/
+.title p{
+    margin-top:3vw;
+    font-size:0.42rem;
+    text-align: center;
+    color:#000000;
+    border-bottom:1px solid #e5e5e5;
+    padding-bottom:3vw;
+}

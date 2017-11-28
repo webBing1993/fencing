@@ -6,7 +6,7 @@
 {/block}
 {block name="body"}
 <ul class="d_lists">
-    <li>{$name}</li>
+    <li class="title"><p>{$name}</p></li>
     <li class="d_list">
     <div class="d_img_box">
         <div class="d_img">防守打法的</div>
@@ -22,9 +22,8 @@
 {block name="script"}
 <script>
     $('title' ).text('组织架构');
-
     var bg_color=["#b1e3fc", "#aeefef", "#ffa351", "#9393f5", "#cf88f7", "#65abfa", "#ebcffb", "#76f4f0", "#ffcf6e", "#ff8ff4"];
-
-
+     var m_color = bg_color[Math.floor(Math.random()*10)];
+    $(".d_img").css("background-color",m_color)
 </script>
 {/block}
