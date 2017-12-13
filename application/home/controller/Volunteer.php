@@ -39,7 +39,7 @@ class Volunteer extends Base
         $data = $Companyst->get_list($mapp);
         //循环遍历
         foreach ($data as $v) {
-            $list = Db::table('pb_companys')->where('type', $v['id'])->count();
+            $list = Db::table('pb_companys')->where('type', $v['id'])->where('status',1)->count();
             $v['number'] = $list;
         }
         $this->assign('data', $data);
