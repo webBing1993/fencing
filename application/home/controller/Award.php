@@ -10,7 +10,6 @@ namespace app\home\controller;
 
 use think\Controller;
 use app\admin\model\Question;
-use think\Db;
 class Award extends Controller
 {
     /**
@@ -32,10 +31,11 @@ class Award extends Controller
                 $question[] = $arr[$index];//重组数据
             }
         }
-        $this->assign('question',$question);
         
+        $this->assign('question',$question);
         return $this->fetch();
     }
+    
     /**
      * 答题页面
      */

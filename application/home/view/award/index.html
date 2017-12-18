@@ -165,7 +165,7 @@
 
 
     {volist name="question" id="vo" key="n"}
-    <div class="question-content animated" data-tab="{$vo.id}">
+    <div class="question-content animated" data-tab="{$vo.value}">
     <p>{$vo.title}</p>
         {volist name="vo->Option" id="value" key="k"}
         <div class="question-answer">
