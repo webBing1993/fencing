@@ -172,8 +172,8 @@
         <span>{if condition="($k eq 1) AND ($value neq ' ')"}A{elseif condition="($k eq 2) AND ($value neq ' ')"}B{elseif condition="($k eq 3 )AND ($value neq ' ')"}C{elseif condition="($k eq 4 )AND ($value neq ' ')"/}D{/if}.</span>
         <span>{$value|substr=###,'2'}</span>
         <div class="answer-radio">
-            <input type="radio" id="answer1" name="sex" />
-            <label for="answer1"></label>
+            <input type="radio" name="answer" />
+            <label></label>
         </div>
     </div>
    {/volist}
@@ -192,7 +192,7 @@
  $(".question-answer span:nth-child(2)").on("click",function(){
      var check = $(this).next().children("input").hasClass("checked");
      if(!check){
-         $("input[type=radio]").removeClass("checked");
+         $(this).parent().parent().find("input").removeClass("checked");
          $(this).next().children("input").addClass("checked");
      }
  });
@@ -200,7 +200,7 @@
  $(".answer-radio label").on("click",function(){
      var check = $(this).prev().hasClass("checked");
      if(!check){
-         $(this).children("input[type=radio]").removeClass("checked");
+         $(this).parent().parent().find("input").removeClass("checked");
          $(this).prev().addClass("checked");
      }
  })
