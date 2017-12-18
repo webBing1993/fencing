@@ -164,8 +164,8 @@ class Volunteer extends Base
                     )
                 );
                 $message = array(
-//                    "totag" => 1,  // 审核组
-                    "touser" => "17557289172",
+                    "totag" => 1,  // 审核组
+//                    "touser" => "17557289172",
                     "msgtype" => 'news',
                     "agentid" => 1000004,
                     "news" => $send,
