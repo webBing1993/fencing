@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/home/sass/stylesheets/screen.css">
+    <link rel="stylesheet" href="/home/sass/stylesheets/animate.min.css">
     <style>
         *{
             margin: 0;
@@ -13,6 +14,7 @@
         html{
             width:100%;
             height:100%;
+            overflow: hidden;
         }
         body{
             background: url("/home/images/award/award_bg.png") no-repeat;
@@ -56,7 +58,8 @@
             text-align: center;
             margin: 0 auto;
             display: none;
-            position: relative;
+            position: absolute;
+            left:25vw;
         }
         .question-content p{
             font-size:28px;
@@ -123,11 +126,18 @@
             position: absolute;
             clip: rect(0, 0, 0, 0);
         }
-        .next{
+        img.next{
             width:10vw;
             position: absolute;
             right:10vw;
             top:40vh;
+        }
+        img.previous{
+            width:10vw;
+            position: absolute;
+            left:10vw;
+            top:40vh;
+            display: none;
         }
         .playmusic{
             width:10vw;
@@ -155,7 +165,7 @@
 
 
     {volist name="question" id="vo" key="n"}
-    <div class="question-content" data-tab="{$vo.id}">
+    <div class="question-content animated" data-tab="{$vo.id}">
     <p>{$vo.title}</p>
         {volist name="vo->Option" id="value" key="k"}
         <div class="question-answer">
@@ -167,10 +177,11 @@
         </div>
     </div>
    {/volist}
+    </div>
 {/volist}
-
-</div>
+    </div>
 <img src="/home/images/award/next.png" class="next">
+<img src="/home/images/award/previous.png" class="previous">
 <div class="playmusic music"></div>
 </body>
 <script src="/static/js/jquery-2.2.1.min.js"></script>
@@ -189,7 +200,7 @@
  $(".answer-radio label").on("click",function(){
      var check = $(this).prev().hasClass("checked");
      if(!check){
-         $("input[type=radio]").removeClass("checked");
+         $(this).children("input[type=radio]").removeClass("checked");
          $(this).prev().addClass("checked");
      }
  })
@@ -203,14 +214,29 @@
  });
 
     $(".next").on("click",function(){
-            var order = parseInt($(".question-order span").text());
-            $(".question-content").eq(order-1).css({"position":"absolute"}).removeClass("animation").animate({right:'2000px'},500,function(){
-                $(".question-content").eq(order).show().addClass("animation");
-                $(".question-order span").text(order+1);
-                if( $(".question-order span").text()==6){
-                    $(".next").hide();
-                }
-            })
+        var order = parseInt($(".question-order span").text());
+        $(".question-content").eq(order-1).addClass("fadeOutRight").
+        removeClass("fadeInLeft").removeClass("fadeInRight").removeClass("fadeOutLeft");
+        $(".previous").show();
+        $(".question-content").eq(order).addClass("fadeInLeft").
+        removeClass("fadeOutRight").removeClass("fadeInRight").removeClass("fadeOutLeft").show();
+        $(".question-order span").text(order+1);
+        if( $(".question-order span").text()==6){
+            $(".next").hide();
+        }
+    })
+
+    $(".previous").on("click",function(){
+        var order = parseInt($(".question-order span").text());
+        $(".question-content").eq(order-1).addClass("fadeOutLeft").
+        removeClass("fadeInRight").removeClass("fadeOutRight").removeClass("fadeInLeft");
+        $(".next").show();
+        $(".question-content").eq(order-2).addClass("fadeInRight").
+        removeClass("fadeOutLeft").removeClass("fadeOutRight").removeClass("fadeInLeft");
+        $(".question-order span").text(order-1);
+        if( $(".question-order span").text()==1){
+            $(".previous").hide();
+        }
     })
 
 
