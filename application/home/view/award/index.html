@@ -1,10 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/home/sass/stylesheets/screen.css">
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+        html{
+            width:100%;
+            height:100%;
+        }
+        body{
+            background: url("/home/images/award/award_bg.png") no-repeat;
+            background-size:cover;
+            /*background-position:center;*/
+        }
+       .question-bg{
+           text-align: center;
+           height:70vh;
+           margin-top:15vh;
+       }
+        .question-bg img{
+            width:60vw;
+            height:70vh;
+            position: absolute;
+            z-index: -1;
+            left:20vw;
+            top:10vh;
+
+        }
+        .question-order{
+            /*position: absolute;*/
+            /*top:5vh;*/
+            /*left:50vw;*/
+            position: relative;
+            margin: 50px auto;
+            top: 20px;
+            width:15vw;
+            /*margin-left: -10vw;*/
+            font-size: 30px;
+            color: #fff;
+            border-radius: 30px;
+            height:5vh;
+            line-height:5vh;
+            background-image:-webkit-linear-gradient(to top, #97461a,#fbd8c5 10%,#97461a);
+            background-image:linear-gradient(to top,#97461a, #fbd8c5,#97461a);
+        }
+        .question-content{
+            display: inline-block;
+            width: 50vw;
+            text-align: center;
+            margin: 0 auto;
+            display: none;
+            position: relative;
+        }
+        .question-content p{
+            font-size:28px;
+            line-height:1.5;
+            text-align: left;
+            margin: 0 auto;
+            word-break: break-all;
+        }
+        .question-answer{
+            font-size:24px;
+            margin: 0 auto;
+            text-align: left;
+            word-break: break-all;
+            display: flex;
+            border-radius: 10px;
+            background: #f2d7b0;
+            margin-top: 20px;
+        }
+        .question-answer span:nth-child(1){
+            padding: 0 10px;
+            display: flex;
+            background: #a56330;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            align-items: center;
+            color: #fff;
+
+        }
+        .question-answer span:nth-child(2){
+            display: flex;
+            flex:2;
+            padding:10px;
+            cursor: pointer;
+            -webkit-tap-highlight-color:rgba(0,0,0,0);
+        }
+        .answer-radio{
+            display: flex;
+            align-items: center;
+        }
+        .answer-radio label{
+            line-height:20px;
+            cursor: pointer;
+            -webkit-tap-highlight-color:rgba(0,0,0,0);
+        }
+        input[type="radio"] + label::before {
+            content: "\a0"; /*不换行空格*/
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 18px;
+            width: 20px;
+            height: 20px;
+            margin-right: .4em;
+            border-radius: 50%;
+            border: 1px solid #0da3ce;
+        }
+        input[type="radio"].checked + label::before {
+            background-color: #0da3ce;
+            background-clip: content-box;
+            height: 10px;
+            width: 10px;
+            padding: 5px;
+        }
+        input[type="radio"] {
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+        }
+        .next{
+            width:10vw;
+            position: absolute;
+            right:10vw;
+            top:40vh;
+        }
+        .playmusic{
+            width:10vw;
+            position: absolute;
+            left: 5vw;
+            bottom:20vh;
+            height:10vw;
+            -webkit-tap-highlight-color:rgba(0,0,0,0);
+        }
+        .music{
+            background:url("/home/images/award/music.png");
+            background-size: 100% 100%;
+        }
+        .mute{
+            background:url("/home/images/award/mute.png");
+            background-size: 100% 100%;
+        }
+
+    </style>
 </head>
 <body>
+<div class="question-bg">
+    <img src="/home/images/award/question_bg.png">
+    <div class="question-order"><span>1</span> / 6</div>
 
+
+
+    <div class="question-content">
+    <p>党的基层各级委员会书记经过相应的培训，应具备坚定地（）理论素养，良好的思想品德，正式的工作作风。</p>
+    <div class="question-answer">
+        <span>A</span>
+        <span>多多的点点滴滴多多多多多多的点点滴滴多多多多多多多多多多多多多多多多多多嘟嘟嘟嘟</span>
+        <div class="answer-radio">
+            <input type="radio" id="answer1" name="sex" />
+            <label for="answer1"></label>
+        </div>
+    </div>
+    <div class="question-answer">
+        <span>B</span>
+        <span>多多多嘟嘟嘟嘟</span>
+        <div class="answer-radio">
+            <input type="radio" id="answer2" name="sex" />
+            <label for="answer2"></label>
+        </div>
+    </div>
+  </div>
+
+
+
+</div>
+<img src="/home/images/award/next.png" class="next">
+<div class="playmusic music"></div>
 </body>
+<script src="/static/js/jquery-2.2.1.min.js"></script>
+<script>
+    $(function(){
+       $(".question-content").eq(0).show();
+    });
+ $(".question-answer span:nth-child(2)").on("click",function(){
+     var check = $(this).next().children("input").hasClass("checked");
+     if(!check){
+         $("input[type=radio]").removeClass("checked");
+         $(this).next().children("input").addClass("checked");
+     }
+ });
+
+ $(".answer-radio label").on("click",function(){
+     var check = $(this).prev().hasClass("checked");
+     if(!check){
+         $("input[type=radio]").removeClass("checked");
+         $(this).prev().addClass("checked");
+     }
+ })
+
+ $(".playmusic").on("click",function(){
+    if($(this).hasClass("music")){
+        $(this).removeClass("music").addClass("mute");
+    }else{
+        $(this).removeClass("mute").addClass("music");
+    }
+ });
+
+    $(".next").on("click",function(){
+            var order = parseInt($(".question-order span").text());
+            $(".question-content").eq(order-1).css({"position":"absolute"}).removeClass("animation").animate({right:'2000px'},500,function(){
+                $(".question-content").eq(order).show().addClass("animation");
+                $(".question-order span").text(order+1);
+                if( $(".question-order span").text()==6){
+                    $(".next").hide();
+                }
+            })
+    })
+
+
+</script>
 </html>
