@@ -154,28 +154,20 @@
     <div class="question-order"><span>1</span> / 6</div>
 
 
-
-    <div class="question-content">
-    <p>党的基层各级委员会书记经过相应的培训，应具备坚定地（）理论素养，良好的思想品德，正式的工作作风。</p>
-    <div class="question-answer">
-        <span>A</span>
-        <span>多多的点点滴滴多多多多多多的点点滴滴多多多多多多多多多多多多多多多多多多嘟嘟嘟嘟</span>
+    {volist name="question" id="vo" key="n"}
+    <div class="question-content" data-tab="{$vo.id}">
+    <p>{$vo.title}</p>
+        {volist name="vo->Option" id="value" key="k"}
+        <div class="question-answer">
+        <span>{if condition="($k eq 1) AND ($value neq ' ')"}A{elseif condition="($k eq 2) AND ($value neq ' ')"}B{elseif condition="($k eq 3 )AND ($value neq ' ')"}C{elseif condition="($k eq 4 )AND ($value neq ' ')"/}D{/if}.</span>
+        <span>{$value|substr=###,'2'}</span>
         <div class="answer-radio">
             <input type="radio" id="answer1" name="sex" />
             <label for="answer1"></label>
         </div>
     </div>
-    <div class="question-answer">
-        <span>B</span>
-        <span>多多多嘟嘟嘟嘟</span>
-        <div class="answer-radio">
-            <input type="radio" id="answer2" name="sex" />
-            <label for="answer2"></label>
-        </div>
-    </div>
-  </div>
-
-
+   {/volist}
+{/volist}
 
 </div>
 <img src="/home/images/award/next.png" class="next">
