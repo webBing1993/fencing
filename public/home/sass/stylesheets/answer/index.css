@@ -6,17 +6,15 @@
     position: absolute;
 }
 .musicBtn{
-    width:150px;
-    height:150px;
-    position:fixed;
-    top:590px;
-    left:70px;
+    width: 10vw;
+    position: absolute;
+    left: 5vw;
+    bottom: 20vh;
+    height: 10vw;
 }
 .music{
     background: url("/home/images/answer/2.png") center center no-repeat;
     background-size: 100% 100%;
-
-
 }
 .stop{
     background: url("/home/images/answer/1.png") center center no-repeat;
@@ -25,33 +23,24 @@
 .logo{
     background: url("/home/images/answer/logo.png") center center no-repeat;
     background-size: 100% 100%;
-    width:900px;
-    height:300px;
-    position:fixed;
-    top:150px;
-    left:500px;
-}
-.gift{
-    position:fixed;
-    top:450px;
-    right:60px;
-}
-.gift img{
-    width:500px;
-    height:500px;
+    width:65vw;
+    height:16vw;
+    position:absolute;
+    top:5vw;
+    left:18vw;
 }
 .btn1{
     background: url("/home/images/answer/GIF1.gif") center center no-repeat;
     background-size: 100% 100%;
-    width: 217px;
-    height: 73px;
-    position:fixed;
-    bottom:300px;
-    left:850px;
+    width: 12vw;
+    height: 4vw;
+    position:absolute;
+    bottom:17vw;
+    left:44vw;
     text-align: center;
     color:#ffffff;
-    line-height:73px;
-    font-size:26px;
+    line-height:4vw;
+    font-size:0.5rem;
     font-family:"微软雅黑";
     letter-spacing:2px;
     display: block;
@@ -59,15 +48,15 @@
 .btn2{
     background: url("/home/images/answer/GIF1.gif") center center no-repeat;
     background-size: 100% 100%;
-    width: 217px;
-    height: 73px;
-    position:fixed;
-    bottom:200px;
-    left:850px;
+    width: 12vw;
+    height: 4vw;
+    position:absolute;
+    bottom:12vw;
+    left:44vw;
     text-align: center;
     color:#ffffff;
-    line-height:73px;
-    font-size:26px;
+    line-height:4vw;
+    font-size:0.5rem;
     font-family:"微软雅黑";
     letter-spacing:2px;
     display: block;
