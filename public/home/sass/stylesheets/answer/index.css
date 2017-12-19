@@ -1,0 +1,77 @@
+.main{
+    background: url("/home/images/answer/banner.png") center center no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.musicBtn{
+    width:150px;
+    height:150px;
+    position:fixed;
+    top:590px;
+    left:70px;
+}
+.music{
+    background: url("/home/images/answer/2.png") center center no-repeat;
+    background-size: 100% 100%;
+
+
+}
+.stop{
+    background: url("/home/images/answer/1.png") center center no-repeat;
+    background-size: 100% 100%;
+}
+.logo{
+    background: url("/home/images/answer/logo.png") center center no-repeat;
+    background-size: 100% 100%;
+    width:900px;
+    height:300px;
+    position:fixed;
+    top:150px;
+    left:500px;
+}
+.gift{
+    position:fixed;
+    top:450px;
+    right:60px;
+}
+.gift img{
+    width:500px;
+    height:500px;
+}
+.btn1{
+    background: url("/home/images/answer/GIF1.gif") center center no-repeat;
+    background-size: 100% 100%;
+    width: 217px;
+    height: 73px;
+    position:fixed;
+    bottom:300px;
+    left:850px;
+    text-align: center;
+    color:#ffffff;
+    line-height:73px;
+    font-size:26px;
+    font-family:"微软雅黑";
+    letter-spacing:2px;
+    display: block;
+}
+.btn2{
+    background: url("/home/images/answer/GIF1.gif") center center no-repeat;
+    background-size: 100% 100%;
+    width: 217px;
+    height: 73px;
+    position:fixed;
+    bottom:200px;
+    left:850px;
+    text-align: center;
+    color:#ffffff;
+    line-height:73px;
+    font-size:26px;
+    font-family:"微软雅黑";
+    letter-spacing:2px;
+    display: block;
+}
+#audio{
+    display: none;
+}
