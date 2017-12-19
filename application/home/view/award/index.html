@@ -127,25 +127,36 @@
             clip: rect(0, 0, 0, 0);
         }
         img.next{
-            width:10vw;
+            width:6vw;
             position: absolute;
-            right:10vw;
+            right:13vw;
             top:40vh;
         }
         img.previous{
-            width:10vw;
+            width:6vw;
             position: absolute;
-            left:10vw;
+            left:13vw;
             top:40vh;
             display: none;
         }
         .playmusic{
-            width:10vw;
+            width:8vw;
             position: absolute;
             left: 5vw;
             bottom:20vh;
-            height:10vw;
+            height:8vw;
             -webkit-tap-highlight-color:rgba(0,0,0,0);
+        }
+        .rotate{
+            -webkit-transform: rotate(360deg);
+            animation: rotation 3s linear infinite;
+            -moz-animation: rotation 3s linear infinite;
+            -webkit-animation: rotation 3s linear infinite;
+            -o-animation: rotation 3s linear infinite;
+        }
+        @-webkit-keyframes rotation{
+            from {-webkit-transform: rotate(0deg);}
+            to {-webkit-transform: rotate(360deg);}
         }
         .music{
             background:url("/home/images/award/music.png");
@@ -155,15 +166,80 @@
             background:url("/home/images/award/mute.png");
             background-size: 100% 100%;
         }
-
+        .submit,.goback{
+            position: relative;
+            margin:0 auto;
+            width:15vw;
+            height:10vh;
+            background: url("/home/images/award/start.gif");
+            background-size: 100% 100%;
+            display: none;
+            -webkit-tap-highlight-color:rgba(0,0,0,0);
+        }
+        .submit span,.goback span{
+            position: absolute;
+            color: #fff;
+            font-size: 24px;
+            width:10vw;
+            text-align: center;
+            left:2.5vw;
+            height:10vh;
+            line-height:10vh;
+        }
+        .goback{
+            display: block;
+            top:10vh;
+        }
+        .correct,.error{
+            display: none;
+        }
+        .correct-bg,.error-bg{
+            text-align: center;
+            height:50vh;
+            margin-top:15vh;
+            position: relative;
+        }
+        .correct-bg .correct-bg-img,.error-bg .error-bg-img{
+            width:40vw;
+            height:50vh;
+            position: absolute;
+            z-index: -1;
+            left:30vw;
+        }
+        .correct-bg-surprise,.error-bg-sad{
+            position: absolute;
+            left:50vw;
+            width: 10vw;
+            margin-left: -5vw;
+            top:10vh;
+        }
+        .correct-bg p,.error-bg p{
+            font-size:36px;
+            color: #e3093a;
+            position: absolute;
+            text-align: center;
+            width:40vw;
+            left:30vw;
+            bottom:10vh;
+        }
+        .error-bg p{
+            color: #e77401;
+        }
+        .correct-gif{
+            position: absolute;
+            left: 30vw;
+            top:-10vh;
+            /*right: 0;*/
+            width: 40vw;
+        }
     </style>
 </head>
 <body>
+<div class="question">
 <div class="question-bg">
     <img src="/home/images/award/question_bg.png">
     <div class="question-order"><span>1</span> / 6</div>
-
-
+    <div class="content">
     {volist name="question" id="vo" key="n"}
     <div class="question-content animated" data-tab="{$vo.value}">
     <p>{$vo.title}</p>
@@ -179,15 +255,46 @@
    {/volist}
     </div>
 {/volist}
+        </div>
     </div>
 <img src="/home/images/award/next.png" class="next">
 <img src="/home/images/award/previous.png" class="previous">
-<div class="playmusic music"></div>
+<div class="submit"><span>确认提交</span></div>
+</div>
+
+
+
+
+<div class="correct animated">
+    <div class="correct-bg">
+    <img src="/home/images/award/question_bg.png" class="correct-bg-img">
+    <img src="/home/images/award/surprise.png" class="correct-bg-surprise">
+    <p>恭喜您，答对6题！</p>
+    </div>
+    <img src="/home/images/award/correct.gif" class="correct-gif">
+    <div class="goback"><span>返回大厅</span></div>
+</div>
+
+
+<div class="error animated">
+    <div class="error-bg">
+        <img src="/home/images/award/question_bg.png" class="error-bg-img">
+        <img src="/home/images/award/sad.png" class="error-bg-sad">
+        <p>很遗憾，答对<span></span>题！</p>
+    </div>
+    <div class="goback"><span>返回大厅</span></div>
+</div>
+
+
+<div class="playmusic music rotate">
+    <audio src="/home/sass/fonts/award_bg.mp3" autoplay="true" loop="loop" id="audio"></audio>
+</div>
 </body>
 <script src="/static/js/jquery-2.2.1.min.js"></script>
 <script>
     $(function(){
-       $(".question-content").eq(0).show();
+        audio.play();
+        $(".question-content").eq(0).show();
     });
  $(".question-answer span:nth-child(2)").on("click",function(){
      var check = $(this).next().children("input").hasClass("checked");
@@ -200,16 +307,18 @@
  $(".answer-radio label").on("click",function(){
      var check = $(this).prev().hasClass("checked");
      if(!check){
-         $(this).parent().parent().find("input").removeClass("checked");
+         $(this).parent().parent().parent().find("input").removeClass("checked");
          $(this).prev().addClass("checked");
      }
- })
+ });
 
  $(".playmusic").on("click",function(){
     if($(this).hasClass("music")){
-        $(this).removeClass("music").addClass("mute");
+        $(this).removeClass("music").addClass("mute").removeClass("rotate");
+        audio.pause();
     }else{
-        $(this).removeClass("mute").addClass("music");
+        $(this).removeClass("mute").addClass("music").addClass("rotate");
+        audio.play();
     }
  });
 
@@ -222,9 +331,10 @@
         removeClass("fadeOutRight").removeClass("fadeInRight").removeClass("fadeOutLeft").show();
         $(".question-order span").text(order+1);
         if( $(".question-order span").text()==6){
+            $(".submit").show();
             $(".next").hide();
         }
-    })
+    });
 
     $(".previous").on("click",function(){
         var order = parseInt($(".question-order span").text());
@@ -237,6 +347,48 @@
         if( $(".question-order span").text()==1){
             $(".previous").hide();
         }
+    });
+
+    $(".submit").on("click",function(){
+        var answer = [];
+        var standard = [];
+        var arr = [];
+        $(".question-content").each(function(){
+            standard.push($(this).data("tab"));
+        });
+        for(i=0;i<$(".question-content").length;i++){
+        if($(".question-content").eq(i).find("input").hasClass("checked")){
+            $(".question-content").eq(i).find(".answer-radio input").each(function(index){
+                if($(this).hasClass("checked")){
+                    answer[i] = (parseInt(index)+1);
+                }
+            })
+          }else{
+            answer[i] = null;
+        }
+        }
+       if(JSON.stringify(answer) == JSON.stringify(standard)){
+           $(".question").addClass("bounceOut").hide();
+           $(".correct").addClass("bounceIn").show();
+       }else{
+           console.log(answer)
+           console.log(standard)
+          for(i=0;i<answer.length;i++){
+                  if(answer[i]==standard[i]){
+                      arr.push(answer[i]);
+                  }
+          }
+           $(".error-bg p span").text(arr.length);
+           $(".question").addClass("bounceOut").hide();
+           setTimeout(function(){
+               $(".error").addClass("bounceIn").show();
+           },300)
+       }
+
+    });
+
+    $(".goback").on("click",function(){
+        window.location.href="/home/award/answer.html"
     })
 
 
