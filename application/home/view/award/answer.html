@@ -7,16 +7,12 @@
 {block name="body"}
 <div class="main">
     <!--音乐按钮-->
-    <div class="musicBtn music"></div>
-    <audio src="/home/images/answer/59aaaa2984643.mp3" controls="controls" autoplay="autoplay" loop="loop" id="audio"></audio>
+    <div class="musicBtn music rotate"></div>
+    <audio src="/home/sass/fonts/award_bg.mp3" controls="controls" autoplay="autoplay" loop="loop" id="audio"></audio>
     <!--文字logo-->
     <div class="logo"></div>
-    <!--礼品gif-->
-
     <!--开始游戏按钮-->
     <a href="{:Url('Award/index')}" class="btn1">开始游戏</a>
-    <!--返回大厅按钮-->
-    <a href="#" class="btn2">返回大厅</a>
 </div>
 {/block}
 {block name="script"}
@@ -24,10 +20,10 @@
     var audio = document.getElementById("audio");
     $(".musicBtn").on("click",function(){
         if($(this).hasClass("music")){
-            $(this).removeClass("music").addClass("stop");
+            $(this).removeClass("music").addClass("stop").removeClass("rotate");
             audio.pause();
         }else{
-            $(this).removeClass("stop").addClass("music");
+            $(this).removeClass("stop").addClass("music").addClass("rotate");
             audio.play();
         }
     });

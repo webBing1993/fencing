@@ -35,7 +35,7 @@
     width: 300px;
     height: 100px;
     position:absolute;
-    bottom:300px;
+    bottom:200px;
     left:44vw;
     text-align: center;
     color:#ffffff;
@@ -45,21 +45,16 @@
     letter-spacing:2px;
     display: block;
 }
-.btn2{
-    background: url("/home/images/answer/GIF1.gif") center center no-repeat;
-    background-size: 100% 100%;
-    width: 300px;
-    height: 100px;
-    position:absolute;
-    bottom:160px;
-    left:44vw;
-    text-align: center;
-    color:#ffffff;
-    line-height:100px;
-    font-size:26px;
-    font-family:"微软雅黑";
-    letter-spacing:2px;
-    display: block;
+.rotate{
+    -webkit-transform: rotate(360deg);
+    animation: rotation 3s linear infinite;
+    -moz-animation: rotation 3s linear infinite;
+    -webkit-animation: rotation 3s linear infinite;
+    -o-animation: rotation 3s linear infinite;
+}
+@-webkit-keyframes rotation{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
 }
 #audio{
     display: none;
