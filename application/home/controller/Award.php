@@ -41,6 +41,7 @@ class Award extends Controller
      */
     public function answer()
     {
+       
         return $this->fetch();
     }
 }

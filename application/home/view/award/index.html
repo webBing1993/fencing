@@ -382,7 +382,21 @@
                     <span>{$value|substr=###,'2'}</span>
                 </div>
                 {/volist}
-                <div class="correctly">正确答案：<span>{$vo.value}</span></div>
+                {if condition="($vo['value'] == 1)"}
+                <div class="correctly">正确答案：<span>A</span></div>
+                {else /}
+                {if condition="($vo['value'] == 2)"}
+                <div class="correctly">正确答案：<span>B</span></div>
+                {else /}
+                {if condition="($vo['value'] == 3)"}
+                <div class="correctly">正确答案：<span>C</span></div>
+                {else /}
+                <div class="correctly">正确答案：<span>D</span></div>
+                {/if}
+                {/if}
+                {/if}
+
+
             </div>
             {/volist}
         </div>
