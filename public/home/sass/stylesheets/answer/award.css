@@ -84,8 +84,6 @@ body{
     line-height:5vh;
     font-size: 24px;
     margin-top: 10px;
-}
-.correctly span{
     color: #f00;
 }
 .question-content p,.detail-content p{

@@ -18,6 +18,7 @@ return [
 
     /* 默认模块和控制器 */
     'default_module' => 'home',
+    'app_debug' => false,
 
     /* URL配置 */
     'base_url'=>'',
