@@ -227,10 +227,53 @@
     }
     .correct-gif{
         position: absolute;
-        left: 30vw;
+        left: 28vw;
         top:-10vh;
         /*right: 0;*/
         width: 40vw;
+    }
+    #container{
+        position: absolute;
+        width:60vw;
+        left:30vw;
+    }
+
+    #leafContainer > div
+    {
+        position: absolute;
+        /*width: 100px;*/
+        /*height: 100px;*/
+        -webkit-animation-iteration-count: infinite, infinite;
+        -webkit-animation-direction: normal, normal;
+        -webkit-animation-timing-function: linear, ease-in;
+    }
+    #leafContainer > div > img {
+        position: absolute;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: alternate;
+        -webkit-animation-timing-function: ease-in-out;
+        -webkit-transform-origin: 50% -100%;
+    }
+    @-webkit-keyframes fade
+    {
+        0%   { opacity: 1; }
+        80%  { opacity: 0; }
+        100% { opacity: 0; }
+    }
+    @-webkit-keyframes drop
+    {
+        0%   { -webkit-transform: translate(0px, -50px); }
+        100% { -webkit-transform: translate(0px, 650px); }
+    }
+    @-webkit-keyframes clockwiseSpin
+    {
+        0%   { -webkit-transform: rotate(-50deg); }
+        100% { -webkit-transform: rotate(50deg); }
+    }
+    @-webkit-keyframes counterclockwiseSpinAndFlip
+    {
+        0%   { -webkit-transform: scale(-1, 1) rotate(50deg); }
+        100% { -webkit-transform: scale(-1, 1) rotate(-50deg); }
     }
 </style>
 </head>
@@ -277,6 +320,9 @@
 
 
 <div class="error animated">
+    <div id="container">
+        <div id="leafContainer"></div>
+    </div>
     <div class="error-bg">
         <img src="/home/images/award/question_bg.png" class="error-bg-img">
         <img src="/home/images/award/sad.png" class="error-bg-sad">
@@ -288,15 +334,37 @@
 
 <div class="playmusic music rotate">
     <audio src="/home/sass/fonts/award_bg.mp3" autoplay="true" loop="loop" id="audio"></audio>
+    <div path="/home/sass/fonts/award_bg.mp3" id="path"></div>
+    <div path="/home/sass/fonts/fail.wav" id="path2"></div>
+    <div path="/home/sass/fonts/victory.mp3" id="path3"></div>
 </div>
 </body>
 <script src="/static/js/jquery-2.2.1.min.js"></script>
+<script src="/home/js/leaves.js"></script>
 <script>
     $(function(){
         audio.play();
         $(".question-content").eq(0).show();
     });
  $(".question-answer span:nth-child(2)").on("click",function(){
+     var order = parseInt($(".question-order span").text());
+     $(".question-content").eq(order-1).addClass("fadeOutRight").
+     removeClass("fadeInLeft").removeClass("fadeInRight").removeClass("fadeOutLeft");
+     $(".previous").show();
+     $(".question-content").eq(order).addClass("fadeInLeft").
+     removeClass("fadeOutRight").removeClass("fadeInRight").removeClass("fadeOutLeft").show();
+     $(".question-order span").text(order+1);
+     if( $(".question-order span").text()==6){
+//         $(".question-content").eq(order-1).removeClass("fadeOutRight");
+//         $(".question-content").eq(order).removeClass("fadeInLeft");
+         $(".submit").show();
+         $(".next").hide();
+     }
+     if( $(".question-order span").text()==7){
+         $(".question-order span").text(6)
+         $(".question-content").eq(order-1).removeClass("fadeOutRight");
+         $(".question-content").eq(order).removeClass("fadeInLeft");
+     }
      var check = $(this).next().children("input").hasClass("checked");
      if(!check){
          $(this).parent().parent().find("input").removeClass("checked");
@@ -305,6 +373,22 @@
  });
 
  $(".answer-radio label").on("click",function(){
+     var order = parseInt($(".question-order span").text());
+     $(".question-content").eq(order-1).addClass("fadeOutRight").
+     removeClass("fadeInLeft").removeClass("fadeInRight").removeClass("fadeOutLeft");
+     $(".previous").show();
+     $(".question-content").eq(order).addClass("fadeInLeft").
+     removeClass("fadeOutRight").removeClass("fadeInRight").removeClass("fadeOutLeft").show();
+     $(".question-order span").text(order+1);
+     if( $(".question-order span").text()==6){
+         $(".submit").show();
+         $(".next").hide();
+     }
+     if( $(".question-order span").text()==7){
+         $(".question-order span").text(6)
+         $(".question-content").eq(order-1).removeClass("fadeOutRight");
+         $(".question-content").eq(order).removeClass("fadeInLeft");
+     }
      var check = $(this).prev().hasClass("checked");
      if(!check){
          $(this).parent().parent().parent().find("input").removeClass("checked");
@@ -370,9 +454,17 @@
        if(JSON.stringify(answer) == JSON.stringify(standard)){
            $(".question").addClass("bounceOut").hide();
            $(".correct").addClass("bounceIn").show();
+        audio.pause();
+        var luyinpath = $("#path3").attr('path');
+        $("#audio").attr('src', luyinpath);
+        audio.play();
+        setTimeout(function(){
+            audio.pause();
+            var luyinpath = $("#path").attr('path');
+            $("#audio").attr('src', luyinpath);
+            audio.play();
+        },4000)
        }else{
-           console.log(answer)
-           console.log(standard)
           for(i=0;i<answer.length;i++){
                   if(answer[i]==standard[i]){
                       arr.push(answer[i]);
@@ -382,6 +474,16 @@
            $(".question").addClass("bounceOut").hide();
            setTimeout(function(){
                $(".error").addClass("bounceIn").show();
+               audio.pause();
+               var luyinpath = $("#path2").attr('path');
+               $("#audio").attr('src', luyinpath);
+               audio.play();
+               setTimeout(function(){
+                   audio.pause();
+                   var luyinpath = $("#path").attr('path');
+                   $("#audio").attr('src', luyinpath);
+                   audio.play();
+               },3500)
            },300)
        }
 
