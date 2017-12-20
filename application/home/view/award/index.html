@@ -186,7 +186,7 @@
     $(".previous").on("click",function(){
         var order = parseInt($(".question-order span").text());
         $(".question-content").eq(order-1).addClass("fadeOutLeft").
-        removeClass("fadeInRight").removeClass("fadeOutRight").removeClass("fadeInLeft");
+        removeClass("fadeInRight").removeClass("fadeOutRight").removeClass("fadeInLeft").hide();
         $(".next").show();
         $(".question-content").eq(order-2).addClass("fadeInRight").
         removeClass("fadeOutLeft").removeClass("fadeOutRight").removeClass("fadeInLeft");
@@ -269,5 +269,7 @@
         $(".error").addClass("bounceOut").hide();
         $(".answerdetail").addClass("bounceIn").show();
     })
+
+
 </script>
 </html>
