@@ -1,0 +1,307 @@
+html{
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+body{
+    background: url(/home/images/award/redflag.gif) center center no-repeat;
+    background-size: 105% 100%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.question-bg{
+    text-align: center;
+    height:70vh;
+    margin-top:15vh;
+}
+.answerdetail{
+    display: none;
+}
+.answerdetail-bg{
+    text-align: center;
+    height: 62vh;
+    margin-top: 15vh;
+    overflow-y: scroll;
+    width: 100vw;
+}
+.question-bg img{
+    width:60vw;
+    height:70vh;
+    position: absolute;
+    z-index: -1;
+    left:20vw;
+    top:10vh;
+
+}
+.answerdetail-bg img{
+    top:-5vh;
+}
+.question-order{
+    /*position: absolute;*/
+    /*top:5vh;*/
+    /*left:50vw;*/
+    position: relative;
+    margin: 50px auto;
+    top: 20px;
+    width:15vw;
+    /*margin-left: -10vw;*/
+    font-size: 30px;
+    color: #fff;
+    border-radius: 30px;
+    height:5vh;
+    line-height:5vh;
+    background-image:-webkit-linear-gradient(to top, #97461a,#fbd8c5 10%,#97461a);
+    background-image:linear-gradient(to top,#97461a, #fbd8c5,#97461a);
+}
+.question-content{
+    display: inline-block;
+    width: 50vw;
+    text-align: center;
+    margin: 0 auto;
+    display: none;
+    position: absolute;
+    left:25vw;
+}
+.detail-content{
+    display: inline-block;
+    width: 50vw;
+    text-align: center;
+    margin: 0 auto;
+    position: absolute;
+    left:25vw;
+    display: block;
+    position: static;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.detail-content:first-child{
+    margin-top: 0;
+}
+.correctly{
+    text-align: left;
+    height:5vh;
+    line-height:5vh;
+    font-size: 24px;
+    margin-top: 10px;
+}
+.correctly span{
+    color: #f00;
+}
+.question-content p,.detail-content p{
+    font-size:28px;
+    line-height:1.5;
+    text-align: left;
+    margin: 0 auto;
+    word-break: break-all;
+}
+.question-answer{
+    font-size:24px;
+    margin: 0 auto;
+    text-align: left;
+    word-break: break-all;
+    display: flex;
+    border-radius: 10px;
+    background: #f2d7b0;
+    margin-top: 20px;
+}
+.question-answer span:nth-child(1){
+    padding: 0 10px;
+    display: flex;
+    background: #a56330;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    align-items: center;
+    color: #fff;
+
+}
+.question-answer span:nth-child(2){
+    display: flex;
+    flex:2;
+    padding:10px;
+    cursor: pointer;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.answer-radio{
+    display: flex;
+    align-items: center;
+}
+.answer-radio label{
+    line-height:20px;
+    cursor: pointer;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+input[type="radio"] + label::before {
+    content: "\a0"; /*不换行空格*/
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    margin-right: .4em;
+    border-radius: 50%;
+    border: 1px solid #0da3ce;
+}
+input[type="radio"].checked + label::before {
+    background-color: #0da3ce;
+    background-clip: content-box;
+    height: 10px;
+    width: 10px;
+    padding: 5px;
+}
+input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+img.next{
+    width:6vw;
+    position: absolute;
+    right:13vw;
+    top:40vh;
+}
+img.previous{
+    width:6vw;
+    position: absolute;
+    left:13vw;
+    top:40vh;
+    display: none;
+}
+.playmusic{
+    width:8vw;
+    position: absolute;
+    left: 5vw;
+    bottom:20vh;
+    height:8vw;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.rotate{
+    -webkit-transform: rotate(360deg);
+    animation: rotation 3s linear infinite;
+    -moz-animation: rotation 3s linear infinite;
+    -webkit-animation: rotation 3s linear infinite;
+    -o-animation: rotation 3s linear infinite;
+}
+@-webkit-keyframes rotation{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+}
+.music{
+    background:url("/home/images/award/music.png");
+    background-size: 100% 100%;
+}
+.mute{
+    background:url("/home/images/award/mute.png");
+    background-size: 100% 100%;
+}
+.submit,.goback,.detail{
+    position: relative;
+    margin:0 auto;
+    width:15vw;
+    height:10vh;
+    background: url("/home/images/award/start.gif");
+    background-size: 100% 100%;
+    display: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.submit span,.goback span,.detail span{
+    position: absolute;
+    color: #fff;
+    font-size: 24px;
+    width:10vw;
+    text-align: center;
+    left:2.5vw;
+    height:10vh;
+    line-height:10vh;
+}
+.goback,.detail{
+    display: block;
+    top:8vh;
+}
+.detail{
+    top:5vh;
+}
+.correct,.error{
+    display: none;
+}
+.correct-bg,.error-bg{
+    text-align: center;
+    height:50vh;
+    margin-top:15vh;
+    position: relative;
+}
+.correct-bg .correct-bg-img,.error-bg .error-bg-img{
+    width:40vw;
+    height:50vh;
+    position: absolute;
+    z-index: -1;
+    left:30vw;
+}
+.correct-bg-surprise,.error-bg-sad{
+    position: absolute;
+    left:50vw;
+    width: 10vw;
+    margin-left: -5vw;
+    top:10vh;
+}
+.correct-bg p,.error-bg p{
+    font-size:36px;
+    color: #e3093a;
+    position: absolute;
+    text-align: center;
+    width:40vw;
+    left:30vw;
+    bottom:10vh;
+}
+.error-bg p{
+    color: #e77401;
+}
+.correct-gif{
+    position: absolute;
+    left: 28vw;
+    top:-10vh;
+    /*right: 0;*/
+    width: 40vw;
+}
+#container{
+    position: absolute;
+    width:60vw;
+    left:30vw;
+}
+
+#leafContainer > div
+{
+    position: absolute;
+    /*width: 100px;*/
+    /*height: 100px;*/
+    -webkit-animation-iteration-count: infinite, infinite;
+    -webkit-animation-direction: normal, normal;
+    -webkit-animation-timing-function: linear, ease-in;
+}
+#leafContainer > div > img {
+    position: absolute;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-transform-origin: 50% -100%;
+}
+@-webkit-keyframes fade
+{
+    0%   { opacity: 1; }
+    80%  { opacity: 0; }
+    100% { opacity: 0; }
+}
+@-webkit-keyframes drop
+{
+    0%   { -webkit-transform: translate(0px, -50px); }
+    100% { -webkit-transform: translate(0px, 650px); }
+}
+@-webkit-keyframes clockwiseSpin
+{
+    0%   { -webkit-transform: rotate(-50deg); }
+    100% { -webkit-transform: rotate(50deg); }
+}
+@-webkit-keyframes counterclockwiseSpinAndFlip
+{
+    0%   { -webkit-transform: scale(-1, 1) rotate(50deg); }
+    100% { -webkit-transform: scale(-1, 1) rotate(-50deg); }
+}
