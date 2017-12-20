@@ -74,6 +74,12 @@
         left:25vw;
     }
     .detail-content{
+        display: inline-block;
+        width: 50vw;
+        text-align: center;
+        margin: 0 auto;
+        position: absolute;
+        left:25vw;
         display: block;
         position: static;
         margin-top: 50px;
@@ -92,7 +98,7 @@
     .correctly span{
         color: #f00;
     }
-    .question-content p{
+    .question-content p,.detail-content p{
         font-size:28px;
         line-height:1.5;
         text-align: left;
@@ -369,7 +375,7 @@
         <img src="/home/images/award/question_bg.png">
         <div class="content">
             {volist name="question" id="vo" key="n"}
-            <div class="question-content detail-content">
+            <div class="detail-content">
                 <p>{$vo.title}</p>
                 {volist name="vo->Option" id="value" key="k"}
                 <div class="question-answer">
@@ -522,11 +528,14 @@
             audio.play();
         },4000)
        }else{
+           console.log(answer)
+           console.log(standard)
           for(i=0;i<answer.length;i++){
                   if(answer[i]==standard[i]){
                       arr.push(answer[i]);
                   }
           }
+           console.log(arr.length)
            $(".error-bg p span").text(arr.length);
            $(".question").addClass("bounceOut").hide();
            setTimeout(function(){
