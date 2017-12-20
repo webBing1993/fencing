@@ -412,6 +412,7 @@
 <script src="/static/js/jquery-2.2.1.min.js"></script>
 <script src="/home/js/leaves.js"></script>
 <script>
+    var answer = [];
     $(function(){
         audio.play();
         $(".question-content").eq(0).show();
@@ -504,7 +505,6 @@
     });
 
     $(".submit").on("click",function(){
-        var answer = [];
         var standard = [];
         var arr = [];
         $(".question-content").each(function(){
@@ -567,6 +567,12 @@
     })
 
     $(".detail").on("click",function(){
+        console.log(answer)
+        for(i=0;i<answer.length;i++) {
+            if (answer[i]!=null) {
+                $(".detail-content").eq(i).find(".question-answer").eq(answer[i]-1).css("background", "#ccc");
+            }
+        }
         $(".question").addClass("bounceOut").hide();
         $(".error").addClass("bounceOut").hide();
         $(".answerdetail").addClass("bounceIn").show();
