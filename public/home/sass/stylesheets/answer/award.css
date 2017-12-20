@@ -261,6 +261,7 @@ img.previous{
     top:-10vh;
     /*right: 0;*/
     width: 40vw;
+    z-index: -1;
 }
 #container{
     position: absolute;
