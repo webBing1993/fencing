@@ -10,7 +10,15 @@
     <div class="musicBtn music rotate"></div>
     <audio src="/home/sass/fonts/award_bg.mp3" autoplay="autoplay" loop="loop" id="audio"></audio>
     <!--文字logo-->
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="/home/images/award/1.png" class="img1">
+     <img src="/home/images/award/2.png">
+      <img src="/home/images/award/3.png">
+      <img src="/home/images/award/4.png">
+      <img src="/home/images/award/5.png">
+      <img src="/home/images/award/7.png">
+      <img src="/home/images/award/6.png">
+    </div>
     <!--开始游戏按钮-->
     <a href="{:Url('Award/index')}" class="btn1">开始游戏</a>
 </div>
@@ -27,5 +35,25 @@
             audio.play();
         }
     });
+/*    var oImg = document.querySelector('.img1');
+    oImg.addEventListener("webkitAnimationIteration", function(){ //动画重复运动时的事件
+       setInterval(function(){
+      /!*  oImg.style.top= 400+"px";
+        oImg.style.left= 50+"px";*!/
+       },5000)
+    }, false);*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 {/block}

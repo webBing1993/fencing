@@ -21,13 +21,71 @@
     background-size: 100% 100%;
 }
 .logo{
-    background: url("/home/images/answer/logo.png") center center no-repeat;
-    background-size: 100% 100%;
     width:65vw;
     height:16vw;
     position:absolute;
     top:5vw;
     left:18vw;
+}
+.logo img{
+    position:absolute;
+    top:-300px;
+}
+.logo img:nth-child(1) {
+    animation:mymove 10s  infinite;
+    -webkit-animation:mymove 10s  infinite; /* Safari 和 Chrome */
+}
+@-webkit-keyframes mymove{
+    0%   { -webkit-transform: translate(50px,-500px); }
+    100% { -webkit-transform: translate(50px,500px); }
+}
+.logo img:nth-child(2) {
+    animation:mymove1 10s infinite;
+    -webkit-animation:mymove1 10s infinite; /* Safari 和 Chrome */
+}
+@-webkit-keyframes mymove1{
+    0%   { -webkit-transform: translate(220px,-450px); }
+    100% { -webkit-transform: translate(220px,450px); }
+}
+.logo img:nth-child(3) {
+    animation:mymove2 10s infinite;
+    -webkit-animation:mymove2 10s infinite; /* Safari 和 Chrome */
+}
+@-webkit-keyframes mymove2{
+    0%   { -webkit-transform: translate(390px,-400px); }
+    100% { -webkit-transform: translate(390px,400px); }
+}
+.logo img:nth-child(4) {
+    animation:mymove3 10s infinite;
+    -webkit-animation:mymove3 10s infinite; /* Safari 和 Chrome */
+}
+@-webkit-keyframes mymove3{
+    0%   { -webkit-transform: translate(560px,-350px); }
+    100% { -webkit-transform: translate(560px,350px); }
+}
+.logo img:nth-child(5) {
+    animation:mymove4 10s infinite;
+    -webkit-animation:mymove4 10s infinite; /* Safari 和 Chrome */
+}
+@-webkit-keyframes mymove4{
+    0%   { -webkit-transform: translate(730px,-400px); }
+    100% { -webkit-transform: translate(730px,400px); }
+}
+.logo img:nth-child(6) {
+    animation:mymove5 10s infinite;
+    -webkit-animation:mymove5 10s infinite; /* Safari 和 Chrome */
+}
+@-webkit-keyframes mymove5{
+    0%   { -webkit-transform: translate(900px,-450px); }
+    100% { -webkit-transform: translate(900px,450px); }
+}
+.logo img:nth-child(7) {
+    animation:mymove6 10s infinite;
+    -webkit-animation:mymove6 10s infinite; /* Safari 和 Chrome */
+}
+@-webkit-keyframes mymove6{
+    0%   { -webkit-transform: translate(1050px,-500px); }
+    100% { -webkit-transform: translate(1050px,500px); }
 }
 .btn1{
     background: url("/home/images/answer/GIF1.gif") center center no-repeat;
