@@ -172,7 +172,7 @@
     $(".next").on("click",function(){
         var order = parseInt($(".question-order span").text());
         $(".question-content").eq(order-1).addClass("fadeOutRight").
-        removeClass("fadeInLeft").removeClass("fadeInRight").removeClass("fadeOutLeft");
+        removeClass("fadeInLeft").removeClass("fadeInRight").removeClass("fadeOutLeft").hide();
         $(".previous").show();
         $(".question-content").eq(order).addClass("fadeInLeft").
         removeClass("fadeOutRight").removeClass("fadeInRight").removeClass("fadeOutLeft").show();
@@ -189,7 +189,7 @@
         removeClass("fadeInRight").removeClass("fadeOutRight").removeClass("fadeInLeft").hide();
         $(".next").show();
         $(".question-content").eq(order-2).addClass("fadeInRight").
-        removeClass("fadeOutLeft").removeClass("fadeOutRight").removeClass("fadeInLeft");
+        removeClass("fadeOutLeft").removeClass("fadeOutRight").removeClass("fadeInLeft").show();
         $(".question-order span").text(order-1);
         if( $(".question-order span").text()==1){
             $(".previous").hide();
