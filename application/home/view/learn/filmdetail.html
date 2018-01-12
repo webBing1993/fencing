@@ -13,7 +13,12 @@
 	}
 	.content .video{
 		text-align: center;
+        height: 50vw;
 	}
+    .content .video iframe {
+        width: 100%;
+        height: 100%;
+    }
 </style>
 {/block}
 {block name="body"}
@@ -259,6 +264,24 @@
         }
         $(".lists" ).append(html);
     }
+    $(function(){
+        pushHistory();
+        window.addEventListener("popstate", function(e) {
+            $("iframe").remove();
+            setTimeout(function () {
+                window.history.go(-1);
+            },100);
+        }, false);
+        function pushHistory() {
+            var sta = {
+                title: "title"
+            };
+            if( window.history.state === null )
+            {
+                window.history.pushState( sta, "title" );
+            }
+        }
+    });
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
