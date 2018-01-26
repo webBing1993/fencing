@@ -4,560 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b702ff38c872f10d74cd985277d2a2f1",
+    "content-hash": "16ca36f47ceb6e0fa13ef8f97723741a",
     "packages": [
-        {
-            "name": "endroid/qrcode",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/endroid/QrCode.git",
-                "reference": "7f73b6a35f4302698fe78a94bf76cd3f36bc9b03"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/endroid/QrCode/7f73b6a35f4302698fe78a94bf76cd3f36bc9b03.zip",
-                "reference": "7f73b6a35f4302698fe78a94bf76cd3f36bc9b03",
-                "shasum": ""
-            },
-            "require": {
-                "ext-gd": "*",
-                "php": ">=5.4",
-                "symfony/options-resolver": "^2.3|^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0|^5.0",
-                "sensio/framework-extra-bundle": "^3.0",
-                "symfony/browser-kit": "^2.3|^3.0",
-                "symfony/framework-bundle": "^2.3|^3.0",
-                "symfony/http-kernel": "^2.3|^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Endroid\\QrCode\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeroen van den Enden",
-                    "email": "info@endroid.nl",
-                    "homepage": "http://endroid.nl/"
-                }
-            ],
-            "description": "Endroid QR Code",
-            "homepage": "https://github.com/endroid/QrCode",
-            "keywords": [
-                "bundle",
-                "code",
-                "endroid",
-                "qr",
-                "qrcode",
-                "symfony"
-            ],
-            "time": "2017-01-05 15:27:10"
-        },
-        {
-            "name": "jeremeamia/SuperClosure",
-            "version": "2.2.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jeremeamia/super_closure.git",
-                "reference": "29a88be2a4846d27c1613aed0c9071dfad7b5938"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/jeremeamia/super_closure/29a88be2a4846d27c1613aed0c9071dfad7b5938.zip",
-                "reference": "29a88be2a4846d27c1613aed0c9071dfad7b5938",
-                "shasum": ""
-            },
-            "require": {
-                "nikic/php-parser": "^1.2|^2.0",
-                "php": ">=5.4",
-                "symfony/polyfill-php56": "^1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SuperClosure\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Lindblom",
-                    "email": "jeremeamia@gmail.com",
-                    "homepage": "https://github.com/jeremeamia",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Serialize Closure objects, including their context and binding",
-            "homepage": "https://github.com/jeremeamia/super_closure",
-            "keywords": [
-                "closure",
-                "function",
-                "lambda",
-                "parser",
-                "serializable",
-                "serialize",
-                "tokenizer"
-            ],
-            "time": "2015-12-05 17:17:57"
-        },
-        {
-            "name": "nikic/php-parser",
-            "version": "2.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/nikic/PHP-Parser/4dd659edadffdc2143e4753df655d866dbfeedf0.zip",
-                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0",
-                "shasum": ""
-            },
-            "require": {
-                "ext-tokenizer": "*",
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "bin": [
-                "bin/php-parse"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PhpParser\\": "lib/PhpParser"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nikita Popov"
-                }
-            ],
-            "description": "A PHP parser written in PHP",
-            "keywords": [
-                "parser",
-                "php"
-            ],
-            "time": "2016-09-16 12:04:44"
-        },
-        {
-            "name": "phpmailer/phpmailer",
-            "version": "v5.2.22",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/PHPMailer/PHPMailer/b18cb98131bd83103ccb26a888fdfe3177b8a663.zip",
-                "reference": "b18cb98131bd83103ccb26a888fdfe3177b8a663",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.0.0"
-            },
-            "require-dev": {
-                "phpdocumentor/phpdocumentor": "*",
-                "phpunit/phpunit": "4.7.*"
-            },
-            "suggest": {
-                "league/oauth2-google": "Needed for Google XOAUTH2 authentication"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "class.phpmailer.php",
-                    "class.phpmaileroauth.php",
-                    "class.phpmaileroauthgoogle.php",
-                    "class.smtp.php",
-                    "class.pop3.php",
-                    "extras/EasyPeasyICS.php",
-                    "extras/ntlm_sasl_client.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
-                },
-                {
-                    "name": "Marcus Bointon",
-                    "email": "phpmailer@synchromedia.co.uk"
-                },
-                {
-                    "name": "Andy Prevost",
-                    "email": "codeworxtech@users.sourceforge.net"
-                },
-                {
-                    "name": "Brent R. Matzelle"
-                }
-            ],
-            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2017-01-09 09:33:47"
-        },
-        {
-            "name": "qiniu/php-sdk",
-            "version": "v7.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/qiniu/php-sdk.git",
-                "reference": "b91653485e36b4797d7a302cc86c49695e47a642"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/qiniu/php-sdk/b91653485e36b4797d7a302cc86c49695e47a642.zip",
-                "reference": "b91653485e36b4797d7a302cc86c49695e47a642",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~2.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Qiniu\\": "src/Qiniu"
-                },
-                "files": [
-                    "src/Qiniu/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Qiniu",
-                    "email": "sdk@qiniu.com",
-                    "homepage": "http://www.qiniu.com"
-                }
-            ],
-            "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
-            "homepage": "http://developer.qiniu.com/",
-            "keywords": [
-                "cloud",
-                "qiniu",
-                "sdk",
-                "storage"
-            ],
-            "time": "2016-11-18 02:57:31"
-        },
-        {
-            "name": "symfony/options-resolver",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "559967e87725ee85d8d8f6ff42c03d9275757699"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/options-resolver/559967e87725ee85d8d8f6ff42c03d9275757699.zip",
-                "reference": "559967e87725ee85d8d8f6ff42c03d9275757699",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\OptionsResolver\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony OptionsResolver Component",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "config",
-                "configuration",
-                "options"
-            ],
-            "time": "2017-02-21 10:07:34"
-        },
-        {
-            "name": "symfony/polyfill-php56",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php56.git",
-                "reference": "1dd42b9b89556f18092f3d1ada22cb05ac85383c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/polyfill-php56/1dd42b9b89556f18092f3d1ada22cb05ac85383c.zip",
-                "reference": "1dd42b9b89556f18092f3d1ada22cb05ac85383c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "symfony/polyfill-util": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php56\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 5.6+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2016-11-14 01:06:16"
-        },
-        {
-            "name": "symfony/polyfill-util",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-util.git",
-                "reference": "746bce0fca664ac0a575e465f65c6643faddf7fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/polyfill-util/746bce0fca664ac0a575e465f65c6643faddf7fb.zip",
-                "reference": "746bce0fca664ac0a575e465f65c6643faddf7fb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Util\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony utilities for portability of PHP codes",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compat",
-                "compatibility",
-                "polyfill",
-                "shim"
-            ],
-            "time": "2016-11-14 01:06:16"
-        },
-        {
-            "name": "toplan/phpsms",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/toplan/phpsms.git",
-                "reference": "6080f5d4ab6f1599938358896fabdcd2da655a91"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/toplan/phpsms/6080f5d4ab6f1599938358896fabdcd2da655a91.zip",
-                "reference": "6080f5d4ab6f1599938358896fabdcd2da655a91",
-                "shasum": ""
-            },
-            "require": {
-                "jeremeamia/superclosure": "~2.2.0",
-                "php": ">=5.4.0",
-                "toplan/task-balancer": ">=0.4.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Toplan\\PhpSms\\": [
-                        "src/phpsms/",
-                        "src/phpsms/agents/"
-                    ],
-                    "Toplan\\PhpSms\\Facades\\": [
-                        "src/phpsms/facades/"
-                    ]
-                },
-                "classmap": [
-                    "src/phpsms/lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "toplan",
-                    "email": "toplan710@gmail.com"
-                }
-            ],
-            "description": "sms send library for php, support the main SMS service provider.",
-            "keywords": [
-                "php sms",
-                "phpsms",
-                "sms",
-                "sms library for php"
-            ],
-            "time": "2016-07-21 02:24:11"
-        },
-        {
-            "name": "toplan/task-balancer",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/toplan/task-balancer.git",
-                "reference": "f2600191e37915730ced9dc00c5846b9a6ce052c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/toplan/task-balancer/f2600191e37915730ced9dc00c5846b9a6ce052c.zip",
-                "reference": "f2600191e37915730ced9dc00c5846b9a6ce052c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Toplan\\TaskBalance\\": "src/TaskBalancer/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "toplan",
-                    "email": "toplan710@gmail.com"
-                }
-            ],
-            "description": "lightweight and powerful task load balancing for php (like the nginx load balancing)",
-            "keywords": [
-                "balance",
-                "balancer",
-                "load balancing",
-                "task"
-            ],
-            "time": "2017-02-20 03:48:50"
-        },
         {
             "name": "topthink/framework",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "45d3957aa431915144f433a40e55457b6d427f72"
+                "reference": "b72caee28beec82a522e048805648c887fb97ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/framework/45d3957aa431915144f433a40e55457b6d427f72.zip",
-                "reference": "45d3957aa431915144f433a40e55457b6d427f72",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/b72caee28beec82a522e048805648c887fb97ec5",
+                "reference": "b72caee28beec82a522e048805648c887fb97ec5",
                 "shasum": ""
             },
             "require": {
@@ -595,7 +55,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2017-03-03 14:38:12"
+            "time": "2018-01-24T11:19:17+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -607,7 +67,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-captcha/9572406f5ed6637f0e12f6106514d488e2cc1a43.zip",
+                "url": "https://api.github.com/repos/top-think/think-captcha/zipball/9572406f5ed6637f0e12f6106514d488e2cc1a43",
                 "reference": "9572406f5ed6637f0e12f6106514d488e2cc1a43",
                 "shasum": ""
             },
@@ -631,7 +91,7 @@
                 }
             ],
             "description": "captcha package for thinkphp5",
-            "time": "2016-12-28 08:22:04"
+            "time": "2016-12-28T08:22:04+00:00"
         },
         {
             "name": "topthink/think-helper",
@@ -639,12 +99,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-helper.git",
-                "reference": "ed64408cdc4cdbd390365ba0906d208b987af520"
+                "reference": "51244bebd189d0e0199ed67cb07b039608ad5687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-helper/ed64408cdc4cdbd390365ba0906d208b987af520.zip",
-                "reference": "ed64408cdc4cdbd390365ba0906d208b987af520",
+                "url": "https://api.github.com/repos/top-think/think-helper/zipball/51244bebd189d0e0199ed67cb07b039608ad5687",
+                "reference": "51244bebd189d0e0199ed67cb07b039608ad5687",
                 "shasum": ""
             },
             "type": "library",
@@ -667,7 +127,7 @@
                 }
             ],
             "description": "The ThinkPHP5 Helper Package",
-            "time": "2016-12-01 07:08:40"
+            "time": "2017-04-05T09:03:40+00:00"
         },
         {
             "name": "topthink/think-image",
@@ -675,12 +135,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-image.git",
-                "reference": "3f3cc4923f07edd59ee79fd82b39e3b2a49618cb"
+                "reference": "87c2946a0e0f45cc438462415ced38a0799847ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-image/3f3cc4923f07edd59ee79fd82b39e3b2a49618cb.zip",
-                "reference": "3f3cc4923f07edd59ee79fd82b39e3b2a49618cb",
+                "url": "https://api.github.com/repos/top-think/think-image/zipball/87c2946a0e0f45cc438462415ced38a0799847ef",
+                "reference": "87c2946a0e0f45cc438462415ced38a0799847ef",
                 "shasum": ""
             },
             "require": {
@@ -707,20 +167,20 @@
                 }
             ],
             "description": "The ThinkPHP5 Image Package",
-            "time": "2016-12-26 05:33:26"
+            "time": "2017-12-18T03:09:47+00:00"
         },
         {
             "name": "topthink/think-installer",
-            "version": "v1.0.11",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-installer.git",
-                "reference": "4c6e1ebecd1afce3f4ccc47e147d61bbe1bf641d"
+                "reference": "1be326e68f63de4e95977ed50f46ae75f017556d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-installer/4c6e1ebecd1afce3f4ccc47e147d61bbe1bf641d.zip",
-                "reference": "4c6e1ebecd1afce3f4ccc47e147d61bbe1bf641d",
+                "url": "https://api.github.com/repos/top-think/think-installer/zipball/1be326e68f63de4e95977ed50f46ae75f017556d",
+                "reference": "1be326e68f63de4e95977ed50f46ae75f017556d",
                 "shasum": ""
             },
             "require": {
@@ -748,7 +208,7 @@
                     "email": "448901948@qq.com"
                 }
             ],
-            "time": "2016-12-01 09:08:45"
+            "time": "2017-05-27T06:58:09+00:00"
         }
     ],
     "packages-dev": [],
