@@ -94,6 +94,9 @@ class Auth extends Admin
         $GroupModel = new AuthGroup();
         $GroupModel->title = input('title');
         $GroupModel->description = input('description');
+        if (empty($GroupModel->title)){
+            return $this->error('用户组名称不能为空');
+        }
         $result = $GroupModel->save();
 
         if($result) {
