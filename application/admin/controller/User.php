@@ -36,10 +36,10 @@ class User extends Admin
         }
 
         $list = $this->lists("Member", $map);
-//        foreach ($list as $key => $value) {
-//            $msg = UcenterMember::get($value['id']);
-//            $value['email'] = $msg['email'];
-//        }
+        foreach ($list as $key => $value) {
+            $msg = UcenterMember::get($value['id']);
+            $value['email'] = $msg['email'];
+        }
         $this->assign('list',$list);
 
         $info['status'] = array('egt', 0);
@@ -107,11 +107,11 @@ class User extends Admin
      */
     public function submitPassword(){
         //获取参数
-        $password   =   I('post.old');
+        $password   =   input('post.old');
         empty($password) && $this->error('请输入原密码');
-        $data['password'] = I('post.password');
+        $data['password'] = input('post.password');
         empty($data['password']) && $this->error('请输入新密码');
-        $repassword = I('post.repassword');
+        $repassword = input('post.repassword');
         empty($repassword) && $this->error('请输入确认密码');
 
         if($data['password'] !== $repassword){
@@ -259,7 +259,7 @@ class User extends Admin
         //更改邮箱
         $result2 =array();
         if($email){
-            $find = UcenterMember::where('email',$email)->find();
+            $find = UcenterMember::where(['email' => $email,'username' => ['neq',$nickname]])->find();
             $map2['email'] = $email;
             if($find){
                 return $this->error('邮箱已存在，请另输入邮箱！！');

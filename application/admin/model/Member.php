@@ -64,7 +64,6 @@ class Member extends Base
         $auth = array(
             'id'              => $user['id'],
             'username'        => $user['nickname'],
-            'header'          => $user['header'],
             'last_login_time' => $user['last_login_time'],
         );
 
