@@ -19,11 +19,11 @@
         "php": ">=5.4.0",
         "topthink/framework": "5.0.*"
     },
-    "require-dev": {
-        "nette/mail":"*"
-    },
     "extra": {
         "think-path": "thinkphp"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "config": {
+        "preferred-install": "dist"
+    }
 }
