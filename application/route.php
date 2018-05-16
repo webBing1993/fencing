@@ -9,5 +9,3 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 // $Id$
-use think\Route;
-Route::rule('answer','home/award/answer','GET');
