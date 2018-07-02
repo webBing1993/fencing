@@ -15,7 +15,7 @@ class UcenterMember extends Merge
 {
     protected $autoWriteTimestamp = false;
     // 定义关联模型列表
-    protected  $relationModel = ['Member'];
+    protected  static $relationModel = ['Member'];
     // 定义关联外键
     protected $fk = 'id';
     protected $mapFields = [
