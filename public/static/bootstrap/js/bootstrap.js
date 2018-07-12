@@ -975,7 +975,7 @@ if (typeof jQuery === 'undefined') {
     this.escape()
     this.resize()
 
-    this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
+    this.$element.on('tap.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
 
     this.$dialog.on('mousedown.dismiss.bs.modal', function () {
       that.$element.one('mouseup.dismiss.bs.modal', function (e) {
@@ -1101,7 +1101,7 @@ if (typeof jQuery === 'undefined') {
         .addClass('modal-backdrop ' + animate)
         .appendTo(this.$body)
 
-      this.$element.on('click.dismiss.bs.modal', $.proxy(function (e) {
+      this.$element.on('tap.dismiss.bs.modal', $.proxy(function (e) {
         if (this.ignoreBackdropClick) {
           this.ignoreBackdropClick = false
           return
@@ -1227,7 +1227,7 @@ if (typeof jQuery === 'undefined') {
   // MODAL DATA-API
   // ==============
 
-  $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
+  $(document).on('tap.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
     var $this   = $(this)
     var href    = $this.attr('href')
     var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) // strip for ie7
