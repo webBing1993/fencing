@@ -181,19 +181,19 @@
                                 </label>
                             </div>
                         </div>
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-lg-1 text-right control-label">-->
-                                <!--<label>是否推送:</label>-->
-                            <!--</div>-->
-                            <!--<div class="col-lg-11">-->
-                                <!--<label class="i-checks">-->
-                                    <!--<input type="radio" value="1" name="push">是-->
-                                <!--</label>-->
-                                <!--<label class="i-checks">-->
-                                    <!--<input type="radio" checked="" value="0" name="push">否-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>是否推送:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <label class="i-checks">
+                                    <input type="radio" value="1" name="push">是
+                                </label>
+                                <label class="i-checks">
+                                    <input type="radio" checked="" value="0" name="push">否
+                                </label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-lg-11 col-lg-offset-1">
                                 <button class="btn btn-primary submit-btn post-add" type="button" target-form="form-horizontal">发布</button>
@@ -284,7 +284,7 @@
 //                address:$("input[name='address']").val(),
                 publisher:$("input[name='publisher']").val(),
                 recommend:$("input[name='recommend']:checked").val(),
-//                push:$("input[name='push']:checked").val(),
+                push:$("input[name='push']:checked").val(),
                 status:0,
             };
             $.ajax({

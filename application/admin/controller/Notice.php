@@ -27,6 +27,7 @@ class Notice extends Admin {
         int_to_string($list,array(
             'status' => array(0=>"已发布",1=>"已发布"),
             'recommend' => array(0=>"否",1=>"是"),
+            'push' => array(0=>"否",1=>"是"),
             'type' => array(1=>"训练通知",2=>"赛事通知",3=>"比赛成绩")
         ));
 
