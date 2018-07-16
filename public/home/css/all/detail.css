@@ -1,0 +1,258 @@
+.banner{
+    position: relative;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 50vw;
+}
+.banner .banner-img{
+    height: 50vw;
+    width: 100vw;
+}
+/*文章主体*/
+.content {padding: 4vw;}
+.content .title ,.content .title p{
+    font-size: .32rem;
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+.content .message {margin-left: -4vw;}
+.content .message div {
+    width: 100%;
+    height: .8rem;
+    padding-left: 13.3333vw;
+    line-height: .8rem;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    font-size: .28rem;
+}
+.content .message div:nth-child(1) {
+    background: url("/home/images/detail/people.png") 4vw center no-repeat;
+    background-size: 5.3333vw 5.3333vw;
+}
+.content .message div:nth-child(2) {
+    background: url("/home/images/detail/time.png") 4vw center no-repeat;
+    background-size: 5.3333vw 5.3333vw ;
+}
+.content .message div:nth-child(3) {
+    background: url("/home/images/detail/address.png") 4vw center no-repeat;
+    background-size: 5.3333vw 5.3333vw ;
+}
+.content .message div.times {
+    background: url("/home/images/detail/time.png") 4vw center no-repeat;
+    background-size: 5.3333vw 5.3333vw;
+}
+.content .message div.telephones {
+    background: url("/home/images/detail/tel.png") 4vw center no-repeat;
+    background-size: 5.3333vw 5.3333vw;
+}
+.content .articleText {
+    width:100%;
+    padding:4vw 0;
+    text-align: justify;
+    font-size: .24rem;
+    overflow: hidden;
+    max-width: 100%!important;
+}
+.content .articleText p , .content .articleText p span {
+    font-size: .28rem ;
+}
+.content .uecontent section {max-width: 100% !important;}
+.content .noteTime {
+    font-size: .26rem;
+    color: #999;
+}
+.content .articleText .uecontent img {margin-left: -2em;}
+/*点赞 收藏*/
+.article .note {
+    text-align: right;
+    color: #999999;
+    font-size: .24rem;
+}
+.article .note span {
+    height: 8vw;
+    display: inline-block;
+    /*margin-right: 3vw;*/
+    line-height: 8vw;
+    font-size: .24rem;
+    vertical-align: middle;
+}
+.article .note span:first-child {
+    max-width:40vw;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+    text-align: left;
+}
+.article .note_ span{
+    margin-right: 0;
+}
+.article .note .good,.article  .note .isgood ,.all .note .good_{
+    margin-right: 0;
+}
+.article .note .read {
+    margin-right: 3.2vw;
+    background: url('/home/images/detail/scan_.png') 0 center no-repeat;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+}
+.article .note .good {
+    background: url('/home/images/detail/good.png') 0 center no-repeat;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+}
+.article .note .good_ {
+    background: url('/home/images/detail/good_.png') 0 center no-repeat;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+    animation: shake 300ms ease;
+    -webkit-animation: shake 300ms ease;
+}
+/*评论*/
+.comment {
+    padding-bottom: 13vw;
+}
+.comment .sum {
+    height: 8vw;
+    padding-left: 3.4vw;
+    background: #fcfcfc;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: .24rem;
+    line-height: 8vw;
+}
+.comment .lists .list {
+    width: 100%;
+    padding-left: 3.4vw;
+    padding-right: 3.4vw;
+    min-height: 100px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.comment .lists .list .fl img {
+    width: 8vw;
+    height: 8vw;
+    margin-top: 3.4vw;
+    margin-right: 3vw;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.comment .lists .list .mid {
+    width: 73%;
+}
+.comment .lists .list .mid .name {
+    width: 100%;
+    height: 14.9vw;
+    line-height: 14.9vw;
+    color: #333;
+    font-size: .28rem;
+}
+.comment .lists .list .mid .PLcontent {
+    width: 100%;
+    word-break: break-all;
+    font-size: .26rem;
+    color: #666;
+    margin-bottom:2vw;
+}
+.comment .lists .list .mid .time {
+    font-size: .24rem;
+    line-height: 5.3vw;
+    color: #999999;
+    padding-bottom: 2vw;
+}
+.comment .lists .list .fr {
+    margin-top: 5vw;
+    color: #999999;
+    line-height: 4vw;
+    font-size: .24rem;
+}
+.comment .lists .list .good {
+    background: url('/home/images/detail/good.png') 0 center no-repeat;
+}
+.comment .lists .list .good_ {
+    animation: shake 300ms ease;
+    -webkit-animation: shake 300ms ease;
+    background: url('/home/images/detail/good_.png') 0 center no-repeat;
+}
+.comment .lists .list .isgood {
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+}
+.comment .tip {
+    height: 10.6vw;
+    text-align: center;
+    line-height: 10.6vw;
+    color: #c1c1c1;
+    font-size: .24rem;
+}
+.sweet-alert.show-input textarea {
+    font-size: .28rem;
+    padding: 1.6vw;
+    line-height: .36rem;
+    overflow: hidden;
+}
+.comment .lists .list .isgood {
+    background-position: center center;
+    padding-left: 8.6vw;
+    line-height: 10.6vw;
+    margin-top: 0;
+    position: absolute;
+    right:4vw;
+}
+/*底部*/
+.bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 12vw;
+    padding-left: 2.6vw;
+    border-top: 1px solid #f1f1f1;
+    background: #ffffff;
+    font-family: "Microsoft YaHei", sans-serif;
+}
+.bottom .star {
+    background: url('/home/images/detail/star-border.png') 5.4vw 3.2vw no-repeat;
+}
+.bottom .star_ {
+    animation: shake 300ms ease;
+    -webkit-animation: shake 300ms ease;
+    background: url('/home/images/detail/star-yellow.png') 5.4vw 3.2vw no-repeat;
+}
+.bottom .collect {
+    width: 16vw;
+    height: 100%;
+    font-size: .24rem;
+    text-align: center;
+    background-size: 5.4vw 5.4vw;
+    padding-top: 24px;
+}
+.bottom .myword input {
+    vertical-align: middle;
+    height: 8vw;
+    width: 94vw;
+    margin: 1.8vw 0;
+    padding-left: 2.6vw;
+    background: #fafafa;
+    border: 1px solid #d8d8d8;
+    -webkit-border-radius: 1.6vw;
+    border-radius: 1.6vw;
+    font-size: .24rem;
+}
+.bottom .send {
+    width: 20.5vw;
+    line-height: 12vw;
+    text-align: center;
+    font-size: .3rem;
+}
+.bottom .send:active {
+    background: #fafafa;
+}

@@ -1,0 +1,484 @@
+
+
+@keyframes bigger
+{
+    0%{
+        background-size: 16vw 16vw;
+        height: 16vw;
+        bottom:-8vw;
+    }
+    50%{
+        background-size: 18vw 18vw;
+        height: 18vw;
+        bottom:-10vw;
+    }
+    100% {
+        background-size: 16vw 16vw;
+        height: 16vw;
+        bottom:-8vw;
+    }
+}
+
+@-moz-keyframes bigger /* Firefox */
+{
+    0%{
+        background-size: 16vw 16vw;
+        height: 16vw;
+    }
+    50%{
+        background-size: 18vw 18vw;
+        height: 18vw;
+    }
+    100% {
+        background-size: 16vw 16vw;
+        height: 16vw;
+    }
+}
+
+@-webkit-keyframes bigger /* Safari 和 Chrome */
+{
+    0%{
+        background-size: 16vw 16vw;
+        height: 16vw;
+        bottom:-8vw;
+    }
+    50%{
+        background-size: 18vw 18vw;
+        height: 18vw;
+        bottom:-10vw;
+    }
+    100% {
+        background-size: 16vw 16vw;
+        height: 16vw;
+        bottom:-8vw;
+    }
+}
+
+@-o-keyframes bigger /* Opera */
+{
+    0%{
+        background-size: 16vw 16vw;
+    }
+    50%{
+        background-size: 18vw 18vw;
+    }
+    100% {
+        background-size: 16vw 16vw;
+    }
+}
+
+@keyframes up
+{
+    0%{
+        bottom:0;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        bottom:4vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        bottom:8vw;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        bottom:12vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        bottom:16vw;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+
+@-moz-keyframes up /* Firefox */
+{
+    0%{
+        top:-8vw;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        top:-4vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        top:0;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        top:4vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        top:8vw;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+
+@-webkit-keyframes up /* Safari 和 Chrome */
+{
+    0%{
+        bottom:0;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        bottom:4vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        bottom:8vw;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        bottom:12vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        bottom:16vw;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+
+@-o-keyframes up /* Opera */
+{
+    0%{
+        top:-8vw;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        top:-4vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        top:0;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        top:4vw;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        top:8vw;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+
+.all .title {
+    text-align: center;
+    color: #333333;
+    font-size: .36rem;
+    font-weight: 600;
+}
+.all .title p{
+    display: inline-block;
+    text-align: left;
+    font-size: .32rem;
+}
+.all .content {
+    width: 100%;
+    overflow: hidden;
+    color: #666666;
+}
+.all .content * {
+    max-width: 100%!important;
+    font-size: .28rem;
+    line-height: .36rem;
+}
+.all .content p span {
+    background: transparent!important;
+}
+.all .content img {
+    display: block;
+    max-width: 100%!important;
+    margin: 0 auto 3.5vw !important;
+}
+.all .content .video {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 10px;
+    background: rgba(208, 208, 208, 0.5);
+}
+.all .content .video video {
+    width: 100%;
+    height: 200px;
+}
+.all .content .video .play {
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 50px;
+    opacity: 0.5;
+    display: none;
+}
+.all .note {
+    text-align: right;
+    color: #999999;
+    font-size: .24rem;
+}
+.all .note span {
+    height: 8vw;
+    display: inline-block;
+    /*margin-right: 3vw;*/
+    line-height: 8vw;
+    font-size: .24rem;
+}
+.all .note span:first-child {
+    max-width:40vw;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+    text-align: left;
+}
+.all .note_ span{
+    margin-right: 0;
+}
+.all .note .good,.article  .note .isgood ,.all .note .good_{
+    margin-right: 0;
+}
+.all .note .read {
+    margin-right: 3.2vw;
+    background: url('/home/images/detail/scan_.png') 0 center no-repeat;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+}
+.all .note .good {
+    background: url('/home/images/detail/good.png') 0 center no-repeat;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+}
+.all .note .good_ {
+    background: url('/home/images/detail/good_.png') 0 center no-repeat;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+    animation: shake 300ms ease;
+    -webkit-animation: shake 300ms ease;
+}
+
+
+/*评论*/
+.comment {
+    padding-bottom: 13vw;
+}
+.comment .sum {
+    height: 8vw;
+    padding-left: 3.4vw;
+    background: #fcfcfc;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: .24rem;
+    line-height: 8vw;
+}
+.comment .lists .list {
+    width: 100%;
+    padding-left: 3.4vw;
+    padding-right: 3.4vw;
+    min-height: 100px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.comment .lists .list .fl img {
+    width: 8vw;
+    height: 8vw;
+    margin-top: 3.4vw;
+    margin-right: 3vw;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.comment .lists .list .mid {
+    width: 73%;
+}
+.comment .lists .list .mid .name {
+    width: 100%;
+    height: 14.9vw;
+    line-height: 14.9vw;
+    color: #333;
+    font-size: .28rem;
+}
+.comment .lists .list .mid .content {
+    width: 100%;
+    word-break: break-all;
+    font-size: .26rem;
+    color: #666;
+    margin-bottom:2vw;
+}
+.comment .lists .list .mid .time {
+    font-size: .24rem;
+    line-height: 5.3vw;
+    color: #999999;
+    padding-bottom: 2vw;
+}
+.comment .lists .list .fr {
+    margin-top: 5vw;
+    color: #999999;
+    line-height: 4vw;
+    font-size: .24rem;
+}
+.comment .lists .list .good {
+    background: url('/home/images/detail/good.png') 0 center no-repeat;
+}
+.comment .lists .list .good_ {
+    animation: shake 300ms ease;
+    -webkit-animation: shake 300ms ease;
+    background: url('/home/images/detail/good_.png') 0 center no-repeat;
+}
+.comment .lists .list .isgood {
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+}
+.comment .tip {
+    height: 10.6vw;
+    text-align: center;
+    line-height: 10.6vw;
+    color: #c1c1c1;
+    font-size: .24rem;
+    display: none;
+}
+/*底部*/
+.bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 12vw;
+    padding-left: 2.6vw;
+    border-top: 1px solid #f1f1f1;
+    background: #ffffff;
+    font-family: "Microsoft YaHei", sans-serif;
+}
+.bottom .star {
+    background: url('/home/images/detail/star-border.png') 5.4vw 3.2vw no-repeat;
+}
+.bottom .star_ {
+    animation: shake 300ms ease;
+    -webkit-animation: shake 300ms ease;
+    background: url('/home/images/detail/star-yellow.png') 5.4vw 3.2vw no-repeat;
+}
+.bottom .collect {
+    width: 16vw;
+    height: 100%;
+    font-size: .24rem;
+    text-align: center;
+    background-size: 5.4vw 5.4vw;
+    padding-top: 24px;
+}
+.bottom .myword input {
+    vertical-align: middle;
+    height: 8vw;
+    width: 94vw;
+    margin: 1.8vw 0;
+    padding-left: 2.6vw;
+    background: #fafafa;
+    border: 1px solid #d8d8d8;
+    -webkit-border-radius: 1.6vw;
+    border-radius: 1.6vw;
+    font-size: .24rem;
+}
+.bottom .send {
+    width: 20.5vw;
+    line-height: 12vw;
+    text-align: center;
+    font-size: .3rem;
+}
+.bottom .send:active {
+    background: #fafafa;
+}
+/*加载动画*/
+.loading {
+    width: 100%;
+    height: 10.7vw;
+}
+.typing_loader {
+    width: 1.6vw;
+    height: 1.6vw;
+    border-radius: 50%;
+    -webkit-animation: typing 1s linear infinite alternate;
+    -moz-animation: Typing 1s linear infinite alternate;
+    animation: typing 1s linear infinite alternate;
+    position: relative;
+    top: 4.6vw;
+    left: 46vw;
+}
+
+
+.all .content .note .star {
+    background: url('/home/images/star-border.png') 0 center no-repeat ;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+    margin-left: 2vw;
+    margin-right: 0;
+}
+.all .content .note .star_ {
+    /*animation: bigger2 300ms ease;*/
+    /*-webkit-animation: bigger2 300ms ease;*/
+    background: url('/home/images/detail/star-yellow.png') 0 center no-repeat;
+    background-size: .24rem .24rem;
+    padding-left: .3rem;
+    margin-left: 2vw;
+    margin-right: 0;
+}
+.note.notess .read {background: url('/home/images/lxyz/icon_005.png') 0 center no-repeat;background-size: 4vw 3vw;padding-left: 4.8vw;}
+.note.notess .isgood {background: url('/home/images/lxyz/icon_006.png') 0 center no-repeat;background-size: 4vw 3vw;padding-left: 4.8vw;}
+
+
+.sweet-alert.show-input textarea {
+    font-size: .28rem;
+    padding: 1.6vw;
+    line-height: normal;
+    height: 24vw;
+}
+.sweet-alert p {
+    font-size: .32rem!important;
+}
+.sweet-alert {
+    width: 90vw!important;
+    left: 5vw!important;
+    right: 5vw!important;
+    margin-left: 0!important;
+}
+.sweet-alert button {
+    padding: 1.6vw 8.2vw !important;
+    margin: 2.4vw 1.6vw 0 1.6vw !important;
+    font-size: .34rem !important;
+}

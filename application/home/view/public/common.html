@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="format-detection" content="telephone=no" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <script src="/home/js/flexible.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <!--<script src="/home/js/flexible.js"></script>-->
     <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/home/sass/stylesheets/mui.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <!--<script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>-->
-    <script src="/static/js/jquery-2.2.1.min.js"></script>
-    <script src="/home/js/mui.min.js"></script>
+    <script src="/static/js/jquery-2.2.1.min.js"  id="ccc"></script>
+
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
@@ -21,13 +20,47 @@
     <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/sweetalert/sweetalert.min.js"></script>
+    <script src="/home/js/loading.js"></script>
     <link rel="stylesheet" href="/static/sweetalert/sweetalert.css">
-    <link rel="stylesheet" href="/home/sass/stylesheets/screen.css">
+    <link rel="stylesheet" href="/home/css/reset.css">
+    <style>
+        body {font-family: "Microsoft YaHei", sans-serif !important;}
+        .sweet-alert h2 {
+            font-size: .3rem;
+            line-height: .6rem;
+        }
+    </style>
+    <script src="/home/js/adaptive-version2.js"></script>
     <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>-->
+    <script>
+        $(function() {
+            $("img.lazy").lazyload({
+                placeholder : "/home/images/loading.jpg",
+                effect: "fadeIn"
+            });
+            /* 长宽占位 rem算法, 根据root的rem来计算各元素相对rem, 默认html 320/20 = 16px */
+            function placeholderPic(){
+                var w = document.documentElement.offsetWidth;
+                document.documentElement.style.fontSize=w/100+'rem';
+            }
+//            window.onresize=function(){
+//                placeholderPic();
+//            }
+            if($(window).width()>=1080){
+                placeholderPic();
+            }
+            var u = navigator.userAgent, app = navigator.appVersion;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if(isAndroid){
+                $('.content .message div').css('line-height','.9rem')
+            }
+        });
+    </script>
     {block name="style"}网页样式{/block}
 </head>
 <body ontouchstart="" onmouseover="">
-<!--<div style="display:none"><img src="/home/images/xspb_default.jpg" alt=""/></div>-->
+
 <!-- 主体 -->
 {block name="body"}页面主体{/block}
 <!-- /主体 -->
@@ -39,7 +72,7 @@
     </div>
 </footer>
 <!-- 用于加载js代码 -->
-{block name="script"}底部JS代码{/block}
+{block name="script"}{/block}
 <!-- 用于加载统计代码等隐藏元素 -->
 <div class="hidden">
     <block name="hidden"></block>
