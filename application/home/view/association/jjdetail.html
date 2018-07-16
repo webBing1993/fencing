@@ -1,0 +1,62 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>击剑馆</title>
+<link rel="stylesheet" href="/home/css/association/detail.css">
+<link rel="stylesheet" href="/static/swiper/swiper.min.css">
+<script src="/static/swiper/swiper.min.js"></script>
+{/block}
+{block name="body"}
+<div class="banner">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
+            <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
+            <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+<div class="detail">
+    <div class="detail01">杭州击剑馆</div>
+    <div class="detail02">详细地址：<a href="#">而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选</a></div>
+    <div class="detail02">联系电话：<a href="tel:1231231">12312312</a></div>
+    <div class="detail02">开放时间：08:00 - 20:00</div>
+</div>
+<div class="content">
+    <p>　凭借威力如此强大的一击，就算是传奇怪物来犯，恐怕也是徒劳而已。
+
+        　　“应该是，一击就能灭杀三阶太古种，这零翼城的防御实在可怕，这下那些想要在魔女之丘跟零翼公会竞争的公会恐怕是一丝机会都没有了。”琴音看了一眼笼罩整个零翼城的魔法屏障，也唏嘘不已。
+
+        　　要是她们第九天堂建造的城镇也有如此厉害，恐怕也就不用愁死神工作室的问题了。
+
+        　　公会城镇最重要的就是安全。
+
+        　　不管是对自由玩家，还是商人玩家都是如此，毕竟谁也不想动不动就被人给干掉，让之前升级的心血白费。
+
+        　　而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选。
+
+        　　“这到底是什么魔法？邪龙化后的魔抗可是有大幅提升，明明还有过半的生命值，怎么会被瞬间秒杀？”远处的猎风追魂看着完全消失的黯刀，脸色极度难看。
+
+        　　黯刀虽然是第二批试验品，</p>
+</div>
+{/block}
+{block name="script"}
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: 3000,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        loop:true,
+    })
+</script>
+<script>
+    $("img.lazy").lazyload({
+        placeholder: "/home/images/loading.jpg",
+        effect: "fadeIn",
+        threshold : 500
+    });
+</script>
+{/block}

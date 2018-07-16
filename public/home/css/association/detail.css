@@ -1,0 +1,70 @@
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.banner {width:100%;height:100%;}
+.banner .swiper-container {width:100%;height:3.75rem;}
+.banner img {width:100%;height:100%;}
+.banner .swiper-pagination {text-align: right;}
+.banner .swiper-pagination-bullet {width:.12rem;height:.12rem;background: #fff;opacity: 1;}
+.banner .swiper-pagination-bullet-active {background: #333;}
+.banner .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {right:.3rem;left:inherit;bottom:.2rem;}
+.detail {width:100%;border-bottom: 1px solid #f7f7f7;padding: .3rem .24rem;color: #333;}
+.detail01 {font-size: .34rem;margin-bottom: .36rem;}
+.detail02 {
+    font-size: .26rem;
+    width:100%;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+    margin-bottom: .26rem;
+}
+.detail02:last-child {margin-bottom: 0;}
+.detail02 a {color: #4083b8;}
+.content {
+    width:100%;
+    height:100%;
+    padding: .3rem .24rem;
+    font-size: .28rem;
+    color: #333;
+}
+.content p {line-height: .48rem;}
+.detailS {width:100%;border-bottom: 1px solid #f7f7f7;padding: .3rem .24rem;color: #333;}
+.detailS .detail01 {
+    font-size: .34rem;
+    color: #333;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+.detail03 {
+    font-size: .24rem;
+    color: #999;
+    margin-top: .36rem;
+    padding-bottom: .36rem;
+}
+.detail03 span:first-child {float:left;}
+.detail03 span:last-child {float:right;}

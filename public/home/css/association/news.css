@@ -1,0 +1,46 @@
+.Top {width:100%;height:1.2rem;padding: 0 .24rem;color: #999;font-size: .3rem;line-height: 1.2rem;border-bottom: 1px solid #f7f7f7;margin-bottom: .3rem;}
+.Top div {float:left;margin-right: .6rem;position: relative;}
+.Top .active {color: #333}
+.Top .active span {
+    display: block;
+    position: absolute;
+    bottom:0;
+    left:50%;
+    width:.5rem;
+    height:.1rem;
+    background: red;
+    margin-left: -.25rem;
+    border-radius: .2rem;
+}
+.news {display: none;width:100%;padding: 0 .24rem;}
+
+.news a {
+    display: block;
+    width: 100%;
+    height: 2.2rem;
+    overflow: hidden;
+    padding: .3rem 0;
+    border-bottom: 1px solid #f7f7f7;
+}
+.news img {float:left;width:2rem;height:100%;border-radius: .1rem;}
+.newsText {margin-left: 2rem;padding:.1rem .2rem;position: relative;height:100%;}
+.newsText .newsTitle {
+    font-size: .28rem;
+    color: #333;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+.newsTime {
+    position: absolute;
+    bottom:.1rem;
+    left:0;
+    color: #999;
+    font-size: .24rem;
+    width:100%;
+}
+.newsTime span:first-child {float:left;margin-left: .2rem;}
+.newsTime span:last-child {float:right;margin-right: .2rem;}
