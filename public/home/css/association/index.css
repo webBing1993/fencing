@@ -41,7 +41,7 @@
 .productsMain .swiper-container01 {margin-left: .24rem;}
 .productsMain .swiper-slide {width:2.4rem;}
 .productsMain img {width:2.4rem;height:1.6rem;border-radius: .1rem;}
-.productsMain p {margin-top: .16rem;color: #333;text-align: left;white-space:nowrap;
+.productsMain p {margin-top: .16rem;color: #333;text-align: left;white-space:nowrap;font-size: .26rem;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
     overflow: hidden;
