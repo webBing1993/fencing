@@ -2463,8 +2463,8 @@ icons:
     categories:
       - Web Application Icons
 
-  - name:       hospital Outlined
-    id:         hospital-o
+  - name:       venue Outlined
+    id:         venue-o
     unicode:    f0f8
     created:    3.0
     filter:
@@ -2530,7 +2530,7 @@ icons:
     unicode:    f0fd
     created:    3.0
     filter:
-      - hospital
+      - venue
       - hotel
     categories:
       - Medical Icons

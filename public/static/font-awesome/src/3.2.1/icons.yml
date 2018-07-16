@@ -1578,8 +1578,8 @@ icons:
     categories:
       - Web Application Icons
 
-  - name:       hospital
-    id:         hospital
+  - name:       venue
+    id:         venue
     unicode:    f0f8
     created:    3.0
     categories:
