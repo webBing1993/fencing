@@ -25,7 +25,8 @@ class Association  extends Base
         $this->assign('list1',$list1);
         //新闻动态2条
         $list2 = News::where('status',0)->order('id desc')->limit(2)->select();
-//        dump($list1);exit;
+        $this->assign('list2',$list2);
+//        dump($list2);exit;
 
         return $this->fetch();
     }
@@ -62,11 +63,21 @@ class Association  extends Base
         return $this->fetch();
     }
 
+    //新闻动态模块  更多页
     public function newsmore(){
+        $list = News::where('status',0)->order('id desc')->limit(10)->select();
+        $this->assign('list',$list);
+
         return $this->fetch();
     }
 
+    //新闻动态 详情页
     public function newsdetail(){
+        $Id = input('id');
+        $data = News::where('id',$Id)->find();
+        $this->assign('data',$data);
+//        dump($data);exit;
+
         return $this->fetch();
     }
 }

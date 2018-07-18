@@ -49,27 +49,15 @@
             <a href="/home/association/newsmore.html" class="more">查看更多 <img src="/home/images/iconRight.png"></a>
         </div>
         <div class="newsSort">
-            <a href="/home/association/newsdetail.html">
-                <img src="/home/images/1.jpg" class="lazy">
+            {volist name="list2" id="lo"}
+            <a href="{:Url('Association/newsdetail?id='.$lo['id'])}">
+                <img src="{$lo.front_cover|get_cover='path'}" class="lazy">
                 <div class="newsText">
-                    <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                    <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
+                    <div class="newsTitle">{$lo.title}</div>
+                    <div class="newsTime"><span>{$lo.publisher}</span><span>{$lo.create_time|time_format='Y-m-d'}</span></div>
                 </div>
             </a>
-            <a href="/home/association/newsdetail.html">
-                <img src="/home/images/1.jpg" class="lazy">
-                <div class="newsText">
-                    <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                    <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-                </div>
-            </a>
-            <a href="/home/association/newsdetail.html">
-                <img src="/home/images/1.jpg" class="lazy">
-                <div class="newsText">
-                    <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                    <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-                </div>
-            </a>
+            {/volist}
         </div>
     </div>
 {/block}
