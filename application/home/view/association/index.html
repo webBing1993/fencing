@@ -35,10 +35,9 @@
         <div class="productsMain">
             <div class="swiper-container01">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><a href="/home/association/jjdetail.html"><img src="/home/images/1.jpg" class="lazy"><p>杭州击剑馆</p></a></div>
-                    <div class="swiper-slide"><a href="/home/association/jjdetail.html"><img src="/home/images/1.jpg" class="lazy"><p>杭州击剑馆</p></a></div>
-                    <div class="swiper-slide"><a href="/home/association/jjdetail.html"><img src="/home/images/1.jpg" class="lazy"><p>杭州击剑馆</p></a></div>
-                    <div class="swiper-slide"><a href="/home/association/jjdetail.html"><img src="/home/images/1.jpg" class="lazy"><p>杭州击剑馆</p></a></div>
+                    {volist name="list1" id="vo"}
+                    <div class="swiper-slide"><a href="{:Url('Association/jjdetail?id='.$vo['id'])}"><img src="{$vo.images|get_cover='path'}" class="lazy"><p>{$vo.title}</p></a></div>
+                   {/volist}
                 </div>
             </div>
         </div>

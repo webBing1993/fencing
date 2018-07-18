@@ -6,48 +6,15 @@
 {/block}
 {block name="body"}
     <div class="sort">
-        <a href="/home/association/jjdetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
+        {volist name="list" id="vo"}
+        <a href="{:Url('Association/jjdetail?id='.$vo['id'])}">
+            <img src="{$vo.images|get_cover='path'}" class="lazy">
             <div>
-                <p>杭州击剑馆</p>
-                <p>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选</p>
+                <p>{$vo.title}</p>
+                <p>{$vo.content}</p>
             </div>
         </a>
-        <a href="/home/association/jjdetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div>
-                <p>杭州击剑馆</p>
-                <p>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选</p>
-            </div>
-        </a>
-        <a href="/home/association/jjdetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div>
-                <p>杭州击剑馆</p>
-                <p>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选</p>
-            </div>
-        </a>
-        <a href="/home/association/jjdetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div>
-                <p>杭州击剑馆</p>
-                <p>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选</p>
-            </div>
-        </a>
-        <a href="/home/association/jjdetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div>
-                <p>杭州击剑馆</p>
-                <p>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选</p>
-            </div>
-        </a>
-        <a href="/home/association/jjdetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div>
-                <p>杭州击剑馆</p>
-                <p>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选</p>
-            </div>
-        </a>
+       {/volist}
     </div>
 {/block}
 {block name="script"}
