@@ -12,169 +12,34 @@
     </div>
 <!--正文切换-->
     <div class="news" id="side1" style="display: block;">
+        {volist name="left" id="a"}
         <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
+            <img src="{$a.front_cover|get_cover='path'}" class="lazy">
             <div class="user">
-                <div class="userName">乌卡卡<span></span></div>
+                <div class="userName">{$a.name}<span></span></div>
                 <div class="userSort">
-                    <span>击剑</span>
-                    <span>佩剑</span>
-                    <span>重剑</span>
+                    <span>{$a.class}</span>
+
                 </div>
-                <div class="userText">虽说邪龙跟NPC战斗，生命值损失不少，但是生命值还有一千五百万以上，可是天空中的四种颜色的光柱同时落下，邪龙就连惨叫一声都办不到，就这么彻底被干掉。
-                    如此强大的魔法攻击绝对是她在进入神域以来头一次遇见，就算是四阶大型毁灭魔法都远远比不上。
-                    凭借威力如此强大的</div>
+                <div class="userText">{$a.content}</div>
             </div>
         </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="user">
-                <div class="userName">乌卡卡<span></span></div>
-                <div class="userSort">
-                    <span>击剑</span>
-                    <span>佩剑</span>
-                    <span>重剑</span>
-                </div>
-                <div class="userText">虽说邪龙跟NPC战斗，生命值损失不少，但是生命值还有一千五百万以上，可是天空中的四种颜色的光柱同时落下，邪龙就连惨叫一声都办不到，就这么彻底被干掉。
-                    如此强大的魔法攻击绝对是她在进入神域以来头一次遇见，就算是四阶大型毁灭魔法都远远比不上。
-                    凭借威力如此强大的</div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="user">
-                <div class="userName">乌卡卡<span></span></div>
-                <div class="userSort">
-                    <span>击剑</span>
-                    <span>佩剑</span>
-                    <span>重剑</span>
-                </div>
-                <div class="userText">虽说邪龙跟NPC战斗，生命值损失不少，但是生命值还有一千五百万以上，可是天空中的四种颜色的光柱同时落下，邪龙就连惨叫一声都办不到，就这么彻底被干掉。
-                    如此强大的魔法攻击绝对是她在进入神域以来头一次遇见，就算是四阶大型毁灭魔法都远远比不上。
-                    凭借威力如此强大的</div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="user">
-                <div class="userName">乌卡卡<span></span></div>
-                <div class="userSort">
-                    <span>击剑</span>
-                    <span>佩剑</span>
-                    <span>重剑</span>
-                </div>
-                <div class="userText">虽说邪龙跟NPC战斗，生命值损失不少，但是生命值还有一千五百万以上，可是天空中的四种颜色的光柱同时落下，邪龙就连惨叫一声都办不到，就这么彻底被干掉。
-                    如此强大的魔法攻击绝对是她在进入神域以来头一次遇见，就算是四阶大型毁灭魔法都远远比不上。
-                    凭借威力如此强大的</div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="user">
-                <div class="userName">乌卡卡<span></span></div>
-                <div class="userSort">
-                    <span>击剑</span>
-                    <span>佩剑</span>
-                    <span>重剑</span>
-                </div>
-                <div class="userText">虽说邪龙跟NPC战斗，生命值损失不少，但是生命值还有一千五百万以上，可是天空中的四种颜色的光柱同时落下，邪龙就连惨叫一声都办不到，就这么彻底被干掉。
-                    如此强大的魔法攻击绝对是她在进入神域以来头一次遇见，就算是四阶大型毁灭魔法都远远比不上。
-                    凭借威力如此强大的</div>
-            </div>
-        </a>
+        {/volist}
     </div>
 <div class="news" id="side2">
+    {volist name="right" id="b"}
     <a href="/home/association/newsdetail.html">
-        <img src="/home/images/1.jpg" class="lazy">
+        <img src="{$b.front_cover|get_cover='path'}" class="lazy">
         <div class="user">
-            <div class="userName">乌卡卡<span></span></div>
+            <div class="userName">{$b.name}<span></span></div>
             <div class="userSort1">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
+                <span>{$b.class}</span>
             </div>
-            <div class="userDetail01">而零翼城不而零翼城不</div>
-            <div class="userDetail02">而零翼城不而零翼城不</div>
+            <div class="userDetail01">{$b.school}</div>
+            <div class="userDetail02">{$b.site}</div>
         </div>
     </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="user">
-            <div class="userName">乌卡卡<span></span></div>
-            <div class="userSort1">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
-            </div>
-            <div class="userDetail01">而零翼城不而零翼城不</div>
-            <div class="userDetail02">而零翼城不而零翼城不</div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="user">
-            <div class="userName">乌卡卡<span></span></div>
-            <div class="userSort1">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
-            </div>
-            <div class="userDetail01">而零翼城不而零翼城不</div>
-            <div class="userDetail02">而零翼城不而零翼城不</div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="user">
-            <div class="userName">乌卡卡<span></span></div>
-            <div class="userSort1">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
-            </div>
-            <div class="userDetail01">而零翼城不而零翼城不</div>
-            <div class="userDetail02">而零翼城不而零翼城不</div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="user">
-            <div class="userName">乌卡卡<span></span></div>
-            <div class="userSort1">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
-            </div>
-            <div class="userDetail01">而零翼城不而零翼城不</div>
-            <div class="userDetail02">而零翼城不而零翼城不</div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="user">
-            <div class="userName">乌卡卡<span></span></div>
-            <div class="userSort1">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
-            </div>
-            <div class="userDetail01">而零翼城不而零翼城不</div>
-            <div class="userDetail02">而零翼城不而零翼城不</div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="user">
-            <div class="userName">乌卡卡<span></span></div>
-            <div class="userSort1">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
-            </div>
-            <div class="userDetail01">而零翼城不而零翼城不</div>
-            <div class="userDetail02">而零翼城不而零翼城不</div>
-        </div>
-    </a>
+    {/volist}
 </div>
 <!--弹出框-->
     <div class="fixed">

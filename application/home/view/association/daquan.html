@@ -13,199 +13,37 @@
     </div>
 <!--正文切换-->
     <div class="news" id="side1" style="display: block;">
-        <a href="/home/association/newsdetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
+        {volist name="left" id="a"}
+        <a href="{:Url('Association/newsdetail3?id='.$a['id'])}">
+            <img src="{$a.front_cover|get_cover='path'}" class="lazy">
             <div class="newsText">
-                <div class="newsTitle">1“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
+                <div class="newsTitle">{$a.title}</div>
+                <div class="newsTime"><span>{$a.publisher}</span><span>{$a.create_time|time_format='Y-m-d'}</span></div>
             </div>
         </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
-        <a href="#">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-            </div>
-        </a>
+        {/volist}
     </div>
     <div class="news" id="side2">
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
+        {volist name="center" id="b"}
+        <a href="{:Url('Association/newsdetail3?id='.$b['id'])}">
+        <img src="{$b.front_cover|get_cover='path'}" class="lazy">
         <div class="newsText">
-            <div class="newsTitle">2“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
+            <div class="newsTitle">{$b.title}</div>
+            <div class="newsTime"><span>{$b.publisher}</span><span>{$b.create_time|time_format='Y-m-d'}</span></div>
         </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
+        </a>
+        {/volist}
 </div>
     <div class="news" id="side3">
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
+        {volist name="right" id="c"}
+        <a href="{:Url('Association/newsdetail3?id='.$c['id'])}">
+        <img src="{$c.front_cover|get_cover='path'}" class="lazy">
         <div class="newsText">
-            <div class="newsTitle">3“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
+            <div class="newsTitle">{$c.title}</div>
+            <div class="newsTime"><span>{$c.publisher}</span><span>{$c.create_time|time_format='Y-m-d'}</span></div>
         </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
-    <a href="#">
-        <img src="/home/images/1.jpg" class="lazy">
-        <div class="newsText">
-            <div class="newsTitle">“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-            <div class="newsTime"><span>杭州市击剑运动协会</span><span>2018-10-10</span></div>
-        </div>
-    </a>
+        </a>
+        {/volist}
 </div>
 {/block}
 {block name="script"}
