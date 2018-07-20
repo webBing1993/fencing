@@ -1,0 +1,278 @@
+body{
+    background:rgba(245,245,245,1);
+}
+.headerTop {
+    width: 100vw;
+    height: 8.4vh;
+    text-align: center;
+    line-height: 8.4vh;
+    background: #f7f7f7;
+    color: #333;
+    font-size: .3rem;
+
+}
+
+.headerTop div {
+    width: 50%;
+    float: left;
+    position: relative;
+}
+
+.headerTop div a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color: #333;
+}
+
+#show1:before {
+    width: 2px;
+    height: 3.75vh;
+    background: #d1d1d1;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    content: '';
+    margin-top: -1.875vh;
+}
+
+#show1:after {
+    content: '';
+    background: url('/home/images/lxyz/icon_021.png') no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 11.33vw;
+    width: .32rem;
+    height: .32rem;
+    background-size: 4.27vw 4.27vw;
+    margin-top: -.16rem;
+}
+
+#show2:after {
+    content: '';
+    background: url('/home/images/lxyz/icon_023.png') no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 11.33vw;
+    width: .52rem;
+    height: .32rem;
+    background-size: 4.27vw 4.27vw;
+    margin-top: -.16rem;
+}
+
+.active#show1:after {
+    content: '';
+    background: url('/home/images/lxyz/icon_020.png') no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 11.33vw;
+    width: .32rem;
+    height: .32rem;
+    background-size: 4.27vw 4.27vw;
+    margin-top: -.16rem;
+}
+
+.active#show2:after {
+    content: '';
+    background: url('/home/images/lxyz/icon_022.png') no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 11.33vw;
+    width: .52rem;
+    height: .32rem;
+    background-size: 4.27vw 4.27vw;
+    margin-top: -.16rem;
+}
+
+.headerTop .active a {
+    color: #DD5D3A;
+}
+
+.appraisal {
+    position: relative;
+    width: 100vw;
+    display: none;
+    margin-top: 2.1vh;
+}
+
+.appraisalSort {
+    width: 100vw;
+    position: relative;
+    margin-top: 6vh;
+}
+
+.headerImg {
+    float: left;
+    width: 12vw;
+    height: 12vw;
+    background: #eee;
+}
+
+.headerImg img {
+    width: 12vw;
+    height: 12vw;
+}
+
+.appraisalRight {
+    margin-left: 14.7vw;
+    display: block;
+    overflow: hidden;
+}
+
+.appTop {
+    height: 12vw;
+    position: relative;
+    margin-bottom: 1.4vh;
+}
+
+.appraisalName {
+    height: 4.25vh;
+    line-height: 3vh;
+    font-size: .3rem;
+    color: #70B587;
+}
+
+.appraisalTime {
+    color: #999;
+    font-size: .28rem;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+}
+
+.appText {
+    font-size: .28rem;
+    color: #333;
+    text-align: justify;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.appshow {
+    font-size: .28rem;
+    color: #70B587;
+    margin: 1vh 0;
+    display: none;
+}
+
+._height {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+
+.appImg {
+    position: relative;
+    display: inline-block;
+}
+
+.appImg figure {
+    display: inline-block;
+    width: 21.33vw;
+    height: 21.33vw;
+    margin: 0 1vw 1vw 0;
+    overflow: hidden;
+}
+
+.appImg a {
+    display: inline-block;
+    width: 21.33vw;
+    height: 21.33vw;
+    margin: 0 1vw 1vw 0;
+    overflow: hidden;
+}
+
+.appImg a img {
+    width: 21.33vw;
+    height: 21.33vw;
+}
+
+#side1 .note {
+    text-align: left;
+}
+
+.appraisalSort li {
+    border-bottom: 1px solid #eee;
+    width: 100vw;
+    padding: 0 4vw;
+    margin-bottom: 2.25vh;
+}
+/*.appraisalSort li:last-child{*/
+    /*margin-bottom: 0;*/
+/*}*/
+.appraisalUser li {
+    width: 92vw;
+    height: 2.8rem;
+    position: relative;
+    margin: 0 auto 2.25vh;
+    background: url('/home/images/lxyz/icon_024.png') no-repeat;
+    background-size: 92vw 2.8rem;
+}
+
+.appraisalUser_01 img {
+    width: 1.18rem;
+    height: 1.18rem;
+    float: left;
+    margin-left: 6.67vw;
+}
+
+.appraisalUser_01 div {
+    display: block;
+    margin-left: 26.4vw;
+    font-size: .28rem;
+    color: #999;
+    height: 100%;
+}
+
+.appraisalUser_01 div p {
+}
+
+.appraisalUser_01 div span {
+    color: #333;
+}
+
+.appraisalUser_02 {
+    position: absolute;
+    left: 6.67vw;
+    bottom: 0;
+    width: 90%;
+    text-align: left;
+    font-size: .26rem;
+    color: #333;
+    height: 6vh;
+    line-height: 6vh;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.appraisalUser a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-top: .5rem;
+}
+
+#share {
+    width: 1.2rem;
+    height: 1.2rem;
+    background: #FE8B44;
+    position: fixed;
+    bottom: 3.6vh;
+    right: 4vw;
+    z-index: 9;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.2rem;
+}
+
+#share img {
+    width: .48rem;
+    height: .51rem;
+    position: relative;
+    vertical-align: middle;
+}
