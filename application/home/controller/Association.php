@@ -101,6 +101,18 @@ class Association  extends Base
 
         return $this->fetch();
     }
+    public function game(){
+        return $this->fetch();
+    }
+    public function gamedetail(){
+        return $this->fetch();
+    }
+    public function gamedetail02(){
+        return $this->fetch();
+    }
+    public function paysuccess(){
+        return $this->fetch();
+    }
 
     //首页场馆模块 更多页
     public function fencing(){

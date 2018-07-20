@@ -1,0 +1,122 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>我要报名</title>
+<link rel="stylesheet" href="/home/css/association/game.css">
+<!--<link rel="stylesheet" href="/home/css/animate.min.css">-->
+{/block}
+{block name="body"}
+    <div class="gameName">
+        <p class="gameName01"><img src="/home/images/game/icon05.png" class="icon">赛事名称</p>
+        <div class="gameName02">
+            <p><span>2018年杭州市“协会杯”击剑联赛（第一站）</span><br><span>报名截止时间：2018-04-21</span></p>
+            <p>杭州市上城区皮市巷158号</p>
+        </div>
+    </div>
+    <div class="user">
+        <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
+        <div class="error"><img src="/home/images/game/icon10.png" class="gantan">部分信息无法获取，需要补充完善才可进行报名！</div>
+        <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="张三"  readonly="readonly"></div>
+        <div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="2018-02-18"  readonly="readonly"></div>
+        <div class="userSort"><span>组别</span><input type="text" placeholder="请选择"  readonly="readonly" class="select" name="zb"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort"><span>剑种</span><input type="text" placeholder="请选择"  readonly="readonly" class="select" name="jz"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort active">
+            <span>赛别</span>
+            <span style="font-size: .26rem;margin-left: .38rem;color: #ccc;">可多选</span>
+            <div class="gameSort">
+                <span class="active">• 个人</span>
+                <span>• 团体</span>
+            </div>
+        </div>
+        <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="男"  readonly="readonly"></div>
+        <div class="userSort"><span>代表单位</span><input type="text" placeholder="请填写" value="杭州击剑馆"></div>
+        <div class="userSort"><span>带训教练</span><input type="text" placeholder="请填写" value="林教练"></div>
+        <div class="userSort active"><span>监护人电话</span><input type="text" placeholder="请填写" value="15788888888"  readonly="readonly"></div>
+        <div class="userSort"><span>证件类型</span><input type="text" placeholder="请选择"  readonly="readonly" class="select" name="zj"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort"><span>证件号</span><input type="text" placeholder="请填写" value="330327199908085698"></div>
+        <div class="userSort"><span>家庭住址</span><input type="text" placeholder="请填写" value="江干区白杨街道学林街583号"></div>
+        <div class="userSort"><span>备注</span><input type="text" placeholder="请填写" value="我是杭州击剑馆的在训学员"></div>
+    </div>
+    <div class="pay">
+        <div class="pay01"><img src="/home/images/game/icon07.png" class="icon">应付款</div>
+        <div class="pay02">会员价：¥<span>400</span></div>
+        <div class="pay03">普通价：¥<span>500</span></div>
+    </div>
+    <div class="vip">您已成为击剑馆会员，享受会员特权!</div>
+    <div class="goPay" data-type="1">去付款</div>
+<div id="HBox">
+    <div class="HBoxSorts">
+    </div>
+</div>
+
+<div id="pay">
+    <div class="payError">
+        <div class="payError01"><img src="/home/images/game/icon08.png" alt=""></div>
+        <div class="payError02">
+            <p>请继续完善所有信息</p>
+            <p>才可进行报名付款！</p>
+        </div>
+        <div class="payError03">继续填写</div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="/home/js/jquery.hdialog.min.js"></script>
+<script>
+    $('.select').on('click',function(){
+        $('#HBox').show();
+        var _height = $('.HBoxSorts').height();
+        $('.HBoxSorts').stop().animate({
+            bottom:'0'
+        },500);
+        var name = $(this)[0].name;
+        _select(name)
+    })
+    $(document).on('click','.HBoxSorts p',function(){
+        var sort = localStorage.getItem('_name');
+        if(sort == 'zb'){
+            $('input[name=zb]').val($(this).text())
+        }else if(sort == 'jz'){
+            $('input[name=jz]').val($(this).text())
+        }else if(sort == 'zj'){
+            $('input[name=zj]').val($(this).text())
+        }
+        $('.HBoxSorts').stop().animate({
+            bottom:'-100%'
+        },500);
+        setTimeout(function(){$('#HBox').hide();},500);
+    })
+    function bodyScroll(event){
+        event.preventDefault();
+    }
+
+    function _select(name){
+        var str = '';
+        if(name == 'zb'){
+            str += '<p>幼儿组</p><p>幼儿组1</p><p>幼儿组2</p><p>幼儿组3</p><p>幼儿组4</p><p>幼儿组5</p>'
+        }else if(name == 'jz'){
+            str += '<p>击剑</p><p>花剑</p><p>重剑</p>'
+        }else if(name == 'zj'){
+            str += '<p>身份证</p><p>军人</p><p>港澳台</p>'
+        }
+        localStorage.setItem('_name',name)
+        $('.HBoxSorts').html(str)
+    }
+    if($('.goPay').data('type')!==1){
+        $('.goPay').css('background','#C2C2C2')
+    }
+    $('.goPay').on('click',function(){
+        if($(this).data('type')==1){
+            location.href='/home/association/paysuccess.html'
+        }else{
+            $('#pay').show();
+            $('body').css('position','fixed');
+        }
+    })
+    $('.payError03').on('click',function(){
+        $('#pay').hide();
+        $('body').css('position','inherit');
+    })
+
+</script>
+{/block}
