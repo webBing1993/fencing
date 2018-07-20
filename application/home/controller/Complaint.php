@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Administrator
- * Date: 2018/7/20
- * Time: 13:57
+ * User: 王泽锋
+ * Date: 2018/07/20
+ * Time: 14:38
  */
 
 namespace app\home\controller;
@@ -11,7 +11,13 @@ namespace app\home\controller;
 
 class Complaint extends Base
 {
-    public function add(){
-        return $this->fetch();
+    //教练投诉首页
+    public function index(){
+
+      return $this->fetch();
     }
+
+
+
+
 }
