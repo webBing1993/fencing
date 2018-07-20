@@ -20,7 +20,7 @@ class Complaint extends Base
     //教练投诉  添加
     public function add(){
         $data = input('post.');
-        dump($data);exit;
+//        dump($data);exit;
 
         return $this->fetch();
     }
