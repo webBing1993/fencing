@@ -1,0 +1,134 @@
+{extend name='public/common'}
+{block name='style'}
+<title>击剑</title>
+<link rel="stylesheet" href="/home/css/mall/detail.css">
+{/block}
+{block name='body'}
+<div class="img">
+    <img src="/home/images/1.jpg" alt="">
+</div>
+
+<!--title-->
+<div class="titles">
+    <div class="title">
+        花剑
+        <span>花剑-小学</span>
+    </div>
+    <div class="priceWay clearfix">
+        <div class="price fl"><span> ￥</span>100</div>
+        <div class="way fr">领取方式：到馆领取</div>
+    </div>
+</div>
+
+<!-- content-->
+<div class="content">
+    <div class="contentTitle">商品详情</div>
+    <div class="summary">
+        这里是简介内容
+    </div>
+</div>
+
+<!-- btn-->
+<div class="btn">
+    <a href="javascript:;">立即购买</a>
+</div>
+
+<!-- buy-->
+<div class="buy">
+    <div class="shadow"></div>
+    <div class="popUp">
+        <div>
+            <div class="popTitle clearfix">
+                <div class="fl popImg">
+                    <img src="/home/images/1.jpg" alt="">
+                </div>
+                <div class="fl popTitlePrice">
+                    <div class="pop_title">花剑-小学</div>
+                    <div class="price">￥<span>100</span></div>
+                </div>
+            </div>
+            <div class="popNum">
+                <p>数量选择</p>
+                <p>
+                    <span class="minus fl">-</span>
+                    <span class="fl number">1</span>
+                    <span class="add fl">+</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="popBuy clearfix">
+        <div class="fl price">应付款 <span>￥</span><span class="total">100</span></div>
+        <div class="fr popBtn"><a href="/home/mall/order.html">生成订单</a></div>
+    </div>
+</div>
+{/block}
+{block name='script'}
+
+<script>
+
+    /*
+     * 立即购买
+     * */
+
+    $(".btn a").on("click", function () {
+        $(".buy").show()
+    });
+
+    /*
+    * 点击阴影消失
+    * */
+    $(".buy .shadow").on('click', function () {
+        $(this).parent('.buy').hide();
+    });
+
+    /*
+    * 数量的加减
+    * */
+    // 减法
+
+    $(".minus").on('click', function () {
+        var val = $(this).next().text();
+        var total = 0;
+        if (val <= 1) {
+            val = 1;
+        }else {
+            val--;
+        }
+        total = val*parseFloat($('.popTitlePrice span').text());
+        $(this).next().text(val);
+        $('.total').text(total);
+    });
+
+    // 加法
+
+    $('.add').on('click', function () {
+        var val = $(this).prev().text();
+        var total = 0;
+        val++;
+        total = val*parseFloat($('.popTitlePrice span').text());
+        $(this).prev().text(val);
+        $('.total').text(total);
+    });
+
+    /*
+    * 生成订单
+    * */
+    $(".popBtn a").on('click', function () {
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: {
+                id: id,
+                num: $(".popNum .number").text()
+            },
+            success: function (msg) {
+                $('.buy').hide();
+
+            }
+        })
+    });
+
+</script>
+
+{/block}

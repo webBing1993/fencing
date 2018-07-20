@@ -180,19 +180,19 @@ table {
 	}
 }
 .tip{
-	height: 10.8vw;
+	height: .8rem;
 	text-align: center;
-	line-height: 10.8vw;
+	line-height: .8rem;
 	color:#c1c1c1;
 	font-size: .24rem;
 }
 .loading{
 	width: 100%;
-	height: 10.8vw;
+	height: .8rem;
 }
 .typing_loader{
-	width: 6px;
-	height: 6px;
+	width: .12rem;
+	height: .12rem;
 	border-radius: 50%;
 	-webkit-animation: typing 1s linear infinite alternate;
 	-moz-animation: Typing 1s linear infinite alternate;

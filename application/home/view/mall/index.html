@@ -1,0 +1,350 @@
+{extend name="public/common"}
+{block name="style"}
+<title>击剑</title>
+<link rel="stylesheet" href="/home/css/mall/index.css">
+{/block}
+{block name="body"}
+
+<!-- 搜索功能-->
+<div class="search">
+    <div class="searchText">
+        <span>点击搜索你想要的商品</span>
+    </div>
+    <div class="searchInput">
+        <input type="text" placeholder="商品搜索">
+        <img src="/home/images/mall/cance.png" alt="">
+    </div>
+</div>
+
+<!-- 搜索弹出框-->
+<div class="reachResult">
+    <div class="shadow"></div>
+    <div class="results">
+        <div>
+            <!-- 搜索列表-->
+            <div class="resultLists">
+                <!-- 未搜索到内容提示-->
+                <div class="list noMsg">未搜索到内容</div>
+
+                <!-- 搜索列表开始-->
+                <div class="list">
+                    <a href="javascript:;">
+                        <span>搜索内容</span><span>商品类型</span>
+                    </a>
+                </div>
+                <!-- 搜索列表结束-->
+            </div>
+            <!-- 历史搜索-->
+            <div class="resultHistory">
+                <div class="historyTitle">历史搜索</div>
+                <div class="historyLists">
+                    <ul>
+                        <!-- 搜索列表开始-->
+                        <li class="list fl">
+                            <a href="javascript:;">
+                                历史搜索内容
+                            </a>
+                        </li>
+                        <!-- 搜索列表结束-->
+                        <!-- 搜索列表开始-->
+                        <li class="list fl">
+                            <a href="javascript:;">
+                                历史搜索内容
+                            </a>
+                        </li>
+                        <!-- 搜索列表结束-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 筛选功能-->
+<div class="preparation">
+    <ul class="clearfix">
+        <li class="fl">
+            <a href="javascript:;">
+                剑种
+                <img src="/home/images/mall/down.png" alt="">
+            </a>
+        </li>
+        <li class="fl">
+            <a href="javascript:;">
+                类别
+                <img src="/home/images/mall/down.png" alt="">
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<!-- 筛选弹窗-->
+<div class="preparationResult">
+    <div class="shadow"></div>
+    <div class="shadow"></div>
+    <!-- 剑种-->
+    <div class="preparationLists">
+        <ul>
+            <!-- 剑种循环开始-->
+            <li class="list">
+                <a href="javascript:;">
+                    花剑
+                </a>
+            </li>
+            <!-- 剑种循环结束-->
+            <!-- 剑种循环开始-->
+            <li class="list active">
+                <a href="javascript:;">
+                    花剑
+                </a>
+            </li>
+            <!-- 剑种循环结束-->
+        </ul>
+    </div>
+
+    <!-- 类别-->
+    <div class="preparationLists">
+        <ul>
+            <!-- 类别循环开始-->
+            <li class="list">
+                <a href="javascript:;">
+                    花剑2
+                </a>
+            </li>
+            <!-- 类别循环结束-->
+            <!-- 类别循环开始-->
+            <li class="list active">
+                <a href="javascript:;">
+                    花剑2
+                </a>
+            </li>
+            <!-- 类别循环结束-->
+        </ul>
+    </div>
+</div>
+
+<!-- 正文内容部分-->
+<div class="content">
+    <div class="lists clearfix">
+        <!-- 内容列表开始-->
+        <div class="list fl">
+            <a href="/home/mall/detail.html">
+                <div class="listImg">
+                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                </div>
+                <div class="listContent">
+                    <p class="title">花剑-小学</p>
+                    <p class="price"><span>￥</span>100</p>
+                </div>
+            </a>
+        </div>
+        <!-- 内容列表结束-->
+    </div>
+</div>
+
+<!-- 加载-->
+<div class="tip"></div>
+<div class="loading hidden">
+    <div class="typing_loader"></div>
+</div>
+
+{/block}
+{block name="script"}
+
+<script>
+
+    /*
+    * 搜索
+    * **/
+
+    // 点击切换搜索功能
+
+    $(".searchText").on("click", function () {
+        $(this).hide().next().show();
+        $(".preparationResult").hide();
+        $(".preparationResult>div").hide();
+        $(".searchInput input").focus();
+    });
+
+    // 清空搜索内容
+
+    $(".searchInput img").on("click", function () {
+        $(this).prev().val('');
+        $(this).prev().focus();
+        $(".reachResult").hide();
+    });
+
+    // 阴影点击搜索、弹窗消失
+
+    $(".shadow").on("click", function () {
+        $(".search .searchText").show();
+        $(".search .searchInput input").val('');
+        $(".search .searchInput").hide();
+        $(".reachResult").hide();
+        $(".preparationResult").hide();
+        $(".preparationResult>div").hide();
+    });
+
+    // 搜索功能
+
+    $(".searchInput input").on("input",function () {
+        var val = $(this).val();
+        if (val == '') {
+            $(".reachResult").hide();
+        }else {
+            $(".reachResult").show();
+        }
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: {
+                val: val
+            },
+            success: function (msg) {
+                console.log(msg);
+            }
+        })
+    });
+
+    /*
+    * 筛选功能
+    * */
+
+    var fist = 0;   // 为了筛选选择时的选择类型下标保存
+    $(".preparation li").on("click", function () {
+        fist = $(this).index();
+        $(".preparationResult").show();
+        $(".preparationResult .shadow").eq($(this).length - $(this).index()).hide();
+        $(".preparationResult .preparationLists").eq($(this).length - $(this).index()).hide();
+        $(".preparationResult .shadow").eq($(this).index()).toggle();
+        $(".preparationResult .preparationLists").eq($(this).index()).toggle();
+    });
+    
+    // 筛选选择
+    var type1 = '',         // 记录两种点击index
+            type2 = '';
+    $(".preparationLists .list").on("click", function () {
+        $(this).parents(".preparationLists").children('.list').removeClass('active');
+        $(this).addClass('active');
+        var index = $(this).index();
+        if (fist == 0) {
+            type1 = index;
+        }else {
+            type2 = index;
+        }
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: {
+                type1: type1,
+                type2: type2
+            },
+            success: function (msg) {
+                console.log(msg);
+                $(".preparationResult").hide();
+                $(".preparationResult>div").hide();
+            }
+        })
+    });
+
+
+    /*
+    * 上拉加载
+    * */
+
+    // 初始状态的判断
+
+    var isScroll = true;  // 开关，增加触发点的流畅
+    $(function () {
+       var len = $(".lists .list").length;
+        if (len >= 10) {
+            $('.tip' ).text('上拉加载更多');
+            // 上拉加载
+            loadScroll();
+        }else {
+            $('.tip').hide();
+        }
+    });
+
+    // 上拉加载函数
+
+    function loadScroll() {
+        $(window ).off("scroll" ).on("scroll",function(){
+            var dh = $(document).height();
+            var end = $(window).height() + $(window ).scrollTop();
+            var len = $(".lists .list").length;
+            var tip = $(".tip");
+            var loading = $('.loading');
+            if(dh == end && isScroll){
+                isScroll = false;
+                $.ajax({
+                    type:"post",
+                    url:"",
+                    data:{
+                        length:len
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        isScroll = true;
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data.code == 1){
+                            // 数据接收函数
+                            addMall(data);
+                            lazy();
+                            if(data.data.length == 6){
+                                tip.text('上拉加载更多');
+                            }
+                        }else{
+                            tip.text('没有更多数据了');
+                            $(window ).off("scroll");
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    // 数据接收函数
+
+    function addMall(data) {
+        console.log(data);
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++) {
+            var list = lists[i];
+            html += '<div class="list fl">'+
+                        '<a href="/home/mall/detail/id='+ list.id +'.html">'+
+                            '<div class="listImg">'+
+                                '<img src="'+ list.src +'" alt="" class="lazy">'+
+                            '</div>'+
+                            '<div class="listContent">'+
+                                '<p class="title">花剑-小学</p>'+
+                                '<p class="price"><span>￥</span>' + lsit.pricce + '</p>'+
+                            '</div>'+
+                        '</a>'+
+                    '</div>';
+        }
+        $(".lists").append(html);
+    }
+
+    /*
+    * 图片懒加载功能函数
+    * */
+
+    function lazy() {
+        $("img.lazy").lazyload({
+            placeholder: "/home/images/loading.jpg",
+            effect: "fadeIn",
+            threshold : 500
+        });
+    }
+
+</script>
+
+{/block}
