@@ -21,6 +21,7 @@ class Complaint extends Base
     //教练投诉  添加
     public function add(){
         $data = input('post.');
+
         if(!empty($data['images'])){
             $data['front_cover'] = json_encode($data['images']);
 
@@ -28,6 +29,9 @@ class Complaint extends Base
             $data['front_cover'] = '';
         }
         unset($data['images']);
+        $userId = session('userId');
+        $data['create_user'] = $userId;
+        $data['create_time'] = time();
         $CompModel = new Comp();
         $info = $CompModel->create($data);
 

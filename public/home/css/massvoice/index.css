@@ -164,9 +164,10 @@
 }
 #showImg img {
     width:7rem;
+    height: 9rem;
     position: relative;
     margin: auto;
-    top:30%;
+    top:18%;
 }
 
 #name {

@@ -115,42 +115,47 @@
         }else {
             var arr = '';
         }
-        var description = $('.suggest textarea').val();
-        if(description!==''){
-            var data = {description:description,images:arr};
-            console.log(data)
-            swal({
-                title: "确定提交你的信息吗？",
-                text: "",
-                type: "info",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                confirmButtonText:'确定',
-                cancelButtonText:'取消',
-                showLoaderOnConfirm: true,
-            }, function () {
-                $.ajax({
-                    type:"post",
-                    url: "{:Url('Complaint/add')}",
-                    data:data,
-                    dataType: "json",
-                    success:function(data){
-                        console.log(data)
-                        // window.location.href=document.referrer
-//                        window.history.go(-1);
-                        // localStorage.setItem('zhuangtai','1')
-                        // window.addEventListener('pageshow', function(e) {
-                        //     // 通过persisted属性判断是否存在 BF Cache
-                        //     if (e.persisted) {
-                        //         location.reload();
-                        //     }
-                        // });
-                    }
-                })
-            });
+        var name = $('.suggest input').val();
+        var content = $('.suggest textarea').val();
+        if(name!=='') {
+            if (content !== '') {
+                var data = {name: name,content: content, images: arr};
+//                console.log(data)
+                swal({
+                    title: "确定提交你的信息吗？",
+                    text: "",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    showLoaderOnConfirm: true,
+                }, function () {
+                    $.ajax({
+                        type: "post",
+                        url: "{:Url('Complaint/add')}",
+                        data: data,
+                        dataType: "json",
+                        success: function (data) {
+//                            console.log(data)
+                            // window.location.href=document.referrer
+                        window.history.go(-1);
+                            // localStorage.setItem('zhuangtai','1')
+                            // window.addEventListener('pageshow', function(e) {
+                            //     // 通过persisted属性判断是否存在 BF Cache
+                            //     if (e.persisted) {
+                            //         location.reload();
+                            //     }
+                            // });
+                        }
+                    })
+                });
 
-        }else {
-            swal("我的声音不能为空！")
+            } else {
+                swal("投诉理由不能为空！")
+            }
+        }else{
+            swal("教练姓名不能为空！")
         }
     })
 </script>
