@@ -8,6 +8,7 @@
 
 namespace app\home\controller;
 
+use app\home\model\Comp;
 
 class Complaint extends Base
 {
@@ -20,9 +21,21 @@ class Complaint extends Base
     //教练投诉  添加
     public function add(){
         $data = input('post.');
-//        dump($data);exit;
+        if(!empty($data['images'])){
+            $data['front_cover'] = json_encode($data['images']);
 
-        return $this->fetch();
+        }else{
+            $data['front_cover'] = '';
+        }
+        unset($data['images']);
+        $CompModel = new Comp();
+        $info = $CompModel->create($data);
+
+        if($info) {
+            return $this->success("提交成功");
+        }else{
+            return $this->error("提交失败");
+        }
     }
 
 
