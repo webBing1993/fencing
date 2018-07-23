@@ -222,23 +222,22 @@
     });
     
     // 筛选选择
-    var type1 = '',         // 记录两种点击index
-            type2 = '';
+    var session = window.sessionStorage;
     $(".preparationLists .list").on("click", function () {
-        $(this).parents(".preparationLists").children('.list').removeClass('active');
+        $(this).parents(".preparationLists").find('.list').removeClass('active');
         $(this).addClass('active');
         var index = $(this).index();
         if (fist == 0) {
-            type1 = index;
+            session.setItem('type1',index);
         }else {
-            type2 = index;
+            session.setItem('type2',index);
         }
         $.ajax({
             url: '',
             type: 'post',
             data: {
-                type1: type1,
-                type2: type2
+                type1: session.getItem('type1'),
+                type2: session.getItem('type2')
             },
             success: function (msg) {
                 console.log(msg);
