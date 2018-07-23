@@ -48,7 +48,7 @@
                         <!-- 搜索列表结束-->
                         <!-- 搜索列表开始-->
                         <li class="list fl">
-                            <a href="javascript:;">
+                            <a href="/home/mall/detail?id=1&&type=1">
                                 历史搜索内容
                             </a>
                         </li>
@@ -86,40 +86,30 @@
     <!-- 剑种-->
     <div class="preparationLists">
         <ul>
+            {volist name="type1" id="a"}
             <!-- 剑种循环开始-->
-            <li class="list">
+            <li class="list" data-id="{$a.id}">
                 <a href="javascript:;">
-                    花剑
+                    {$a.title}
                 </a>
             </li>
             <!-- 剑种循环结束-->
-            <!-- 剑种循环开始-->
-            <li class="list active">
-                <a href="javascript:;">
-                    花剑
-                </a>
-            </li>
-            <!-- 剑种循环结束-->
+            {/volist}
         </ul>
     </div>
 
     <!-- 类别-->
     <div class="preparationLists">
         <ul>
+            {volist name="type2" id="b"}
             <!-- 类别循环开始-->
-            <li class="list">
+            <li class="list" data-id="{$b.id}">
                 <a href="javascript:;">
-                    花剑2
+                    {$b.title}
                 </a>
             </li>
             <!-- 类别循环结束-->
-            <!-- 类别循环开始-->
-            <li class="list active">
-                <a href="javascript:;">
-                    花剑2
-                </a>
-            </li>
-            <!-- 类别循环结束-->
+            {/volist}
         </ul>
     </div>
 </div>
@@ -128,17 +118,19 @@
 <div class="content">
     <div class="lists clearfix">
         <!-- 内容列表开始-->
+        {volist name="list" id="vo"}
         <div class="list fl">
-            <a href="/home/mall/detail.html">
+            <a href="{:Url('Mall/detail?id='.$vo['id'])}">
                 <div class="listImg">
-                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                    <img src="{$vo.front_cover|get_cover='path'}" alt="" class="lazy">
                 </div>
                 <div class="listContent">
-                    <p class="title">花剑-小学</p>
-                    <p class="price"><span>￥</span>100</p>
+                    <p class="title">{$vo.title}</p>
+                    <p class="price"><span>￥</span>{$vo.price}</p>
                 </div>
             </a>
         </div>
+        {/volist}
         <!-- 内容列表结束-->
     </div>
 </div>
@@ -196,7 +188,7 @@
             $(".reachResult").show();
         }
         $.ajax({
-            url: '',
+            url: "{:Url('Mall/search')}",
             type: 'post',
             data: {
                 val: val

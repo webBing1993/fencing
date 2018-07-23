@@ -1,0 +1,349 @@
+{extend name="base/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/static/datepicker/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="/static/iCheck/custom.css">
+<link rel="stylesheet" href="/admin/css/chosen/chosen.css">
+<style>
+    textarea{
+        resize:none;
+    }
+    .imggroup{
+        position: relative;
+    }
+    .imgbox{
+        height: 100px;
+        width: 200px;
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+    .imgfile{
+        height: 100px;
+        width: 200px;
+        position: absolute;
+        top:0;
+        opacity: 0;
+    }
+    .plus{
+        height: 100px;
+        width: 200px;
+        font-size: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: rgba(204, 204, 204, 0.51);
+    }
+    .plus:hover{
+        font-size: 150px;
+    }
+</style>
+{/block}
+
+{block name="page-header"}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>购物商城</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{:Url('Shop/index')}">商品管理</a>
+            </li>
+            <li class="active">
+                <strong>修改</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+{/block}
+
+{block name="main"}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>修改</h5>
+                    <div class="ibox-tools">
+                        <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form id="form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>剑种类型:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <select class="form-control" name="type1">
+
+                                    <option>{$msg.type1}</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>类别:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <select class="form-control" name="type2">
+
+                                    <option>{$msg.type2}</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>顶部Banner:</label>
+                            </div>
+                            <div class="col-lg-5" >
+                                <div class="imggroup">
+                                    <img src="{$msg.front_cover|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
+                                    <input type="file" class="imgfile" id="file" accept="image/png , image/jpg ,image/jpeg ,image/gif">
+                                    <input type="hidden" name="front_cover" class="img"  value="{$msg.front_cover}" required="">
+                                </div>
+                                <b>推荐尺寸：500*400px</b>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>标题:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入标题..." class="form-control form_title" name="title" value="{$msg.title}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>价格:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入价格..." class="form-control form_title" name="price" value="{$msg.price}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-1 control-label">
+                                <label>内容:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class=" float-e-margins">
+                                    <div class="ibox-content no-padding borders">
+                                        <script id="container" name="content" type="text/plain">{$msg.content}</script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="id" value="{$msg.id}">
+                        <div class="form-group">
+                            <div class="col-lg-11 col-lg-offset-1">
+                                <button class="btn btn-primary submit-btn post-add" type="button" target-form="form-horizontal" >发布</button>
+                                <a class="btn btn-default" href="javascript:window.history.go(-1);">返回</a>
+                            </div>
+                        </div>
+                        <div class="selblo"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/static/uploadify/jquery.uploadify.min.js"></script>
+<script src="/static/iCheck/icheck.min.js"></script>
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
+
+<script>
+    $(function(){
+        //导航高亮
+        highlight_subnav("{:Url('Shop/index')}");
+
+        //上传图片
+        var plus = $('.plus');
+        var imgnum  = $('[n]' ).attr('n');
+        plus.on('click',function(){
+            var it = $(this);
+            it.hide().next().fadeIn();
+            imgnum = 3;
+            if(!it.hasClass('plus2')){
+                plus.eq(1).fadeIn();
+                imgnum = 2
+            }
+        });
+        $(".imgfile").on("change",function(){
+            var fileObj = document.getElementById("file").files[0]; // js 获取文件对象
+            var formData = new FormData();
+            formData.append("picture",fileObj);
+            var url = "{:Url('File/uploadPicture')}"; // 接收上传文件的后台地址
+            var form = new FormData(); // FormData 对象
+            if(fileObj.size/1024 > 1025) { //大于1M，进行压缩上传
+                photoCompress(fileObj, {
+                    quality: 0.2
+                }, function(base64Codes){
+                    //console.log("压缩后：" + base.length / 1024 + " " + base);
+                    var bl = convertBase64UrlToBlob(base64Codes);
+                    form.append("picture", bl, "file_"+Date.parse(new Date())+".jpg"); // 文件对象
+                    xhr = new XMLHttpRequest();  // XMLHttpRequest 对象
+                    xhr.open("post", url, true); //post方式，url为服务器请求地址，true 该参数规定请求是否异步处理。
+                    xhr.onload = uploadComplete; //请求完成
+                    xhr.onerror =  uploadFailed; //请求失败
+                    xhr.send(form); //开始上传，发送form数据
+                });
+            }
+            else{ //小于等于1M 原图上传
+                form.append("picture", fileObj); // 文件对象
+                xhr = new XMLHttpRequest();  // XMLHttpRequest 对象
+                xhr.open("post", url, true); //post方式，url为服务器请求地址，true 该参数规定请求是否异步处理。
+                xhr.onload = uploadComplete; //请求完成
+                xhr.onerror =  uploadFailed; //请求失败
+                xhr.send(form); //开始上传，发送form数据
+            }
+        });
+        //上传成功响应
+        function uploadComplete(evt) {
+            var data = JSON.parse(evt.target.responseText);
+            console.log(data)
+            $('.imgfile').siblings(".img").val(data.data.id);
+            //显示图片缩略图
+            $('.imggroup').find("img" ).attr('src',data.data.path);
+        }
+        //上传失败
+        function uploadFailed(evt) {
+            alert("上传失败！");
+        }
+        //取消上传
+        function cancleUploadFile(){
+            xhr.abort();
+        }
+        //百度编辑器
+        var ue = UE.getEditor('container',{
+            initialFrameHeight:400
+        });
+
+        $(".post-add").on("click",function(){
+            /*重组轮播图，删除多余字符串（i是键值，1表示几位开始*/
+            var it=$(this);
+            var data = {
+                id:$("input[name='id']").val(),
+//                type:$("select[name='type']").val(),
+                front_cover:$("input[name='front_cover']").val(),
+                title:$("input[name='title']").val(),
+                price:$("input[name='price']").val(),
+                content:ue.getContent(),
+                status:0,
+            };
+            $.ajax({
+                type:"post",
+                url:$("#form").attr("action"),
+                data:data,
+                success:function(data){
+                    if(data.code == 1){
+                        if (data.url) {
+                            updateAlert(data.msg + ' 页面即将自动跳转~','success');
+                        }else{
+                            updateAlert(data.msg ,'success');
+                        }
+                        it.prop('disabled','true');
+                        it.next('button').prop('disabled','true');
+                        setTimeout(function(){
+                            if (data.url) {
+                                location.href=data.url;
+                            } else {
+                                location.reload();
+                            }
+                            it.removeAttr('disabled');
+                            it.next('button').removeAttr('disabled')
+                        },2000);
+                    } else {
+                        updateAlert(data.msg, 'error');
+                        it.attr('disabled','true');
+                        it.next('button').prop('disabled','true');
+                        setTimeout(function(){
+                            it.removeAttr('disabled');
+                            it.next('button').removeAttr('disabled')
+                        },2000);
+                    }
+                }
+            });
+            return false;
+        });
+
+    })
+</script>
+
+
+<!--时间日历-->
+<script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        //    时间日历
+        $( ".datetimepicker" ).datetimepicker( {
+            language:  'cn',
+            format: 'yyyy-mm-dd hh:ii',
+            minView: "hour",
+            forceParse: false,
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: 1,
+            minuteStep: 5
+
+        });
+        //    单选按钮
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+    })
+
+</script>
+<script>
+    $(function(){
+        //下拉框
+        $("select").chosen({
+            no_results_text: "没有找到该选项",
+            allow_single_de: true,
+            width:'100%',
+            max_selected_options:'100'
+        });
+        var selgp = $(".selgp");
+        var selgp2 = $(".selgp2");
+        selHeight(selgp);
+        selHeight(selgp2);
+        function selHeight(e){
+            e.find('ul').on('click',function(){
+                var results = $(this ).next().find('.chosen-results' );
+                var h= results.height();
+                h=h-100;
+                $('.selblo' ).animate({'height':h+'px'},100);
+                //切出页面
+                var hiddenProperty = 'hidden' in document ? 'hidden' :
+                        'webkitHidden' in document ? 'webkitHidden' :
+                                null;
+                var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+                var onVisibilityChange = function(){
+                    if (!document[hiddenProperty]) {
+                        //selgp.find('.search-field').find('input').on('blur');
+                    }else{
+                        e.find('.search-field').find('input').off('blur');
+                    }
+                };
+                $(document).on(visibilityChangeEvent, onVisibilityChange);
+            });
+            e.find('.search-field').find('input').on('blur',function(){
+                setTimeout(function(){
+                    $('.selblo' ).animate({'height':'0'});
+                },100)
+            });
+        }
+    })
+</script>
+{/block}

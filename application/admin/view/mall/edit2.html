@@ -1,0 +1,286 @@
+{extend name="base/common"}
+
+{block name="style"}
+<link rel="stylesheet" href="/static/datepicker/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="/static/iCheck/custom.css">
+<link rel="stylesheet" href="/admin/css/chosen/chosen.css">
+<style>
+    .imggroup{
+        position: relative;
+    }
+    .imgbox{
+        height: 100px;
+        width: 200px;
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+    .imgfile{
+        height: 100px;
+        width: 200px;
+        position: absolute;
+        top:0;
+        opacity: 0;
+    }
+    .plus{
+        height: 100px;
+        width: 200px;
+        font-size: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: rgba(204, 204, 204, 0.51);
+    }
+    .plus:hover{
+        font-size: 150px;
+    }
+    .plus2{
+        display: none;
+    }
+    .plusimg{
+        display: none;
+    }
+</style>
+{/block}
+
+{block name="page-header"}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>购物商城</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{:Url('Mall/tp')}">类别列表</a>
+            </li>
+            <li class="active">
+                {empty name="msg"}
+                <strong>添加</strong>
+                {else/}
+                <strong>修改</strong>
+                {/empty}
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+{/block}
+
+{block name="main"}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5></h5>
+                    <div class="ibox-tools">
+                        <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
+                    </div>
+                </div>
+                <div class="ibox-content all">
+                    <form id="form" class="form-horizontal" method="post">
+
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>类别名称:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入类别名称" class="form-control form_title" name="title" value="{$msg.title || default=''}">
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="id" value="{$msg.id || default=''}">
+                        <div class="form-group">
+                            <div class="col-lg-11 col-lg-offset-1">
+                                <button class="btn btn-primary submit-btn post-put" type="button" target-form="form-horizontal" >发布</button>
+                                <a class="btn btn-default" href="javascript:window.history.go(-1);">返回</a>
+                            </div>
+                        </div>
+                        <div class="selblo"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/static/uploadify/jquery.uploadify.min.js"></script>
+<script src="/static/iCheck/icheck.min.js"></script>
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
+<script src="/admin/js/chosen.jquery.js"></script>
+<script>
+    $(function(){
+        //    单选按钮
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+        highlight_subnav("{:Url('Mall/tp')}");
+        //上传图片
+        var plus = $('.plus');
+        var imgnum = 1;
+        plus.on('click',function(){
+            var it = $(this);
+            it.hide().next().fadeIn();
+            imgnum = 3;
+            if(!it.hasClass('plus2')){
+                plus.eq(1).fadeIn();
+                imgnum = 2
+            }
+        });
+
+        var ue = UE.getEditor('container',{
+            initialFrameHeight:400
+        });
+
+        //发布
+        $(".post-put").off('click').on("click",function(){
+            var it=$(this);
+            var data = {
+                id:$("input[name='id']").val(),
+                title:$("input[name='title']").val(),
+                status:0,
+            };
+            $.ajax({
+                type:"post",
+                url:$("#form").attr("action"),
+                data:data,
+                success:function(data){
+                    if(data.code == 1){
+                        if (data.url) {
+                            updateAlert(data.msg + ' 页面即将自动跳转~','success');
+                        }else{
+                            updateAlert(data.msg ,'success');
+                        }
+                        it.prop('disabled','true');
+                        it.prev().prop('disabled','true');
+                        setTimeout(function(){
+                            if (data.url) {
+                                location.href=data.url;
+                            } else {
+                                location.reload();
+                            }
+                            it.removeAttr('disabled');
+                            it.prev().removeAttr('disabled')
+                        },2000);
+                    } else {
+                        updateAlert(data.msg, 'error');
+                        it.attr('disabled','true');
+                        it.prev().prop('disabled','true');
+                        setTimeout(function(){
+                            it.removeAttr('disabled');
+                            it.prev().removeAttr('disabled')
+                        },2000);
+                    }
+                }
+            });
+            return false;
+        });
+    })
+    $("select" ).chosen({
+        no_results_text: "没有找到该选项",
+        allow_single_de: true,
+        width:'100%',
+        max_selected_options:'100'
+    });
+
+    
+  $(".imgbox").off().on("click",function(){
+      if($(".img_pop_up").length==0){
+        html = '';
+        html +=
+                '<div class="img_pop_up">' +
+                '<div class="self_img_pop_up">' +
+                '<div class="cut_img">' +
+                '<img id="imgTest" src="" alt="">' +
+                '</div>' +
+                '<div class="confirm_button">' +
+                '<div class="picture_div">' +
+                '<input type="file" id="fileTest">' +
+                '</div>' +
+                '<button class="cancel_choose">取消</button><button class="confirm_choose">确定</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+        $("body").append(html);
+    }
+      $(".img_pop_up").show();
+      $('#fileTest').on('change', function(ev) {
+          var size = ($(this)[0].files[0].size / 1024).toFixed(2);
+          var imgBox = $(this);
+          if(size <= 2048) {
+              let $file = $(this);
+              let fileObj = $file[0];
+              let windowURL = window.URL || window.webkitURL;
+              let dataURL = null;
+              if (!fileObj || !fileObj.files || !fileObj.files[0]) return;
+              dataURL = windowURL.createObjectURL(fileObj.files[0]);
+              $("#imgTest").attr('src', dataURL);
+              $("#imgTest").cropper({
+                  aspectRatio: 15 / 8,
+                  viewMode: 1,
+                  rotatable: true,
+                  guides: false,
+                  dragMode: "move",
+                  background: true,
+                  movable: true,
+//                   cropBoxMovable :false,
+                   cropBoxResizable :false,
+                  resizable: false,
+                  dragCrop:false
+              });
+              $("#imgTest").cropper('replace', dataURL);
+          }else{
+              warning({msg:"您选择的图片超过2mb，请重新选择"});
+              return;
+          }
+      });
+
+      $('.confirm_button .confirm_choose').off().on('click', function() {
+          if ($("#imgTest").cropper('getCroppedCanvas') == null) return;
+          var base64 = $("#imgTest").cropper('getCroppedCanvas').toDataURL('base64', 0.3);
+          $.ajax({
+              type: 'post',
+              url: "{:Url('Admin/picture_play')}",
+              data: {
+                  type: base64
+              },
+              success: function (res) {
+                  if(res.code == 1){
+                      $("input[name='front_cover']").val(res.data);
+                  }else{
+                      updateAlert(data.msg, 'error');
+                      it.attr('disabled','true');
+                      it.prev().prop('disabled','true');
+                      setTimeout(function(){
+                          it.removeAttr('disabled');
+                          it.prev().removeAttr('disabled')
+                      },2000);
+                  }
+              }
+          });
+          $(".imgbox").attr("src",base64);
+          $('.self_bg').remove();
+          $("#imgTest").cropper('reset');
+          $('.img_pop_up').css('display', 'none');
+      });
+      $('.confirm_button .cancel_choose').off().on('click', function() {
+          $('.img_pop_up').css('display', 'none');
+      });
+  });
+
+
+
+
+
+
+
+
+
+
+
+</script>
+{/block}
