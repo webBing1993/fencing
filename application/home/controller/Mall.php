@@ -11,6 +11,7 @@ namespace app\home\controller;
 use app\home\model\Shop;
 use app\home\model\MallOne;
 use app\home\model\MallTwo;
+use app\home\model\ShopRecord;
 
 /*
  * 商城
@@ -35,7 +36,7 @@ class Mall  extends Base
     // 搜索
     public function search(){
         $val = input('val');
-        $data = Shop::where('title','like','%'.$val.'%')->order('id desc')->select();
+        $data = Shop::where('title','like','%'.$val.'%')->where('status',0)->order('id desc')->select();
         if($data) {
             return $this->success("搜索成功",'',$data);
         }else{
@@ -45,10 +46,20 @@ class Mall  extends Base
 
     // 商城详情页
     public function detail(){
-//        $id = input('id');
-//        $type = input('type');
-//
-//        dump($data);exit;
+        $id = input('id');
+        if(empty($id)){
+            return $this->error('没有找到此数据');
+        }
+        $type = input('type');
+        if(empty($type)){
+            $data = Shop::where('id',$id)->find();
+        }else{
+            $data = Shop::where('id',$id)->find();
+            $li['title'] = $data['title'];
+            $li['create_time'] = time();
+            ShopRecord::create($li);
+        }
+        $this->assign('data',$data);
 
         return $this->fetch();
     }
