@@ -167,6 +167,7 @@
         $(".preparationResult").hide();
         $(".preparationResult>div").hide();
         $(".searchInput input").focus();
+        $(".searchInput input").val('');
     });
 
     // 清空搜索内容
@@ -204,7 +205,19 @@
                 val: val
             },
             success: function (msg) {
-                console.log(msg);
+                $(".resultLists .list").remove();
+                var html = '';
+                for (var i = 0; i < msg.data.length; i++) {
+                    html += '<div class="list">'+
+                            '<a href="/home/mall/detail?id='+ msg.data[i].id +'&&type=1">'+
+                            '<span>'+ msg.data[i].title +'</span>'+
+                            '</a>'+
+                            '</div>'
+                }
+                if (msg.data.length == 0) {
+                    html = '<div class="list noMsg">未搜索到内容</div>';
+                }
+                $(".resultLists").append(html);
             }
         })
     });
