@@ -24,7 +24,7 @@
             <!-- 搜索列表-->
             <div class="resultLists">
                 <!-- 未搜索到内容提示-->
-                <div class="list noMsg">未搜索到内容</div>
+                <!--<div class="list noMsg">未搜索到内容</div>-->
 
                 <!-- 搜索列表开始-->
                 <div class="list">
@@ -86,6 +86,11 @@
     <!-- 剑种-->
     <div class="preparationLists">
         <ul>
+            <li class="list" data-id="">
+                <a href="javascript:;">
+                    全部
+                </a>
+            </li>
             {volist name="type1" id="a"}
             <!-- 剑种循环开始-->
             <li class="list" data-id="{$a.id}">
@@ -101,6 +106,11 @@
     <!-- 类别-->
     <div class="preparationLists">
         <ul>
+            <li class="list" data-id="">
+                <a href="javascript:;">
+                    全部
+                </a>
+            </li>
             {volist name="type2" id="b"}
             <!-- 类别循环开始-->
             <li class="list" data-id="{$b.id}">
@@ -218,7 +228,7 @@
     $(".preparationLists .list").on("click", function () {
         $(this).parents(".preparationLists").find('.list').removeClass('active');
         $(this).addClass('active');
-        var index = $(this).index();
+        var index = $(this).attr('data-id');
         if (fist == 0) {
             session.setItem('type1',index);
         }else {
@@ -249,7 +259,7 @@
     var isScroll = true;  // 开关，增加触发点的流畅
     $(function () {
        var len = $(".lists .list").length;
-        if (len >= 10) {
+        if (len >= 12) {
             $('.tip' ).text('上拉加载更多');
             // 上拉加载
             loadScroll();
@@ -273,7 +283,9 @@
                     type:"post",
                     url:"",
                     data:{
-                        length:len
+                        length:len,
+                        type1: session.getItem('type1'),
+                        type2: session.getItem('type2')
                     },
                     beforeSend: function(XMLHttpRequest){
                         tip.hide();
@@ -287,7 +299,7 @@
                             // 数据接收函数
                             addMall(data);
                             lazy();
-                            if(data.data.length == 6){
+                            if(data.data.length == 8){
                                 tip.text('上拉加载更多');
                             }
                         }else{
