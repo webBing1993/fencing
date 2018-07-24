@@ -1,0 +1,57 @@
+{extend name="public/common"}
+{block name="style"}
+<title>请假申请</title>
+<link rel="stylesheet" href="/home/css/user/leave.css">
+<link rel="stylesheet" href="/home/css/association/game.css">
+{/block}
+{block name="body"}
+<!--假如是 教练进入-->
+
+<!--顶部分类-->
+<div class="Top">
+    <div data-side="1" class="active">未审批<span></span></div>
+    <div data-side="2">已审批<span></span></div>
+</div>
+<!--正文切换-->
+<div class="leave" id="side1" style="display: block;">
+    <a href="/home/user/leavedetail.html">
+        <div class="leave01">请假审批</div>
+        <div class="leave02"><span>申请原因：</span><span>原因原因原因原因原因原因</span></div>
+        <div class="leave02"><span>时间区间：</span><span>2018-05-06-12：00——2018-05-07-12：00</span></div>
+        <div class="leave03"><span>2018/4/28/ 23:43</span></div>
+    </a>
+</div>
+<div class="leave" id="side2" style="display: none;">
+    <a href="/home/user/leavedetail.html">
+        <div class="leave01">请假审批</div>
+        <div class="leave02"><span>申请原因：</span><span>原因原因原因原因原因原因</span></div>
+        <div class="leave02"><span>时间区间：</span><span>2018-05-06-12：00——2018-05-07-12：00</span></div>
+        <div class="leave03"><span>2018/4/28/ 23:43</span></div>
+    </a>
+</div>
+
+<!--这是学员-->
+<!--<div class="leave">-->
+    <!--<a href="/home/user/leavedetail.html">-->
+        <!--<div class="leave01">请假审批</div>-->
+        <!--<div class="leave02"><span>申请原因：</span><span>原因原因原因原因原因原因</span></div>-->
+        <!--<div class="leave02"><span>时间区间：</span><span>2018-05-06-12：00——2018-05-07-12：00</span></div>-->
+        <!--<div class="leave03"><span>2018/4/28/ 23:43</span></div>-->
+    <!--</a>-->
+<!--</div>-->
+<!--学员end-->
+<a href="/home/user/application.html" id="leave">请假申请</a>
+{/block}
+{block name="script"}
+<script>
+    for(var i=0;i<$('.Top div').length;i++){
+        $('.Top div')[i].onclick = function(){
+            $('.Top div').removeClass('active');
+            $(this).addClass('active');
+            var side = $(this).data('side');
+            $('.leave').hide();
+            $('#side'+side).show();
+        }
+    }
+</script>
+{/block}

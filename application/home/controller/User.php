@@ -35,4 +35,19 @@ class User extends Base
     public function play(){
         return $this->fetch();
     }
+    public function leave(){
+        return $this->fetch();
+    }
+    public function leavedetail(){
+        return $this->fetch();
+    }
+    public function application(){
+        return $this->fetch();
+    }
+    public function reite(){
+        return $this->fetch();
+    }
+    public function reite01(){
+        return $this->fetch();
+    }
 }

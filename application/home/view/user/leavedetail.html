@@ -1,0 +1,63 @@
+{extend name="public/common"}
+{block name="style"}
+<title>请假申请</title>
+<link rel="stylesheet" href="/home/css/user/leave.css">
+{/block}
+{block name="body"}
+    <div class="leaveDetail">
+        <div class="leaveDetail01">
+            <p>申请人</p>
+            <input type="text" value="张三" readonly="readonly" name="name">
+        </div>
+        <div class="leaveDetail01">
+            <p>申请原因</p>
+            <input type="text" value="张三" readonly="readonly" name="text">
+        </div>
+        <div class="leaveDetail01">
+            <p>请假时间</p>
+            <input type="text" value="2018-10-15 15:33" readonly="readonly" name="time01">
+            <span>至</span>
+            <input type="text" value="2018-10-16 15:33" readonly="readonly" name="time02">
+        </div>
+        <div class="leaveDetail01">
+            <p>相关图片</p>
+            <div class="leaveUl">
+                <img src="/home/images/1.jpg" alt="">
+                <img src="/home/images/1.jpg" alt="">
+                <img src="/home/images/1.jpg" alt="">
+                <img src="/home/images/1.jpg" alt="">
+            </div>
+        </div>
+        <!--教练下查看-->
+        <div class="leaveDetail01" style="border-bottom: transparent;">
+            <p>审批结果</p>
+            <div style="color: #21B552;font-size: .3rem;">未审批</div>
+            <div style="color: #3A8CFB;font-size: .3rem;">未审批</div>
+            <div style="color: #FF2740;font-size: .3rem;">未审批</div>
+        </div>
+    </div>
+
+<!--这是超管权限下的显示状态-->
+<div class="success">通过</div>
+<div class="errors">驳回</div>
+{/block}
+{block name="script"}
+<script>
+    $('.success').on('click',function(){
+        swal({
+            title: "请假审批成功",
+            type:'success'
+        },function(){
+            history.go(-1)
+        });
+    })
+    $('.errors').on('click',function(){
+        swal({
+            title: "请假审批驳回",
+            type:'error'
+        },function(){
+            history.go(-1)
+        });
+    })
+</script>
+{/block}

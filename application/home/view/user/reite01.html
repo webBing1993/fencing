@@ -1,0 +1,75 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>我的比赛</title>
+<link rel="stylesheet" href="/home/css/association/game.css">
+<style>
+    #leave {
+        display: block;
+        width: 7rem;
+        height: .8rem;
+        background: #3A8CFB;
+        color: #fff;
+        font-size: .28rem;
+        text-align: center;
+        line-height: .8rem;
+        border-radius: .4rem;
+        position: fixed;
+        bottom: .3rem;
+        left: 50%;
+        margin-left: -3.5rem;
+    }
+    .payError04 {
+        width: 4.1rem;
+        height: .7rem;
+        text-align: center;
+        line-height: .7rem;
+        color: #fff;
+        background: #3A8CFB;
+        border: 1px solid #fff;
+        border-radius: .35rem;
+        font-size: .26rem;
+        position: absolute;
+        bottom: -.35rem;
+        left: 50%;
+        margin-left: -2rem;
+    }
+    .payError04 span {display: block;}
+    #cancel {
+        float:left;
+        width:2rem;
+        height:.6rem;
+        position: absolute;
+        top:50%;
+        margin-top: -.3rem;
+        left:.05rem;
+        line-height: .6rem;
+    }
+    #ok {
+        width:2rem;
+        height:.6rem;
+        border-radius: .28rem;
+        background: #fff;
+        float:right;
+        position: absolute;
+        top:50%;
+        margin-top: -.3rem;
+        right:.05rem;
+        color: #3A8CFB;
+        line-height: .6rem;
+    }
+</style>
+{/block}
+{block name="body"}
+<p style="text-align: center;font-size: .3rem;color: #333;margin: 1rem 0 .74rem 0;">退赛申请已提交</p>
+<p style="text-align: center;font-size: .26rem;color: #999;">管理人员将在24小时之内给出反馈<br>请耐心等待</p>
+<div class="sucDetail06" style="position: fixed;bottom:0;left:50%;margin-left: -1.4rem;">返回列表</div>
+{/block}
+{block name="script"}
+<script>
+    $('.sucDetail06').on('click',function(){
+        history.go(-1);
+        localStorage.setItem('reite','1');
+    })
+</script>
+{/block}
