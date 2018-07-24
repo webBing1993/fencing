@@ -53,6 +53,21 @@ body {
 }
 
 /*
+* identity
+*/
+.identity {
+    background-color: #fff;
+    margin-bottom: .1rem;
+    padding: .28rem .25rem;
+    color: #999;
+    font-size: .24rem;
+}
+
+.identity span:first-of-type {
+    margin-right: .53rem;
+}
+
+/*
 * content
 */
 .content {
