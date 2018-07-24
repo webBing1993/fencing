@@ -13,6 +13,7 @@ use app\home\model\MallOne;
 use app\home\model\MallTwo;
 use app\home\model\ShopRecord;
 use app\home\model\ShopOrder;
+use app\home\model\Picture;
 
 /*
  * 商城
@@ -80,6 +81,10 @@ class Mall  extends Base
         }
         $map['status'] = 0;
         $data = Shop::where($map)->order('id desc')->limit($len,8)->select();
+        foreach($data as $value){
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
         if($data) {
             return $this->success("加载成功",'',$data);
         }else{
