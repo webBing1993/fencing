@@ -224,6 +224,8 @@
     
     // 筛选选择
     var session = window.sessionStorage;
+    session.setItem('type1','');
+    session.setItem('type2','');
     $(".preparationLists .list").on("click", function () {
         $(this).parents(".preparationLists").find('.list').removeClass('active');
         $(this).addClass('active');
@@ -242,6 +244,21 @@
             },
             success: function (msg) {
                 console.log(msg);
+                $(".lists .list").remove();
+                $(".noOrder").remove();
+                if (msg.code == 0) {
+                    $(".tip").hide();
+                    // 筛选失败   即无商品
+                    var html1 = '';
+                    html1 = '<div class="noOrder">'+
+                            '<img src="/home/images/mall/noOrder.png" alt="">'+
+                            '<p>暂无商品</p>'+
+                            '</div>';
+                    $('.lists').append(html1);
+                }else {
+                    addMall(msg);
+                    onloadFun();
+                }
                 $(".preparationResult").hide();
                 $(".preparationResult>div").hide();
             }
@@ -256,8 +273,8 @@
     // 初始状态的判断
 
     var isScroll = true;  // 开关，增加触发点的流畅
-    $(function () {
-       var len = $(".lists .list").length;
+    function onloadFun() {
+        var len = $(".lists .list").length;
         if (len >= 12) {
             $('.tip' ).text('上拉加载更多');
             // 上拉加载
@@ -265,6 +282,10 @@
         }else {
             $('.tip').hide();
         }
+    }
+
+    $(function () {
+        onloadFun();
     });
 
     // 上拉加载函数
@@ -326,8 +347,8 @@
                                 '<img src="'+ list.src +'" alt="" class="lazy">'+
                             '</div>'+
                             '<div class="listContent">'+
-                                '<p class="title">花剑-小学</p>'+
-                                '<p class="price"><span>￥</span>' + lsit.pricce + '</p>'+
+                                '<p class="title">'+ list.title + '</p>'+
+                                '<p class="price"><span>￥</span>' + list.price + '</p>'+
                             '</div>'+
                         '</a>'+
                     '</div>';
