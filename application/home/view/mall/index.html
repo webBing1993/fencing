@@ -257,6 +257,7 @@
                     $('.lists').append(html1);
                 }else {
                     addMall(msg);
+                    lazy();
                     onloadFun();
                 }
                 $(".preparationResult").hide();
@@ -344,7 +345,7 @@
             html += '<div class="list fl">'+
                         '<a href="/home/mall/detail/id='+ list.id +'.html">'+
                             '<div class="listImg">'+
-                                '<img src="'+ list.src +'" alt="" class="lazy">'+
+                                '<img src="'+ list.front_cover +'" alt="" class="lazy">'+
                             '</div>'+
                             '<div class="listContent">'+
                                 '<p class="title">'+ list.title + '</p>'+
