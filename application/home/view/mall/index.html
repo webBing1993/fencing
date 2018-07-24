@@ -280,9 +280,9 @@
                 isScroll = false;
                 $.ajax({
                     type:"post",
-                    url:"",
+                    url:"{:Url('Mall/more')}",
                     data:{
-                        length:len,
+                        len:len,
                         type1: session.getItem('type1'),
                         type2: session.getItem('type2')
                     },

@@ -47,6 +47,7 @@ class Mall  extends Base
             return $this->error("搜索失败");
         }
     }
+
     // 筛选
     public function screen(){
         $type1 = input('type1');
@@ -63,6 +64,26 @@ class Mall  extends Base
             return $this->success("筛选成功",'',$data);
         }else{
             return $this->error("筛选失败");
+        }
+    }
+
+    // 上拉加载
+    public function more(){
+        $type1 = input('type1');
+        $type2 = input('type2');
+        $len = input('len');
+        if(!empty($type1)){
+            $map['type1'] = $type1;
+        }
+        if(!empty($type2)){
+            $map['type2'] = $type2;
+        }
+        $map['status'] = 0;
+        $data = Shop::where($map)->order('id desc')->limit($len,8)->select();
+        if($data) {
+            return $this->success("加载成功",'',$data);
+        }else{
+            return $this->error("加载失败");
         }
     }
 
