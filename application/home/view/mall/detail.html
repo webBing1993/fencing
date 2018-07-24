@@ -5,31 +5,30 @@
 {/block}
 {block name='body'}
 <div class="img">
-    <img src="/home/images/1.jpg" alt="">
+    <img src="{$data.front_cover|get_cover='path'}" alt="">
 </div>
 
 <!--title-->
 <div class="titles">
     <div class="title">
-        花剑
-        <span>花剑-小学</span>
+        {$data.title}
     </div>
     <div class="priceWay clearfix">
-        <div class="price fl"><span> ￥</span>100</div>
+        <div class="price fl"><span> ￥</span>{$data.price}</div>
         <div class="way fr">领取方式：到馆领取</div>
     </div>
 </div>
 
 <div class="identity">
-    <span>剑种：花剑</span>
-    <span>类别：小学</span>
+    <span>剑种：{$data.type1}</span>
+    <span>类别：{$data.type2}</span>
 </div>
 
 <!-- content-->
 <div class="content">
     <div class="contentTitle">商品详情</div>
     <div class="summary">
-        这里是简介内容
+        {$data.content}
     </div>
 </div>
 
@@ -45,11 +44,11 @@
         <div>
             <div class="popTitle clearfix">
                 <div class="fl popImg">
-                    <img src="/home/images/1.jpg" alt="">
+                    <img src="{$data.front_cover|get_cover='path'}" alt="">
                 </div>
                 <div class="fl popTitlePrice">
-                    <div class="pop_title">花剑-小学</div>
-                    <div class="price">￥<span>100</span></div>
+                    <div class="pop_title">{$data.title}</div>
+                    <div class="price">￥<span>{$data.price}</span></div>
                 </div>
             </div>
             <div class="popNum">
@@ -64,7 +63,7 @@
     </div>
     <div class="popBuy clearfix">
         <div class="fl price">应付款 <span>￥</span><span class="total">100</span></div>
-        <div class="fr popBtn"><a href="/home/mall/order.html">生成订单</a></div>
+        <div class="fr popBtn"><a href="JavaScript:;">生成订单</a></div>
     </div>
 </div>
 {/block}
@@ -72,6 +71,7 @@
 
 <script>
 
+    var id = "{$data.id}";
     /*
      * 立即购买
      * */
@@ -121,7 +121,7 @@
     * */
     $(".popBtn a").on('click', function () {
         $.ajax({
-            url: '',
+            url: "{:Url('Mall/ordering')}",
             type: 'post',
             data: {
                 id: id,
