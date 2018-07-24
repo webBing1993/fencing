@@ -358,3 +358,11 @@
     margin:.8rem  auto;
     color: #3A8CFB;
 }
+
+.newsTitle p:first-child {margin-top: -.1rem;font-size: .28rem;}
+.newsTitle p:last-child {font-size: .26rem;color: #999; display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;}

@@ -1,0 +1,65 @@
+{extend name="public/common"}
+{block name="style"}
+<title>个人中心</title>
+<link rel="stylesheet" href="/home/css/user/insider.css">
+{/block}
+{block name="body"}
+    <div class="top"><img src="/home/images/insider/icon01.png" alt=""><p>开通击剑协会会员，享专属特权</p></div>
+    <div class="header">比赛报名可享受会员特惠专属价格</div>
+<!--教练状态-->
+    <div class="user">
+        <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="张三" readonly="readonly"></div>
+        <div class="userSort"><span>性别</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>民族</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="2006-11-28" readonly="readonly"></div>
+        <div class="userSort"><span>政治面貌</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>籍贯</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>学历</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>专业</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>所属单位</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>联系电话</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>邮箱</span><input type="text" placeholder="请点击输入完善信息"></div>
+        <div class="userSort"><span>联系地址</span><input type="text" placeholder="请点击输入完善信息"></div>
+    </div>
+    <div class="deal">
+        <img src="/home/images/insider/icon03.png" class="read"> 同意 <a href="/home/user/rule.html">《杭州市击剑运动协会会员管理规定》</a>
+    </div>
+    <div class="money"><span>¥</span><span>120</span>/年</div>
+    <div class="pay">立即支付</div>
+<!--学员状态-->
+<!--<div class="user">-->
+    <!--<div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="张三" readonly="readonly"></div>-->
+    <!--<div class="userSort"><span>性别</span><input type="text" placeholder="请点击输入完善信息"></div>-->
+    <!--<div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="2006-11-28" readonly="readonly"></div>-->
+    <!--<div class="userSort"><span>所属单位</span><input type="text" placeholder="请点击输入完善信息"></div>-->
+    <!--<div class="userSort"><span>联系电话</span><input type="text" placeholder="请点击输入完善信息"></div>-->
+    <!--<div class="userSort"><span>邮箱</span><input type="text" placeholder="请点击输入完善信息"></div>-->
+    <!--<div class="userSort"><span>联系地址</span><input type="text" placeholder="请点击输入完善信息"></div>-->
+<!--</div>-->
+
+<!--假如他已成为会有后 显示的状态-->
+<!--<div class="top"><img src="/home/images/insider/icon01.png" alt=""><p>开通击剑协会会员，享专属特权</p></div>-->
+<!--<div class="header">比赛报名可享受会员特惠专属价格</div>-->
+<!--<div class="times">会员期限：2018-02-03至2019-02-03</div>-->
+{/block}
+{block name="script"}
+<script>
+    var rule = localStorage.getItem('rule');
+    if(rule == 1){
+        $('.read').attr('src','/home/images/insider/icon04.png').removeClass('read').addClass('read_');
+        $('.pay').addClass('active');
+    }
+    $('.read').on('click',function(){
+        if($(this).hasClass('read')){
+            $(this).attr('src','/home/images/insider/icon04.png').removeClass('read').addClass('read_');
+            $('.pay').addClass('active');
+        }else{
+            $(this).attr('src','/home/images/insider/icon03.png').removeClass('read_').addClass('read');
+            $('.pay').removeClass('active');
+        }
+    })
+    $(document).on('click','.active',function(){
+        location.href = '/home/user/paysuccess.html'
+    });
+</script>
+{/block}

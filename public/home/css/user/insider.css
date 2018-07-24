@@ -1,0 +1,86 @@
+.top {width:100%;text-align: center;font-size: .38rem;color: #E4B356;font-weight: 900;}
+.top img {width:1rem;height:.65rem;margin-top: .62rem;}
+.top p {margin: .34rem 0 .3rem 0;}
+.header {
+    width:100%;
+    height:2rem;
+    text-align: center;
+    line-height: 2rem;
+    font-size: .3rem;
+    color: #333;
+    background-image: url('/home/images/insider/icon02.png');
+    background-size: 94% 2rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.user {width:100%;padding: 0 .24rem;margin-top: .3rem;}
+.userSort {position:relative;width:100%;height:1rem;line-height: 1rem;font-size: .26rem;border-bottom: 1px solid #ebebeb;padding: 0 .3rem;}
+.userSort span {float:left;color: #999;}
+.userSort input {float:right;color: #333;text-align: right;width:5rem;border: transparent;background: transparent;}
+.deal {text-align: center;margin:.6rem 0 .65rem 0;font-size: .26rem;color: #333;}
+.deal img {width:.36rem;height:.36rem;}
+.deal a {color: #E4B356;}
+.money {text-align: center;font-size: .26rem;color: #333;}
+.money span:first-child {font-size: .24rem;color: #D12D2D;}
+.money span:last-child {font-size: .4rem;color: #D12D2D;}
+.pay {
+    width: 7rem;
+    height: .8rem;
+    background: #C2C2C2;
+    color: #fff;
+    font-size: .28rem;
+    text-align: center;
+    line-height: .8rem;
+    border-radius: .4rem;
+    margin: .3rem auto;
+}
+.pay.active {
+    color: #333;
+    background: #E4B356;
+}
+.ruleTop {font-size: .3rem;color: #333;text-align: center;margin: .6rem 0 .45rem 0;}
+.contnet {width:100%;padding: 0 .24rem ;font-size: .26rem;height:10rem;overflow-y: scroll;}
+.agree {
+    width: 7rem;
+    height: .8rem;
+    background: #303338;
+    color: #E4B356;
+    font-size: .28rem;
+    text-align: center;
+    line-height: .8rem;
+    border-radius: .4rem;
+    position: fixed;
+    bottom:.3rem;
+    left:50%;
+    margin-left: -3.5rem;
+}
+.sucTop {width:100%;padding: 0 .24rem;text-align: center;font-size: .38rem;color: #E4B356;}
+.sucTop img {width:6rem;height:6rem;}
+.info_03 {
+    width: 94%;
+    position: relative;
+    border-radius: .2rem;
+    box-shadow: 0 0 .2rem rgba(212, 212, 212, 0.3);
+    margin: .6rem auto;
+    text-align: center;
+    padding-top: .8rem;
+    padding-bottom: .74rem;
+}
+.info_03 p:first-child {font-size: .3rem;color: #333;}
+.info_03 p:last-child {font-size: .26rem;color: #999;margin-top: .36rem;}
+.goBack {
+    width:2.8rem;
+    height:.8rem;
+    text-align: center;
+    line-height: .78rem;
+    color: #3A8CFB;
+    border: 1px solid #3A8CFB;
+    display: block;
+    position: fixed;
+    bottom:.44rem;
+    left:50%;
+    margin-left: -1.4rem;
+    border-radius: .4rem;
+    font-size: .3rem;
+}
+.times {text-align: center;font-size: .26rem;color: #999;margin: .8rem auto;}

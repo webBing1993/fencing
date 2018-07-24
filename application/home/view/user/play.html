@@ -1,0 +1,58 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>我的比赛</title>
+<link rel="stylesheet" href="/home/css/association/game.css">
+{/block}
+{block name="body"}
+<!--顶部分类-->
+    <div class="Top">
+        <div data-side="1" class="active">未开始<span></span></div>
+        <div data-side="2">已截止<span></span></div>
+    </div>
+<!--正文切换-->
+    <div class="news" id="side1" style="display: block;">
+        <a href="/home/association/gamedetail.html">
+            <img src="/home/images/1.jpg" class="lazy">
+            <div class="newsText" style="padding: 0 0 .1rem .2rem;">
+                <div class="newsTitle">1“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
+                <div class="newsTime">
+                    <span>2018-10-10</span>
+                    <span>杭州市击剑运动协会</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="news" id="side2">
+        <a href="/home/association/gamedetail.html">
+            <img src="/home/images/1.jpg" class="lazy">
+            <div class="newsText" style="padding: 0 0 .1rem .2rem;">
+                <div class="newsTitle">1“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
+                <div class="newsTime">
+                    <span>2018-10-10</span>
+                    <span>杭州市击剑运动协会</span>
+                </div>
+            </div>
+        </a>
+</div>
+{/block}
+{block name="script"}
+<script>
+    for(var i=0;i<$('.Top div').length;i++){
+        $('.Top div')[i].onclick = function(){
+            $('.Top div').removeClass('active');
+            $(this).addClass('active');
+            var side = $(this).data('side');
+            $('.news').hide();
+            $('#side'+side).show();
+        }
+    }
+</script>
+<script>
+    $("img.lazy").lazyload({
+        placeholder: "/home/images/loading.jpg",
+        effect: "fadeIn",
+        threshold : 500
+    });
+</script>
+{/block}
