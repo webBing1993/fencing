@@ -42,6 +42,7 @@ class Shop extends Admin {
                 unset($data['id']);
             }
             $noticeModel = new ShopModel();
+            $data['create_time'] = time();
 //            $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             $model = $noticeModel->validate('Shop')->save($data);
             if($model){

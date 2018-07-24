@@ -119,7 +119,7 @@ class Mall extends Admin {
     }
 
     /**
-     * 新闻添加
+     * 类别添加
      */
     public function add2(){
         if(IS_POST) {
@@ -147,7 +147,7 @@ class Mall extends Admin {
     }
 
     /**
-     * 修改
+     * 类别修改
      */
     public function edit2(){
         if(IS_POST) {
@@ -172,7 +172,7 @@ class Mall extends Admin {
     }
 
     /**
-     * 删除功能
+     * 类别删除功能
      */
     public function del2(){
         $id = input('id');
