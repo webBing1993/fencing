@@ -61,7 +61,7 @@ class Shop extends Admin {
         }
     }
     /**
-     * 相关通知 修改
+     * 商品 修改
      */
     public function indexedit(){
         if(IS_POST){
@@ -89,7 +89,7 @@ class Shop extends Admin {
         }
     }
     /**
-     * 删除
+     * 商品删除
      */
     public function del(){
         $id = input('id');
@@ -101,4 +101,5 @@ class Shop extends Admin {
             return $this->error("删除失败");
         }
     }
+
 }
