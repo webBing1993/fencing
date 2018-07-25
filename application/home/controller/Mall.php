@@ -14,6 +14,8 @@ use app\home\model\MallTwo;
 use app\home\model\ShopRecord;
 use app\home\model\ShopOrder;
 use app\home\model\Picture;
+use app\home\model\WechatDepartment;
+use app\home\model\WechatUser;
 
 /*
  * 商城
@@ -130,10 +132,14 @@ class Mall  extends Base
         }else{
             $data['sid'] = $id;
             $data['num'] = $num;
-            $data['price'] = $shop['price'];
+//            $data['price'] = $shop['price'];
             $data['create_time'] = time();
             $data['create_user'] = session('userId');
-            $data['total'] = $num * $shop['price'];
+//            $data['total'] = $num * $shop['price'];
+            $user = WechatUser::where('mobile',session('userId'))->find();
+            $data['name'] = $user['name'];
+            $data['mobile'] = $user['mobile'];
+            $data['depart'] = WechatDepartment::where('id',$user['department'])->value('name');
             $ShopOrderModel = new ShopOrder();
             $info = $ShopOrderModel->save($data);
             if($info) {
@@ -147,8 +153,39 @@ class Mall  extends Base
 
     // 商城订单结算页()
     public function order(){
+        $id = input('id');
+        $data = ShopOrder::where('id',$id)->find();
+        $sp = Shop::where('id',$data['sid'])->where('status',0)->find();
+        if(empty($sp)){
+            return $this->error("该商品已下架");
+        }else{
+            $data['title'] = $sp['title'];
+            $data['price'] = $sp['price'];
+            $data['total'] = $sp['price'] * $data['num'];
+            $data['front_cover'] = $sp['front_cover'];
+//            $user = WechatUser::where('mobile',$data['create_user'])->find();
+//            $data['name'] = $user['name'];
+//            $data['mobile'] = $user['mobile'];
+//            $data['depart'] = WechatDepartment::where('id',$user['department'])->value('name');
+        }
+        $this->assign('data',$data);
 
         return $this->fetch();
+    }
+
+    // 付钱,更新订单状态
+    public function pay(){
+        $data = input('post.');
+        $order = ShopOrder::where('id',$data['id'])->find();
+        $shop = Shop::where('id',$order['sid'])->where('status',0)->find();
+        if(empty($shop)){
+            return $this->error('此商品已下架');
+        }else{
+            $data['single'] = $shop['price'];
+            $data['all'] = $shop['price'] * $order['num'];
+            $data['status'] = 1;
+            ShopOrder::update($data);
+        }
     }
 
     // 商城订单列表
