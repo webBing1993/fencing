@@ -62,10 +62,19 @@
         </div>
     </div>
     <div class="popBuy clearfix">
-        <div class="fl price">应付款 <span>￥</span><span class="total">100</span></div>
+        <div class="fl price">应付款 <span>￥</span><span class="total">{$data.price}</span></div>
         <div class="fr popBtn"><a href="JavaScript:;">生成订单</a></div>
     </div>
 </div>
+
+<div class="showbox">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+
 {/block}
 {block name='script'}
 
@@ -127,9 +136,15 @@
                 id: id,
                 num: $(".popNum .number").text()
             },
+            beforeSend: function(XMLHttpRequest){
+                $(".showbox").show();
+            },
             success: function (msg) {
-                $('.buy').hide();
-
+                setTimeout(function () {
+                   $(".showbox").hide();
+                    $('.buy').hide();
+                   window.location.href = '/home/mall/order/id/' + msg.data;
+                },1500)
             }
         })
     });
