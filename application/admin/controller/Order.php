@@ -10,16 +10,14 @@ namespace app\admin\controller;
 use app\admin\model\Shop;
 use app\admin\model\ShopOrder;
 use think\Controller;
-use app\admin\model\Push;
-use app\admin\model\Show as ShowModel;
 
 /**
  * Class Order
- * @package  风采展示   控制器
+ * @package  订单管理   控制器
  */
 class Order extends Admin {
     /**
-     * 主页列表 教练管理
+     * 订单管理
      */
     public function index(){
         $map = array(
@@ -37,6 +35,7 @@ class Order extends Admin {
         return $this->fetch();
     }
 
+    //预览
     public function preview(){
         $id = input('id');
         $list = ShopOrder::where('id',$id)->find();
