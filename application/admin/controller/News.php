@@ -26,6 +26,10 @@ class News extends Admin {
         $map = array(
             'status' => array('egt',0),
         );
+        $search = input('search');
+        if ($search != '') {
+            $map['title'] = ['like', '%' . $search . '%'];
+        }
         $list = $this->lists('News',$map);
         int_to_string($list,array(
             'status' => array(0 =>"已发布",1=>"已发布"),
@@ -97,6 +101,25 @@ class News extends Admin {
             return $this->error("删除失败");
         }
 
+    }
+
+    /**
+     * 批量删除
+     */
+    public function moveToTrash()
+    {
+        $ids = input('ids/a');
+        if (!$ids) {
+            return $this->error('请勾选删除选项');
+        }
+        $data['status'] = '-1';
+        $info = NewsModel::where('id', 'in', $ids)->update($data);
+
+        if ($info) {
+            return $this->success('批量删除成功', url('News/index'));
+        } else {
+            return $this->error('批量删除失败');
+        }
     }
     /*
      * 推送列表
