@@ -39,22 +39,7 @@
 {/block}
 
 {block name="page-header"}
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>购物商城</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="{:Url('Shop/index')}">商品管理</a>
-            </li>
-            <li class="active">
-                <strong>修改</strong>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-2">
 
-    </div>
-</div>
 {/block}
 
 {block name="main"}
@@ -62,11 +47,13 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>修改</h5>
-                    <div class="ibox-tools">
+                <div class="mail-box-header">
+                    <div class="pull-right tooltip-demo">
                         <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
                     </div>
+                    <h2>
+                        商品管理 - {empty name="msg"}添加{else/}修改{/empty}
+                    </h2>
                 </div>
                 <div class="ibox-content">
                     <form id="form" class="form-horizontal" method="post" enctype="multipart/form-data">

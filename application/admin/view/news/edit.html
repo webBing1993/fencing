@@ -42,146 +42,113 @@
 {/block}
 
 {block name="page-header"}
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>新闻动态</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="{:Url('News/index')}">新闻动态</a>
-            </li>
-            <li class="active">
-                <strong>{empty name="msg"}添加{else/}修改{/empty}</strong>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-2">
 
-    </div>
-</div>
 {/block}
 
 {block name="main"}
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5></h5>
-                    <div class="ibox-tools">
-                        <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
-                    </div>
+            <div class="mail-box-header">
+                <div class="pull-right tooltip-demo">
+                    <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
                 </div>
-                <div class="ibox-content all">
-                    <form id="form" class="form-horizontal" method="post">
-                        <!--<div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>类型:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <select name="type" id="type"  class="form-control">
-                                    {empty name="msg"}
-                                    <option value="1">动态聚焦</option>
-                                    <option value="2">各地动态</option>
-                                    <option value="3">政策文件</option>
-                                    {else/}
-                                    <option value="1" {eq name="msg.type" value="1"} selected {/eq}>动态聚焦</option>
-                                    <option value="2" {eq name="msg.type" value="2"} selected {/eq}>各地动态</option>
-                                    <option value="3" {eq name="msg.type" value="3"} selected {/eq}>意见文件</option>
-                                    {/empty}
-                                </select>
-                            </div>
-                        </div>-->
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>封面图片:</label>
-                            </div>
-                            {eq name="msg" value=""}
-                            <div class="col-lg-5">
-                                <div class="imggroup">
-                                    <img src="" alt='图片' class='thumbnail imgbox'>
-                                    <input type="file" class="imgfile" accept="image/jpg, image/png, image/gif, image/jpeg">
-                                    <input type="hidden" name="front_cover" class="img"  value="" required="">
-                                </div>
-                                <b>推荐尺寸：750*400px</b>
-                            </div>
-                            {else/}
-                            <div class="col-lg-5">
-                                <div class="imggroup">
-                                    <img src="{$msg.front_cover|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
-                                    <input type="file" class="imgfile" accept="image/jpg, image/png, image/gif, image/jpeg">
-                                    <input type="hidden" name="front_cover" class="img"  value="{$msg.front_cover}" required="">
-                                </div>
-                                <b>推荐尺寸：750*400px</b>
-                            </div>
-                            {/eq}
-                       </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>标题:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <input type="text" placeholder="请输入标题" class="form-control form_title" name="title" value="{$msg.title || default=''}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 control-label">
-                                <label>内容:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <div class=" float-e-margins">
-                                    <div class="ibox-content no-padding borders">
-                                        <script id="container" name="content" type="text/plain">{$msg.content || default=''}</script>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>发布人:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher || default=''}">
-                            </div>
+                <h2>
+                    新闻动态 - {empty name="msg"}添加{else/}修改{/empty}
+                </h2>
+            </div>
+            <div class="ibox-content all">
+                <form id="form" class="form-horizontal" method="post">
+                    <div class="form-group">
+                        <div class="col-lg-1 text-right control-label">
+                            <label>封面图片:</label>
                         </div>
                         {eq name="msg" value=""}
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>是否推荐:</label>
+                        <div class="col-lg-5">
+                            <div class="imggroup">
+                                <img src="" alt='图片' class='thumbnail imgbox'>
+                                <input type="file" class="imgfile" accept="image/jpg, image/png, image/gif, image/jpeg">
+                                <input type="hidden" name="front_cover" class="img"  value="" required="">
                             </div>
-                            <div class="col-lg-11">
-                                <label class="i-checks">
-                                    <input type="radio" value="1" name="recommend">是
-                                </label>
-                                <label class="i-checks">
-                                    <input type="radio" checked="" value="0" name="recommend">否
-                                </label>
-                            </div>
+                            <b>推荐尺寸：750*400px</b>
                         </div>
                         {else/}
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>是否推荐:</label>
+                        <div class="col-lg-5">
+                            <div class="imggroup">
+                                <img src="{$msg.front_cover|get_cover='path'}" alt='图片' class='thumbnail imgbox'>
+                                <input type="file" class="imgfile" accept="image/jpg, image/png, image/gif, image/jpeg">
+                                <input type="hidden" name="front_cover" class="img"  value="{$msg.front_cover}" required="">
                             </div>
-                            <div class="col-lg-11">
-                                <label class="i-checks">
-                                    <input type="radio" value="1" name="recommend" {eq name="msg.recommend" value="1"}checked{/eq}>是
-                                </label>
-                                <label class="i-checks">
-                                    <input type="radio" value="0" name="recommend" {eq name="msg.recommend" value="0"}checked{/eq}>否
-                                </label>
-                            </div>
+                            <b>推荐尺寸：750*400px</b>
                         </div>
                         {/eq}
-                        <input type="hidden" name="id" value="{$msg.id || default=''}">
-                        <div class="form-group">
-                            <div class="col-lg-11 col-lg-offset-1">
-                                <button class="btn btn-primary submit-btn post-put" type="button" target-form="form-horizontal" >发布</button>
-                                <a class="btn btn-default" href="javascript:window.history.go(-1);">返回</a>
+                   </div>
+                    <div class="form-group">
+                        <div class="col-lg-1 text-right control-label">
+                            <label>标题:</label>
+                        </div>
+                        <div class="col-lg-11">
+                            <input type="text" placeholder="请输入标题" class="form-control form_title" name="title" value="{$msg.title || default=''}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-1 control-label">
+                            <label>内容:</label>
+                        </div>
+                        <div class="col-lg-11">
+                            <div class=" float-e-margins">
+                                <div class="ibox-content no-padding borders">
+                                    <script id="container" name="content" type="text/plain">{$msg.content || default=''}</script>
+                                </div>
                             </div>
                         </div>
-                        <div class="selblo"></div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-1 text-right control-label">
+                            <label>发布人:</label>
+                        </div>
+                        <div class="col-lg-11">
+                            <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher || default=''}">
+                        </div>
+                    </div>
+                    {eq name="msg" value=""}
+                    <div class="form-group">
+                        <div class="col-lg-1 text-right control-label">
+                            <label>是否推荐:</label>
+                        </div>
+                        <div class="col-lg-11">
+                            <label class="i-checks">
+                                <input type="radio" value="1" name="recommend">是
+                            </label>
+                            <label class="i-checks">
+                                <input type="radio" checked="" value="0" name="recommend">否
+                            </label>
+                        </div>
+                    </div>
+                    {else/}
+                    <div class="form-group">
+                        <div class="col-lg-1 text-right control-label">
+                            <label>是否推荐:</label>
+                        </div>
+                        <div class="col-lg-11">
+                            <label class="i-checks">
+                                <input type="radio" value="1" name="recommend" {eq name="msg.recommend" value="1"}checked{/eq}>是
+                            </label>
+                            <label class="i-checks">
+                                <input type="radio" value="0" name="recommend" {eq name="msg.recommend" value="0"}checked{/eq}>否
+                            </label>
+                        </div>
+                    </div>
+                    {/eq}
+                    <input type="hidden" name="id" value="{$msg.id || default=''}">
+                    <div class="form-group">
+                        <div class="col-lg-11 col-lg-offset-1">
+                            <button class="btn btn-primary submit-btn post-put" type="button" target-form="form-horizontal" >发布</button>
+                            <a class="btn btn-default" href="javascript:window.history.go(-1);">返回</a>
+                        </div>
+                    </div>
+                    <div class="selblo"></div>
+                </form>
             </div>
         </div>
     </div>

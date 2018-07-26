@@ -24,6 +24,10 @@ class Mall extends Admin {
         $map = array(
             'status' => array('eq',0),
         );
+        $search = input('search');
+        if ($search != '') {
+            $map['title'] = ['like', '%' . $search . '%'];
+        }
         $list = $this->lists('MallOne',$map);
         int_to_string($list,array(
             'status' => array(0 =>"已发布"),
@@ -102,12 +106,35 @@ class Mall extends Admin {
     }
 
     /**
+     * 批量删除
+     */
+    public function moveToTrash()
+    {
+        $ids = input('ids/a');
+        if (!$ids) {
+            return $this->error('请勾选删除选项');
+        }
+        $data['status'] = '-1';
+        $info = VenueModel::where('id', 'in', $ids)->update($data);
+
+        if ($info) {
+            return $this->success('批量删除成功', url('Venue/index'));
+        } else {
+            return $this->error('批量删除失败');
+        }
+    }
+
+    /**
      * 类别主页列表
      */
     public function tp(){
         $map = array(
             'status' => array('eq',0),
         );
+        $search = input('search');
+        if ($search != '') {
+            $map['title'] = ['like', '%' . $search . '%'];
+        }
         $list = $this->lists('MallTwo',$map);
         int_to_string($list,array(
             'status' => array(0 =>"已发布"),
@@ -185,5 +212,23 @@ class Mall extends Admin {
         }
     }
 
+    /**
+     * 批量删除
+     */
+    public function moveToTrash2()
+    {
+        $ids = input('ids/a');
+        if (!$ids) {
+            return $this->error('请勾选删除选项');
+        }
+        $data['status'] = '-1';
+        $info = VenueModel::where('id', 'in', $ids)->update($data);
+
+        if ($info) {
+            return $this->success('批量删除成功', url('Venue/index'));
+        } else {
+            return $this->error('批量删除失败');
+        }
+    }
 
 }

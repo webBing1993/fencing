@@ -26,6 +26,10 @@ class Knowledge extends Admin {
         $map = array(
             'status' => array('egt',0),
         );
+        $search = input('search');
+        if ($search != '') {
+            $map['title'] = ['like', '%' . $search . '%'];
+        }
         $list = $this->lists('Knowledge',$map);
         int_to_string($list,array(
             'type' => array(1 =>"重剑",2=>"花剑",3=>"佩剑"),
@@ -98,6 +102,26 @@ class Knowledge extends Admin {
         }
 
     }
+
+    /**
+     * 批量删除
+     */
+    public function moveToTrash()
+    {
+        $ids = input('ids/a');
+        if (!$ids) {
+            return $this->error('请勾选删除选项');
+        }
+        $data['status'] = '-1';
+        $info = VenueModel::where('id', 'in', $ids)->update($data);
+
+        if ($info) {
+            return $this->success('批量删除成功', url('Venue/index'));
+        } else {
+            return $this->error('批量删除失败');
+        }
+    }
+
 //    /*
 //     * 推送列表
 //     */

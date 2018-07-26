@@ -23,6 +23,10 @@ class Order extends Admin {
         $map = array(
             'status' => array('eq',1),
         );
+        $search = input('search');
+        if ($search != '') {
+            $map['depart'] = ['like', '%' . $search . '%'];
+        }
         $list = $this->lists('ShopOrder',$map);
         foreach($list as $k=>$v){
             $list[$k]['title'] = Shop::where('id',$v['sid'])->value('title');
@@ -45,6 +49,25 @@ class Order extends Admin {
         $this->assign('list',$list);
 
         return $this->fetch();
+    }
+
+    /**
+     * 批量删除
+     */
+    public function moveToTrash()
+    {
+        $ids = input('ids/a');
+        if (!$ids) {
+            return $this->error('请勾选删除选项');
+        }
+        $data['status'] = '-1';
+        $info = VenueModel::where('id', 'in', $ids)->update($data);
+
+        if ($info) {
+            return $this->success('批量删除成功', url('Venue/index'));
+        } else {
+            return $this->error('批量删除失败');
+        }
     }
 
 }

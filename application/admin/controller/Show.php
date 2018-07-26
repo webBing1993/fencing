@@ -27,6 +27,10 @@ class Show extends Admin {
             'type' => array('eq',1),
             'status' => array('egt',0),
         );
+        $search = input('search');
+        if ($search != '') {
+            $map['name'] = ['like', '%' . $search . '%'];
+        }
         $list = $this->lists('Show',$map);
         int_to_string($list,array(
             'status' => array(0 =>"已发布"),
@@ -100,6 +104,25 @@ class Show extends Admin {
 
 
     /**
+     * 批量删除
+     */
+    public function moveToTrash()
+    {
+        $ids = input('ids/a');
+        if (!$ids) {
+            return $this->error('请勾选删除选项');
+        }
+        $data['status'] = '-1';
+        $info = VenueModel::where('id', 'in', $ids)->update($data);
+
+        if ($info) {
+            return $this->success('批量删除成功', url('Venue/index'));
+        } else {
+            return $this->error('批量删除失败');
+        }
+    }
+
+    /**
      * 主页列表 教练管理
      */
     public function indexs(){
@@ -107,6 +130,10 @@ class Show extends Admin {
             'type' => array('eq',2),
             'status' => array('egt',0),
         );
+        $search = input('search');
+        if ($search != '') {
+            $map['name'] = ['like', '%' . $search . '%'];
+        }
         $list = $this->lists('Show',$map);
         int_to_string($list,array(
             'status' => array(0 =>"已发布"),
@@ -178,5 +205,22 @@ class Show extends Admin {
         }
     }
 
+    /**
+     * 批量删除
+     */
+    public function moveToTrashs()
+    {
+        $ids = input('ids/a');
+        if (!$ids) {
+            return $this->error('请勾选删除选项');
+        }
+        $data['status'] = '-1';
+        $info = VenueModel::where('id', 'in', $ids)->update($data);
 
+        if ($info) {
+            return $this->success('批量删除成功', url('Venue/index'));
+        } else {
+            return $this->error('批量删除失败');
+        }
+    }
 }
