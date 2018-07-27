@@ -1,9 +1,7 @@
 {extend name="base/common"}
 
 {block name="style"}
-<style>
-    .shadow{width: 100%;height: 100%;position: absolute;left: 0;top: 0;background: rgba(0,0,0,0.4);z-index: 88;}
-</style>
+
 {/block}
 
 {block name="page-header"}
@@ -31,9 +29,8 @@
                         </form>
                     </div>
                 </div>
-                <div class="ibox-content">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
+                <div class="mail-box">
+                        <table class="table table-hover table-mail">
                             <thead>
                             <tr>
                                 <th></th>
@@ -46,7 +43,9 @@
                             <tbody>
                             {volist name="list" id="vo"}
                             <tr>
-                                <td><input type="checkbox" class="i-checks ids" name="ids[]"></td>
+                                <td class="check-mail">
+                                    <input type="checkbox" class="i-checks ids" name="ids[]" value="{$vo.id}">
+                                </td>
                                 <td>{$vo.title|msubstr=0,20}</td>
                                 <td>{$vo.create_time|time_format='Y-m-d'}</td>
                                 <td>{$vo.status_text}</td>
@@ -65,7 +64,6 @@
                             </tr>
                             </tfoot>
                         </table>
-                    </div>
                 </div>
             </div>
         </div>

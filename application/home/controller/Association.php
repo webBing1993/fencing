@@ -34,6 +34,7 @@ class Association  extends Base
         return $this->fetch();
     }
 
+
     //通知公告 列表页
     public function news(){
         //训练通知
@@ -50,6 +51,20 @@ class Association  extends Base
         $this->assign('right',$right);
 
         return $this->fetch();
+    }
+
+    //通知公告   上拉加载
+    public function more(){
+        $type = input('type');
+        $len = input('len');
+        $map = array('type' => $type, 'status' => 0);
+        $info = Notice::where($map)->order('id desc')->limit($len,6)->select();
+
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
     }
 
     //通知公告 详情页
@@ -79,6 +94,20 @@ class Association  extends Base
         return $this->fetch();
     }
 
+    //击剑百科   上拉加载
+    public function more2(){
+        $type = input('type');
+        $len = input('len');
+        $map = array('type' => $type, 'status' => 0);
+        $info = Knowledge::where($map)->order('id desc')->limit($len,6)->select();
+
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
+    }
+
     //击剑百科 详情页
     public function newsdetail3(){
         $Id = input('id');
@@ -101,6 +130,21 @@ class Association  extends Base
 
         return $this->fetch();
     }
+
+    //风采展示   上拉加载
+    public function more3(){
+        $type = input('type');
+        $len = input('len');
+        $map = array('type' => $type, 'status' => 0);
+        $info = Show::where($map)->order('id desc')->limit($len,6)->select();
+
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
+    }
+
     public function game(){
         return $this->fetch();
     }
@@ -116,7 +160,7 @@ class Association  extends Base
 
     //首页场馆模块 更多页
     public function fencing(){
-        $list = Venue::where('status',0)->order('id desc')->select();
+        $list = Venue::where('status',0)->order('id desc')->limit(10)->select();
 
         foreach($list as $key=>$v){
             $li = json_decode($v['front_cover']);
@@ -125,6 +169,19 @@ class Association  extends Base
         $this->assign('list',$list);
 
         return $this->fetch();
+    }
+
+    //场馆   上拉加载
+    public function more4(){
+        $len = input('len');
+        $map = array('status' => 0);
+        $info = Venue::where($map)->order('id desc')->limit($len,6)->select();
+
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
     }
 
     //场馆模块详情页
@@ -143,6 +200,19 @@ class Association  extends Base
         $this->assign('list',$list);
 
         return $this->fetch();
+    }
+
+    //新闻动态   上拉加载
+    public function more5(){
+        $len = input('len');
+        $map = array('status' => 0);
+        $info = News::where($map)->order('id desc')->limit($len,6)->select();
+
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
     }
 
     //新闻动态 详情页

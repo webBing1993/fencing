@@ -119,7 +119,7 @@ class Shop extends Admin {
         $info = ShopModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
-            return $this->success('批量删除成功', url('Venue/index'));
+            return $this->success('批量删除成功', url('index'));
         } else {
             return $this->error('批量删除失败');
         }

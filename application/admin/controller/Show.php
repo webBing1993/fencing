@@ -116,7 +116,7 @@ class Show extends Admin {
         $info = ShowModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
-            return $this->success('批量删除成功', url('Venue/index'));
+            return $this->success('批量删除成功', url('index'));
         } else {
             return $this->error('批量删除失败');
         }
@@ -215,10 +215,10 @@ class Show extends Admin {
             return $this->error('请勾选删除选项');
         }
         $data['status'] = '-1';
-        $info = VenueModel::where('id', 'in', $ids)->update($data);
+        $info = ShowModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
-            return $this->success('批量删除成功', url('Venue/index'));
+            return $this->success('批量删除成功', url('indexs'));
         } else {
             return $this->error('批量删除失败');
         }
