@@ -142,6 +142,18 @@ class Association  extends Base
         return $this->fetch();
     }
 
+    //风采展示 点击接口
+    public function show(){
+        $id = input('id');
+        $data = Show::where('id',$id)->find();
+        if($data){
+            return $this->success("获取数据成功",'',$data);
+        }else{
+            return $this->error("获取数据失败");
+        }
+    }
+
+
     //风采展示   上拉加载
     public function more3(){
         $type = input('type');
