@@ -9,6 +9,7 @@
 namespace app\home\controller;
 
 use app\home\model\News;
+use app\home\model\Picture;
 use app\home\model\Venue;
 use app\home\model\Notice;
 use app\home\model\Knowledge;
@@ -176,6 +177,12 @@ class Association  extends Base
         $len = input('len');
         $map = array('status' => 0);
         $info = Venue::where($map)->order('id desc')->limit($len,6)->select();
+
+        foreach($info as $key=>$v){
+            $li = json_decode($v['front_cover']);
+            $pic = Picture::where('id',$li[0])->value('path');
+            $info[$key]['front_cover'] = $pic;
+        }
 
         if($info){
             return $this->success("加载成功",'',$info);
