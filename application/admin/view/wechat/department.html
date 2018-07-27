@@ -16,47 +16,40 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="mail-box-header">
-                    <h2>Wechat / Department</h2>
+            <div class="mail-box-header">
+                <h2>部门</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <button class="pull-right ladda-button ladda-button-user btn btn-primary"  data-style="zoom-in">同步部门</button>
                 </div>
-                <div class="ibox-title">
-                    <h5>部门列表</h5>
-                    <div class="ibox-tools progress-demo">
-                        <button class="ladda-button ladda-button-user btn btn-primary"  data-style="zoom-in">同步部门</button>
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><input class="i-checks check-all" type="checkbox"></th>
-                                <th>ID</th>
-                                <td>名称</td>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {volist name="list" id="vo"}
-                            <tr>
-                                <td><input type="checkbox" class="i-checks ids" name="input[]"></td>
-                                <td>{$vo.id}</td>
-                                <td>{$vo.name}</td>
-                                <td>查看详情</td>
-                            </tr>
-                            {/volist}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="11">
-                                    <div class="page">{$_page}</div>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
+            </div>
+            <div class="mail-box">
+                <table class="table table-hover table-mail">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <td>名称</td>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td><input type="checkbox" class="i-checks ids" name="input[]"></td>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.name}</td>
+                        <td>查看详情</td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="11">
+                            <div class="page">{$_page}</div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
