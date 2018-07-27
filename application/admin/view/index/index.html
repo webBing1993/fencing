@@ -7,11 +7,36 @@
 <link href="/admin/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 <style>
     .ibox-content {
-        height: 74vh;
-        line-height: calc(74vh - 35px);
+        /*min-height: 76vh;*/
+        /*!*line-height: calc(74vh - 35px);*!*/
+        /*background: url("/admin/images/bg.jpg") center 0 no-repeat;*/
+        /*background-size: 100%;*/
+        position: relative;
+        padding: 0 !important;
+        overflow: hidden;
+    }
+    .ibox-content>img {
+        display: block;
+        width: 120%;
+        height: 100%;
+        opacity: .5;
     }
     .p-lg {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
         padding: 0 !important;
+    }
+    .float-e-margins .btn {
+        border-radius: 100%;
+        padding: 0!important;
+        width: 200px;
+        height: 200px;
+        text-align: center;
+        line-height: 200px;
+        margin-bottom: 0!important;
+        font-size: 20px;
     }
 </style>
 {/block}
@@ -34,6 +59,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <img src="/admin/images/bg.jpg" alt="">
                     <div class="text-center p-lg">
 
                         <button class="ladda-button btn-dep btn btn-warning" data-style="slide-left">
