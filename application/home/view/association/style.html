@@ -13,7 +13,7 @@
 <!--正文切换-->
     <div class="news" id="side1">
         {volist name="left" id="a"}
-        <a><img src="{$a.front_cover|get_cover='path'}" class="lazy">
+        <a data-id="{$a.id}"><img src="{$a.front_cover|get_cover='path'}" class="lazy">
             <div class="user">
                 <div class="userName">{$a.name}<span></span></div>
                 <div class="userSort"><span>{$a.class}</span></div>
@@ -24,7 +24,7 @@
     </div>
 <div class="news" id="side2">
     {volist name="right" id="b"}
-    <a href="/home/association/newsdetail.html">
+    <a href="/home/association/newsdetail.html" data-id="{$b.id}">
         <img src="{$b.front_cover|get_cover='path'}" class="lazy">
         <div class="user">
             <div class="userName">{$b.name}<span></span></div>
