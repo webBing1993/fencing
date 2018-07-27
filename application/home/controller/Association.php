@@ -61,6 +61,11 @@ class Association  extends Base
         $map = array('type' => $type, 'status' => 0);
         $info = Notice::where($map)->order('id desc')->limit($len,6)->select();
 
+        foreach($info as $value){
+            $value['time'] = date("Y-m-d",$value['create_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
         if($info){
             return $this->success("加载成功",'',$info);
         }else{
@@ -102,6 +107,11 @@ class Association  extends Base
         $map = array('type' => $type, 'status' => 0);
         $info = Knowledge::where($map)->order('id desc')->limit($len,6)->select();
 
+        foreach($info as $value){
+            $value['time'] = date("Y-m-d",$value['create_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
         if($info){
             return $this->success("加载成功",'',$info);
         }else{
@@ -139,6 +149,11 @@ class Association  extends Base
         $map = array('type' => $type, 'status' => 0);
         $info = Show::where($map)->order('id desc')->limit($len,6)->select();
 
+        foreach($info as $value){
+            $value['time'] = date("Y-m-d",$value['create_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
         if($info){
             return $this->success("加载成功",'',$info);
         }else{
@@ -182,6 +197,7 @@ class Association  extends Base
             $li = json_decode($v['front_cover']);
             $pic = Picture::where('id',$li[0])->value('path');
             $info[$key]['front_cover'] = $pic;
+            $value['time'] = date("Y-m-d",$v['create_time']);
         }
 
         if($info){
@@ -215,6 +231,11 @@ class Association  extends Base
         $map = array('status' => 0);
         $info = News::where($map)->order('id desc')->limit($len,6)->select();
 
+        foreach($info as $value){
+            $value['time'] = date("Y-m-d",$value['create_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
         if($info){
             return $this->success("加载成功",'',$info);
         }else{
