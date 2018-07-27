@@ -11,16 +11,12 @@
         <div data-side="2">运动员<span></span></div>
     </div>
 <!--正文切换-->
-    <div class="news" id="side1" style="display: block;">
+    <div class="news" id="side1">
         {volist name="left" id="a"}
-        <a href="#">
-            <img src="{$a.front_cover|get_cover='path'}" class="lazy">
+        <a><img src="{$a.front_cover|get_cover='path'}" class="lazy">
             <div class="user">
                 <div class="userName">{$a.name}<span></span></div>
-                <div class="userSort">
-                    <span>{$a.class}</span>
-
-                </div>
+                <div class="userSort"><span>{$a.class}</span></div>
                 <div class="userText">{$a.content}</div>
             </div>
         </a>
@@ -58,9 +54,28 @@
             <ol><span>所获奖项</span><span>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选。</span></ol>
         </div>
     </div>
+<div class="bg"></div>
+<div class="tip"></div>
+<div class="loading hidden">
+    <div class="typing_loader"></div>
+</div>
 {/block}
 {block name="script"}
 <script>
+    var scrollNow = true;
+    // var notice = localStorage.getItem('jjstyles')==null?0:localStorage.getItem('jjstyles');
+    var type = localStorage.getItem('jjstyle')==null?1:localStorage.getItem('jjstyle');
+    $('.Top div').removeClass('active');
+    $('.Top div').eq(type-1).addClass('active');
+    $('.news').hide();
+    $('.news').eq(type-1).show()
+    var len = $('.news').eq(type-1).find('a').length;
+    if(len >= 6){
+        $('.tip' ).text('上拉加载更多');
+        loadScroll();
+    }else {
+        $('.tip' ).hide();
+    }
     for(var i=0;i<$('.Top div').length;i++){
         $('.Top div')[i].onclick = function(){
             $('.Top div').removeClass('active');
@@ -68,9 +83,93 @@
             var side = $(this).data('side');
             $('.news').hide();
             $('#side'+side).show();
+            // localStorage.setItem('jjstyles',eq);
+            localStorage.setItem('jjstyle',side);
+            var len = $('.news').eq(side-1).find('a').length;
+            if(len >= 6){
+                $('.tip' ).text('上拉加载更多');
+                loadScroll();
+            }else {
+                $('.tip' ).hide();
+            }
+            type = side;
+            // loadScroll();
         }
     }
-    $('#side1 a').on('click',function(){
+
+    function loadScroll(){
+        $(window ).off("scroll" ).on("scroll",function(){
+            var ntc = $('.lists');
+            var dh = $(document).height();
+            var end = $(window).height() + $(window ).scrollTop();
+            var len = $('.news').eq(type-1).find('a').length;
+            var tip = $(".tip");
+            var loading = $('.loading');
+            if(dh == end && scrollNow){
+                scrollNow = false;
+                $.ajax({
+                    type:"post",
+                    url: "{:Url('Association/more3')}",
+                    data:{
+                        type:type,
+                        len:len
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data.code == 1){
+                            addLists(data,type);
+                            if(data.data.length == 5){
+                                tip.text('上拉加载更多');
+                            }else{
+                                tip.text('没有更多数据了');
+                                // $(window ).off("scroll");
+                            }
+                            $("img.lazy").lazyload({
+                                placeholder: "/home/images/loading.jpg",
+                                effect: "fadeIn",
+                                threshold: 1
+                            });
+                        } else {
+                            tip.text('没有更多数据了');
+                            $(window ).off("scroll");
+                        }
+                        scrollNow = true;
+                    }
+                })
+            }
+        })
+    }
+    function addLists(data,type){
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        if(type == 1){
+            for(var i = 0; i< len;i++){
+                var list = lists[i];
+                //var pid = $('.part div' ).eq(list.pid ).text();
+                html +=' <a><img data-original="'+list.front_cover+'" class="lazy"><div class="user"><div class="userName">'+list.name+'<span></span></div><div class="userSort"><span>'+list.class+'</span></div><div class="userText">'+list.content+'</div></div></a>'
+            }
+        }else {
+            for(var j = 0; j< len;j++){
+                var list = lists[j];
+                html +='<a href="/home/association/newsdetail/id/'+ list.id+'.html">'
+                        +'<img class="lazy" data-original='+list.front_cover+'>'
+                        +'<div class="user">'
+                        +'<div class="userName">'+list.name+'<span></span></div>'
+                        +'<div class="userSort1"> <span>'+list.class+'</span> </div>'
+                        +'<div class="userDetail01">'+list.school+'</div><div class="userDetail02">'+list.site+'</div>'
+                        +'</div>'
+                        +'</a>'
+            }
+        }
+        $('.news').eq(type-1).append(html);
+    }
+    $(document).on('click','#side1 a',function(){
         $('.fixed').show();
     })
     $('.close').on('click',function(){
@@ -82,6 +181,13 @@
         placeholder: "/home/images/loading.jpg",
         effect: "fadeIn",
         threshold : 500
+    });
+    $(document).scroll(function() {
+        $("img.lazy").lazyload({
+            placeholder: "/home/images/loading.jpg",
+            effect: "fadeIn",
+            threshold: 1
+        });
     });
 </script>
 {/block}

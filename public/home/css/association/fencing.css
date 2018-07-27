@@ -1,6 +1,7 @@
-.sort {width:100%;padding: .3rem .24rem;position: relative;}
+.sort {width:100%;padding: .3rem .24rem 0 .24rem;position: relative;}
 .sort a {display: block;width:100%;height:4rem;position: relative;overflow: hidden;border-radius: .2rem;box-shadow: 0 0 .14rem rgba(0,0,0,.1);margin-bottom: .3rem;}
 .sort a img {width:100%;height:3rem;}
+.sort a:last-child {margin-bottom: 0;}
 .sort div {height:1rem;padding:0 .3rem;}
 .sort div p:first-child {
     padding-top: .18rem;
