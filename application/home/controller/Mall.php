@@ -198,7 +198,6 @@ class Mall  extends Base
             $data[$k]['title'] = $li['title'];
         }
         $this->assign('data',$data);
-//        dump($data);exit;
 
         return $this->fetch();
     }
