@@ -9,9 +9,13 @@
         {volist name="list" id="vo"}
         <a href="{:Url('Association/jjdetail?id='.$vo['id'])}">
             <img src="{$vo.images|get_cover='path'}" class="lazy">
-            <div>
-                <p>{$vo.title}</p>
-                <p>{$vo.content}</p>
+            <div class="titleContent">
+                <div class="title">{$vo.title}</div>
+                <div class="content">{$vo.content}</div>
+            </div>
+            <div class="address clearfix">
+                <img src="" alt="" class="fl">
+                <span class="fl">余杭区</span>
             </div>
         </a>
        {/volist}
@@ -90,9 +94,13 @@
             html +=
                 '<a href="/home/association/jjdetail/id/'+ list.id+'.html" class="list clear">'+
                 '<img class="lazy" data-original='+list.front_cover+'>'+
-                '<div>'+
-                '<p>'+list.title+'</p>'+
-                '<p>'+list.content+'</p>'+
+                '<div  class="titleContent">'+
+                '<div class="title">'+list.title+'</div>'+
+                '<div class="content">'+list.content+'</div>'+
+                '</div>'+
+                '<div class="address clearfix">'+
+                '<img src="" alt="" class="fl">'+
+                '<span class="fl">余杭区</span>'+
                 '</div>'+
                 '</a>'
         }

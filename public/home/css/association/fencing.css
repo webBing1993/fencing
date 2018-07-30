@@ -1,22 +1,68 @@
-.sort {width:100%;padding: .3rem .24rem 0 .24rem;position: relative;}
-.sort a {display: block;width:100%;height:4rem;position: relative;overflow: hidden;border-radius: .2rem;box-shadow: 0 0 .14rem rgba(0,0,0,.1);margin-bottom: .3rem;}
-.sort a img {width:100%;height:3rem;}
-.sort a:last-child {margin-bottom: 0;}
-.sort div {height:1rem;padding:0 .3rem;}
-.sort div p:first-child {
-    padding-top: .18rem;
-    font-size: .28rem;color: #333;
-    width:70%;
+.sort {
+    width:100%;
+    padding: .3rem .24rem 0 .24rem;
+    position: relative;
+}
+
+.sort a {
+    display: block;
+    width:100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: .2rem;
+    box-shadow: 0 0 .14rem rgba(0,0,0,.1);
+    margin-bottom: .3rem;
+}
+
+.sort a>img {
+    width:100%;
+    height:3rem;
+}
+
+.sort a:last-child {
+    margin-bottom: 0;
+}
+
+.sort a .titleContent {
+    padding:0.18rem .3rem;
+}
+
+.sort .title:first-child {
+    font-size: .28rem;
+    color: #333;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+    margin-bottom: .2rem;
+}
+
+.sort .content:last-child {
+    font-size: .24rem;
+    color: #999;
     white-space:nowrap;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
     overflow: hidden;
 }
-.sort div p:last-child {
-    font-size: .24rem;color: #999;
-    width:70%;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    -o-text-overflow:ellipsis;
-    overflow: hidden;
+
+.sort .address {
+    position: absolute;
+    right: .36rem;
+    top: 0;
+    background-color: #fff;
+    padding: .12rem;
+    border-radius: 0 0 .2rem .2rem;
+}
+
+.sort .address img {
+    display: inline-block;
+    width: .3rem;
+    height: .3rem;
+    margin-right: .1rem;
+}
+
+.sort .address span {
+    font-size: .24rem;
+    color: #333;
 }

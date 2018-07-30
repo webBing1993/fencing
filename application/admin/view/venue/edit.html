@@ -414,7 +414,7 @@
                     '<input type="file" class="imgfile"  accept="image/jpg, image/png, image/gif, image/jpeg">'+
                     '<input type="hidden" name="'+inputName+'" class="img"  value="" required="">'+
                     '<img src="/admin/images/close.png" class="close-img">'+
-                    '</div>'
+                    '</div>';
             $(this).prev(".phone-img").append(html);
             if($(this).prev(".phone-img").find(".photo").length==3){
                 $(this).hide();
@@ -527,7 +527,7 @@
                         if(msg['code'] == 1){
                             imgBox.siblings(".img").val(msg.data["id"]);
                             //显示图片缩略图
-                            pic.parent().find("img" ).attr({src:path});
+                            pic.parent().find(".imgbox" ).attr({src:path});
                         } else {
                             warning({msg:msg['msg']});
                             return;
