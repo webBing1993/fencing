@@ -13,6 +13,7 @@ use think\Validate;
 class Venue extends Validate {
     protected $rule = [
         'title' =>  'require',
+        'region' =>  'require',
         'address' =>  'require',
         'lng' =>  'require',
         'lat' =>  'require',
@@ -25,6 +26,7 @@ class Venue extends Validate {
 
     protected $message = [
         'title.require' =>  '请添加场馆名称！',
+        'region.require' =>  '请添加场馆所在区域！',
         'address.require' =>  '请添加详细地址！',
         'lng.require' =>  '请添加经度！',
         'lat.require' =>  '请添加纬度！',

@@ -231,6 +231,14 @@
                         </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
+                                <label>所在区域:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入所在区域" class="form-control form_title" name="region" value="{$msg.region || default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
                                 <label>详细地址:</label>
                             </div>
                             <div class="col-lg-11">
@@ -562,6 +570,7 @@
                 vr:$("input[name='vr']").val().trim(),
                 title:$("input[name='title']").val().trim(),
                 address:$("input[name='address']").val().trim(),
+                region:$("input[name='region']").val().trim(),
                 lng:$("input[name='lng']").val().trim(),
                 lat:$("input[name='lat']").val().trim(),
                 tel:$("input[name='tel']").val().trim(),
