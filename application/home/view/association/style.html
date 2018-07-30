@@ -152,7 +152,7 @@
             for(var i = 0; i< len;i++){
                 var list = lists[i];
                 //var pid = $('.part div' ).eq(list.pid ).text();
-                html +=' <a><img data-original="'+list.front_cover+'" class="lazy"><div class="user"><div class="userName">'+list.name+'<span></span></div><div class="userSort"><span>'+list.class+'</span></div><div class="userText">'+list.content+'</div></div></a>'
+                html +=' <a data-side="'+list.id+'"><img data-original="'+list.front_cover+'" class="lazy"><div class="user"><div class="userName">'+list.name+'<span></span></div><div class="userSort"><span>'+list.class+'</span></div><div class="userText">'+list.content+'</div></div></a>'
             }
         }else {
             for(var j = 0; j< len;j++){
