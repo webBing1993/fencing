@@ -219,12 +219,13 @@ class Mall  extends Base
         $len = input('len');
         $map['status'] = 1;
         $map['create_user'] = session('userId');
-        $data = Shop::where($map)->order('id desc')->limit($len,6)->select();
+        $data = ShopOrder::where($map)->order('id desc')->limit($len,6)->select();
         foreach($data as $value){
             $value['create_time'] = date("Y-m-d H:i",$value['create_time']);
             $img = Picture::get($value['front_cover']);
             $value['front_cover'] = $img['path'];
         }
+
         if($data) {
             return $this->success("加载成功",'',$data);
         }else{

@@ -125,21 +125,21 @@
         for(var i = 0; i< len;i++) {
             var list = lists[i];
             html += '<div class="list">'+
-                        '<div class="time">下单时间：2018-07-20</div>'+
+                        '<div class="time">下单时间：'+ list.create_time +'</div>'+
                         '<div class="orderList">'+
-                            '<a href="/home/mall/orderDetail/id='+ list.id +'">'+
+                            '<a href="/home/mall/orderDetail/id/'+ list.id +'">'+
                                 '<div class="order clearfix">'+
                                     '<div class="img fl">'+
-                                        '<img src="/home/images/1.jpg" alt="">'+
+                                        '<img src="'+ list.front_cover +'" alt="">'+
                                     '</div>'+
                                     '<div class="titlePrice fl">'+
-                                        '<div class="title">花剑-小学</div>'+
-                                        '<div class="price">￥<span>100</span></div>'+
+                                        '<div class="title">'+ list.title +'</div>'+
+                                        '<div class="price">￥<span>'+ list.single +'</span></div>'+
                                     '</div>'+
-                                    '<div class="num fr">x <span>2</span></div>'+
+                                    '<div class="num fr">x <span>'+ list.num + '</span></div>'+
                                 '</div>'+
                                 '<div class="total">'+
-                                    '共<span>两</span>件，合计<span>300</span>元'+
+                                    '共<span>'+ list.num + '</span>件，合计<span>'+ list.all +'</span>元'+
                                 '</div>'+
                             '</a>'+
                         '</div>'+
