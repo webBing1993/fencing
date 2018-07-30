@@ -190,13 +190,47 @@ class Mall  extends Base
 
     // 商城订单列表
     public function orderList(){
+        $uid = session('userId');
+        $data = ShopOrder::where('create_user',$uid)->where('status',1)->order('id desc')->limit(10)->select();
+        foreach($data as $k=>$v){
+            $li = Shop::where('id',$v['sid'])->find();
+            $data[$k]['front_cover'] = $li['front_cover'];
+            $data[$k]['title'] = $li['title'];
+        }
+        $this->assign('data',$data);
+//        dump($data);exit;
 
         return $this->fetch();
     }
 
     // 商城订单详情页
     public function orderDetail(){
+        $id = input('id');
+        $data = ShopOrder::where('id',$id)->find();
+        $li = Shop::where('id',$data['sid'])->find();
+        $data['front_cover'] = $li['front_cover'];
+        $data['title'] = $li['title'];
+        $this->assign('data',$data);
 
         return $this->fetch();
     }
+
+    // 订单页上拉加载
+    public function ordermore(){
+        $len = input('len');
+        $map['status'] = 1;
+        $map['create_user'] = session('userId');
+        $data = Shop::where($map)->order('id desc')->limit($len,6)->select();
+        foreach($data as $value){
+            $value['create_time'] = date("Y-m-d H:i",$value['create_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
+        if($data) {
+            return $this->success("加载成功",'',$data);
+        }else{
+            return $this->error("加载失败");
+        }
+    }
+
 }
