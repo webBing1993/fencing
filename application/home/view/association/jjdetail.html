@@ -19,18 +19,64 @@
         <div class="swiper-pagination"></div>
     </div>
 </div>
-<div class="detail">
-    <!--<div class="detail01">{$data.title}</div>-->
-    <!--<div class="detail02">详细地址：<a href="#">{$data.address}</a></div>-->
-    <!--<div class="detail02">联系电话：<a href="tel:{$data.tel}">{$data.tel}</a></div>-->
-    <!--<div class="detail02">开放时间：{$data.time}</div>-->
+<div class="detail detailTop">
 
-    <div class="title"></div>
+    <div class="detail01">{$data.title}</div>
+
+    <div class="lists">
+        <div class="list">
+            <a href="javascript:;" class="clearfix">
+                <i class="fl"></i>
+                <span class="fl">{$data.address}</span>
+            </a>
+        </div>
+        <div class="list">
+            <a href="tel:{$data.tel}" class="clearfix">
+                <i class="fl"></i>
+                <span class="fl">{$data.tel}</span>
+            </a>
+        </div>
+        <div class="list clearfix">
+            <i class="fl"></i>
+            <span class="fl">{$data.time}</span>
+        </div>
+    </div>
 
 </div>
-<div class="content">
-    <p>　{$data.content}</p>
+<div class="content1">
+    <div class="contentTitle">相关课程</div>
+    <div class="contentList">
+        <a class="list clearfix" href="javascript:;">
+            <div class="listImg fl">
+                <img src="/home/images/1.jpg" alt="" class="lazy">
+            </div>
+            <div class="listContent fl">
+                <div class="title">课程标题</div>
+                <div class="summary">课题简介所在</div>
+                <div class="note clearfix">
+                    <div class="times fl">2018-01-01至2018-06-30</div>
+                    <div class="price fr">￥<span>100</span></div>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>
+
+<div class="mapChoose">
+    <div class="shadow"></div>
+    <div class="mapList">
+        <a href="http://api.map.baidu.com/marker?location={$data.lng},{$data.lat}&title=我的位置&content={$data.title}&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position={$data.lng},{$data.lat}">高德地图</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
+<!-- 加载-->
+<div class="tip"></div>
+<div class="loading hidden">
+    <div class="typing_loader"></div>
+</div>
+
 {/block}
 {block name="script"}
 <script>
@@ -40,13 +86,118 @@
             el: '.swiper-pagination',
         },
         loop:true,
-    })
-</script>
-<script>
-    $("img.lazy").lazyload({
-        placeholder: "/home/images/loading.jpg",
-        effect: "fadeIn",
-        threshold : 500
     });
+
+    /*
+     * 上拉加载
+     * */
+
+    // 初始状态的判断
+
+    var isScroll = true;  // 开关，增加触发点的流畅
+    function onloadFun() {
+        var len = $(".contentList .list").length;
+        if (len >= 10) {
+            $('.tip' ).text('上拉加载更多');
+            // 上拉加载
+            loadScroll();
+        }else {
+            $('.tip').hide();
+        }
+    }
+
+    // 上拉加载函数
+
+    function loadScroll() {
+        $(window ).off("scroll" ).on("scroll",function(){
+            var dh = $(document).height();
+            var end = $(window).height() + $(window ).scrollTop();
+            var len = $(".contentList .list").length;
+            var tip = $(".tip");
+            var loading = $('.loading');
+            if(dh == end && isScroll){
+                isScroll = false;
+                $.ajax({
+                    type:"post",
+                    url:"",
+                    data:{
+                        len:len
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        isScroll = true;
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data.code == 1){
+                            // 数据接收函数
+                            addMall(data);
+                            lazy();
+                            if(data.data.length == 6){
+                                tip.text('上拉加载更多');
+                            }
+                        }else{
+                            tip.text('没有更多数据了');
+                            $(window ).off("scroll");
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    // 数据接收函数
+
+    function addMall(data) {
+        console.log(data);
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++) {
+            var list = lists[i];
+            html += '<div class="list fl">'+
+                    '<a class="list clearfix" href="javascript:;">'+
+                        '<div class="listImg fl">'+
+                            '<img src="'+ list.front_cover +'" alt="" class="lazy">'+
+                        '</div>'+
+                        '<div class="listContent fl">'+
+                            '<div class="title">'+ list.title +'</div>'+
+                            '<div class="summary">'+ list.summary +'</div>'+
+                            '<div class="note clearfix">'+
+                                '<div class="times fl">2018-01-01至2018-06-30</div>'+
+                                '<div class="price fr">￥<span>'+ list.price +'</span></div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</a>';
+        }
+        $(".contentList").append(html);
+    }
+
+
+    /*
+    * 懒加载
+    * */
+    function lazy() {
+        $("img.lazy").lazyload({
+            placeholder: "/home/images/loading.jpg",
+            effect: "fadeIn",
+            threshold : 500
+        });
+    }
+    lazy();
+
+    /*
+    * 地图跳转
+    * */
+    $(".lists .list:first-of-type").on("click", function () {
+        $(".mapChoose").show();
+    });
+
+    $(".mapChoose .shadow,.mapChoose .mapBack").on("click", function () {
+        $(".mapChoose").hide();
+    });
+
 </script>
 {/block}
