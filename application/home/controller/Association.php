@@ -17,6 +17,7 @@ use app\home\model\Venue;
 use app\home\model\Notice;
 use app\home\model\Knowledge;
 use app\home\model\Show;
+use app\home\model\WechatUser;
 
 class Association  extends Base
 {
@@ -287,9 +288,12 @@ class Association  extends Base
         }
     }
 
+    /**
+     * 我要报名比赛详情页
+     */
     public function gamedetail(){
         $id = input('id');
-        $data = Competition::where('id',$id)->find();
+        $data = Competition::get($id);
         $data['individual_event'] = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->order('sort')->select();
         $data['team_event'] = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::TEAM_EVENT])->order('sort')->select();
         $data['competition_group'] = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
@@ -297,9 +301,53 @@ class Association  extends Base
 
         return $this->fetch();
     }
+
+    /**
+     * 马上报名提交页
+     */
     public function gamedetail02(){
+        $id = input('id');
+        $userId = session('userId');
+        $data = Competition::get($id);
+        $model = wechatUser::where(['userid' => $userId])->find();
+//        if(!$model['name'] || !$model['birthday'] || !$model['gender'] || !$model['guardian_mobile'] || !$model['address']){
+//            $data['show_tip'] = true;
+//        }else{
+//            $data['show_tip'] = false;
+//        }
+        $representative = "杭州击剑馆";
+        $coach = "林教练1";
+
+        $this->assign('data',$data);
+        $this->assign('model',$model);
+        $this->assign('representative',$representative);
+        $this->assign('coach',$coach);
+
         return $this->fetch();
     }
+
+    /**
+     * 报名时组别列表
+     */
+    public function getgrouplist(){
+        $id = input('id');
+        $userId = session('userId');
+        $birthday = wechatUser::where(['userid' => $userId])->value('birthday');
+        $birthday = strtotime($birthday);
+        $data = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
+        if ($data) {
+            foreach ($data as $key => $val) {
+                if ($val['start_time'] > $birthday && $val['end_time'] > $birthday) {
+                    unset($data[$key]);
+                }
+            }
+        } else {
+            $data = [];
+        }
+
+        return json_encode($data);
+    }
+
     public function paysuccess(){
         return $this->fetch();
     }
