@@ -6,9 +6,22 @@
 {block name="body"}
 <a href="/home/user/information.html">
     <div class="top">
-        <div class="topName"><p>张三</p><span style="background: #3A8CFB;">在训</span><span style="background: #E4B356;">VIP</span></div>
+        <div class="topName"><p>{$user.name}</p>
+            {if condition="($user['train'] == 1)"}
+            <span style="background: #3A8CFB;">在训</span>
+            {else /}
+            {/if}
+            {if condition="($user['vip'] == 1)"}
+            <span style="background: #E4B356;">VIP</span>
+            {else /}
+            {/if}
+        </div>
         <div class="topText">查看编辑个人信息</div>
-        <img src="/home/images/1.jpg" class="userImg">
+        {if condition="empty($user['header'])"}
+        <img src="{$user.avatar}" class="userImg">
+        {else /}
+        <img src="{$user.header}" class="userImg">
+        {/if}
     </div>
 </a>
     <div class="main">
