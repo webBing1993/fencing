@@ -50,7 +50,7 @@
             <div class="info_02Main">
                 <div class="info_02Text" id="info_04">
                     {volist name="data.competition_group" id="vo"}
-                    <p><span style="width:1rem;">{$vo.group_name}</span><span></span><span>{$vo.start_time|time_format='Y年m月d日'}——{$vo.end_time|time_format='Y年m月d日'}</span></p>
+                    <p><span>{$vo.group_name}</span><span></span><span>{$vo.start_time|time_format='Y.m.d'}——{$vo.end_time|time_format='Y.m.d'}</span></p>
                     {/volist}
                 </div>
             </div>
