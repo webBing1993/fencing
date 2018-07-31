@@ -30,6 +30,15 @@
 .banner .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {right:.3rem;left:inherit;bottom:.2rem;}
 .detail {width:100%;border-bottom: 1px solid #f7f7f7;padding: .3rem .24rem;color: #333;}
 .detail01 {font-size: .34rem;margin-bottom: .36rem;}
+
+.detail.detailTop {
+    border-bottom: 0;
+}
+
+.detail.detailTop .detail01 {
+    margin-bottom: .2rem;
+}
+
 .detail02 {
     font-size: .26rem;
     width:100%;
@@ -68,3 +77,177 @@
 }
 .detail03 span:first-child {float:left;}
 .detail03 span:last-child {float:right;}
+
+.lists .list {
+    padding: .27rem 0 0;
+}
+
+.lists .list a {
+    display: block;
+}
+
+.lists .list i {
+    width: .3rem;
+    margin-right: .24rem;
+    display: inline-block;
+    height: .3rem;
+}
+
+.lists .list:first-of-type i {
+    background: url("/home/images/game/icon02.png")0 center no-repeat;
+    background-size: .25rem .3rem;
+}
+
+.lists .list:nth-of-type(2) i {
+    background: url("/home/images/game/icon02.png")0 center no-repeat;
+    background-size: .3rem .27rem;
+}
+
+.lists .list:last-of-type i {
+    background: url("/home/images/game/icon03.png")0 center no-repeat;
+    background-size: .3rem .3rem;
+}
+
+.lists .list span, .lists .list a span {
+    color: #999;
+    font-size: .26rem;
+    display: inline-block;
+    width: calc(100% - .54rem);
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+}
+
+.content1 {
+    margin-top: .34rem;
+}
+
+.content1 .contentTitle {
+    font-weight: bold;
+    font-size: .3rem;
+    color: #333;
+    padding-left: .44rem;
+    position: relative;
+}
+
+.content1 .contentTitle:before {
+    content: '';
+    display: inline-block;
+    width: .08rem;
+    height: .3rem;
+    position: absolute;
+    left: 0.24rem;
+    top: 50%;
+    background-color: #3A8CFB;
+    border-radius: .04rem;
+    margin-top: -.15rem;
+}
+
+.content1 .contentList .list {
+    padding: .32rem .24rem;
+    border-bottom: 1px solid #EBEBEB;
+    display: block;
+}
+
+.content1 .contentList .listImg {
+    display: inline-block;
+    width: 2rem;
+    height: 1.6rem;
+    margin-right: .2rem;
+}
+
+.content1 .contentList .listImg img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: .1rem;
+}
+
+.content1 .contentList .listContent {
+    height: 1.6rem;
+    width: calc(100% - 2.2rem);
+    position: relative;
+}
+
+.content1 .contentList .listContent .title {
+    color: #333;
+    font-size: .28rem;
+    font-weight: bold;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+    margin-bottom: .25rem;
+}
+
+.content1 .contentList .listContent .summary {
+    color: #999;
+    font-size: .24rem;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+}
+
+.content1 .contentList .listContent .note {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.content1 .contentList .listContent .note .times {
+    color: #999;
+    font-size: .24rem;
+}
+
+.content1 .contentList .listContent .note .price {
+    color: #D12D2D;
+    font-size: .18rem;
+}
+
+.content1 .contentList .listContent .note .price span {
+    font-size: .3rem;
+}
+
+
+/* mapChoose*/
+.mapChoose {
+    display: none;
+}
+
+.mapChoose .shadow {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .6;
+}
+
+.mapChoose .mapList {
+    position: fixed;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100vw;
+}
+
+.mapChoose .mapList a {
+    display: block;
+    width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    color: #333;
+    font-size: .36rem;
+    text-align: center;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.mapChoose .mapList a:last-of-type {
+    border-bottom: 0;
+}
