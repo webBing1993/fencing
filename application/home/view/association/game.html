@@ -55,6 +55,7 @@
     </div>
     <div class="content1">
         <div class="contentList">
+            <!-- 普通课程列表开始-->
             <a class="list clearfix" href="javascript:;">
                 <div class="listImg fl">
                     <img src="/home/images/1.jpg" alt="" class="lazy">
@@ -68,10 +69,51 @@
                     </div>
                 </div>
             </a>
+            <!-- 普通课程列表结束-->
+            <!-- 精品课程列表开始 未选择普通课程情况-->
+            <a class="list clearfix" href="javascript:;" onclick="noChoose()">
+                <div class="listImg fl">
+                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                </div>
+                <div class="listContent fl">
+                    <div class="title">课程标题</div>
+                    <div class="summary">课题简介所在</div>
+                    <div class="note clearfix">
+                        <div class="times fl">2018-01-01至2018-06-30</div>
+                        <div class="price fr">￥<span>100</span></div>
+                    </div>
+                </div>
+            </a>
+            <!-- 普通课程列表结束-->
+            <!-- 精品课程列表开始 选择普通课程情况-->
+            <a class="list clearfix" href="">
+                <div class="listImg fl">
+                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                </div>
+                <div class="listContent fl">
+                    <div class="title">课程标题</div>
+                    <div class="summary">课题简介所在</div>
+                    <div class="note clearfix">
+                        <div class="times fl">2018-01-01至2018-06-30</div>
+                        <div class="price fr">￥<span>100</span></div>
+                    </div>
+                </div>
+            </a>
+            <!-- 普通课程列表结束-->
         </div>
     </div>
 </div>
 
+<!-- 精品课权限提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>您当前未报普通课，暂无申请精品课权限，请先报名普通课后再申请，谢谢。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+
+<!-- map-->
 <div class="mapChoose">
     <div class="shadow"></div>
     <div class="mapList">
@@ -176,7 +218,9 @@
         })
     }
 
-    // 数据接收函数
+    /*
+    * 数据接收函数
+    * */
 
     function addMall(data) {
         console.log(data);
@@ -219,6 +263,17 @@
             $(".contentList").append(html);
         }
     }
+
+    /*
+    * 精品课程权限提示
+    * */
+    function noChoose() {
+        $(".chooseTig").show();
+    }
+
+    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
+        $(".chooseTig").hide();
+    });
 
     /*
     * 图片懒加载
