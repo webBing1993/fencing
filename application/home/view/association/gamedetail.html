@@ -55,14 +55,14 @@
                 </div>
             </div>
         </div>
-        <a href="/home/association/gamedetail02.html"><div class="SignUp">马上报名</div></a>
+        <a href="{:Url('Association/gamedetail02?id='.$data['id'])}"><div class="SignUp">马上报名</div></a>
     </div>
 <!-- map-->
 <div class="mapChoose">
     <div class="shadow"></div>
     <div class="mapList">
-        <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
-        <a href="https://uri.amap.com/marker?position=132.22115,30.2552455">高德地图</a>
+        <a href="http://api.map.baidu.com/marker?location={$data.lat},{$data.lng}&title={$data.title}&content={$data.title}&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position={$data.lng},{$data.lat}&name={$data.title}">高德地图</a>
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
