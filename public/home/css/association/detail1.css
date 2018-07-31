@@ -1,0 +1,132 @@
+/* addressImg*/
+.addressImg {
+    position: relative;
+    width: 100vw;
+    height: 50vw;
+}
+
+.addressImg .img,.addressImg .img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.addressImg .address {
+    width: calc(100vw - .48rem);
+    position: absolute;
+    bottom: -1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border-radius: .2rem;
+    box-shadow: 1px 0 .15rem #D4D4D4;
+}
+
+.addressImg .address .addressTitle {
+    padding: .36rem .3rem 0;
+}
+
+.addressImg .address .addressTitle .title {
+    width: 70%;
+    color: #333;
+    font-size: .3rem;
+    font-weight: bold;
+}
+
+.addressImg .address .addressTitle .price {
+    color: #D12D2D;
+    font-size: .18rem;
+    font-weight: bold;
+}
+
+.addressImg .address .addressTitle .price span {
+    font-size: .3rem;
+}
+
+.addressImg .nums {
+    padding: .24rem .3rem;
+    color: #999;
+    font-size: .26rem;
+}
+
+.addressImg .line {
+    width: calc(100% - .28rem);
+    height: 1px;
+    background-color: #DEDEDE;
+    margin: 2px .14rem;
+}
+
+.lists {
+    padding: 0 .24rem;
+}
+
+.lists .list a {
+    display: block;
+    padding: .36rem 0;
+}
+
+.lists .list i {
+    width: .3rem;
+    margin-right: .24rem;
+    display: inline-block;
+    height: .3rem;
+    background: url("/home/images/game/icon02.png")0 center no-repeat;
+    background-size: .25rem .3rem;
+}
+
+.lists .list span, .lists .list a span {
+    color: #999;
+    font-size: .26rem;
+    display: inline-block;
+    width: calc(100% - .54rem);
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+}
+
+/* classTimes remark*/
+.classTimes,.remark {
+    width: calc(100vw - .48rem);
+    padding: .43rem .53rem;
+}
+
+/* mapChoose*/
+.mapChoose {
+    display: none;
+}
+
+.mapChoose .shadow {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .6;
+}
+
+.mapChoose .mapList {
+    position: fixed;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100vw;
+}
+
+.mapChoose .mapList a {
+    display: block;
+    width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    color: #333;
+    font-size: .36rem;
+    text-align: center;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.mapChoose .mapList a:last-of-type {
+    border-bottom: 0;
+}

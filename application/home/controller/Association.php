@@ -303,4 +303,11 @@ class Association  extends Base
     public function paysuccess(){
         return $this->fetch();
     }
+
+
+    // 课程报名详情页
+    public function gamedetail1() {
+
+        return $this->fetch();
+    }
 }

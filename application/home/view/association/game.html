@@ -88,7 +88,7 @@
             </a>
             <!-- 普通课程列表结束-->
             <!-- 精品课程列表开始 选择普通课程情况-->
-            <a class="list clearfix" href="">
+            <a class="list clearfix" href="/home/association/gamedetail1.html">
                 <div class="listImg fl">
                     <img src="/home/images/1.jpg" alt="" class="lazy">
                 </div>
@@ -120,7 +120,7 @@
     <div class="shadow"></div>
     <div class="mapList">
         <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
-        <a href="https://uri.amap.com/marker?position=132.22115,30.2552455">高德地图</a>
+        <a href="https://uri.amap.com/marker?position={$data.lng},{$data.lat}&name={$data.title}">高德地图</a>
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
