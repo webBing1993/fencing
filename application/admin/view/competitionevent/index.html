@@ -1,0 +1,88 @@
+{extend name="base/common"}
+
+{block name="style"}
+
+{/block}
+
+{block name="page-header"}
+
+{/block}
+
+{block name="main"}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="mail-box-header">
+                <h2>比赛项目</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <input class="i-checks check-all" type="checkbox">
+                    <button class="btn btn-danger btn-sm m-l ajax-post" url="{:Url('moveToTrash')}" data-toggle="tooltip" data-placement="top" target-form="ids"><i class="fa fa-trash-o"></i> 批量删除</button>
+                    <a href="{:Url('add',array('pid'=>$pid))}" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> 添加</a>
+                    <a class="btn btn-sm btn-warning" href="{:Url('sort',array('pid'=>$pid))}" >排序</a>
+                    <a href="{:Url('competition/index')}" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="返回"><i class="fa fa-reply"></i> 返回上一级</a>
+                </div>
+            </div>
+            <div class="mail-box">
+                <table class="table table-hover table-mail">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>比赛名称</th>
+                        <th>类型</th>
+                        <th>剑种</th>
+                        <th>普通价</th>
+                        <th>会员价</th>
+                        <th>创建时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td class="check-mail">
+                            <input type="checkbox" class="i-checks ids" name="ids[]" value="{$vo.id}">
+                        </td>
+                        <td>{$name|msubstr=0,20}</td>
+                        <td>{$vo.type_text}</td>
+                        <td>{$vo.kinds_text}</td>
+                        <td>{$vo.price}</td>
+                        <td>{$vo.vip_price}</td>
+                        <td>{$vo.create_time|time_format='Y-m-d'}</td>
+                        <td>{$vo.status_text}</td>
+                        <td>
+                            <a href="{:Url('edit?pid='.$pid.'&id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-pencil"></i> 修改</a>
+                            <a href="{:Url('del?pid='.$pid.'&id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 删除</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            <div class="page">{$_page}</div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    highlight_subnav("{:Url('competition/index')}");
+    $(document).ready(function(){
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $(".check-all").on("ifChanged",function(){
+            $("tbody").find(".ids").iCheck("toggle");
+        });
+    });
+</script>
+{/block}
