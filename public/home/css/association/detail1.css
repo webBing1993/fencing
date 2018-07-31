@@ -159,6 +159,10 @@ body {
     width: 100%;
 }
 
+.btn a.btnRea {
+    background-color: #C2C2C2;
+}
+
 /* chooseTig*/
 .chooseTig .shadow {
     position: fixed;
