@@ -83,7 +83,7 @@
                                 <label>开始时间:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" readonly="readonly" placeholder="请选择开始时间" class="form-control form_title datetimepicker" name="start_time" value="{notempty name='msg'}{$msg['start_time']|time_format='Y-m-d H:i'}{/notempty}">
+                                <input type="text" readonly="readonly" placeholder="请选择开始时间" class="form-control form_title datetimepicker" name="start_time" value="{notempty name='msg'}{$msg['start_time']|time_format='Y-m-d'}{/notempty}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -91,7 +91,7 @@
                                 <label>结束时间:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" readonly="readonly" placeholder="请选择结束时间" class="form-control form_title datetimepicker" name="end_time" value="{notempty name='msg'}{$msg['end_time']|time_format='Y-m-d H:i'}{/notempty}">
+                                <input type="text" readonly="readonly" placeholder="请选择结束时间" class="form-control form_title datetimepicker" name="end_time" value="{notempty name='msg'}{$msg['end_time']|time_format='Y-m-d'}{/notempty}">
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{$msg.id || default=''}">
@@ -121,11 +121,11 @@
 
         //    时间日历
         $( ".datetimepicker" ).datetimepicker( {
-            format: 'yyyy-mm-dd HH:ii',
+            format: 'yyyy-mm-dd',
             weekStart: 1,
             autoclose: true,
             startView: 2,
-            minView: 0,
+            minView: 2,
             forceParse: false,
             language: 'cn'
         });

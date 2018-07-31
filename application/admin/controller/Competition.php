@@ -53,12 +53,6 @@ class Competition extends Admin {
             if($data['end_time']){
                 $data['end_time'] = strtotime($data['end_time']);
             }
-            if($data['male_time']){
-                $data['male_time'] = strtotime($data['male_time']);
-            }
-            if($data['female_time']){
-                $data['female_time'] = strtotime($data['female_time']);
-            }
             $competitionModel = new CompetitionModel();
             $info = $competitionModel->validate('Competition')->save($data);
             if($info) {
@@ -81,12 +75,6 @@ class Competition extends Admin {
             $data = input('post.');
             if($data['end_time']){
                 $data['end_time'] = strtotime($data['end_time']);
-            }
-            if($data['male_time']){
-                $data['male_time'] = strtotime($data['male_time']);
-            }
-            if($data['female_time']){
-                $data['female_time'] = strtotime($data['female_time']);
             }
             $competitionModel = new CompetitionModel();
             $info = $competitionModel->validate('Competition')->save($data,['id'=>input('id')]);

@@ -15,11 +15,10 @@ class Competition extends Validate {
         'front_cover'  =>  'require',
         'title' =>  'require',
         'end_time'  =>  'require',
-        'male_time'  =>  'require',
-        'female_time'  =>  'require',
         'address'  =>  'require',
         'lng'  =>  'require',
         'lat'  =>  'require',
+        'content'  =>  'require',
         'publisher'  =>  'require',
     ];
 
@@ -27,11 +26,10 @@ class Competition extends Validate {
         'front_cover.require'  =>  '请添加封面图片！',
         'title.require' =>  '请添加比赛名称！',
         'end_time.require'  =>  '请选择报名截止时间！',
-        'male_time.require'  =>  '请选择男子比赛时间！',
-        'female_time.require'  =>  '请选择女子比赛时间！',
         'address.require'  =>  '请填写比赛地址！',
         'lng.require'  =>  '请填写比赛地址经度！',
         'lat.require'  =>  '请填写比赛地址纬度！',
+        'content.require'  =>  '请填写比赛内容！',
         'publisher.require'  =>  '请填写发布者！',
     ];
 

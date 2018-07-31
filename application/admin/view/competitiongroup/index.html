@@ -18,7 +18,7 @@
                     <input class="i-checks check-all" type="checkbox">
                     <button class="btn btn-danger btn-sm m-l ajax-post" url="{:Url('moveToTrash')}" data-toggle="tooltip" data-placement="top" target-form="ids"><i class="fa fa-trash-o"></i> 批量删除</button>
                     <a href="{:Url('add',array('pid'=>$pid))}" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> 添加</a>
-                    <a class="btn btn-sm btn-warning" href="{:Url('sort',array('pid'=>$pid))}" >排序</a>
+                    <a class="btn btn-sm btn-warning" href="{:Url('sort',array('pid'=>$pid))}" ><i class="fa fa-sort"></i> 排序</a>
                     <a href="{:Url('competition/index')}" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="返回"><i class="fa fa-reply"></i> 返回上一级</a>
                 </div>
             </div>
@@ -44,8 +44,8 @@
                         </td>
                         <td>{$name|msubstr=0,20}</td>
                         <td>{$vo.group_name|msubstr=0,20}</td>
-                        <td>{$vo.start_time|time_format='Y-m-d H:i'}</td>
-                        <td>{$vo.end_time|time_format='Y-m-d H:i'}</td>
+                        <td>{$vo.start_time|time_format='Y-m-d'}</td>
+                        <td>{$vo.end_time|time_format='Y-m-d'}</td>
                         <td>{$vo.create_time|time_format='Y-m-d'}</td>
                         <td>{$vo.status_text}</td>
                         <td>

@@ -102,22 +102,6 @@
                         </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>男子比赛时间:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <input type="text" readonly="readonly" placeholder="请选择男子比赛时间" class="form-control form_title datetimepicker" name="male_time" value="{notempty name='msg'}{$msg['male_time']|time_format='Y-m-d H:i'}{/notempty}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>女子比赛时间:</label>
-                            </div>
-                            <div class="col-lg-11">
-                                <input type="text" readonly="readonly" placeholder="请选择女子比赛时间" class="form-control form_title datetimepicker" name="female_time" value="{notempty name='msg'}{$msg['female_time']|time_format='Y-m-d H:i'}{/notempty}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
                                 <label></label>
                             </div>
                             <div class="col-lg-11">
@@ -141,6 +125,18 @@
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" placeholder="请输入经度" class="form-control form_title" name="lng" value="{$msg.lng || default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 control-label">
+                                <label>比赛内容:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class=" float-e-margins">
+                                    <div class="ibox-content no-padding borders">
+                                        <script id="container" name="content" type="text/plain">{$msg.content || default=''}</script>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -171,6 +167,8 @@
 
 <script src="/static/uploadify/jquery.uploadify.min.js"></script>
 <script src="/static/iCheck/icheck.min.js"></script>
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
 <script src="/admin/js/chosen.jquery.js"></script>
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
 <script>
@@ -239,6 +237,10 @@
             }
         });
 
+        var ue = UE.getEditor('container',{
+            initialFrameHeight:400
+        });
+
         //发布
         $(".post-put").off('click').on("click",function(){
             var it=$(this);
@@ -247,8 +249,7 @@
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
                 end_time:$("input[name='end_time']").val(),
-                male_time:$("input[name='male_time']").val(),
-                female_time:$("input[name='female_time']").val(),
+                content:ue.getContent(),
                 address:$("input[name='address']").val(),
                 lat:$("input[name='lat']").val(),
                 lng:$("input[name='lng']").val(),
