@@ -211,14 +211,24 @@
     border-bottom-left-radius: .1rem;
     border-bottom-right-radius: .1rem;
 }
+.info_02Text span {
+    display: block;
+    float:left;
+}
 
 .info_02Text span:nth-child(1) {
     color: #999;
+    width:2.4rem;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
 }
 
 .info_02Text span:nth-child(2) {
     color: #E4B356;
     margin-left: .3rem;
+   
 }
 
 .info_02Text span:nth-child(3) {
