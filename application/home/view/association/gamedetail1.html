@@ -81,6 +81,13 @@
     </div>
 </div>
 
+<div class="showbox">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
 {/block}
 {block name='script'}
 
@@ -94,20 +101,27 @@
         $(".mapChoose").show();
     });
 
-    $(".mapChoose .shadow").on("click", function () {
+    $(".mapChoose .shadow,.mapChoose .mapBack").on("click", function () {
         $(".mapChoose").hide();
     });
 
-    $(".mapChoose .mapBack").on('click', function () {
-        $(".mapChoose").hide();
+    /*
+    * 报名
+    * */
+
+    $(".enroll").on('click', function () {
         $.ajax({
             url: '',
             data: {
                 id: id
             },
             type: 'post',
+            beforeSend: function(XMLHttpRequest){
+                $(".showbox").show();
+            },
             success: function (data) {
-                window.location.href = '/home/association/'
+                $(".showbox").hide();
+                window.location.href = '/home/association/payment/id/'+ id +'.html'
             }
         })
     });

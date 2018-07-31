@@ -316,4 +316,9 @@ class Association  extends Base
 
         return $this->fetch();
     }
+
+    // 课程报名成功
+    public function paysuccess1(){
+        return $this->fetch();
+    }
 }
