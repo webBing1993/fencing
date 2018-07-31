@@ -8,6 +8,9 @@
 
 namespace app\home\controller;
 
+use app\home\model\CompetitionEvent;
+use app\home\model\Competition;
+use app\home\model\CompetitionGroup;
 use app\home\model\News;
 use app\home\model\Picture;
 use app\home\model\Venue;
@@ -173,19 +176,6 @@ class Association  extends Base
         }
     }
 
-    public function game(){
-        return $this->fetch();
-    }
-    public function gamedetail(){
-        return $this->fetch();
-    }
-    public function gamedetail02(){
-        return $this->fetch();
-    }
-    public function paysuccess(){
-        return $this->fetch();
-    }
-
     //首页场馆模块 更多页
     public function fencing(){
         $list = Venue::where('status',0)->order('id desc')->limit(10)->select();
@@ -261,6 +251,56 @@ class Association  extends Base
         $data = News::where('id',$Id)->find();
         $this->assign('data',$data);
 
+        return $this->fetch();
+    }
+
+    /**
+     * 比赛报名列表
+     */
+    public function game(){
+        //比赛报名
+        $map1 = array('status' => ['>=', 0]);
+        $left = Competition::where($map1)->order('end_time desc')->limit(10)->select();
+        $this->assign('left',$left);
+        //课程报名
+        $map2 = array('type' => 2, 'status' => 0);
+        $right = Show::where($map2)->order('id desc')->limit(10)->select();
+        $this->assign('right',$right);
+
+        return $this->fetch();
+    }
+    //比赛报名   上拉加载
+    public function more6(){
+        $len = input('len');
+        $map = array('status' => ['>=', 0]);
+        $info = Competition::where($map)->order('end_time desc')->limit($len,6)->select();
+
+        foreach($info as $value){
+            $value['time'] = date("Y-m-d",$value['end_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
+    }
+
+    public function gamedetail(){
+        $id = input('id');
+        $data = Competition::where('id',$id)->find();
+        $data['individual_event'] = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->order('sort')->select();
+        $data['team_event'] = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::TEAM_EVENT])->order('sort')->select();
+        $data['competition_group'] = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
+        $this->assign('data',$data);
+
+        return $this->fetch();
+    }
+    public function gamedetail02(){
+        return $this->fetch();
+    }
+    public function paysuccess(){
         return $this->fetch();
     }
 }

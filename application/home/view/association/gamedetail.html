@@ -5,51 +5,53 @@
 <link rel="stylesheet" href="/home/css/association/game.css">
 {/block}
 {block name="body"}
-    <div class="banner"><img src="/home/images/1.jpg" class="lazy"></div>
+    <div class="banner"><img data-original="{$data.front_cover|get_cover='path'}" class="lazy"></div>
     <div class="information">
         <div class="info_01">
-            <p>2018年杭州市“协会杯”击剑联赛（第一站）</p>
-            <p>报名截止时间：2018-04-21</p>
+            <p>{$data.title}</p>
+            <p>报名截止时间：{$data.end_time|time_format='Y-m-d'}</p>
         </div>
         <div class="info_02">
             <div class="info_02Top"><img src="/home/images/game/icon01.png" class="icon">比赛项目价目表</div>
+            {notempty name="$data.individual_event"}
             <div class="info_02Main">
                 <div class="info_02Title"><span></span>个人赛</div>
                 <div class="info_02Text">
-                    <p><span>普通价：¥500</span><span>会员价：¥400</span><span>花剑</span></p>
-                    <p><span>普通价：¥500</span><span>会员价：¥400</span><span>重剑</span></p>
-                    <p><span>普通价：¥500</span><span>会员价：¥400</span><span>佩剑</span></p>
+                    {volist name="data.individual_event" id="vo"}
+                    <p><span>普通价：¥{$vo.price}</span><span>会员价：¥{$vo.vip_price}</span><span><?php echo \app\home\model\CompetitionEvent::EVENT_KINDS_ARRAY[$vo['kinds']]?></span></p>
+                    {/volist}
                 </div>
             </div>
+            {/notempty}
+            {notempty name="$data.team_event"}
             <div class="info_02Main">
                 <div class="info_02Title"><span></span>团体赛</div>
                 <div class="info_02Text">
-                    <p><span>普通价：¥500</span><span>会员价：¥400</span><span>花剑</span></p>
-                    <p><span>普通价：¥500</span><span>会员价：¥400</span><span>重剑</span></p>
-                    <p><span>普通价：¥500</span><span>会员价：¥400</span><span>佩剑</span></p>
+                    {volist name="data.team_event" id="vo"}
+                    <p><span>普通价：¥{$vo.price}</span><span>会员价：¥{$vo.vip_price}</span><span><?php echo \app\home\model\CompetitionEvent::EVENT_KINDS_ARRAY[$vo['kinds']]?></span></p>
+                    {/volist}
                 </div>
             </div>
+            {/notempty}
         </div>
         <div class="info_03">
             <div class="info_03Add">
                 <p><img src="/home/images/game/icon02.png" class="icon">比赛地址</p>
-                <p>杭州市上城区皮市巷158号</p>
+                <p>{$data.address}</p>
             </div>
             <div class="info_03Time">
                 <p><img src="/home/images/game/icon03.png" class="icon">比赛时间</p>
-                <p class="info_03Game"><span>男子比赛</span><span>2018年4月28日</span></p>
-                <p class="info_03Game"><span>女子比赛</span><span>2018年4月28日</span></p>
+                <p class="info_03Game"><span>男子比赛</span><span>{$data.male_time|time_format='Y年m月d日'}</span></p>
+                <p class="info_03Game"><span>女子比赛</span><span>{$data.female_time|time_format='Y年m月d日'}</span></p>
             </div>
         </div>
         <div class="info_02">
             <div class="info_02Top"><img src="/home/images/game/icon04.png" class="icon">比赛组别</div>
             <div class="info_02Main">
                 <div class="info_02Text" id="info_04">
-                    <p><span>幼儿组</span><span></span><span>2012年1月1日——2016年12月31日</span></p>
-                    <p><span>幼儿组</span><span></span><span>2012年1月1日——2016年12月31日</span></p>
-                    <p><span>幼儿组</span><span></span><span>2012年1月1日——2016年12月31日</span></p>
-                    <p><span>幼儿组</span><span></span><span>2012年1月1日——2016年12月31日</span></p>
-                    <p><span>幼儿组</span><span></span><span>2012年1月1日——2016年12月31日</span></p>
+                    {volist name="data.competition_group" id="vo"}
+                    <p><span>{$vo.group_name}</span><span></span><span>{$vo.start_time|time_format='Y年m月d日'}——{$vo.end_time|time_format='Y年m月d日'}</span></p>
+                    {/volist}
                 </div>
             </div>
         </div>
