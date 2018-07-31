@@ -53,16 +53,33 @@
     </ul>
 </div>
 
+
+<div class="btn">
+    <!-- 报名事件-->
+    <a href="javascript:;" class="enroll">立即报名</a>
+
+    <!-- 精品课程申请-->
+    <a href="javascript:;" class="apply">立即申请</a>
+</div>
+
 <!-- map-->
 <div class="mapChoose">
     <div class="shadow"></div>
     <div class="mapList">
         <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
-        <a href="https://uri.amap.com/marker?position={$data.lng},{$data.lat}&name={$data.title}">高德地图</a>
+        <a href="https://uri.amap.com/marker?position=30.2552455,132.22115,30&name=我的位置">高德地图</a>
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
 
+<!-- 精品课程申请提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>精品课需先提交管理员审核，审核通过后，才可缴费报名，请您耐心等待。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
 
 {/block}
 {block name='script'}
@@ -72,12 +89,39 @@
     /*
      * 地图跳转
      * */
+
     $(".lists .list").on("click", function () {
         $(".mapChoose").show();
     });
 
-    $(".mapChoose .shadow,.mapChoose .mapBack").on("click", function () {
+    $(".mapChoose .shadow").on("click", function () {
         $(".mapChoose").hide();
+    });
+
+    $(".mapChoose .mapBack").on('click', function () {
+        $(".mapChoose").hide();
+        $.ajax({
+            url: '',
+            data: {
+                id: id
+            },
+            type: 'post',
+            success: function (data) {
+                window.location.href = '/home/association/'
+            }
+        })
+    });
+
+    /*
+     * 精品课程权限提示
+     * */
+
+    $(".apply").on("click",function () {
+        $(".chooseTig").show();
+    });
+
+    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
+        $(".chooseTig").hide();
     });
 
 </script>

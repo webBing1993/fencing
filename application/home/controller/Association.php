@@ -310,4 +310,10 @@ class Association  extends Base
 
         return $this->fetch();
     }
+
+    // 课程报名付款页
+    public function payment() {
+
+        return $this->fetch();
+    }
 }

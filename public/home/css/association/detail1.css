@@ -14,7 +14,7 @@
 .addressImg .address {
     width: calc(100vw - .48rem);
     position: absolute;
-    bottom: -1.4rem;
+    bottom: -1.3rem;
     left: 50%;
     transform: translateX(-50%);
     background-color: #fff;
@@ -44,7 +44,7 @@
 }
 
 .addressImg .nums {
-    padding: .24rem .3rem;
+    padding: .15rem .3rem;
     color: #999;
     font-size: .26rem;
 }
@@ -62,7 +62,7 @@
 
 .lists .list a {
     display: block;
-    padding: .36rem 0;
+    padding: .32rem 0;
 }
 
 .lists .list i {
@@ -75,7 +75,7 @@
 }
 
 .lists .list span, .lists .list a span {
-    color: #999;
+    color: #333;
     font-size: .26rem;
     display: inline-block;
     width: calc(100% - .54rem);
@@ -89,6 +89,115 @@
 .classTimes,.remark {
     width: calc(100vw - .48rem);
     padding: .43rem .53rem;
+    background-color: #fff;
+    box-shadow: 1px 0 .15rem #d4d4d4;
+    border-radius: .2rem;
+    margin: .24rem auto;
+}
+
+.classTimes {
+    margin-top: 1.55rem;
+}
+
+.classTimes li,.remark li {
+    margin-bottom: .39rem;
+}
+
+.classTimes li:last-of-type,.remark li:last-of-type {
+    margin-bottom: 0;
+}
+
+.classTimes .title,.remark .title {
+    position: relative;
+    color: #333;
+    font-size: .26rem;
+    font-weight: bold;
+    margin-bottom: .27rem;
+}
+
+.classTimes .title:before,.remark .title:before {
+    position: absolute;
+    content: '';
+    width: .08rem;
+    height: .3rem;
+    left: -.17rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3A8CFB;
+    border-radius: .04rem;
+}
+
+.classTimes .times,.remark .times {
+    font-size: .24rem;
+    color: #999;
+}
+
+/* btn*/
+.btn {
+    position: fixed;
+    z-index: 5;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding: .1rem .24rem;
+    width: 100vw;
+}
+
+.btn a {
+    display: block;
+    text-align: center;
+    height: .8rem;
+    line-height: .8rem;
+    background-color: #3A8CFB;
+    border-radius: .2rem;
+    color: #fff;
+    font-size: .28rem;
+    width: 100%;
+}
+
+/* chooseTig*/
+.chooseTig .shadow {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .6;
+}
+
+.chooseTig {
+    display: none;
+}
+
+.chooseTig .tig {
+    position: fixed;
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    width: calc(100vw - 2.3rem);
+    transform: translate(-50%, -50%);
+    border-radius: .3rem;
+    padding: .32rem .4rem;
+    text-align: center;
+}
+
+.chooseTig .tig p {
+    text-align: left;
+    margin: .35rem 0 .46rem;
+    color: #666;
+    font-size: .26rem;
+    line-height: .36rem;
+}
+
+.chooseTig .chooseBtn {
+    font-size: .26rem;
+    color: #fff;
+    padding: .15rem .61rem;
+    background-color: #3A8CFB;
+    border-radius: .35rem;
 }
 
 /* mapChoose*/
