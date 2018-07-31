@@ -650,6 +650,7 @@
     border-radius: .4rem;
     margin: .8rem auto;
     color: #3A8CFB;
+    display: block;
 }
 
 .newsTitle p:first-child {

@@ -9,9 +9,15 @@
 namespace app\home\controller;
 
 
+use app\home\model\WechatUser;
+
 class User extends Base
 {
     public function index(){
+        $userId = session('userId');
+        $user = WechatUser::where('mobile',$userId)->find();
+        $this->assign('user',$user);
+
         return $this->fetch();
     }
     public function information(){
@@ -21,6 +27,10 @@ class User extends Base
         return $this->fetch();
     }
     public function insider(){
+        $userId = session('userId');
+        $user = WechatUser::where('mobile',$userId)->find();
+        $this->assign('user',$user);
+
         return $this->fetch();
     }
     public function rule(){
