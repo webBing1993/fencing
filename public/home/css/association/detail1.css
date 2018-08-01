@@ -51,6 +51,19 @@ body {
     padding: .15rem .3rem;
     color: #999;
     font-size: .26rem;
+    position: relative;
+}
+
+.addressImg .nums i {
+    display: inline-block;
+    position: absolute;
+    width: .57rem;
+    height: .42rem;
+    right: 0.3rem;
+    top: 0.1rem;
+    background: url("/home/images/game/jpk.png") 0 0 no-repeat;
+    background-size: .57rem .42rem;
+    box-shadow: 1px 0 .1rem #646464;
 }
 
 .addressImg .line {
