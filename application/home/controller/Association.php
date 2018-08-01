@@ -317,11 +317,23 @@ class Association  extends Base
 //        }
         $representative = "杭州击剑馆";
         $coach = "林教练1";
+        $individual_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->find();
+        $team_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::TEAM_EVENT])->find();
+        if ($individual_event && $team_event) {
+            $show_type = 3;
+        } else {
+            if ($team_event) {
+                $show_type = 2;
+            } else {
+                $show_type = 1;
+            }
+        }
 
         $this->assign('data',$data);
         $this->assign('model',$model);
         $this->assign('representative',$representative);
         $this->assign('coach',$coach);
+        $this->assign('show_type',$show_type);
 
         return $this->fetch();
     }
@@ -346,7 +358,7 @@ class Association  extends Base
         $userId = session('userId');
         if (!$id) {
             $return = [
-                'code' => 1,
+                'code' => 0,
                 'msg' => '参数缺失',
                 'data' => [],
             ];
@@ -385,9 +397,9 @@ class Association  extends Base
         $kinds = input('kinds');//剑种
         $userId = session('userId');
 
-        if (!$id || !$type || !$kinds) {
+        if (!$id || !$type) {
             $return = [
-                'code' => 1,
+                'code' => 0,
                 'msg' => '参数缺失',
                 'data' => [],
             ];
@@ -396,26 +408,65 @@ class Association  extends Base
         $vip = wechatUser::where(['userid' => $userId])->value('vip');
 
         if ($type == 3) {//赛别 3 全部
-            $result = competitionEvent::where(['kinds' => $kinds])->select();
-            foreach ($result as $val) {
-                if ($vip) {
+            if ($kinds) {//单独剑种
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'kinds' => $kinds])->select();
+                $return['id'] = $kinds;
+                $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
 
-                } else {
-
+                //价格相加
+                foreach ($model as $key => $val) {
+                    if ($vip) {//会员价
+                        $return['price'] += $val['vip_price'];
+                    } else {//普通价
+                        $return['price'] += $val['price'];
+                    }
                 }
+            } else {//所有剑种
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id])->select();
+
+                foreach ($model as $key => $val) {
+                    $return[$val['kinds']]['id'] = $val['kinds'];
+                    $return[$val['kinds']]['name'] = competitionEvent::EVENT_KINDS_ARRAY[$val['kinds']];
+
+                    //按剑种价格相加
+                    if ($vip) {//会员价
+                        $return[$val['kinds']]['price'] += $val['vip_price'];
+                    } else {//普通价
+                        $return[$val['kinds']]['price'] += $val['price'];
+                    }
+                }
+                array_values($return);
             }
-
         } else {//赛别 1 个人 2 团体
-            $model = competitionEvent::where(['type' => $type, 'kinds' => $kinds])->find();
-            if ($vip) {
+            if ($kinds) {//单独剑种
+                $return['id'] = $kinds;
+                $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => $type, 'kinds' => $kinds])->find();
 
-            } else {
+                if ($vip) {//会员价
+                    $return['price'] = $model['vip_price'];
+                } else {//普通价
+                    $return['price'] = $model['price'];
+                }
+            } else {//所有剑种
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => $type])->select();
 
+                foreach ($model as $key => $val) {
+                    $return[$val['kinds']]['id'] = $val['kinds'];
+                    $return[$val['kinds']]['name'] = competitionEvent::EVENT_KINDS_ARRAY[$val['kinds']];
+
+                    //按剑种价格相加
+                    if ($vip) {//会员价
+                        $return[$val['kinds']]['price'] = $val['vip_price'];
+                    } else {//普通价
+                        $return[$val['kinds']]['price'] = $val['price'];
+                    }
+                }
+                array_values($return);
             }
         }
-
-
-        return json_encode($return);
+var_dump($return);die;
+        return $this->success('成功','',$return);
     }
 
     public function paysuccess(){

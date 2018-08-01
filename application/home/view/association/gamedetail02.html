@@ -22,10 +22,20 @@
         <div class="userSort"><span>剑种</span><input type="text" placeholder="请选择"  readonly="readonly" class="select" name="jz"><img src="/home/images/game/iconxl.png" class="xiala"></div>
         <div class="userSort active">
             <span>赛别</span>
+            {eq name="$show_type" value="3"}
             <span style="font-size: .26rem;margin-left: .38rem;color: #ccc;">可多选</span>
+            {/eq}
             <div class="gameSort">
+                {eq name="$show_type" value="3"}
                 <span class="active">• 个人</span>
                 <span>• 团体</span>
+                {else/}
+                    {eq name="$show_type" value="2"}
+                    <span class="active">• 团体</span>
+                    {else/}
+                    <span class="active">• 个人</span>
+                    {/eq}
+                {/eq}
             </div>
         </div>
         <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
