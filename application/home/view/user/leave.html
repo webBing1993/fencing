@@ -13,23 +13,26 @@
     <div data-side="2">已审批<span></span></div>
 </div>
 <!--正文切换-->
+{volist name="left" id="vo"}
 <div class="leave" id="side1" style="display: block;">
-    <a href="/home/user/leavedetail.html">
+    <a href="{:Url('User/leavedetail?id='.$vo['id'])}">
         <div class="leave01">请假审批</div>
-        <div class="leave02"><span>申请原因：</span><span>原因原因原因原因原因原因</span></div>
-        <div class="leave02"><span>时间区间：</span><span>2018-05-06-12：00——2018-05-07-12：00</span></div>
-        <div class="leave03"><span>2018/4/28/ 23:43</span></div>
+        <div class="leave02"><span>申请原因：</span><span>{$vo.content}</span></div>
+        <div class="leave02"><span>时间区间：</span><span>{$vo.starttime}——{$vo.endtime}</span></div>
+        <div class="leave03"><span>{$vo.create_time|time_format='Y/m/d H:i'}</span></div>
     </a>
 </div>
+{/volist}
+{volist name="right" id="lo"}
 <div class="leave" id="side2" style="display: none;">
-    <a href="/home/user/leavedetail.html">
+    <a href="{:Url('User/leavedetail?id='.$lo['id'])}">
         <div class="leave01">请假审批</div>
-        <div class="leave02"><span>申请原因：</span><span>原因原因原因原因原因原因</span></div>
-        <div class="leave02"><span>时间区间：</span><span>2018-05-06-12：00——2018-05-07-12：00</span></div>
-        <div class="leave03"><span>2018/4/28/ 23:43</span></div>
+        <div class="leave02"><span>申请原因：</span><span>{$vo.content}</span></div>
+        <div class="leave02"><span>时间区间：</span><span>{$vo.starttime}——{$vo.endtime}</span></div>
+        <div class="leave03"><span>{$vo.create_time|time_format='Y/m/d H:i'}</span></div>
     </a>
 </div>
-
+{/volist}
 <!--这是学员-->
 <!--<div class="leave">-->
     <!--<a href="/home/user/leavedetail.html">-->

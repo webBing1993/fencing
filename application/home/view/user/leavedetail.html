@@ -7,33 +7,36 @@
     <div class="leaveDetail">
         <div class="leaveDetail01">
             <p>申请人</p>
-            <input type="text" value="张三" readonly="readonly" name="name">
+            <input type="text" value="{$data.create_user}" readonly="readonly" name="name">
         </div>
         <div class="leaveDetail01">
             <p>申请原因</p>
-            <input type="text" value="张三" readonly="readonly" name="text">
+            <input type="text" value="{$data.content}" readonly="readonly" name="text">
         </div>
         <div class="leaveDetail01">
             <p>请假时间</p>
-            <input type="text" value="2018-10-15 15:33" readonly="readonly" name="time01">
+            <input type="text" value="{$data.starttime}" readonly="readonly" name="time01">
             <span>至</span>
-            <input type="text" value="2018-10-16 15:33" readonly="readonly" name="time02">
+            <input type="text" value="{$data.endtime}" readonly="readonly" name="time02">
         </div>
         <div class="leaveDetail01">
             <p>相关图片</p>
             <div class="leaveUl">
-                <img src="/home/images/1.jpg" alt="">
-                <img src="/home/images/1.jpg" alt="">
-                <img src="/home/images/1.jpg" alt="">
-                <img src="/home/images/1.jpg" alt="">
+                {volist name="$data['front_cover']" id="vo"}
+                <img src="{$vo|get_cover='path'}" alt="">
+                {/volist}
             </div>
         </div>
         <!--教练下查看-->
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>审批结果</p>
-            <div style="color: #21B552;font-size: .3rem;">未审批</div>
+            {if condition="($data['status'] == 0)"}
             <div style="color: #3A8CFB;font-size: .3rem;">未审批</div>
-            <div style="color: #FF2740;font-size: .3rem;">未审批</div>
+            {elseif condition="($data['status'] == 1)" /}
+            <div style="color: #21B552;font-size: .3rem;">通过</div>
+            {else/}
+            <div style="color: #FF2740;font-size: .3rem;">未通过</div>
+            {/if}
         </div>
     </div>
 

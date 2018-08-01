@@ -151,11 +151,11 @@
             var arr = '';
         }
         var time01 = $('#demo_date_01').val();
-        var time02 = $('#demo_date_01').val();
+        var time02 = $('#demo_date_02').val();
         var content = $('#content').val();
         if(time01!==''&& time02!=='') {
             if (content !== '') {
-                var data = {time01: time01,time02: time02,content: content, images: arr};
+                var data = {starttime: time01,endtime: time02,content: content, front_cover: arr};
                // console.log(data)
                //  return;
                 swal({
@@ -189,7 +189,7 @@
                 });
 
             } else {
-                swal("投诉理由不能为空！")
+                swal("申请原因不能为空！")
             }
         }else{
             swal("时间区间不能为空！")
