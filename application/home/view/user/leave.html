@@ -5,6 +5,21 @@
 <link rel="stylesheet" href="/home/css/association/game.css">
 {/block}
 {block name="body"}
+
+{if condition="($user['tag'] == 1)"}
+<!--这是学员-->
+<div class="leave" style="display: block;">
+    {volist name="data" id="co"}
+    <a href="{:Url('User/leavedetail?id='.$co['id'])}">
+    <div class="leave01">请假审批</div>
+    <div class="leave02"><span>申请原因：</span><span>{$co.content}</span></div>
+    <div class="leave02"><span>时间区间：</span><span>{$co.starttime}——{$co.endtime}</span></div>
+    <div class="leave03"><span>{$co.create_time|time_format='Y/m/d H:i'}</span></div>
+    </a>
+    {/volist}
+</div>
+<!--学员end-->
+{else /}
 <!--假如是 教练进入-->
 
 <!--顶部分类-->
@@ -13,36 +28,31 @@
     <div data-side="2">已审批<span></span></div>
 </div>
 <!--正文切换-->
-{volist name="left" id="vo"}
+
 <div class="leave" id="side1" style="display: block;">
+    {volist name="left" id="vo"}
     <a href="{:Url('User/leavedetail?id='.$vo['id'])}">
         <div class="leave01">请假审批</div>
         <div class="leave02"><span>申请原因：</span><span>{$vo.content}</span></div>
         <div class="leave02"><span>时间区间：</span><span>{$vo.starttime}——{$vo.endtime}</span></div>
         <div class="leave03"><span>{$vo.create_time|time_format='Y/m/d H:i'}</span></div>
     </a>
+    {/volist}
 </div>
-{/volist}
-{volist name="right" id="lo"}
+
+
 <div class="leave" id="side2">
+    {volist name="right" id="lo"}
     <a href="{:Url('User/leavedetail?id='.$lo['id'])}">
         <div class="leave01">请假审批</div>
         <div class="leave02"><span>申请原因：</span><span>{$vo.content}</span></div>
         <div class="leave02"><span>时间区间：</span><span>{$vo.starttime}——{$vo.endtime}</span></div>
         <div class="leave03"><span>{$vo.create_time|time_format='Y/m/d H:i'}</span></div>
     </a>
+    {/volist}
 </div>
-{/volist}
-<!--这是学员-->
-<!--<div class="leave">-->
-    <!--<a href="/home/user/leavedetail.html">-->
-        <!--<div class="leave01">请假审批</div>-->
-        <!--<div class="leave02"><span>申请原因：</span><span>原因原因原因原因原因原因</span></div>-->
-        <!--<div class="leave02"><span>时间区间：</span><span>2018-05-06-12：00——2018-05-07-12：00</span></div>-->
-        <!--<div class="leave03"><span>2018/4/28/ 23:43</span></div>-->
-    <!--</a>-->
-<!--</div>-->
-<!--学员end-->
+
+{/if}
 <a href="/home/user/application.html" id="leave">请假申请</a>
 {/block}
 {block name="script"}
