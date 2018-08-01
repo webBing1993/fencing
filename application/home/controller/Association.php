@@ -337,18 +337,6 @@ class Association  extends Base
 
         return $this->fetch();
     }
-    /**
-     * 马上报名提交处理页
-     */
-    public function submit(){
-        $id = input('id');
-        $userId = session('userId');
-        $data = Competition::get($id);
-        $model = wechatUser::where(['userid' => $userId])->find();
-
-
-        return $this->fetch();
-    }
 
     /**
      * 报名时组别列表
@@ -381,14 +369,6 @@ class Association  extends Base
     }
 
     /**
-     * 报名时剑种列表
-     */
-    public function getkindslist(){
-        $data = competitionEvent::EVENT_KINDS_ARRAY;
-        return json_encode($data);
-    }
-
-    /**
      * 报名时获取价格
      */
     public function getprice(){
@@ -414,14 +394,14 @@ class Association  extends Base
                 $return['id'] = $kinds;
                 $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
                 $return['price'] = 0;
+                $return['vip_price'] = 0;
 
                 //价格相加
                 foreach ($model as $key => $val) {
-                    if ($vip) {//会员价
-                        $return['price'] += $val['vip_price'];
-                    } else {//普通价
-                        $return['price'] += $val['price'];
-                    }
+                    //会员价
+                    $return['vip_price'] += $val['vip_price'];
+                    //普通价
+                    $return['price'] += $val['price'];
                 }
             } else {//所有剑种
                 $model = competitionEvent::where(['status' => 0, 'competition_id' => $id])->select();
@@ -434,12 +414,14 @@ class Association  extends Base
                         $return[$val['kinds']]['price'] = 0;
                     }
 
-                    //按剑种价格相加
-                    if ($vip) {//会员价
-                        $return[$val['kinds']]['price'] += $val['vip_price'];
-                    } else {//普通价
-                        $return[$val['kinds']]['price'] += $val['price'];
+                    if (!isset($return[$val['kinds']]['vip_price'])) {
+                        $return[$val['kinds']]['vip_price'] = 0;
                     }
+                    //按剑种价格相加
+                    //会员价
+                    $return[$val['kinds']]['vip_price'] += $val['vip_price'];
+                    //普通价
+                    $return[$val['kinds']]['price'] += $val['price'];
                 }
                 $return = array_values($return);
             }
@@ -448,13 +430,12 @@ class Association  extends Base
                 $return['id'] = $kinds;
                 $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
                 $return['price'] = 0;
+                $return['vip_price'] = 0;
                 $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => $type, 'kinds' => $kinds])->find();
-
-                if ($vip) {//会员价
-                    $return['price'] = $model['vip_price'];
-                } else {//普通价
-                    $return['price'] = $model['price'];
-                }
+                //会员价
+                $return['vip_price'] = $model['vip_price'];
+                //普通价
+                $return['price'] = $model['price'];
             } else {//所有剑种
                 $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => $type])->select();
 
@@ -465,18 +446,34 @@ class Association  extends Base
                     if (!isset($return[$val['kinds']]['price'])) {
                         $return[$val['kinds']]['price'] = 0;
                     }
-                    //按剑种价格相加
-                    if ($vip) {//会员价
-                        $return[$val['kinds']]['price'] = $val['vip_price'];
-                    } else {//普通价
-                        $return[$val['kinds']]['price'] = $val['price'];
+
+                    if (!isset($return[$val['kinds']]['vip_price'])) {
+                        $return[$val['kinds']]['vip_price'] = 0;
                     }
+                    //按剑种价格相加
+                    //会员价
+                    $return[$val['kinds']]['vip_price'] = $val['vip_price'];
+                    //普通价
+                    $return[$val['kinds']]['price'] = $val['price'];
                 }
                 $return = array_values($return);
             }
         }
 
         return $this->success('成功','',$return);
+    }
+
+    /**
+     * 马上报名提交处理页
+     */
+    public function submit(){
+        $id = input('id');
+        $userId = session('userId');
+        $data = Competition::get($id);
+        $model = wechatUser::where(['userid' => $userId])->find();
+
+
+        return $this->fetch();
     }
 
     public function paysuccess(){
