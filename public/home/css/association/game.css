@@ -599,6 +599,8 @@
 .sucDetail01 {
     font-size: .3rem;
     margin-bottom: .19rem;
+    color: #333;
+    font-weight: bold;
 }
 
 .sucDetail02 {
