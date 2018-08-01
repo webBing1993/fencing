@@ -112,9 +112,30 @@
     function _select(name){
         var str = '';
         if(name == 'zb'){
+            $.ajax({
+                type: "post",
+                url: "{:Url('Association/getgrouplist')}",
+                data: {id:'1'},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                }
+            })
             str += '<p>幼儿组</p><p>幼儿组1</p><p>幼儿组2</p><p>幼儿组3</p><p>幼儿组4</p><p>幼儿组5</p>'
         }else if(name == 'jz'){
-            str += '<p>击剑</p><p>花剑</p><p>重剑</p>'
+            $.ajax({
+                type: "post",
+                url: "{:Url('Association/getkindslist')}",
+                data: '',
+                dataType: "json",
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    for(var i=0;i<data;i++){
+                        console.log(data[i])
+                    }
+
+                }
+            })
         }else if(name == 'zj'){
             str += '<p>身份证</p><p>军人</p><p>港澳台</p>'
         }
