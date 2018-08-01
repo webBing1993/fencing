@@ -96,6 +96,7 @@ class User extends Base
     //审批提交 意见
     public function view(){
         $data = input('post.');
+        $data['leavetime'] = time();
         $info = Apply::update($data);
 
         if($info) {
