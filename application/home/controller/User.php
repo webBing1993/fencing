@@ -51,9 +51,23 @@ class User extends Base
     public function leavedetail(){
         return $this->fetch();
     }
+
+    //个人中心  请假申请(申请页面)
     public function application(){
+
         return $this->fetch();
     }
+
+    //个人中心  请假申请 提交数据库
+    public function apply(){
+        $data = input('post');
+        dump($data);exit;
+
+
+        return $this->fetch();
+    }
+
+
     public function reite(){
         return $this->fetch();
     }
