@@ -1,0 +1,80 @@
+/* summary*/
+.summary {
+    padding: .3rem .28rem .3rem .23rem;
+    position: relative;
+}
+
+.summary .nameAccount .name {
+    font-weight: bold;
+    font-size: .38rem;
+    color: #333;
+    margin-right: .2rem;
+    margin-bottom: .19rem;
+}
+
+.summary .nameAccount i {
+    width: .25rem;
+    height: .37rem;
+}
+
+.summary .nameAccount i.male {
+    background: url("/home/images/newsletter/male.png") 0 0 no-repeat;
+    background-size: .25rem .37rem;
+}
+
+.summary .nameAccount i.female {
+    background: url("/home/images/newsletter/female.png") 0 0 no-repeat;
+    background-size: .25rem .37rem;
+}
+
+.summary .nameAccount .account {
+    color: #999;
+    font-size: .24rem;
+}
+
+.summary .img {
+    width: .8rem;
+    height: .8rem;
+    position: absolute;
+    right: 0.28rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.summary .img img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: .1rem;
+}
+
+.line {
+    height: .1rem;
+    background-color: #F7F7F7;
+}
+
+/* lists*/
+.lists {
+   padding: 0 .24rem;
+}
+
+.list {
+    border-bottom: 1px solid #f7f7f7;
+    height: .98rem;
+    line-height: .98rem;
+}
+
+.list .fl {
+    color: #999;
+    font-size: .28rem;
+    font-weight: bold;
+}
+
+.list .fr,.list .fr a {
+    color: #333;
+    font-size: .28rem;
+    font-weight: bold;
+    display: inline-block;
+    line-height: .98rem;
+    height: .98rem;
+}

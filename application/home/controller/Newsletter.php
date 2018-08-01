@@ -21,5 +21,19 @@ class Newsletter  extends Base
         return $this->fetch();
     }
 
+    // 通讯名录列表页
+    public function userlist(){
+
+
+        return $this->fetch();
+    }
+
+    // 通讯名录详情页
+    public function detail(){
+
+
+        return $this->fetch();
+    }
+
 
 }
