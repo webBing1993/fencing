@@ -325,6 +325,18 @@ class Association  extends Base
 
         return $this->fetch();
     }
+    /**
+     * 马上报名提交处理页
+     */
+    public function submit(){
+        $id = input('id');
+        $userId = session('userId');
+        $data = Competition::get($id);
+        $model = wechatUser::where(['userid' => $userId])->find();
+
+
+        return $this->fetch();
+    }
 
     /**
      * 报名时组别列表
@@ -332,6 +344,43 @@ class Association  extends Base
     public function getgrouplist(){
         $id = input('id');
         $userId = session('userId');
+        $birthday = wechatUser::where(['userid' => $userId])->value('birthday');
+        $birthday = strtotime($birthday);
+        $data = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
+        if ($data) {
+            foreach ($data as $key => $val) {
+                if ($val['start_time'] > $birthday && $val['end_time'] > $birthday) {
+                    unset($data[$key]);
+                }
+            }
+        } else {
+            $data = [];
+        }
+
+        return json_encode($data);
+    }
+
+    /**
+     * 报名时剑种列表
+     */
+    public function getkindslist(){
+        $data = competitionEvent::EVENT_KINDS_ARRAY;
+        return json_encode($data);
+    }
+
+    /**
+     * 报名时获取价格
+     */
+    public function getprice(){
+        $type = input('type');//赛别
+        $kinds = input('kinds');//剑种 1
+        $userId = session('userId');
+        if ($type) {
+
+        }
+        if ($kinds) {
+
+        }
         $birthday = wechatUser::where(['userid' => $userId])->value('birthday');
         $birthday = strtotime($birthday);
         $data = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
