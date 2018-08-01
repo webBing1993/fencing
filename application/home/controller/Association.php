@@ -407,11 +407,13 @@ class Association  extends Base
         }
         $vip = wechatUser::where(['userid' => $userId])->value('vip');
 
+        $return = [];
         if ($type == 3) {//赛别 3 全部
             if ($kinds) {//单独剑种
                 $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'kinds' => $kinds])->select();
                 $return['id'] = $kinds;
                 $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
+                $return['price'] = 0;
 
                 //价格相加
                 foreach ($model as $key => $val) {
@@ -428,6 +430,10 @@ class Association  extends Base
                     $return[$val['kinds']]['id'] = $val['kinds'];
                     $return[$val['kinds']]['name'] = competitionEvent::EVENT_KINDS_ARRAY[$val['kinds']];
 
+                    if (!isset($return[$val['kinds']]['price'])) {
+                        $return[$val['kinds']]['price'] = 0;
+                    }
+
                     //按剑种价格相加
                     if ($vip) {//会员价
                         $return[$val['kinds']]['price'] += $val['vip_price'];
@@ -435,12 +441,13 @@ class Association  extends Base
                         $return[$val['kinds']]['price'] += $val['price'];
                     }
                 }
-                array_values($return);
+                $return = array_values($return);
             }
         } else {//赛别 1 个人 2 团体
             if ($kinds) {//单独剑种
                 $return['id'] = $kinds;
                 $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
+                $return['price'] = 0;
                 $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => $type, 'kinds' => $kinds])->find();
 
                 if ($vip) {//会员价
@@ -455,6 +462,9 @@ class Association  extends Base
                     $return[$val['kinds']]['id'] = $val['kinds'];
                     $return[$val['kinds']]['name'] = competitionEvent::EVENT_KINDS_ARRAY[$val['kinds']];
 
+                    if (!isset($return[$val['kinds']]['price'])) {
+                        $return[$val['kinds']]['price'] = 0;
+                    }
                     //按剑种价格相加
                     if ($vip) {//会员价
                         $return[$val['kinds']]['price'] = $val['vip_price'];
@@ -462,10 +472,10 @@ class Association  extends Base
                         $return[$val['kinds']]['price'] = $val['price'];
                     }
                 }
-                array_values($return);
+                $return = array_values($return);
             }
         }
-var_dump($return);die;
+
         return $this->success('成功','',$return);
     }
 
