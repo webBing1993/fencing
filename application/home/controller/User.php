@@ -89,9 +89,20 @@ class User extends Base
             $data['front_cover'] = json_decode($data['front_cover']);
         }
         $this->assign('data',$data);
-//        dump($user);exit();
 
         return $this->fetch();
+    }
+
+    //审批提交 意见
+    public function view(){
+        $data = input('post.');
+        $info = Apply::update($data);
+
+        if($info) {
+            return $this->success("审批成功");
+        }else{
+            return $this->error("审批失败");
+        }
     }
 
     //个人中心  请假申请(申请页面)
