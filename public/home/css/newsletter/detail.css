@@ -10,21 +10,25 @@
     color: #333;
     margin-right: .2rem;
     margin-bottom: .19rem;
+    width: 80%;
+    line-height: .54rem;
 }
 
 .summary .nameAccount i {
-    width: .25rem;
+    width: .37rem;
     height: .37rem;
+    margin-left: .2rem;
+    margin-top: .085rem;
 }
 
 .summary .nameAccount i.male {
     background: url("/home/images/newsletter/male.png") 0 0 no-repeat;
-    background-size: .25rem .37rem;
+    background-size: .37rem .37rem;
 }
 
 .summary .nameAccount i.female {
     background: url("/home/images/newsletter/female.png") 0 0 no-repeat;
-    background-size: .25rem .37rem;
+    background-size: .37rem .37rem;
 }
 
 .summary .nameAccount .account {
