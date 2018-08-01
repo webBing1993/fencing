@@ -77,11 +77,17 @@ class User extends Base
         $u = WechatUser::where('mobile',$data['create_user'])->find();
         $data['create_user'] = $u['name'];
 
-        //审核人姓名
+        //一级审核人姓名
         if(!empty($data['leave'])){
             $a = WechatUser::where('mobile',$data['leave'])->find();
             $data['leave'] = $a['name'];
             $data['img'] = ($a['header']) ? $a['header'] : $a['avatar'];
+        }
+        //二级审核人姓名
+        if(!empty($data['leavetwo'])){
+            $b = WechatUser::where('mobile',$data['leavetwo'])->find();
+            $data['leavetwo'] = $b['name'];
+            $data['img2'] = ($b['header']) ? $b['header'] : $b['avatar'];
         }
 
         //图片
@@ -117,6 +123,7 @@ class User extends Base
         $userId = session('userId');
         $user = WechatUser::where('mobile',$userId)->find();
         $data['leave'] = $user['telephone'];
+        $data['leavetwo'] = $user['telephone2'];
         $data = input('post.');
         if(!empty($data['front_cover'])){
             $data['front_cover'] = json_encode($data['front_cover']);
