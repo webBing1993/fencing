@@ -344,6 +344,14 @@ class Association  extends Base
     public function getgrouplist(){
         $id = input('id');
         $userId = session('userId');
+        if (!$id) {
+            $return = [
+                'code' => 1,
+                'msg' => '参数缺失',
+                'data' => [],
+            ];
+            return json_encode($return);
+        }
         $birthday = wechatUser::where(['userid' => $userId])->value('birthday');
         $birthday = strtotime($birthday);
         $data = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
@@ -357,7 +365,7 @@ class Association  extends Base
             $data = [];
         }
 
-        return json_encode($data);
+        return $this->success('成功','',$data);
     }
 
     /**
@@ -372,29 +380,42 @@ class Association  extends Base
      * 报名时获取价格
      */
     public function getprice(){
-        $type = input('type');//赛别
-        $kinds = input('kinds');//剑种 1
+        $id = input('id');
+        $type = input('type');//赛别 1 个人 2 团体 3 全部
+        $kinds = input('kinds');//剑种
         $userId = session('userId');
-        if ($type) {
 
+        if (!$id || !$type || !$kinds) {
+            $return = [
+                'code' => 1,
+                'msg' => '参数缺失',
+                'data' => [],
+            ];
+            return json_encode($return);
         }
-        if ($kinds) {
+        $vip = wechatUser::where(['userid' => $userId])->value('vip');
 
-        }
-        $birthday = wechatUser::where(['userid' => $userId])->value('birthday');
-        $birthday = strtotime($birthday);
-        $data = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
-        if ($data) {
-            foreach ($data as $key => $val) {
-                if ($val['start_time'] > $birthday && $val['end_time'] > $birthday) {
-                    unset($data[$key]);
+        if ($type == 3) {//赛别 3 全部
+            $result = competitionEvent::where(['kinds' => $kinds])->select();
+            foreach ($result as $val) {
+                if ($vip) {
+
+                } else {
+
                 }
             }
-        } else {
-            $data = [];
+
+        } else {//赛别 1 个人 2 团体
+            $model = competitionEvent::where(['type' => $type, 'kinds' => $kinds])->find();
+            if ($vip) {
+
+            } else {
+
+            }
         }
 
-        return json_encode($data);
+
+        return json_encode($return);
     }
 
     public function paysuccess(){
