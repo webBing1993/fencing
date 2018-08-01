@@ -21,7 +21,7 @@
 </div>
 <div class="leaveTime">
     <p class="leaveTime01">申请原因：</p>
-    <textarea placeholder="请填写请假原因..."></textarea>
+    <textarea placeholder="请填写请假原因..." id="content"></textarea>
 </div>
 <div style="padding: 0 .24rem;">
     <div class="myImg">
@@ -150,12 +150,14 @@
         }else {
             var arr = '';
         }
-        var name = $('.suggest input').val();
-        var content = $('.suggest textarea').val();
-        if(name!=='') {
+        var time01 = $('#demo_date_01').val();
+        var time02 = $('#demo_date_01').val();
+        var content = $('#content').val();
+        if(time01!==''&& time02!=='') {
             if (content !== '') {
-                var data = {name: name,content: content, images: arr};
-//                console.log(data)
+                var data = {time01: time01,time02: time02,content: content, images: arr};
+               // console.log(data)
+               //  return;
                 swal({
                     title: "确定提交你的信息吗？",
                     text: "",
@@ -190,7 +192,7 @@
                 swal("投诉理由不能为空！")
             }
         }else{
-            swal("教练姓名不能为空！")
+            swal("时间区间不能为空！")
         }
     })
 </script>
