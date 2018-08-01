@@ -1,4 +1,4 @@
-.leave {width:100%;height:100%;position: relative;padding: 0 .24rem 1.5rem .24rem;}
+.leave {width:100%;height:100%;position: relative;padding: 0 .24rem 1.5rem .24rem;display: none;}
 .leave a {display: block;width:100%;padding: .28rem 0;border-bottom: 1px solid #EBEBEB;color: #333;}
 .leave .leave01 {font-size: .3rem;margin-bottom: .26rem;}
 .leave .leave02 {margin-bottom: .16rem;}
@@ -24,7 +24,7 @@
     margin-left: -3.5rem;
 }
 
-.leaveDetail {width:100%;height:100%;position: relative;padding: 0 .24rem;}
+.leaveDetail {width:100%;height:100%;position: relative;padding: 0 .24rem 2rem .24rem;}
 .leaveDetail01 {border-bottom: 1px solid #EBEBEB;position: relative;overflow: hidden;}
 .leaveDetail01 p {width:100%;height:1rem;line-height: 1rem;font-size: .3rem;color: #333;position: relative;padding-left: .2rem;}
 .leaveDetail01 p:before {
@@ -181,4 +181,55 @@
 .errors {
     right:.24rem;
     background: #FF2740;
+}
+.spr {
+    float:left;
+}
+.spr img{
+    width: .8rem;
+    height: .8rem;
+    border-radius: 50%;
+}
+.spr p {
+    font-size: .26rem;
+    color: #999;
+    margin-top: .1rem;
+}
+.lefts {
+    float:left;
+    width:.4rem;
+    height:.27rem;
+    margin: .3rem .3rem 0 .3rem;
+}
+
+.lc {
+    width:100%;
+    height:.8rem;
+    line-height:.8rem;
+    position: relative;
+    margin-bottom: .6rem;
+    z-index: 99;
+}
+.leaveDetail01 .lc01 {float:left;height:100%;line-height: .8rem;}
+.leaveDetail01 .lc01 img {width:.36rem;height:.36rem;vertical-align: middle;position: relative;float:initial;}
+.leaveDetail01 .lc02 img {float:left;width:.8rem;height:.8rem;vertical-align: middle;border-radius: 50%;}
+.lc03 {line-height:initial;font-size: .26rem;float:left;margin-left: -.1rem;color: #999;height:.8rem;position: relative;width:2rem;}
+.lc03 span {position: absolute;bottom:0;left:0;}
+.lc04 {float:right;font-size: .28rem;}
+.lc04.Nsuccess {color: #21B552;}
+.lc04.successs {color: #3A8CFB;}
+.lc04.error {color: #FF2740;}
+#hr {position: absolute;top:.3rem;left:.18rem;width:1px;background: #F0F0F0;z-index: 9;}
+.opinion01 {margin-left: 1rem;padding-bottom: .26rem;border-bottom: 1px solid #EBEBEB;margin-bottom: .3rem;}
+.opinion02 {width:100%;height:.4rem;vertical-align: text-top;font-size: .26rem;color: #666;}
+.opinion02 span {float:right;font-size: .24rem;color: #999;}
+.opinion03 {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    font-size: .26rem;
+    color: #999;
 }

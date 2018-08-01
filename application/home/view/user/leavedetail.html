@@ -19,7 +19,7 @@
             <span>至</span>
             <input type="text" value="{$data.endtime}" readonly="readonly" name="time02">
         </div>
-        <div class="leaveDetail01">
+        <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>相关图片</p>
             <div class="leaveUl">
                 {volist name="$data['front_cover']" id="vo"}
@@ -30,22 +30,97 @@
         <!--教练下查看-->
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>审批结果</p>
-            {if condition="($data['status'] == 0)"}
-            <div style="color: #3A8CFB;font-size: .3rem;">未审批</div>
-            {elseif condition="($data['status'] == 1)" /}
-            <div style="color: #21B552;font-size: .3rem;">通过</div>
-            {else/}
-            <div style="color: #FF2740;font-size: .3rem;">未通过</div>
+            <div class="hg" style="position: relative;">
+
+                <div class="lc">
+                    <div class="lc01">
+                        {if condition="($data['status'] == 0)"}
+                        <img src="/home/images/user/qj03.png" alt="">
+                        {elseif condition="($data['status'] == 1)" /}
+                        <img src="/home/images/user/qj02.png" alt="">
+                        {else/}
+                        <img src="/home/images/user/qj04.png" alt="">
+                        {/if}
+                    </div>
+                    <div class="lc02"><img  src="{$data['img']}" alt=""></div>
+                    <div class="lc03">
+                        {$data.leave} <span>{$data.leavetime|time_format='Y-m-d'}</span>
+                    </div>
+                    {if condition="($data['status'] == 0)"}
+                    <div class="lc04 Nsuccess">未审批</div>
+                    {elseif condition="($data['status'] == 1)" /}
+                    <div class="lc04 successs">已同意</div>
+                    {else/}
+                    <div class="lc04 error">被否决</div>
+                    {/if}
+
+                </div>
+
+                <!--<div class="lc">-->
+                    <!--<div class="lc01"><img src="/home/images/user/qj02.png" alt=""></div>-->
+                    <!--<div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>-->
+                    <!--<div class="lc03">-->
+                        <!--姓名 <span>2018-10-25</span>-->
+                    <!--</div>-->
+                    <!--<div class="lc04 successs">已同意</div>-->
+                <!--</div>-->
+                <!--<div class="lc">-->
+                    <!--<div class="lc01"><img src="/home/images/user/qj04.png" alt=""></div>-->
+                    <!--<div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>-->
+                    <!--<div class="lc03">-->
+                        <!--姓名 <span>2018-10-25</span>-->
+                    <!--</div>-->
+                    <!--<div class="lc04 error">被否决</div>-->
+                <!--</div>-->
+                <div id="hr"></div>
+            </div>
+        </div>
+        <div class="leaveDetail01" style="border-bottom: transparent;">
+            <p>审批意见</p>
+
+            {if condition="($data['leavetext'] == '')"}
+
+            {else /}
+            <div class="opinion">
+                <div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>
+                <div class="opinion01">
+                    <div class="opinion02">{$data.leave} <span>{$data.leavetime|time_format='Y-m-d'}</span></div>
+                    <div class="opinion03">{$data.leavetext}</div>
+                </div>
+            </div>
             {/if}
+            <!--<div class="opinion">-->
+                <!--<div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>-->
+                <!--<div class="opinion01">-->
+                    <!--<div class="opinion02">姓名 <span>2018-10-15</span></div>-->
+                    <!--<div class="opinion03">请假原因请假原因请假原因请假原因请假原因请假原 因请假原因请假原因</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        {if condition="($user['tag'] != 1)"}
+        {if condition="($data['status'] == 0)"}
+        <!--超管权限下 的审批意见-->
+        <div class="leaveDetail01" style="border-bottom: transparent;">
+            <p>审批意见</p>
+            <textarea placeholder="请填写请假原因..." id="content" style="    width: 100%;
+    height: 2.2rem;
+    border-radius: .2rem;
+    background: #F7F8FA;
+    font-size: .24rem;
+    padding: .2rem;"></textarea>
         </div>
     </div>
 
 <!--这是超管权限下的显示状态-->
 <div class="success">通过</div>
 <div class="errors">驳回</div>
+{/if}
+{/if}
 {/block}
 {block name="script"}
 <script>
+    console.log($('.hg').height());
+    $('#hr').css('height',$('.hg').height()*0.77)
     $('.success').on('click',function(){
         swal({
             title: "请假审批成功",

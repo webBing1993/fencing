@@ -50,24 +50,46 @@ class User extends Base
     //个人中心  请假申请(列表首页)
     public function leave(){
         $userId = session('userId');
-        $left = Apply::where('create_user',$userId)->where('status',0)->order('id desc')->limit(6)->select();//待审核
-        $right = Apply::where('create_user',$userId)->where('status','>',0)->order('id desc')->limit(6)->select();//已审核
-        $this->assign('left',$left);
-        $this->assign('right',$right);
+        $user = WechatUser::where('mobile',$userId)->find();
+        $this->assign('user',$user);
+        if($user['tag'] == 1){
+            $data = Apply::where('create_user',$userId)->order('id desc')->limit(6)->select();
+            $this->assign('data',$data);
+        }else{
+            $left = Apply::where('leave',$userId)->where('status',0)->order('id desc')->limit(6)->select();//待审核
+            $right = Apply::where('leave',$userId)->where('status','>',0)->order('id desc')->limit(6)->select();//已审核
+            $this->assign('left',$left);
+            $this->assign('right',$right);
+        }
 
         return $this->fetch();
     }
 
     public function leavedetail(){
+        //判断身份
+        $userId = session('userId');
+        $user = WechatUser::where('mobile',$userId)->find();
+        $this->assign('user',$user);
+        //获取该请假信息
         $Id = input('id');
         $data = Apply::where('id',$Id)->find();
-        $user = WechatUser::where('mobile',$data['create_user'])->find();
-        $data['create_user'] = $user['name'];
+        //请假人姓名
+        $u = WechatUser::where('mobile',$data['create_user'])->find();
+        $data['create_user'] = $u['name'];
+
+        //审核人姓名
+        if(!empty($data['leave'])){
+            $a = WechatUser::where('mobile',$data['leave'])->find();
+            $data['leave'] = $a['name'];
+            $data['img'] = ($a['header']) ? $a['header'] : $a['avatar'];
+        }
+
+        //图片
         if(!empty($data['front_cover'])){
             $data['front_cover'] = json_decode($data['front_cover']);
         }
         $this->assign('data',$data);
-//        dump($data);exit();
+//        dump($user);exit();
 
         return $this->fetch();
     }
@@ -80,11 +102,14 @@ class User extends Base
 
     //个人中心  请假申请 提交数据库
     public function apply(){
+        $userId = session('userId');
+        $user = WechatUser::where('mobile',$userId)->find();
+        $data['leave'] = $user['telephone'];
         $data = input('post.');
         if(!empty($data['front_cover'])){
             $data['front_cover'] = json_encode($data['front_cover']);
         }
-        $data['create_user'] = session('userId');
+        $data['create_user'] = $userId;
         $data['create_time'] = time();
         $info = Apply::create($data);
 
