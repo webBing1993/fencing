@@ -633,12 +633,14 @@
     margin: .78rem 0 .55rem 0;
     width: 100%;
     text-align: center;
+    color: #999;
 }
 
 .sucDetail05 {
     font-size: .24rem;
     width: 100%;
     text-align: center;
+    color: #999;
 }
 
 .sucDetail06 {
@@ -718,12 +720,12 @@
 }
 
 .lists .list:first-of-type i {
-    background: url("/home/images/game/icon02.png")0 center no-repeat;
+    background: url("/home/images/game/icon13.png")0 center no-repeat;
     background-size: .25rem .3rem;
 }
 
 .lists .list:nth-of-type(2) i {
-    background: url("/home/images/game/icon02.png")0 center no-repeat;
+    background: url("/home/images/game/icon12.png")0 center no-repeat;
     background-size: .3rem .27rem;
 }
 

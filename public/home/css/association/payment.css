@@ -23,12 +23,12 @@ body {
 
 .lists:first-of-type .title:before {
     background: url("/home/images/game/icon05.png") 0 center no-repeat;
-    background-size: .25rem .3rem;
+    background-size: .3rem .3rem;
 }
 
 .lists:nth-of-type(2) .title:before {
     background: url("/home/images/game/icon06.png") 0 center no-repeat;
-    background-size: .26rem .33rem;
+    background-size: .3rem .3rem;
 }
 
 .lists:nth-of-type(3) .title:before {
@@ -97,7 +97,7 @@ body {
     margin-right: .24rem;
     display: inline-block;
     height: .3rem;
-    background: url("/home/images/game/icon02.png")0 center no-repeat;
+    background: url("/home/images/game/icon13.png")0 center no-repeat;
     background-size: .25rem .3rem;
 }
 
