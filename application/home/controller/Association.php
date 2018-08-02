@@ -466,8 +466,10 @@ class Association  extends Base
         $competitionGroupModel = CompetitionGroup::get($data['group_id']);
         $competitionEventModel = CompetitionEvent::get($data['event_id']);
         $data['userid'] = $userId;
+        $data['name'] = $wechatUserModel['name'];
         $data['title'] = $competitionModel['title'];
         $data['end_time'] = $competitionModel['end_time'];
+        $data['address'] = $competitionModel['address'];
         $data['group_name'] = $competitionGroupModel['group_name'];
         $data['type'] = $competitionEventModel['type'];
         $data['kinds'] = $competitionEventModel['kinds'];
@@ -480,13 +482,20 @@ class Association  extends Base
         $competitionApplyodel = new CompetitionApply();
         $model = $competitionApplyodel->validate('CompetitionApply')->save($data);
         if($model){
-            return $this->success('报名成功!');
+            return $this->success('报名成功!','',$competitionApplyodel->id);
         }else{
             return $this->error($competitionApplyodel->getError());
         }
     }
 
     public function paysuccess(){
+        $id = input('id');
+        $data = CompetitionApply::get($id);
+        $data['end_time'] = date('Y-m-d', $data['end_time']);
+        $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[$data['type']];
+        $data['kinds'] = competitionEvent::EVENT_KINDS_ARRAY[$data['kinds']];
+        $this->assign('data',$data);
+
         return $this->fetch();
     }
 
