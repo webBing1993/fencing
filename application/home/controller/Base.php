@@ -20,6 +20,7 @@ use app\home\model\Browse;
 class Base extends Controller {
     public function _initialize(){
 //        session('userId','visitor');
+//        session('userId','12345678910');
         session('userId','15757116500');
 //        session('header','/home/images/vistor.jpg');
 //        session('nickname','游客');

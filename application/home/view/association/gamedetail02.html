@@ -16,10 +16,11 @@
     <div class="user">
         <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
         <div class="error"><img src="/home/images/game/icon10.png" class="gantan">部分信息无法获取，需要补充完善才可进行报名！</div>
-        <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$model.name}"  readonly="readonly"></div>
-        <div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="{$model.birthday}"  readonly="readonly"></div>
-        <div class="userSort"><span>组别</span><input type="text" placeholder="请选择"  readonly="readonly" class="select" name="zb"><img src="/home/images/game/iconxl.png" class="xiala"></div>
-        <div class="userSort"><span>剑种</span><input type="text" placeholder="请选择"  readonly="readonly" class="select" name="jz"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort active"><span>姓名</span><input name="name" type="text" placeholder="请填写" value="{$model.name}"  readonly="readonly"></div>
+        <div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="请填写" value="{$model.birthday}"  readonly="readonly"></div>
+        <!--<div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="请填写" readonly="readonly"></div>-->
+        <div class="userSort"><span>组别</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zb"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort"><span>剑种</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="jz"><img src="/home/images/game/iconxl.png" class="xiala"></div>
         <div class="userSort active">
             <span>赛别</span>
             {eq name="$show_type" value="3"}
@@ -27,42 +28,42 @@
             {/eq}
             <div class="gameSort">
                 {eq name="$show_type" value="3"}
-                <span class="active">• 个人</span>
-                <span>• 团体</span>
+                <span class="active" data-show="1">• 个人</span>
+                <span data-show="2">• 团体</span>
                 {else/}
                     {eq name="$show_type" value="2"}
-                    <span class="active">• 团体</span>
+                    <span class="active" data-show="1">• 团体</span>
                     {else/}
-                    <span class="active">• 个人</span>
+                    <span class="active" data-show="2">• 个人</span>
                     {/eq}
                 {/eq}
             </div>
         </div>
-        <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
-        <div class="userSort"><span>代表单位</span><input type="text" placeholder="请填写" value="{$representative}"></div>
-        <div class="userSort"><span>带训教练</span><input type="text" placeholder="请填写" value="{$coach}"></div>
-        <div class="userSort active"><span>监护人电话</span><input type="text" placeholder="请填写" value="{$model.guardian_mobile}"  readonly="readonly"></div>
-        <div class="userSort"><span>证件类型</span><input type="text" placeholder="请选择"  readonly="readonly" class="select" name="zj"><img src="/home/images/game/iconxl.png" class="xiala"></div>
-        <div class="userSort"><span>证件号</span><input type="text" placeholder="请填写" value="{$model.identity}"></div>
-        <div class="userSort"><span>家庭住址</span><input type="text" placeholder="请填写" value="{$model.address}"></div>
-        <div class="userSort"><span>备注</span><input type="text" placeholder="请填写" value=""></div>
+        <div class="userSort active"><span>性别</span><input name="sex" type="text" placeholder="请填写" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
+        <div class="userSort"><span>代表单位</span><input  name="dbdw" type="text" placeholder="请填写" value="{$representative}"></div>
+        <div class="userSort"><span>带训教练</span><input  name="dxjl" type="text" placeholder="请填写" value="{$coach}"></div>
+        <div class="userSort active"><span>监护人电话</span><input name="phone" type="text" placeholder="请填写" value="{$model.guardian_mobile}"  readonly="readonly"></div>
+        <div class="userSort"><span>证件类型</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zj"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort"><span>证件号</span><input  name="codeNum" type="text" placeholder="请填写" value="{$model.identity}"></div>
+        <div class="userSort"><span>家庭住址</span><input name="address" type="text" placeholder="请填写" value="{$model.address}" readonly="readonly"></div>
+        <div class="userSort"><span>备注</span><input name="bz" type="text" placeholder="请填写" value=""></div>
     </div>
     {eq name="$model.vip" value="1"}
     <div class="pay">
         <div class="pay01"><img src="/home/images/game/icon07.png" class="icon">应付款</div>
-        <div class="pay02">会员价：¥<span>400</span></div>
-        <div class="pay03">普通价：¥<span>500</span></div>
+        <div class="pay02">会员价：¥<span>0.00</span></div>
+        <div class="pay03">普通价：¥<span>0.00</span></div>
     </div>
     <div class="vip">您已成为击剑馆会员，享受会员特权!</div>
     {else/}
     <div class="pay">
         <div class="pay01"><img src="/home/images/game/icon07.png" class="icon">应付款</div>
-        <div class="pay02">普通价：¥<span>500</span></div>
-        <div class="pay03">会员价：¥<span>400</span></div>
+        <div class="pay02">普通价：¥<span>0.00</span></div>
+        <div class="pay03">会员价：¥<span>0.00</span></div>
     </div>
 <div class="vip"><a href="{:Url('User/insider')}">加入击剑馆会员，享受会员特权!</a></div>
     {/eq}
-    <div class="goPay" data-type="1">去付款</div>
+    <div class="goPay" data-type="0">去付款</div>
 <div id="HBox">
     <div class="HBoxSorts">
     </div>
@@ -77,11 +78,93 @@
         </div>
         <div class="payError03">继续填写</div>
     </div>
+    <div class="infoError">
+        <div class="payError01"><img src="/home/images/game/icon08.png" alt=""></div>
+        <div class="payError02">
+            <p>请前往个人中心完善所有信息</p>
+            <p>才可进行报名付款！</p>
+        </div>
+        <div class="payError03">前往个人中心</div>
+    </div>
 </div>
 {/block}
 {block name="script"}
 <script src="/home/js/jquery.hdialog.min.js"></script>
 <script>
+    var id = {$data.id};
+    var name = $('input[name=name]').val(); //姓名
+    var birthday = $('input[name=birthday]').val(); //出生日期
+    var zubie = $('input[name=zb]').val(); //组别
+    var jianzhong = $('input[name=jz]').val(); //剑种
+    var saibie = _getprice; //赛别
+    var sex = $('input[name=sex]').val(); //性别
+    var dbdw = $('input[name=dbdw]').val(); //代表单位
+    var dxjl = $('input[name=dxjl]').val(); //带训教练
+    var phone = $('input[name=phone]').val(); //监护人电话
+    var zjxl = $('input[name=zj]').val(); //证件类型
+    var codeNum = $('input[name=codeNum]').val(); //证件号
+    var address = $('input[name=address]').val(); //家庭住址
+    var bz = $('input[name=bz]').val(); //备注
+    if(name == '' || birthday == '' || sex == '' || phone == '' || address == ''){
+        $('#pay').show();
+        $('.payError').hide();
+        $('body').css('position','fixed');
+    }
+
+    // 判断是否包含 个人/团体赛
+    var _getprice ;
+    if($('.gameSort span').eq(0).hasClass('active') && !$('.gameSort span').eq(1).hasClass('active')){
+        _getprice = 1;
+    }else if($('.gameSort span').eq(1).hasClass('active') && !$('.gameSort span').eq(0).hasClass('active')){
+        _getprice = 2;
+    }else if($('.gameSort span').eq(0).hasClass('active') && $('.gameSort span').eq(1).hasClass('active')) {
+        _getprice = 3;
+    }
+    $('.gameSort span').on('click',function(){
+        if($('input[name=jz]').val()!==''){
+            // console.log($('input[name=zb]').data('id'))
+            if(!$(this).hasClass('active')){
+                $(this).addClass('active')
+            }else{
+                $(this).removeClass('active')
+            }
+            if($('.gameSort span').eq(0).hasClass('active') && !$('.gameSort span').eq(1).hasClass('active')){
+                _getprice = 1;
+            }else if($('.gameSort span').eq(1).hasClass('active') && !$('.gameSort span').eq(0).hasClass('active')){
+                _getprice = 2;
+            }else if($('.gameSort span').eq(0).hasClass('active') && $('.gameSort span').eq(1).hasClass('active')) {
+                _getprice = 3;
+            }
+            var data = {id:id,type:_getprice,kinds:$('input[name=jz]').data('id')}
+            $.ajax({
+                type: "post",
+                url: "{:Url('Association/getprice')}",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    $('.pay02 span').html(data.data.price);
+                    $('.pay03 span').html(data.data.vip_price);
+                }
+            })
+        }else{
+            if(!$(this).hasClass('active')){
+                $(this).addClass('active')
+            }else{
+                $(this).removeClass('active')
+            }
+            if($('.gameSort span').eq(0).hasClass('active') && !$('.gameSort span').eq(1).hasClass('active')){
+                _getprice = 1;
+            }else if($('.gameSort span').eq(1).hasClass('active') && !$('.gameSort span').eq(0).hasClass('active')){
+                _getprice = 2;
+            }else if($('.gameSort span').eq(0).hasClass('active') && $('.gameSort span').eq(1).hasClass('active')) {
+                _getprice = 3;
+            }
+        }
+    })
+
+
+
     $('.select').on('click',function(){
         $('#HBox').show();
         var _height = $('.HBoxSorts').height();
@@ -94,11 +177,16 @@
     $(document).on('click','.HBoxSorts p',function(){
         var sort = localStorage.getItem('_name');
         if(sort == 'zb'){
-            $('input[name=zb]').val($(this).text())
+            $('input[name=zb]').val($(this).text());
+            $('input[name=zb]').data('id',$(this).data('id'));
         }else if(sort == 'jz'){
-            $('input[name=jz]').val($(this).text())
+            $('input[name=jz]').val($(this).text());
+            $('input[name=jz]').data('id',$(this).data('id'));
+            $('.pay02 span').html($(this).data('price'));
+            $('.pay03 span').html($(this).data('vipprice'));
         }else if(sort == 'zj'){
-            $('input[name=zj]').val($(this).text())
+            $('input[name=zj]').val($(this).text());
+            $('input[name=zj]').data('id',$(this).data('id'));
         }
         $('.HBoxSorts').stop().animate({
             bottom:'-100%'
@@ -110,50 +198,123 @@
     }
 
     function _select(name){
-        var str = '';
+        var _this  =this;
         if(name == 'zb'){
             $.ajax({
                 type: "post",
                 url: "{:Url('Association/getgrouplist')}",
-                data: {id:'1'},
+                data: {id:id},
+                dataType: "json",
+                success: function (data) {
+                    var _len = data.data;
+                    var str = '';
+                    for(var i=0;i<_len.length;i++){
+                        str += '<p data-id="'+_len[i].id+'">'+_len[i].group_name+'</p>'
+                    }
+                    $('.HBoxSorts').html(str)
+                }
+            })
+            // str += '<p>幼儿组</p><p>幼儿组1</p><p>幼儿组2</p><p>幼儿组3</p><p>幼儿组4</p><p>幼儿组5</p>'
+        }else if(name == 'jz'){
+            if(!($('.gameSort span').eq(0).hasClass('active')) && !($('.gameSort span').eq(1).hasClass('active'))){
+                swal({
+                        title: "至少选择一项赛别！",
+                        type: "warning",
+                    },
+                    function(){
+                        $('#HBox').hide();
+                    });
+            }else {
+                var data = {id:id,type:_getprice,kinds:''}
+                $.ajax({
+                    type: "post",
+                    url: "{:Url('Association/getprice')}",
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                        var _len = data.data;
+                        var str = '';
+                        for(var i=0;i<_len.length;i++){
+                            str += '<p data-vipprice="'+_len[i].vip_price+'" data-price="'+_len[i].price+'" data-id="'+_len[i].id+'">'+_len[i].name+'</p>'
+                        }
+                        $('.HBoxSorts').html(str)
+                    }
+                })
+            }
+        }else if(name == 'zj'){
+            var str = '';
+            str += '<p data-id="1">身份证</p><p data-id="2">港澳台</p><p data-id="3">护照</p>'
+            $('.HBoxSorts').html(str)
+        }
+        localStorage.setItem('_name',name)
+        // $('.HBoxSorts').html(str)
+    }
+    if($('.goPay').data('type')!==1){
+        $('.goPay').css('background','#C2C2C2')
+    }
+
+    setInterval ("showTime()", 500);
+    function showTime()
+    {
+        if($('input[name=zb]').val()!==''
+            && $('input[name=jz]').val()!==''
+            && $('input[name=dbdw]').val()!==''
+            && $('input[name=dxjl]').val()!==''
+            && $('input[name=zj]').val()!==''
+            && $('input[name=codeNum]').val()!==''){
+            $('.goPay').data('type',1);
+            $('.goPay').css('background','#3A8CFB');
+            $('.error').hide();
+        }else{
+            $('.error').show();
+            $('.goPay').data('type',0);
+        }
+    }
+
+    $('.goPay').on('click',function(){
+        if($(this).data('type')==1){
+            var competition_id = id;//比赛表id
+            var group_id = $('input[name=zb]').data('id'); //组别id
+            var type = _getprice;//赛别id
+            var kinds= $('input[name=jz]').data('id');//剑种id
+            var representative = $('input[name=dbdw]').val();//代表单位
+            var coach = $('input[name=dxjl]').val();//带训教练
+            var card_type = $('input[name=zj]').data('id');//证件id
+            var card_num = $('input[name=codeNum]').val();//证件号
+            var remark = $('input[name=bz]').val();//备注
+            var data = {
+                competition_id:competition_id,
+                group_id:group_id,
+                type:type,
+                kinds:kinds,
+                representative:representative,
+                coach:coach,
+                card_type:card_type,
+                card_num:card_num,
+                remark:remark
+            }
+            $.ajax({
+                type: "post",
+                url: "{:Url('Association/submit')}",
+                data: data,
                 dataType: "json",
                 success: function (data) {
                     console.log(data)
                 }
             })
-            str += '<p>幼儿组</p><p>幼儿组1</p><p>幼儿组2</p><p>幼儿组3</p><p>幼儿组4</p><p>幼儿组5</p>'
-        }else if(name == 'jz'){
-            $.ajax({
-                type: "post",
-                url: "{:Url('Association/getkindslist')}",
-                data: '',
-                dataType: "json",
-                success: function (data) {
-                    var data = JSON.parse(data);
-                    for(var i=0;i<data;i++){
-                        console.log(data[i])
-                    }
-
-                }
-            })
-        }else if(name == 'zj'){
-            str += '<p>身份证</p><p>军人</p><p>港澳台</p>'
-        }
-        localStorage.setItem('_name',name)
-        $('.HBoxSorts').html(str)
-    }
-    if($('.goPay').data('type')!==1){
-        $('.goPay').css('background','#C2C2C2')
-    }
-    $('.goPay').on('click',function(){
-        if($(this).data('type')==1){
-            location.href='/home/association/paysuccess.html'
+            // location.href='/home/association/paysuccess.html'
         }else{
-            $('#pay').show();
+            $('#pay , .payError').show();
+            $('.infoError').hide();
             $('body').css('position','fixed');
         }
     })
-    $('.payError03').on('click',function(){
+    $('.payError .payError03').on('click',function(){
+        $('#pay').hide();
+        $('body').css('position','inherit');
+    })
+    $('.infoError .payError03').on('click',function(){
+        location.href = '/home/user/information.html';
         $('#pay').hide();
         $('body').css('position','inherit');
     })
