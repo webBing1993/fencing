@@ -270,7 +270,7 @@
     margin-top: .21rem;
 }
 
-.info_03Time p:nth-child(1) {
+.info_03Time>p:nth-child(1) {
     font-size: .3rem;
     color: #333;
 }
