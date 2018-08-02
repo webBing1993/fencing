@@ -56,25 +56,21 @@ class User extends Base
             $data = Apply::where('create_user',$userId)->order('id desc')->limit(6)->select();
             $this->assign('data',$data);
         }else{
-
+            //待审核
             $map = array('leave' => array('eq',$userId),'leavezt' => array('eq',0));
-//            $map2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('eq',0),'leavezt' => array('eq',1));
             $q = Apply::where($map);
             $left = $q->whereOr(function($q)use($userId){
                 $map2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('eq',0),'leavezt' => array('eq',1));
                 $q->where($map2);
             })->order('id desc')->limit(6)->select();//待审核
 //            dump($left->fetchSql()->select());exit;////sql语句查询
-
+            //已审核
             $m = array('leave' => array('eq',$userId),'leavezt' => array('neq',0));
             $b = Apply::where($m);
             $right = $b->whereOr(function($b)use($userId){
                 $m2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('neq',0));
                 $b->where($m2);
             })->order('id desc')->limit(6)->select();//已审核
-
-//            $right = Apply::where($m)->order('id desc')->limit(6)->select();//已审核
-//            dump($right);exit;
             $this->assign('left',$left);
             $this->assign('right',$right);
         }
@@ -93,7 +89,6 @@ class User extends Base
         //请假人姓名
         $u = WechatUser::where('mobile',$data['create_user'])->find();
         $data['create_user'] = $u['name'];
-
         //一级审核人姓名
         if(!empty($data['leave'])){
             $a = WechatUser::where('mobile',$data['leave'])->find();
@@ -106,31 +101,26 @@ class User extends Base
             $data['leavetwo'] = $b['name'];
             $data['img2'] = ($b['header']) ? $b['header'] : $b['avatar'];
         }
-
         //图片
         if(!empty($data['front_cover'])){
             $data['front_cover'] = json_decode($data['front_cover']);
         }
         $this->assign('data',$data);
-
-//        dump($data['leave']);exit;
+        //判断时候已经审批,审批框是否显示
         $li = Apply::where('id',$Id)->find();
         if($userId == $li['leave']){
-//            echo 111;die;
             if($data['leavezt'] == 0){
                 $sp = 1;//显示
             }else{
                 $sp = 0;//不显示
             }
         }else{
-//            echo 222;die;
             if($data['leavetwozt'] == 0){
                 $sp = 1;//显示
             }else{
                 $sp = 0;//不显示
             }
         }
-//        dump($sp);exit;
         $this->assign('sp',$sp);
 
         return $this->fetch();
