@@ -279,7 +279,10 @@
     font-size: .24rem;
     color: #999;
 }
-
+.info03_Content {
+    margin-top: .21rem;font-size: .24rem;color: #999;
+}
+.info03_Content img {max-width: 100%;}
 /*.info_03Game span:first-child {float:left;}*/
 .info_03Game span:last-child {
     float: right;
