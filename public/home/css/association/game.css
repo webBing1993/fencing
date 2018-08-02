@@ -628,6 +628,10 @@
     text-align: left;
     display: block;
     width: 47%;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
 }
 
 .sucDetail04 {

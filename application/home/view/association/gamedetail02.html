@@ -300,6 +300,7 @@
                 dataType: "json",
                 success: function (data) {
                     console.log(data)
+                    location.href='/home/association/paysuccess/id/'+data.data.id+'/type/'+data.data.type
                 }
             })
             // location.href='/home/association/paysuccess.html'
