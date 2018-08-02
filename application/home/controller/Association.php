@@ -501,12 +501,18 @@ class Association  extends Base
 
     public function paysuccess(){
         $id = input('id');
-        if (!$id) {
+        $type = input('type');
+        if (!$id || !$type) {
             return $this->error('参数缺失');
         }
         $data = CompetitionApply::get($id);
         $data['end_time'] = date('Y-m-d', $data['end_time']);
-        $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[$data['type']];
+
+        if ($type == 3) {
+            $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[1].'/'.competitionEvent::EVENT_TYPE_ARRAY[2];
+        } else {
+            $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[$data['type']];
+        }
         $data['kinds'] = competitionEvent::EVENT_KINDS_ARRAY[$data['kinds']];
         $this->assign('data',$data);
 
