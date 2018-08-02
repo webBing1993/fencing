@@ -40,9 +40,13 @@
 </div>
 <div class="leaveTime">
     <p class="leaveTime01">审批人：</p>
-    <div class="spr"><img src="/home/images/1.jpg"><p>张三</p></div>
+    {if condition="!empty($data['name1'])"}
+    <div class="spr"><img src="{$data.img1}"><p>{$data.name1}</p></div>
+    {/if}
+    {if condition="!empty($data['name2'])"}
     <img src="/home/images/user/qj01.png" class="lefts">
-    <div class="spr"><img src="/home/images/1.jpg"><p>李四</p></div>
+    <div class="spr"><img src="{$data.img2}"><p>{$data.name2}</p></div>
+    {/if}
 </div>
 <div id="showImg"><img src=""></div>
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">

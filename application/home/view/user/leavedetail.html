@@ -31,6 +31,7 @@
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>审批结果</p>
             <div class="hg" style="position: relative;">
+                {if condition="!empty($data['leave'])"}
                 <!-- 一级 -->
                 <div class="lc">
                     <div class="lc01">
@@ -54,6 +55,8 @@
                     <div class="lc04 error">被否决</div>
                     {/if}
                 </div>
+                {/if}
+                {if condition="!empty($data['leavetwo'])"}
                 <!-- 二级 -->
                 <div class="lc">
                     <div class="lc01">
@@ -77,7 +80,7 @@
                     <div class="lc04 error">被否决</div>
                     {/if}
                 </div>
-
+                {/if}
                 <!--<div class="lc">-->
                     <!--<div class="lc01"><img src="/home/images/user/qj02.png" alt=""></div>-->
                     <!--<div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>-->
@@ -98,11 +101,12 @@
             </div>
         </div>
         <div class="leaveDetail01" style="border-bottom: transparent;">
-            <p>审批意见</p>
+
 
             {if condition="($data['leavetext'] == '')"}
 
             {else /}
+            <p>审批意见</p>
             <div class="opinion">
                 <div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>
                 <div class="opinion01">
