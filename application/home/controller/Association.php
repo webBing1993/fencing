@@ -456,23 +456,22 @@ class Association  extends Base
 
     /**
      * 马上报名提交处理页
-     * @param competition_id,group_id,event_id,representative,coach,card_type,card_num,remark
+     * @param competition_id,group_id,type,kinds,representative,coach,card_type,card_num,remark
      */
     public function submit(){
         $data = input('post.');
         $userId = session('userId');
         $wechatUserModel = wechatUser::where(['userid' => $userId])->find();
-        $competitionModel = Competition::get($data['id']);
+        $competitionModel = Competition::get($data['competition_id']);
         $competitionGroupModel = CompetitionGroup::get($data['group_id']);
-        $competitionEventModel = CompetitionEvent::get($data['event_id']);
+        $competitionEventModel = CompetitionEvent::where(['status' => 0, 'competition_id' => $data['competition_id'], 'type' => $data['type'], 'kinds' => $data['kinds']])->find();
         $data['userid'] = $userId;
         $data['name'] = $wechatUserModel['name'];
         $data['title'] = $competitionModel['title'];
         $data['end_time'] = $competitionModel['end_time'];
         $data['address'] = $competitionModel['address'];
         $data['group_name'] = $competitionGroupModel['group_name'];
-        $data['type'] = $competitionEventModel['type'];
-        $data['kinds'] = $competitionEventModel['kinds'];
+        $data['event_id'] = $competitionEventModel['id'];
         if ($wechatUserModel['vip']) {
             $data['price'] = $competitionEventModel['vip_price'];
         } else {
@@ -490,6 +489,9 @@ class Association  extends Base
 
     public function paysuccess(){
         $id = input('id');
+        if (!$id) {
+            return $this->error('参数缺失');
+        }
         $data = CompetitionApply::get($id);
         $data['end_time'] = date('Y-m-d', $data['end_time']);
         $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[$data['type']];
