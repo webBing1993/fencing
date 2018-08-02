@@ -119,23 +119,55 @@
 {/block}
 {block name="script"}
 <script>
-    console.log($('.hg').height());
+    var id = {$data.id};
     $('#hr').css('height',$('.hg').height()*0.77)
     $('.success').on('click',function(){
-        swal({
-            title: "请假审批成功",
-            type:'success'
-        },function(){
-            history.go(-1)
-        });
+        if($('#content').val()!==''){
+            var data = {id:id,leavetext:$('#content').val()}
+            $.ajax({
+                type: "post",
+                url: "{:Url('User/view')}",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    swal({
+                        title: "请假审批成功!",
+                        type:'success'
+                    },function(){
+                        history.go(-1)
+                    });
+                }
+            })
+        }else{
+            swal({
+                title: "意见不能为空！",
+                type:'error'
+            });
+        }
     })
        $('.errors').on('click',function(){
-        swal({
-            title: "请假审批驳回",
-            type:'error'
-        },function(){
-            history.go(-1)
-        });
+           if($('#content').val()!==''){
+               var data = {id:id,leavetext:$('#content').val()}
+               $.ajax({
+                   type: "post",
+                   url: "{:Url('User/view')}",
+                   data: data,
+                   dataType: "json",
+                   success: function (data) {
+                       swal({
+                           title: "请假审批驳回!",
+                           type:'success'
+                       },function(){
+                           history.go(-1)
+                       });
+                   }
+               })
+           }else{
+               swal({
+                   title: "意见不能为空！",
+                   type:'error'
+               });
+           }
     })
 </script>
 {/block}
