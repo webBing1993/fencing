@@ -56,8 +56,25 @@ class User extends Base
             $data = Apply::where('create_user',$userId)->order('id desc')->limit(6)->select();
             $this->assign('data',$data);
         }else{
-            $left = Apply::where('leave',$userId)->where('status',0)->order('id desc')->limit(6)->select();//待审核
-            $right = Apply::where('leave',$userId)->where('status','>',0)->order('id desc')->limit(6)->select();//已审核
+
+            $map = array('leave' => array('eq',$userId),'leavezt' => array('eq',0));
+//            $map2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('eq',0),'leavezt' => array('eq',1));
+            $q = Apply::where($map);
+            $left = $q->whereOr(function($q)use($userId){
+                $map2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('eq',0),'leavezt' => array('eq',1));
+                $q->where($map2);
+            })->order('id desc')->limit(6)->select();//待审核
+//            dump($left->fetchSql()->select());exit;////sql语句查询
+
+            $m = array('leave' => array('eq',$userId),'leavezt' => array('neq',0));
+            $b = Apply::where($m);
+            $right = $b->whereOr(function($b)use($userId){
+                $m2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('neq',0));
+                $b->where($m2);
+            })->order('id desc')->limit(6)->select();//已审核
+
+//            $right = Apply::where($m)->order('id desc')->limit(6)->select();//已审核
+//            dump($right);exit;
             $this->assign('left',$left);
             $this->assign('right',$right);
         }
@@ -96,14 +113,51 @@ class User extends Base
         }
         $this->assign('data',$data);
 
+//        dump($data['leave']);exit;
+        $li = Apply::where('id',$Id)->find();
+        if($userId == $li['leave']){
+//            echo 111;die;
+            if($data['leavezt'] == 0){
+                $sp = 1;//显示
+            }else{
+                $sp = 0;//不显示
+            }
+        }else{
+//            echo 222;die;
+            if($data['leavetwozt'] == 0){
+                $sp = 1;//显示
+            }else{
+                $sp = 0;//不显示
+            }
+        }
+//        dump($sp);exit;
+        $this->assign('sp',$sp);
+
         return $this->fetch();
     }
 
     //审批提交 意见
     public function view(){
         $data = input('post.');
-        $data['leavetime'] = time();
-        $info = Apply::update($data);
+        $userId = session('userId');
+        $list = Apply::where('id',$data['id'])->find();
+        if($list['leave'] == $userId){
+            $da['id'] = $data['id'];
+            $da['leavetext'] = $data['leavetext'];
+            $da['leavetime'] = time();
+            $da['leavezt'] = $data['status'];
+            if($data['status'] == 2){
+                $da['status'] = $data['status'];
+            }
+            $info = Apply::update($da);
+        }elseif($list['leavetwo'] == $userId){
+            $da['id'] = $data['id'];
+            $da['leavetwotext'] = $data['leavetext'];
+            $da['leavetwotime'] = time();
+            $da['leavetwozt'] = $data['status'];
+            $da['status'] = $data['status'];
+            $info = Apply::update($da);
+        }
 
         if($info) {
             return $this->success("审批成功");

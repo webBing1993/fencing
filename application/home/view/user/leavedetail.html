@@ -31,12 +31,12 @@
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>审批结果</p>
             <div class="hg" style="position: relative;">
-
+                <!-- 一级 -->
                 <div class="lc">
                     <div class="lc01">
-                        {if condition="($data['status'] == 0)"}
+                        {if condition="($data['leavezt'] == 0)"}
                         <img src="/home/images/user/qj03.png" alt="">
-                        {elseif condition="($data['status'] == 1)" /}
+                        {elseif condition="($data['leavezt'] == 1)" /}
                         <img src="/home/images/user/qj02.png" alt="">
                         {else/}
                         <img src="/home/images/user/qj04.png" alt="">
@@ -46,14 +46,36 @@
                     <div class="lc03">
                         {$data.leave} <span>{$data.leavetime|time_format='Y-m-d'}</span>
                     </div>
-                    {if condition="($data['status'] == 0)"}
+                    {if condition="($data['leavezt'] == 0)"}
                     <div class="lc04 Nsuccess">未审批</div>
-                    {elseif condition="($data['status'] == 1)" /}
+                    {elseif condition="($data['leavezt'] == 1)" /}
                     <div class="lc04 successs">已同意</div>
                     {else/}
                     <div class="lc04 error">被否决</div>
                     {/if}
-
+                </div>
+                <!-- 二级 -->
+                <div class="lc">
+                    <div class="lc01">
+                        {if condition="($data['leavetwozt'] == 0)"}
+                        <img src="/home/images/user/qj03.png" alt="">
+                        {elseif condition="($data['leavetwozt'] == 1)" /}
+                        <img src="/home/images/user/qj02.png" alt="">
+                        {else/}
+                        <img src="/home/images/user/qj04.png" alt="">
+                        {/if}
+                    </div>
+                    <div class="lc02"><img  src="{$data['img2']}" alt=""></div>
+                    <div class="lc03">
+                        {$data.leavetwo} <span>{$data.leavetwotime|time_format='Y-m-d'}</span>
+                    </div>
+                    {if condition="($data['leavetwozt'] == 0)"}
+                    <div class="lc04 Nsuccess">未审批</div>
+                    {elseif condition="($data['leavetwozt'] == 1)" /}
+                    <div class="lc04 successs">已同意</div>
+                    {else/}
+                    <div class="lc04 error">被否决</div>
+                    {/if}
                 </div>
 
                 <!--<div class="lc">-->
@@ -89,6 +111,17 @@
                 </div>
             </div>
             {/if}
+            {if condition="($data['leavetwotext'] == '')"}
+
+            {else /}
+            <div class="opinion">
+                <div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>
+                <div class="opinion01">
+                    <div class="opinion02">{$data.leavetwo} <span>{$data.leavetwotime|time_format='Y-m-d'}</span></div>
+                    <div class="opinion03">{$data.leavetwotext}</div>
+                </div>
+            </div>
+            {/if}
             <!--<div class="opinion">-->
                 <!--<div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>-->
                 <!--<div class="opinion01">-->
@@ -98,7 +131,7 @@
             <!--</div>-->
         </div>
         {if condition="($user['tag'] != 1)"}
-        {if condition="($data['status'] == 0)"}
+        {if condition="($sp == 1 )"}
         <!--超管权限下 的审批意见-->
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>审批意见</p>
