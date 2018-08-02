@@ -461,6 +461,11 @@ class Association  extends Base
     public function submit(){
         $data = input('post.');
         $userId = session('userId');
+        $flag = 0;
+        if ($data['type'] == 3) {
+            $data['type'] = 1;
+            $flag = 1;
+        }
         $wechatUserModel = wechatUser::where(['userid' => $userId])->find();
         $competitionModel = Competition::get($data['competition_id']);
         $competitionGroupModel = CompetitionGroup::get($data['group_id']);
@@ -481,7 +486,14 @@ class Association  extends Base
         $competitionApplyodel = new CompetitionApply();
         $model = $competitionApplyodel->validate('CompetitionApply')->save($data);
         if($model){
-            return $this->success('报名成功!','',$competitionApplyodel->id);
+            if ($flag == 1) {
+                $data['type'] = 2;
+                $data2 = $data;
+                $competitionApplyodel2 = new CompetitionApply();
+                $competitionApplyodel2->validate('CompetitionApply')->save($data2);
+                return $this->success('报名成功!','',['id' => $competitionApplyodel2->id, 'type' => 3]);
+            }
+            return $this->success('报名成功!','',['id' => $competitionApplyodel->id, 'type' => $data['type']]);
         }else{
             return $this->error($competitionApplyodel->getError());
         }
