@@ -120,13 +120,44 @@
         </div>
     </div>
     <!-- 列表结束-->
+    <!-- 列表开始-->
+    <div class="userList" name="F" id="F">
+        <span class="letter">F</span>
+        <div class="user">
+            <!-- 同字母列表开始-->
+            <a href="/home/newsletter/detail.html" class="clearfix">
+                <img src="/home/images/1.jpg" alt="" class="fl">
+                <span class="name fl">姓名</span>
+            </a>
+            <!-- 同字母列表结束-->
+            <!-- 同字母列表开始-->
+            <a href="/home/newsletter/detail.html" class="clearfix">
+                <img src="/home/images/1.jpg" alt="" class="fl">
+                <span class="name fl">姓名</span>
+            </a>
+            <!-- 同字母列表结束-->
+            <!-- 同字母列表开始-->
+            <a href="/home/newsletter/detail.html" class="clearfix">
+                <img src="/home/images/1.jpg" alt="" class="fl">
+                <span class="name fl">姓名</span>
+            </a>
+            <!-- 同字母列表结束-->
+            <!-- 同字母列表开始-->
+            <a href="/home/newsletter/detail.html" class="clearfix">
+                <img src="/home/images/1.jpg" alt="" class="fl">
+                <span class="name fl">姓名</span>
+            </a>
+            <!-- 同字母列表结束-->
+        </div>
+    </div>
+    <!-- 列表结束-->
 </div>
 
 <!-- 字母顺序-->
 <div class="letters">
     <ul>
         <li>
-            <a href="javascript:;">A</a>
+            <a href="javascript:;" class="active">A</a>
         </li>
         <li>
             <a href="javascript:;">B</a>
@@ -160,6 +191,26 @@
     $(".letters a").on('click', function () {
         $(this).addClass('active').parent('li').siblings('li').find('a').removeClass('active');
         window.location.replace('/home/newsletter/userlist.html#' + $(this).text());
+    });
+
+    /*
+    * 滑动事件
+    * */
+    $(window).off("scroll" ).on('scroll', function () {
+        var userListTop = 0;
+        let arr = [];
+        var reachTop = $('.search').height() + 2 * $('.search').css('paddingTop').replace('px', '');
+        var heithtTop = $(this).scrollTop() - reachTop;
+        $(".letters li").find('a').removeClass('active');
+        for (var j = 0; j < $('.userList').length; j++) {
+            userListTop += $('.userList').eq(j).height();
+            if (heithtTop >= userListTop) {
+                arr.push(j);
+            }else if (heithtTop < $('.userList').eq(0).height()) {
+                arr = [];
+            }
+        }
+        $(".letters li").eq(arr.length).find('a').addClass('active');
     });
 
     /*

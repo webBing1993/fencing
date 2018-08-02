@@ -520,7 +520,7 @@
     display: none;
 }
 
-.payError {
+.payError , .infoError{
     width: 5.2rem;
     height: 2.78rem;
     border-radius: .3rem;
