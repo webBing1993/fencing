@@ -123,7 +123,7 @@
     $('#hr').css('height',$('.hg').height()*0.77)
     $('.success').on('click',function(){
         if($('#content').val()!==''){
-            var data = {id:id,leavetext:$('#content').val()}
+            var data = {id:id,leavetext:$('#content').val(),status:1}
             $.ajax({
                 type: "post",
                 url: "{:Url('User/view')}",
@@ -147,7 +147,7 @@
     })
        $('.errors').on('click',function(){
            if($('#content').val()!==''){
-               var data = {id:id,leavetext:$('#content').val()}
+               var data = {id:id,leavetext:$('#content').val(),status:2}
                $.ajax({
                    type: "post",
                    url: "{:Url('User/view')}",
