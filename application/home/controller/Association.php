@@ -8,6 +8,7 @@
 
 namespace app\home\controller;
 
+use app\admin\model\CompetitionApply;
 use app\home\model\CompetitionEvent;
 use app\home\model\Competition;
 use app\home\model\CompetitionGroup;
@@ -315,6 +316,7 @@ class Association  extends Base
 //        }else{
 //            $data['show_tip'] = false;
 //        }
+        //TODO
         $representative = "杭州击剑馆";
         $coach = "林教练1";
         $individual_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->find();
@@ -345,12 +347,7 @@ class Association  extends Base
         $id = input('id');
         $userId = session('userId');
         if (!$id) {
-            $return = [
-                'code' => 0,
-                'msg' => '参数缺失',
-                'data' => [],
-            ];
-            return json_encode($return);
+            return $this->error('参数缺失');
         }
         $birthday = wechatUser::where(['userid' => $userId])->value('birthday');
         $birthday = strtotime($birthday);
@@ -378,14 +375,8 @@ class Association  extends Base
         $userId = session('userId');
 
         if (!$id || !$type) {
-            $return = [
-                'code' => 0,
-                'msg' => '参数缺失',
-                'data' => [],
-            ];
-            return json_encode($return);
+            return $this->error('参数缺失');
         }
-        $vip = wechatUser::where(['userid' => $userId])->value('vip');
 
         $return = [];
         if ($type == 3) {//赛别 3 全部
@@ -465,15 +456,34 @@ class Association  extends Base
 
     /**
      * 马上报名提交处理页
+     * @param competition_id,group_id,event_id,representative,coach,card_type,card_num,remark
      */
     public function submit(){
-        $id = input('id');
+        $data = input('post.');
         $userId = session('userId');
-        $data = Competition::get($id);
-        $model = wechatUser::where(['userid' => $userId])->find();
+        $wechatUserModel = wechatUser::where(['userid' => $userId])->find();
+        $competitionModel = Competition::get($data['id']);
+        $competitionGroupModel = CompetitionGroup::get($data['group_id']);
+        $competitionEventModel = CompetitionEvent::get($data['event_id']);
+        $data['userid'] = $userId;
+        $data['title'] = $competitionModel['title'];
+        $data['end_time'] = $competitionModel['end_time'];
+        $data['group_name'] = $competitionGroupModel['group_name'];
+        $data['type'] = $competitionEventModel['type'];
+        $data['kinds'] = $competitionEventModel['kinds'];
+        if ($wechatUserModel['vip']) {
+            $data['price'] = $competitionEventModel['vip_price'];
+        } else {
+            $data['price'] = $competitionEventModel['price'];
+        }
 
-
-        return $this->fetch();
+        $competitionApplyodel = new CompetitionApply();
+        $model = $competitionApplyodel->validate('CompetitionApply')->save($data);
+        if($model){
+            return $this->success('报名成功!');
+        }else{
+            return $this->error($competitionApplyodel->getError());
+        }
     }
 
     public function paysuccess(){
