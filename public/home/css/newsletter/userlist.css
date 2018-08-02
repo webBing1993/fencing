@@ -101,13 +101,12 @@
 
 /* content*/
 .content {
-    padding: 0 .24rem 0 .67rem;
+    padding: .29rem .24rem 0 .67rem;
     position: relative;
 }
 
 .userList {
     position: relative;
-    margin-top: .29rem;
 }
 
 .userList .letter {
