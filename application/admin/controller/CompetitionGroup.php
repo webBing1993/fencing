@@ -60,7 +60,7 @@ class CompetitionGroup extends Admin {
             $competitionGroupModel = new CompetitionGroupModel();
             $info = $competitionGroupModel->validate('CompetitionGroup')->save($data);
             if($info) {
-                return $this->success("添加成功", Url('Competitiongroup/index', array('pid' => $data['competition_id'])));
+                return $this->success("添加成功", Url('CompetitionGroup/index', array('pid' => $data['competition_id'])));
             }else{
                 return $this->error($competitionGroupModel->getError());
             }
@@ -90,7 +90,7 @@ class CompetitionGroup extends Admin {
             $competitionGroupModel = new CompetitionGroupModel();
             $info = $competitionGroupModel->validate('CompetitionGroup')->save($data,['id'=>input('id')]);
             if($info){
-                return $this->success("修改成功",Url("Competitiongroup/index", array('pid' => $data['competition_id'])));
+                return $this->success("修改成功",Url("CompetitionGroup/index", array('pid' => $data['competition_id'])));
             }else{
                 return $this->get_update_error_msg($competitionGroupModel->getError());
             }

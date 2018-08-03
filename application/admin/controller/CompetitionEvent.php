@@ -60,7 +60,7 @@ class CompetitionEvent extends Admin {
             $CompetitionEventModel = new CompetitionEventModel();
             $info = $CompetitionEventModel->validate('CompetitionEvent')->save($data);
             if($info) {
-                return $this->success("添加成功", Url('Competitionevent/index', array('pid' => $data['competition_id'])));
+                return $this->success("添加成功", Url('CompetitionEvent/index', array('pid' => $data['competition_id'])));
             }else{
                 return $this->error($CompetitionEventModel->getError());
             }
@@ -90,7 +90,7 @@ class CompetitionEvent extends Admin {
             $CompetitionEventModel = new CompetitionEventModel();
             $info = $CompetitionEventModel->validate('CompetitionEvent')->save($data,['id'=>input('id')]);
             if($info){
-                return $this->success("修改成功",Url("Competitionevent/index", array('pid' => $data['competition_id'])));
+                return $this->success("修改成功",Url("CompetitionEvent/index", array('pid' => $data['competition_id'])));
             }else{
                 return $this->get_update_error_msg($CompetitionEventModel->getError());
             }
