@@ -16,7 +16,7 @@ use think\Config;
 
 /**
  * Class Competition
- * @package  比赛报名控制器
+ * @package  比赛管理控制器
  */
 class Competition extends Admin {
     /**

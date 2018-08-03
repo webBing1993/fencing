@@ -60,10 +60,10 @@
                         <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
                         <td>{$vo.status_text}</td>
                         <td>
-                            <a data-toggle="modal" href="#company-code" onclick="remark(this)" class="btn-sm btn-success"
-                               data-remark='{$vo}'
-                               style="color: #fff;">查看备注</a>
-                            <a href="{:Url('edit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-eye"></i> 详情</a>
+                            <a data-toggle="modal" href="#show" onclick="detail(this)" class="btn-sm btn-success"
+                               data-detail='{$vo}'
+                               style="color: #fff;"><i class="fa fa-eye"></i> 详情</a>
+                            <!--<a href="{:Url('edit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-eye"></i> 详情</a>-->
                             <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 退赛</a>
                         </td>
                     </tr>
@@ -81,27 +81,80 @@
         </div>
     </div>
 </div>
-<div id="company-code" class="modal fade" aria-hidden="true">
+<div id="show" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" method="post" action="">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span
                             aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h3 class="modal-title text-center">查看备注</h3>
+                    <h2 class="modal-title text-center">详情</h2>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group"><label class="col-sm-3 control-label">备注:</label>
-                        <div class="col-sm-9">
-                            <input type="text"  readonly   class="form-control" required="" name="remark">
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>代表单位:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="representative">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>带训教练:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="coach">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>证件类型:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <select name="card_type" id="card_type"  class="form-control">
+                                <option value="1" >身份证</option>
+                                <option value="2" >港澳台</option>
+                                <option value="3" >护照</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>证件号:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="card_num">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>备注:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <textarea readonly name="remark"  class="form-control" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>报名人:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>价格:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="price">
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
 
                 </div>
-
             </form>
         </div>
     </div>
@@ -120,11 +173,17 @@
             $("tbody").find(".ids").iCheck("toggle");
         });
     });
-    function remark(a) {
-        var data = $(a).attr('data-remark');
+    function detail(a) {
+        var data = JSON.parse($(a).attr('data-detail'));
         console.log(data);
-        console.log($(a)[0].dataset.remark);
-        $("input[name='remark']").val(data.title);
+        $("input[name='title']").val(data.title);
+        $("input[name='representative']").val(data.representative);
+        $("input[name='coach']").val(data.coach);
+        $("select[name='card_type']").val(data.card_type);
+        $("input[name='card_num']").val(data.card_num);
+        $("textarea[name='remark']").val(data.remark);
+        $("input[name='name']").val(data.name);
+        $("input[name='price']").val(data.price);
     }
 </script>
 {/block}
