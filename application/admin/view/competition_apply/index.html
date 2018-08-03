@@ -61,7 +61,7 @@
                         <td>{$vo.status_text}</td>
                         <td>
                             <a data-toggle="modal" href="#company-code" onclick="remark(this)" class="btn-sm btn-success"
-                               data-remark='{$vo.title,$vo.address}'
+                               data-remark='{$vo}'
                                style="color: #fff;">查看备注</a>
                             <a href="{:Url('edit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-eye"></i> 详情</a>
                             <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 退赛</a>
@@ -122,8 +122,8 @@
     });
     function remark(a) {
         var data = $(a).attr('data-remark');
-
-        console.log($(a).dataset);
+        console.log(data);
+        console.log($(a)[0].dataset.remark);
         $("input[name='remark']").val(data.title);
     }
 </script>
