@@ -138,6 +138,10 @@ class User extends Base
             $da['leavezt'] = $data['status'];
             if($data['status'] == 2){
                 $da['status'] = $data['status'];
+            }elseif($data['status'] == 1){
+                if(empty($list['leavetwo'])){
+                    $da['status'] = $data['status'];
+                }
             }
             $info = Apply::update($da);
         }elseif($list['leavetwo'] == $userId){
@@ -158,6 +162,25 @@ class User extends Base
 
     //个人中心  请假申请(申请页面)
     public function application(){
+        $userId = session('userId');
+        $user = WechatUser::where('mobile',$userId)->find();
+        if(!empty($user['telephone'])){
+            $name1 = WechatUser::where('mobile',$user['telephone'])->find();
+            $data['name1'] = $name1['name'];
+            $data['img1'] = ($name1['header']) ? $name1['header'] : $name1['avatar'];
+        }else{
+            $data['name1'] = '';
+            $data['img1'] = '';
+        }
+        if(!empty($user['telephone2'])){
+            $name2 = WechatUser::where('mobile',$user['telephone2'])->find();
+            $data['name2'] = $name2['name'];
+            $data['img2'] = ($name2['header']) ? $name2['header'] : $name2['avatar'];
+        }else{
+            $data['name2'] = '';
+            $data['img2'] = '';
+        }
+        $this->assign('data',$data);
 
         return $this->fetch();
     }
@@ -165,13 +188,18 @@ class User extends Base
     //个人中心  请假申请 提交数据库
     public function apply(){
         $userId = session('userId');
-        $user = WechatUser::where('mobile',$userId)->find();
-        $data['leave'] = $user['telephone'];
-        $data['leavetwo'] = $user['telephone2'];
         $data = input('post.');
+        $user = WechatUser::where('mobile',$userId)->find();
+
+        if(!empty($user['telephone'])){
+            $data['leave'] = $user['telephone'];
+        }//一级审批者
+        if(!empty($user['telephone2'])){
+            $data['leavetwo'] = $user['telephone2'];
+        }//二级审批者
         if(!empty($data['front_cover'])){
             $data['front_cover'] = json_encode($data['front_cover']);
-        }
+        }//图片json
         $data['create_user'] = $userId;
         $data['create_time'] = time();
         $info = Apply::create($data);
