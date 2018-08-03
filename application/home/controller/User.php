@@ -22,6 +22,17 @@ class User extends Base
         return $this->fetch();
     }
     public function information(){
+        $userId = session('userId');
+        $user = WechatUser::where('mobile',$userId)->find();
+        if($user['gender'] == 0){
+            $user['gender'] = '未定义';
+        }elseif($user['gender'] == 1){
+            $user['gender'] = '男';
+        }else{
+            $user['gender'] = '女';
+        }
+        $this->assign('user',$user);
+
         return $this->fetch();
     }
     public function sign(){
@@ -53,7 +64,7 @@ class User extends Base
         $user = WechatUser::where('mobile',$userId)->find();
         $this->assign('user',$user);
         if($user['tag'] == 1){
-            $data = Apply::where('create_user',$userId)->order('id desc')->limit(6)->select();
+            $data = Apply::where('create_user',$userId)->order('id desc')/*->limit(6)*/->select();
             $this->assign('data',$data);
         }else{
             //待审核
@@ -62,7 +73,7 @@ class User extends Base
             $left = $q->whereOr(function($q)use($userId){
                 $map2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('eq',0),'leavezt' => array('eq',1));
                 $q->where($map2);
-            })->order('id desc')->limit(6)->select();//待审核
+            })->order('id desc')/*->limit(6)*/->select();//待审核
 //            dump($left->fetchSql()->select());exit;////sql语句查询
             //已审核
             $m = array('leave' => array('eq',$userId),'leavezt' => array('neq',0));
@@ -70,7 +81,7 @@ class User extends Base
             $right = $b->whereOr(function($b)use($userId){
                 $m2 = array('leavetwo' => array('eq',$userId),'leavetwozt' => array('neq',0));
                 $b->where($m2);
-            })->order('id desc')->limit(6)->select();//已审核
+            })->order('id desc')/*->limit(6)*/->select();//已审核
             $this->assign('left',$left);
             $this->assign('right',$right);
         }
