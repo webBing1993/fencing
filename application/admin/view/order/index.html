@@ -3,6 +3,11 @@
 {block name="style"}
 <style>
     .shadow{width: 100%;height: 100%;position: absolute;left: 0;top: 0;background: rgba(0,0,0,0.4);z-index: 88;}
+    .imgs img {
+        display: block;
+        width: 100%;
+        height: 300px;
+    }
 </style>
 {/block}
 
@@ -56,10 +61,13 @@
                                 <td>{$vo.mobile}</td>
                                 <td>{$vo.title|msubstr=0,20}</td>
                                 <td>{$vo.num}</td>
-                                <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
+                                <td>{$vo.create_time}</td>
                                 <td>{$vo.status_text}</td>
                                 <td>
-                                    <a href="javascript:showIframe({$vo.id})" class="confirm btn-sm btn-primary"> 预览</a>
+                                    <!--<a href="javascript:showIframe({$vo.id})" class="confirm btn-sm btn-primary"> 预览</a>-->
+                                    <a data-toggle="modal" href="#show" onclick="detail(this)" class="btn-sm btn-success"
+                                       data-detail='{$vo}'
+                                       style="color: #fff;"><i class="fa fa-eye"></i>预览</a>
                                     <!--&emsp;<a href="{:Url('Venue/edit?id='.$vo['id'])}">修改</a>-->
                                     <!--&emsp;<a href="{:Url('Venue/del?id='.$vo['id'])}" class="confirm ajax-del">删除</a>-->
                                 </td>
@@ -82,6 +90,79 @@
 </div>
 <iframe id="iframe" src="" style="height: 80%;width: 60%;z-index: 99;position: absolute;top: 10%;border: 0;left: 50%;margin-left: -30%;background: #fff;display: none;" scrolling="auto" seamless></iframe>
 <div class="shadow" style="display: none"></div>
+
+<div id="show" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" method="post" action="">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h2 class="modal-title text-center">预览</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>商品名称:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>数量:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="num">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>下单人:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>所属场馆:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="depart">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>联系电话:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="mobile">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>下单时间:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input readonly type="text" class="form-control form_title" name="create_time">
+                        </div>
+                    </div>
+                    <div class="form-group imgs">
+                        <div class="col-lg-12">
+                            <img src="" alt="">
+                        </div>
+                    </div>
+
+                <div class="modal-footer">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {/block}
 
 {block name="script"}
@@ -114,5 +195,17 @@
         });
     }
 
+
+    function detail(a) {
+        var data = JSON.parse($(a).attr('data-detail'));
+        console.log(data);
+        $("input[name='title']").val(data.title);
+        $("input[name='num']").val(data.num);
+        $("input[name='name']").val(data.name);
+        $("input[name='depart']").val(data.depart);
+        $("input[name='mobile']").val(data.mobile);
+        $("input[name='create_time']").val(data.create_time);
+        $(".imgs img").attr('src',data.front_cover);
+    }
 </script>
 {/block}
