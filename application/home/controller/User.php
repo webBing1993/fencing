@@ -14,6 +14,7 @@ use app\home\model\WechatUser;
 
 class User extends Base
 {
+    //个人中心首页
     public function index(){
         $userId = session('userId');
         $user = WechatUser::where('mobile',$userId)->find();
@@ -21,6 +22,8 @@ class User extends Base
 
         return $this->fetch();
     }
+
+    //个人信息页
     public function information(){
         $userId = session('userId');
         $user = WechatUser::where('mobile',$userId)->find();
@@ -35,9 +38,12 @@ class User extends Base
 
         return $this->fetch();
     }
+
     public function sign(){
         return $this->fetch();
     }
+
+    //会员申请页
     public function insider(){
         $userId = session('userId');
         $user = WechatUser::where('mobile',$userId)->find();
