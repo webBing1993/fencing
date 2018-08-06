@@ -13,6 +13,7 @@ use app\home\model\Apply;
 use app\home\model\Competition;
 use app\home\model\CompetitionApply;
 use app\home\model\CompetitionEvent;
+use app\home\model\Picture;
 use app\home\model\WechatUser;
 
 class User extends Base
@@ -80,6 +81,34 @@ class User extends Base
 
         return $this->fetch();
     }
+
+    //个人中心  我的比赛   上拉加载
+    public function more(){
+        $len = input('len');
+        $type = input('type');
+        $userId = session('userId');
+
+        if($type == 1){
+            $info = CompetitionApply::where('userid',$userId)->where('status',1)->where('end_time','gt',time())->order('id desc')->limit($len,6)->select();//报名未结束
+        }elseif($type == 2){
+            $info = CompetitionApply::where('userid',$userId)->where('status',1)->where('end_time','elt',time())->order('id desc')->limit($len,6)->select();//报名已结束
+        }
+
+        foreach($info as $value){
+            $value['end_time'] = date("Y-m-d",$value['end_time']);
+            $value['front_cover'] = Competition::where('id',$value['competition_id'])->value('front_cover');
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
+
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
+    }
+
+
 
     //个人中心  请假申请(列表首页)
     public function leave(){
