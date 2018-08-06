@@ -130,7 +130,7 @@ body {
 
 .reachResult .results::before,
 .reachResult .results::after {
-    content: '';
+    /*content: '';*/
     position: absolute;
     right: 0.52rem;
     width: .24rem;
@@ -311,7 +311,7 @@ body {
     display: block;
     background-color: #fff;
     border-radius: .2rem;
-    box-shadow: 1px 0 .15rem #000000;
+    box-shadow: 1px 0 .15rem rgba(0,0,0,0.05);
     height: 3.28rem;
 }
 
