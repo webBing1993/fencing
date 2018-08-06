@@ -69,10 +69,13 @@ class User extends Base
     public function play(){
         $userId = session('userId');
         $left = CompetitionApply::where('userid',$userId)->where('status',1)->where('end_time','gt',time())->order('id desc')->limit(6)->select();//报名未结束
+
         foreach($left as $k=>$v){
             $left[$k]['front_cover'] = Competition::where('id',$v['competition_id'])->value('front_cover');
         }
+
         $right = CompetitionApply::where('userid',$userId)->where('status',1)->where('end_time','elt',time())->order('id desc')->limit(6)->select();//报名已结束
+
         foreach($right as $key=>$value){
             $right[$key]['front_cover'] = Competition::where('id',$value['competition_id'])->value('front_cover');
         }
