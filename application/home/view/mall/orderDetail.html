@@ -137,25 +137,11 @@
     };
 
 
-    // 监听页面回跳
-    pushHistory();
-    window.addEventListener('popstate', function(event) {
-        setTimeout(function () {
-//            window.location.href = '/home/mall/orderList.html';
-            window.location.replace('/home/mall/orderList.html');
-            event.returnValue = false;
-            return false;
-        },100);
-    }, false);
-    function pushHistory() {
-        var sta = {
-            title: ''
-    };
-        if( window.history.state === null )
-        {
-            window.history.pushState( sta,'');
-        }
-    }
+    $(".orderList a").on('click',function() {
+        window.location.replace($(this).attr('href'));
+        return false;
+    });
+
 
 </script>
 
