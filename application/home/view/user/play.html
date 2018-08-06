@@ -134,14 +134,20 @@
         var html = '';
         var lists = data.data;
         var len = lists.length;
+        var url = '';
+        if(type == 1){
+            url = '/home/user/reite/id/'
+        }else {
+            url = '/home/association/gamedetail/id/'
+        }
         for(var i = 0; i< len;i++){
             var list = lists[i];
             //var pid = $('.part div' ).eq(list.pid ).text();
             html +=
-                '<a href="/home/association/newsdetail2/id/'+ list.id+'.html">'+
+                '<a href='+url+ list.id+'.html">'+
                 '<img class="lazy" data-original='+list.front_cover+'>'
                 +'<div class="newsText" style="padding: 0 0 .1rem .2rem;">'
-                +'<div class="newsTitle">'+list.title+'</div><div class="newsTime"><span>'+list.publisher+'</span><span>'+list.time+'</span></div>'
+                +'<div class="newsTitle">'+list.title+'</div><div class="newsTime"><span>'+list.representative+'</span><span>'+list.end_time+'</span></div>'
                 +'</div>'
                 +'</a>'
         }
