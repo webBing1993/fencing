@@ -19,7 +19,9 @@
         "php": ">=5.4.0",
         "topthink/framework": "5.0RC3",
         "topthink/think-worker":"*",
-        "phpoffice/phpexcel":"*"
+        "topthink/think-helper": "*",
+        "phpoffice/phpexcel":"*",
+        "goldeagle/wx-pay-api": "dev-master"
     },
     "extra": {
         "think-path": "thinkphp"

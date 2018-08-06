@@ -38,4 +38,14 @@ return [
     ),
     /* UC用户中心配置 */
     'uc_auth_key' => '(.t!)=JTb_OPCkrD:-i"QEz6KLGq5glnf^[{p;je',
+
+    /* 微信支付 */
+    'weixinpay'       => [
+        'appid'       => 'wwf507973ebf84282e', // 微信支付appid
+        'mchid'       => '1496568072', // 微信支付mchid 商户收款账号
+        'key'         => 'e10adc3949ba59abbe56e057f20f883a', // 微信支付key
+        'appsecret'   => 'F16SLtStcOYDVXCeVeuriQ8l-mVjnyZBAAoM7aiYbhU', // 公众帐号secert (公众号支付专用)
+        'notify_url' => 'http://jjg.0519ztnet.com/home/wechat/notify', // 接收支付状态的连接
+        'agentid' => '3010046',
+    ],
 ];
