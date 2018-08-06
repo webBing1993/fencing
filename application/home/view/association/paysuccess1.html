@@ -1,0 +1,34 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>我要报名</title>
+<link rel="stylesheet" href="/home/css/association/game.css">
+{/block}
+{block name="body"}
+<div class="sucTop">
+    <img src="/home/images/game/icon09.png" alt="">
+    <p>恭喜您课程报名成功！</p>
+</div>
+<div class="sucDetail">
+    <div class="sucDetail01">击剑培训课</div>
+    <div class="sucDetail02"><img src="/home/images/game/icon02.png" class="icon">杭州市上城区皮市巷158号</div>
+    <div class="sucDetail02"><img src="/home/images/game/icon03.png" class="icon">比赛时间：2018-05-06</div>
+    <div class="sucDetail02"><img src="/home/images/game/icon14.png" class="icon">课程节数：42</div>
+</div>
+<div class="sucDetail04">届时请按时参加比赛。</div>
+<div class="sucDetail05">
+    如果有对课程有疑问请在个人中心我的培训进行查看！
+</div>
+<a href="javascript:;"  class="sucDetail06">返回报名列表</a>
+{/block}
+{block name="script"}
+
+<script>
+
+    $('.sucDetail06').on('click', function () {
+        history.go(-3);
+    });
+
+</script>
+
+{/block}

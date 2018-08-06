@@ -1,0 +1,33 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>签到</title>
+<link rel="stylesheet" href="/home/css/association/game.css">
+<style>
+    .sucTop img {width:4.8rem;height:4.2rem;}
+    .sucDetail07 {
+        width: 100%;
+        text-align: center;
+        color: #666;
+        font-size: .3rem;
+    }
+    .sucDetail08 {
+        width: 100%;
+        text-align: center;
+        color: #666;
+        font-size: .35rem;
+    }
+</style>
+{/block}
+{block name="body"}
+    <div class="sucTop">
+        <img src="/home/images/sign/sign01.png" alt="">
+        <!--<p>恭喜您比赛报名成功！</p>-->
+    </div>
+<div class="sucDetail07" style="margin-top: 1.4rem;">请打开签到二维码</div>
+<div class="sucDetail07" style="color: #3A8CFB;margin-top: .3rem;">（个人中心-我的签到）</div>
+<div class="sucDetail08" style="margin-top: 2rem;">在屏幕下方的扫描器扫描二维码进行签到</div>
+<!--<div class="sucDetail04">在屏幕下方的扫描器扫描二维码进行签到</div>-->
+{/block}
+{block name="script"}
+{/block}

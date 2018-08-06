@@ -6,9 +6,22 @@
 {block name="body"}
 <a href="/home/user/information.html">
     <div class="top">
-        <div class="topName"><p>张三</p><span style="background: #3A8CFB;">在训</span><span style="background: #E4B356;">VIP</span></div>
+        <div class="topName"><p>{$user.name}</p>
+            {if condition="($user['train'] == 1)"}
+            <span style="background: #3A8CFB;">在训</span>
+            {else /}
+            {/if}
+            {if condition="($user['vip'] == 1)"}
+            <span style="background: #E4B356;">VIP</span>
+            {else /}
+            {/if}
+        </div>
         <div class="topText">查看编辑个人信息</div>
-        <img src="/home/images/1.jpg" class="userImg">
+        {if condition="empty($user['header'])"}
+        <img src="{$user.avatar}" class="userImg">
+        {else /}
+        <img src="{$user.header}" class="userImg">
+        {/if}
     </div>
 </a>
     <div class="main">
@@ -16,12 +29,13 @@
         <a href="/home/user/insider.html"><div class="mainVip"><img src="/home/images/user/uservip.png">会员特权</div></a>
     </div>
     <div class="userSort">
-        <a href="/home/user/train.html">我的培训</a>
-        <a href="/home/user/play.html">我的比赛</a>
-        <a href="/home/mall/orderList.html">我的订单</a>
-        <a href="/home/user/leave.html">请假申请</a>
-        <a href="#">所属教练</a>
-        <a href="/home/complaint/index.html">教练投诉</a>
+        <a href="/home/user/train.html"><img src="/home/images/user/user01.png" class="icon">我的培训</a>
+        <a href="/home/user/play.html"><img src="/home/images/user/user02.png" class="icon">我的比赛</a>
+        <a href="/home/mall/orderList.html"><img src="/home/images/user/user03.png" class="icon">我的订单</a>
+        <a href="/home/user/leave.html"><img src="/home/images/user/user04.png" class="icon">请假申请</a>
+        <a href="/home/user/leave.html"><img src="/home/images/user/user05.png" class="icon">请假审批</a>
+        <a href="#"><img src="/home/images/user/user06.png" class="icon">所属教练</a>
+        <a href="/home/complaint/index.html"><img src="/home/images/user/user07.png" class="icon">教练投诉</a>
     </div>
 {/block}
 {block name="script"}

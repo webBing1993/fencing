@@ -1,0 +1,147 @@
+{extend name='public/common'}
+{block name='style'}
+<title>我要报名</title>
+<link rel="stylesheet" href="/home/css/association/detail1.css">
+{/block}
+{block name='body'}
+
+<div class="addressImg">
+    <div class="img">
+        <img src="/home/images/1.jpg" alt="">
+    </div>
+    <div class="address">
+        <div class="addressTitle clearfix">
+            <div class="title fl">击剑培训课</div>
+            <div class="price fr">￥<span>500</span></div>
+        </div>
+        <!-- i 为精品课的标识-->
+        <p class="nums">节数：40 <i></i></p>
+        <p class="line"></p>
+        <div class="lists">
+            <div class="list">
+                <a href="javascript:;" class="clearfix">
+                    <i class="fl"></i>
+                    <span class="fl">地址所在</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="classTimes">
+    <ul>
+        <li>
+            <div class="title">课程时效</div>
+            <div class="times">2018-07-12至2018-07-31</div>
+        </li>
+        <li>
+            <div class="title">上课时间</div>
+            <div class="times">每周六上午8:30-11:30 下午13:00-18:00</div>
+        </li>
+        <li>
+            <div class="title">课程内容</div>
+            <div class="times">每周六上午8:30-11:30 下午13:00-18:00</div>
+        </li>
+    </ul>
+</div>
+
+<div class="remark">
+    <ul>
+        <li>
+            <div class="title">备注</div>
+            <div class="times">每周六上午8:30-11:30 下午13:00-18:00</div>
+        </li>
+    </ul>
+</div>
+
+
+<div class="btn">
+    <!-- 报名事件-->
+    <a href="javascript:;" class="enroll">立即报名</a>
+
+    <!-- 精品课程申请-->
+    <a href="javascript:;" class="apply">立即申请</a>
+
+    <!-- 已报名-->
+    <a href="javascript:;" class="btnRea">已报名</a>
+</div>
+
+<!-- map-->
+<div class="mapChoose">
+    <div class="shadow"></div>
+    <div class="mapList">
+        <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position=30.2552455,132.22115,30&name=我的位置">高德地图</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
+<!-- 精品课程申请提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>精品课需先提交管理员审核，审核通过后，才可缴费报名，请您耐心等待。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+
+<div class="showbox">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+{/block}
+{block name='script'}
+
+<script>
+
+    /*
+     * 地图跳转
+     * */
+
+    $(".lists .list").on("click", function () {
+        $(".mapChoose").show();
+    });
+
+    $(".mapChoose .shadow,.mapChoose .mapBack").on("click", function () {
+        $(".mapChoose").hide();
+    });
+
+    /*
+    * 报名
+    * */
+
+    $(".enroll").on('click', function () {
+        $.ajax({
+            url: '',
+            data: {
+                id: id
+            },
+            type: 'post',
+            beforeSend: function(XMLHttpRequest){
+                $(".showbox").show();
+            },
+            success: function (data) {
+                $(".showbox").hide();
+                window.location.href = '/home/association/payment/id/'+ id +'.html'
+            }
+        })
+    });
+
+    /*
+     * 精品课程权限提示
+     * */
+
+    $(".apply").on("click",function () {
+        $(".chooseTig").show();
+    });
+
+    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
+        $(".chooseTig").hide();
+    });
+
+</script>
+
+{/block}

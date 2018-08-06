@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 
+use app\admin\model\Picture;
 use app\admin\model\WechatUser;
 use think\Controller;
 use app\admin\model\Comp;
@@ -31,11 +32,20 @@ class Complaint extends Admin {
         foreach($list as $k=>$v){
             $list[$k]['create_user'] = WechatUser::where('mobile',$v['create_user'])->value('name');
         }
-//        dump($list);exit;
+
+        //循环遍历
+        foreach($list as $key=>$value){
+            $da = json_decode($value['front_cover']);
+            $arr2=array();
+            foreach($da as $va){
+                $img = Picture::get($va);
+                $arr2[] = $img['path'];
+            }
+            $list[$key]['front_cover'] = $arr2;
+        }
         int_to_string($list,array(
             'status' => array(0 =>"已发布"),
         ));
-
         $this->assign('list',$list);
 
         return $this->fetch();

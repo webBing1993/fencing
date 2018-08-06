@@ -1,0 +1,142 @@
+{extend name='public/common'}
+{block name='style'}
+<title>我要报名</title>
+<link rel="stylesheet" href="/home/css/association/payment.css">
+{/block}
+{block name='body'}
+
+<!-- 课程报名-->
+<div class="lists">
+    <div class="title">课程报名</div>
+    <div class="content">
+        <div class="titlePriceNum">
+            <div class="titlePrice clearfix">
+                <div class="fl">击剑培训课</div>
+                <div class="price fr">￥<span>200</span></div>
+            </div>
+            <div class="num">节数：42</div>
+        </div>
+        <div class="line"></div>
+        <div class="address">
+            <a href="javascript:;" class="clearfix">
+                <i class="fl"></i>
+                <span class="fl">地址所在</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 人员信息-->
+<div class="lists">
+    <div class="title">人员信息</div>
+    <div class="content">
+        <ul>
+            <li class="clearfix">
+                <div class="name fl">姓名</div>
+                <input type="text" value="人员姓名" disabled class="fr">
+            </li>
+            <li class="clearfix active">
+                <div class="name fl">出生日期</div>
+                <input type="text" value="2000-01-01" disabled class="fr">
+            </li>
+            <li class="clearfix">
+                <div class="name fl">性别</div>
+                <input type="text" value="男" disabled class="fr">
+            </li>
+            <li class="clearfix active">
+                <div class="name fl">监护人电话</div>
+                <input type="text" value="18158417452" disabled class="fr">
+            </li>
+            <li class="clearfix active">
+                <div class="name fl">省份证号</div>
+                <input type="text" value="340824565456545642" disabled class="fr">
+            </li>
+            <li class="clearfix active">
+                <div class="name fl">家庭住址</div>
+                <input type="text" value="家庭住址1222" disabled class="fr">
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- 备注-->
+<div class="lists">
+    <div class="title">备注</div>
+    <div class="content">
+        <textarea name="" id="" placeholder="请填写相关备注"></textarea>
+    </div>
+</div>
+
+<!-- 应付款-->
+<div class="lists">
+    <div class="title">应付款</div>
+    <div class="pay">
+        普通价：<span>￥</span><span>500</span>
+    </div>
+</div>
+
+<div class="btn">
+    <!-- 去付款-->
+    <a href="javascript:;" class="payMoney">去付款</a>
+</div>
+
+<!-- map-->
+<div class="mapChoose">
+    <div class="shadow"></div>
+    <div class="mapList">
+        <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position=30.2552455,132.22115,30&name=我的位置">高德地图</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
+
+<div class="showbox">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+
+{/block}
+{block name='script'}
+
+<script>
+
+    /*
+     * 地图跳转
+     * */
+
+    $(".address a").on("click", function () {
+        $(".mapChoose").show();
+    });
+
+    $(".mapChoose .shadow").on("click", function () {
+        $(".mapChoose").hide();
+    });
+
+    /*
+    * 去付款
+    * */
+    $(".payMoney").on('click', function () {
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: {
+                id: id,
+                remark: $('textarea').val()
+            },
+            beforeSend: function(XMLHttpRequest){
+                $(".showbox").show();
+            },
+            success: function (msg) {
+                $(".showbox").hide();
+                window.location.href = ''
+            }
+        })
+    });
+
+</script>
+
+{/block}

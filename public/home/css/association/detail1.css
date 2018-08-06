@@ -1,0 +1,345 @@
+body {
+    padding-bottom: 1.2rem;
+}
+
+/* addressImg*/
+.addressImg {
+    position: relative;
+    width: 100vw;
+    height: 50vw;
+}
+
+.addressImg .img,.addressImg .img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.addressImg .address {
+    width: calc(100vw - .48rem);
+    position: absolute;
+    bottom: -1.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border-radius: .2rem;
+    box-shadow: 1px 0 .15rem #D4D4D4;
+}
+
+.addressImg .address .addressTitle {
+    padding: .36rem .3rem 0;
+}
+
+.addressImg .address .addressTitle .title {
+    width: 70%;
+    color: #333;
+    font-size: .3rem;
+    font-weight: bold;
+}
+
+.addressImg .address .addressTitle .price {
+    color: #D12D2D;
+    font-size: .18rem;
+    font-weight: bold;
+}
+
+.addressImg .address .addressTitle .price span {
+    font-size: .3rem;
+}
+
+.addressImg .nums {
+    padding: .15rem .3rem;
+    color: #999;
+    font-size: .26rem;
+    position: relative;
+}
+
+.addressImg .nums i {
+    display: inline-block;
+    position: absolute;
+    width: .57rem;
+    height: .42rem;
+    right: 0.3rem;
+    top: 0.1rem;
+    background: url("/home/images/game/jpk.png") 0 0 no-repeat;
+    background-size: .57rem .42rem;
+    box-shadow: 1px 0 .1rem #646464;
+}
+
+.addressImg .line {
+    width: calc(100% - .28rem);
+    height: 1px;
+    background-color: #DEDEDE;
+    margin: 2px .14rem;
+}
+
+.lists {
+    padding: 0 .24rem;
+}
+
+.lists .list a {
+    display: block;
+    padding: .32rem 0;
+}
+
+.lists .list i {
+    width: .3rem;
+    margin-right: .24rem;
+    display: inline-block;
+    height: .3rem;
+    background: url("/home/images/game/icon13.png")0 center no-repeat;
+    background-size: .25rem .3rem;
+}
+
+.lists .list span, .lists .list a span {
+    color: #333;
+    font-size: .26rem;
+    display: inline-block;
+    width: calc(100% - .54rem);
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+}
+
+/* classTimes remark*/
+.classTimes,.remark {
+    width: calc(100vw - .48rem);
+    padding: .43rem .53rem;
+    background-color: #fff;
+    box-shadow: 1px 0 .15rem #d4d4d4;
+    border-radius: .2rem;
+    margin: .24rem auto;
+}
+
+.classTimes {
+    margin-top: 1.55rem;
+}
+
+.classTimes li,.remark li {
+    margin-bottom: .39rem;
+}
+
+.classTimes li:last-of-type,.remark li:last-of-type {
+    margin-bottom: 0;
+}
+
+.classTimes .title,.remark .title {
+    position: relative;
+    color: #333;
+    font-size: .26rem;
+    font-weight: bold;
+    margin-bottom: .27rem;
+}
+
+.classTimes .title:before,.remark .title:before {
+    position: absolute;
+    content: '';
+    width: .08rem;
+    height: .3rem;
+    left: -.17rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3A8CFB;
+    border-radius: .04rem;
+}
+
+.classTimes .times,.remark .times {
+    font-size: .24rem;
+    color: #999;
+}
+
+/* btn*/
+.btn {
+    position: fixed;
+    z-index: 5;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding: .1rem .24rem;
+    width: 100vw;
+}
+
+.btn a {
+    display: block;
+    text-align: center;
+    height: .8rem;
+    line-height: .8rem;
+    background-color: #3A8CFB;
+    border-radius: .2rem;
+    color: #fff;
+    font-size: .28rem;
+    width: 100%;
+}
+
+.btn a.btnRea {
+    background-color: #C2C2C2;
+}
+
+/* chooseTig*/
+.chooseTig .shadow {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .6;
+}
+
+.chooseTig {
+    display: none;
+}
+
+.chooseTig .tig {
+    position: fixed;
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    width: calc(100vw - 2.3rem);
+    transform: translate(-50%, -50%);
+    border-radius: .3rem;
+    padding: .32rem .4rem;
+    text-align: center;
+}
+
+.chooseTig .tig p {
+    text-align: left;
+    margin: .35rem 0 .46rem;
+    color: #666;
+    font-size: .26rem;
+    line-height: .36rem;
+}
+
+.chooseTig .chooseBtn {
+    font-size: .26rem;
+    color: #fff;
+    padding: .15rem .61rem;
+    background-color: #3A8CFB;
+    border-radius: .35rem;
+}
+
+/* mapChoose*/
+.mapChoose {
+    display: none;
+}
+
+.mapChoose .shadow {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .6;
+}
+
+.mapChoose .mapList {
+    position: fixed;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100vw;
+}
+
+.mapChoose .mapList a {
+    display: block;
+    width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    color: #333;
+    font-size: .36rem;
+    text-align: center;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.mapChoose .mapList a:last-of-type {
+    border-bottom: 0;
+}
+
+
+/*
+* showbox
+*/
+.showbox {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5%;
+    background: rgba(0, 0, 0, 0.01);
+    z-index: 20;
+    display: none;
+}
+
+.loader {
+    position: relative;
+    margin: 70% auto 0;
+    width: 100px;
+}
+.loader:before {
+    content: '';
+    display: block;
+    padding-top: 50%;
+}
+
+.circular {
+    animation: rotate 2s linear infinite;
+    height: 100%;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}
+@keyframes color {
+    100%,
+    0% {
+        stroke: #d62d20;
+    }
+    40% {
+        stroke: #0057e7;
+    }
+    66% {
+        stroke: #008744;
+    }
+    80%,
+    90% {
+        stroke: #ffa700;
+    }
+}

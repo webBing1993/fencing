@@ -231,26 +231,37 @@
                         </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>详细地址:</label>
+                                <label>所在区域:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="{$msg.address || default=''}">
+                                <input type="text" placeholder="请输入所在区域" class="form-control form_title" name="region" value="{$msg.region || default=''}">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>经度:</label>
+                                <label></label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入经度" class="form-control form_title" name="lng" value="{$msg.lng || default=''}">
+                                <a target="_blank" href="http://www.gpsspg.com/maps.htm">点击查询对应地址的经纬度坐标（顺序为 纬度，经度）</a>
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>详细地址:</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" placeholder="请输入详细地址" class="form-control form_title" name="address" value="{$msg.address || default=''}"></div>
                             <div class="col-lg-1 text-right control-label">
                                 <label>纬度:</label>
                             </div>
-                            <div class="col-lg-11">
+                            <div class="col-lg-3">
                                 <input type="text" placeholder="请输入纬度" class="form-control form_title" name="lat" value="{$msg.lat || default=''}">
+                            </div>
+                            <div class="col-lg-1 text-right control-label">
+                                <label>经度:</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" placeholder="请输入经度" class="form-control form_title" name="lng" value="{$msg.lng || default=''}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -414,7 +425,7 @@
                     '<input type="file" class="imgfile"  accept="image/jpg, image/png, image/gif, image/jpeg">'+
                     '<input type="hidden" name="'+inputName+'" class="img"  value="" required="">'+
                     '<img src="/admin/images/close.png" class="close-img">'+
-                    '</div>'
+                    '</div>';
             $(this).prev(".phone-img").append(html);
             if($(this).prev(".phone-img").find(".photo").length==3){
                 $(this).hide();
@@ -527,7 +538,7 @@
                         if(msg['code'] == 1){
                             imgBox.siblings(".img").val(msg.data["id"]);
                             //显示图片缩略图
-                            pic.parent().find("img" ).attr({src:path});
+                            pic.parent().find(".imgbox" ).attr({src:path});
                         } else {
                             warning({msg:msg['msg']});
                             return;
@@ -562,6 +573,7 @@
                 vr:$("input[name='vr']").val().trim(),
                 title:$("input[name='title']").val().trim(),
                 address:$("input[name='address']").val().trim(),
+                region:$("input[name='region']").val().trim(),
                 lng:$("input[name='lng']").val().trim(),
                 lat:$("input[name='lat']").val().trim(),
                 tel:$("input[name='tel']").val().trim(),

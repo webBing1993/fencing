@@ -8,12 +8,17 @@
 
 namespace app\home\controller;
 
+use app\admin\model\CompetitionApply;
+use app\home\model\CompetitionEvent;
+use app\home\model\Competition;
+use app\home\model\CompetitionGroup;
 use app\home\model\News;
 use app\home\model\Picture;
 use app\home\model\Venue;
 use app\home\model\Notice;
 use app\home\model\Knowledge;
 use app\home\model\Show;
+use app\home\model\WechatUser;
 
 class Association  extends Base
 {
@@ -173,19 +178,6 @@ class Association  extends Base
         }
     }
 
-    public function game(){
-        return $this->fetch();
-    }
-    public function gamedetail(){
-        return $this->fetch();
-    }
-    public function gamedetail02(){
-        return $this->fetch();
-    }
-    public function paysuccess(){
-        return $this->fetch();
-    }
-
     //首页场馆模块 更多页
     public function fencing(){
         $list = Venue::where('status',0)->order('id desc')->limit(10)->select();
@@ -261,6 +253,287 @@ class Association  extends Base
         $data = News::where('id',$Id)->find();
         $this->assign('data',$data);
 
+        return $this->fetch();
+    }
+
+    /**
+     * 比赛报名列表
+     */
+    public function game(){
+        //比赛报名
+        $map1 = array('status' => ['>=', 0]);
+        $left = Competition::where($map1)->order('end_time desc')->limit(10)->select();
+        $this->assign('left',$left);
+        //课程报名
+        $map2 = array('type' => 2, 'status' => 0);
+        $right = Show::where($map2)->order('id desc')->limit(10)->select();
+        $this->assign('right',$right);
+
+        return $this->fetch();
+    }
+    //比赛报名   上拉加载
+    public function more6(){
+        $len = input('len');
+        $map = array('status' => ['>=', 0]);
+        $info = Competition::where($map)->order('end_time desc')->limit($len,6)->select();
+
+        foreach($info as $value){
+            $value['time'] = date("Y-m-d",$value['end_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
+    }
+
+    /**
+     * 我要报名比赛详情页
+     */
+    public function gamedetail(){
+        $id = input('id');
+        $data = Competition::get($id);
+        $data['individual_event'] = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->order('sort')->select();
+        $data['team_event'] = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::TEAM_EVENT])->order('sort')->select();
+        $data['competition_group'] = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
+        $this->assign('data',$data);
+
+        return $this->fetch();
+    }
+
+    /**
+     * 马上报名提交页
+     */
+    public function gamedetail02(){
+        $id = input('id');
+        $userId = session('userId');
+        $data = Competition::get($id);
+        $model = wechatUser::where(['userid' => $userId])->find();
+//        if(!$model['name'] || !$model['birthday'] || !$model['gender'] || !$model['guardian_mobile'] || !$model['address']){
+//            $data['show_tip'] = true;
+//        }else{
+//            $data['show_tip'] = false;
+//        }
+        //TODO
+        $representative = "杭州击剑馆";
+        $coach = "林教练1";
+        $individual_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->find();
+        $team_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::TEAM_EVENT])->find();
+        if ($individual_event && $team_event) {
+            $show_type = 3;
+        } else {
+            if ($team_event) {
+                $show_type = 2;
+            } else {
+                $show_type = 1;
+            }
+        }
+
+        $this->assign('data',$data);
+        $this->assign('model',$model);
+        $this->assign('representative',$representative);
+        $this->assign('coach',$coach);
+        $this->assign('show_type',$show_type);
+
+        return $this->fetch();
+    }
+
+    /**
+     * 报名时组别列表
+     */
+    public function getgrouplist(){
+        $id = input('id');
+        $userId = session('userId');
+        if (!$id) {
+            return $this->error('参数缺失');
+        }
+        $birthday = wechatUser::where(['userid' => $userId])->value('birthday');
+        $birthday = strtotime($birthday);
+        $data = competitionGroup::where(['status' => 0, 'competition_id' => $id])->order('sort')->select();
+        if ($data) {
+            foreach ($data as $key => $val) {
+                if ($val['start_time'] > $birthday && $val['end_time'] > $birthday) {
+                    unset($data[$key]);
+                }
+            }
+        } else {
+            $data = [];
+        }
+
+        return $this->success('成功','',$data);
+    }
+
+    /**
+     * 报名时获取价格
+     */
+    public function getprice(){
+        $id = input('id');
+        $type = input('type');//赛别 1 个人 2 团体 3 全部
+        $kinds = input('kinds');//剑种
+        $userId = session('userId');
+
+        if (!$id || !$type) {
+            return $this->error('参数缺失');
+        }
+
+        $return = [];
+        if ($type == 3) {//赛别 3 全部
+            if ($kinds) {//单独剑种
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'kinds' => $kinds])->select();
+                $return['id'] = $kinds;
+                $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
+                $return['price'] = 0;
+                $return['vip_price'] = 0;
+
+                //价格相加
+                foreach ($model as $key => $val) {
+                    //会员价
+                    $return['vip_price'] += $val['vip_price'];
+                    //普通价
+                    $return['price'] += $val['price'];
+                }
+            } else {//所有剑种
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id])->select();
+
+                foreach ($model as $key => $val) {
+                    $return[$val['kinds']]['id'] = $val['kinds'];
+                    $return[$val['kinds']]['name'] = competitionEvent::EVENT_KINDS_ARRAY[$val['kinds']];
+
+                    if (!isset($return[$val['kinds']]['price'])) {
+                        $return[$val['kinds']]['price'] = 0;
+                    }
+
+                    if (!isset($return[$val['kinds']]['vip_price'])) {
+                        $return[$val['kinds']]['vip_price'] = 0;
+                    }
+                    //按剑种价格相加
+                    //会员价
+                    $return[$val['kinds']]['vip_price'] += $val['vip_price'];
+                    //普通价
+                    $return[$val['kinds']]['price'] += $val['price'];
+                }
+                $return = array_values($return);
+            }
+        } else {//赛别 1 个人 2 团体
+            if ($kinds) {//单独剑种
+                $return['id'] = $kinds;
+                $return['name'] = competitionEvent::EVENT_KINDS_ARRAY[$kinds];
+                $return['price'] = 0;
+                $return['vip_price'] = 0;
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => $type, 'kinds' => $kinds])->find();
+                //会员价
+                $return['vip_price'] = $model['vip_price'];
+                //普通价
+                $return['price'] = $model['price'];
+            } else {//所有剑种
+                $model = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => $type])->select();
+
+                foreach ($model as $key => $val) {
+                    $return[$val['kinds']]['id'] = $val['kinds'];
+                    $return[$val['kinds']]['name'] = competitionEvent::EVENT_KINDS_ARRAY[$val['kinds']];
+
+                    if (!isset($return[$val['kinds']]['price'])) {
+                        $return[$val['kinds']]['price'] = 0;
+                    }
+
+                    if (!isset($return[$val['kinds']]['vip_price'])) {
+                        $return[$val['kinds']]['vip_price'] = 0;
+                    }
+                    //按剑种价格相加
+                    //会员价
+                    $return[$val['kinds']]['vip_price'] = $val['vip_price'];
+                    //普通价
+                    $return[$val['kinds']]['price'] = $val['price'];
+                }
+                $return = array_values($return);
+            }
+        }
+
+        return $this->success('成功','',$return);
+    }
+
+    /**
+     * 马上报名提交处理页
+     * @param competition_id,group_id,type,kinds,representative,coach,card_type,card_num,remark
+     */
+    public function submit(){
+        $data = input('post.');
+        $userId = session('userId');
+        $flag = 0;
+        if ($data['type'] == 3) {
+            $data['type'] = 1;
+            $flag = 1;
+        }
+        $wechatUserModel = wechatUser::where(['userid' => $userId])->find();
+        $competitionModel = Competition::get($data['competition_id']);
+        $competitionGroupModel = CompetitionGroup::get($data['group_id']);
+        $competitionEventModel = CompetitionEvent::where(['status' => 0, 'competition_id' => $data['competition_id'], 'type' => $data['type'], 'kinds' => $data['kinds']])->find();
+        $data['userid'] = $userId;
+        $data['name'] = $wechatUserModel['name'];
+        $data['title'] = $competitionModel['title'];
+        $data['end_time'] = $competitionModel['end_time'];
+        $data['address'] = $competitionModel['address'];
+        $data['group_name'] = $competitionGroupModel['group_name'];
+        $data['event_id'] = $competitionEventModel['id'];
+        if ($wechatUserModel['vip']) {
+            $data['price'] = $competitionEventModel['vip_price'];
+        } else {
+            $data['price'] = $competitionEventModel['price'];
+        }
+
+        $competitionApplyodel = new CompetitionApply();
+        $model = $competitionApplyodel->validate('CompetitionApply')->save($data);
+        if($model){
+            if ($flag == 1) {
+                $data['type'] = 2;
+                $data2 = $data;
+                $competitionApplyodel2 = new CompetitionApply();
+                $competitionApplyodel2->validate('CompetitionApply')->save($data2);
+                return $this->success('报名成功!','',['id' => $competitionApplyodel2->id, 'type' => 3]);
+            }
+            return $this->success('报名成功!','',['id' => $competitionApplyodel->id, 'type' => $data['type']]);
+        }else{
+            return $this->error($competitionApplyodel->getError());
+        }
+    }
+
+    public function paysuccess(){
+        $id = input('id');
+        $type = input('type');
+        if (!$id || !$type) {
+            return $this->error('参数缺失');
+        }
+        $data = CompetitionApply::get($id);
+        $data['end_time'] = date('Y-m-d', $data['end_time']);
+
+        if ($type == 3) {
+            $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[1].'/'.competitionEvent::EVENT_TYPE_ARRAY[2];
+        } else {
+            $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[$data['type']];
+        }
+        $data['kinds'] = competitionEvent::EVENT_KINDS_ARRAY[$data['kinds']];
+        $this->assign('data',$data);
+
+        return $this->fetch();
+    }
+
+
+    // 课程报名详情页
+    public function gamedetail1() {
+
+        return $this->fetch();
+    }
+
+    // 课程报名付款页
+    public function payment() {
+
+        return $this->fetch();
+    }
+
+    // 课程报名成功
+    public function paysuccess1(){
         return $this->fetch();
     }
 }

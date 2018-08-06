@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 
+use app\admin\model\Picture;
 use app\admin\model\Shop;
 use app\admin\model\ShopOrder;
 use think\Controller;
@@ -28,8 +29,13 @@ class Order extends Admin {
             $map['depart'] = ['like', '%' . $search . '%'];
         }
         $list = $this->lists('ShopOrder',$map);
+
         foreach($list as $k=>$v){
             $list[$k]['title'] = Shop::where('id',$v['sid'])->value('title');
+            $list[$k]['create_time'] = date("Y-m-d H:i",$v['create_time']);
+            $a = Shop::where('id',$v['sid'])->value('front_cover');
+            $img = Picture::get($a);
+            $list[$k]['front_cover'] = $img['path'];
         }
         int_to_string($list,array(
             'status' => array(1 =>"已付款"),

@@ -5,54 +5,311 @@
 <link rel="stylesheet" href="/home/css/association/game.css">
 {/block}
 {block name="body"}
+
 <!--顶部分类-->
-    <div class="Top">
-        <div data-side="1" class="active">比赛报名<span></span></div>
-        <div data-side="2">课程报名<span></span></div>
-    </div>
-<!--正文切换-->
-    <div class="news" id="side1" style="display: block;">
-        <a href="/home/association/gamedetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">1“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime">
-                    <span>2018-10-10</span>
-                    <span>杭州市击剑运动协会</span>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="news" id="side2">
-        <a href="/home/association/gamedetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
-            <div class="newsText">
-                <div class="newsTitle">1“太强了！一击就灭杀了半血的巨龙，琴音姐你说那是零翼发动的攻击吗？”半猫女绯心双眼大睁，心中说不出的震撼。</div>
-                <div class="newsTime">
-                    <span>2018-10-10</span>
-                    <span>杭州市击剑运动协会</span>
-                </div>
-            </div>
-        </a>
+<div class="Top">
+    <div>比赛报名<span></span></div>
+    <div>课程报名<span></span></div>
 </div>
+
+<!--正文切换-->
+<div class="news">
+    {volist name="left" id="vo"}
+    <a href="{:Url('Association/gamedetail?id='.$vo['id'])}">
+        <img data-original="{$vo.front_cover|get_cover='path'}" class="lazy">
+        <div class="newsText">
+            <div class="newsTitle">{$vo.title}</div>
+            <div class="newsTime">
+                <span>{$vo.end_time|time_format='Y-m-d'} 截止</span>
+                <span>{$vo.publisher}</span>
+            </div>
+        </div>
+    </a>
+    {/volist}
+</div>
+<div class="news">
+    <!-- 无权限显示-->
+    <!--<div class="noPower">-->
+        <!--您目前暂无所属场馆，需前往击剑风云-击剑馆中报名公开场馆课程-->
+    <!--</div>-->
+
+    <!-- 学员权限显示-->
+    <div class="address">
+        <div class="addressTitle">所属场馆的名称</div>
+        <div class="lists">
+            <div class="list">
+                <a href="javascript:;" class="clearfix">
+                    <i class="fl"></i>
+                    <span class="fl">海创大厦</span>
+                </a>
+            </div>
+            <div class="list">
+                <a href="tel:18158417280" class="clearfix">
+                    <i class="fl"></i>
+                    <span class="fl">18158417280</span>
+                </a>
+            </div>
+            <div class="list clearfix">
+                <i class="fl"></i>
+                <span class="fl">08:00-20:00</span>
+            </div>
+        </div>
+    </div>
+    <div class="content1">
+        <div class="contentList">
+            <!-- 普通课程列表开始-->
+            <a class="list clearfix" href="javascript:;">
+                <div class="listImg fl">
+                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                </div>
+                <div class="listContent fl">
+                    <div class="title">课程标题</div>
+                    <div class="summary">课题简介所在</div>
+                    <div class="note clearfix">
+                        <div class="times fl">2018-01-01至2018-06-30</div>
+                        <div class="price fr">￥<span>100</span></div>
+                    </div>
+                </div>
+            </a>
+            <!-- 普通课程列表结束-->
+            <!-- 精品课程列表开始 未选择普通课程情况-->
+            <a class="list clearfix" href="javascript:;" onclick="noChoose()">
+                <div class="listImg fl">
+                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                    <!-- 精品课的标示-->
+                    <i></i>
+                </div>
+                <div class="listContent fl">
+                    <div class="title">课程标题</div>
+                    <div class="summary">课题简介所在</div>
+                    <div class="note clearfix">
+                        <div class="times fl">2018-01-01至2018-06-30</div>
+                        <div class="price fr">￥<span>100</span></div>
+                    </div>
+                </div>
+            </a>
+            <!-- 普通课程列表结束-->
+            <!-- 精品课程列表开始 选择普通课程情况-->
+            <a class="list clearfix" href="/home/association/gamedetail1.html">
+                <div class="listImg fl">
+                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                    <i></i>
+                </div>
+                <div class="listContent fl">
+                    <div class="title">课程标题</div>
+                    <div class="summary">课题简介所在</div>
+                    <div class="note clearfix">
+                        <div class="times fl">2018-01-01至2018-06-30</div>
+                        <div class="price fr">￥<span>100</span></div>
+                    </div>
+                </div>
+            </a>
+            <!-- 普通课程列表结束-->
+        </div>
+    </div>
+</div>
+
+<!-- 精品课权限提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>您当前未报普通课，暂无申请精品课权限，请先报名普通课后再申请，谢谢。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+
+<!-- map-->
+<div class="mapChoose">
+    <div class="shadow"></div>
+    <div class="mapList">
+        <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position=30.2552455,132.22115&name=我的位置">高德地图</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
+<!-- 加载-->
+<div class="tip"></div>
+<div class="loading hidden">
+    <div class="typing_loader"></div>
+</div>
+
 {/block}
 {block name="script"}
+<script src="/home/js/reset.js"></script>
 <script>
-    for(var i=0;i<$('.Top div').length;i++){
-        $('.Top div')[i].onclick = function(){
-            $('.Top div').removeClass('active');
-            $(this).addClass('active');
-            var side = $(this).data('side');
-            $('.news').hide();
-            $('#side'+side).show();
+
+    /*
+    * 点击切换事件
+    * */
+    $(".Top div").on("click", function () {
+        $(this).addClass('active').siblings('div').removeClass('active');
+        $('.news').hide();
+        $('.news').eq($(this).index()).show();
+        setCookie('tab',$(this).index());
+
+        // 初始化条数的判断
+        onloadFun();
+    });
+
+    /*
+     * 上拉加载
+     * */
+
+    // 初始状态的判断
+
+    var isScroll = true;  // 开关，增加触发点的流畅
+    function onloadFun() {
+        var len = 0;
+        if (getCookie('tab') == 0) {
+            len = $(".news:first-of-type a").length;
+        }else {
+            len = $(".contentList .list").length;
+        }
+        if (len >= 10) {
+            $('.tip' ).text('上拉加载更多');
+            // 上拉加载
+            loadScroll();
+        }else {
+            $('.tip').hide();
         }
     }
-</script>
-<script>
-    $("img.lazy").lazyload({
-        placeholder: "/home/images/loading.jpg",
-        effect: "fadeIn",
-        threshold : 500
+
+    // 上拉加载函数
+
+    function loadScroll() {
+        $(window ).off("scroll" ).on("scroll",function(){
+            var dh = $(document).height();
+            var end = $(window).height() + $(window ).scrollTop();
+            var len = 0;
+            if (getCookie('tab') == 0) {
+                len = $(".news:first-of-type a").length;
+            }else {
+                len = $(".contentList .list").length;
+            }
+            var tip = $(".tip");
+            var loading = $('.loading');
+            if(dh == end && isScroll){
+                isScroll = false;
+                $.ajax({
+                    type:"post",
+                    url:"",
+                    data:{
+                        len: len,
+                        type: getCookie('tab')+1
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        isScroll = true;
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data.code == 1){
+                            // 数据接收函数
+                            addMall(data);
+                            lazy();
+                            if(data.data.length == 6){
+                                tip.text('上拉加载更多');
+                            }
+                        }else{
+                            tip.text('没有更多数据了');
+                            $(window ).off("scroll");
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    /*
+    * 数据接收函数
+    * */
+
+    function addMall(data) {
+        console.log(data);
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++) {
+            var list = lists[i];
+            if (data.type == 1) {
+                html +=  '<a href="/home/association/gamedetail/id/'+ list.id +'.html">'+
+                        '<img src="/home/images/1.jpg" class="lazy">'+
+                        '<div class="newsText">'+
+                        '<div class="newsTitle">'+ list.title +'</div>'+
+                        '<div class="newsTime">'+
+                        '<span>2018-10-10</span>'+
+                        '<span>杭州市击剑运动协会</span>'+
+                        '</div>'+
+                        '</div>'+
+                        '</a>';
+            }else {
+                html += '<div class="list fl">'+
+                        '<a class="list clearfix" href="javascript:;">'+
+                        '<div class="listImg fl">'+
+                        '<img src="'+ list.front_cover +'" alt="" class="lazy">'+
+                        '<i></i>'+
+                        '</div>'+
+                        '<div class="listContent fl">'+
+                        '<div class="title">'+ list.title +'</div>'+
+                        '<div class="summary">'+ list.summary +'</div>'+
+                        '<div class="note clearfix">'+
+                        '<div class="times fl">2018-01-01至2018-06-30</div>'+
+                        '<div class="price fr">￥<span>'+ list.price +'</span></div>'+
+                        '</div>'+
+                        '</div>'+
+                        '</a>';
+            }
+        }
+        if (data.type == 1) {
+            $(".news:first-of-type").append(html);
+        }else {
+            $(".contentList").append(html);
+        }
+    }
+
+    /*
+    * 精品课程权限提示
+    * */
+    function noChoose() {
+        $(".chooseTig").show();
+    }
+
+    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
+        $(".chooseTig").hide();
     });
+
+    /*
+    * 图片懒加载
+    * */
+    function lazy() {
+        $("img.lazy").lazyload({
+            placeholder: "/home/images/loading.jpg",
+            effect: "fadeIn",
+            threshold : 500
+        });
+    }
+
+    $(function () {
+        lazy();
+
+        // 初始化点击事件
+        $('.Top div').eq(getCookie('tab')?getCookie('tab'): 0).click();
+    });
+
+
+    /*
+     * 地图跳转
+     * */
+    $(".lists .list:first-of-type").on("click", function () {
+        $(".mapChoose").show();
+    });
+
+    $(".mapChoose .shadow,.mapChoose .mapBack").on("click", function () {
+        $(".mapChoose").hide();
+    });
+
 </script>
 {/block}
