@@ -5,6 +5,8 @@
 <link href="/admin/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 <!-- Gritter -->
 <link href="/admin/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+<!-- Ladda style -->
+<link href="/admin/css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
 <style>
     .ibox-content {
         /*min-height: 76vh;*/
@@ -19,7 +21,7 @@
         display: block;
         width: 100%;
         /*height: 100%;*/
-        opacity: .8;
+        opacity: .9;
     }
     .p-lg {
         position: absolute;
@@ -84,6 +86,9 @@
 <script src="/admin/js/plugins/flot/jquery.flot.pie.js"></script>
 <script src="/admin/js/plugins/flot/jquery.flot.symbol.js"></script>
 <script src="/admin/js/plugins/flot/jquery.flot.time.js"></script>
+<script src="/admin/js/plugins/ladda/spin.min.js"></script>
+<script src="/admin/js/plugins/ladda/ladda.min.js"></script>
+<script src="/admin/js/plugins/ladda/ladda.jquery.min.js"></script>
 <script type="text/javascript">
     /* 插件块关闭操作 */
     $(".title-opt .wm-slide").each(function(){
@@ -92,6 +97,25 @@
             $(this).find("i").toggleClass("mod-up");
         });
     })
+
+    var l = $( '.btn-dep' ).ladda();
+    l.click(function(){
+        l.ladda( 'start' );
+        $.ajax({
+            type: "get",
+            url: "{:Url('Wechat/syncAll')}",
+            success: function (response) {
+                swal(response.msg, response.data);
+                $('.confirm').one('click',function(){
+                    window.location.reload();
+                });
+                l.ladda('stop');
+            },
+            error: function (err) {
+                l.ladda('stop');
+            }
+        });
+    });
 </script>
 
 {/block}
