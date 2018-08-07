@@ -18,7 +18,14 @@ return [
 
     /* 默认模块和控制器 */
     'default_module' => 'home',
-    'app_debug' => true,
+
+    'http_exception_template' => [
+        // 定义404错误的重定向页面地址
+        404 => APP_PATH . 'admin/view/base/404.html',
+        // 还可以定义其它的HTTP status
+        401 => APP_PATH . 'admin/view/base/401.html',
+        500 => APP_PATH . 'admin/view/base/500.html',
+    ],
 
     /* URL配置 */
     'base_url'=>'',
@@ -28,16 +35,27 @@ return [
         '__ADMIN__' => '/admin',
         '__HOME__' => '/home',
     ],
-    
-    /* 企业配置 */
+
+    /* 企业配置   新手指南*/
     'party' => array(
+        'login' => 'http://zzxz.0571ztnet.com/home/index/login',
         'token' => '',
         'encodingaeskey' => '',
-        'appid' => '',
-        'appsecret' => '',
+        'appid' => 'wwf507973ebf84282e',
+        'appsecret' => 'mPpwyW2_khw7PVfZ8Ow0EVM93oghffubbR0klvyQUR4',
+        'agentid' => 1000002,
     ),
+
+    //  推送网站域名
+    'http_url' => "http://ben.zt.cn",
+    // 推送对象 发送给全体 @all  个人测试15700004138
+    'touser' => '18767104335',
     /* UC用户中心配置 */
     'uc_auth_key' => '(.t!)=JTb_OPCkrD:-i"QEz6KLGq5glnf^[{p;je',
+    // 关闭调试模式
+    'app_debug' => true,
+    // 显示错误信息
+    'show_error_msg'        =>  true,
 
     /* 微信支付 */
     'weixinpay'       => [

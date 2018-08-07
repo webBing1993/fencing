@@ -24,7 +24,6 @@ class Pay extends Base
         $user = $weObj->convertToOpenId($data);
         $tools = new JsApiPay();
 
-
         $outTradeNo = WxPayConfig::$MCHID . date("YmdHis");
         $input = new WxPayUnifiedOrder();
         $input->setBody("积分购买");
