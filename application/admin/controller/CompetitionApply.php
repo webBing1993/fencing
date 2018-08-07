@@ -29,15 +29,38 @@ class CompetitionApply extends Admin {
         );
         $search = input('search');
         if ($search != '') {
-            $map['title'] = ['like', '%' . $search . '%'];
+            $map['name|title'] = ['like', '%' . $search . '%'];
+        }
+        $type = (int)input('type');
+        if ($type != '') {
+            $map['type'] = $type;
+        }
+        $kinds = (int)input('kinds');
+        if ($kinds != '') {
+            $map['kinds'] = $kinds;
+        }
+        $status = (int)input('status');
+        if (input('status') != '') {
+            $map['status'] = $status;
+        }else{
+            $status = null;
         }
         $list = $this->lists('CompetitionApply',$map);
+        $type_list = CompetitionEventModel::EVENT_TYPE_ARRAY;
+        $kinds_list = CompetitionEventModel::EVENT_KINDS_ARRAY;
+        $status_list = array(-1 =>"已退赛",0 =>"未支付",1=>"已支付");
         int_to_string($list,array(
-            'type' => CompetitionEventModel::EVENT_TYPE_ARRAY,
-            'kinds' => CompetitionEventModel::EVENT_KINDS_ARRAY,
-            'status' => array(-1 =>"已退赛",0 =>"未支付",1=>"已支付"),
+            'type' => $type_list,
+            'kinds' => $kinds_list,
+            'status' => $status_list,
         ));
 
+        $this->assign('type_list',$type_list);
+        $this->assign('checkType', $type);
+        $this->assign('kinds_list',$kinds_list);
+        $this->assign('checkKinds', $kinds);
+        $this->assign('status_list',$status_list);
+        $this->assign('checkStatus', $status);
         $this->assign('list',$list);
 
         return $this->fetch();

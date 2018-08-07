@@ -13,17 +13,15 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="mail-box-header">
-                <h2>比赛报名</h2>
-                <div class="mail-tools tooltip-demo m-t-md">
-                    <form method="get" action="" class="pull-right mail-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="search" placeholder="搜索标题">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
-                            </div>
+                <form method="get" action="" class="pull-right mail-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" name="search" placeholder="搜索比赛名称、报名人">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+                <h2>比赛报名</h2>
             </div>
             <div class="mail-box">
                 <table class="table table-hover table-mail">
@@ -34,12 +32,33 @@
                         <th>报名截止时间</th>
                         <th>地址</th>
                         <th>组别</th>
-                        <th>赛别</th>
-                        <th>剑种</th>
+                        <th>
+                            <select name="type" id="changeType" onchange="changeType()">
+                                <option value="">赛别</option>
+                                {volist name="type_list" id="vo"}
+                                <option value="{$key}" {eq name="$checkType" value="$key"}selected{/eq}>{$vo}</option>
+                                {/volist}
+                            </select>
+                        </th>
+                        <th>
+                            <select name="kinds" id="changeKinds" onchange="changeType()">
+                                <option value="">剑种</option>
+                                {volist name="kinds_list" id="vo"}
+                                <option value="{$key}" {eq name="$checkKinds" value="$key"}selected{/eq}>{$vo}</option>
+                                {/volist}
+                            </select>
+                        </th>
                         <th>报名人</th>
                         <th>价格</th>
                         <th>报名时间</th>
-                        <th>状态</th>
+                        <th>
+                            <select name="status" id="changeStatus" onchange="changeType()">
+                                <option value="" {if condition="$checkStatus == null"}selected{/if}>状态</option>
+                                {volist name="status_list" id="vo"}
+                                <option value="{$key}" {if condition="$checkStatus === $key"}selected{/if}>{$vo}</option>
+                                {/volist}
+                            </select>
+                        </th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -64,7 +83,11 @@
                                data-detail='{$vo}'
                                style="color: #fff;"><i class="fa fa-eye"></i> 详情</a>
                             <!--<a href="{:Url('edit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-eye"></i> 详情</a>-->
+                            {eq name="$vo.status" value="1"}
                             <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 退赛</a>
+                            {else/}
+                            <a class="btn-sm btn-default2"><i class="fa fa-trash-o"></i> 退赛</a>
+                            {/eq}
                         </td>
                     </tr>
                     {/volist}
@@ -184,6 +207,19 @@
         $("textarea[name='remark']").val(data.remark);
         $("input[name='name']").val(data.name);
         $("input[name='price']").val(data.price);
+    }
+    function changeType(){
+        var url = "/admin/competition_apply/index";
+        if($('#changeType').val()){
+            url += "/type/"+$('#changeType').val();
+        }
+        if($('#changeKinds').val()){
+            url += "/kinds/"+$('#changeKinds').val();
+        }
+        if($('#changeStatus').val()){
+            url += "/status/"+$('#changeStatus').val();
+        }
+        location.href = url;
     }
 </script>
 {/block}
