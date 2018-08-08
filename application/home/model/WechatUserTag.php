@@ -35,7 +35,7 @@ class WechatUserTag extends Model {
         $tagid = WechatUserTag::where(['tagid' => ['>', 9], 'userid' => $userId])->value('tagid');
         if($tagid){
             $tagname = WechatUserTag::getTagName($tagid);
-            $venue_id = venue::where(['title' => $tagname, 'status' => ['>=', 0]])->value('id');
+            $venue_id = Venue::where(['title' => $tagname, 'status' => ['>=', 0]])->value('id');
             if($venue_id){
                 return $venue_id;
             }
