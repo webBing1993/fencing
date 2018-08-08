@@ -33,6 +33,12 @@
     {/volist}
 </div>
 <div class="news">
+    {empty name="$venue"}
+    <!-- 无权限显示-->
+    <div class="noPower">
+        您当前没有所属场馆，只能前往击剑风云-击剑馆中报名公开场馆课程或联系管理员添加所属场馆，抱歉。
+    </div>
+    {else/}
 
     <div class="banner">
         <div class="swiper-container">
@@ -46,12 +52,6 @@
         </div>
     </div>
 
-    {empty name="$venue"}
-    <!-- 无权限显示-->
-    <div class="noPower">
-        您当前没有所属场馆，只能前往击剑风云-击剑馆中报名公开场馆课程或联系管理员添加所属场馆，抱歉。
-    </div>
-    {else/}
     <!-- 学员权限显示-->
     <div class="address">
         <div class="addressTitle">{$venue.title}</div>
