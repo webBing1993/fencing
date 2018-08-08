@@ -51,6 +51,17 @@ class User extends Base
     public function insider(){
         $userId = session('userId');
         $user = WechatUser::where('mobile',$userId)->find();
+        if($user['gender'] == 2){
+            $user['gender'] = '女';
+        }elseif($user['gender'] == 1){
+            $user['gender'] = '男';
+        }else{
+            $user['gender'] = '未定义';
+        }
+        if(!empty($user['viptime'])){
+            $user['vipendtime'] = date("Y-m-d",$user['viptime'] + 365*24*60*60);
+            $user['viptime'] = date("Y-m-d",$user['viptime']);
+        }
         $this->assign('user',$user);
 
         return $this->fetch();

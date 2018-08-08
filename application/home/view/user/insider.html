@@ -6,41 +6,49 @@
 {block name="body"}
     <div class="top"><img src="/home/images/insider/icon01.png" alt=""><p>开通击剑协会会员，享专属特权</p></div>
     <div class="header">比赛报名可享受会员特惠专属价格</div>
+
+{if condition="($user['vip'] == 0)"}
+
+
+{if condition="($user['tag'] == 2)"}
 <!--教练状态-->
     <div class="user">
         <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}" readonly="readonly"></div>
-        <div class="userSort"><span>性别</span><input type="text" placeholder="请点击输入完善信息">{$user.gender}</div>
-        <div class="userSort"><span>民族</span><input type="text" placeholder="请点击输入完善信息">{$user.nation}</div>
-        <div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="{$user.birthday|time_format='Y-m-d'}" readonly="readonly"></div>
-        <div class="userSort"><span>政治面貌</span><input type="text" placeholder="请点击输入完善信息">{$user.face}</div>
-        <div class="userSort"><span>籍贯</span><input type="text" placeholder="请点击输入完善信息">{$user.branch}</div>
-        <div class="userSort"><span>学历</span><input type="text" placeholder="请点击输入完善信息">{$user.education}</div>
-        <div class="userSort"><span>专业</span><input type="text" placeholder="请点击输入完善信息">{$user.position}</div>
-        <div class="userSort"><span>所属单位</span><input type="text" placeholder="请点击输入完善信息">{$user.school}</div>
-        <div class="userSort"><span>联系电话</span><input type="text" placeholder="请点击输入完善信息">{$user.mobile}</div>
-        <div class="userSort"><span>邮箱</span><input type="text" placeholder="请点击输入完善信息">{$user.email}</div>
-        <div class="userSort"><span>联系地址</span><input type="text" placeholder="请点击输入完善信息">{$user.address}</div>
+        <div class="userSort"><span>性别</span><input type="text" placeholder="请点击输入完善信息" value="{$user.gender}"></div>
+        <div class="userSort"><span>民族</span><input type="text" placeholder="请点击输入完善信息" value="{$user.nation}"></div>
+        <div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="{$user.birthday}" readonly="readonly"></div>
+        <div class="userSort"><span>政治面貌</span><input type="text" placeholder="请点击输入完善信息" value="{$user.face}"></div>
+        <div class="userSort"><span>籍贯</span><input type="text" placeholder="请点击输入完善信息" value="{$user.branch}"></div>
+        <div class="userSort"><span>学历</span><input type="text" placeholder="请点击输入完善信息" value="{$user.education}"></div>
+        <div class="userSort"><span>专业</span><input type="text" placeholder="请点击输入完善信息" value="{$user.position}"></div>
+        <div class="userSort"><span>所属单位</span><input type="text" placeholder="请点击输入完善信息" value="{$user.school}"></div>
+        <div class="userSort"><span>联系电话</span><input type="text" placeholder="请点击输入完善信息" value="{$user.mobile}"></div>
+        <div class="userSort"><span>邮箱</span><input type="text" placeholder="请点击输入完善信息" value="{$user.email}"></div>
+        <div class="userSort"><span>联系地址</span><input type="text" placeholder="请点击输入完善信息" value="{$user.address}"></div>
     </div>
     <div class="deal">
         <img src="/home/images/insider/icon03.png" class="read"> 同意 <a href="/home/user/rule.html">《杭州市击剑运动协会会员管理规定》</a>
     </div>
     <div class="money"><span>¥</span><span>120</span>/年</div>
     <div class="pay">立即支付</div>
+{else /}
 <!--学员状态-->
-<!--<div class="user">-->
-    <!--<div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="张三" readonly="readonly"></div>-->
-    <!--<div class="userSort"><span>性别</span><input type="text" placeholder="请点击输入完善信息"></div>-->
-    <!--<div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="2006-11-28" readonly="readonly"></div>-->
-    <!--<div class="userSort"><span>所属单位</span><input type="text" placeholder="请点击输入完善信息"></div>-->
-    <!--<div class="userSort"><span>联系电话</span><input type="text" placeholder="请点击输入完善信息"></div>-->
-    <!--<div class="userSort"><span>邮箱</span><input type="text" placeholder="请点击输入完善信息"></div>-->
-    <!--<div class="userSort"><span>联系地址</span><input type="text" placeholder="请点击输入完善信息"></div>-->
-<!--</div>-->
-
+<div class="user">
+    <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}" readonly="readonly"></div>
+    <div class="userSort"><span>性别</span><input type="text" placeholder="请点击输入完善信息" value="{$user.gender}"></div>
+    <div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="{$user.birthday}" readonly="readonly"></div>
+    <div class="userSort"><span>所属单位</span><input type="text" placeholder="请点击输入完善信息" value="{$user.school}"></div>
+    <div class="userSort"><span>联系电话</span><input type="text" placeholder="请点击输入完善信息" value="{$user.mobile}"></div>
+    <div class="userSort"><span>邮箱</span><input type="text" placeholder="请点击输入完善信息" value="{$user.email}"></div>
+    <div class="userSort"><span>联系地址</span><input type="text" placeholder="请点击输入完善信息" value="{$user.address}"></div>
+</div>
+{/if}
+{else /}
 <!--假如他已成为会有后 显示的状态-->
 <!--<div class="top"><img src="/home/images/insider/icon01.png" alt=""><p>开通击剑协会会员，享专属特权</p></div>-->
 <!--<div class="header">比赛报名可享受会员特惠专属价格</div>-->
-<!--<div class="times">会员期限：2018-02-03至2019-02-03</div>-->
+<div class="times">会员期限：{$user.viptime}至{$user.vipendtime}</div>
+{/if}
 {/block}
 {block name="script"}
 <script>
