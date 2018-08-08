@@ -57,7 +57,7 @@
             </div>
         </div>
         {if condition="$data.end_time < time()"}
-        <a href="javascript:;" class="SignUp signOver"><div>已截止</div></a>
+        <div class="SignUp signOver"><div>已截止</div></div>
         {else/}
         <a href="{:Url('Association/gamedetail02?id='.$data['id'])}" class="SignUp"><div>马上报名</div></a>
         {/if}

@@ -11,16 +11,16 @@
     <div class="content">
         <div class="titlePriceNum">
             <div class="titlePrice clearfix">
-                <div class="fl">击剑培训课</div>
-                <div class="price fr">￥<span>200</span></div>
+                <div class="fl">{$data.course_name}</div>
+                <div class="price fr">￥<span>{$data.price}</span></div>
             </div>
-            <div class="num">节数：42</div>
+            <div class="num">节数：{$data.num}</div>
         </div>
         <div class="line"></div>
         <div class="address">
             <a href="javascript:;" class="clearfix">
                 <i class="fl"></i>
-                <span class="fl">地址所在</span>
+                <span class="fl">{$venue.address}</span>
             </a>
         </div>
     </div>
@@ -33,27 +33,27 @@
         <ul>
             <li class="clearfix">
                 <div class="name fl">姓名</div>
-                <input type="text" value="人员姓名" disabled class="fr">
+                <input type="text" value="{$model.name}" disabled class="fr">
             </li>
             <li class="clearfix active">
                 <div class="name fl">出生日期</div>
-                <input type="text" value="2000-01-01" disabled class="fr">
+                <input type="text" value="{$model.birthday}" disabled class="fr">
             </li>
             <li class="clearfix">
                 <div class="name fl">性别</div>
-                <input type="text" value="男" disabled class="fr">
+                <input type="text" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}" disabled class="fr">
             </li>
             <li class="clearfix active">
                 <div class="name fl">监护人电话</div>
-                <input type="text" value="18158417452" disabled class="fr">
+                <input type="text" value="{$model.guardian_mobile}" disabled class="fr">
             </li>
             <li class="clearfix active">
-                <div class="name fl">省份证号</div>
-                <input type="text" value="340824565456545642" disabled class="fr">
+                <div class="name fl">身份证号</div>
+                <input type="text" value="{$model.identity}" disabled class="fr">
             </li>
             <li class="clearfix active">
                 <div class="name fl">家庭住址</div>
-                <input type="text" value="家庭住址1222" disabled class="fr">
+                <input type="text" value="{$model.address}" disabled class="fr">
             </li>
         </ul>
     </div>
@@ -71,7 +71,7 @@
 <div class="lists">
     <div class="title">应付款</div>
     <div class="pay">
-        普通价：<span>￥</span><span>500</span>
+        价格：<span>￥</span><span>{$data.price}</span>
     </div>
 </div>
 
@@ -84,8 +84,8 @@
 <div class="mapChoose">
     <div class="shadow"></div>
     <div class="mapList">
-        <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
-        <a href="https://uri.amap.com/marker?position=30.2552455,132.22115,30&name=我的位置">高德地图</a>
+        <a href="http://api.map.baidu.com/marker?location={$venue.lat},{$venue.lng}&title={$venue.address}&content={$venue.address}&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position={$venue.lng},{$venue.lat}&name={$venue.address}">高德地图</a>
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>

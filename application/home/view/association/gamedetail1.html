@@ -60,13 +60,13 @@
 
 
 <div class="btn">
-    {eq name="$data.type" value="2"}
+    {empty name="$flag"}
     <!-- 精品课程申请-->
     <a href="javascript:;" class="apply">立即申请</a>
     {else/}
     <!-- 报名事件-->
     <a href="javascript:;" class="enroll">立即报名</a>
-    {/eq}
+    {/empty}
     <!-- 已报名-->
     <!--<a href="javascript:;" class="btnRea">已报名</a>-->
 </div>
@@ -102,7 +102,7 @@
 
 <script>
 
-    var id = 7;
+    var id = {$data.id};
 
     /*
      * 地图跳转

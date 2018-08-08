@@ -631,8 +631,20 @@ class Association  extends Base
     // 课程报名详情页
     public function gamedetail1() {
         $id = input('id');
+        $userId = session('userId');
         $data = VenueCourse::get($id);
         $venue = venue::get($data['venue_id']);
+        if($data['type'] == 2){
+            $rs = CourseReview::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId, 'status' => 1])->find();
+            if($rs){
+                $flag = true;
+            }else{
+                $flag = false;
+            }
+        }else{
+            $flag = true;
+        }
+        $this->assign('flag',$flag);
         $this->assign('venue',$venue);
         $this->assign('data',$data);
 
@@ -640,7 +652,7 @@ class Association  extends Base
     }
 
     /**
-     * 精品课申请页
+     * 精品课申请处理
      */
     public function payment1() {
         $id = input('id');
@@ -669,6 +681,15 @@ class Association  extends Base
     }
     // 课程报名付款页
     public function payment() {
+        $id = input('id');
+        $userId = session('userId');
+        $data = VenueCourse::get($id);
+        $venue = venue::get($data['venue_id']);
+        $model = wechatUser::where(['userid' => $userId])->find();
+
+        $this->assign('venue',$venue);
+        $this->assign('data',$data);
+        $this->assign('model',$model);
 
         return $this->fetch();
     }
