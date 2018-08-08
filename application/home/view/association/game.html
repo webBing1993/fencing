@@ -76,7 +76,7 @@
             {/notempty}
             {/notempty}
                 <div class="listImg fl">
-                    <img src="{$vo.front_cover}" alt="" class="lazy">
+                    <img data-original="{$vo.front_cover|get_cover='path'}" alt="" class="lazy">
                     {eq name="$vo.type" value="2"}
                     <!-- 精品课的标示-->
                     <i></i>
@@ -235,7 +235,7 @@
             var list = lists[i];
             if (getCookie('tab') == 0) {
                 html += '<a href="/home/association/gamedetail/id/'+ list.id +'.html">'+
-                        '<img src="'+ list.front_cover +'" class="lazy">'+
+                        '<img data-original="'+ list.front_cover +'" class="lazy">'+
                         '<div class="newsText">'+
                         '<div class="newsTitle">'+ list.title +'</div>'+
                         '<div class="newsTime">';
@@ -261,7 +261,7 @@
                 html +=
 
                         '<div class="listImg fl">'+
-                        '<img src="'+ list.front_cover +'" alt="" class="lazy">';
+                        '<img data-original="'+ list.front_cover +'" alt="" class="lazy">';
                                 if (list.type == 2) {
                                     html += '<i></i>';
                                 }
