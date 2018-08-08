@@ -12,6 +12,7 @@ use app\admin\model\CompetitionApply;
 use app\home\model\CompetitionEvent;
 use app\home\model\Competition;
 use app\home\model\CompetitionGroup;
+use app\home\model\CourseReview;
 use app\home\model\News;
 use app\home\model\Picture;
 use app\home\model\Venue;
@@ -589,19 +590,19 @@ class Association  extends Base
             $data['price'] = $competitionEventModel['price'];
         }
 
-        $competitionApplyodel = new CompetitionApply();
-        $model = $competitionApplyodel->validate('CompetitionApply')->save($data);
+        $competitionApplyModel = new CompetitionApply();
+        $model = $competitionApplyModel->validate('CompetitionApply')->save($data);
         if($model){
             if ($flag == 1) {
                 $data['type'] = 2;
                 $data2 = $data;
-                $competitionApplyodel2 = new CompetitionApply();
-                $competitionApplyodel2->validate('CompetitionApply')->save($data2);
-                return $this->success('报名成功!','',['id' => $competitionApplyodel2->id, 'type' => 3]);
+                $competitionApplyModel2 = new CompetitionApply();
+                $competitionApplyModel2->validate('CompetitionApply')->save($data2);
+                return $this->success('报名成功!','',['id' => $competitionApplyModel2->id, 'type' => 3]);
             }
-            return $this->success('报名成功!','',['id' => $competitionApplyodel->id, 'type' => $data['type']]);
+            return $this->success('报名成功!','',['id' => $competitionApplyModel->id, 'type' => $data['type']]);
         }else{
-            return $this->error($competitionApplyodel->getError());
+            return $this->error($competitionApplyModel->getError());
         }
     }
 
@@ -628,10 +629,40 @@ class Association  extends Base
 
     // 课程报名详情页
     public function gamedetail1() {
+        $id = input('id');
+        $data = VenueCourse::get($id);
+        $venue = venue::get($data['venue_id']);
+        $this->assign('venue',$venue);
+        $this->assign('data',$data);
 
         return $this->fetch();
     }
 
+    /**
+     * 精品课申请页
+     */
+    public function payment1() {
+        $id = input('id');
+        $userId = session('userId');
+        $wechatUserModel = wechatUser::where(['userid' => $userId])->find();
+        $venueCourseModel = VenueCourse::get($id);
+        $venue = venue::get($venueCourseModel['venue_id']);
+
+        $data['venue_id'] = $venueCourseModel['venue_id'];
+        $data['venue_name'] = $venue['title'];
+        $data['course_id'] = $id;
+        $data['course_name'] = $venueCourseModel['course_name'];
+        $data['userid'] = $userId;
+        $data['name'] = $wechatUserModel['name'];
+
+        $courseReviewModel = new CourseReview();
+        $model = $courseReviewModel->save($data);
+        if($model){
+            return $this->success('申请成功!');
+        }else{
+            return $this->error($courseReviewModel->getError());
+        }
+    }
     // 课程报名付款页
     public function payment() {
 

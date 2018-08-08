@@ -7,21 +7,25 @@
 
 <div class="addressImg">
     <div class="img">
-        <img src="/home/images/1.jpg" alt="">
+        <img data-original="{$data.front_cover|get_cover='path'}" class="lazy">
     </div>
     <div class="address">
         <div class="addressTitle clearfix">
-            <div class="title fl">击剑培训课</div>
-            <div class="price fr">￥<span>500</span></div>
+            <div class="title fl">{$data.course_name}</div>
+            <div class="price fr">￥<span>{$data.price}</span></div>
         </div>
         <!-- i 为精品课的标识-->
-        <p class="nums">节数：40 <i></i></p>
+        <p class="nums">节数：{$data.num}
+            {eq name="$data.type" value="2"}
+            <!-- 精品课的标示-->
+            <i></i>
+            {/eq}</p>
         <p class="line"></p>
         <div class="lists">
             <div class="list">
                 <a href="javascript:;" class="clearfix">
                     <i class="fl"></i>
-                    <span class="fl">地址所在</span>
+                    <span class="fl">{$venue.address}</span>
                 </a>
             </div>
         </div>
@@ -32,15 +36,15 @@
     <ul>
         <li>
             <div class="title">课程时效</div>
-            <div class="times">2018-07-12至2018-07-31</div>
+            <div class="times">{$data.start_time|time_format='Y-m-d'}至{$data.end_time|time_format='Y-m-d'}</div>
         </li>
         <li>
             <div class="title">上课时间</div>
-            <div class="times">每周六上午8:30-11:30 下午13:00-18:00</div>
+            <div class="times">{$data.course_time}</div>
         </li>
         <li>
             <div class="title">课程内容</div>
-            <div class="times">每周六上午8:30-11:30 下午13:00-18:00</div>
+            <div class="times">{$data.content}</div>
         </li>
     </ul>
 </div>
@@ -49,29 +53,30 @@
     <ul>
         <li>
             <div class="title">备注</div>
-            <div class="times">每周六上午8:30-11:30 下午13:00-18:00</div>
+            <div class="times">{$data.remark}</div>
         </li>
     </ul>
 </div>
 
 
 <div class="btn">
-    <!-- 报名事件-->
-    <a href="javascript:;" class="enroll">立即报名</a>
-
+    {eq name="$data.type" value="2"}
     <!-- 精品课程申请-->
     <a href="javascript:;" class="apply">立即申请</a>
-
+    {else/}
+    <!-- 报名事件-->
+    <a href="javascript:;" class="enroll">立即报名</a>
+    {/eq}
     <!-- 已报名-->
-    <a href="javascript:;" class="btnRea">已报名</a>
+    <!--<a href="javascript:;" class="btnRea">已报名</a>-->
 </div>
 
 <!-- map-->
 <div class="mapChoose">
     <div class="shadow"></div>
     <div class="mapList">
-        <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
-        <a href="https://uri.amap.com/marker?position=30.2552455,132.22115,30&name=我的位置">高德地图</a>
+        <a href="http://api.map.baidu.com/marker?location={$venue.lat},{$venue.lng}&title={$venue.address}&content={$venue.address}&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position={$venue.lng},{$venue.lat}&name={$venue.address}">高德地图</a>
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
