@@ -316,6 +316,7 @@ class Association  extends Base
                 $val['desc'] = str_replace("\n",'',$val['desc']);
             }
 
+            $venue['front_cover'] = json_decode($venue['front_cover']);
             $this->assign('venue',$venue);
             $this->assign('right',$right);
         }
@@ -643,6 +644,9 @@ class Association  extends Base
      */
     public function payment1() {
         $id = input('id');
+        if (!$id) {
+            return $this->error('参数缺失');
+        }
         $userId = session('userId');
         $wechatUserModel = wechatUser::where(['userid' => $userId])->find();
         $venueCourseModel = VenueCourse::get($id);

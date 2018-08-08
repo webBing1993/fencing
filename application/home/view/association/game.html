@@ -43,9 +43,9 @@
     <div class="banner">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
-                <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
-                <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
+                {volist name="venue.front_cover" id="vo"}
+                <div class="swiper-slide"><img src="{$vo|get_cover='path'}" class="lazy"></div>
+                {/volist}
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
@@ -63,7 +63,7 @@
                 </a>
             </div>
             <div class="list">
-                <a href="tel:18158417280" class="clearfix">
+                <a href="tel:{$venue.tel}" class="clearfix">
                     <i class="fl"></i>
                     <span class="fl">{$venue.tel}</span>
                 </a>
