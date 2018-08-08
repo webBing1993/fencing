@@ -16,8 +16,8 @@
     <div class="user">
         <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
         <div class="error"><img src="/home/images/game/icon10.png" class="gantan">部分信息无法获取，需要补充完善才可进行报名！</div>
-        <div class="userSort active"><span>姓名</span><input name="name" type="text" placeholder="请填写" value="{$model.name}"  readonly="readonly"></div>
-        <div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="请填写" value="{$model.birthday}"  readonly="readonly"></div>
+        <div class="userSort active"><span>姓名</span><input name="name" type="text" placeholder="暂无" value="{$model.name}"  readonly="readonly"></div>
+        <div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="暂无" value="{$model.birthday}"  readonly="readonly"></div>
         <!--<div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="请填写" readonly="readonly"></div>-->
         <div class="userSort"><span>组别</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zb"><img src="/home/images/game/iconxl.png" class="xiala"></div>
         <div class="userSort"><span>剑种</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="jz"><img src="/home/images/game/iconxl.png" class="xiala"></div>
@@ -39,13 +39,13 @@
                 {/eq}
             </div>
         </div>
-        <div class="userSort active"><span>性别</span><input name="sex" type="text" placeholder="请填写" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
+        <div class="userSort active"><span>性别</span><input name="sex" type="text" placeholder="暂无" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
         <div class="userSort"><span>代表单位</span><input  name="dbdw" type="text" placeholder="请填写" value="{$representative}"></div>
         <div class="userSort"><span>带训教练</span><input  name="dxjl" type="text" placeholder="请填写" value="{$coach}"></div>
-        <div class="userSort active"><span>监护人电话</span><input name="phone" type="text" placeholder="请填写" value="{$model.guardian_mobile}"  readonly="readonly"></div>
+        <div class="userSort active"><span>监护人电话</span><input name="phone" type="text" placeholder="暂无" value="{$model.guardian_mobile}"  readonly="readonly"></div>
         <div class="userSort"><span>证件类型</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zj"><img src="/home/images/game/iconxl.png" class="xiala"></div>
         <div class="userSort"><span>证件号</span><input  name="codeNum" type="text" placeholder="请填写" value="{$model.identity}"></div>
-        <div class="userSort"><span>家庭住址</span><input name="address" type="text" placeholder="请填写" value="{$model.address}" readonly="readonly"></div>
+        <div class="userSort"><span>家庭住址</span><input name="address" type="text" placeholder="暂无" value="{$model.address}" readonly="readonly"></div>
         <div class="userSort"><span>备注</span><input name="bz" type="text" placeholder="请填写" value=""></div>
     </div>
     {eq name="$model.vip" value="1"}
@@ -84,7 +84,7 @@
             <p>请前往个人中心完善所有信息</p>
             <p>才可进行报名付款！</p>
         </div>
-        <div class="payError03">前往个人中心</div>
+        <div class="payError03">确定</div>
     </div>
 </div>
 {/block}
@@ -315,7 +315,7 @@
         $('body').css('position','inherit');
     })
     $('.infoError .payError03').on('click',function(){
-        location.href = '/home/user/information.html';
+        // location.href = '/home/user/information.html';
         $('#pay').hide();
         $('body').css('position','inherit');
     })
