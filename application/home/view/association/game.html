@@ -251,9 +251,9 @@
                         '</a>';
             }else {
 
-                if (list.noChoose == false) {
+                if (list.noChoose == true) {
                     html += '<a class="list clearfix" href="javascript:;" onclick="noChoose()">';
-                }else if (list.noClick == false) {
+                }else if (list.noClick == true) {
                     html += '<a class="list clearfix" href="javascript:;" onclick="noClick()">'
                 }else {
                     html += '<a class="list clearfix" href="/home/association/gamedetail1/id/'+ list.id +'">';
