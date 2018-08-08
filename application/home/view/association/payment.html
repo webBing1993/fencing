@@ -32,29 +32,29 @@
     <div class="error"><img src="/home/images/game/icon10.png" class="gantan">部分信息无法获取，需要补充完善才可进行报名！</div>
     <div class="content">
         <ul>
-            <li class="clearfix">
+            <li class="clearfix active">
                 <div class="name fl">姓名</div>
-                <input type="text" value="{$model.name}" disabled class="fr name">
+                <input type="text" value="{$model.name}" placeholder="暂无" disabled class="fr name">
             </li>
             <li class="clearfix active">
                 <div class="name fl">出生日期</div>
-                <input type="text" value="{$model.birthday}" disabled class="fr setData">
+                <input type="text" value="{$model.birthday}" placeholder="暂无" disabled class="fr setData">
             </li>
-            <li class="clearfix">
+            <li class="clearfix active">
                 <div class="name fl">性别</div>
-                <input type="text" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}" disabled class="fr sale">
+                <input type="text" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}" placeholder="暂无" disabled class="fr sale">
             </li>
             <li class="clearfix active">
                 <div class="name fl">监护人电话</div>
-                <input type="text" value="{$model.guardian_mobile}" disabled class="fr phone">
+                <input type="text" value="{$model.guardian_mobile}" placeholder="暂无" disabled class="fr phone">
             </li>
             <li class="clearfix active">
                 <div class="name fl">身份证号</div>
-                <input type="text" value="{$model.identity}" disabled class="fr personId">
+                <input type="text" value="{$model.identity}" placeholder="暂无" disabled class="fr personId">
             </li>
             <li class="clearfix active">
                 <div class="name fl">家庭住址</div>
-                <input type="text" value="{$model.address}" disabled class="fr address">
+                <input type="text" value="{$model.address}" placeholder="暂无" disabled class="fr address1">
             </li>
         </ul>
     </div>
@@ -107,7 +107,7 @@
             <p>请前往个人中心完善所有信息</p>
             <p>才可进行报名付款！</p>
         </div>
-        <div class="payError03">前往个人中心</div>
+        <div class="payError03">我知道了</div>
     </div>
 </div>
 
@@ -132,18 +132,18 @@
     * 初始化判断
     * */
     var isWrite = false;
-    if ($('.name').val() != '' && $('.setData').val() != '' && $('.sale').val() != '' && $('.phone').val() != '' && $('.personId').val() != '' && $('.address').val() != '') {
+    if ($('.name').val() != '' && $('.setData').val() != '' && $('.sale').val() != '' && $('.phone').val() != '' && $('.personId').val() != '' && $('.address1').val() != '') {
         isWrite = true;
     }else {
         $('#pay').show();
-        $('body').css('position','fixed');
+        $('.btn a').css('backgroundColor',"#C2C2C2");
     }
 
     /*
     * 去付款
     * */
     $(".payMoney").on('click', function () {
-        if (isWrite = true) {
+        if (isWrite == true) {
             $.ajax({
                 url: '',
                 type: 'post',
@@ -159,13 +159,13 @@
                     window.location.href = '/home/association/paysuccess1.html'
                 }
             })
+        }else {
+            $('#pay').show();
         }
     });
 
     $('.infoError .payError03').on('click',function(){
-        location.href = '/home/user/information.html';
         $('#pay').hide();
-        $('body').css('position','inherit');
     })
 
 </script>
