@@ -28,92 +28,84 @@
     {/volist}
 </div>
 <div class="news">
+    {empty name="$venue"}
     <!-- 无权限显示-->
-    <!--<div class="noPower">-->
-        <!--您目前暂无所属场馆，需前往击剑风云-击剑馆中报名公开场馆课程-->
-    <!--</div>-->
-
+    <div class="noPower">
+        您当前没有所属场馆，只能前往击剑风云-击剑馆中报名公开场馆课程或联系管理员添加所属场馆，抱歉。
+    </div>
+    {else/}
     <!-- 学员权限显示-->
     <div class="address">
-        <div class="addressTitle">所属场馆的名称</div>
+        <div class="addressTitle">{$venue.title}</div>
         <div class="lists">
             <div class="list">
                 <a href="javascript:;" class="clearfix">
                     <i class="fl"></i>
-                    <span class="fl">海创大厦</span>
+                    <span class="fl">{$venue.address}</span>
                 </a>
             </div>
             <div class="list">
                 <a href="tel:18158417280" class="clearfix">
                     <i class="fl"></i>
-                    <span class="fl">18158417280</span>
+                    <span class="fl">{$venue.tel}</span>
                 </a>
             </div>
             <div class="list clearfix">
                 <i class="fl"></i>
-                <span class="fl">08:00-20:00</span>
+                <span class="fl">{$venue.time}</span>
             </div>
         </div>
     </div>
     <div class="content1">
         <div class="contentList">
-            <!-- 普通课程列表开始-->
-            <a class="list clearfix" href="javascript:;">
-                <div class="listImg fl">
-                    <img src="/home/images/1.jpg" alt="" class="lazy">
-                </div>
-                <div class="listContent fl">
-                    <div class="title">课程标题</div>
-                    <div class="summary">课题简介所在</div>
-                    <div class="note clearfix">
-                        <div class="times fl">2018-01-01至2018-06-30</div>
-                        <div class="price fr">￥<span>100</span></div>
-                    </div>
-                </div>
-            </a>
-            <!-- 普通课程列表结束-->
-            <!-- 精品课程列表开始 未选择普通课程情况-->
+            {volist name="right" id="vo"}
+            {notempty name='$vo.noChoose'}
+            <!-- 精品课权限-->
             <a class="list clearfix" href="javascript:;" onclick="noChoose()">
+            {else/}
+            {notempty name='$vo.noClick'}
+            <!-- 课程冲突-->
+            <a class="list clearfix" href="javascript:;" onclick="noClick()">
+            {else/}
+            <!-- 跳转-->
+            <a class="list clearfix" href="{:Url('Association/gamedetail1?id='.$vo['id'])}">
+            {/notempty}
+            {/notempty}
                 <div class="listImg fl">
                     <img src="/home/images/1.jpg" alt="" class="lazy">
+                    {eq name="$vo.type" value="2"}
                     <!-- 精品课的标示-->
                     <i></i>
+                    {/eq}
                 </div>
                 <div class="listContent fl">
-                    <div class="title">课程标题</div>
-                    <div class="summary">课题简介所在</div>
+                    <div class="title">{$vo.course_name}</div>
+                    <div class="summary">{$vo.desc}</div>
                     <div class="note clearfix">
-                        <div class="times fl">2018-01-01至2018-06-30</div>
-                        <div class="price fr">￥<span>100</span></div>
+                        <div class="times fl">{$vo.start_time|time_format='Y-m-d'}至{$vo.end_time|time_format='Y-m-d'}</div>
+                        <div class="price fr">￥<span>{$vo.price}</span></div>
                     </div>
                 </div>
             </a>
-            <!-- 普通课程列表结束-->
-            <!-- 精品课程列表开始 选择普通课程情况-->
-            <a class="list clearfix" href="/home/association/gamedetail1.html">
-                <div class="listImg fl">
-                    <img src="/home/images/1.jpg" alt="" class="lazy">
-                    <i></i>
-                </div>
-                <div class="listContent fl">
-                    <div class="title">课程标题</div>
-                    <div class="summary">课题简介所在</div>
-                    <div class="note clearfix">
-                        <div class="times fl">2018-01-01至2018-06-30</div>
-                        <div class="price fr">￥<span>100</span></div>
-                    </div>
-                </div>
-            </a>
-            <!-- 普通课程列表结束-->
+            {/volist}
         </div>
     </div>
+    {/empty}
 </div>
 
 <!-- 精品课权限提示-->
-<div class="chooseTig">
+<div class="chooseTig chooseTig2">
     <div class="shadow"></div>
     <div class="tig">
         <p>您当前未报普通课，暂无申请精品课权限，请先报名普通课后再申请，谢谢。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+<!-- 课程冲突提示-->
+<div class="chooseTig chooseTig1">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>由于您当前已有课程，并与该课程的上课时间冲突，所以无法报名，抱歉。</p>
         <a class="chooseBtn" href="javascript:;">我知道了</a>
     </div>
 </div>
@@ -122,8 +114,8 @@
 <div class="mapChoose">
     <div class="shadow"></div>
     <div class="mapList">
-        <a href="http://api.map.baidu.com/marker?location=132.22115,30.2552455&title=我的位置&content=海创大厦&output=html">百度地图</a>
-        <a href="https://uri.amap.com/marker?position=30.2552455,132.22115&name=我的位置">高德地图</a>
+        <a href="http://api.map.baidu.com/marker?location={$venue.lat},{$venue.lng}&title={$venue.address}&content={$venue.address}&output=html">百度地图</a>
+        <a href="https://uri.amap.com/marker?position={$venue.lng},{$venue.lat}&name={$venue.address}">高德地图</a>
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
@@ -274,12 +266,25 @@
     * 精品课程权限提示
     * */
     function noChoose() {
-        $(".chooseTig").show();
+        $(".chooseTig2").show();
     }
 
-    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
-        $(".chooseTig").hide();
+    $(".chooseTig2 .shadow, .chooseTig2 .chooseBtn").on("click", function () {
+        $(".chooseTig2").hide();
     });
+
+
+    /*
+    * 课程冲突提示
+    * */
+    function noClick() {
+        $(".chooseTig1").show();
+    }
+
+    $(".chooseTig1 .shadow, .chooseTig1 .chooseBtn").on("click", function () {
+        $(".chooseTig1").hide();
+    });
+
 
     /*
     * 图片懒加载

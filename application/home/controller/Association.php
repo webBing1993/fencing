@@ -18,7 +18,10 @@ use app\home\model\Venue;
 use app\home\model\Notice;
 use app\home\model\Knowledge;
 use app\home\model\Show;
+use app\home\model\CourseApply;
+use app\home\model\VenueCourse;
 use app\home\model\WechatUser;
+use app\home\model\WechatUserTag;
 
 class Association  extends Base
 {
@@ -257,7 +260,7 @@ class Association  extends Base
     }
 
     /**
-     * 比赛报名列表
+     * 我要报名列表
      */
     public function game(){
         //比赛报名
@@ -265,9 +268,56 @@ class Association  extends Base
         $left = Competition::where($map1)->order('end_time desc')->limit(10)->select();
         $this->assign('left',$left);
         //课程报名
-        $map2 = array('type' => 2, 'status' => 0);
-        $right = Show::where($map2)->order('id desc')->limit(10)->select();
-        $this->assign('right',$right);
+        $userId = session('userId');
+        $venue_id = WechatUserTag::getVenueId($userId);
+        if(!$venue_id){
+            $this->assign('venue',false);
+            $this->assign('right',[]);
+        }else{
+            $venue = venue::get($venue_id);
+            $map2 = array('venue_id' => $venue_id, 'status' => ['>=', 0]);
+            $right = VenueCourse::where($map2)->order('id desc')->limit(10)->select();
+            foreach ($right as $val) {
+                //精品课权限
+                $val['noChoose'] = false;
+                if($val['type'] == 2){
+                    $rs = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'type' => 1, 'status' => 1, 'start_time' => ['<=', time()], 'end_time' => ['>=', time()]])->find();
+                    if($rs){
+                        $val['noChoose'] = false;
+                    }else{
+                        $val['noChoose'] = true;
+                    }
+                }
+                //课程冲突
+                $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1])
+                    ->where(function ($query)use($val) {
+                        $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
+                            ->whereOr(function ($query)use($val) {
+                                $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
+                            })
+                            ->whereOr(function ($query)use($val) {
+                                $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
+                            })
+                            ->whereOr(function ($query)use($val) {
+                                $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
+                            });
+                    });
+//		var_dump($query->fetchSql()->select());die;
+                $res = $query->find();
+                if($res){
+                    $val['noClick'] = true;
+                }else{
+                    $val['noClick'] = false;
+                }
+
+                $val['desc'] = str_replace('&nbsp;','',strip_tags($val['content']));
+                $val['desc'] = str_replace(" ",'',$val['desc']);
+                $val['desc'] = str_replace("\n",'',$val['desc']);
+            }
+
+            $this->assign('venue',$venue);
+            $this->assign('right',$right);
+        }
 
         return $this->fetch();
     }
@@ -281,6 +331,62 @@ class Association  extends Base
             $value['time'] = date("Y-m-d",$value['end_time']);
             $img = Picture::get($value['front_cover']);
             $value['front_cover'] = $img['path'];
+        }
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
+    }
+    //课程报名   上拉加载
+    public function more7(){
+        $len = input('len');
+        $userId = session('userId');
+        $venue_id = WechatUserTag::getVenueId($userId);
+        $map = array('venue_id' => $venue_id, 'status' => ['>=', 0]);
+        $info = VenueCourse::where($map)->order('id desc')->limit($len,6)->select();
+
+        foreach($info as $val){
+            //精品课权限
+            $val['noChoose'] = false;
+            if($val['type'] == 2){
+                $rs = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'type' => 1, 'status' => 1, 'start_time' => ['<=', time()], 'end_time' => ['>=', time()]])->find();
+                if($rs){
+                    $val['noChoose'] = false;
+                }else{
+                    $val['noChoose'] = true;
+                }
+            }
+            //课程冲突
+            $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1])
+                ->where(function ($query)use($val) {
+                    $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
+                        ->whereOr(function ($query)use($val) {
+                            $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
+                        })
+                        ->whereOr(function ($query)use($val) {
+                            $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
+                        })
+                        ->whereOr(function ($query)use($val) {
+                            $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
+                        });
+                });
+//		var_dump($query->fetchSql()->select());die;
+            $res = $query->find();
+            if($res){
+                $val['noClick'] = true;
+            }else{
+                $val['noClick'] = false;
+            }
+
+            $val['desc'] = str_replace('&nbsp;','',strip_tags($val['content']));
+            $val['desc'] = str_replace(" ",'',$val['desc']);
+            $val['desc'] = str_replace("\n",'',$val['desc']);
+
+            $val['start_time'] = date("Y-m-d",$val['start_time']);
+            $val['end_time'] = date("Y-m-d",$val['end_time']);
+            $img = Picture::get($val['front_cover']);
+            $val['front_cover'] = $img['path'];
         }
         if($info){
             return $this->success("加载成功",'',$info);
