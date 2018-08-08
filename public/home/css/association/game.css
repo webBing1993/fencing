@@ -818,11 +818,16 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    line-height: .36rem;
 }
 
 .content1 .contentList .listContent .note .times {
     color: #999;
     font-size: .24rem;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width: 68%;
 }
 
 .content1 .contentList .listContent .note .price {
