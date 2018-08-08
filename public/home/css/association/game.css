@@ -755,7 +755,7 @@
 }
 
 .content1 .contentList .list {
-    padding: .32rem .24rem;
+    padding: .32rem 0;
     border-bottom: 1px solid #EBEBEB;
     display: block;
 }
