@@ -2,6 +2,7 @@
 
 {block name="style"}
 <title>我要报名</title>
+<link rel="stylesheet" href="/static/swiper/swiper.min.css">
 <link rel="stylesheet" href="/home/css/association/game.css">
 {/block}
 {block name="body"}
@@ -32,6 +33,19 @@
     {/volist}
 </div>
 <div class="news">
+
+    <div class="banner">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
+                <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
+                <div class="swiper-slide"><img src="/home/images/1.jpg" class="lazy"></div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
     {empty name="$venue"}
     <!-- 无权限显示-->
     <div class="noPower">
@@ -133,6 +147,7 @@
 {/block}
 {block name="script"}
 <script src="/home/js/reset.js"></script>
+<script src="/static/swiper/swiper.min.js"></script>
 <script>
 
     /*
@@ -325,6 +340,18 @@
 
         // 初始化点击事件
         $('.Top div').eq(getCookie('tab')?getCookie('tab'): 0).click();
+
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination'
+            },
+            loop:true
+        });
+
     });
 
 

@@ -913,3 +913,21 @@
     background-color: #3A8CFB;
     border-radius: .35rem;
 }
+
+.news .banner {
+    padding: 0 .33rem;
+    height: 3rem;
+}
+
+.news .banner img {
+    border-radius: .2rem .2rem 0 0;
+}
+
+.news .banner .swiper-pagination {
+    text-align: left;
+    padding-left: .3rem;
+}
+
+.news .banner .swiper-pagination-bullet-active {
+    background: #FFFFFF;
+}
