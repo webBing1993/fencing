@@ -63,7 +63,7 @@ body {
     top: 0.1rem;
     background: url("/home/images/game/jpk.png") 0 0 no-repeat;
     background-size: .57rem .42rem;
-    box-shadow: 1px 0 .1rem #646464;
+    /*box-shadow: 1px 0 .1rem #646464;*/
 }
 
 .addressImg .line {

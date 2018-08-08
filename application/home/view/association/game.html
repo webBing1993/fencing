@@ -76,7 +76,7 @@
             {/notempty}
             {/notempty}
                 <div class="listImg fl">
-                    <img src="/home/images/1.jpg" alt="" class="lazy">
+                    <img src="{$vo.front_cover}" alt="" class="lazy">
                     {eq name="$vo.type" value="2"}
                     <!-- 精品课的标示-->
                     <i></i>
@@ -158,7 +158,7 @@
     function onloadFun() {
         var len = 0;
         if (getCookie('tab') == 0) {
-            len = $(".news:first-of-type a").length;
+            len = $(".news").eq(0).find('a').length;
         }else {
             len = $(".contentList .list").length;
         }
@@ -178,10 +178,13 @@
             var dh = $(document).height();
             var end = $(window).height() + $(window ).scrollTop();
             var len = 0;
+            var url = '';
             if (getCookie('tab') == 0) {
-                len = $(".news:first-of-type a").length;
+                len = $(".news").eq(0).find('a').length;
+                url = '{:Url("association/more6")}';
             }else {
                 len = $(".contentList .list").length;
+                url = '{:Url("association/more7")}';
             }
             var tip = $(".tip");
             var loading = $('.loading');
@@ -189,10 +192,9 @@
                 isScroll = false;
                 $.ajax({
                     type:"post",
-                    url:"",
+                    url: url,
                     data:{
-                        len: len,
-                        type: getCookie('tab')+1
+                        len: len
                     },
                     beforeSend: function(XMLHttpRequest){
                         tip.hide();
@@ -228,39 +230,56 @@
         var html = '';
         var lists = data.data;
         var len = lists.length;
+        var now_time = Math.floor(new Date().getTime() / 1000);
         for(var i = 0; i< len;i++) {
             var list = lists[i];
-            if (data.type == 1) {
-                html +=  '<a href="/home/association/gamedetail/id/'+ list.id +'.html">'+
-                        '<img src="/home/images/1.jpg" class="lazy">'+
+            if (getCookie('tab') == 0) {
+                html += '<a href="/home/association/gamedetail/id/'+ list.id +'.html">'+
+                        '<img src="'+ list.front_cover +'" class="lazy">'+
                         '<div class="newsText">'+
                         '<div class="newsTitle">'+ list.title +'</div>'+
-                        '<div class="newsTime">'+
-                        '<span>2018-10-10</span>'+
-                        '<span>杭州市击剑运动协会</span>'+
+                        '<div class="newsTime">';
+                                if (list.end_time < now_time) {
+                                    html += '<span>已截至</span>';
+                                }else {
+                                    html += '<span>'+ list.time +' 截至</span>';
+                                }
+                html +=
+                        '<span>'+ list.publisher +'</span>'+
                         '</div>'+
                         '</div>'+
                         '</a>';
             }else {
-                html += '<div class="list fl">'+
-                        '<a class="list clearfix" href="javascript:;">'+
+
+                if (list.noChoose == false) {
+                    html += '<a class="list clearfix" href="javascript:;" onclick="noChoose()">';
+                }else if (list.noClick == false) {
+                    html += '<a class="list clearfix" href="javascript:;" onclick="noClick()">'
+                }else {
+                    html += '<a class="list clearfix" href="/home/association/gamedetail1/id/'+ list.id +'">';
+                }
+                html +=
+
                         '<div class="listImg fl">'+
-                        '<img src="'+ list.front_cover +'" alt="" class="lazy">'+
-                        '<i></i>'+
-                        '</div>'+
+                        '<img src="'+ list.front_cover +'" alt="" class="lazy">';
+                                if (list.type == 2) {
+                                    html += '<i></i>';
+                                }
+
+                html += '</div>'+
                         '<div class="listContent fl">'+
-                        '<div class="title">'+ list.title +'</div>'+
-                        '<div class="summary">'+ list.summary +'</div>'+
+                        '<div class="title">'+ list.course_name +'</div>'+
+                        '<div class="summary">'+ list.desc +'</div>'+
                         '<div class="note clearfix">'+
-                        '<div class="times fl">2018-01-01至2018-06-30</div>'+
+                        '<div class="times fl">'+ list.start_time +'至'+ list.end_time +'</div>'+
                         '<div class="price fr">￥<span>'+ list.price +'</span></div>'+
                         '</div>'+
                         '</div>'+
                         '</a>';
             }
         }
-        if (data.type == 1) {
-            $(".news:first-of-type").append(html);
+        if (getCookie('tab') == 0) {
+            $(".news").eq(0).append(html);
         }else {
             $(".contentList").append(html);
         }
