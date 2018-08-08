@@ -92,7 +92,7 @@ class Wechat extends Admin
                                 $user['school'] = $value['value'];
                                 break;
                             case "身份证号":
-                                $user['identity'] = $dname;
+                                $user['identity'] = $value['value'];
                                 break;
                             case "监护人":
                                 $user['guardian_mobile'] = $value['value'];
@@ -209,6 +209,12 @@ class Wechat extends Admin
                             $data = ['tagid' => $value['tagid'],'userid' => $val['userid']];
                             if(empty(WechatUserTag::where($data)->find())){
                                 WechatUserTag::create($data);
+                                if(isset(WechatTag::TAG_ARRAY[$value['tagid']])){
+                                    $member_type = WechatTag::TAG_ARRAY[$value['tagid']];
+                                    if($member_type !== WechatUser::where(['userid'=>$user['userid']])->value('tag')){
+                                        WechatUser::where(['userid'=>$user['userid']])->update(['tag'=>$member_type]);
+                                    }
+                                }
                             }
                         }
                     };
@@ -218,6 +224,12 @@ class Wechat extends Admin
                         $data = ['tagid'=>$value['tagid'], 'userid'=>$user['userid']];
                         if(empty(WechatUserTag::where($data)->find())){
                             WechatUserTag::create($data);
+                            if(isset(WechatTag::TAG_ARRAY[$value['tagid']])){
+                                $member_type = WechatTag::TAG_ARRAY[$value['tagid']];
+                                if($member_type !== WechatUser::where(['userid'=>$user['userid']])->value('tag')){
+                                    WechatUser::where(['userid'=>$user['userid']])->update(['tag'=>$member_type]);
+                                }
+                            }
                         }
                     }
                 }
