@@ -20,7 +20,11 @@
         <div class="newsText">
             <div class="newsTitle">{$vo.title}</div>
             <div class="newsTime">
+                {if condition="$vo.end_time < time()"}
+                <span>已截止</span>
+                {else/}
                 <span>{$vo.end_time|time_format='Y-m-d'} 截止</span>
+                {/if}
                 <span>{$vo.publisher}</span>
             </div>
         </div>
