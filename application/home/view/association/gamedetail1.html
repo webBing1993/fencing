@@ -102,6 +102,8 @@
 
 <script>
 
+    var id = 7;
+
     /*
      * 地图跳转
      * */
@@ -141,6 +143,16 @@
 
     $(".apply").on("click",function () {
         $(".chooseTig").show();
+        $.ajax({
+            url: '{:Url("association/payment1")}',
+            data: {
+                id: id
+            },
+            type: 'post',
+            success: function (data) {
+
+            }
+        })
     });
 
     $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
