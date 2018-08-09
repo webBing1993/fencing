@@ -95,6 +95,16 @@ class User extends Base
 
         return $this->fetch();
     }
+
+    //会员申请 去支付接口
+    public function vipapply(){
+        $data = input('post');
+        dump($data);exit;
+
+        return $this->fetch();
+    }
+
+
     public function rule(){
         return $this->fetch();
     }
