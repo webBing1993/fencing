@@ -159,7 +159,6 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
-                    $('.btn a').css('backgroundColor',"#C2C2C2");
                     payPrice(price,'/home/association/paysuccess1/id/'+msg.data.id);
                 }
             })
@@ -190,6 +189,7 @@
                                 'getBrandWCPayRequest',  JSON.parse(response),
                                 function (res) {
                                     if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        $('.btn a').css('backgroundColor',"#C2C2C2");
                                         setTimeout(function () {
                                             window.location.href = url;
                                         },1500);
