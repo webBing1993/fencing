@@ -159,7 +159,7 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
-                    payPrice(id,price,'/home/association/paysuccess1/id/'+msg.data.id);
+                    payPrice(msg.data.id,price,'/home/association/paysuccess1/id/'+msg.data.id);
                 }
             })
         }else {
