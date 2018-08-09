@@ -42,7 +42,7 @@ class Pay extends Base
         $input->setBody("购买支付");
         $input->setAttach("test");
         $input->setOutTradeNo($outTradeNo);
-        $input->setTotalFee($price); // 微信支付以分为单位
+        $input->setTotalFee($price * 100); // 微信支付以分为单位
         $input->setTimeStart(date("YmdHis"));
         $input->setTimeExpire(date("YmdHis", time() + 600));
         $input->setGoodsTag("Reward");
@@ -76,7 +76,10 @@ class Pay extends Base
             'original_price' => $original_price,//原价
             'pay_type' => 2,//支付类型 1支付宝 2微信 3银联
         ];
-        PayRecord::create($info);
+        $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
+        if(!$rs){
+            PayRecord::create($info);
+        }
 
         return $jsApiParameters;
     }

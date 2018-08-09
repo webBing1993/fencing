@@ -17,7 +17,7 @@ class PayRecord extends Model {
     const TYPE_ARRAY = [
         self::TYPE_1 => 'course_apply',//课程报名
         self::TYPE_2 => 'competition_apply',//比赛报名
-        self::TYPE_3 => 3,//升级会员
+        self::TYPE_3 => 'vipapply',//升级会员
         self::TYPE_4 => 'shop_order',//商城购买
     ];
 }

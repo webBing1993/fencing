@@ -612,19 +612,24 @@ class Association  extends Base
             $data['price'] = $competitionEventModel['price'];
         }
 
-        $competitionApplyModel = new CompetitionApply();
-        $model = $competitionApplyModel->validate('CompetitionApply')->save($data);
-        if($model){
-            if ($flag == 1) {
-                $data['type'] = 2;
-                $data2 = $data;
-                $competitionApplyModel2 = new CompetitionApply();
-                $competitionApplyModel2->validate('CompetitionApply')->save($data2);
-                return $this->success('报名成功!','',['id' => $competitionApplyModel2->id, 'type' => 3]);
+        $rs = CompetitionApply::where(['competition_id' => $data['competition_id'], 'group_id' => $data['group_id'], 'event_id' => $competitionEventModel['id'], 'userid' => $userId, 'status' => 0])->find();
+        if(!$rs){
+            $competitionApplyModel = new CompetitionApply();
+            $model = $competitionApplyModel->validate('CompetitionApply')->save($data);
+            if($model){
+                if ($flag == 1) {
+                    $data['type'] = 2;
+                    $data2 = $data;
+                    $competitionApplyModel2 = new CompetitionApply();
+                    $competitionApplyModel2->validate('CompetitionApply')->save($data2);
+                    return $this->success('报名成功!','',['id' => $competitionApplyModel2->id, 'type' => 3]);
+                }
+                return $this->success('报名成功!','',['id' => $competitionApplyModel->id, 'type' => $data['type']]);
+            }else{
+                return $this->error($competitionApplyModel->getError());
             }
-            return $this->success('报名成功!','',['id' => $competitionApplyModel->id, 'type' => $data['type']]);
         }else{
-            return $this->error($competitionApplyModel->getError());
+            return $this->success('报名成功!','',['id' => $rs->id]);
         }
     }
 
@@ -735,12 +740,17 @@ class Association  extends Base
         $data['start_time'] = $venueCourseModel['start_time'];
         $data['end_time'] = $venueCourseModel['end_time'];
 
-        $courseApplyModel = new CourseApply();
-        $model = $courseApplyModel->validate('CourseApply')->save($data);
-        if($model){
-            return $this->success('报名成功!','',['id' => $courseApplyModel->id]);
+        $rs = CourseApply::where(['venue_id' => $venueCourseModel['venue_id'], 'course_id' => $data['course_id'], 'userid' => $userId, 'status' => 0])->find();
+        if(!$rs){
+            $courseApplyModel = new CourseApply();
+            $model = $courseApplyModel->validate('CourseApply')->save($data);
+            if($model){
+                return $this->success('报名成功!','',['id' => $courseApplyModel->id]);
+            }else{
+                return $this->error($courseApplyModel->getError());
+            }
         }else{
-            return $this->error($courseApplyModel->getError());
+            return $this->success('报名成功!','',['id' => $rs->id]);
         }
     }
 

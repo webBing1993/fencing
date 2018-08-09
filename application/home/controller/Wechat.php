@@ -4,6 +4,7 @@ namespace app\home\controller;
 
 
 use app\home\model\PayRecord;
+use think\Db;
 use think\Loader;
 use think\Log;
 use wechat\TPWechat;
@@ -29,26 +30,7 @@ class Wechat extends Controller
      * 微信支付返回
      */
     public function notify() {
-        $notify = new PayNotifyCallBack();
-        $notify->handle(true);
-
-
-        //找到匹配签名的订单
-        $order = PayRecord::get(1);
-        if (!isset($order)) {
-            Log::write('未找到订单，id= ' . 1);
-        }
-        $succeed = ($notify->getReturnCode() == 'SUCCESS') ? true : false;
-        if ($succeed) {
-
-            Log::write('订单' . $order->id . '生成二维码成功');
-
-            $order->save(['flag' => '2'], ['id' => $order->id]);
-            Log::write('订单' . $order->id . '状态更新成功');
-        } else {
-            Log::write('订单' . 1 . '支付失败');
-        }
-
+        Log::write('---------------------------------微信支付回调---------------------------------');
         //接受成功回调支付信息
         $xml = file_get_contents('php://input');
         $arr = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
@@ -64,6 +46,8 @@ class Wechat extends Controller
             $res->status = 1;
             $res->save();
 
+            //更新原表支付状态
+            Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);
 
             //返回成功
             $return = ['return_code' => 'SUCCESS', 'return_msg' => 'OK'];
