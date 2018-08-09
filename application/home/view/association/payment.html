@@ -158,7 +158,8 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
-                    window.location.href = '/home/association/paysuccess1/id/'+data.data.id
+                    $('.btn a').css('backgroundColor',"#C2C2C2");
+                    window.location.href = '/home/association/paysuccess1/id/'+msg.data.id
                 }
             })
         }else {
