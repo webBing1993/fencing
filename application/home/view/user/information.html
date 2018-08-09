@@ -100,7 +100,11 @@
         <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
         <div class="userSort active headers">
             <span>照片</span>
+            {if condition="empty($user['header'])"}
+            <div class="up" data-tab="{$user.avatar}" id="myImage"></div>
+            {else /}
             <div class="up" data-tab="{$user.header}" id="myImage"></div>
+            {/if}
             <input type="file" id="upload" accept="image/*" >
             <input type="file" accept="image/*" id="uploadImage"  onchange="selectFileImage(this);" />
         </div>
