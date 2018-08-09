@@ -116,6 +116,8 @@
 
 <script>
 
+    var id = 5;
+
     /*
      * 地图跳转
      * */
@@ -145,10 +147,10 @@
     $(".payMoney").on('click', function () {
         if (isWrite == true) {
             $.ajax({
-                url: '',
+                url: '{:Url("association/commit")}',
                 type: 'post',
                 data: {
-                    id: id,
+                    course_id: id,
                     remark: $('textarea').val()
                 },
                 beforeSend: function(XMLHttpRequest){

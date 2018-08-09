@@ -46,19 +46,21 @@
 <div class="content1">
     <div class="contentTitle">相关课程</div>
     <div class="contentList">
-        <a class="list clearfix" href="/home/association/gamedetail1.html">
+        {volist name="venue" id="vo"}
+        <a class="list clearfix" href="{:Url('Association/gamedetail1?id='.$vo['id'])}">
             <div class="listImg fl">
-                <img src="/home/images/1.jpg" alt="" class="lazy">
+                <img src="{$vo.front_cover|get_cover='path'}" alt="" class="lazy">
             </div>
             <div class="listContent fl">
-                <div class="title">课程标题</div>
-                <div class="summary">课题简介所在</div>
+                <div class="title">{$vo.course_name}</div>
+                <div class="summary">{$vo.content}</div>
                 <div class="note clearfix">
-                    <div class="times fl">2018-01-01至2018-06-30</div>
-                    <div class="price fr">￥<span>100</span></div>
+                    <div class="times fl">{$vo.start_time|time_format='Y-m-d'}至{$vo.end_time|time_format='Y-m-d'}</div>
+                    <div class="price fr">￥<span>{$vo.price}</span></div>
                 </div>
             </div>
         </a>
+        {/volist}
     </div>
 </div>
 
@@ -115,13 +117,15 @@
             var len = $(".contentList .list").length;
             var tip = $(".tip");
             var loading = $('.loading');
+            var id = "{$data.id}";
             if(dh == end && isScroll){
                 isScroll = false;
                 $.ajax({
                     type:"post",
-                    url:"",
+                    url:"{:Url('Association/detailmore')}",
                     data:{
-                        len:len
+                        len:len,
+                        id:id
                     },
                     beforeSend: function(XMLHttpRequest){
                         tip.hide();
@@ -163,10 +167,10 @@
                             '<img src="'+ list.front_cover +'" alt="" class="lazy">'+
                         '</div>'+
                         '<div class="listContent fl">'+
-                            '<div class="title">'+ list.title +'</div>'+
-                            '<div class="summary">'+ list.summary +'</div>'+
+                            '<div class="title">'+ list.course_name +'</div>'+
+                            '<div class="summary">'+ list.content +'</div>'+
                             '<div class="note clearfix">'+
-                                '<div class="times fl">2018-01-01至2018-06-30</div>'+
+                                '<div class="times fl">'+ list.start_time +'至'+ list.end_time +'</div>'+
                                 '<div class="price fr">￥<span>'+ list.price +'</span></div>'+
                             '</div>'+
                         '</div>'+
