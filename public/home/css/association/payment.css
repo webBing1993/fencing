@@ -337,6 +337,7 @@ body {
     background: #FFEBEB;
     border-radius: .2rem;
     font-size: .24rem;
+    display: none;
 }
 
 .gantan {
