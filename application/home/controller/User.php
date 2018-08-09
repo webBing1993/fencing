@@ -93,6 +93,8 @@ class User extends Base
             $user['viptime'] = date("Y-m-d",$user['viptime']);
         }
         $this->assign('user',$user);
+        $price = 120;
+        $this->assign('price',$price);
 
         return $this->fetch();
     }
