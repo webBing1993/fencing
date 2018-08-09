@@ -42,6 +42,11 @@
     <div class="userSort"><span>邮箱</span><input type="text" placeholder="请点击输入完善信息" value="{$user.email}"></div>
     <div class="userSort"><span>联系地址</span><input type="text" placeholder="请点击输入完善信息" value="{$user.address}"></div>
 </div>
+<div class="deal">
+    <img src="/home/images/insider/icon03.png" class="read"> 同意 <a href="/home/user/rule.html">《杭州市击剑运动协会会员管理规定》</a>
+</div>
+<div class="money"><span>¥</span><span>120</span>/年</div>
+<div class="pay">立即支付</div>
 {/if}
 {else /}
 <!--假如他已成为会有后 显示的状态-->
@@ -51,23 +56,78 @@
 {/if}
 {/block}
 {block name="script"}
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
     var rule = localStorage.getItem('rule');
     if(rule == 1){
         $('.read').attr('src','/home/images/insider/icon04.png').removeClass('read').addClass('read_');
         $('.pay').addClass('active');
     }
-    $('.read').on('click',function(){
+    $('.read ,.read_').on('click',function(){
         if($(this).hasClass('read')){
+            localStorage.setItem('rule','1')
             $(this).attr('src','/home/images/insider/icon04.png').removeClass('read').addClass('read_');
             $('.pay').addClass('active');
         }else{
+            localStorage.setItem('rule','2')
             $(this).attr('src','/home/images/insider/icon03.png').removeClass('read_').addClass('read');
             $('.pay').removeClass('active');
         }
     })
-    $(document).on('click','.active',function(){
-        location.href = '/home/user/paysuccess.html'
-    });
+    // $(document).on('click','.active',function(){
+    //     location.href = '/home/user/paysuccess.html'
+    // });
+</script>
+<script>
+    var id = "{$user.id}";
+    var price = 120;
+    /*
+    * 去结算
+    * */
+    $('.pay').on('click',function(){
+        if(localStorage.getItem('rule') == 1){
+            $.post('/home/pay/wxpay ', {price: price,pid: id,type:3})
+                .then(function (response) {
+                    console.log(response);
+                    if (response) {
+                        if (typeof WeixinJSBridge == "undefined"){
+                            if( document.addEventListener ){
+                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                            }else if (document.attachEvent){
+                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                            }
+                        } else {
+                            WeixinJSBridge.invoke(
+                                'getBrandWCPayRequest',  JSON.parse(response),
+                                function (res) {
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        alert(res)
+                                        // $(".content").hide();
+                                        // $(".popUp").show();
+                                        // setTimeout(function () {
+                                        //     window.history.go(-index);
+                                        // },1500);
+                                    }
+                                    // 使用以上方式判断前端返回,微信团队郑重提示：
+                                    // res.err_msg将在用户支付成功后返回
+                                    // ok，但并不保证它绝对可靠。
+                                }
+                            );
+                        }
+
+                    } else {
+                        swal({
+                            title: "",
+                            text: response.data.error_msg,
+                            type: "error",
+                            confirmButtonColor: "#ffb45b",
+                            confirmButtonText: "确定"
+                        });
+                    }
+                });
+        }
+
+    })
 </script>
 {/block}

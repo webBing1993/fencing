@@ -45,7 +45,7 @@
 </style>
 {/block}
 {block name="body"}
-<div style="margin-top: .2rem;padding: 0 .24rem;">
+<div style="margin-top: .2rem;padding: 0 .24rem;" id="infoss">
     <div class="error"><img src="/home/images/game/icon10.png" class="gantan">请填写真实个人信息，且只可填写一次。请谨慎填写。</div>
 </div>
 {if condition="($user['tag'] == 1)"}
@@ -86,31 +86,31 @@
         <input type="file" id="upload" accept="image/*" >
         <input type="file" accept="image/*" id="uploadImage"  onchange="selectFileImage(this);" />
     </div>
-    <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}"   ></div>
-    <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{$user.gender}"   ></div>
-    <div class="userSort active"><span>剑种</span><input type="text" placeholder="请填写" value="{$user.swords}"   ></div>
-    <div class="userSort active"><span>执教年限</span><input type="text" placeholder="请填写" value="{$user.teach}"   ></div>
-    <div class="userSort active"><span>所获奖项</span><input type="text" placeholder="请填写" value="{$user.prize}"   ></div>
-    <div class="userSort active"><span>自我介绍</span><input type="text" placeholder="请填写" value="{$user.introduce}"></div>
-    <div class="userSort active"><span>邮箱</span><input type="text" placeholder="请填写" value="{$user.email}"   ></div>
-    <div class="userSort active"><span>岗位级别</span><input type="text" placeholder="请填写" value="{$user.level}"   ></div>
-    <div class="userSort active"><span>手机号码</span><input type="text" placeholder="请填写" value="{$user.mobile}"></div>
+    <div class="userSort active"><span>姓名</span><input name="name" type="text" placeholder="请填写" value="{$user.name}"   ></div>
+    <div class="userSort active"><span>性别</span><input name="gender" type="text" placeholder="请填写" value="{$user.gender}"   ></div>
+    <div class="userSort active"><span>剑种</span><input name="swords" type="text" placeholder="请填写" value="{$user.swords}"   ></div>
+    <div class="userSort active"><span>执教年限</span><input name="teach" type="text" placeholder="请填写" value="{$user.teach}"   ></div>
+    <div class="userSort active"><span>所获奖项</span><input name="prize" type="text" placeholder="请填写" value="{$user.prize}"   ></div>
+    <div class="userSort active"><span>自我介绍</span><input name="introduce" type="text" placeholder="请填写" value="{$user.introduce}"></div>
+    <div class="userSort active"><span>邮箱</span><input name="email" type="text" placeholder="请填写" value="{$user.email}"   ></div>
+    <div class="userSort active"><span>岗位级别</span><input name="level" type="text" placeholder="请填写" value="{$user.level}"   ></div>
+    <div class="userSort active"><span>手机号码</span><input name="mobile" type="text" placeholder="请填写" value="{$user.mobile}"></div>
 </div>
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">详细信息</p>
-    <div class="userSort active"><span>身份证号</span><input type="text" placeholder="请填写" value="{$user.card}"></div>
-    <div class="userSort active"><span>民族</span><input type="text" placeholder="请填写" value="{$user.nation}"   ></div>
-    <div class="userSort active"><span>婚育</span><input type="text" placeholder="请填写" value="{$user.marry}"   ></div>
-    <div class="userSort active"><span>政治面貌</span><input type="text" placeholder="请填写" value="{$user.face}"   ></div>
-    <div class="userSort active"><span>籍贯</span><input type="text" placeholder="请填写" value="{$user.branch}"   ></div>
-    <div class="userSort active"><span>户口类型</span><input type="text" placeholder="请填写" value="{$user.familytype}"></div>
-    <div class="userSort active"><span>家庭住址</span><input type="text" placeholder="请填写" value="{$user.address}"   ></div>
-    <div class="userSort active"><span>毕业院校</span><input type="text" placeholder="请填写" value="{$user.school}"   ></div>
-    <div class="userSort active"><span>学历</span><input type="text" placeholder="请填写" value="{$user.education}"></div>
-    <div class="userSort active"><span>专业</span><input type="text" placeholder="请填写" value="{$user.position}"></div>
-    <div class="userSort active"><span>工作时间</span><input type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"></div>
-    <div class="userSort active"><span>应急人</span><input type="text" placeholder="请填写" value="{$user.urgent}"></div>
-    <div class="userSort active"><span>应急人号码</span><input type="text" placeholder="请填写" value="{$user.urgenttel}"></div>
+    <div class="userSort active"><span>身份证号</span><input name="card" type="text" placeholder="请填写" value="{$user.card}"></div>
+    <div class="userSort active"><span>民族</span><input name="nation" type="text" placeholder="请填写" value="{$user.nation}"   ></div>
+    <div class="userSort active"><span>婚育</span><input name="marry" type="text" placeholder="请填写" value="{$user.marry}"   ></div>
+    <div class="userSort active"><span>政治面貌</span><input name="face" type="text" placeholder="请填写" value="{$user.face}"   ></div>
+    <div class="userSort active"><span>籍贯</span><input name="branch" type="text" placeholder="请填写" value="{$user.branch}"   ></div>
+    <div class="userSort active"><span>户口类型</span><input name="familytype" type="text" placeholder="请填写" value="{$user.familytype}"></div>
+    <div class="userSort active"><span>家庭住址</span><input name="address" type="text" placeholder="请填写" value="{$user.address}"   ></div>
+    <div class="userSort active"><span>毕业院校</span><input name="school" type="text" placeholder="请填写" value="{$user.school}"   ></div>
+    <div class="userSort active"><span>学历</span><input name="education" type="text" placeholder="请填写" value="{$user.education}"></div>
+    <div class="userSort active"><span>专业</span><input name="position" type="text" placeholder="请填写" value="{$user.position}"></div>
+    <div class="userSort active"><span>工作时间</span><input name="worktime" type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"></div>
+    <div class="userSort active"><span>应急人</span><input name="urgent" type="text" placeholder="请填写" value="{$user.urgent}"></div>
+    <div class="userSort active"><span>应急人号码</span><input name="urgenttel" type="text" placeholder="请填写" value="{$user.urgenttel}"></div>
 </div>
 {else/}
 <!--员工/主管状态-->
@@ -126,27 +126,27 @@
             <input type="file" id="upload" accept="image/*" >
             <input type="file" accept="image/*" id="uploadImage"  onchange="selectFileImage(this);" />
         </div>
-        <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}"   ></div>
-        <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{$user.gender}"   ></div>
-        <div class="userSort active"><span>邮箱</span><input type="text" placeholder="请填写" value="{$user.email}"   ></div>
-        <div class="userSort active"><span>岗位级别</span><input type="text" placeholder="请填写" value="{$user.level}"   ></div>
-        <div class="userSort active"><span>手机号码</span><input type="text" placeholder="请填写" value="{$user.mobile}"   ></div>
+        <div class="userSort active"><span>姓名</span><input name="name" type="text" placeholder="请填写" value="{$user.name}"   ></div>
+        <div class="userSort active"><span>性别</span><input name="gender" type="text" placeholder="请填写" value="{$user.gender}"   ></div>
+        <div class="userSort active"><span>邮箱</span><input name="email" type="text" placeholder="请填写" value="{$user.email}"   ></div>
+        <div class="userSort active"><span>岗位级别</span><input name="level" type="text" placeholder="请填写" value="{$user.level}"   ></div>
+        <div class="userSort active"><span>手机号码</span><input name="mobile" type="text" placeholder="请填写" value="{$user.mobile}"   ></div>
     </div>
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon05.png" class="icon">场馆情况</p>
-    <div class="userSort active"><span>身份证号</span><input type="text" placeholder="请填写" value="{$user.card}"   ></div>
-    <div class="userSort active"><span>民族</span><input type="text" placeholder="请填写" value="{$user.nation}"   ></div>
-    <div class="userSort active"><span>婚育</span><input type="text" placeholder="请填写" value="{$user.marry}"   ></div>
-    <div class="userSort active"><span>政治面貌</span><input type="text" placeholder="请填写" value="{$user.face}"   ></div>
-    <div class="userSort active"><span>籍贯</span><input type="text" placeholder="请填写" value="{$user.branch}"   ></div>
-    <div class="userSort active"><span>户口类型</span><input type="text" placeholder="请填写" value="{$user.familytype}"   ></div>
-    <div class="userSort active"><span>家庭住址</span><input type="text" placeholder="请填写" value="{$user.address}"   ></div>
-    <div class="userSort active"><span>毕业院校</span><input type="text" placeholder="请填写" value="{$user.school}"   ></div>
-    <div class="userSort active"><span>学历</span><input type="text" placeholder="请填写" value="{$user.education}"   ></div>
-    <div class="userSort active"><span>专业</span><input type="text" placeholder="请填写" value="{$user.position}"   ></div>
-    <div class="userSort active"><span>工作时间</span><input type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"   ></div>
-    <div class="userSort active"><span>应急人</span><input type="text" placeholder="请填写" value="{$user.urgent}"   ></div>
-    <div class="userSort active"><span>应急人号码</span><input type="text" placeholder="请填写" value="{$user.urgenttel}"   ></div>
+    <div class="userSort active"><span>身份证号</span><input name="card" type="text" placeholder="请填写" value="{$user.card}"   ></div>
+    <div class="userSort active"><span>民族</span><input name="nation" type="text" placeholder="请填写" value="{$user.nation}"   ></div>
+    <div class="userSort active"><span>婚育</span><input name="marry" type="text" placeholder="请填写" value="{$user.marry}"   ></div>
+    <div class="userSort active"><span>政治面貌</span><input name="face" type="text" placeholder="请填写" value="{$user.face}"   ></div>
+    <div class="userSort active"><span>籍贯</span><input name="branch" type="text" placeholder="请填写" value="{$user.branch}"   ></div>
+    <div class="userSort active"><span>户口类型</span><input name="familytype" type="text" placeholder="请填写" value="{$user.familytype}"   ></div>
+    <div class="userSort active"><span>家庭住址</span><input name="address" type="text" placeholder="请填写" value="{$user.address}"   ></div>
+    <div class="userSort active"><span>毕业院校</span><input name="school" type="text" placeholder="请填写" value="{$user.school}"   ></div>
+    <div class="userSort active"><span>学历</span><input name="education" type="text" placeholder="请填写" value="{$user.education}"   ></div>
+    <div class="userSort active"><span>专业</span><input name="position" type="text" placeholder="请填写" value="{$user.position}"   ></div>
+    <div class="userSort active"><span>工作时间</span><input name="worktime" type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"   ></div>
+    <div class="userSort active"><span>应急人</span><input name="urgent" type="text" placeholder="请填写" value="{$user.urgent}"   ></div>
+    <div class="userSort active"><span>应急人号码</span><input name="urgenttel" type="text" placeholder="请填写" value="{$user.urgenttel}"   ></div>
 </div>
 {/if}
 <div class="goPay" style="margin: 1.2rem auto .28rem">提交</div>
@@ -256,14 +256,22 @@
     });
 </script>
 <script>
+    if($('.up').attr('data-tab') !== '/home/images/common/vistor.jpg'){
+        $('.headers').find('input').hide();
+    }
     $('.headers').on('click',function(){
         if($('.up').attr('data-tab') == '/home/images/common/vistor.jpg'){
             alert('请填写真实头像！')
         }
     })
-    // 信息保存提交
     var tag =  {$user['tag']}; //1:学员 2:教练 3:员工主管
     var id  =  {$user.id}; //用户ID
+    $('body input').each(function(){
+        if($(this).val()!==''){
+            $(this).attr("disabled","disabled")
+        }
+    });
+    //判断是否全部信息已经修改
     if(tag == 1){ //学员
         var header      = $('.up').attr('data-tab');
         var name        = $('input[name=name]').val();
@@ -275,27 +283,221 @@
         var email       = $('input[name=email]').val();
         var address     = $('input[name=address]').val();
         var parent      = $('input[name=parent]').val();
-        var data = {
-            id:id,header:header,name:name,gender:gender,birthday:birthday,school:school,
-            card:card,mobile:mobile,email:email,address:address,parent:parent
+        if(
+            name=='' || gender=='' || birthday=='' || school=='' || card=='' || mobile==''
+            || email=='' || address=='' || parent==''
+        ){
+            $('.goPay').show();
+        }else {
+            $('.goPay , #infoss').hide();
         }
     }
+    else if(tag == 2){
+        var header      = $('.up').attr('data-tab');
+        var name        = $('input[name=name]').val();
+        var gender      = $('input[name=gender]').val()=='男'?1:2;
+        var swords      = $('input[name=swords]').val();
+        var teach      = $('input[name=teach]').val();
+        var prize      = $('input[name=prize]').val();
+        var introduce      = $('input[name=introduce]').val();
+        var email      = $('input[name=email]').val();
+        var level      = $('input[name=level]').val();
+        var mobile      = $('input[name=mobile]').val();
+        var card      = $('input[name=card]').val();
+        var nation      = $('input[name=nation]').val();
+        var marry      = $('input[name=marry]').val();
+        var face      = $('input[name=face]').val();
+        var branch      = $('input[name=branch]').val();
+        var familytype      = $('input[name=familytype]').val();
+        var address      = $('input[name=address]').val();
+        var school      = $('input[name=school]').val();
+        var education      = $('input[name=education]').val();
+        var position      = $('input[name=position]').val();
+        var worktime      = $('input[name=worktime]').val();
+        var urgent      = $('input[name=urgent]').val();
+        var urgenttel      = $('input[name=urgenttel]').val();
+        if(
+            name=='' || gender=='' || gender=='' || swords=='' || teach=='' || prize==''
+            || introduce=='' || email=='' || level=='' || mobile=='' || card=='' || nation==''
+            || marry=='' || face=='' || branch=='' || familytype=='' || address=='' || school==''
+            || education=='' || position=='' || worktime=='' || urgent=='' || urgenttel==''
+        ){
+            $('.goPay').show();
+        }else {
+            $('.goPay , #infoss').hide();
+        }
+    }
+    else if(tag == 3){
+        var header      = $('.up').attr('data-tab');
+        var name        = $('input[name=name]').val();
+        var gender      = $('input[name=gender]').val()=='男'?1:2;
+        var email      = $('input[name=email]').val();
+        var level      = $('input[name=level]').val();
+        var mobile      = $('input[name=mobile]').val();
+        var card      = $('input[name=card]').val();
+        var nation      = $('input[name=nation]').val();
+        var marry      = $('input[name=marry]').val();
+        var face      = $('input[name=face]').val();
+        var branch      = $('input[name=branch]').val();
+        var familytype      = $('input[name=familytype]').val();
+        var address      = $('input[name=address]').val();
+        var school      = $('input[name=school]').val();
+        var education      = $('input[name=education]').val();
+        var position      = $('input[name=position]').val();
+        var worktime      = $('input[name=worktime]').val();
+        var urgent      = $('input[name=urgent]').val();
+        var urgenttel      = $('input[name=urgenttel]').val();
+        if(
+            name=='' || gender=='' || gender==''
+            || email=='' || level=='' || mobile=='' || card=='' || nation==''
+            || marry=='' || face=='' || branch=='' || familytype=='' || address=='' || school==''
+            || education=='' || position=='' || worktime=='' || urgent=='' || urgenttel==''
+        ){
+            $('.goPay').show();
+        }else {
+            $('.goPay , #infoss').hide();
+        }
+    }
+    // 信息保存提交
     $('.goPay').on('click',function(){
-        $.ajax({
-            type: "post",
-            url: "{:Url('User/hold')}",
-            data: data,
-            dataType: "json",
-            success: function (data) {
-                swal({
-                    title: ' ',
-                    text: '上传成功',
-                    type: 'success',
-                    confirmButtonText:'确定',
-                    timer:'1000'
-                });
+        if(tag == 1){ //学员
+            var header      = $('.up').css('backgroundImage').slice(21,$('.up').css('backgroundImage').length-2);
+            var name        = $('input[name=name]').val();
+            var gender      = $('input[name=gender]').val()=='男'?1:2;
+            var birthday    = $('input[name=birthday]').val();
+            var school      = $('input[name=school]').val();
+            var card        = $('input[name=card]').val();
+            var mobile      = $('input[name=mobile]').val();
+            var email       = $('input[name=email]').val();
+            var address     = $('input[name=address]').val();
+            var parent      = $('input[name=parent]').val();
+            var data = {
+                id:id,header:header,name:name,gender:gender,birthday:birthday,school:school,
+                card:card,mobile:mobile,email:email,address:address,parent:parent
             }
-        })
+            $.ajax({
+                type: "post",
+                url: "{:Url('User/hold')}",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    $('body input').each(function(){
+                        if($(this).val()!==''){
+                            $(this).attr("disabled","disabled")
+                        }
+                    })
+                    swal({
+                        title: ' ',
+                        text: '上传成功',
+                        type: 'success',
+                        confirmButtonText:'确定',
+                        timer:'1000'
+                    });
+                }
+            })
+        }
+        else if(tag == 2){
+            var header      = $('.up').css('backgroundImage').slice(21,$('.up').css('backgroundImage').length-2);
+            var name        = $('input[name=name]').val();
+            var gender      = $('input[name=gender]').val()=='男'?1:2;
+            var swords      = $('input[name=swords]').val();
+            var teach      = $('input[name=teach]').val();
+            var prize      = $('input[name=prize]').val();
+            var introduce      = $('input[name=introduce]').val();
+            var email      = $('input[name=email]').val();
+            var level      = $('input[name=level]').val();
+            var mobile      = $('input[name=mobile]').val();
+            var card      = $('input[name=card]').val();
+            var nation      = $('input[name=nation]').val();
+            var marry      = $('input[name=marry]').val();
+            var face      = $('input[name=face]').val();
+            var branch      = $('input[name=branch]').val();
+            var familytype      = $('input[name=familytype]').val();
+            var address      = $('input[name=address]').val();
+            var school      = $('input[name=school]').val();
+            var education      = $('input[name=education]').val();
+            var position      = $('input[name=position]').val();
+            var worktime      = $('input[name=worktime]').val();
+            var urgent      = $('input[name=urgent]').val();
+            var urgenttel      = $('input[name=urgenttel]').val();
+            var data = {
+                id:id,header:header,name:name,gender:gender,swords:swords,teach:teach,prize:prize,introduce:introduce,
+                email:email,level:level,mobile:mobile,card:card,nation:nation,marry:marry,face:face,branch:branch,
+                familytype:familytype,address:address,school:school,education:education,position:position,worktime:worktime,
+                urgent:urgent,urgenttel:urgenttel
+            }
+            // console.log(data)
+            // return;
+            $.ajax({
+                type: "post",
+                url: "{:Url('User/hold')}",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    $('body input').each(function(){
+                        if($(this).val()!==''){
+                            $(this).attr("disabled","disabled")
+                        }
+                    })
+                    swal({
+                        title: ' ',
+                        text: '上传成功',
+                        type: 'success',
+                        confirmButtonText:'确定',
+                        timer:'1000'
+                    });
+                }
+            })
+        }
+        else if(tag == 3){
+            var header      = $('.up').css('backgroundImage').slice(21,$('.up').css('backgroundImage').length-2);
+            var name        = $('input[name=name]').val();
+            var gender      = $('input[name=gender]').val()=='男'?1:2;
+            var email      = $('input[name=email]').val();
+            var level      = $('input[name=level]').val();
+            var mobile      = $('input[name=mobile]').val();
+            var card      = $('input[name=card]').val();
+            var nation      = $('input[name=nation]').val();
+            var marry      = $('input[name=marry]').val();
+            var face      = $('input[name=face]').val();
+            var branch      = $('input[name=branch]').val();
+            var familytype      = $('input[name=familytype]').val();
+            var address      = $('input[name=address]').val();
+            var school      = $('input[name=school]').val();
+            var education      = $('input[name=education]').val();
+            var position      = $('input[name=position]').val();
+            var worktime      = $('input[name=worktime]').val();
+            var urgent      = $('input[name=urgent]').val();
+            var urgenttel      = $('input[name=urgenttel]').val();
+            var data = {
+                id:id,header:header,name:name,gender:gender,
+                email:email,level:level,mobile:mobile,card:card,nation:nation,marry:marry,face:face,branch:branch,
+                familytype:familytype,address:address,school:school,education:education,position:position,worktime:worktime,
+                urgent:urgent,urgenttel:urgenttel
+            }
+            // console.log(data)
+            // return;
+            $.ajax({
+                type: "post",
+                url: "{:Url('User/hold')}",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    $('body input').each(function(){
+                        if($(this).val()!==''){
+                            $(this).attr("disabled","disabled")
+                        }
+                    })
+                    swal({
+                        title: ' ',
+                        text: '上传成功',
+                        type: 'success',
+                        confirmButtonText:'确定',
+                        timer:'1000'
+                    });
+                }
+            })
+        }
     })
 </script>
 {/block}
