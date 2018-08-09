@@ -144,6 +144,7 @@ body {
     color: #333;
     font-size: .26rem;
     height: 1.8rem;
+    width: 100%;
 }
 
 .content textarea:-ms-input-placeholder {
