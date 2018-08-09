@@ -184,7 +184,7 @@ class Association  extends Base
 
     //首页场馆模块 更多页
     public function fencing(){
-        $list = Venue::where('status',0)->order('id desc')->limit(10)->select();
+        $list = Venue::where('status',0)->where('type',1)->order('id desc')->limit(10)->select();
 
         foreach($list as $key=>$v){
             $li = json_decode($v['front_cover']);
@@ -221,8 +221,29 @@ class Association  extends Base
         $data = Venue::where('id',$Id)->find();
         $data['front_cover'] = json_decode($data['front_cover']);
         $this->assign('data',$data);
+        $venue = VenueCourse::where('venue_id',$Id)->where('status',0)->order('id desc')->limit(10)->select();
+        $this->assign('venue',$venue);
 
         return $this->fetch();
+    }
+
+    //场馆模块详情页   上拉加载
+    public function detailmore(){
+        $len = input('len');
+        $Id = input('id');
+        $info = VenueCourse::where('venue_id',$Id)->where('status',0)->order('id desc')->limit($len,6)->select();
+
+        foreach($info as $value){
+            $value['start_time'] = date("Y-m-d",$value['start_time']);
+            $value['end_time'] = date("Y-m-d",$value['end_time']);
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
     }
 
     //新闻动态模块  更多页
