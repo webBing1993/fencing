@@ -173,7 +173,7 @@
     });
 
 
-    function payPrice(price) {
+    function payPrice(price,url) {
         $.post('/home/pay/index', {price: price})
             .then(function (response) {
                 console.log(response);
