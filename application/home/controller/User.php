@@ -60,6 +60,18 @@ class User extends Base
         return $this->fetch();
     }
 
+    //个人中心  个人信息 保存
+    public function hold(){
+        $data = input('post.');
+        $info = WechatUser::update($data);
+
+        if($info){
+            return $this->success("保存成功");
+        }else{
+            return $this->error("保存失败");
+        }
+    }
+
     public function sign(){
         return $this->fetch();
     }
