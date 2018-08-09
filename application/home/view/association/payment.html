@@ -117,6 +117,7 @@
 <script>
 
     var id = {$data.id};
+    var price = {$data.price};
 
     /*
      * 地图跳转
@@ -159,50 +160,7 @@
                 success: function (msg) {
                     $(".showbox").hide();
                     $('.btn a').css('backgroundColor',"#C2C2C2");
-                    $.post('/home/pay/index', {price: 1})
-                            .then(function (response) {
-                                console.log(response);
-                                if (response) {
-                                    if (typeof WeixinJSBridge == "undefined"){
-                                        if( document.addEventListener ){
-                                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                                        }else if (document.attachEvent){
-                                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-                                        }
-                                    } else {
-                                        WeixinJSBridge.invoke(
-                                                'getBrandWCPayRequest',  JSON.parse(response),
-                                                function (res) {
-                                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                                        swal({
-                                                            title: "",
-                                                            text: "充值成功",
-                                                            type: "success",
-                                                            confirmButtonColor: "#ffb45b",
-                                                            confirmButtonText: "确定"
-                                                        }, function () {
-//                                                            window.history.go(-1);
-                                                            window.location.href = '/home/association/paysuccess1/id/'+msg.data.id
-                                                        });
-                                                    }
-                                                    // 使用以上方式判断前端返回,微信团队郑重提示：
-                                                    // res.err_msg将在用户支付成功后返回
-                                                    // ok，但并不保证它绝对可靠。
-                                                }
-                                        );
-                                    }
-
-                                } else {
-                                    swal({
-                                        title: "",
-                                        text: response.data.error_msg,
-                                        type: "error",
-                                        confirmButtonColor: "#ffb45b",
-                                        confirmButtonText: "确定",
-                                    });
-                                }
-                            })
+                    payPrice(price,'/home/association/paysuccess1/id/'+msg.data.id);
                 }
             })
         }else {
@@ -212,7 +170,55 @@
 
     $('.infoError .payError03').on('click',function(){
         $('#pay').hide();
-    })
+    });
+
+
+    function payPrice(price) {
+        $.post('/home/pay/index', {price: price})
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+                    if (typeof WeixinJSBridge == "undefined"){
+                        if( document.addEventListener ){
+                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                        }else if (document.attachEvent){
+                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                        }
+                    } else {
+                        WeixinJSBridge.invoke(
+                                'getBrandWCPayRequest',  JSON.parse(response),
+                                function (res) {
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        swal({
+                                            title: "",
+                                            text: "充值成功",
+                                            type: "success",
+                                            confirmButtonColor: "#ffb45b",
+                                            confirmButtonText: "确定"
+                                        }, function () {
+//                                                            window.history.go(-1);
+                                            window.location.href = url;
+                                        });
+                                    }
+                                    // 使用以上方式判断前端返回,微信团队郑重提示：
+                                    // res.err_msg将在用户支付成功后返回
+                                    // ok，但并不保证它绝对可靠。
+                                }
+                        );
+                    }
+
+                } else {
+                    swal({
+                        title: "",
+                        text: response.data.error_msg,
+                        type: "error",
+                        confirmButtonColor: "#ffb45b",
+                        confirmButtonText: "确定",
+                    });
+                }
+            })
+    }
 
 </script>
 
