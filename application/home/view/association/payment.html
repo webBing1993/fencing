@@ -116,7 +116,7 @@
 
 <script>
 
-    var id = 5;
+    var id = {$data.id};
 
     /*
      * 地图跳转
@@ -158,7 +158,7 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
-                    window.location.href = '/home/association/paysuccess1.html'
+                    window.location.href = '/home/association/paysuccess1/id/'+data.data.id
                 }
             })
         }else {
