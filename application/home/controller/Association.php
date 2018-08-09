@@ -19,7 +19,7 @@ use app\home\model\Venue;
 use app\home\model\Notice;
 use app\home\model\Knowledge;
 use app\home\model\Show;
-use app\home\model\CourseApply;
+use app\admin\model\CourseApply;
 use app\home\model\VenueCourse;
 use app\home\model\WechatUser;
 use app\home\model\WechatUserTag;
@@ -693,9 +693,39 @@ class Association  extends Base
 
         return $this->fetch();
     }
+    /**
+     * 课程报名提交处理页
+     * @param course_id,remark
+     */
+    public function commit(){
+        $data = input('post.');
+        $userId = session('userId');
+        $wechatUserModel = wechatUser::where(['userid' => $userId])->find();
+        $venueCourseModel = VenueCourse::get($data['course_id']);
+        $venue = venue::get($venueCourseModel['venue_id']);
+        $data['venue_id'] = $venueCourseModel['venue_id'];
+        $data['venue_name'] = $venue['title'];
+        $data['course_name'] = $venueCourseModel['course_name'];
+        $data['userid'] = $userId;
+        $data['name'] = $wechatUserModel['name'];
+        $data['type'] = $venueCourseModel['type'];
+        $data['num'] = $venueCourseModel['num'];
+        $data['price'] = $venueCourseModel['price'];
+        $data['start_time'] = $venueCourseModel['start_time'];
+        $data['end_time'] = $venueCourseModel['end_time'];
+
+        $courseApplyModel = new CourseApply();
+        $model = $courseApplyModel->validate('CourseApply')->save($data);
+        if($model){
+            return $this->success('报名成功!','',['id' => $courseApplyModel->id]);
+        }else{
+            return $this->error($courseApplyModel->getError());
+        }
+    }
 
     // 课程报名成功
     public function paysuccess1(){
+
         return $this->fetch();
     }
 }
