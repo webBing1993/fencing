@@ -11,7 +11,7 @@
         overflow: hidden;
         -webkit-border-radius: 50%;
         border-radius: 50%;
-        background: url("/home/images/1.jpg") center no-repeat;
+        /*background: url("/home/images/1.jpg") center no-repeat;*/
         background-size: .6rem .6rem;
         position: absolute;
         right:.6rem;
@@ -45,49 +45,67 @@
 </style>
 {/block}
 {block name="body"}
-
+<div style="margin-top: .2rem;padding: 0 .24rem;">
+    <div class="error"><img src="/home/images/game/icon10.png" class="gantan">请填写真实个人信息，且只可填写一次。请谨慎填写。</div>
+</div>
 {if condition="($user['tag'] == 1)"}
 <!--学员状态-->
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
-    <div class="userSort active">
+    <div class="userSort active headers">
         <span>照片</span>
+        {if condition="empty($user['header'])"}
+        <div class="up" data-tab="{$user.avatar}" id="myImage"></div>
+        {else /}
+        <div class="up" data-tab="{$user.header}" id="myImage"></div>
+        {/if}
+        <input type="file" id="upload" accept="image/*" >
+        <input type="file" accept="image/*" id="uploadImage"  onchange="selectFileImage(this);" />
     </div>
-    <div class="userSort active"><span>学生姓名</span><input type="text" placeholder="请填写" value="{$user.name}"  readonly="readonly"></div>
-    <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{$user.gender}"  readonly="readonly"></div>
-    <div class="userSort active"><span>出生日期</span><input type="text" placeholder="请填写" value="{$user.birthday|time_format='Y-m-d'}"  readonly="readonly"></div>
-    <div class="userSort active"><span>就读学校</span><input type="text" placeholder="请填写" value="{$user.school}"  readonly="readonly"></div>
-    <div class="userSort active"><span>身份证号</span><input type="text" placeholder="请填写" value="{$user.card}"></div>
-    <div class="userSort active"><span>监护人电话</span><input type="text" placeholder="请填写" value="{$user.mobile}"  readonly="readonly"></div>
-    <div class="userSort active"><span>邮箱</span><input type="text" placeholder="请填写" value="{$user.email}"  readonly="readonly"></div>
-    <div class="userSort active"><span>住址</span><input type="text" placeholder="请填写" value="{$user.address}"></div>
-    <div class="userSort active"><span>父母</span><input type="text" placeholder="请填写" value="{$user.parent}"></div>
+    <div class="userSort active"><span>学生姓名</span><input name="name" type="text" placeholder="请填写" value="{$user.name}"   ></div>
+    <div class="userSort active"><span>性别</span><input name="gender" type="text" placeholder="请填写" value="{$user.gender}"   ></div>
+    <div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="请填写" value="{$user.birthday|time_format='Y-m-d'}"   ></div>
+    <div class="userSort active"><span>就读学校</span><input name="school" type="text" placeholder="请填写" value="{$user.school}"   ></div>
+    <div class="userSort active"><span>身份证号</span><input name="card" type="text" placeholder="请填写" value="{$user.card}"></div>
+    <div class="userSort active"><span>监护人电话</span><input name="mobile" type="text" placeholder="请填写" value="{$user.mobile}"   ></div>
+    <div class="userSort active"><span>邮箱</span><input name="email" type="text" placeholder="请填写" value="{$user.email}"   ></div>
+    <div class="userSort active"><span>住址</span><input name="address" type="text" placeholder="请填写" value="{$user.address}"></div>
+    <div class="userSort active"><span>父母</span><input name="parent" type="text" placeholder="请填写" value="{$user.parent}"></div>
 </div>
 {elseif condition="($user['tag'] == 2)" /}
 <!--教练员状态-->
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
-    <div class="userSort active"><span>照片</span></div>
-    <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}"  readonly="readonly"></div>
-    <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{$user.gender}"  readonly="readonly"></div>
-    <div class="userSort active"><span>剑种</span><input type="text" placeholder="请填写" value="{$user.swords}"  readonly="readonly"></div>
-    <div class="userSort active"><span>执教年限</span><input type="text" placeholder="请填写" value="{$user.teach}"  readonly="readonly"></div>
-    <div class="userSort active"><span>所获奖项</span><input type="text" placeholder="请填写" value="{$user.prize}"  readonly="readonly"></div>
+    <div class="userSort active headers">
+        <span>照片</span>
+        {if condition="empty($user['header'])"}
+        <div class="up" data-tab="{$user.avatar}" id="myImage"></div>
+        {else /}
+        <div class="up" data-tab="{$user.header}" id="myImage"></div>
+        {/if}
+        <input type="file" id="upload" accept="image/*" >
+        <input type="file" accept="image/*" id="uploadImage"  onchange="selectFileImage(this);" />
+    </div>
+    <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}"   ></div>
+    <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{$user.gender}"   ></div>
+    <div class="userSort active"><span>剑种</span><input type="text" placeholder="请填写" value="{$user.swords}"   ></div>
+    <div class="userSort active"><span>执教年限</span><input type="text" placeholder="请填写" value="{$user.teach}"   ></div>
+    <div class="userSort active"><span>所获奖项</span><input type="text" placeholder="请填写" value="{$user.prize}"   ></div>
     <div class="userSort active"><span>自我介绍</span><input type="text" placeholder="请填写" value="{$user.introduce}"></div>
-    <div class="userSort active"><span>邮箱</span><input type="text" placeholder="请填写" value="{$user.email}"  readonly="readonly"></div>
-    <div class="userSort active"><span>岗位级别</span><input type="text" placeholder="请填写" value="{$user.level}"  readonly="readonly"></div>
+    <div class="userSort active"><span>邮箱</span><input type="text" placeholder="请填写" value="{$user.email}"   ></div>
+    <div class="userSort active"><span>岗位级别</span><input type="text" placeholder="请填写" value="{$user.level}"   ></div>
     <div class="userSort active"><span>手机号码</span><input type="text" placeholder="请填写" value="{$user.mobile}"></div>
 </div>
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">详细信息</p>
     <div class="userSort active"><span>身份证号</span><input type="text" placeholder="请填写" value="{$user.card}"></div>
-    <div class="userSort active"><span>民族</span><input type="text" placeholder="请填写" value="{$user.nation}"  readonly="readonly"></div>
-    <div class="userSort active"><span>婚育</span><input type="text" placeholder="请填写" value="{$user.marry}"  readonly="readonly"></div>
-    <div class="userSort active"><span>政治面貌</span><input type="text" placeholder="请填写" value="{$user.face}"  readonly="readonly"></div>
-    <div class="userSort active"><span>籍贯</span><input type="text" placeholder="请填写" value="{$user.branch}"  readonly="readonly"></div>
+    <div class="userSort active"><span>民族</span><input type="text" placeholder="请填写" value="{$user.nation}"   ></div>
+    <div class="userSort active"><span>婚育</span><input type="text" placeholder="请填写" value="{$user.marry}"   ></div>
+    <div class="userSort active"><span>政治面貌</span><input type="text" placeholder="请填写" value="{$user.face}"   ></div>
+    <div class="userSort active"><span>籍贯</span><input type="text" placeholder="请填写" value="{$user.branch}"   ></div>
     <div class="userSort active"><span>户口类型</span><input type="text" placeholder="请填写" value="{$user.familytype}"></div>
-    <div class="userSort active"><span>家庭住址</span><input type="text" placeholder="请填写" value="{$user.address}"  readonly="readonly"></div>
-    <div class="userSort active"><span>毕业院校</span><input type="text" placeholder="请填写" value="{$user.school}"  readonly="readonly"></div>
+    <div class="userSort active"><span>家庭住址</span><input type="text" placeholder="请填写" value="{$user.address}"   ></div>
+    <div class="userSort active"><span>毕业院校</span><input type="text" placeholder="请填写" value="{$user.school}"   ></div>
     <div class="userSort active"><span>学历</span><input type="text" placeholder="请填写" value="{$user.education}"></div>
     <div class="userSort active"><span>专业</span><input type="text" placeholder="请填写" value="{$user.position}"></div>
     <div class="userSort active"><span>工作时间</span><input type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"></div>
@@ -96,7 +114,7 @@
 </div>
 {else/}
 <!--员工/主管状态-->
-    <div class="user">
+<div class="user">
         <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
         <div class="userSort active headers">
             <span>照片</span>
@@ -108,36 +126,50 @@
             <input type="file" id="upload" accept="image/*" >
             <input type="file" accept="image/*" id="uploadImage"  onchange="selectFileImage(this);" />
         </div>
-        <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}"  readonly="readonly"></div>
-        <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{$user.gender}"  readonly="readonly"></div>
-        <div class="userSort active"><span>邮箱</span><input type="text" placeholder="请填写" value="{$user.email}"  readonly="readonly"></div>
-        <div class="userSort active"><span>岗位级别</span><input type="text" placeholder="请填写" value="{$user.level}"  readonly="readonly"></div>
-        <div class="userSort active"><span>手机号码</span><input type="text" placeholder="请填写" value="{$user.mobile}"  readonly="readonly"></div>
+        <div class="userSort active"><span>姓名</span><input type="text" placeholder="请填写" value="{$user.name}"   ></div>
+        <div class="userSort active"><span>性别</span><input type="text" placeholder="请填写" value="{$user.gender}"   ></div>
+        <div class="userSort active"><span>邮箱</span><input type="text" placeholder="请填写" value="{$user.email}"   ></div>
+        <div class="userSort active"><span>岗位级别</span><input type="text" placeholder="请填写" value="{$user.level}"   ></div>
+        <div class="userSort active"><span>手机号码</span><input type="text" placeholder="请填写" value="{$user.mobile}"   ></div>
     </div>
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon05.png" class="icon">场馆情况</p>
-    <div class="userSort active"><span>身份证号</span><input type="text" placeholder="请填写" value="{$user.card}"  readonly="readonly"></div>
-    <div class="userSort active"><span>民族</span><input type="text" placeholder="请填写" value="{$user.nation}"  readonly="readonly"></div>
-    <div class="userSort active"><span>婚育</span><input type="text" placeholder="请填写" value="{$user.marry}"  readonly="readonly"></div>
-    <div class="userSort active"><span>政治面貌</span><input type="text" placeholder="请填写" value="{$user.face}"  readonly="readonly"></div>
-    <div class="userSort active"><span>籍贯</span><input type="text" placeholder="请填写" value="{$user.branch}"  readonly="readonly"></div>
-    <div class="userSort active"><span>户口类型</span><input type="text" placeholder="请填写" value="{$user.familytype}"  readonly="readonly"></div>
-    <div class="userSort active"><span>家庭住址</span><input type="text" placeholder="请填写" value="{$user.address}"  readonly="readonly"></div>
-    <div class="userSort active"><span>毕业院校</span><input type="text" placeholder="请填写" value="{$user.school}"  readonly="readonly"></div>
-    <div class="userSort active"><span>学历</span><input type="text" placeholder="请填写" value="{$user.education}"  readonly="readonly"></div>
-    <div class="userSort active"><span>专业</span><input type="text" placeholder="请填写" value="{$user.position}"  readonly="readonly"></div>
-    <div class="userSort active"><span>工作时间</span><input type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"  readonly="readonly"></div>
-    <div class="userSort active"><span>应急人</span><input type="text" placeholder="请填写" value="{$user.urgent}"  readonly="readonly"></div>
-    <div class="userSort active"><span>应急人号码</span><input type="text" placeholder="请填写" value="{$user.urgenttel}"  readonly="readonly"></div>
+    <div class="userSort active"><span>身份证号</span><input type="text" placeholder="请填写" value="{$user.card}"   ></div>
+    <div class="userSort active"><span>民族</span><input type="text" placeholder="请填写" value="{$user.nation}"   ></div>
+    <div class="userSort active"><span>婚育</span><input type="text" placeholder="请填写" value="{$user.marry}"   ></div>
+    <div class="userSort active"><span>政治面貌</span><input type="text" placeholder="请填写" value="{$user.face}"   ></div>
+    <div class="userSort active"><span>籍贯</span><input type="text" placeholder="请填写" value="{$user.branch}"   ></div>
+    <div class="userSort active"><span>户口类型</span><input type="text" placeholder="请填写" value="{$user.familytype}"   ></div>
+    <div class="userSort active"><span>家庭住址</span><input type="text" placeholder="请填写" value="{$user.address}"   ></div>
+    <div class="userSort active"><span>毕业院校</span><input type="text" placeholder="请填写" value="{$user.school}"   ></div>
+    <div class="userSort active"><span>学历</span><input type="text" placeholder="请填写" value="{$user.education}"   ></div>
+    <div class="userSort active"><span>专业</span><input type="text" placeholder="请填写" value="{$user.position}"   ></div>
+    <div class="userSort active"><span>工作时间</span><input type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"   ></div>
+    <div class="userSort active"><span>应急人</span><input type="text" placeholder="请填写" value="{$user.urgent}"   ></div>
+    <div class="userSort active"><span>应急人号码</span><input type="text" placeholder="请填写" value="{$user.urgenttel}"   ></div>
 </div>
 {/if}
-<div class="goPay" data-type="0">去付款</div>
-<div style="height:1rem;"></div>
+<div class="goPay" style="margin: 1.2rem auto .28rem">提交</div>
 {/block}
 {block name="script"}
 <script src="/home/js/exif.js"></script>
 <script src="/home/js/imgupload.js"></script>
 <script>
+    //头像大小
+    var up = $('.up' );
+    var path = up.attr('data-tab');
+    var image = new Image();
+    var ww = up.width();
+    image.src = path ;
+    up.css({"background-image":'url('+path+')'});
+    // image.onload = function(){
+    //     if(image.width > image.height){
+    //         up.css({"background-size":'auto '+ww +'px'});
+    //     }else{
+    //         up.css({"background-size":ww +'px'+' auto '});
+    //     }
+    // };
+
     var u = navigator.userAgent, app = navigator.appVersion;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -222,5 +254,48 @@
             return;
         }
     });
+</script>
+<script>
+    $('.headers').on('click',function(){
+        if($('.up').attr('data-tab') == '/home/images/common/vistor.jpg'){
+            alert('请填写真实头像！')
+        }
+    })
+    // 信息保存提交
+    var tag =  {$user['tag']}; //1:学员 2:教练 3:员工主管
+    var id  =  {$user.id}; //用户ID
+    if(tag == 1){ //学员
+        var header      = $('.up').attr('data-tab');
+        var name        = $('input[name=name]').val();
+        var gender      = $('input[name=gender]').val()=='男'?1:2;
+        var birthday    = $('input[name=birthday]').val();
+        var school      = $('input[name=school]').val();
+        var card        = $('input[name=card]').val();
+        var mobile      = $('input[name=mobile]').val();
+        var email       = $('input[name=email]').val();
+        var address     = $('input[name=address]').val();
+        var parent      = $('input[name=parent]').val();
+        var data = {
+            id:id,header:header,name:name,gender:gender,birthday:birthday,school:school,
+            card:card,mobile:mobile,email:email,address:address,parent:parent
+        }
+    }
+    $('.goPay').on('click',function(){
+        $.ajax({
+            type: "post",
+            url: "{:Url('User/hold')}",
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                swal({
+                    title: ' ',
+                    text: '上传成功',
+                    type: 'success',
+                    confirmButtonText:'确定',
+                    timer:'1000'
+                });
+            }
+        })
+    })
 </script>
 {/block}
