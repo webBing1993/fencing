@@ -159,7 +159,7 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
-                    payPrice(price,'/home/association/paysuccess1/id/'+msg.data.id);
+                    payPrice(id,price,'/home/association/paysuccess1/id/'+msg.data.id);
                 }
             })
         }else {
@@ -172,8 +172,8 @@
     });
 
 
-    function payPrice(price,url) {
-        $.post('/home/pay/index', {price: price})
+    function payPrice(id,price,url) {
+        $.post('/home/pay/wxpay', {price: price,pid: id,type:1})
             .then(function (response) {
                 console.log(response);
                 if (response) {

@@ -96,8 +96,8 @@
     /*
     * 去结算
     * */
-    function payPrice(price,index) {
-        $.post('/home/pay/index', {price: price})
+    function payPrice(id,price,index) {
+        $.post('/home/pay/wxpay ', {price: price,pid: id,type:4})
                 .then(function (response) {
                     console.log(response);
                     if (response) {
@@ -152,7 +152,7 @@
             },
             success: function (msg) {
                 $(".showbox").hide();
-                payPrice(price,2);
+                payPrice(id,price,2);
             }
         })
     });
