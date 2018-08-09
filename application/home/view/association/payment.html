@@ -34,7 +34,7 @@
         <ul>
             <li class="clearfix active">
                 <div class="name fl">姓名</div>
-                <input type="text" value="{$model.name}" placeholder="暂无" disabled class="fr name">
+                <input type="text" value="{$model.name}" placeholder="暂无" disabled class="fr name1">
             </li>
             <li class="clearfix active">
                 <div class="name fl">出生日期</div>
@@ -132,7 +132,7 @@
     * 初始化判断
     * */
     var isWrite = false;
-    if ($('.name').val() != '' && $('.setData').val() != '' && $('.sale').val() != '' && $('.phone').val() != '' && $('.personId').val() != '' && $('.address1').val() != '') {
+    if ($('.name1').val() != '' && $('.setData').val() != '' && $('.sale').val() != '' && $('.phone').val() != '' && $('.personId').val() != '' && $('.address1').val() != '') {
         isWrite = true;
     }else {
         $('#pay').show();
