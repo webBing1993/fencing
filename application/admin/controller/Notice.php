@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Notice as NoticeModel;
 use app\admin\model\Picture;
+use app\admin\model\WechatTag;
 
 /**
  * Class Notice
@@ -44,6 +45,7 @@ class Notice extends Admin {
     public function indexadd(){
         if(IS_POST) {
             $data = input('post.');
+            dump($data);exit;
             $result = $this->validate($data,'Notice');  // 验证  数据
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if (true !== $result) {
@@ -58,6 +60,9 @@ class Notice extends Admin {
                 }
             }
         }else {
+            $list = WechatTag::where('id','>',0)->select();
+            $this->assign('list',$list);
+
             return $this->fetch();
         }
     }
