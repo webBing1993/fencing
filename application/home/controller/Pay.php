@@ -1,6 +1,10 @@
 <?php
 namespace app\home\controller;
 
+use app\home\model\CompetitionApply;
+use app\home\model\CompetitionEvent;
+use app\home\model\PayRecord;
+use app\home\model\WechatUser;
 use think\Response;
 use wechat\TPWechat;
 use wechat\Weixinpay;
@@ -11,12 +15,20 @@ use wxpay\WxPayConfig;
 
 class Pay extends Base
 {
-    public function index(){
+    /**
+     * 微信支付
+     */
+    public function wxpay()
+    {
+        $pid = input('pid');
+        $type = input('type');
 //        $price = input('price');
         $price = 0.01;
+        if (empty($pid) || empty($type) || empty($price)) {
+            $this->error('参数错误！');
+        }
 
-        $config = config('weixinpay');
-        $weObj = new TPWechat($config);
+        $weObj = new TPWechat(config('weixinpay'));
         $uid = session('userId');
         $data = [
             'userid' => $uid,
@@ -24,12 +36,13 @@ class Pay extends Base
         $user = $weObj->convertToOpenId($data);
         $tools = new JsApiPay();
 
+        //统一下单
         $outTradeNo = WxPayConfig::$MCHID . date("YmdHis");
         $input = new WxPayUnifiedOrder();
-        $input->setBody("积分购买");
+        $input->setBody("购买支付");
         $input->setAttach("test");
         $input->setOutTradeNo($outTradeNo);
-        $input->setTotalFee(1); //积分是一角 微信支付以分为单位
+        $input->setTotalFee($price); // 微信支付以分为单位
         $input->setTimeStart(date("YmdHis"));
         $input->setTimeExpire(date("YmdHis", time() + 600));
         $input->setGoodsTag("Reward");
@@ -37,12 +50,84 @@ class Pay extends Base
         $input->setTradeType("JSAPI");
         $input->setOpenid($user['openid']);
         $order = WxPayApi::unifiedOrder($input);
-
         $jsApiParameters = $tools->getJsApiParameters($order);
+
+        //生成预支付订单
+        $model = wechatUser::where(['userid' => $uid])->find();
+        if($type == 2){
+            $event_id = competitionApply::where(['id' => $pid])->value('event_id');
+            if($event_id){
+                $original_price = competitionEvent::where(['id' => $event_id])->value('price');
+            }else{
+                $original_price = $price;
+            }
+        }else{
+            $original_price = $price;
+        }
+
+        $info = [
+            'out_trade_no' => $outTradeNo, //唯一订单号
+            'userid' => $uid,
+            'type' => $type,
+            'table' => PayRecord::TYPE_ARRAY[$type],
+            'pid' => $pid,
+            'name' => $model['name'],
+            'price' => $price,
+            'original_price' => $original_price,//原价
+            'pay_type' => 2,//支付类型 1支付宝 2微信 3银联
+        ];
+        PayRecord::create($info);
 
         return $jsApiParameters;
     }
 
+
+    // 生成alipay订单
+    public function alipay() {
+        $price = input('points');
+        if (empty($price)) {
+            $this->error('参数错误！');
+        }
+
+        $aliConfig = config('alipay');
+        // 订单信息
+        $orderNo = $aliConfig['app_id'].time() . rand(1000, 9999);
+        $payData = [
+            'body'    => '积分购买',
+            'subject'    => '积分购买',
+            'order_no'    => $orderNo,
+            'timeout_express' => time() + 600,// 表示必须 600s 内付款
+            'amount'    => $price / 10 ,// 单位为元 ,最小为0.01
+            'return_param' => 'tata',// 一定不要传入汉字，只能是 字母 数字组合
+            // 'client_ip' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1',// 客户地址
+            'goods_type' => '1',
+            'store_id' => '',
+        ];
+
+        try {
+            $str = Charge::run(Config::ALI_CHANNEL_WAP, $aliConfig, $payData);
+            //生成预支付订单
+            $useType = $this->getUserType(); // 用户类型 1 普通 2  服务站
+            if ($useType == 1) {
+                $uid = session('userId');
+            } else {
+                $uid = session('thirdUserId');
+            }
+            $payLog = [
+                'order_id' => $orderNo, //唯一订单号
+                'user_id' => $uid,
+                'user_type' => $useType,
+                'points' => $price,
+                'rmb' => $price * 10, //单位元
+                'type' => 2,
+            ];
+            PayLogModel::create($payLog);
+        } catch (PayException $e) {
+            return json(['success' => false,'data' => $e->errorMessage()]);
+        }
+
+        return json(['success' => true, 'data' => $str]);
+    }
 
 
 }
