@@ -725,6 +725,16 @@ class Association  extends Base
 
     // 课程报名成功
     public function paysuccess1(){
+        $id = input('id');
+        if (!$id) {
+            return $this->error('参数缺失');
+        }
+        $data = CourseApply::get($id);
+        $venue = venue::get($data['venue_id']);
+        $data['start_time'] = date('Y-m-d', $data['start_time']);
+        $data['end_time'] = date('Y-m-d', $data['end_time']);
+        $this->assign('venue',$venue);
+        $this->assign('data',$data);
 
         return $this->fetch();
     }
