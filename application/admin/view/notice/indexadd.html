@@ -360,16 +360,14 @@
                 arrbm = '';
             }else{
                 for(var i=0;i<bmlength;i++){
-                    console.log($('.selgp .chosen-choices li a').eq(i).data('option-array-value'));
-                    arrbm.push($('.selgp .chosen-choices li a').eq(i).data('option-array-value'))
+                    for (var j = 0; j < $('.selgp option').length; j++) {
+                        if ($('.selgp option').eq(j).index() == $('.selgp .chosen-choices li a').eq(i).data('optionArrayIndex')) {
+                            arrbm.push($('.selgp option').eq(j).attr('value'))
+                        }
+                    }
                 }
             }
 
-            console.log(arrbm);
-            var sortVal = '';
-            if (_sort == 1) {
-                sortVal = 1
-            }
             var data = {
                 type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
@@ -380,6 +378,10 @@
                 push:$("input[name='push']:checked").val(),
                 status:0,
             };
+            if (_sort == 1) {
+                data.sortVal = arrbm;
+            }
+            console.log(data);
             $.ajax({
                 type:"post",
                 url:$("#form").attr("action"),
