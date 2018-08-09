@@ -41,6 +41,9 @@
     .plusimg{
         display: none;
     }
+    #sort {
+        display: none;
+    }
 </style>
 {/block}
 
@@ -168,6 +171,7 @@
                                 <!--</label>-->
                             <!--</div>-->
                         <!--</div>-->
+
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
                                 <label>是否推送:</label>
@@ -181,6 +185,23 @@
                                 </label>
                             </div>
                         </div>
+
+                        <div class="form-group" id="sort">
+                            <div class="sort">
+                                <div class="col-lg-1 text-right control-label">
+                                    <label>标签:</label>
+                                </div>
+                                <div class="col-lg-11 selgp">
+                                    <select class="chosen-select form-control" data-placeholder="--请选择--" name="tag" multiple="multiple">
+                                        {volist name="list" id="vo"}
+                                        <option value="{$vo.id}">{$vo.tagname}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
                         <div class="form-group">
                             <div class="col-lg-11 col-lg-offset-1">
                                 <button class="btn btn-primary submit-btn post-add" type="button" target-form="form-horizontal">发布</button>
@@ -201,9 +222,82 @@
 <script src="/static/iCheck/icheck.min.js"></script>
 <script src="/static/ueditor/ueditor.config.js"></script>
 <script src="/static/ueditor/ueditor.all.min.js"></script>
+<script src="/admin/js/chosen.jquery.js"></script>
 <!--时间日历-->
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
 <script>
+
+    var _sort = 0;
+
+    $(function(){
+
+        //    时间日历
+        $( ".datetimepicker" ).datetimepicker( {
+            language:  'cn',
+            format: 'yyyy-mm-dd hh:ii',
+            minView: "hour",
+            forceParse: false,
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: 1,
+            minuteStep: 5
+
+        });
+        //    单选按钮
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+        $('.i-checks').on('ifChecked', function (e) {
+            if (e.currentTarget.innerText == '是') {
+                $('#sort').show();
+                _sort = 1;
+            }else {
+                _sort = 0;
+                $("#sort").hide();
+            }
+        });
+
+        //下拉菜单
+        $("select").chosen({
+            no_results_text: "没有找到该选项",
+            allow_single_de: true,
+            width:'100%',
+            max_selected_options:'100'
+        });
+        var selgp = $(".selgp");
+        var selgp2 = $(".selgp2");
+        selHeight(selgp);
+        selHeight(selgp2);
+        function selHeight(e){
+            e.find('ul').on('click',function(){
+                var results = $(this ).next().find('.chosen-results' );
+                var h= results.height();
+                h=h-100;
+                $('.selblo' ).animate({'height':h+'px'},100);
+                //切出页面
+                var hiddenProperty = 'hidden' in document ? 'hidden' :
+                        'webkitHidden' in document ? 'webkitHidden' :
+                                null;
+                var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+                var onVisibilityChange = function(){
+                    if (!document[hiddenProperty]) {
+                        //selgp.find('.search-field').find('input').on('blur');
+                    }else{
+                        e.find('.search-field').find('input').off('blur');
+                    }
+                };
+                $(document).on(visibilityChangeEvent, onVisibilityChange);
+            });
+            e.find('.search-field').find('input').on('blur',function(){
+                setTimeout(function(){
+                    $('.selblo' ).animate({'height':'0'});
+                },100)
+            });
+        }
+    });
+
     //导航高亮
     highlight_subnav("{:Url('Notice/index')}");
 
@@ -259,16 +353,28 @@
         });
         $(".post-add").off('click').on("click",function(){
             var it = $(this);
+            var arrbm = [];
+            var bmlength = $('.selgp .chosen-choices .search-choice').length;
+            console.log(bmlength);
+            if(bmlength == 0){
+                arrbm = '';
+            }else{
+                for(var i=0;i<bmlength;i++){
+                    console.log($('.selgp .chosen-choices li a').eq(i).data('option-array-value'));
+                    arrbm.push($('.selgp .chosen-choices li a').eq(i).data('option-array-value'))
+                }
+            }
 
+            console.log(arrbm);
+            var sortVal = '';
+            if (_sort == 1) {
+                sortVal = 1
+            }
             var data = {
                 type:$("select[name='type']").val(),
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
-//                telephone:$("input[name='tel']").val(),
-//                start_time:$("input[name='start_time']").val(),
-//                end_time:$("input[name='end_time']").val(),
                 content:ue.getContent(),
-//                address:$("input[name='address']").val(),
                 publisher:$("input[name='publisher']").val(),
                 recommend:$("input[name='recommend']:checked").val(),
                 push:$("input[name='push']:checked").val(),
@@ -313,66 +419,5 @@
 
     });
 </script>
-<script>
-    $(function(){
-        //    时间日历
-        $( ".datetimepicker" ).datetimepicker( {
-            language:  'cn',
-            format: 'yyyy-mm-dd hh:ii',
-            minView: "hour",
-            forceParse: false,
-            todayBtn: true,
-            autoclose: true,
-            todayHighlight: 1,
-            minuteStep: 5
-
-        });
-        //    单选按钮
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green'
-        });
-        //下拉菜单
-        $("select").chosen({
-            no_results_text: "没有找到该选项",
-            allow_single_de: true,
-            width:'100%',
-            max_selected_options:'100'
-        });
-        var selgp = $(".selgp");
-        var selgp2 = $(".selgp2");
-        selHeight(selgp);
-        selHeight(selgp2);
-        function selHeight(e){
-            e.find('ul').on('click',function(){
-                var results = $(this ).next().find('.chosen-results' );
-                var h= results.height();
-                h=h-100;
-                $('.selblo' ).animate({'height':h+'px'},100);
-                //切出页面
-                var hiddenProperty = 'hidden' in document ? 'hidden' :
-                        'webkitHidden' in document ? 'webkitHidden' :
-                                null;
-                var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
-                var onVisibilityChange = function(){
-                    if (!document[hiddenProperty]) {
-                        //selgp.find('.search-field').find('input').on('blur');
-                    }else{
-                        e.find('.search-field').find('input').off('blur');
-                    }
-                };
-                $(document).on(visibilityChangeEvent, onVisibilityChange);
-            });
-            e.find('.search-field').find('input').on('blur',function(){
-                setTimeout(function(){
-                    $('.selblo' ).animate({'height':'0'});
-                },100)
-            });
-        }
-    })
-
-</script>
-
-
 
 {/block}
