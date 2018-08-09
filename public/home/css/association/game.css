@@ -942,3 +942,12 @@
 .news .banner .swiper-pagination-bullet-active {
     background: #FFFFFF;
 }
+
+.news .banner .swiper-slide {
+    border-radius: .2rem .2rem 0 0;
+}
+
+.news .banner .swiper-container {
+    width: 100%;
+    border-radius: .2rem .2rem 0 0;
+}

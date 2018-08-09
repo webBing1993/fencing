@@ -77,19 +77,68 @@
     </div>
 </div>
 
+
+<div class="showbox">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+
 {/block}
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
 
     var id = "{$data.id}";
+    var price = {$data.price};
     /*
     * 去结算
     * */
+    function payPrice(price,index) {
+        $.post('/home/pay/index', {price: price})
+                .then(function (response) {
+                    console.log(response);
+                    if (response) {
+                        if (typeof WeixinJSBridge == "undefined"){
+                            if( document.addEventListener ){
+                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                            }else if (document.attachEvent){
+                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                            }
+                        } else {
+                            WeixinJSBridge.invoke(
+                                    'getBrandWCPayRequest',  JSON.parse(response),
+                                    function (res) {
+                                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                            $(".content").hide();
+                                            $(".popUp").show();
+                                            setTimeout(function () {
+                                                window.history.go(-index);
+                                            },1500);
+                                        }
+                                        // 使用以上方式判断前端返回,微信团队郑重提示：
+                                        // res.err_msg将在用户支付成功后返回
+                                        // ok，但并不保证它绝对可靠。
+                                    }
+                            );
+                        }
+
+                    } else {
+                        swal({
+                            title: "",
+                            text: response.data.error_msg,
+                            type: "error",
+                            confirmButtonColor: "#ffb45b",
+                            confirmButtonText: "确定"
+                        });
+                    }
+                });
+    }
 
     $(".orderBtn a").on('click', function () {
-        $(".content").hide();
-        $(".popUp").show();
         $.ajax({
             url: "{:Url('Mall/pay')}",
             type: 'post',
@@ -98,50 +147,12 @@
                 text1: $(".size").val(),
                 text2: $(".list_ textarea").val()
             },
+            beforeSend: function(XMLHttpRequest){
+                $(".showbox").show();
+            },
             success: function (msg) {
-                $.post('/home/pay/index', {price: 1})
-                        .then(function (response) {
-                            console.log(response);
-                            if (response) {
-                                if (typeof WeixinJSBridge == "undefined"){
-                                    if( document.addEventListener ){
-                                        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                                    }else if (document.attachEvent){
-                                        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                                        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-                                    }
-                                } else {
-                                    WeixinJSBridge.invoke(
-                                            'getBrandWCPayRequest',  JSON.parse(response),
-                                            function (res) {
-                                                if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                                    swal({
-                                                        title: "",
-                                                        text: "充值成功",
-                                                        type: "success",
-                                                        confirmButtonColor: "#ffb45b",
-                                                        confirmButtonText: "确定"
-                                                    }, function () {
-                                                        window.history.go(-2);
-                                                    });
-                                                }
-                                                // 使用以上方式判断前端返回,微信团队郑重提示：
-                                                // res.err_msg将在用户支付成功后返回
-                                                // ok，但并不保证它绝对可靠。
-                                            }
-                                    );
-                                }
-
-                            } else {
-                                swal({
-                                    title: "",
-                                    text: response.data.error_msg,
-                                    type: "error",
-                                    confirmButtonColor: "#ffb45b",
-                                    confirmButtonText: "确定",
-                                });
-                            }
-                        });
+                $(".showbox").hide();
+                payPrice(price,2);
             }
         })
     });
