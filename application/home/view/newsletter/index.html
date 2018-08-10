@@ -21,132 +21,140 @@
 <!-- 部门列表-->
 <div class="content">
     <!-- 一级  有二级情况 hasTwo-->
+    {volist name="one" id="vo"}
+    {if condition="($vo['twopd'] == 1)"}
     <div class="list1 hasTwo">
-        <a href="javascript:;">
-            <span>训练部门</span>
-            <i class="fr"></i>
-        </a>
-    </div>
-
-    <div class="lists2">
-        <!-- 二级  有三级情况 hasThree-->
-        <div class="list2 hasThree">
+        {else /}
+        <div class="list1">
+            {/if}
+            {if condition="($vo['twopd'] == 1)"}
             <a href="javascript:;">
-                <span>训练主管</span>
-                <i class="fr"></i>
-            </a>
-        </div>
-
-        <div class="lists3">
-            <!-- 三级-->
-            <div class="list3">
-                <a href="/home/newsletter/userlist.html">
-                    <span>训练主管</span>
+                {else /}
+                <a href="{:Url('Newsletter/userlist?id='.$vo['id'])}">
+                    {/if}
+                    <span>{$vo.name}</span>
                     <i class="fr"></i>
                 </a>
+        </div>
+
+        <div class="lists2">
+            <!-- 二级  有三级情况 hasThree-->
+            {volist name="$vo['two']" id="lo"}
+            {if condition="($lo['threepd'] == 1)"}
+            <div class="list2 hasThree">
+                {else /}
+                <div class="list2">
+                    {/if}
+                    {if condition="($lo['threepd'] == 1)"}
+                    <a href="javascript:;">
+                        {else /}
+                        <a href="{:Url('Newsletter/userlist?id='.$lo['id'])}">
+                            {/if}
+                            <span>{$lo.name}</span>
+                            <i class="fr"></i>
+                        </a>
+                </div>
+
+                <div class="lists3">
+                    <!-- 三级-->
+                    {if condition="!empty($lo['three'])"}
+                    {volist name="$lo['three']" id="co"}
+                    <div class="list3">
+                        <a href="{:Url('Newsletter/userlist?id='.$co['id'])}">
+                            <span>{$co.name}</span>
+                            <i class="fr"></i>
+                        </a>
+                    </div>
+                    {/volist}
+                    {/if}
+                </div>
+                {/volist}
+
             </div>
-        </div>
-
-
-        <!-- 二级  无三级情况-->
-        <div class="list2">
-            <a href="/home/newsletter/userlist.html">
-                <span>训练主管</span>
-                <i class="fr"></i>
-            </a>
+            {/volist}
         </div>
     </div>
+    {/block}
+    {block name='script'}
 
-    <!-- 一级  无二级情况-->
-    <div class="list1">
-        <a href="/home/newsletter/userlist.html">
-            <span>训练部门</span>
-            <i class="fr"></i>
-        </a>
-    </div>
-</div>
+    <script>
 
-{/block}
-{block name='script'}
-
-<script>
-
-    /*
-    * 下拉
-    * */
-    $(".hasTwo").on('click', function () {
-        $(this).toggleClass('active');
-        $(this).next('.lists2').fadeToggle();
-    });
-
-    $('.hasThree').on('click', function () {
-        $(this).toggleClass('active');
-        $(this).next('.lists3').fadeToggle();
-    });
-
-    /*
-    * 搜索
-    * */
-    $(".searchInput input").on('focus', function () {
-        $('.searchResult').show();
-        $('.content').hide();
-    }).on('input', function () {
-        var val = $(this).val();
-        $('.searchResult a,.searchResult .noList').remove();
-        $.ajax({
-            url: '',
-            type: 'post',
-            data: {
-                val: val
-            },
-            success: function (msg) {
-                addMsg(msg);
-                lazy();
-            }
-        })
-    });
-
-    /*
-    * 添加数据
-    * */
-    function addMsg(data) {
-        var list = data.data;
-        var html = '';
-        if (list.length == 0) {
-            html = '<div class="noList">搜索无内容，请重新搜索</div>';
-        }
-        for (var i = 0; i < list.length; i++) {
-            html += '<a href="javascript:;" class="list clearfix">'+
-                    '<img src="'+ list.src +'" alt="" class="fl lazy">'+
-                    '<span class="fl name">'+ list.name +'</span>'+
-                    '</a>'
-        }
-
-        $('.searchResult').append(html);
-    }
-
-    /*
-    * 取消事件
-    * */
-    $('.cancel').on('click', function () {
-        $('.searchResult').hide();
-        $('.content').show();
-        $('.searchInput input').val('');
-    });
-
-
-    /*
-     * 图片懒加载功能函数
-     * */
-
-    function lazy() {
-        $("img.lazy").lazyload({
-            placeholder: "/home/images/loading.jpg",
-            effect: "fadeIn",
-            threshold : 500
+        /*
+         * 下拉
+         * */
+        $(".hasTwo").on('click', function () {
+            $(this).toggleClass('active');
+            $(this).next('.lists2').fadeToggle();
         });
-    }
 
-</script>
+        $('.hasThree').on('click', function () {
+            $(this).toggleClass('active');
+            $(this).next('.lists3').fadeToggle();
+        });
 
-{/block}
+        /*
+         * 搜索
+         * */
+        $(".searchInput input").on('focus', function () {
+            $('.searchResult').show();
+            $('.content').hide();
+        }).on('input', function () {
+            var val = $(this).val();
+            $('.searchResult a,.searchResult .noList').remove();
+            $.ajax({
+                url: '',
+                type: 'post',
+                data: {
+                    val: val
+                },
+                success: function (msg) {
+                    addMsg(msg);
+                    lazy();
+                }
+            })
+        });
+
+        /*
+         * 添加数据
+         * */
+        function addMsg(data) {
+            var list = data.data;
+            var html = '';
+            if (list.length == 0) {
+                html = '<div class="noList">搜索无内容，请重新搜索</div>';
+            }
+            for (var i = 0; i < list.length; i++) {
+                html += '<a href="javascript:;" class="list clearfix">' +
+                        '<img src="' + list.src + '" alt="" class="fl lazy">' +
+                        '<span class="fl name">' + list.name + '</span>' +
+                        '</a>'
+            }
+
+            $('.searchResult').append(html);
+        }
+
+        /*
+         * 取消事件
+         * */
+        $('.cancel').on('click', function () {
+            $('.searchResult').hide();
+            $('.content').show();
+            $('.searchInput input').val('');
+        });
+
+
+        /*
+         * 图片懒加载功能函数
+         * */
+
+        function lazy() {
+            $("img.lazy").lazyload({
+                placeholder: "/home/images/loading.jpg",
+                effect: "fadeIn",
+                threshold: 500
+            });
+        }
+
+    </script>
+
+    {/block}
