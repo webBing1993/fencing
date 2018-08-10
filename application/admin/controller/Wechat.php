@@ -15,7 +15,7 @@ use app\admin\model\WechatTag;
 use app\admin\model\WechatUser;
 use app\admin\model\WechatUserTag;
 use com\wechat\QYWechat;
-use com\wechat\TPWechat;
+use wechat\TPWechat;
 use think\Config;
 use think\Input;
 
@@ -72,6 +72,11 @@ class Wechat extends Admin
             $users = $Wechat->getUserListInfo($list['department'][$key]['id']);
             $num += count($users['userlist']);
             foreach ($users['userlist'] as $user) {
+                $weObj = new TPWechat(config('weixinpay'));
+                $toOpenId = $weObj->convertToOpenId(['userid' => $user['userid']]);
+                if($toOpenId){
+                    $user['openid'] = $toOpenId['openid'];
+                }
                 $user['department'] = json_encode($user['department']);
                 $user['order'] = json_encode($user['order']);
                 if(isset($user['extattr'])){
@@ -209,6 +214,12 @@ class Wechat extends Admin
                             $data = ['tagid' => $value['tagid'],'userid' => $val['userid']];
                             if(empty(WechatUserTag::where($data)->find())){
                                 WechatUserTag::create($data);
+                                if($value['tagid'] == 8){
+                                    WechatUser::where(['userid'=>$user['userid']])->update(['train'=>1]);
+                                }
+                                if($value['tagid'] == 9){
+                                    WechatUser::where(['userid'=>$user['userid']])->update(['vip'=>1]);
+                                }
                                 if(isset(WechatTag::TAG_ARRAY[$value['tagid']])){
                                     $member_type = WechatTag::TAG_ARRAY[$value['tagid']];
                                     if($member_type !== WechatUser::where(['userid'=>$user['userid']])->value('tag')){
@@ -224,6 +235,12 @@ class Wechat extends Admin
                         $data = ['tagid'=>$value['tagid'], 'userid'=>$user['userid']];
                         if(empty(WechatUserTag::where($data)->find())){
                             WechatUserTag::create($data);
+                            if($value['tagid'] == 8){
+                                WechatUser::where(['userid'=>$user['userid']])->update(['train'=>1]);
+                            }
+                            if($value['tagid'] == 9){
+                                WechatUser::where(['userid'=>$user['userid']])->update(['vip'=>1]);
+                            }
                             if(isset(WechatTag::TAG_ARRAY[$value['tagid']])){
                                 $member_type = WechatTag::TAG_ARRAY[$value['tagid']];
                                 if($member_type !== WechatUser::where(['userid'=>$user['userid']])->value('tag')){

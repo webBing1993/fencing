@@ -6,9 +6,11 @@
  * Time: 9:22
  */
 namespace app\home\controller;
+use app\home\model\WechatUser;
 use think\Controller;
 use app\user\controller\Index as APIIndex;
 use com\wechat\TPQYWechat;
+use wechat\TPWechat;
 
 class Verify extends Controller{
     /**
@@ -52,6 +54,15 @@ class Verify extends Controller{
             } else {
                 $UserAPI->addWechatUser($user);
             }
+            $openid = WechatUser::where('userid',$result['UserId'])->value('openid');
+            if(!$openid) {
+                $weObj = new TPWechat(config('weixinpay'));
+                $toOpenId = $weObj->convertToOpenId(['userid' => $result['UserId']]);
+                if($toOpenId){
+                    $user['openid'] = $toOpenId['openid'];
+                }
+            }
+
             session("userId", $result['UserId']);
             //存在url则跳转，不存在则回主页
             if(session('url')){
