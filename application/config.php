@@ -46,6 +46,13 @@ return [
         'agentid' => 1000002,
     ),
 
+    //消息通知模块
+    'news' => [
+        'appid' => 'ww361a838e44ae696f',
+        'appsecret' => '05FC2Dycjf421Uhz2_YGb7j_IeArwgCe47u2Ucd1tZE',
+        'agentid' => 1000004
+    ],
+
     //  推送网站域名
     'http_url' => "http://ben.zt.cn",
     // 推送对象 发送给全体 @all  个人测试15700004138
