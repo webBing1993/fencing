@@ -77,18 +77,39 @@
     {/block}
     {block name='script'}
 
+    <script src="/home/js/reset.js"></script>
     <script>
 
+        var hasTwoClick = getCookie('hasTwoClick') ? getCookie('hasTwoClick') : '';
+        var hasThreeClick = getCookie('hasThreeClick') ? getCookie('hasThreeClick') : '';
+        $(function () {
+            if (hasTwoClick != '') {
+                $('.hasTwo').eq(hasTwoClick).click();
+                if (hasThreeClick != '') {
+                    $('.hasThree').eq(hasThreeClick).click();
+                }
+            }
+        });
         /*
          * 下拉
          * */
         $(".hasTwo").on('click', function () {
             $(this).toggleClass('active');
+            if ($(this).hasClass('active')) {
+                setCookie('hasTwoClick',$(this).index())
+            }else {
+                setCookie('hasTwoClick','')
+            }
             $(this).next('.lists2').fadeToggle();
         });
 
         $('.hasThree').on('click', function () {
             $(this).toggleClass('active');
+            if ($(this).hasClass('active')) {
+                setCookie('hasThreeClick',$(this).index())
+            }else {
+                setCookie('hasThreeClick','')
+            }
             $(this).next('.lists3').fadeToggle();
         });
 
