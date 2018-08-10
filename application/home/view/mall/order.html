@@ -92,7 +92,7 @@
 <script>
 
     var id = "{$data.id}";
-    var price = {$data.price};
+    var price = "{$data.price}";
     /*
     * 去结算
     * */
@@ -152,7 +152,7 @@
             },
             success: function (msg) {
                 $(".showbox").hide();
-                payPrice(id,price,2);
+                payPrice(id,price,1);
             }
         })
     });

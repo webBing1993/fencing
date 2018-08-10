@@ -196,12 +196,15 @@
                                 <label>是否推送:</label>
                             </div>
                             <div class="col-lg-11">
+                                {if condition="($msg['push'] == 1)"}
                                 <label class="i-checks">
                                     <input type="radio" value="1" name="push" {eq name="msg.push" value="1"}checked{/eq}>是
                                 </label>
+                                {else /}
                                 <label class="i-checks">
                                     <input type="radio" value="0" name="push" {eq name="msg.push" value="0"}checked{/eq}>否
                                 </label>
+                                {/if}
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{$msg.id}">

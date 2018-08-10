@@ -32,10 +32,17 @@
     </div>
 </div>
 
+{if condition="($an == 1)"}
 <!-- btn-->
-<div class="btn">
+<div class="btn btnNow">
     <a href="javascript:;">立即购买</a>
 </div>
+{else /}
+<div class="btn">
+    <a>暂无购买权限</a>
+</div>
+{/if}
+
 
 <!-- buy-->
 <div class="buy">
@@ -85,7 +92,7 @@
      * 立即购买
      * */
 
-    $(".btn a").on("click", function () {
+    $(".btnNow a").on("click", function () {
         $(".buy").show()
     });
 

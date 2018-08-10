@@ -14,6 +14,7 @@ use app\home\model\Competition;
 use app\home\model\CompetitionApply;
 use app\home\model\CompetitionEvent;
 use app\home\model\Picture;
+use app\home\model\Vipapply;
 use app\home\model\WechatUser;
 
 class User extends Base
@@ -92,16 +93,25 @@ class User extends Base
             $user['viptime'] = date("Y-m-d",$user['viptime']);
         }
         $this->assign('user',$user);
+        $price = 120;
+        $this->assign('price',$price);
 
         return $this->fetch();
     }
 
     //会员申请 去支付接口
     public function vipapply(){
-        $data = input('post');
-        dump($data);exit;
+        $userId = session('userId');
+        $map['userid'] = $userId;
+        $map['time'] = time();
+        $info = Vipapply::create($map);
 
-        return $this->fetch();
+        if($info) {
+            return $this->success("会员申请记录成功");
+        }else{
+            return $this->error("会员申请记录失败");
+        }
+
     }
 
 
