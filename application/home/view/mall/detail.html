@@ -38,7 +38,7 @@
     <a href="javascript:;">立即购买</a>
 </div>
 {else /}
-<div class="btn">
+<div class="btn noPower">
     <a>暂无购买权限</a>
 </div>
 {/if}
@@ -74,6 +74,15 @@
     </div>
 </div>
 
+<!-- 权限提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>精品课需先提交管理员审核，审核通过后，才可缴费报名，请您耐心等待。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+
 <div class="showbox">
     <div class="loader">
         <svg class="circular" viewBox="25 25 50 50">
@@ -94,6 +103,16 @@
 
     $(".btnNow a").on("click", function () {
         $(".buy").show()
+    });
+
+    /*
+    * 权限提示
+    * */
+    $('.noPower a').on('click', function () {
+        $('.chooseTig').show();
+    });
+    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
+        $(".chooseTig").hide();
     });
 
     /*
