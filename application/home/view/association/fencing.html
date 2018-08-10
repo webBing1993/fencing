@@ -14,7 +14,7 @@
                 <div class="content">{$vo.content}</div>
             </div>
             <div class="address clearfix">
-                <img src="" alt="" class="fl">
+                <img src="/home/images/game/icon15.png" alt="" class="fl">
                 <span class="fl">{$vo.region}</span>
             </div>
         </a>
@@ -35,7 +35,7 @@
         loadScroll();
     }
     else{
-        $(".tip").text('没有更多了');
+        $(".tip").text('');
     }
     function loadScroll(){
         $(window ).off("scroll" ).on("scroll",function(){
@@ -99,7 +99,7 @@
                 '<div class="content">'+list.content+'</div>'+
                 '</div>'+
                 '<div class="address clearfix">'+
-                '<img src="" alt="" class="fl">'+
+                '<img src="/home/images/game/icon15.png" alt="" class="fl">'+
                 '<span class="fl">余杭区</span>'+
                 '</div>'+
                 '</a>'
