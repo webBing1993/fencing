@@ -14,8 +14,10 @@ use app\home\model\MallTwo;
 use app\home\model\ShopRecord;
 use app\home\model\ShopOrder;
 use app\home\model\Picture;
+use app\home\model\Venue;
 use app\home\model\WechatDepartment;
 use app\home\model\WechatUser;
+use app\home\model\WechatUserTag;
 
 /*
  * 商城
@@ -116,6 +118,16 @@ class Mall  extends Base
         //类别赋值
         $data['type2'] = MallTwo::where('id',$data['type2'])->value('title');
         $this->assign('data',$data);
+        $userId = session('userId');
+        $user = WechatUser::where('mobile',$userId)->find();
+        $venue_id = WechatUserTag::getVenueId($userId);
+
+        if($venue_id != false AND $user['tag'] == 1 AND $user['vip'] == 1){
+            $an = 1;
+        }else{
+            $an = 0;
+        }
+        $this->assign('an',$an);
 
         return $this->fetch();
     }
@@ -137,12 +149,13 @@ class Mall  extends Base
                 $data['num'] = $num;
 //            $data['price'] = $shop['price'];
                 $data['create_time'] = time();
-                $data['create_user'] = session('userId');
+                $data['userid'] = session('userId');
 //            $data['total'] = $num * $shop['price'];
                 $user = WechatUser::where('mobile',session('userId'))->find();
                 $data['name'] = $user['name'];
                 $data['mobile'] = $user['mobile'];
-                $data['depart'] = WechatDepartment::where('id',$user['department'])->value('name');
+                $venue_id = WechatUserTag::getVenueId($userId);
+                $data['depart'] = $venue_id;
                 $ShopOrderModel = new ShopOrder();
                 $info = $ShopOrderModel->save($data);
                 if($info) {
@@ -175,6 +188,7 @@ class Mall  extends Base
             $data['price'] = $sp['price'];
             $data['total'] = $sp['price'] * $data['num'];
             $data['front_cover'] = $sp['front_cover'];
+            $data['depart'] = Venue::where('id',$data['depart'])->value('title');
 //            $user = WechatUser::where('mobile',$data['create_user'])->find();
 //            $data['name'] = $user['name'];
 //            $data['mobile'] = $user['mobile'];
