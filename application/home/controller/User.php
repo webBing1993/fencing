@@ -143,7 +143,7 @@ class User extends Base
         }
         $this->assign('left',$left);
         $this->assign('right',$right);
-//        dump($left);dump($right);exit;
+
 
         return $this->fetch();
     }

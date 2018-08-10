@@ -8,13 +8,13 @@
 <div class="summary clearfix">
     <div class="nameAccount">
         <p class="name clearfix">
-            <span class="fl">姓名</span>
+            <span class="fl">{$user.name}</span>
             <!-- 男-->
             <i class="male fl"></i>
             <!-- 女-->
             <!--<i class="female fl"></i>-->
         </p>
-        <p class="account">账号：15558023165</p>
+        <p class="account">账号：{$user.userid}</p>
     </div>
     <div class="img">
         <img src="/home/images/1.jpg" alt="">
@@ -26,19 +26,30 @@
 <div class="lists">
     <div class="list clearfix">
         <span class="fl">手机</span>
-        <span class="fr"><a href="tel:18158417280">18158417280</a></span>
+        <span class="fr"><a href="tel:18158417280">{$user.mobile}</a></span>
     </div>
     <div class="list clearfix">
         <span class="fl">场馆</span>
-        <span class="fr">杭州击剑馆</span>
+        <span class="fr">{$user.bm}</span>
     </div>
     <div class="list clearfix">
         <span class="fl">职位</span>
-        <span class="fr">主教练</span>
+        {if condition="($user['tag'] == 1)"}
+        <span class="fr">学生</span>
+        {elseif condition="($user['tag'] == 2)" /}
+        <span class="fr">教练</span>
+        {elseif condition="($user['tag'] == 3)" /}
+        <span class="fr">分管</span>
+        {elseif condition="($user['tag'] == 4)"  /}
+        <span class="fr">超级管理员</span>
+        {else/}
+        <span class="fr">暂无职位</span>
+        {/if}
+
     </div>
     <div class="list clearfix">
         <span class="fl">剑种</span>
-        <span class="fr">花剑、重剑</span>
+        <span class="fr">{$user.swords}</span>
     </div>
 </div>
 

@@ -21,133 +21,23 @@
 <!-- 通讯列表-->
 <div class="content">
     <!-- 列表开始-->
+    {volist name="charArray" id="vo"}
     <div class="userList" name="A" id="A">
-        <span class="letter">A</span>
+        <span class="letter">{$key}</span>
         <div class="user">
             <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
+            {volist name="$vo" id="lo"}
+            <a href="{:Url('Newsletter/detail?id='.$lo['uid'])}" class="clearfix">
+                <img src="{$lo.img}" alt="" class="fl">
+                <span class="name fl">{$lo.name}</span>
             </a>
+            {/volist}
             <!-- 同字母列表结束-->
         </div>
     </div>
+    {/volist}
     <!-- 列表结束-->
-    <!-- 列表开始-->
-    <div class="userList" name="B" id="B">
-        <span class="letter">B</span>
-        <div class="user">
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-        </div>
-    </div>
-    <!-- 列表结束-->
-    <!-- 列表开始-->
-    <div class="userList" name="C" id="C">
-        <span class="letter">C</span>
-        <div class="user">
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-        </div>
-    </div>
-    <!-- 列表结束-->
-    <!-- 列表开始-->
-    <div class="userList" name="D" id="D">
-        <span class="letter">D</span>
-        <div class="user">
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-        </div>
-    </div>
-    <!-- 列表结束-->
-    <!-- 列表开始-->
-    <div class="userList" name="F" id="F">
-        <span class="letter">F</span>
-        <div class="user">
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
-            <!-- 同字母列表开始-->
-            <a href="/home/newsletter/detail.html" class="clearfix">
-                <img src="/home/images/1.jpg" alt="" class="fl">
-                <span class="name fl">姓名</span>
-            </a>
-            <!-- 同字母列表结束-->
+
         </div>
     </div>
     <!-- 列表结束-->
