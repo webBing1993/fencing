@@ -145,7 +145,7 @@ class Notice extends Admin {
         $httpUrl = config('http_url');
 //                $httpUrl="http://".$_SERVER['HTTP_HOST'];
         $arr1 = $nid;    //主图文id
-        $update['status'] = '1';
+        $update['status'] = '0';
         NoticeModel::where(['id'=>$arr1])->update($update); // 更新推送后的状态
         //主图文信息
         $focus1 = NoticeModel::where('id',$arr1)->find();
