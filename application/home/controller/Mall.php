@@ -122,32 +122,44 @@ class Mall  extends Base
 
     //订单生成(未付款)
     public function ordering(){
-        $id = input('id');
-        $num = input('num');
+        $id = input('id');//商品id
+        $num = input('num');//数量
         $shop = Shop::where('id',$id)->where('status',0)->find();
         if(empty($shop)){
             return $this->error("该商品已下架");
         }elseif($num < 1){
             return $this->error("请核对下单商品的数量");
         }else{
-            $data['sid'] = $id;
-            $data['num'] = $num;
+            $userId = session('userId');
+            $count = ShopOrder::where('status',0)->where('sid',$id)->where('num',$num)->where('mobile',$userId)->count();
+            if($count == 0){
+                $data['sid'] = $id;
+                $data['num'] = $num;
 //            $data['price'] = $shop['price'];
-            $data['create_time'] = time();
-            $data['create_user'] = session('userId');
+                $data['create_time'] = time();
+                $data['create_user'] = session('userId');
 //            $data['total'] = $num * $shop['price'];
-            $user = WechatUser::where('mobile',session('userId'))->find();
-            $data['name'] = $user['name'];
-            $data['mobile'] = $user['mobile'];
-            $data['depart'] = WechatDepartment::where('id',$user['department'])->value('name');
-            $ShopOrderModel = new ShopOrder();
-            $info = $ShopOrderModel->save($data);
-            if($info) {
-                $oid = $ShopOrderModel->id;
-                return $this->success("订单生成成功",'',$oid);
+                $user = WechatUser::where('mobile',session('userId'))->find();
+                $data['name'] = $user['name'];
+                $data['mobile'] = $user['mobile'];
+                $data['depart'] = WechatDepartment::where('id',$user['department'])->value('name');
+                $ShopOrderModel = new ShopOrder();
+                $info = $ShopOrderModel->save($data);
+                if($info) {
+                    $oid = $ShopOrderModel->id;
+                    return $this->success("订单生成成功",'',$oid);
+                }else{
+                    return $this->error("订单生成失败");
+                }
             }else{
-                return $this->error("订单生成失败");
+                $oid = ShopOrder::where('status',0)->where('sid',$id)->where('num',$num)->where('mobile',$userId)->value('id');
+                if($oid) {
+                    return $this->success("订单生成成功",'',$oid);
+                }else{
+                    return $this->error("订单生成失败");
+                }
             }
+
         }
     }
 
