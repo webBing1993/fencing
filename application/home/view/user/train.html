@@ -12,32 +12,36 @@
     </div>
 <!--正文切换-->
     <div class="news" id="side1" style="display: block;">
-        <a href="/home/association/gamedetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
+        {volist name="left" id="vo"}
+        <a href="{:Url('Association/gamedetail1?id='.$vo['course_id'])}">
+            <img src="{$vo.front_cover|get_cover='path'}" class="lazy">
             <div class="newsText" style="padding: 0 0 .1rem .2rem;">
                 <div class="newsTitle">
-                    <p>初级课程</p>
-                    <p>击剑基础知识击剑基础知识击剑基础知识</p>
+                    <p>{$vo.course_name}</p>
+                    <p>{$vo.content}</p>
                 </div>
                 <div class="newsTime">
-                    <span style="color: #999;">2018-01-01至2018-07-01</span>
+                    <span style="color: #999;">{$vo.start_time|time_format='Y-m-d'}至{$vo.end_time|time_format='Y-m-d'}</span>
                 </div>
             </div>
         </a>
+        {/volist}
     </div>
     <div class="news" id="side2">
-        <a href="/home/association/gamedetail.html">
-            <img src="/home/images/1.jpg" class="lazy">
+        {volist name="right" id="lo"}
+        <a href="{:Url('Association/gamedetail1?id='.$lo['course_id'])}">
+            <img src="{$lo.front_cover|get_cover='path'}" class="lazy">
             <div class="newsText" style="padding: 0 0 .1rem .2rem;">
                 <div class="newsTitle">
-                    <p>初级课程</p>
-                    <p>击剑基础知识击剑基础知识击剑基础知识</p>
+                    <p>{$lo.course_name}</p>
+                    <p>{$lo.content}</p>
                 </div>
                 <div class="newsTime">
-                    <span style="color: #999;">2018-01-01至2018-07-01</span>
+                    <span style="color: #999;">{$lo.start_time|time_format='Y-m-d'}至{$lo.end_time|time_format='Y-m-d'}</span>
                 </div>
             </div>
         </a>
+        {/volist}
 </div>
 {/block}
 {block name="script"}

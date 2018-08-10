@@ -13,7 +13,9 @@ use app\home\model\Apply;
 use app\home\model\Competition;
 use app\home\model\CompetitionApply;
 use app\home\model\CompetitionEvent;
+use app\home\model\CourseApply;
 use app\home\model\Picture;
+use app\home\model\VenueCourse;
 use app\home\model\Vipapply;
 use app\home\model\WechatUser;
 
@@ -121,7 +123,28 @@ class User extends Base
     public function paysuccess(){
         return $this->fetch();
     }
+
+    //个人中心 我的培训
     public function train(){
+        $userId = session('userId');
+        $left = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','gt',time())->order('id desc')->limit(6)->select();//未结束
+        foreach($left as $k=>$v){
+            $q = VenueCourse::where('id',$v['course_id'])->value('content');
+            $a = str_replace('&nbsp;','',strip_tags($q));
+            $z = str_replace(" ",'',$a);
+            $left[$k]['content'] = str_replace("\n",'',$z);
+        }
+        $right = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','elt',time())->order('id desc')->limit(6)->select();//已结束
+        foreach($right as $key=>$value){
+            $qq= VenueCourse::where('id',$value['course_id'])->value('content');
+            $aa = str_replace('&nbsp;','',strip_tags($qq));
+            $zz = str_replace(" ",'',$aa);
+            $right[$key]['content2'] = str_replace("\n",'',$zz);
+        }
+        $this->assign('left',$left);
+        $this->assign('right',$right);
+//        dump($left);dump($right);exit;
+
         return $this->fetch();
     }
 
