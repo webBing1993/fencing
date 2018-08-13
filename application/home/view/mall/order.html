@@ -86,10 +86,20 @@
     </div>
 </div>
 
+
+<!-- payChoose-->
+<div class="payChoose">
+    <div class="shadow"></div>
+    <div class="chooseList">
+        <a href="javascript:;" class="zhifubao">支付宝</a>
+        <a href="javascript:;" class="weixin">微信</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
 {/block}
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-<script type="text/javascript" src="/home/js/ap.js"></script>
 <script>
 
     var id = "{$data.id}";
@@ -139,50 +149,44 @@
                 });
     }
 
-    // 微信
-    // $(".orderBtn a").on('click', function () {
-    //     $.ajax({
-    //         url: "{:Url('Mall/pay')}",
-    //         type: 'post',
-    //         data: {
-    //             id: id,
-    //             text1: $(".size").val(),
-    //             text2: $(".list_ textarea").val()
-    //         },
-    //         beforeSend: function(XMLHttpRequest){
-    //             $(".showbox").show();
-    //         },
-    //         success: function (msg) {
-    //             $(".showbox").hide();
-    //              payPrice(id,price,1);
-    //         }
-    //     })
-    // });
-    // 支付宝
-    $(".orderBtn a").on('click', function (event) {
+    $(".orderBtn a").on('click', function () {
         $.ajax({
-            url: "/home/pay/alipay",
+            url: "{:Url('Mall/pay')}",
             type: 'post',
             data: {
-                price: 1,
+                id: id,
+                text1: $(".size").val(),
+                text2: $(".list_ textarea").val()
             },
             beforeSend: function(XMLHttpRequest){
                 $(".showbox").show();
             },
-            success: function (response) {
-                // $(".showbox").hide();
-                // payPrice(id,price,1);
-                response = JSON.parse(response);
-                if (response.success) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    event.stopImmediatePropagation();
-                    _AP.pay(response.data);
-                }
+            success: function (msg) {
+                $(".showbox").hide();
+                $('.payChoose').show();
             }
         })
-
     });
+
+
+
+    /**
+     * payChoose
+     * */
+    $('.payChoose a').on('click', function () {
+        if ($(this).hasClass('zhifubao')) {
+            // 调取支付宝接口
+
+        }else if ($(this).hasClass('weixin')) {
+            payPrice(id,price,1);
+        }else {
+            $('.payChoose').hide();
+        }
+    });
+    $('.payChoose .shadow').on('click', function () {
+        $('.payChoose').hide();
+    });
+
 
     // 取消
     $(".cancel,.shadow").on('click', function () {

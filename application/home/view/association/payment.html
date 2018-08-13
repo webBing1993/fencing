@@ -111,6 +111,16 @@
     </div>
 </div>
 
+<!-- payChoose-->
+<div class="payChoose">
+    <div class="shadow"></div>
+    <div class="chooseList">
+        <a href="javascript:;" class="zhifubao">支付宝</a>
+        <a href="javascript:;" class="weixin">微信</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
 {/block}
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -118,6 +128,7 @@
 
     var id = {$data.id};
     var price = {$data.price};
+    var id_ = 0;
 
     /*
      * 地图跳转
@@ -160,13 +171,33 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
-                    payPrice(msg.data.id,price,'/home/association/paysuccess1/id/'+msg.data.id);
+                    $('.payChoose').show();
+                    id_ = msg.data.id;
                 }
             })
         }else {
             $('#pay').show();
         }
     });
+
+    /**
+     * payChoose
+     * */
+    $('.payChoose a').on('click', function () {
+        if ($(this).hasClass('zhifubao')) {
+            // 调取支付宝接口
+
+        }else if ($(this).hasClass('weixin')) {
+            payPrice(msg.data.id,price,'/home/association/paysuccess1/id/'+ id_);
+        }else {
+            $('.payChoose').hide();
+        }
+    });
+    $('.payChoose .shadow').on('click', function () {
+        $('.payChoose').hide();
+    });
+
+
 
     $('.infoError .payError03').on('click',function(){
         $('#pay').hide();
