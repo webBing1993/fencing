@@ -114,7 +114,7 @@
                                 <label>价格:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入价格..." class="form-control form_title" name="price" value="">
+                                <input type="number" placeholder="请输入价格..." class="form-control form_title" name="price" value="" onkeyup="onlyNonNegative(this)" >
                             </div>
                         </div>
 
@@ -257,6 +257,28 @@
         });
 
     });
+
+
+    // 价格非负数
+    function onlyNonNegative(obj) {
+        var inputChar = event.keyCode;
+        //alert(event.keyCode);
+
+        //1.判断是否有多于一个小数点
+        if(inputChar == 190 ) {  //输入的是否为.
+            var index1 = obj.value.indexOf(".") + 1;//取第一次出现.的后一个位置
+            var index2 = obj.value.indexOf(".",index1);
+            while(index2!=-1) {
+                //alert("有多个.");
+
+                obj.value = obj.value.substring(0,index2);
+                index2 = obj.value.indexOf(".",index1);
+            }
+        }
+        //2.如果输入的不是.或者不是数字，替换 g:全局替换
+        obj.value = obj.value.replace(/[^(\d|.)]/g,"");
+    }
+
 </script>
 <script>
     $(function(){
