@@ -189,10 +189,6 @@ class Mall  extends Base
             $data['total'] = $sp['price'] * $data['num'];
             $data['front_cover'] = $sp['front_cover'];
             $data['depart'] = Venue::where('id',$data['depart'])->value('title');
-//            $user = WechatUser::where('mobile',$data['create_user'])->find();
-//            $data['name'] = $user['name'];
-//            $data['mobile'] = $user['mobile'];
-//            $data['depart'] = WechatDepartment::where('id',$user['department'])->value('name');
         }
         $this->assign('data',$data);
 
@@ -217,7 +213,7 @@ class Mall  extends Base
     // 商城订单列表
     public function orderList(){
         $uid = session('userId');
-        $data = ShopOrder::where('create_user',$uid)->where('status',1)->order('id desc')->limit(10)->select();
+        $data = ShopOrder::where('userid',$uid)->where('status',1)->order('id desc')->limit(10)->select();
         foreach($data as $k=>$v){
             $li = Shop::where('id',$v['sid'])->find();
             $data[$k]['front_cover'] = $li['front_cover'];

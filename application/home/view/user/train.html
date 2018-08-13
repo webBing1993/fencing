@@ -1,0 +1,158 @@
+{extend name="public/common"}
+
+{block name="style"}
+<title>我的培训</title>
+<link rel="stylesheet" href="/home/css/association/game.css">
+{/block}
+{block name="body"}
+<!--顶部分类-->
+<div class="Top">
+    <div data-side="1" class="active">学习中<span></span></div>
+    <div data-side="2">已结束<span></span></div>
+</div>
+<!--正文切换-->
+<div class="news" id="side1" style="display: block;">
+    {volist name="left" id="vo"}
+    <a href="{:Url('Association/gamedetail1?id='.$vo['course_id'])}">
+        <img src="{$vo.front_cover|get_cover='path'}" class="lazy">
+        <div class="newsText" style="padding: 0 0 .1rem .2rem;">
+            <div class="newsTitle">
+                <p>{$vo.course_name}</p>
+                <p>{$vo.content}</p>
+            </div>
+            <div class="newsTime">
+                <span style="color: #999;">{$vo.start_time|time_format='Y-m-d'}至{$vo.end_time|time_format='Y-m-d'}</span>
+            </div>
+        </div>
+    </a>
+    {/volist}
+</div>
+<div class="news" id="side2">
+    {volist name="right" id="lo"}
+    <a href="{:Url('Association/gamedetail1?id='.$lo['course_id'])}">
+        <img src="{$lo.front_cover|get_cover='path'}" class="lazy">
+        <div class="newsText" style="padding: 0 0 .1rem .2rem;">
+            <div class="newsTitle">
+                <p>{$lo.course_name}</p>
+                <p>{$lo.content}</p>
+            </div>
+            <div class="newsTime">
+                <span style="color: #999;">{$lo.start_time|time_format='Y-m-d'}至{$lo.end_time|time_format='Y-m-d'}</span>
+            </div>
+        </div>
+    </a>
+    {/volist}
+</div>
+{/block}
+{block name="script"}
+<script>
+    var scrollNow = true;
+    // var notice = localStorage.getItem('trains')==null?0:localStorage.getItem('trains');
+    var type = localStorage.getItem('train')==null?1:localStorage.getItem('train');
+    $('.Top div').removeClass('active');
+    $('.Top div').eq(type-1).addClass('active');
+    $('.news').hide();
+    $('.news').eq(type-1).show()
+    var len = $('.news').eq(type-1).find('a').length;
+    if(len >= 6){
+        $('.tip' ).text('上拉加载更多');
+        loadScroll();
+    }else {
+        $('.tip' ).hide();
+    }
+    for(var i=0;i<$('.Top div').length;i++){
+        $('.Top div')[i].onclick = function(){
+            $('.Top div').removeClass('active');
+            $(this).addClass('active');
+            var side = $(this).data('side');
+            $('.news').hide();
+            $('#side'+side).show();
+            // localStorage.setItem('trains',eq);
+            localStorage.setItem('train',side);
+            var len = $('.news').eq(side-1).find('a').length;
+            if(len >= 6){
+                $('.tip' ).text('上拉加载更多');
+                loadScroll();
+            }else {
+                $('.tip' ).hide();
+            }
+            type = side;
+            // loadScroll();
+        }
+    }
+
+    function loadScroll(){
+        $(window ).off("scroll" ).on("scroll",function(){
+            var ntc = $('.lists');
+            var dh = $(document).height();
+            var end = $(window).height() + $(window ).scrollTop();
+            var len = $('.news').eq(type-1).find('a').length;
+            var tip = $(".tip");
+            var loading = $('.loading');
+            if(dh == end && scrollNow){
+                scrollNow = false;
+                $.ajax({
+                    type:"post",
+                    url: "{:Url('user/more2')}",
+                    data:{
+                        type:type,
+                        len:len
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        tip.hide();
+                        loading.toggleClass('hidden');
+                    },
+                    success:function(data){
+                        loading.toggleClass('hidden');
+                        tip.show();
+                        if(data.code == 1){
+                            addLists(data,type);
+                            if(data.data.length == 5){
+                                tip.text('上拉加载更多');
+                            }else{
+                                tip.text('没有更多数据了');
+                                // $(window ).off("scroll");
+                            }
+                            $("img.lazy").lazyload({
+                                placeholder: "/home/images/loading.jpg",
+                                effect: "fadeIn",
+                                threshold: 1
+                            });
+                        } else {
+                            tip.text('没有更多数据了');
+                            $(window ).off("scroll");
+                        }
+                        scrollNow = true;
+                    }
+                })
+            }
+        })
+    }
+    function addLists(data,type){
+        var html = '';
+        var lists = data.data;
+        var len = lists.length;
+        for(var i = 0; i< len;i++){
+            var list = lists[i];
+            //var pid = $('.part div' ).eq(list.pid ).text();
+            html +=
+                '<a href="/home/association/gamedetail1/id/'+ list.course_id+'.html">'+
+                '<img class="lazy" data-original='+list.front_cover+'>'
+                +'<div class="newsText" style="padding: 0 0 .1rem .2rem;">'
+                +'<div class="newsTitle">'+list.course_name+'</div><div class="newsTime"><span>'+list.content+'</span><span>'+list.start_time+'至'+list.end_time+'</span></div>'
+                +'</div>'
+                +'</a>'
+        }
+        $('.news').eq(type-1).append(html);
+    }
+</script>
+<script>
+    $(document).scroll(function() {
+        $("img.lazy").lazyload({
+            placeholder: "/home/images/loading.jpg",
+            effect: "fadeIn",
+            threshold: 1
+        });
+    });
+</script>
+{/block}

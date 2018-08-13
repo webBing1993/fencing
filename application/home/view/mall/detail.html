@@ -178,8 +178,9 @@
                 setTimeout(function () {
                     $(".showbox").hide();
                     $('.buy').hide();
+//                    window.location.href = '/home/mall/order/id/' + msg.data;
                    window.location.replace('/home/mall/order/id/' + msg.data);
-                },1500)
+                },500)
             }
         })
     });
