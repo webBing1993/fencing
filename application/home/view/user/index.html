@@ -35,7 +35,11 @@
         <a href="/home/user/leave.html"><img src="/home/images/user/user04.png" class="icon">请假申请</a>
         <a href="/home/user/leave.html"><img src="/home/images/user/user05.png" class="icon">请假审批</a>
         <a href="#"><img src="/home/images/user/user06.png" class="icon">所属教练</a>
+        {if condition="($ts == 1)"}
         <a href="/home/complaint/index.html"><img src="/home/images/user/user07.png" class="icon">教练投诉</a>
+        {else /}
+        {/if}
+
     </div>
 {/block}
 {block name="script"}

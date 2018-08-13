@@ -18,6 +18,7 @@ use app\home\model\Picture;
 use app\home\model\VenueCourse;
 use app\home\model\Vipapply;
 use app\home\model\WechatUser;
+use app\home\model\WechatUserTag;
 
 class User extends Base
 {
@@ -26,6 +27,13 @@ class User extends Base
         $userId = session('userId');
         $user = WechatUser::where('mobile',$userId)->find();
         $this->assign('user',$user);
+        $venue_id = WechatUserTag::getVenueId($userId);
+        if($venue_id != false AND $user['tag'] == 1){
+            $ts = 1;
+        }else{
+            $ts = 0;
+        }
+        $this->assign('ts',$ts);
 
         return $this->fetch();
     }
