@@ -27,7 +27,225 @@
 <div class="sucDetail07" style="margin-top: 1.4rem;">请打开签到二维码</div>
 <div class="sucDetail07" style="color: #3A8CFB;margin-top: .3rem;">（个人中心-我的签到）</div>
 <div class="sucDetail08" style="margin-top: 2rem;">在屏幕下方的扫描器扫描二维码进行签到</div>
+<input type="text" class="number" maxlength="11" style="background: red;">
+<div class="bg"></div>
+<ul class="roster"></ul>
 <!--<div class="sucDetail04">在屏幕下方的扫描器扫描二维码进行签到</div>-->
 {/block}
 {block name="script"}
+<script src="/admin/js/plugins/toastr/toastr.min.js"></script>
+<script>
+
+    var a = '';
+
+    var wh = $(window).height();
+    $('body').height(wh);
+
+    //签到
+    var last = '';
+    var end = true;
+    //初始化签到
+    $('.sign').on('click', function () {
+        history.go(0)
+    });
+    $('.bg').off('click').on('click', function () {
+        $('.bg,.roster').fadeOut();
+        $('.number').focus();
+    });
+    $('.more').each(function () {
+        var hh = $(this).parents('.content').height();
+        $(this).height(hh).css('padding-top', hh - 18);
+    });
+
+    $('.number').focus();
+    var clean;
+    document.onkeyup = function (event) {
+        var e = event || window.event;
+        var keyCode = e.keyCode;
+        if (a.length >= 11) {
+            a = '';
+            return false;
+        }
+        if (end == true && a.length < 10) {
+            a += keyCode;
+        } else {
+            if (a.length < 11 && end == true) {
+                a += keyCode;
+                var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+                var nubmer = a;
+
+                if (!re.test(nubmer)) {
+                    end = false;
+                    toastr.error('无效的二维码');
+                    speckText('无效的二维码');
+                    setTimeout(function () {
+                        a = '';
+                        end = true;
+                    }, 1500);
+                    return false;
+                }
+
+                var num = a;
+                if (last != num && end == true) {
+                    last = num;
+                    end = false;
+                    // 签到更新
+                    $.ajax({
+                        type: "post",
+                        url: "{:Url('Visitor/newSign')}",
+                        data: {
+                            mobile: num
+                        },
+                        dataType: "Json",
+                        success: function (data) {
+                            var obj = data.data;
+                            speckText(data.msg);
+                            var html = '';
+                            var name = '';
+                            if (obj) {
+                                for (var i = 0; i < obj.length; i++) {
+                                    html += '<div class="' + 'list' + '" data-tab=' + obj[i].coach_id + ' data-tag=' + obj[i].class_id + '>' +
+                                        '<div class="' + 'coach' + '">' +
+                                        '<span class="' + 'name limit' + '">教练: ' + obj[i].name + '/' + obj[i].class_name + '</span>' +
+                                        '<span class="' + 'num limit' + '">学员情况: <span>' + obj[i].current_num + '</span>/' + obj[i].all_num + '</span>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                                $('.lists').html('');
+                                $('.lists').prepend(html);
+                            }
+
+
+                            if (data.code == 1) {
+                                a = '';
+                                end = true;
+                                last = '';
+                                toastr.success(data.msg);
+
+                            } else if (data.code == 2) {
+
+                                a = '';
+                                end = true;
+                                last = '';
+                                toastr.warning(data.msg);
+                            } else {
+                                a = '';
+                                end = true;
+                                last = '';
+                                toastr.error(data.msg);
+                            }
+                        }
+                    })
+                } else {
+
+                    a = '';
+                }
+            }
+        }
+    }
+
+    function test(number) {
+        //var e = event || window.event;
+        //var keyCode = e.key;
+        var a = number;
+
+        var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+        var nubmer = a;
+
+        if (!re.test(nubmer)) {
+            end = false;
+            toastr.error('无效的二维码');
+            speckText('无效的二维码');
+            setTimeout(function () {
+                a = '';
+                end = true;
+            }, 1500);
+            return false;
+        }
+
+        var num = a;
+        if (last != num && end == true) {
+            last = num;
+            end = false;
+            // 签到更新
+            $.ajax({
+                type: "post",
+                url: "{:Url('Visitor/newSign')}",
+                data: {
+                    mobile: num
+                },
+                dataType: "Json",
+                success: function (data) {
+                    var obj = data.data;
+                    speckText(data.msg);
+                    var html = '';
+                    var name = '';
+                    if (obj) {
+                        for (var i = 0; i < obj.length; i++) {
+                            html += '<div class="' + 'list' + '" data-tab=' + obj[i].coach_id + ' data-tag=' + obj[i].class_id + '>' +
+                                '<div class="' + 'coach' + '">' +
+                                '<span class="' + 'name limit' + '">教练: ' + obj[i].name + '/' + obj[i].class_name + '</span>' +
+                                '<span class="' + 'num limit' + '">学员情况: <span>' + obj[i].current_num + '</span>/' + obj[i].all_num + '</span>' +
+                                '</div>' +
+                                '</div>';
+                        }
+                        $('.lists').html('');
+                        $('.lists').prepend(html);
+                    }
+
+
+                    if (data.code == 1) {
+                        a = '';
+                        end = true;
+                        last = '';
+                        toastr.success(data.msg);
+
+                    } else if (data.code == 2) {
+
+                        a = '';
+                        end = true;
+                        last = '';
+                        toastr.warning(data.msg);
+                    } else {
+                        a = '';
+                        end = true;
+                        last = '';
+                        toastr.error(data.msg);
+                    }
+                }
+            })
+        } else {
+
+            a = '';
+        }
+
+    }
+
+    // 播放声音
+    function speckText(str) {
+//	var url = "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=7&text=" + encodeURI(str);        // baidu
+        var url = "http://tsn.baidu.com/text2audio?tex=" + encodeURI(str) + "&lan=zh&ctp=1&cuid=$token&tok=$token&per=0&spd=7&pit=5&vol=5";        // baidu
+        var n = new Audio(url);
+        n.src = url;
+        n.play();
+    }
+
+    // 提醒框配置
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-center",
+        "onclick": null,
+        "showDuration": "500",
+        "hideDuration": "500",
+        "timeOut": "10000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut",
+        "progressBar": true
+    }
+
+</script>
 {/block}
