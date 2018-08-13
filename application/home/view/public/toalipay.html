@@ -120,6 +120,7 @@
 <div class="J-weixin-tip-img weixin-tip-img"></div>
 
 <script type="text/javascript" src="/home/js/ap.js"></script>
+<script type="text/javascript" src="/home/js/reset.js"></script>
 <script>
     if (location.hash.indexOf('error') != -1) {
         alert('参数错误，请检查');
@@ -142,6 +143,7 @@
             };
             var param = getQueryString(location.href, 'goto') || '';
 
+            setCookie('isCookie',true);
             location.href = param != '' ? _AP.decode(param) : 'buypoints#error';
         }
     }

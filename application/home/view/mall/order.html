@@ -91,8 +91,8 @@
 <div class="payChoose">
     <div class="shadow"></div>
     <div class="chooseList">
-        <a href="javascript:;" class="zhifubao">支付宝</a>
-        <a href="javascript:;" class="weixin">微信</a>
+        <a href="javascript:;" class="zhifubao"><i></i> 支付宝</a>
+        <a href="javascript:;" class="weixin"><i></i>微信</a>
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
@@ -101,6 +101,7 @@
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="/home/js/ap.js"></script>
+<script src="/home/js/reset.js"></script>
 <script>
 
     var id = "{$data.id}";
@@ -188,7 +189,6 @@
             success: function (msg) {
                 $(".showbox").hide();
                 $('.payChoose').show();
-//                payPrice1(id,price);
             }
         })
     });
@@ -199,13 +199,20 @@
      * payChoose
      * */
     $('.payChoose a').on('click', function () {
-        if ($(this).hasClass('zhifubao')) {
-            // 调取支付宝接口
-            payPrice1(id,price);
-        }else if ($(this).hasClass('weixin')) {
-            payPrice(id,price,1);
+        if (getCookie('isCookie')) {
+            // 跳转到判断页面去
+
+
+            delCookie('isCookie')
         }else {
-            $('.payChoose').hide();
+            if ($(this).hasClass('zhifubao')) {
+                // 调取支付宝接口
+                payPrice1(id,price);
+            }else if ($(this).hasClass('weixin')) {
+                payPrice(id,price,1);
+            }else {
+                $('.payChoose').hide();
+            }
         }
     });
     $('.payChoose .shadow').on('click', function () {
@@ -214,10 +221,10 @@
 
 
     // 取消
-    $(".cancel,.shadow").on('click', function () {
+    $(".popUp .cancel,.popUp .shadow").on('click', function () {
         setTimeout(function () {
             history.go(-2);
-        },2000)
+        },1500)
     });
 
     $(function () {

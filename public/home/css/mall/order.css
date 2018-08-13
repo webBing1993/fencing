@@ -397,6 +397,27 @@ body {
     font-size: .36rem;
     text-align: center;
     border-bottom: 1px solid #EBEBEB;
+    position: relative;
+    padding-left: .36rem;
+}
+
+.payChoose .chooseList a i {
+    position: absolute;
+    left: 38%;
+    top: 50%;
+    transform: translateY( -50%);
+    width: .36rem;
+    height: .36rem;
+}
+
+.payChoose .chooseList a:first-of-type i {
+    background: url("/home/images/common/zhifubao.png") center no-repeat ;
+    background-size: .36rem .36rem;
+}
+
+.payChoose .chooseList a:nth-of-type(2) i {
+    background: url("/home/images/common/weixin.png") center no-repeat ;
+    background-size: .36rem .36rem;
 }
 
 .payChoose .chooseList a:last-of-type {
