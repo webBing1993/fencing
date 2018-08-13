@@ -106,6 +106,7 @@ class Newsletter  extends Base
     // 通讯名录列表页
     public function userlist(){
         $id = input('id');
+        $this->assign('bmid',$id);
         $user = WechatDepartmentUser::where('departmentid',$id)->select();
         $charArray = [];
         foreach($user as $k=>$v){
@@ -175,5 +176,27 @@ class Newsletter  extends Base
         }
     }
 
+    /**
+     * 部门内搜索
+     */
+    public function search2() {
+        $val = input('val');
+        if($val) {
+            $map = [
+                'name' => ['like','%'.$val.'%'],
+            ];
+            $map2 = [
+                'mobile' => ['like','%'.$val.'%'],
+            ];
+            $list = WechatUser::where($map)->whereOr($map2)->column('id,name,mobile,header,avatar');
+            if($list) {
+                return $this->success("查询成功","",$list);
+            }else{
+                return $this->error("未查询到数据");
+            }
+        }else {
+            return $this->error("查询条件不能为空");
+        }
+    }
 
 }
