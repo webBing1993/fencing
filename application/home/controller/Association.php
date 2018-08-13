@@ -43,7 +43,7 @@ class Association  extends Base
 
         //比赛报名
         $map1 = array('status' => ['>=', 0]);
-        $left = Competition::where($map1)->order('end_time desc')->limit(2)->select();
+        $left = Competition::where($map1)->order('create_time desc')->limit(2)->select();
         $this->assign('left',$left);
 
         return $this->fetch();
@@ -292,7 +292,7 @@ class Association  extends Base
     public function game(){
         //比赛报名
         $map1 = array('status' => ['>=', 0]);
-        $left = Competition::where($map1)->order('end_time desc')->limit(10)->select();
+        $left = Competition::where($map1)->order('create_time desc')->limit(10)->select();
         $this->assign('left',$left);
         //课程报名
         $userId = session('userId');
