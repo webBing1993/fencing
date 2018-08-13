@@ -9,15 +9,27 @@
     <div class="nameAccount">
         <p class="name clearfix">
             <span class="fl">{$user.name}</span>
+
+            {if condition="($user['gender'] == 1)"}
             <!-- 男-->
             <i class="male fl"></i>
+            {elseif condition="($user['gender'] == 2)" /}
             <!-- 女-->
-            <!--<i class="female fl"></i>-->
+            <i class="female fl"></i>
+            {else/}
+
+            {/if}
         </p>
         <p class="account">账号：{$user.userid}</p>
     </div>
     <div class="img">
-        <img src="/home/images/1.jpg" alt="">
+
+        {if condition="!empty($user['header'])"}
+        <img src="{$user.header}" alt="">
+        {else /}
+        <img src="{$user.avatar}" alt="">
+        {/if}
+
     </div>
 </div>
 
@@ -49,7 +61,12 @@
     </div>
     <div class="list clearfix">
         <span class="fl">剑种</span>
+        {if condition="!empty($user['swords'])"}
         <span class="fr">{$user.swords}</span>
+        {else /}
+        <span class="fr">暂无</span>
+        {/if}
+
     </div>
 </div>
 

@@ -1,17 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Administrator
- * Date: 2018/7/19
+ * User: 王泽锋
+ * Date: 2018/08/10
  * Time: 14:16
  */
-
 namespace app\home\controller;
 
-
-/*
- * 通讯名录
- * */
 use app\home\model\Venue;
 use app\home\model\WechatDepartment;
 use app\home\model\WechatDepartmentUser;
