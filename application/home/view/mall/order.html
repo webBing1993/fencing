@@ -151,12 +151,14 @@
     }
 
     // zhifubao
-    function payPrice1(price) {
+    function payPrice1(id,price) {
         $.ajax({
             url: "/home/pay/alipay",
             type: 'post',
             data: {
                 price: price,
+                pid: id,
+                type:4
             },
             success: function (response) {
                 response = JSON.parse(response);
@@ -197,7 +199,7 @@
     $('.payChoose a').on('click', function () {
         if ($(this).hasClass('zhifubao')) {
             // 调取支付宝接口
-            payPrice1(price);
+            payPrice1(id,price);
         }else if ($(this).hasClass('weixin')) {
             payPrice(id,price,1);
         }else {
