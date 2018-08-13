@@ -77,7 +77,6 @@ class Wechat extends Controller
             return json_encode(['success' => false,'data' => $e->errorMessage()]);
         }
 
-//        var_dump($retData);
         echo $ret;
         exit;
     }
@@ -88,6 +87,6 @@ class Wechat extends Controller
 
     // 兼容服务号错误
     public function toalipay() {
-        return $this->fetch('mall/toalipay');
+        return $this->fetch('public/toalipay');
     }
 }

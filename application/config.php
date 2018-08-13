@@ -127,8 +127,8 @@ cKG85S3TOIxeCdBjvqluMO1on7Bq7yu+YoiguTR7g2U1P/6Zd9YK',
         ],// 用户不可用指定渠道支付当有多个渠道时用“,”分隔
 
         // 与业务相关参数
-        'notify_url' => 'http://jjg.0519ztnet.com/home/pay/alipayNotify',
-        'return_url' => 'http://jjg.0519ztnet.com/home/pay/returnUrl',
+        'notify_url' => 'http://jjg.0519ztnet.com/home/Wechat/alipayNotify',
+        'return_url' => 'http://jjg.0519ztnet.com/home/Wechat/returnUrl',
 
         'return_raw' => true,// 在处理回调时，是否直接返回原始数据，默认为 true
     ],

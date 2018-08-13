@@ -90,21 +90,22 @@ class Pay extends Base
 
     // 生成alipay订单
     public function alipay() {
-        $uid = session('userId');
-
-//        $price = input('points');
+        $pid = input('pid');
+        $type = input('type');
+//        $price = input('price');
         $price = 0.01;
-        if (empty($price)) {
+        if (empty($pid) || empty($type) || empty($price)) {
             $this->error('参数错误！');
         }
-
+        $uid = session('userId');
         $aliConfig = config('alipay');
-        // 订单信息
-        $orderNo = $aliConfig['app_id'].time() . rand(1000, 9999);
+
+        //统一下单
+        $outTradeNo = $aliConfig['app_id'].time() . rand(1000, 9999);
         $payData = [
-            'body'    => '积分购买',
-            'subject'    => '积分购买',
-            'order_no'    => $orderNo,
+            'body'    => '购买支付',
+            'subject'    => '购买支付',
+            'order_no'    => $outTradeNo,
             'timeout_express' => time() + 600,// 表示必须 600s 内付款
             'amount'    => $price ,// 单位为元 ,最小为0.01
             'return_param' => 'tata',// 一定不要传入汉字，只能是 字母 数字组合
@@ -115,16 +116,34 @@ class Pay extends Base
 
         try {
             $str = Charge::run(Config::ALI_CHANNEL_WAP, $aliConfig, $payData);
+            //生成预支付订单
+            $model = wechatUser::where(['userid' => $uid])->find();
+            if($type == 2){
+                $event_id = competitionApply::where(['id' => $pid])->value('event_id');
+                if($event_id){
+                    $original_price = competitionEvent::where(['id' => $event_id])->value('price');
+                }else{
+                    $original_price = $price;
+                }
+            }else{
+                $original_price = $price;
+            }
 
-            $payLog = [
-                'order_id' => $orderNo, //唯一订单号
-                'user_id' => $uid,
-                'user_type' => 1,
-                'points' => $price,
-                'rmb' => $price * 10, //单位元
-                'type' => 2,
+            $info = [
+                'out_trade_no' => $outTradeNo, //唯一订单号
+                'userid' => $uid,
+                'type' => $type,
+                'table' => PayRecord::TYPE_ARRAY[$type],
+                'pid' => $pid,
+                'name' => $model['name'],
+                'price' => $price,
+                'original_price' => $original_price,//原价
+                'pay_type' => 1,//支付类型 1支付宝 2微信 3银联
             ];
-//            PayLogModel::create($payLog);
+            $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
+            if(!$rs){
+                PayRecord::create($info);
+            }
         } catch (PayException $e) {
             return json_encode(['success' => false,'data' => $e->errorMessage()]);
         }
