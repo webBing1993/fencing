@@ -159,11 +159,12 @@ class Newsletter  extends Base
         $val = input('val');
         if($val) {
             $map = [
-                'title' => ['like','%'.$val.'%'],
-                'status' => 1,
+                'name' => ['like','%'.$val.'%'],
             ];
-            $filmModel = new Redfilm();
-            $list = $filmModel->where($map)->order('create_time desc')->column('id,title');
+            $map2 = [
+                'mobile' => ['like','%'.$val.'%'],
+            ];
+            $list = WechatUser::where($map)->whereOr($map2)->column('id,name,mobile');
             if($list) {
                 return $this->success("查询成功","",$list);
             }else{
