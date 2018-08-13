@@ -63,15 +63,15 @@
 <div class="news" style='margin-bottom: .2rem;'>
     <div class="productsTop">
         <span>比赛报名</span>
-        <a href="/home/association/newsmore.html" class="more">查看更多 <img src="/home/images/iconRight.png"></a>
+        <a href="{:Url('Association/game')}" class="more">查看更多 <img src="/home/images/iconRight.png"></a>
     </div>
     <div class="newsSort">
-        {volist name="list2" id="lo"}
-        <a href="{:Url('Association/newsdetail?id='.$lo['id'])}">
-            <img src="{$lo.front_cover|get_cover='path'}" class="lazy">
+        {volist name="left" id="co"}
+        <a href="{:Url('Association/gamedetail?id='.$co['id'])}">
+            <img src="{$co.front_cover|get_cover='path'}" class="lazy">
             <div class="newsText">
-                <div class="newsTitle">{$lo.title}</div>
-                <div class="newsTime"><span>{$lo.publisher}</span><span>{$lo.create_time|time_format='Y-m-d'}</span></div>
+                <div class="newsTitle">{$co.title}</div>
+                <div class="newsTime"><span>{$co.publisher}</span><span>{$co.create_time|time_format='Y-m-d'}</span></div>
             </div>
         </a>
         {/volist}

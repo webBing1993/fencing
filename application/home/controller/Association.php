@@ -41,6 +41,11 @@ class Association  extends Base
         $list2 = News::where('status',0)->order('id desc')->limit(2)->select();
         $this->assign('list2',$list2);
 
+        //比赛报名
+        $map1 = array('status' => ['>=', 0]);
+        $left = Competition::where($map1)->order('end_time desc')->limit(2)->select();
+        $this->assign('left',$left);
+
         return $this->fetch();
     }
 
@@ -769,4 +774,5 @@ class Association  extends Base
 
         return $this->fetch();
     }
+
 }
