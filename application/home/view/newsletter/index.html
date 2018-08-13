@@ -140,14 +140,18 @@
          * */
         function addMsg(data) {
             var list = data.data;
-            console.log(list);
             var html = '';
             if (list.length == 0) {
                 html = '<div class="noList">搜索无内容，请重新搜索</div>';
             }
             for (var i in list) {
-                html += '<a href="javascript:;" class="list clearfix">' +
-                        '<img src="' + list[i].src + '" alt="" class="fl lazy">' +
+                html += '<a href="javascript:;" class="list clearfix">';
+                if (list.header == null) {
+                    html +=  '<img src="' + list[i].avatar + '" alt="" class="fl lazy">';
+                }else {
+                    html += '<img src="' + list[i].header + '" alt="" class="fl lazy">';
+                }
+                html +=
                         '<span class="fl name">' + list[i].name + '</span>' +
                         '</a>'
             }

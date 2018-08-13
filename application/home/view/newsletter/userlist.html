@@ -134,10 +134,15 @@
         if (list.length == 0) {
             html = '<div class="noList">搜索无内容，请重新搜索</div>';
         }
-        for (var i = 0; i < list.length; i++) {
-            html += '<a href="javascript:;" class="list clearfix">'+
-                    '<img src="'+ list.src +'" alt="" class="fl lazy">'+
-                    '<span class="fl name">'+ list.name +'</span>'+
+        for (var i in list) {
+            html += '<a href="javascript:;" class="list clearfix">';
+            if (list.header == null) {
+                html +=  '<img src="' + list[i].avatar + '" alt="" class="fl lazy">';
+            }else {
+                html += '<img src="' + list[i].header + '" alt="" class="fl lazy">';
+            }
+            html +=
+                    '<span class="fl name">' + list[i].name + '</span>' +
                     '</a>'
         }
 
