@@ -12,7 +12,7 @@ namespace app\home\controller;
 use app\home\model\Apply;
 use app\home\model\Competition;
 use app\home\model\CompetitionApply;
-use app\home\model\CompetitionEvent;
+use app\home\model\Course;
 use app\home\model\CourseApply;
 use app\home\model\Picture;
 use app\home\model\VenueCourse;
@@ -152,8 +152,38 @@ class User extends Base
         $this->assign('left',$left);
         $this->assign('right',$right);
 
-
         return $this->fetch();
+    }
+
+    //个人中心  我的培训   上拉加载
+    public function more2(){
+        $len = input('len');
+        $type = input('type');
+        $userId = session('userId');
+
+        if($type == 1){
+            $info = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','gt',time())->order('id desc')->limit($len,6)->select();//未结束
+        }elseif($type == 2){
+            $info = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','elt',time())->order('id desc')->limit($len,6)->select();//已结束
+        }
+
+        foreach($info as $value){
+            $value['start_time'] = date("Y-m-d",$value['start_time']);
+            $value['end_time'] = date("Y-m-d",$value['end_time']);
+            $q = VenueCourse::where('id',$value['course_id'])->value('content');
+            $a = str_replace('&nbsp;','',strip_tags($q));
+            $z = str_replace(" ",'',$a);
+            $value['content'] = str_replace("\n",'',$z);
+//            $value['front_cover'] = Course::where('id',$value['course_id'])->value('front_cover');
+//            $img = Picture::get($value['front_cover']);
+//            $value['front_cover'] = $img['path'];
+        }
+
+        if($info){
+            return $this->success("加载成功",'',$info);
+        }else{
+            return $this->error("加载失败");
+        }
     }
 
     //个人中心  我的比赛

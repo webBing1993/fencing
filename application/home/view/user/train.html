@@ -93,7 +93,7 @@
                 scrollNow = false;
                 $.ajax({
                     type:"post",
-                    url: "{:Url('user/more')}",
+                    url: "{:Url('user/more2')}",
                     data:{
                         type:type,
                         len:len
@@ -136,10 +136,10 @@
             var list = lists[i];
             //var pid = $('.part div' ).eq(list.pid ).text();
             html +=
-                '<a href="/home/association/newsdetail2/id/'+ list.id+'.html">'+
+                '<a href="/home/association/gamedetail1/id/'+ list.course_id+'.html">'+
                 '<img class="lazy" data-original='+list.front_cover+'>'
                 +'<div class="newsText" style="padding: 0 0 .1rem .2rem;">'
-                +'<div class="newsTitle">'+list.title+'</div><div class="newsTime"><span>'+list.publisher+'</span><span>'+list.time+'</span></div>'
+                +'<div class="newsTitle">'+list.course_name+'</div><div class="newsTime"><span>'+list.content+'</span><span>'+list.start_time+'至'+list.end_time+'</span></div>'
                 +'</div>'
                 +'</a>'
         }
