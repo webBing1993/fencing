@@ -135,16 +135,18 @@
         if (list.length == 0) {
             html = '<div class="noList">搜索无内容，请重新搜索</div>';
         }
-        for (var i in list) {
-            html += '<a href="javascript:;" class="list clearfix">';
-            if (list.header == null) {
-                html +=  '<img src="' + list[i].avatar + '" alt="" class="fl lazy">';
-            }else {
-                html += '<img src="' + list[i].header + '" alt="" class="fl lazy">';
+        for (var i = 0; i < list.length; i++) {
+            for (var j in list[i]) {
+                html += '<a href="/home/newsletter/detail/id/'+ j +'" class="list clearfix">';
+                if (list.header == null) {
+                    html +=  '<img src="' + list[i][j].avatar + '" alt="" class="fl lazy">';
+                }else {
+                    html += '<img src="' + list[i][j].header + '" alt="" class="fl lazy">';
+                }
+                html +=
+                        '<span class="fl name">' + list[i][j].name + '</span>' +
+                        '</a>'
             }
-            html +=
-                    '<span class="fl name">' + list[i].name + '</span>' +
-                    '</a>'
         }
 
         $('.searchResult').append(html);
