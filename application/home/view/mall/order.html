@@ -86,6 +86,17 @@
     </div>
 </div>
 
+
+<!-- payChoose-->
+<div class="payChoose">
+    <div class="shadow"></div>
+    <div class="chooseList">
+        <a href="javascript:;" class="zhifubao">支付宝</a>
+        <a href="javascript:;" class="weixin">微信</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
 {/block}
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -152,10 +163,30 @@
             },
             success: function (msg) {
                 $(".showbox").hide();
-                payPrice(id,price,1);
+                $('.payChoose').show();
             }
         })
     });
+
+
+
+    /**
+     * payChoose
+     * */
+    $('.payChoose a').on('click', function () {
+        if ($(this).hasClass('zhifubao')) {
+            // 调取支付宝接口
+
+        }else if ($(this).hasClass('weixin')) {
+            payPrice(id,price,1);
+        }else {
+            $('.payChoose').hide();
+        }
+    });
+    $('.payChoose .shadow').on('click', function () {
+        $('.payChoose').hide();
+    });
+
 
     // 取消
     $(".cancel,.shadow").on('click', function () {
