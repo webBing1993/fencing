@@ -74,7 +74,7 @@
 {block name='script'}
 
 <script>
-
+    var id = '{$bmid}';
     /*
     * 锚点事件
     * */
@@ -113,10 +113,11 @@
         var val = $(this).val();
         $('.searchResult a,.searchResult .noList').remove();
         $.ajax({
-            url: '',
+            url: "{:Url('Newsletter/search2')}",
             type: 'post',
             data: {
-                val: val
+                val: val,
+                bmid:id
             },
             success: function (msg) {
                 addMsg(msg);

@@ -180,15 +180,21 @@ class Newsletter  extends Base
      * 部门内搜索
      */
     public function search2() {
-        $val = input('val');
-        if($val) {
-            $map = [
-                'name' => ['like','%'.$val.'%'],
-            ];
-            $map2 = [
-                'mobile' => ['like','%'.$val.'%'],
-            ];
-            $list = WechatUser::where($map)->whereOr($map2)->column('id,name,mobile,header,avatar');
+        $val = input('val');//搜索值
+        $bmid = input('bmid');//部门ID
+        if(!empty($val) OR !empty($bmid)) {
+            $wdu = WechatDepartmentUser::where('departmentid',$bmid)->select();
+            $list=array();
+            foreach($wdu as $k=>$v){
+                $map = [
+                    'userid' => $v['userid'],
+                    'name|mobile' => ['like','%'.$val.'%'],
+                ];
+                $da = WechatUser::where($map)->column('id,name,mobile,header,avatar');
+                if(!empty($da)){
+                    $list[] = $da;
+                }
+            }
             if($list) {
                 return $this->success("查询成功","",$list);
             }else{
