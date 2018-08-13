@@ -147,12 +147,31 @@ class Newsletter  extends Base
         }else{
             $user['bm'] = Venue::where('id',$venue_id)->value('title');
         }
-
         $this->assign('user',$user);
 
-//        dump($user);exit;;
-
         return $this->fetch();
+    }
+
+    /**
+     * 首页搜索
+     */
+    public function search() {
+        $val = input('val');
+        if($val) {
+            $map = [
+                'title' => ['like','%'.$val.'%'],
+                'status' => 1,
+            ];
+            $filmModel = new Redfilm();
+            $list = $filmModel->where($map)->order('create_time desc')->column('id,title');
+            if($list) {
+                return $this->success("查询成功","",$list);
+            }else{
+                return $this->error("未查询到数据");
+            }
+        }else {
+            return $this->error("查询条件不能为空");
+        }
     }
 
 
