@@ -21,7 +21,8 @@
         "topthink/think-worker":"*",
         "topthink/think-helper": "*",
         "phpoffice/phpexcel":"*",
-        "goldeagle/wx-pay-api": "dev-master"
+        "goldeagle/wx-pay-api": "dev-master",
+        "riverslei/payment": "^4.0.0"
     },
     "extra": {
         "think-path": "thinkphp"

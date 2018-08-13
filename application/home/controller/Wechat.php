@@ -16,6 +16,8 @@ use wxpay\NativePay;
 use wxpay\PayNotifyCallBack;
 use wxpay\WxPayApi;
 use wxpay\WxPayConfig;
+use Payment\Client\Notify;
+use Payment\Common\PayException;
 
 class Wechat extends Controller
 {
@@ -72,7 +74,7 @@ class Wechat extends Controller
 //            $retData = Notify::getNotifyData($type, $aliConfig);// 获取第三方的原始数据，未进行签名检查
             $ret = Notify::run($type, $aliConfig, $callback);// 处理回调，内部进行了签名检查
         } catch (PayException $e) {
-            return json(['success' => false,'data' => $e->errorMessage()]);
+            return json_encode(['success' => false,'data' => $e->errorMessage()]);
         }
 
 //        var_dump($retData);
@@ -86,6 +88,6 @@ class Wechat extends Controller
 
     // 兼容服务号错误
     public function toalipay() {
-        return $this->fetch('user/toalipay');
+        return $this->fetch('mall/toalipay');
     }
 }

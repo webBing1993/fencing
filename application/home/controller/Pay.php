@@ -12,6 +12,9 @@ use wxpay\JsApiPay;
 use wxpay\database\WxPayUnifiedOrder;
 use wxpay\WxPayApi;
 use wxpay\WxPayConfig;
+use Payment\Client\Charge;
+use Payment\Common\PayException;
+use Payment\Config;
 
 class Pay extends Base
 {
@@ -87,7 +90,10 @@ class Pay extends Base
 
     // 生成alipay订单
     public function alipay() {
-        $price = input('points');
+        $uid = session('userId');
+
+//        $price = input('points');
+        $price = 0.01;
         if (empty($price)) {
             $this->error('参数错误！');
         }
@@ -100,7 +106,7 @@ class Pay extends Base
             'subject'    => '积分购买',
             'order_no'    => $orderNo,
             'timeout_express' => time() + 600,// 表示必须 600s 内付款
-            'amount'    => $price / 10 ,// 单位为元 ,最小为0.01
+            'amount'    => $price ,// 单位为元 ,最小为0.01
             'return_param' => 'tata',// 一定不要传入汉字，只能是 字母 数字组合
             // 'client_ip' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1',// 客户地址
             'goods_type' => '1',
@@ -109,27 +115,21 @@ class Pay extends Base
 
         try {
             $str = Charge::run(Config::ALI_CHANNEL_WAP, $aliConfig, $payData);
-            //生成预支付订单
-            $useType = $this->getUserType(); // 用户类型 1 普通 2  服务站
-            if ($useType == 1) {
-                $uid = session('userId');
-            } else {
-                $uid = session('thirdUserId');
-            }
+
             $payLog = [
                 'order_id' => $orderNo, //唯一订单号
                 'user_id' => $uid,
-                'user_type' => $useType,
+                'user_type' => 1,
                 'points' => $price,
                 'rmb' => $price * 10, //单位元
                 'type' => 2,
             ];
-            PayLogModel::create($payLog);
+//            PayLogModel::create($payLog);
         } catch (PayException $e) {
-            return json(['success' => false,'data' => $e->errorMessage()]);
+            return json_encode(['success' => false,'data' => $e->errorMessage()]);
         }
 
-        return json(['success' => true, 'data' => $str]);
+        return json_encode(['success' => true, 'data' => $str]);
     }
 
 

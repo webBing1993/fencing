@@ -89,6 +89,7 @@
 {/block}
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="/home/js/ap.js"></script>
 <script>
 
     var id = "{$data.id}";
@@ -138,23 +139,49 @@
                 });
     }
 
-    $(".orderBtn a").on('click', function () {
+    // 微信
+    // $(".orderBtn a").on('click', function () {
+    //     $.ajax({
+    //         url: "{:Url('Mall/pay')}",
+    //         type: 'post',
+    //         data: {
+    //             id: id,
+    //             text1: $(".size").val(),
+    //             text2: $(".list_ textarea").val()
+    //         },
+    //         beforeSend: function(XMLHttpRequest){
+    //             $(".showbox").show();
+    //         },
+    //         success: function (msg) {
+    //             $(".showbox").hide();
+    //              payPrice(id,price,1);
+    //         }
+    //     })
+    // });
+    // 支付宝
+    $(".orderBtn a").on('click', function (event) {
         $.ajax({
-            url: "{:Url('Mall/pay')}",
+            url: "/home/pay/alipay",
             type: 'post',
             data: {
-                id: id,
-                text1: $(".size").val(),
-                text2: $(".list_ textarea").val()
+                price: 1,
             },
             beforeSend: function(XMLHttpRequest){
                 $(".showbox").show();
             },
-            success: function (msg) {
-                $(".showbox").hide();
-                payPrice(id,price,1);
+            success: function (response) {
+                // $(".showbox").hide();
+                // payPrice(id,price,1);
+                response = JSON.parse(response);
+                if (response.success) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    _AP.pay(response.data);
+                }
             }
         })
+
     });
 
     // 取消

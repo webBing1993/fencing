@@ -6,7 +6,7 @@
  * Time: 上午3:54
  */
 
-namespace app\index\controller;
+namespace app\home\controller;
 
 use app\common\model\PayLog;
 use app\common\model\PointsLog;

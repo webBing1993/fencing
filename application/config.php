@@ -73,4 +73,63 @@ return [
         'notify_url' => 'http://jjg.0519ztnet.com/home/wechat/notify', // 接收支付状态的连接
         'agentid' => '3010046',
     ],
+    /* 支付宝 */
+    'alipay' => [
+        'use_sandbox' => false,// 是否使用沙盒模式
+        'partner'     => '2088921675491734',
+        'app_id'      => '2018080960945646',
+        'sign_type'   => 'RSA2',// RSA  RSA2
+
+        // 可以填写文件路径，或者密钥字符串  当前字符串是 rsa2 的支付宝公钥(开放平台获取)
+//        'ali_public_key'  => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAihthOCftodBNy329HNe/idSShNPiKviLj1kuBxW/2wA90+cf+RSPIR6MezieM9KTKM8ARWSLrO9cyvV9bgF0mq2KyOeAnUDCmD+ANqYZ137BxayuZIan5ZHg4MhI5m8n3vIVskVKudCa+31bxsmmaEa1X+qK6W247dqP59Y+Pg1pQqzgHEjFSNBQ0q7pMw9kL/y4zU4fCDQa9jIxrNeegoBrotBlOYocdoM+1PWeePLSELMOtNXJrHVYCArzjc4tKs8gjKEKCA/sxmLuJ/rZIJQ9C6+d0wLSqi8LYxR3PGkpGK0YIIEq4eoGz6Xkm2XIDAYB6glWMIh3EcLD+7cFswIDAQAB',
+        'ali_public_key' => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA69JpXWbsi0coC9IXZfUO
+Q1JQN0r92DBHCN96OSsAFnp7jbvm1vjGVhbeHVRcc+VLynMrjm01cCDO2cCc0Kk9
+DEdgAzjtI0Q7L3PqF4CjXAC+dIUfYji5ipcEqqLPliU1ryQ/2EIkfEkH2GEsnghW
+046sf5UCdvBBUsarZ9eagS1Ff+TA6wmCm3iSix6/xJMCpOIIwUwxYureDgEdLhr7
+efZGiwrptzCRFyZXjuQQ4Zhux9sXyPwH+J8Zx0bBm+0Zk5ZQX0/rpZ2gpt21A1lT
+Ksm+U3Ggty+om1H8mxrmFVcg9Q949CM33/Gd6HSrdzOQr+Mlad4NTXxDthoBakzp
+SwIDAQAB',
+        // 可以填写文件路径，或者密钥字符串  我的沙箱模式，rsa与rsa2的私钥相同，为了方便测试
+        'rsa_private_key' => 'MIIEowIBAAKCAQEA69JpXWbsi0coC9IXZfUOQ1JQN0r92DBHCN96OSsAFnp7jbvm
+1vjGVhbeHVRcc+VLynMrjm01cCDO2cCc0Kk9DEdgAzjtI0Q7L3PqF4CjXAC+dIUf
+Yji5ipcEqqLPliU1ryQ/2EIkfEkH2GEsnghW046sf5UCdvBBUsarZ9eagS1Ff+TA
+6wmCm3iSix6/xJMCpOIIwUwxYureDgEdLhr7efZGiwrptzCRFyZXjuQQ4Zhux9sX
+yPwH+J8Zx0bBm+0Zk5ZQX0/rpZ2gpt21A1lTKsm+U3Ggty+om1H8mxrmFVcg9Q94
+9CM33/Gd6HSrdzOQr+Mlad4NTXxDthoBakzpSwIDAQABAoIBAAnZOr9E2iIi8aA0
+wPdoGZVkLadxgVJzCbRsKN2UVyeZK+nKbCSUNSxJPjN5X3cTn2uwDaSgGPg61oiv
+i50HRF5r6K2ZxgWQBuy/aYpbu/bOrSWOnbXraoxILFC4BfVeTnSnDeeJM57hKeu2
+ezeKX53sOnYFkhnHhOLhGy12CqTUW6nMD6/p5TWtLLgZE4IHl6TL083/jyX+VH7r
+DCMe5jnYVp6XRC9RBFoV2NgabSwgPkUhUbeUha8dWLSGmKu/4kVCRxfOe75RWP1p
+LVL0xTrDQ+6mwd3pjl84PoeYkoiFK9SqlW844nZ95cGrk9THFYsEwyQCqqyX/DwQ
+0P8QBoECgYEA9s3xQI7L0GE4gclK2X8DNR5jr2+b1LcwWE8PRchjXSkNH+q/P13o
+69/rnQJ51E7O2uK+T8VJnpQXG/1NJPG/gJiqD53obSi2PxKMsdj7e6SuH2mbgsko
+0uF7XvfZ3NTSQNsiV5Jh34KTX3XwfnZo8mG+MF2XgNOAF8Sn8IL63IsCgYEA9Ju3
+UHlGeg3hL5j5EalCM3CoAimfazXVCkJOzt6+4a8LtvRMhzgmeN8aR4Hp+hz9i4kd
+Q2Ta+vbQZx6AMApfKxDCIVILx74ucAGMJmo9pi6bsjBjrXC/EYO39dq1qOeA0hYl
+bYkyRN/oFqSGd5v4g1utmBjrqgIzdzuE3EF7/kECgYB0q7RhhV+aGWuCBytIF//n
+K3+KXqN28kZ7aJxaq7k1QAPBU9Km3PkQEGGsbpAzKjIlTU0UHrqHqZAnHh5K2bFi
+1EiIa2iFudo1hMpYBLAVqiraFK18LSYMUqVkppwqBb2DBVR9u2hjJbIPTYyr68P+
+2O/0oznMn68NDV0qmHCIswKBgFBDvH5inTa10TuuJaSe9sMsZ2T2RYKHkpWgNn35
+Z4dkyiJJvcbtLOqiwtvODHnvA1/DKWAQ+y44yR/dSVD6Rko6YIlQg98ST+ifCV8d
+o4chaiOpbzvdcEUOBNJe5xc6h/HoJHXx/BXPpzeu2xTqkDyCW8859jK+MCci17Dy
+p/5BAoGBANjojdYmrnBKS8btP4AnBSgSG/Hk/so06DwFduFaPQfgADiadX1WsXGK
+WKcJBB5KkrIYNyAwymNL5t4IlsxPEaaG0gYZDlWlU2zOGq4mVCHNS7apjEo2B33A
+cKG85S3TOIxeCdBjvqluMO1on7Bq7yu+YoiguTR7g2U1P/6Zd9YK',
+
+        'limit_pay' => [
+            //'balance',// 余额
+            //'moneyFund',// 余额宝
+            //'debitCardExpress',// 	借记卡快捷
+            //'creditCard',//信用卡
+            //'creditCardExpress',// 信用卡快捷
+            //'creditCardCartoon',//信用卡卡通
+            //'credit_group',// 信用支付类型（包含信用卡卡通、信用卡快捷、花呗、花呗分期）
+        ],// 用户不可用指定渠道支付当有多个渠道时用“,”分隔
+
+        // 与业务相关参数
+        'notify_url' => 'http://jjg.0519ztnet.com/home/pay/alipayNotify',
+        'return_url' => 'http://jjg.0519ztnet.com/home/pay/returnUrl',
+
+        'return_raw' => true,// 在处理回调时，是否直接返回原始数据，默认为 true
+    ],
 ];
