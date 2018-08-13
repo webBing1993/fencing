@@ -97,6 +97,15 @@
 <script>
 
     var id = "{$data.id}";
+
+    $(function () {
+        var u = navigator.userAgent.toLowerCase();
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if (isiOS) {
+            $('.buy .popUp .popNum p:last-of-type span').css('marginTop','-2px');
+        }
+    });
+
     /*
      * 立即购买
      * */
