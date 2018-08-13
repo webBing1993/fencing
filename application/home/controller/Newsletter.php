@@ -165,7 +165,7 @@ class Newsletter  extends Base
             $map2 = [
                 'mobile' => ['like','%'.$val.'%'],
             ];
-            $list = WechatUser::where($map)->whereOr($map2)->column('id,name,mobile');
+            $list = WechatUser::where($map)->whereOr($map2)->column('id,name,mobile,header,avatar');
             if($list) {
                 return $this->success("查询成功","",$list);
             }else{

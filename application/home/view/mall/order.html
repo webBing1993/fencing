@@ -107,6 +107,7 @@
     /*
     * 去结算
     * */
+    // weixin
     function payPrice(id,price,index) {
         $.post('/home/pay/wxpay ', {price: price,pid: id,type:4})
                 .then(function (response) {
@@ -149,6 +150,26 @@
                 });
     }
 
+    // zhifubao
+    function payPrice1(price) {
+        $.ajax({
+            url: "/home/pay/alipay",
+            type: 'post',
+            data: {
+                price: price,
+            },
+            success: function (response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    _AP.pay(response.data);
+                }
+            }
+        })
+    }
+
     $(".orderBtn a").on('click', function () {
         $.ajax({
             url: "{:Url('Mall/pay')}",
@@ -176,7 +197,7 @@
     $('.payChoose a').on('click', function () {
         if ($(this).hasClass('zhifubao')) {
             // 调取支付宝接口
-
+            payPrice1(price);
         }else if ($(this).hasClass('weixin')) {
             payPrice(id,price,1);
         }else {
