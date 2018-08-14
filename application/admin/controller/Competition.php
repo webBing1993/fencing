@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 
+use app\home\model\CompetitionApply;
 use think\Controller;
 use app\admin\model\Picture;
 use app\admin\model\Push;
@@ -31,6 +32,9 @@ class Competition extends Admin {
             $map['title'] = ['like', '%' . $search . '%'];
         }
         $list = $this->lists('Competition',$map);
+        foreach($list as $k=>$v){
+            $list[$k]['xg'] = CompetitionApply::where('competition_id',$v['id'])->count();
+        }
         int_to_string($list,array(
             'status' => array(0 =>"已发布",1=>"已推送"),
         ));
