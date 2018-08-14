@@ -51,6 +51,9 @@ class CompetitionGroup extends Admin {
             if(empty($data['id'])){
                 unset($data['id']);
             }
+            if($data['end_time'] < $data['start_time']){
+                return $this->error("结束时间必须大于开始时间");
+            }
             if($data['start_time']){
                 $data['start_time'] = strtotime($data['start_time']);
             }
@@ -81,6 +84,9 @@ class CompetitionGroup extends Admin {
     public function edit(){
         if(IS_POST) {
             $data = input('post.');
+            if($data['end_time'] < $data['start_time']){
+                return $this->error("结束时间必须大于开始时间");
+            }
             if($data['start_time']){
                 $data['start_time'] = strtotime($data['start_time']);
             }
