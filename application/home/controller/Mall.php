@@ -151,7 +151,7 @@ class Mall  extends Base
                 $data['create_time'] = time();
                 $data['userid'] = session('userId');
 //            $data['total'] = $num * $shop['price'];
-                $user = WechatUser::where('mobile',session('userId'))->find();
+                $user = WechatUser::where('userid',session('userId'))->find();
                 $data['name'] = $user['name'];
                 $data['mobile'] = $user['mobile'];
                 $venue_id = WechatUserTag::getVenueId($userId);

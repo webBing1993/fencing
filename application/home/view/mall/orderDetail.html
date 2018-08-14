@@ -51,7 +51,11 @@
         </div>
         <div class="list clearfix">
             <span class="fl">支付方式</span>
+            {if condition="($data['choose'] == 1)"}
+            <input type="text" class="fr size" value="支付宝支付" placeholder="无内容" disabled>
+            {elseif condition="($data['choose'] == 2)" /}
             <input type="text" class="fr size" value="微信支付" placeholder="无内容" disabled>
+            {/if}
         </div>
     </div>
 
