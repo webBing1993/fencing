@@ -144,6 +144,13 @@
     margin-top: -.15rem;
 }
 
+.content1 .contentList .noMsg {
+    color: #333;
+    font-size: .28rem;
+    text-align: center;
+    margin: 1.2rem auto;
+}
+
 .content1 .contentList .list {
     padding: .32rem .24rem;
     border-bottom: 1px solid #EBEBEB;
@@ -184,6 +191,13 @@
 .content1 .contentList .listContent .summary {
     color: #999;
     font-size: .24rem;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+}
+
+.content1 .contentList .listContent .summary p {
     white-space:nowrap;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;

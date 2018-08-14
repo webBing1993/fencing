@@ -46,6 +46,10 @@
 <div class="content1">
     <div class="contentTitle">相关课程</div>
     <div class="contentList">
+
+        <!-- 无课程的提示-->
+        <p class="noMsg">暂无课程</p>
+
         {volist name="venue" id="vo"}
         <a class="list clearfix" href="{:Url('Association/gamedetail1?id='.$vo['id'])}">
             <div class="listImg fl">
