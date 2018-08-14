@@ -58,7 +58,7 @@ class User extends Base
     //个人信息页
     public function information(){
         $userId = session('userId');
-        $user = WechatUser::where('mobile',$userId)->find();
+        $user = WechatUser::where('userid',$userId)->find();
         if($user['gender'] == 0){
             $user['gender'] = '未定义';
         }elseif($user['gender'] == 1){
