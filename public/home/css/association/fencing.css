@@ -46,6 +46,13 @@
     overflow: hidden;
 }
 
+.sort .content:last-child p {
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
+}
+
 .sort .address {
     position: absolute;
     right: .36rem;
