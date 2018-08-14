@@ -14,6 +14,7 @@ use app\home\model\Competition;
 use app\home\model\CompetitionGroup;
 use app\home\model\CourseReview;
 use app\home\model\News;
+use app\home\model\PayRecord;
 use app\home\model\Picture;
 use app\home\model\Venue;
 use app\home\model\Notice;
@@ -652,10 +653,12 @@ class Association  extends Base
     public function paysuccess(){
         $id = input('id');
         $type = input('type');
-        if (!$id || !$type) {
-            return $this->error('参数缺失');
-        }
+//        if (!$id || !$type) {
+//            return $this->error('参数缺失');
+//        }
         $data = CompetitionApply::get($id);
+        $userId = session('userId');
+        $data['choose'] = PayRecord::where('userid',$userId)->where('type',2)->where('pid',$id)->where('status',1)->value('pay_type');
         $data['end_time'] = date('Y-m-d', $data['end_time']);
 
         if ($type == 3) {
@@ -777,6 +780,8 @@ class Association  extends Base
             return $this->error('参数缺失');
         }
         $data = CourseApply::get($id);
+        $userId = session('userId');
+        $data['choose'] = PayRecord::where('userid',$userId)->where('type',1)->where('pid',$id)->where('status',1)->value('pay_type');
         $venue = venue::get($data['venue_id']);
         $data['start_time'] = date('Y-m-d', $data['start_time']);
         $data['end_time'] = date('Y-m-d', $data['end_time']);

@@ -21,8 +21,14 @@
             <p><span>代表单位</span><span>{$data.representative}</span></p>
         </div>
     </div>
-<div class="sucDetail04">付款金额：100</div>
+<div class="sucDetail04">付款金额：{$data.price}</div>
+
+{if condition="($data['choose'] == 1)"}
+<div class="sucDetail04">支付方式：支付宝支付</div>
+{elseif condition="($data['choose'] == 2)" /}
 <div class="sucDetail04">支付方式：微信支付</div>
+{/if}
+
 <div class="sucDetail04">届时请按时参加比赛。</div>
 <div class="sucDetail05">
     如果有对比赛有疑问或有其他原因需要退赛 <br>
