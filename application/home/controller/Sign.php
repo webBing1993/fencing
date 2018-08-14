@@ -19,6 +19,13 @@ class Sign extends Controller
 {
     public function index(){
 //        $venue_id = input('venue_id');
+        $venue_id = 98;
+        $this->assign('venue_id',$venue_id);
+
+        return $this->fetch();
+    }
+    public function sign(){
+//        $venue_id = input('venue_id');
 //        $openid = input('openid');
         $venue_id = 98;
         $openid = 'oKYU71ILqw-IVM1CrzkSZ4BOcSfM';
@@ -53,12 +60,14 @@ class Sign extends Controller
                 return $this->error($user_name."已签退");
             } else if ($sign_num == 1) {//签退
                 $data['mold'] = 2;
+                $tip = '签退';
                 $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute')));
                 if ($real_time < $is_exist['start_time']) {
                     return $this->error($user_name."已签到");
                 }
             } else {//签到
                 $data['mold'] = 1;
+                $tip = '签到';
             }
             //存入签到表
             $data['type'] = $type;
@@ -77,9 +86,9 @@ class Sign extends Controller
                     'name' => $user_name,
                     'sex' => $msg['gender']==2?'女':'男',
                     'comment' => '员工',
-                    'tip' => '恭喜签到成功！',
+                    'tip' => '恭喜'.$tip.'成功！',
                 ];
-                return $this->success($user_name."签到成功", '', $response);
+                return $this->success($user_name.$tip, '', $response);
             } else {
                 return $this->error($user_name."请重新扫描二维码");
             }
@@ -93,8 +102,10 @@ class Sign extends Controller
                     return $this->error($user_name."已签退");
                 } else if ($sign_num == 1) {//签退
                     $data['mold'] = 2;
+                    $tip = '签退';
                 } else {//签到
                     $data['mold'] = 1;
+                    $tip = '签到';
                 }
                 //存入签到表
                 $data['type'] = $type;
@@ -112,10 +123,10 @@ class Sign extends Controller
                         'type' => $type,
                         'name' => $user_name,
                         'sex' => $msg['gender']==2?'女':'男',
-                        'comment' => '员工',
-                        'tip' => '恭喜签到成功！',
+                        'comment' => '区域主管',
+                        'tip' => '恭喜'.$tip.'成功！',
                     ];
-                    return $this->success($user_name."签到成功", '', $response);
+                    return $this->success($user_name.$tip, '', $response);
                 } else {
                     return $this->error($user_name."请重新扫描二维码");
                 }
@@ -126,7 +137,6 @@ class Sign extends Controller
         }
 
 
-        return $this->fetch();
     }
     public function signS(){
         return $this->fetch();
