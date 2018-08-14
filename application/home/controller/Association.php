@@ -251,6 +251,9 @@ class Association  extends Base
             $value['end_time'] = date("Y-m-d",$value['end_time']);
             $img = Picture::get($value['front_cover']);
             $value['front_cover'] = $img['path'];
+            $value['content'] = str_replace('&nbsp;','',strip_tags($value['content']));
+            $value['content'] = str_replace(" ",'',$value['content']);
+            $value['content'] = str_replace("\n",'',$value['content']);
         }
         if($info){
             return $this->success("加载成功",'',$info);
