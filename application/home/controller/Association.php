@@ -230,6 +230,11 @@ class Association  extends Base
         $data['front_cover'] = json_decode($data['front_cover']);
         $this->assign('data',$data);
         $venue = VenueCourse::where('venue_id',$Id)->where('status',0)->order('id desc')->limit(10)->select();
+        foreach($venue as $val){
+            $val['content'] = str_replace('&nbsp;','',strip_tags($val['content']));
+            $val['content'] = str_replace(" ",'',$val['content']);
+            $val['content'] = str_replace("\n",'',$val['content']);
+        }
         $this->assign('venue',$venue);
 
         return $this->fetch();
