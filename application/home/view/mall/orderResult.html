@@ -1,0 +1,33 @@
+{extend name='public/common'}
+{block name='style'}
+
+{/block}
+{block name='body'}
+
+{/block}
+{block name='script'}
+<script src="/home/js/reset.js"></script>
+<script>
+
+    $(function () {
+        var id = getCookie('orderId');
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: {
+                id: id
+            },
+            success: function (msg) {
+                setCookie('isOrder',true);
+                setTimeout(function () {
+                    window.location.replace('/mall/order/id/' + id);
+                },1500)
+            },
+            error: function (msg) {
+
+            }
+        })
+    })
+
+</script>
+{/block}

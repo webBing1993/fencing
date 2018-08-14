@@ -106,6 +106,15 @@
 
     var id = "{$data.id}";
     var price = "{$data.price}";
+
+    $(function () {
+       if (getCookie('isOrder')) {
+           $(".content").hide();
+           $(".popUp").show();
+           delCookie('isOrder');
+       }
+    });
+
     /*
     * 去结算
     * */
@@ -184,50 +193,45 @@
      * payChoose
      * */
     $('.payChoose a').on('click', function () {
-        if (getCookie('isCookie')) {
-            // 跳转到判断页面去
+        setCookie('orderId',id);
 
-
-            delCookie('isCookie')
+        if ($(this).hasClass('zhifubao')) {
+            $.ajax({
+                url: "{:Url('Mall/pay')}",
+                type: 'post',
+                data: {
+                    id: id,
+                    text1: $(".size").val(),
+                    text2: $(".list_ textarea").val()
+                },
+                beforeSend: function(XMLHttpRequest){
+                    $(".showbox").show();
+                },
+                success: function (msg) {
+                    $(".showbox").hide();
+                    // 调取支付宝接口
+                    payPrice1(id,price);
+                }
+            })
+        }else if ($(this).hasClass('weixin')) {
+            $.ajax({
+                url: "{:Url('Mall/pay')}",
+                type: 'post',
+                data: {
+                    id: id,
+                    text1: $(".size").val(),
+                    text2: $(".list_ textarea").val()
+                },
+                beforeSend: function(XMLHttpRequest){
+                    $(".showbox").show();
+                },
+                success: function (msg) {
+                    $(".showbox").hide();
+                    payPrice(id,price,1);
+                }
+            });
         }else {
-            if ($(this).hasClass('zhifubao')) {
-                $.ajax({
-                    url: "{:Url('Mall/pay')}",
-                    type: 'post',
-                    data: {
-                        id: id,
-                        text1: $(".size").val(),
-                        text2: $(".list_ textarea").val()
-                    },
-                    beforeSend: function(XMLHttpRequest){
-                        $(".showbox").show();
-                    },
-                    success: function (msg) {
-                        $(".showbox").hide();
-                        // 调取支付宝接口
-                        payPrice1(id,price);
-                    }
-                })
-            }else if ($(this).hasClass('weixin')) {
-                $.ajax({
-                    url: "{:Url('Mall/pay')}",
-                    type: 'post',
-                    data: {
-                        id: id,
-                        text1: $(".size").val(),
-                        text2: $(".list_ textarea").val()
-                    },
-                    beforeSend: function(XMLHttpRequest){
-                        $(".showbox").show();
-                    },
-                    success: function (msg) {
-                        $(".showbox").hide();
-                        payPrice(id,price,1);
-                    }
-                });
-            }else {
-                $('.payChoose').hide();
-            }
+            $('.payChoose').hide();
         }
     });
     $('.payChoose .shadow').on('click', function () {
