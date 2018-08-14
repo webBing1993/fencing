@@ -18,7 +18,7 @@
             <div class="newsText" style="padding: 0 0 .1rem .2rem;">
                 <div class="newsTitle">{$vo.title}</div>
                 <div class="newsTime">
-                    <span>{$vo.end_time|time_format='Y-m-d'}</span>
+                    <span>{$vo.end_time|time_format='Y-m-d'}  截止</span>
                     <span>{$vo.representative}</span>
                 </div>
             </div>
@@ -33,7 +33,7 @@
             <div class="newsText" style="padding: 0 0 .1rem .2rem;">
                 <div class="newsTitle">{$lo.title}</div>
                 <div class="newsTime">
-                    <span>{$lo.end_time|time_format='Y-m-d'}</span>
+                    <span>{$lo.end_time|time_format='Y-m-d'}  截止</span>
                     <span>{$lo.representative}</span>
                 </div>
             </div>
@@ -147,7 +147,7 @@
                 '<a href='+url+ list.id+'.html>'+
                 '<img class="lazy" data-original='+list.front_cover+'>'
                 +'<div class="newsText" style="padding: 0 0 .1rem .2rem;">'
-                +'<div class="newsTitle">'+list.title+'</div><div class="newsTime"><span>'+list.representative+'</span><span>'+list.end_time+'</span></div>'
+                +'<div class="newsTitle">'+list.title+'</div><div class="newsTime"><span>'+list.representative+'</span><span>'+list.end_time+'  截止</span></div>'
                 +'</div>'
                 +'</a>'
         }
