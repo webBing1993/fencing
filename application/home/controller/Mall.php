@@ -8,6 +8,7 @@
 
 namespace app\home\controller;
 
+use app\home\model\PayRecord;
 use app\home\model\Shop;
 use app\home\model\MallOne;
 use app\home\model\MallTwo;
@@ -231,6 +232,9 @@ class Mall  extends Base
         $li = Shop::where('id',$data['sid'])->find();
         $data['front_cover'] = $li['front_cover'];
         $data['title'] = $li['title'];
+        $uid = session('userId');
+        $zf = PayRecord::where('userid',$uid)->where('type',4)->where('pid',$id)->where('status',1)->find();
+        $data['choose'] = $zf['pay_type'];
         $this->assign('data',$data);
 
         return $this->fetch();
