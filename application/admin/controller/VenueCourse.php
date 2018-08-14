@@ -51,6 +51,9 @@ class VenueCourse extends Admin {
     public function add(){
         if(IS_POST) {
             $data = input('post.');
+            if($data['end_time'] < $data['start_time']){
+                return $this->error("课程结束时间必须大于开始时间");
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if(empty($data['id'])){
                 unset($data['id']);
@@ -61,6 +64,7 @@ class VenueCourse extends Admin {
             if($data['end_time']){
                 $data['end_time'] = strtotime($data['end_time']);
             }
+
             $venueCourseModel = new VenueCourseModel();
             $info = $venueCourseModel->validate('VenueCourse')->save($data);
             if($info) {
@@ -84,6 +88,9 @@ class VenueCourse extends Admin {
     public function edit(){
         if(IS_POST) {
             $data = input('post.');
+            if($data['end_time'] < $data['start_time']){
+                return $this->error("课程结束时间必须大于开始时间");
+            }
             if($data['start_time']){
                 $data['start_time'] = strtotime($data['start_time']);
             }
