@@ -114,6 +114,7 @@ class User extends Base
         $userId = session('userId');
         $map['userid'] = $userId;
         $map['time'] = time();
+        $map['endtime'] = time() + 365*24*60*60;
         $info = Vipapply::create($map);
 
         if($info) {
