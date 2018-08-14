@@ -175,22 +175,7 @@
     }
 
     $(".orderBtn a").on('click', function () {
-        $.ajax({
-            url: "{:Url('Mall/pay')}",
-            type: 'post',
-            data: {
-                id: id,
-                text1: $(".size").val(),
-                text2: $(".list_ textarea").val()
-            },
-            beforeSend: function(XMLHttpRequest){
-                $(".showbox").show();
-            },
-            success: function (msg) {
-                $(".showbox").hide();
-                $('.payChoose').show();
-            }
-        })
+        $('.payChoose').show();
     });
 
 
@@ -208,14 +193,47 @@
             if ($(this).hasClass('zhifubao')) {
                 // 调取支付宝接口
                 payPrice1(id,price);
+                $.ajax({
+                    url: "{:Url('Mall/pay')}",
+                    type: 'post',
+                    data: {
+                        id: id,
+                        text1: $(".size").val(),
+                        text2: $(".list_ textarea").val(),
+                        choose: 1
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        $(".showbox").show();
+                    },
+                    success: function (msg) {
+                        $(".showbox").hide();
+
+                    }
+                })
+
             }else if ($(this).hasClass('weixin')) {
                 payPrice(id,price,1);
-            }else {
-                $('.payChoose').hide();
+                $.ajax({
+                    url: "{:Url('Mall/pay')}",
+                    type: 'post',
+                    data: {
+                        id: id,
+                        text1: $(".size").val(),
+                        text2: $(".list_ textarea").val(),
+                        choose: 2
+                    },
+                    beforeSend: function(XMLHttpRequest){
+                        $(".showbox").show();
+                    },
+                    success: function (msg) {
+                        $(".showbox").hide();
+
+                    }
+                })
             }
         }
     });
-    $('.payChoose .shadow').on('click', function () {
+    $('.payChoose .shadow,.payChoose .mapBack').on('click', function () {
         $('.payChoose').hide();
     });
 
