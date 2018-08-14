@@ -160,6 +160,9 @@ class Association  extends Base
     public function show(){
         $id = input('id');
         $data = Show::where('id',$id)->find();
+        $img = Picture::get($data['front_cover']);
+        $data['front_cover'] = $img['path'];
+
         if($data){
             return $this->success("获取数据成功",'',$data);
         }else{
