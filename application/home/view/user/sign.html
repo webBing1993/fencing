@@ -58,8 +58,8 @@
         }
     }
     $(function(){
-        var sliarrn=[15,16,17,20];//正常在训
-        var sliarrn1=[10,11];//迟到
+        var sliarrn=[15,16,17,20,31];//正常在训
+        var sliarrn1=[1,10,11];//迟到
         var sliarrn2=[8,9,18];//早退
         var $thead=$('#thead'),
             $tbody=$('#tbody'),
@@ -69,7 +69,6 @@
             slidate=new Date(),
             _nullnei='',
             de=slidate.getDate()+1;
-        console.log(slidate.getDate())
         var monthFirst = new Date(slidate.getFullYear(), parseInt(slidate.getMonth()), 1).getDay();//获取当月的1日等于星期几
         var d = new Date(slidate.getFullYear(), parseInt(slidate.getMonth() + 1), 0); //获取月
         var conter=d.getDate();//获取当前月的天数
@@ -90,7 +89,6 @@
         {
             $slitd.eq(i+monthFirst).html("<p>"+parseInt(i+1)+"</p>")
         }
-
         // Funback();//给当前日加样式
         // Funmore();//本月未签到样式
         Funmonth();//查询已签到
@@ -118,42 +116,41 @@
             }
         }
         function Funmonth(){
-            for(var i=1; i<=conter; i++)
-            {
-                for(var j=0; j<sliarrn.length;j++)
-                {
-                    if(i==sliarrn[j])
-                    {
-                        $slitd.eq(i+2).find('p').addClass('los')
+            $slitd.each(function(){
+                if($(this).find('p').length>0){
+                    var _this = $(this).find('p').text();
+                    for(var j=0; j<sliarrn.length;j++) {
+                        if(_this == sliarrn[j]) {
+                            $(this).find('p').addClass('los')
+                        }
                     }
                 }
-            }
+            })
         }
         function Funmonth1(){
-            for(var i=1; i<=conter; i++)
-            {
-                for(var j=0; j<sliarrn1.length;j++)
-                {
-                    if(i==sliarrn1[j])
-                    {
-                        $slitd.eq(i+2).find('p').addClass('los1')
+            $slitd.each(function(){
+                if($(this).find('p').length>0){
+                    var _this = $(this).find('p').text();
+                    for(var j=0; j<sliarrn1.length;j++) {
+                        if(_this == sliarrn1[j]) {
+                            $(this).find('p').addClass('los1')
+                        }
                     }
                 }
-            }
+            })
         }
         function Funmonth2(){
-            for(var i=1; i<=conter; i++)
-            {
-                for(var j=0; j<sliarrn2.length;j++)
-                {
-                    if(i==sliarrn2[j])
-                    {
-                        $slitd.eq(i+2).find('p').addClass('los2')
+            $slitd.each(function(){
+                if($(this).find('p').length>0){
+                    var _this = $(this).find('p').text();
+                    for(var j=0; j<sliarrn2.length;j++) {
+                        if(_this == sliarrn2[j]) {
+                            $(this).find('p').addClass('los2')
+                        }
                     }
                 }
-            }
+            })
         }
-        console.log(sliarrn)
     })
 </script>
 <script>
