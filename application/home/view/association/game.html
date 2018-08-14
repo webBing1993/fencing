@@ -168,6 +168,17 @@
         // 初始化条数的判断
         onloadFun();
     });
+    
+    
+    /*
+    * 初始化判断
+    * */
+    $(function () {
+        if (window.location.href.indexOf('id') != -1) {
+            var id = window.location.href.split('id/')[1].split('.html')[0];
+            setCookie('tab',id);
+        }
+    });
 
     /*
      * 上拉加载
