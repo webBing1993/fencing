@@ -261,9 +261,6 @@ class Mall  extends Base
         }
     }
 
-    // 订单结果页面
-    public function orderResult() {
-        return $this->fetch();
-    }
+
 
 }
