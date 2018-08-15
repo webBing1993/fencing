@@ -25,7 +25,7 @@ class User extends Base
     //个人中心首页
     public function index(){
         $userId = session('userId');
-        $user = WechatUser::where('mobile',$userId)->find();
+        $user = WechatUser::where('userid',$userId)->find();
         $this->assign('user',$user);
         $venue_id = WechatUserTag::getVenueId($userId);
         if($venue_id != false AND $user['tag'] == 1){

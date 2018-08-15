@@ -61,8 +61,8 @@ class Notice extends Admin {
                 $res = $noticeModel->save($data);
                 if ($res){
                     //推送
-                    $nid=$noticeModel->id;
-                    $this->pushto($nid,$data);
+//                    $nid=$noticeModel->id;
+//                    $this->pushto($nid,$data);
                     return $this->success("添加成功",Url('Notice/index'));
                 }else{
                     return $this->error($noticeModel->getError());
