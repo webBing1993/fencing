@@ -61,8 +61,8 @@ class Notice extends Admin {
                 $res = $noticeModel->save($data);
                 if ($res){
                     //推送
-//                    $nid=$noticeModel->id;
-//                    $this->pushto($nid,$data);
+                    $nid=$noticeModel->id;
+                    $this->pushto($nid,$data);
                     return $this->success("添加成功",Url('Notice/index'));
                 }else{
                     return $this->error($noticeModel->getError());
@@ -138,6 +138,7 @@ class Notice extends Admin {
 
     //添加页面直接推送
     public function pushto($nid,$data){
+//        dump($nid);dump($data);exit;
         if (!empty($data['tag'])) {
             $data['tag'] = json_decode($data['tag']);
         }
@@ -178,36 +179,18 @@ class Notice extends Admin {
             "picurl" => $path1,
         );
         //发送给企业号
-        $Wechat = new TPQYWechat(Config::get('news'));
-        $touser = config('touser');
-        $newsConf = config('news');
-
-
-        //部门推送
-        if (!empty($focus1['tag'])){
-            $bm=join('|',json_decode($focus1['tag'],true));
-            $message = array(
-                "toparty" => $bm,
-                "msgtype" => 'news',
-                "agentid" => $newsConf['agentid'],
-                "news" => $send,
-                "safe" => "0"
-            );
-            $msg = $Wechat->sendMessage($message);
-//
-//            $bms=json_decode($focus1['show_depart']);
-//
-//            foreach($bms as $bmv){
-//                $bm2=Db::table('pb_wechat_department_user')->where('departmentid',$bmv)->select();
-//
-//                foreach($bm2 as $bmv2)
-//                {
-//                    $mapp22 = ['nid' => $nid, 'userid' => $bmv2['userid'],'type'=>$focus1['type']];
-//                    Db::table('pb_noticeqx')->insert($mapp22);
-//                }
-//            }
-
-        }
+        $Wechat = new TPQYWechat(Config::get('party'));
+        $touser = config('totestuser');
+        $newsConf = config('party');
+        $message = array(
+//          "toparty" => $bm,
+            "touser" => $touser,
+            "msgtype" => 'news',
+            "agentid" => $newsConf['agentid'],
+            "news" => $send,
+            "safe" => "0"
+        );
+        $msg = $Wechat->sendMessage($message);
     }
 
 
