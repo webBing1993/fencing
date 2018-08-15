@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 
+use app\home\model\PayRecord;
 use think\Controller;
 use app\admin\model\Picture;
 use app\admin\model\Push;
@@ -85,7 +86,12 @@ class CompetitionApply extends Admin {
         $data['status'] = '-1';
         $info = CompetitionApplyModel::where('id',$id)->update($data);
         if($info) {
-            //TODO 支付表处理
+            // 支付表处理
+            $res = PayRecord::where(['type' => 2, 'pid' => $id])->find();
+            if ($res) {
+                $res->status = -1;
+                $res->save();
+            }
             return $this->success("退赛成功");
         }else{
             return $this->error("退赛失败");

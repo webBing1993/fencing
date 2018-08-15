@@ -11,5 +11,7 @@ namespace app\home\model;
 use think\Model;
 
 class Venue extends Model {
-
+    public static function getName($id){
+        return Venue::where(['id' => $id])->value('title');
+    }
 }

@@ -13,6 +13,7 @@ use app\home\model\CompetitionEvent;
 use app\home\model\Competition;
 use app\home\model\CompetitionGroup;
 use app\home\model\CourseReview;
+use app\home\model\CourseUser;
 use app\home\model\News;
 use app\home\model\PayRecord;
 use app\home\model\Picture;
@@ -462,9 +463,10 @@ class Association  extends Base
 //        }else{
 //            $data['show_tip'] = false;
 //        }
-        //TODO
-        $representative = "杭州击剑馆";
-        $coach = "林教练1";
+        $venue_id = WechatUserTag::getVenueId($userId);
+        $representative = Venue::getName($venue_id);
+        $courseUserModel = CourseUser::where(['userid' => $userId, 'status' => 0, 'start_time' => ['<=', time()], 'end_time' => ['>=', time()]])->find();
+        $coach = CourseUser::where(['member_type' => 1, 'status' => 0, 'course_id' => $courseUserModel['course_id']])->value('name');
         $individual_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->find();
         $team_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::TEAM_EVENT])->find();
         if ($individual_event && $team_event) {
@@ -629,6 +631,10 @@ class Association  extends Base
             $data['price'] = $competitionEventModel['price'];
         }
 
+        $res = CompetitionApply::where(['competition_id' => $data['competition_id'], 'group_id' => $data['group_id'], 'event_id' => $competitionEventModel['id'], 'userid' => $userId, 'status' => 1])->find();
+        if($res){
+            return $this->error("已报名".$data['group_name']);
+        }
         $rs = CompetitionApply::where(['competition_id' => $data['competition_id'], 'group_id' => $data['group_id'], 'event_id' => $competitionEventModel['id'], 'userid' => $userId, 'status' => 0])->find();
         if(!$rs){
             $competitionApplyModel = new CompetitionApply();
@@ -759,6 +765,10 @@ class Association  extends Base
         $data['start_time'] = $venueCourseModel['start_time'];
         $data['end_time'] = $venueCourseModel['end_time'];
 
+        $res = CourseApply::where(['venue_id' => $venueCourseModel['venue_id'], 'course_id' => $data['course_id'], 'userid' => $userId, 'status' => 1])->find();
+        if($res){
+            return $this->error("已报名".$data['course_name']);
+        }
         $rs = CourseApply::where(['venue_id' => $venueCourseModel['venue_id'], 'course_id' => $data['course_id'], 'userid' => $userId, 'status' => 0])->find();
         if(!$rs){
             $courseApplyModel = new CourseApply();
