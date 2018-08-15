@@ -503,6 +503,7 @@
     color: #FF2740;
     background: #FFEBEB;
     border-radius: .2rem;
+    font-size: .24rem;
 }
 
 .gantan {
@@ -687,7 +688,7 @@
 }
 
 .newsTitle p:first-child {
-    margin-top: -.1rem;
+    /*margin-top: -.1rem;*/
     font-size: .28rem;
 }
 

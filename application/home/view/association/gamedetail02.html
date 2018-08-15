@@ -138,26 +138,32 @@
             }else{
                 $(this).removeClass('active')
             }
-            if($('.gameSort span').eq(0).hasClass('active') && !$('.gameSort span').eq(1).hasClass('active')){
-                _getprice = 1;
-            }else if($('.gameSort span').eq(1).hasClass('active') && !$('.gameSort span').eq(0).hasClass('active')){
-                _getprice = 2;
-            }else if($('.gameSort span').eq(0).hasClass('active') && $('.gameSort span').eq(1).hasClass('active')) {
-                _getprice = 3;
-            }
-            var data = {id:id,type:_getprice,kinds:$('input[name=jz]').data('id')}
-            $.ajax({
-                type: "post",
-                url: "{:Url('Association/getprice')}",
-                data: data,
-                dataType: "json",
-                success: function (data) {
-                    console.log(data)
-                    $('.pay02 span').html(data.data.price);
-                    $('.pay03 span').html(data.data.vip_price);
+            if(!$('.gameSort span').eq(0).hasClass('active') && !$('.gameSort span').eq(1).hasClass('active')){
+                $('.pay02 span').html('0.00')
+                $('.pay03 span').html('0.00')
+            }else{
+                if($('.gameSort span').eq(0).hasClass('active') && !$('.gameSort span').eq(1).hasClass('active')){
+                    _getprice = 1;
+                }else if($('.gameSort span').eq(1).hasClass('active') && !$('.gameSort span').eq(0).hasClass('active')){
+                    _getprice = 2;
+                }else if($('.gameSort span').eq(0).hasClass('active') && $('.gameSort span').eq(1).hasClass('active')) {
+                    _getprice = 3;
                 }
-            })
-        }else{
+                var data = {id:id,type:_getprice,kinds:$('input[name=jz]').data('id')}
+                $.ajax({
+                    type: "post",
+                    url: "{:Url('Association/getprice')}",
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                        $('.pay02 span').html(data.data.price);
+                        $('.pay03 span').html(data.data.vip_price);
+                    }
+                })
+            }
+        }
+        else{
             if(!$(this).hasClass('active')){
                 $(this).addClass('active')
             }else{
