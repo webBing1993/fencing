@@ -119,10 +119,34 @@
         if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
             window.onpageshow = function(event) {
                 if (event.persisted) {
-                    $('.chooseTig').show();
                     setTimeout(function () {
-                        $('.chooseTig').hide();
-                    },3000)
+                        $.ajax({
+                            url: '{:Url("Pay/payStatus")}',
+                            type: 'post',
+                            data: {
+                                pid: id,
+                                type: 4
+                            },
+                            success: function (msg) {
+                                $('.showbox').hide();
+                                if (msg.code == 1) {
+                                    $(".content").hide();
+                                    $(".popUp").show();
+                                }else {
+                                    $('.chooseTig').show();
+                                    setTimeout(function () {
+                                        $('.chooseTig').hide();
+                                    },3000)
+                                }
+                            },
+                            error: function (msg) {
+                                $('.chooseTig').show();
+                                setTimeout(function () {
+                                    $('.chooseTig').hide();
+                                },3000)
+                            }
+                        })
+                    },1000)
                 }
 
             };
