@@ -121,30 +121,33 @@
             e.val('yes');
         }else{
             e.val('no');
-            $.ajax({
-                url: '{:Url("Pay/payStatus")}',
-                type: 'post',
-                data: {
-                    pid: id,
-                    type: 4
-                },
-                success: function (msg) {
-                    alert(msg.code);
-                    if (msg.code == 1) {
-                        $(".content").hide();
-                        $(".popUp").show();
-                    }else {
-                        $('.chooseTig').show();
-                        setTimeout(function () {
-                            $('.chooseTig').hide();
-                        },3000)
+            $(".showbox").show();
+            setTimeout(function () {
+                $.ajax({
+                    url: '{:Url("Pay/payStatus")}',
+                    type: 'post',
+                    data: {
+                        pid: id,
+                        type: 4
+                    },
+                    success: function (msg) {
+                        $('.showbox').hide();
+                        if (msg.code == 1) {
+                            $(".content").hide();
+                            $(".popUp").show();
+                        }else {
+                            $('.chooseTig').show();
+                            setTimeout(function () {
+                                $('.chooseTig').hide();
+                            },3000)
+                        }
+                        e.val('yes');
+                    },
+                    error: function (msg) {
+                        alert(msg.code);
                     }
-                    e.val('yes');
-                },
-                error: function (msg) {
-                    alert(msg.code);
-                }
-            })
+                })
+            },1000)
         }
     });
 
