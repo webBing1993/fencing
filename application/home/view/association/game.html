@@ -21,6 +21,9 @@
 
 <!--正文切换-->
 <div class="news">
+    {if condition="empty($left)"}
+    <div id="null"><img src="/home/images/null.png" alt=""><p>当前页面暂无内容</p></div>
+    {else /}
     {volist name="left" id="vo"}
     <a href="{:Url('Association/gamedetail?id='.$vo['id'])}">
         <img data-original="{$vo.front_cover|get_cover='path'}" class="lazy">
@@ -37,6 +40,7 @@
         </div>
     </a>
     {/volist}
+    {/if}
 </div>
 <div class="news">
     {empty name="$venue"}
