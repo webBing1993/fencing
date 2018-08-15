@@ -151,5 +151,20 @@ class Pay extends Base
         return json_encode(['success' => true, 'data' => $str]);
     }
 
+    // 返回支付状态
+    public function payStatus() {
+        $pid = input('pid');
+        $type = input('type');
+        if (empty($pid) || empty($type)) {
+            $this->error('参数错误！');
+        }
+        $uid = session('userId');
+        $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 1])->find();
+        if($rs){
+            return $this->success("支付成功");
+        }else{
+            return $this->error("支付失败");
+        }
+    }
 
 }
