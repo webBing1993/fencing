@@ -206,7 +206,6 @@ class Mall  extends Base
         }else{
             $data['single'] = $shop['price'];
             $data['all'] = $shop['price'] * $order['num'];
-            $data['status'] = 1;
             ShopOrder::update($data);
         }
     }
