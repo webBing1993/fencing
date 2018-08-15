@@ -137,7 +137,9 @@ class User extends Base
     public function train(){
         $userId = session('userId');
         $left = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','gt',time())->order('id desc')->limit(6)->select();//未结束
+
         foreach($left as $k=>$v){
+            $left[$k]['course_name'] = Course::where('id',$v['course_id'])->value('course_name');
             $q = VenueCourse::where('id',$v['course_id'])->value('content');
             $a = str_replace('&nbsp;','',strip_tags($q));
             $z = str_replace(" ",'',$a);
@@ -145,6 +147,7 @@ class User extends Base
         }
         $right = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','elt',time())->order('id desc')->limit(6)->select();//已结束
         foreach($right as $key=>$value){
+            $right[$key]['course_name'] = Course::where('id',$value['course_id'])->value('course_name');
             $qq= VenueCourse::where('id',$value['course_id'])->value('content');
             $aa = str_replace('&nbsp;','',strip_tags($qq));
             $zz = str_replace(" ",'',$aa);
@@ -169,6 +172,7 @@ class User extends Base
         }
 
         foreach($info as $value){
+            $value['course_name'] = Course::where('id',$value['course_id'])->value('course_name');
             $value['start_time'] = date("Y-m-d",$value['start_time']);
             $value['end_time'] = date("Y-m-d",$value['end_time']);
             $q = VenueCourse::where('id',$value['course_id'])->value('content');
