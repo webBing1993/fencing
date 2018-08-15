@@ -243,7 +243,7 @@ class Mall  extends Base
     public function ordermore(){
         $len = input('len');
         $map['status'] = 1;
-        $map['create_user'] = session('userId');
+        $map['userid'] = session('userId');
         $data = ShopOrder::where($map)->order('id desc')->limit($len,6)->select();
         foreach($data as $value){
             $shop = Shop::where('id',$value['sid'])->find();

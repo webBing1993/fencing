@@ -178,34 +178,36 @@
                                 <input type="text" placeholder="请输入发布人" class="form-control form_title" name="publisher" value="{$msg.publisher}">
                             </div>
                         </div>
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-lg-1 text-right control-label">-->
-                                <!--<label>是否推荐:</label>-->
-                            <!--</div>-->
-                            <!--<div class="col-lg-11">-->
-                                <!--<label class="i-checks">-->
-                                    <!--<input type="radio" value="1" name="recommend" {eq name="msg.recommend" value="1"}checked{/eq}>是-->
-                                <!--</label>-->
-                                <!--<label class="i-checks">-->
-                                    <!--<input type="radio" value="0" name="recommend" {eq name="msg.recommend" value="0"}checked{/eq}>否-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>是否推送:</label>
+                                <label>是否推荐:</label>
                             </div>
                             <div class="col-lg-11">
-                                {if condition="($msg['push'] == 1)"}
                                 <label class="i-checks">
                                     <input type="radio" value="1" name="push" {eq name="msg.push" value="1"}checked{/eq}>是
                                 </label>
-                                {else /}
                                 <label class="i-checks">
                                     <input type="radio" value="0" name="push" {eq name="msg.push" value="0"}checked{/eq}>否
                                 </label>
-                                {/if}
                             </div>
+                        </div>
+
+                        <div class="form-group" id="sort">
+                            <div class="sort">
+                                <div class="col-lg-1 text-right control-label">
+                                    <label>标签:</label>
+                                </div>
+                                <div class="col-lg-11 selgp">
+                                    <select class="chosen-select form-control" data-placeholder="--请选择--" name="tag" multiple="multiple">
+                                        {volist name="list" id="vo"}
+                                        <option value="{$vo.tagid}" {volist name="$msg['tag']" id="bq"}
+                                                {eq name="$bq" value="$vo.tagid"}selected{/eq}
+                                        {/volist}>{$vo.tagname}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
                         <input type="hidden" name="id" value="{$msg.id}">
                         <div class="form-group">
@@ -228,8 +230,41 @@
 <script src="/static/iCheck/icheck.min.js"></script>
 <script src="/static/ueditor/ueditor.config.js"></script>
 <script src="/static/ueditor/ueditor.all.min.js"></script>
+<script src="/admin/js/chosen.jquery.js"></script>
 
 <script>
+
+    var _sort = 0;
+
+    $(function () {
+        //    单选按钮
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+        for (var i = 0; i < $('.i-checks').length; i++) {
+            if ($('.i-checks').eq(i).find('.iradio_square-green').hasClass('checked')) {
+                if (i == 0) {
+                    $('#sort').show();
+                    _sort = 1;
+                }else {
+                    $('#sort').hide();
+                    _sort = 0;
+                }
+            }
+        }
+    });
+    $('.i-checks').on('ifChecked', function (e) {
+        if (e.currentTarget.innerText == '是') {
+            $('#sort').show();
+            _sort = 1;
+        }else {
+            _sort = 0;
+            $("#sort").hide();
+        }
+    });
+
     $(function(){
         //导航高亮
         highlight_subnav("{:Url('Notice/index')}");
@@ -299,6 +334,20 @@
         $(".post-add").on("click",function(){
             /*重组轮播图，删除多余字符串（i是键值，1表示几位开始*/
             var it=$(this);
+
+            var arrbm = [];
+            var bmlength = $('.selgp .chosen-choices .search-choice').length;
+            if(bmlength == 0){
+                arrbm = '';
+            }else{
+                for(var i=0;i<bmlength;i++){
+                    for (var j = 0; j < $('.selgp option').length; j++) {
+                        if ($('.selgp option').eq(j).index() == $('.selgp .chosen-choices li a').eq(i).data('optionArrayIndex')) {
+                            arrbm.push($('.selgp option').eq(j).attr('value'))
+                        }
+                    }
+                }
+            }
             var data = {
                 id:$("input[name='id']").val(),
                 type:$("select[name='type']").val(),
@@ -314,6 +363,9 @@
                 push:$("input[name='push']:checked").val(),
                 status:0,
             };
+            if (_sort == 1) {
+                data.tag = arrbm;
+            }
             $.ajax({
                 type:"post",
                 url:$("#form").attr("action"),
@@ -371,11 +423,7 @@
             minuteStep: 5
 
         });
-        //    单选按钮
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green'
-        });
+
 
     })
 
