@@ -15,6 +15,7 @@ use app\home\model\CompetitionApply;
 use app\home\model\Course;
 use app\home\model\CourseApply;
 use app\home\model\Picture;
+use app\home\model\Venue;
 use app\home\model\VenueCourse;
 use app\home\model\Vipapply;
 use app\home\model\WechatUser;
@@ -144,6 +145,9 @@ class User extends Base
             $a = str_replace('&nbsp;','',strip_tags($q));
             $z = str_replace(" ",'',$a);
             $left[$k]['content'] = str_replace("\n",'',$z);
+            $img = Venue::where('id',$v['venue_id'])->value('front_cover');
+            $img2 = json_decode($img);
+            $left[$k]['front_cover'] = $img2[0];
         }
         $right = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','elt',time())->order('id desc')->limit(6)->select();//已结束
         foreach($right as $key=>$value){
@@ -152,6 +156,9 @@ class User extends Base
             $aa = str_replace('&nbsp;','',strip_tags($qq));
             $zz = str_replace(" ",'',$aa);
             $right[$key]['content2'] = str_replace("\n",'',$zz);
+            $img2 = Venue::where('id',$value['venue_id'])->value('front_cover');
+            $img22 = json_decode($img2);
+            $right[$key]['front_cover'] = $img22[0];
         }
         $this->assign('left',$left);
         $this->assign('right',$right);
@@ -179,9 +186,12 @@ class User extends Base
             $a = str_replace('&nbsp;','',strip_tags($q));
             $z = str_replace(" ",'',$a);
             $value['content'] = str_replace("\n",'',$z);
+            $img2 = Venue::where('id',$value['venue_id'])->value('front_cover');
+            $img22 = json_decode($img2);
+            $value['front_cover'] = $img22[0];
 //            $value['front_cover'] = Course::where('id',$value['course_id'])->value('front_cover');
-//            $img = Picture::get($value['front_cover']);
-//            $value['front_cover'] = $img['path'];
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
         }
 
         if($info){
