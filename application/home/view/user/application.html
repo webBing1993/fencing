@@ -38,6 +38,7 @@
     </div>
     <div class="Img_btn" style="position: fixed;bottom:.3rem;width:94%;">提交</div>
 </div>
+{if condition="($user['tag'] != 1)"}
 <div class="leaveTime">
     <p class="leaveTime01">审批人：</p>
     {if condition="!empty($data['name1'])"}
@@ -48,6 +49,7 @@
     <div class="spr"><img src="{$data.img2}"><p>{$data.name2}</p></div>
     {/if}
 </div>
+{/if}
 <div id="showImg"><img src=""></div>
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 

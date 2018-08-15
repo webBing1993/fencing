@@ -352,6 +352,7 @@ class User extends Base
     public function application(){
         $userId = session('userId');
         $user = WechatUser::where('mobile',$userId)->find();
+        $this->assign('user',$user);
         if(!empty($user['telephone'])){
             $name1 = WechatUser::where('mobile',$user['telephone'])->find();
             $data['name1'] = $name1['name'];
