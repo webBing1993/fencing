@@ -96,7 +96,7 @@
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
-
+<input type="hidden" id="refreshed" value="no">
 {/block}
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -107,13 +107,36 @@
     var id = "{$data.id}";
     var price = "{$data.price}";
 
-    $(function () {
-       if (getCookie('isOrder')) {
-           $(".content").hide();
-           $(".popUp").show();
-           delCookie('isOrder');
-       }
+    $(function(){
+        var e=$("#refreshed");
+        if(e.val() == "no") {
+            e.val('yes');
+        }else{
+            e.val('no');
+            $.ajax({
+                url: '{:Url("Pay/payStatus")}',
+                type: 'post',
+                data: {
+                    pid: id,
+                    type: 4
+                },
+                success: function (msg) {
+                    alert(msg.code);
+                    if (msg.code == 1) {
+                        $(".content").hide();
+                        $(".popUp").show();
+                    }else {
+
+                    }
+                    e.val('yes');
+                },
+                error: function (msg) {
+                    alert(msg.code);
+                }
+            })
+        }
     });
+
 
     /*
     * 去结算
