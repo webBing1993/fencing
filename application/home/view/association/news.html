@@ -13,7 +13,9 @@
     </div>
 <!--正文切换-->
     <div class="news" id="side1">
+        {if condition="empty($left)"}
         <div id="null"><img src="/home/images/null.png" alt=""><p>当前页面暂无内容</p></div>
+        {else /}
             {volist name="left" id="a"}
             <a href="{:Url('Association/newsdetail2?id='.$a['id'])}">
                 <img data-original="{$a.front_cover|get_cover='path'}" class="lazy">
@@ -23,8 +25,12 @@
                 </div>
             </a>
             {/volist}
+        {/if}
     </div>
     <div class="news" id="side2">
+        {if condition="empty($center)"}
+        <div id="null"><img src="/home/images/null.png" alt=""><p>当前页面暂无内容</p></div>
+        {else /}
         {volist name="center" id="b"}
         <a href="{:Url('Association/newsdetail2?id='.$b['id'])}">
             <img data-original="{$b.front_cover|get_cover='path'}" class="lazy">
@@ -34,8 +40,12 @@
             </div>
         </a>
         {/volist}
+        {/if}
     </div>
     <div class="news" id="side3">
+        {if condition="empty($right)"}
+        <div id="null"><img src="/home/images/null.png" alt=""><p>当前页面暂无内容</p></div>
+        {else /}
         {volist name="right" id="c"}
         <a href="{:Url('Association/newsdetail2?id='.$c['id'])}">
         <img data-original="{$c.front_cover|get_cover='path'}" class="lazy">
@@ -45,6 +55,7 @@
         </div>
         </a>
         {/volist}
+        {/if}
 </div>
 <div class="bg"></div>
 <div class="tip"></div>
