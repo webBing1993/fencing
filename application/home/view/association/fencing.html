@@ -6,6 +6,9 @@
 {/block}
 {block name="body"}
     <div class="sort">
+        {if condition="empty($list)"}
+        <div id="null"><img src="/home/images/null.png" alt=""><p>当前页面暂无内容</p></div>
+        {else /}
         {volist name="list" id="vo"}
         <a href="{:Url('Association/jjdetail?id='.$vo['id'])}">
             <img src="{$vo.images|get_cover='path'}" class="lazy">
@@ -19,6 +22,7 @@
             </div>
         </a>
        {/volist}
+       {/if}
     </div>
 <div class="bg"></div>
 <div class="tip"></div>

@@ -7,6 +7,9 @@
 {block name="body"}
     <div class="news">
         <div class="newsSort" style="padding: .24rem .24rem 0 .24rem;">
+            {if condition="empty($list)"}
+            <div id="null"><img src="/home/images/null.png" alt=""><p>当前页面暂无内容</p></div>
+            {else /}
             {volist name="list" id="vo"}
             <a href="{:Url('Association/newsdetail?id='.$vo['id'])}">
                 <img src="{$vo.front_cover|get_cover='path'}" class="lazy">
@@ -16,6 +19,7 @@
                 </div>
             </a>
             {/volist}
+            {/if}
         </div>
     </div>
 <div class="bg"></div>
@@ -31,9 +35,6 @@
     if(len >= 7){
         $(".tip").text('上拉加载更多');
         loadScroll();
-    }
-    else{
-        $(".tip").text('没有更多了');
     }
     function loadScroll(){
         $(window ).off("scroll" ).on("scroll",function(){
