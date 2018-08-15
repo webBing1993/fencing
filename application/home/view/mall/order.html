@@ -77,6 +77,14 @@
     </div>
 </div>
 
+<!-- 支付失败的提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>支付失败，请重新支付</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
 
 <div class="showbox">
     <div class="loader">
@@ -126,7 +134,10 @@
                         $(".content").hide();
                         $(".popUp").show();
                     }else {
-
+                        $('.chooseTig').show();
+                        setTimeout(function () {
+                            $('.chooseTig').hide();
+                        },3000)
                     }
                     e.val('yes');
                 },
@@ -162,9 +173,15 @@
                                             $(".content").hide();
                                             $(".popUp").show();
                                             setTimeout(function () {
-                                                window.history.go(-index);
+//                                                window.history.go(-index);
                                             },1500);
+                                        }else {
+                                            $('.chooseTig').show();
+                                            setTimeout(function () {
+                                                $('.chooseTig').hide();
+                                            },3000)
                                         }
+                                        $('.payChoose').hide();
                                         // 使用以上方式判断前端返回,微信团队郑重提示：
                                         // res.err_msg将在用户支付成功后返回
                                         // ok，但并不保证它绝对可靠。
@@ -195,6 +212,7 @@
                 type:4
             },
             success: function (response) {
+                $('.payChoose').hide();
                 response = JSON.parse(response);
                 if (response.success) {
                     event.preventDefault();
@@ -210,7 +228,12 @@
         $('.payChoose').show();
     });
 
-
+    /*
+    * 支付失败提示取消
+    * */
+    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
+        $(".chooseTig").hide();
+    });
 
     /**
      * payChoose
