@@ -24,7 +24,7 @@
     </div>
 <div class="news" id="side2">
     {volist name="right" id="b"}
-    <a href="/home/association/newsdetail.html" data-id="{$b.id}">
+    <a  data-id="{$b.id}">
         <img src="{$b.front_cover|get_cover='path'}" class="lazy">
         <div class="user">
             <div class="userName">{$b.name}<span></span></div>
@@ -40,18 +40,18 @@
 <!--弹出框-->
     <div class="fixed">
         <div class="information">
-            <div class="close"><img src="/home/images/1.jpg"></div>
-            <div class="inImg"><img src="/home/images/1.jpg" class="lazy"></div>
-            <div class="inName">张教练</div>
-            <div class="userSort">
-                <span>击剑</span>
-                <span>佩剑</span>
-                <span>重剑</span>
-            </div>
-            <div class="inText">而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选。</div>
-            <ol><span>职业年限</span><span>五年</span></ol>
-            <ol><span>岗位级别</span><span>2级</span></ol>
-            <ol><span>所获奖项</span><span>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选。</span></ol>
+            <!--<div class="close"><img src="/home/images/1.jpg"></div>-->
+            <!--<div class="inImg"><img src="/home/images/1.jpg" class="lazy"></div>-->
+            <!--<div class="inName">张教练</div>-->
+            <!--<div class="userSort">-->
+                <!--&lt;!&ndash;<span>测试.测试.测试</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span>佩剑</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span>重剑</span>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div class="inText">而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选。</div>-->
+            <!--<ol><span>职业年限</span><span>五年</span></ol>-->
+            <!--<ol><span>岗位级别</span><span>2级</span></ol>-->
+            <!--<ol><span>所获奖项</span><span>而零翼城不仅有绝佳的环境，现在还有如此防御手段，可以说是所有玩家生活发展的首选。</span></ol>-->
         </div>
     </div>
 <div class="bg"></div>
@@ -161,7 +161,7 @@
         }else {
             for(var j = 0; j< len;j++){
                 var list = lists[j];
-                html +='<a href="/home/association/newsdetail/id/'+ list.id+'.html">'
+                html +='<a data-side="'+list.id+'">'
                         +'<img class="lazy" data-original='+list.front_cover+'>'
                         +'<div class="user">'
                         +'<div class="userName">'+list.name+'<span></span></div>'
@@ -173,10 +173,32 @@
         }
         $('.news').eq(type-1).append(html);
     }
-    $(document).on('click','#side1 a',function(){
+    $(document).on('click','.news a',function(){
         $('.fixed').show();
+        var id = $(this).data('id')
+        $.ajax({
+            type:"post",
+            url: "{:Url('Association/show')}",
+            data:{
+                id:id,
+            },
+            success:function(data){
+                console.log(data)
+                    var html = '';
+                var data = data.data;
+                html ='<div class="close"><img src="/home/images/1.jpg"></div>'
+                    +'<div class="inImg"><img src="'+data.front_cover+'" class="lazy"></div>'
+                    +'<div class="inName">'+data.name+'</div>'
+                    +'<div class="userSort">'+data.class+'</div>'
+                    +'<div class="inText">'+data.content+'</div>'
+                    +'<ol><span>职业年限</span><span>'+data.year+'</span></ol>'
+                    +'<ol><span>岗位级别</span><span>'+data.level+'</span></ol>'
+                    +'<ol><span>所获奖项</span><span>'+data.prize+'</span></ol>';
+                $('.information').html(html)
+            }
+        });
     })
-    $('.close').on('click',function(){
+    $(document).on('click','.close',function(){
         $('.fixed').hide();
     })
 </script>

@@ -87,6 +87,16 @@
         <div class="payError03">我知道了</div>
     </div>
 </div>
+<div id="pays">
+    <div class="infoErrors">
+        <div class="payError01"><img src="/home/images/game/icon08.png" alt=""></div>
+        <div class="payError02">
+            <p>您的年龄当前不符合比赛要求</p>
+            <p>不可进行报名，抱歉！</p>
+        </div>
+        <div class="payError03">我知道了</div>
+    </div>
+</div>
 {/block}
 {block name="script"}
 <script src="/home/js/jquery.hdialog.min.js"></script>
@@ -108,7 +118,7 @@
     if(name == '' || birthday == '' || sex == '' || phone == '' || address == ''){
         $('#pay').show();
         $('.payError').hide();
-        $('body').css('position','fixed');
+        $('body').css({'position':'fixed','width':'100%'});
     }
 
     // 判断是否包含 个人/团体赛
@@ -206,15 +216,19 @@
                 data: {id:id},
                 dataType: "json",
                 success: function (data) {
-                    var _len = data.data;
-                    var str = '';
-                    for(var i=0;i<_len.length;i++){
-                        str += '<p data-id="'+_len[i].id+'">'+_len[i].group_name+'</p>'
+                    if(data.data.length == 0){
+                        $('#pays ,.infoErrors').show();
+                        $('body').css({'position':'fixed','width':'100%'});;
+                    }else {
+                        var _len = data.data;
+                        var str = '';
+                        for(var i=0;i<_len.length;i++){
+                            str += '<p data-id="'+_len[i].id+'">'+_len[i].group_name+'</p>'
+                        }
+                        $('.HBoxSorts').html(str)
                     }
-                    $('.HBoxSorts').html(str)
                 }
             })
-            // str += '<p>幼儿组</p><p>幼儿组1</p><p>幼儿组2</p><p>幼儿组3</p><p>幼儿组4</p><p>幼儿组5</p>'
         }else if(name == 'jz'){
             if(!($('.gameSort span').eq(0).hasClass('active')) && !($('.gameSort span').eq(1).hasClass('active'))){
                 swal({
@@ -307,11 +321,15 @@
         }else{
             $('#pay , .payError').show();
             $('.infoError').hide();
-            $('body').css('position','fixed');
+            $('body').css({'position':'fixed','width':'100%'});
         }
     })
     $('.payError .payError03').on('click',function(){
         $('#pay').hide();
+        $('body').css('position','inherit');
+    })
+    $('#pays .payError03').on('click',function(){
+        $('#pays ,#HBox').hide();
         $('body').css('position','inherit');
     })
     $('.infoError .payError03').on('click',function(){

@@ -4,7 +4,7 @@
 <title>签到</title>
 <link rel="stylesheet" href="/home/css/association/game.css">
 <style>
-    .sucTop img {width:4.8rem;height:4.2rem;}
+    /*.sucTop img {width:4.8rem;height:4.2rem;}*/
     .sucDetail07 {
         width: 100%;
         text-align: center;
@@ -20,13 +20,28 @@
 </style>
 {/block}
 {block name="body"}
+<div id="signNull">
     <div class="sucTop">
-        <img src="/home/images/sign/sign01.png" alt="">
-        <!--<p>恭喜您比赛报名成功！</p>-->
+    <img src="/home/images/sign/sign01.png" alt="">
+    <!--<p>恭喜您比赛报名成功！</p>-->
     </div>
-<div class="sucDetail07" style="margin-top: 1.4rem;">请打开签到二维码</div>
-<div class="sucDetail07" style="color: #3A8CFB;margin-top: .3rem;">（个人中心-我的签到）</div>
-<div class="sucDetail08" style="margin-top: 2rem;">在屏幕下方的扫描器扫描二维码进行签到</div>
+    <div class="sucDetail07" style="margin-top: 1.4rem;">请打开签到二维码</div>
+    <div class="sucDetail07" style="color: #3A8CFB;margin-top: .3rem;">（个人中心-我的签到）</div>
+    <div class="sucDetail08" style="margin-top: 2rem;">在屏幕下方的扫描器扫描二维码进行签到</div>
+</div>
+<div id="signSucc" style="display: none;">
+    <!--<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>恭喜同学签到成功！</p></div>-->
+    <!--<div class="sucDetail">-->
+        <!--<div class="sucDetail03">-->
+            <!--<p><span>姓名</span><span>1</span></p>-->
+            <!--<p><span>组别</span><span>1</span></p>-->
+            <!--<p><span>剑种</span><span>1</span></p>-->
+            <!--<p><span>赛别</span><span>1</span></p>-->
+            <!--<p><span>代表单位</span><span>1</span></p>-->
+            <!--<p><span>岗位</span><span>1</span></p>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
 <input type="text" class="number" maxlength="11" style="background: red;">
 <div class="bg"></div>
 <ul class="roster"></ul>
@@ -60,8 +75,8 @@
     $('.number').focus();
     var clean;
     document.onkeyup = function (event) {
-        var e = event || window.event;
-        var keyCode = e.keyCode;
+        var e = window.event ? event.keyCode : event.which;
+        var keyCode = String.fromCharCode(e);
         if (a.length >= 11) {
             a = '';
             return false;
@@ -92,134 +107,130 @@
                     // 签到更新
                     $.ajax({
                         type: "post",
-                        url: "{:Url('Visitor/newSign')}",
+                        url: "{:Url('sign/sign')}",
                         data: {
-                            mobile: num
+                            venue_id: 98,
+                            openid:num
                         },
                         dataType: "Json",
                         success: function (data) {
-                            var obj = data.data;
-                            speckText(data.msg);
+                            console.log(data)
+                            var data = data.data;
                             var html = '';
-                            var name = '';
-                            if (obj) {
-                                for (var i = 0; i < obj.length; i++) {
-                                    html += '<div class="' + 'list' + '" data-tab=' + obj[i].coach_id + ' data-tag=' + obj[i].class_id + '>' +
-                                        '<div class="' + 'coach' + '">' +
-                                        '<span class="' + 'name limit' + '">教练: ' + obj[i].name + '/' + obj[i].class_name + '</span>' +
-                                        '<span class="' + 'num limit' + '">学员情况: <span>' + obj[i].current_num + '</span>/' + obj[i].all_num + '</span>' +
-                                        '</div>' +
-                                        '</div>';
-                                }
-                                $('.lists').html('');
-                                $('.lists').prepend(html);
+                            if(data.type == 1){
+                                html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+                                    +'<div class="sucDetail"><div class="sucDetail03">'
+                                    +'<p><span>姓名</span><span>1</span></p>'
+                                    +'<p><span>性别</span><span>1</span></p>'
+                                    +'<p><span>就读学校</span><span>1</span></p>'
+                                    +'<p><span>剑种</span><span>1</span></p>'
+                                    +'<p><span>训练场馆</span><span>1</span></p>'
+                                    +'</div></div>'
+                            }else if(data.type == 2){
+                                html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+                                    +'<div class="sucDetail"><div class="sucDetail03">'
+                                    +'<p><span>姓名</span><span>1</span></p>'
+                                    +'<p><span>性别</span><span>1</span></p>'
+                                    +'<p><span>岗位级别</span><span>1</span></p>'
+                                    +'<p><span>剑种</span><span>1</span></p>'
+                                    +'<p><span>训练场馆</span><span>1</span></p>'
+                                    +'</div></div>'
                             }
-
-
-                            if (data.code == 1) {
-                                a = '';
-                                end = true;
-                                last = '';
-                                toastr.success(data.msg);
-
-                            } else if (data.code == 2) {
-
-                                a = '';
-                                end = true;
-                                last = '';
-                                toastr.warning(data.msg);
-                            } else {
-                                a = '';
-                                end = true;
-                                last = '';
-                                toastr.error(data.msg);
+                            else if(data.type == 3){
+                                html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+                                    +'<div class="sucDetail"><div class="sucDetail03">'
+                                    +'<p><span>姓名</span><span>'+data.name+'</span></p>'
+                                    +'<p><span>性别</span><span>'+data.sex+'</span></p>'
+                                    +'<p><span>岗位</span><span>'+data.comment+'</span></p>'
+                                    +'</div></div>'
                             }
+                            $('#signNull').hide();
+                            $('#signSucc').show().html(html);
                         }
                     })
                 } else {
-
                     a = '';
                 }
             }
         }
     }
 
-    function test(number) {
-        //var e = event || window.event;
-        //var keyCode = e.key;
-        var a = number;
-
-        var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
-        var nubmer = a;
-
-        if (!re.test(nubmer)) {
-            end = false;
-            toastr.error('请重新扫描二维码');
-            speckText('请重新扫描二维码');
-            setTimeout(function () {
-                a = '';
-                end = true;
-            }, 1500);
-            return false;
-        }
-
-        var num = a;
-        if (last != num && end == true) {
-            last = num;
-            end = false;
-            // 签到更新
-            $.ajax({
-                type: "post",
-                url: "{:Url('Visitor/newSign')}",
-                data: {
-                    mobile: num
-                },
-                dataType: "Json",
-                success: function (data) {
-                    var obj = data.data;
-                    speckText(data.msg);
-                    var html = '';
-                    var name = '';
-                    if (obj) {
-                        for (var i = 0; i < obj.length; i++) {
-                            html += '<div class="' + 'list' + '" data-tab=' + obj[i].coach_id + ' data-tag=' + obj[i].class_id + '>' +
-                                '<div class="' + 'coach' + '">' +
-                                '<span class="' + 'name limit' + '">教练: ' + obj[i].name + '/' + obj[i].class_name + '</span>' +
-                                '<span class="' + 'num limit' + '">学员情况: <span>' + obj[i].current_num + '</span>/' + obj[i].all_num + '</span>' +
-                                '</div>' +
-                                '</div>';
-                        }
-                        $('.lists').html('');
-                        $('.lists').prepend(html);
-                    }
-
-
-                    if (data.code == 1) {
-                        a = '';
-                        end = true;
-                        last = '';
-                        toastr.success(data.msg);
-
-                    } else if (data.code == 2) {
-
-                        a = '';
-                        end = true;
-                        last = '';
-                        toastr.warning(data.msg);
-                    } else {
-                        a = '';
-                        end = true;
-                        last = '';
-                        toastr.error(data.msg);
-                    }
-                }
-            })
-        } else {
-
-            a = '';
-        }
-
-    }
+    // function test(number) {
+    //     //var e = event || window.event;
+    //     //var keyCode = e.key;
+    //     var a = number;
+    //
+    //     var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+    //     var nubmer = a;
+    //
+    //     if (!re.test(nubmer)) {
+    //         end = false;
+    //         toastr.error('请重新扫描二维码');
+    //         speckText('请重新扫描二维码');
+    //         setTimeout(function () {
+    //             a = '';
+    //             end = true;
+    //         }, 1500);
+    //         return false;
+    //     }
+    //
+    //     var num = a;
+    //     if (last != num && end == true) {
+    //         last = num;
+    //         end = false;
+    //         // 签到更新
+    //         $.ajax({
+    //             type: "post",
+    //             url: "{:Url('Visitor/newSign')}",
+    //             data: {
+    //                 mobile: num
+    //             },
+    //             dataType: "Json",
+    //             success: function (data) {
+    //                 var obj = data.data;
+    //                 speckText(data.msg);
+    //                 var html = '';
+    //                 var name = '';
+    //                 if (obj) {
+    //                     for (var i = 0; i < obj.length; i++) {
+    //                         html += '<div class="' + 'list' + '" data-tab=' + obj[i].coach_id + ' data-tag=' + obj[i].class_id + '>' +
+    //                             '<div class="' + 'coach' + '">' +
+    //                             '<span class="' + 'name limit' + '">教练: ' + obj[i].name + '/' + obj[i].class_name + '</span>' +
+    //                             '<span class="' + 'num limit' + '">学员情况: <span>' + obj[i].current_num + '</span>/' + obj[i].all_num + '</span>' +
+    //                             '</div>' +
+    //                             '</div>';
+    //                     }
+    //                     $('.lists').html('');
+    //                     $('.lists').prepend(html);
+    //                 }
+    //
+    //
+    //                 if (data.code == 1) {
+    //                     a = '';
+    //                     end = true;
+    //                     last = '';
+    //                     toastr.success(data.msg);
+    //
+    //                 } else if (data.code == 2) {
+    //
+    //                     a = '';
+    //                     end = true;
+    //                     last = '';
+    //                     toastr.warning(data.msg);
+    //                 } else {
+    //                     a = '';
+    //                     end = true;
+    //                     last = '';
+    //                     toastr.error(data.msg);
+    //                 }
+    //             }
+    //         })
+    //     } else {
+    //
+    //         a = '';
+    //     }
+    //
+    // }
 
     // 播放声音
     function speckText(str) {

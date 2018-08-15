@@ -30,8 +30,8 @@
 .banner .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {right:.3rem;left:inherit;bottom:.2rem;}
 .mainSort {width:100%;padding: 0 .24rem;margin-top: .2rem;text-align: center;font-size: .24rem;color: #333;height:2rem;}
 .mainSort a {display: block;width:25%;float:left;color: #333;}
-.mainSort img {width:.9rem;height:.9rem;border-radius: 50%;}
-.mainSort p {margin-top: .16rem;}
+.mainSort img {width:1.5rem;height:1.5rem;border-radius: 50%;}
+/*.mainSort p {margin-top: .16rem;}*/
 .products {width:100%;height:100%;position: relative;overflow: hidden;}
 .productsTop {width:100%;height:1rem;padding: 0 .24rem;line-height: 1rem;}
 .productsTop span {float:left;font-size: .4rem;color: #333;}
