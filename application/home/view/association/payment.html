@@ -139,7 +139,7 @@
 
     var id = {$data.id};
     var price = {$data.price};
-    var id_ = 0;
+    var id_ = getCookie('id_')?getCookie('id_'):0;
 
     /*
      * 地图跳转
@@ -195,6 +195,7 @@
                 success: function (msg) {
                     $(".showbox").hide();
                     id_ = msg.data.id;
+                    setCookie('id_',id_);
                     setCookie('isOrder',true);
                     // 调取支付宝接口
                     payPrice1(id_,price);
@@ -215,6 +216,7 @@
                     $(".showbox").hide();
                     setCookie('isOrder',true);
                     id_ = msg.data.id;
+                    setCookie('id_',id_);
                     payPrice(id_,price,'/home/association/paysuccess1/id/'+ id_);
                 }
             })
@@ -307,17 +309,46 @@
             window.onpageshow = function(event) {
                 var isOrder = getCookie('isOrder');
                 if (event.persisted) {
-                    setTimeout(function () {
+                    $.ajax({
+                        url: '{:Url("Pay/payStatus")}',
+                        type: 'post',
+                        data: {
+                            pid: id_,
+                            type: 1
+                        },
+                        success: function (msg) {
+                            $('.showbox').hide();
+                            if (msg.code == 1) {
+                                window.location.href = '/home/association/paysuccess1/id/'+ id_;
+                            }else {
+                                $('.chooseTig').show();
+                                setTimeout(function () {
+                                    $('.chooseTig').hide();
+                                },3000)
+                            }
+                            setCookie('isOrder',false);
+                        },
+                        error: function (msg) {
+                            $('.chooseTig').show();
+                            setTimeout(function () {
+                                $('.chooseTig').hide();
+                            },3000)
+                        }
+                    })
+                }else {
+                    if (isOrder == 'true') {
+                        setCookie('isOrder',false);
                         $.ajax({
                             url: '{:Url("Pay/payStatus")}',
                             type: 'post',
                             data: {
-                                pid: id,
+                                pid: id_,
                                 type: 1
                             },
                             success: function (msg) {
                                 $('.showbox').hide();
                                 if (msg.code == 1) {
+                                    setCookie('isOrder',true);
                                     window.location.href = '/home/association/paysuccess1/id/'+ id_;
                                 }else {
                                     $('.chooseTig').show();
@@ -325,6 +356,7 @@
                                         $('.chooseTig').hide();
                                     },3000)
                                 }
+                                setCookie('isOrder',false);
                             },
                             error: function (msg) {
                                 $('.chooseTig').show();
@@ -333,14 +365,6 @@
                                 },3000)
                             }
                         })
-                    },1000)
-                }else {
-                    if (isOrder == 'true') {
-                        setCookie('isOrder',false);
-                        $('.chooseTig').show();
-                        setTimeout(function () {
-                            $('.chooseTig').hide();
-                        },3000)
                     }else {
                     }
                 }
@@ -358,7 +382,7 @@
                         url: '{:Url("Pay/payStatus")}',
                         type: 'post',
                         data: {
-                            pid: id,
+                            pid: id_,
                             type: 1
                         },
                         success: function (msg) {
