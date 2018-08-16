@@ -119,37 +119,7 @@
         if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
             window.onpageshow = function(event) {
                 var isOrder = getCookie('isOrder');
-                $.ajax({
-                    url: '{:Url("Pay/payStatus")}',
-                    type: 'post',
-                    data: {
-                        pid: id,
-                        type: 4
-                    },
-                    success: function (msg) {
-                        alert(1);
-                        $('.showbox').hide();
-                        if (msg.code == 1) {
-                            alert(2);
-                            $(".content").hide();
-                            $(".popUp").show();
-                        }else {
-                            alert(3);
-                            $('.chooseTig').show();
-                            setTimeout(function () {
-                                $('.chooseTig').hide();
-                            },3000)
-                        }
-                    },
-                    error: function (msg) {
-                        alert(4);
-                        $('.chooseTig').show();
-                        setTimeout(function () {
-                            $('.chooseTig').hide();
-                        },3000)
-                    }
-                });
-                /*if (event.persisted) {
+                if (event.persisted) {
                     $.ajax({
                         url: '{:Url("Pay/payStatus")}',
                         type: 'post',
@@ -179,13 +149,36 @@
                 }else {
                     if (isOrder == 'true') {
                         setCookie('isOrder',false);
-                        $('.chooseTig').show();
-                        setTimeout(function () {
-                            $('.chooseTig').hide();
-                        },3000)
+                        $.ajax({
+                            url: '{:Url("Pay/payStatus")}',
+                            type: 'post',
+                            data: {
+                                pid: id,
+                                type: 4
+                            },
+                            success: function (msg) {
+                                $('.showbox').hide();
+                                if (msg.code == 1) {
+                                    $(".content").hide();
+                                    $(".popUp").show();
+                                }else {
+                                    $('.chooseTig').show();
+                                    setTimeout(function () {
+                                        $('.chooseTig').hide();
+                                    },3000)
+                                }
+                                setCookie('isOrder',true);
+                            },
+                            error: function (msg) {
+                                $('.chooseTig').show();
+                                setTimeout(function () {
+                                    $('.chooseTig').hide();
+                                },3000)
+                            }
+                        })
                     }else {
                     }
-                }*/
+                }
 
             };
         }

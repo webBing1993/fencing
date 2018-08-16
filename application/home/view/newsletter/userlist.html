@@ -51,14 +51,15 @@
     <ul>
         {volist name="k" id="cc"}
         <li>
-            <a href="javascript:;" class="active">{$cc}</a>
+            <a href="javascript:;">{$cc}</a>
         </li>
         {/volist}
     </ul>
 </div>
 
 {else /}
-<div> 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</div>
+<!-- 无权限-->
+<div> </div>
 {/if}
 {/block}
 {block name='script'}
@@ -72,6 +73,10 @@
     $(".letters a").on('click', function () {
         $(this).addClass('active').parent('li').siblings('li').find('a').removeClass('active');
         window.location.replace('/home/newsletter/userlist.html#' + $(this).text());
+    });
+
+    $(function () {
+        $(".letters li").eq(0).find('a').addClass('active');
     });
 
     /*
