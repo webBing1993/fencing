@@ -3,6 +3,7 @@
 {block name="style"}
 <title>我要报名</title>
 <link rel="stylesheet" href="/home/css/association/game.css">
+<link rel="stylesheet" href="/home/css/mall/order.css?v=11">
 <!--<link rel="stylesheet" href="/home/css/animate.min.css">-->
 {/block}
 {block name="body"}
@@ -16,11 +17,11 @@
     <div class="user">
         <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
         <div class="error"><img src="/home/images/game/icon10.png" class="gantan">部分信息无法获取，需要补充完善才可进行报名！</div>
-        <div class="userSort active"><span>姓名</span><input name="name" type="text" placeholder="暂无" value="{$model.name}"  readonly="readonly"></div>
-        <div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="暂无" value="{$model.birthday}"  readonly="readonly"></div>
+        <div class="userSort active"><span>姓名</span><input onfocus="this.blur()" name="name" type="text" placeholder="暂无" value="{$model.name}"  readonly="readonly"></div>
+        <div class="userSort active"><span>出生日期</span><input onfocus="this.blur()" name="birthday" type="text" placeholder="暂无" value="{$model.birthday}"  readonly="readonly"></div>
         <!--<div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="请填写" readonly="readonly"></div>-->
-        <div class="userSort"><span>组别</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zb"><img src="/home/images/game/iconxl.png" class="xiala"></div>
-        <div class="userSort"><span>剑种</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="jz"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort"><span>组别</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly"  onfocus="this.blur()" class="select" name="zb"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort"><span>剑种</span><input onfocus="this.blur()" data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="jz"><img src="/home/images/game/iconxl.png" class="xiala"></div>
         <div class="userSort active">
             <span>赛别</span>
             {eq name="$show_type" value="3"}
@@ -39,14 +40,14 @@
                 {/eq}
             </div>
         </div>
-        <div class="userSort active"><span>性别</span><input name="sex" type="text" placeholder="暂无" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
-        <div class="userSort"><span>代表单位</span><input  name="dbdw" type="text" placeholder="请填写" value="{$representative}"></div>
-        <div class="userSort"><span>带训教练</span><input  name="dxjl" type="text" placeholder="请填写" value="{$coach}"></div>
-        <div class="userSort active"><span>监护人电话</span><input name="phone" type="text" placeholder="暂无" value="{$model.guardian_mobile}"  readonly="readonly"></div>
-        <div class="userSort"><span>证件类型</span><input data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zj"><img src="/home/images/game/iconxl.png" class="xiala"></div>
-        <div class="userSort"><span>证件号</span><input  name="codeNum" type="text" placeholder="请填写" value="{$model.identity}"></div>
-        <div class="userSort"><span>家庭住址</span><input name="address" type="text" placeholder="暂无" value="{$model.address}" readonly="readonly"></div>
-        <div class="userSort"><span>备注</span><input name="bz" type="text" placeholder="请填写" value=""></div>
+        <div class="userSort active"><span>性别</span><input onfocus="this.blur()" name="sex" type="text" placeholder="暂无" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
+        <div class="userSort"><span>代表单位</span><input   name="dbdw" type="text" placeholder="请填写" value="{$representative}"></div>
+        <div class="userSort"><span>带训教练</span><input   name="dxjl" type="text" placeholder="请填写" value="{$coach}"></div>
+        <div class="userSort active"><span>监护人电话</span><input  name="phone" type="text" placeholder="暂无" value="{$model.guardian_mobile}"  readonly="readonly"></div>
+        <div class="userSort"><span>证件类型</span><input onfocus="this.blur()" data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zj"><img src="/home/images/game/iconxl.png" class="xiala"></div>
+        <div class="userSort"><span>证件号</span><input   name="codeNum" type="text" placeholder="请填写" value="{$model.identity}"></div>
+        <div class="userSort"><span>家庭住址</span><input onfocus="this.blur()" name="address" type="text" placeholder="暂无" value="{$model.address}" readonly="readonly"></div>
+        <div class="userSort"><span>备注</span><input  name="bz" type="text" placeholder="请填写" value=""></div>
     </div>
     {eq name="$model.vip" value="1"}
     <div class="pay">
@@ -97,10 +98,44 @@
         <div class="payError03">我知道了</div>
     </div>
 </div>
+<!-- 结算后的弹窗-->
+<div class="popUp">
+    <div class="shadow"></div>
+    <div class="popContent">
+        <div>
+            <img src="/home/images/mall/success.png" alt="">
+            <p>请在个人中心-我的订单中查看订单信息</p>
+        </div>
+        <img src="/home/images/mall/default.png" alt="" class="cancel">
+    </div>
+</div>
+
+<!-- 支付失败的提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>支付失败，请重新支付</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+<!-- payChoose-->
+<div class="payChoose">
+    <div class="shadow"></div>
+    <div class="chooseList">
+        <a href="javascript:;" class="zhifubao"><i></i> 支付宝</a>
+        <a href="javascript:;" class="weixin"><i></i>微信</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+<input type="hidden" id="refreshed" value="no">
 {/block}
 {block name="script"}
 <script src="/home/js/jquery.hdialog.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="/home/js/ap.js"></script>
 <script>
+    var orderId = '';//订单ID
+    var orderPrice = '';//订单价格
     var id = {$data.id};
     var name = $('input[name=name]').val(); //姓名
     var birthday = $('input[name=birthday]').val(); //出生日期
@@ -190,7 +225,7 @@
         var name = $(this)[0].name;
         _select(name)
     })
-    $(document).on('click','.HBoxSorts p',function(){
+    $(document).on('click','#HBox .HBoxSorts p',function(){
         var sort = localStorage.getItem('_name');
         if(sort == 'zb'){
             $('input[name=zb]').val($(this).text());
@@ -319,12 +354,16 @@
                 data: data,
                 dataType: "json",
                 success: function (data) {
-                    console.log(data)
-                    location.href='/home/association/paysuccess/id/'+data.data.id+'/type/'+data.data.type
+                    // console.log(data)
+                    orderId = data.data.id
+                    orderPrice = $('.pay02 span').text();
+                    $('.payChoose').show();
+                    // location.href='/home/association/paysuccess/id/'+data.data.id+'/type/'+data.data.type
                 }
             })
             // location.href='/home/association/paysuccess.html'
-        }else{
+        }
+        else{
             $('#pay , .payError').show();
             $('.infoError').hide();
             $('body').css({'position':'fixed','width':'100%'});
@@ -344,5 +383,133 @@
         $('body').css('position','inherit');
     })
 
+    /**
+     * payChoose
+     * */
+    $('.payChoose a').on('click', function () {
+        // setCookie('orderId',id);
+        if ($(this).hasClass('zhifubao')) {
+            $.ajax({
+                url: "{:Url('Mall/pay')}",
+                type: 'post',
+                data: {
+                    id: orderId,
+                    text1: $(".size").val(),
+                    text2: $(".list_ textarea").val()
+                },
+                beforeSend: function(XMLHttpRequest){
+                    $(".showbox").show();
+                },
+                success: function (msg) {
+                    $(".showbox").hide();
+                    // 调取支付宝接口
+                    payPrice1(orderId,orderPrice);
+                }
+            })
+        }else if ($(this).hasClass('weixin')) {
+            $.ajax({
+                url: "{:Url('Mall/pay')}",
+                type: 'post',
+                data: {
+                    id: id,
+                    text1: $(".size").val(),
+                    text2: $(".list_ textarea").val()
+                },
+                beforeSend: function(XMLHttpRequest){
+                    $(".showbox").show();
+                },
+                success: function (msg) {
+                    $(".showbox").hide();
+                    payPrice(orderId,orderPrice);
+                }
+            });
+        }else {
+            $('.payChoose').hide();
+        }
+    });
+    $('.payChoose .shadow').on('click', function () {
+        $('.payChoose').hide();
+    });
+
+
+    // 取消
+    $(".popUp .cancel,.popUp .shadow").on('click', function () {
+        setTimeout(function () {
+            history.go(-1);
+        },1500)
+    });
+
+
+    // weixin
+    function payPrice(orderId,orderPrice) {
+        $.post('/home/pay/wxpay ', {price: orderPrice,pid: orderId,type:2})
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+                    if (typeof WeixinJSBridge == "undefined"){
+                        if( document.addEventListener ){
+                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                        }else if (document.attachEvent){
+                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                        }
+                    } else {
+                        WeixinJSBridge.invoke(
+                            'getBrandWCPayRequest',  JSON.parse(response),
+                            function (res) {
+                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                    $(".content").hide();
+                                    $(".popUp").show();
+                                    setTimeout(function () {
+//                                                window.history.go(-index);
+                                    },1500);
+                                }else {
+                                    $('.chooseTig').show();
+                                    setTimeout(function () {
+                                        $('.chooseTig').hide();
+                                    },3000)
+                                }
+                                $('.payChoose').hide();
+                                // 使用以上方式判断前端返回,微信团队郑重提示：
+                                // res.err_msg将在用户支付成功后返回
+                                // ok，但并不保证它绝对可靠。
+                            }
+                        );
+                    }
+
+                } else {
+                    swal({
+                        title: "",
+                        text: response.data.error_msg,
+                        type: "error",
+                        confirmButtonColor: "#ffb45b",
+                        confirmButtonText: "确定"
+                    });
+                }
+            });
+    }
+
+    // zhifubao
+    function payPrice1(orderId,orderPrice) {
+        $.ajax({
+            url: "/home/pay/alipay",
+            type: 'post',
+            data: {
+                price: orderPrice,
+                pid: orderId,
+                type:2
+            },
+            success: function (response) {
+                $('.payChoose').hide();
+                response = JSON.parse(response);
+                if (response.success) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    _AP.pay(response.data);
+                }
+            }
+        })
+    }
 </script>
 {/block}

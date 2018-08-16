@@ -359,6 +359,7 @@
     width: 100%;
     height: .97rem;
     line-height: .97rem;
+    font-size: .24rem;
 }
 
 .user {
@@ -381,6 +382,12 @@
     color: #999;
 }
 
+input:disabled {
+    -webkit-text-fill-color: #000;
+    -webkit-opacity: 1;
+    color: #000;
+}
+
 .userSort input {
     float: right;
     color: #333;
@@ -396,6 +403,8 @@
     bottom: -100%;
     background: #fff;
     padding: 0 .24rem;
+    z-index: 999;
+    cursor: pointer;
     /*display: none;*/
 }
 
