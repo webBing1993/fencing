@@ -120,7 +120,7 @@ class Mall  extends Base
         $data['type2'] = MallTwo::where('id',$data['type2'])->value('title');
         $this->assign('data',$data);
         $userId = session('userId');
-        $user = WechatUser::where('mobile',$userId)->find();
+        $user = WechatUser::where('userid',$userId)->find();
         $venue_id = WechatUserTag::getVenueId($userId);
 
         if($venue_id != false AND $user['tag'] == 1 AND $user['vip'] == 1){
