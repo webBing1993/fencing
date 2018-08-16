@@ -43,6 +43,13 @@ class User extends Base
         }
         $this->assign('coach',$coach);
         $this->assign('ts',$ts);
+        //会员过期验证更新
+        if(!empty($user['viptime'])){
+            if($user['viptime'] < time()){
+                $map['vip'] = 0;
+                WechatUser::where('userid',$userId)->update($map);
+            }
+        }
 
         return $this->fetch();
     }
