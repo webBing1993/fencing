@@ -170,7 +170,24 @@
     * */
     $(".payMoney").on('click', function () {
         if (isWrite == true) {
-            $('.payChoose').show();
+            $.ajax({
+                url: '{:Url("association/commit")}',
+                type: 'post',
+                data: {
+                    course_id: id,
+                    remark: $('textarea').val()
+                },
+                beforeSend: function(XMLHttpRequest){
+                    $(".showbox").show();
+                },
+                success: function (msg) {
+                    $(".showbox").hide();
+                    id_ = msg.data.id;
+                    setCookie('id_',id_);
+                    setCookie('isOrder',true);
+                    $('.payChoose').show();
+                }
+            })
         }else {
             $('#pay').show();
         }
@@ -182,44 +199,9 @@
     $('.payChoose a').on('click', function () {
         if ($(this).hasClass('zhifubao')) {
             // 调取支付宝接口
-            $.ajax({
-                url: '{:Url("association/commit")}',
-                type: 'post',
-                data: {
-                    course_id: id,
-                    remark: $('textarea').val()
-                },
-                beforeSend: function(XMLHttpRequest){
-                    $(".showbox").show();
-                },
-                success: function (msg) {
-                    $(".showbox").hide();
-                    id_ = msg.data.id;
-                    setCookie('id_',id_);
-                    setCookie('isOrder',true);
-                    // 调取支付宝接口
-                    payPrice1(id_,price);
-                }
-            })
+            payPrice1(id_,price);
         }else if ($(this).hasClass('weixin')) {
-            $.ajax({
-                url: '{:Url("association/commit")}',
-                type: 'post',
-                data: {
-                    course_id: id,
-                    remark: $('textarea').val()
-                },
-                beforeSend: function(XMLHttpRequest){
-                    $(".showbox").show();
-                },
-                success: function (msg) {
-                    $(".showbox").hide();
-                    setCookie('isOrder',true);
-                    id_ = msg.data.id;
-                    setCookie('id_',id_);
-                    payPrice(id_,price,'/home/association/paysuccess1/id/'+ id_);
-                }
-            })
+            payPrice(id_,price,'/home/association/paysuccess1/id/'+ id_);
         }else {
             $('.payChoose').hide();
         }

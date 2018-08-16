@@ -298,7 +298,23 @@
     }
 
     $(".orderBtn a").on('click', function () {
-        $('.payChoose').show();
+        $.ajax({
+            url: "{:Url('Mall/pay')}",
+            type: 'post',
+            data: {
+                id: id,
+                text1: $(".size").val(),
+                text2: $(".list_ textarea").val()
+            },
+            beforeSend: function(XMLHttpRequest){
+                $(".showbox").show();
+            },
+            success: function (msg) {
+                setCookie('isOrder',true);
+                $(".showbox").hide();
+                $('.payChoose').show();
+            }
+        })
     });
 
     /*
@@ -315,42 +331,11 @@
         setCookie('orderId',id);
 
         if ($(this).hasClass('zhifubao')) {
-            $.ajax({
-                url: "{:Url('Mall/pay')}",
-                type: 'post',
-                data: {
-                    id: id,
-                    text1: $(".size").val(),
-                    text2: $(".list_ textarea").val()
-                },
-                beforeSend: function(XMLHttpRequest){
-                    $(".showbox").show();
-                },
-                success: function (msg) {
-                    setCookie('isOrder',true);
-                    $(".showbox").hide();
-                    // 调取支付宝接口
-                    payPrice1(id,price);
-                }
-            })
+            // 调取支付宝接口
+            payPrice1(id,price);
+
         }else if ($(this).hasClass('weixin')) {
-            $.ajax({
-                url: "{:Url('Mall/pay')}",
-                type: 'post',
-                data: {
-                    id: id,
-                    text1: $(".size").val(),
-                    text2: $(".list_ textarea").val()
-                },
-                beforeSend: function(XMLHttpRequest){
-                    $(".showbox").show();
-                },
-                success: function (msg) {
-                    $(".showbox").hide();
-                    setCookie('isOrder',true);
-                    payPrice(id,price,1);
-                }
-            });
+            payPrice(id,price,1);
         }else {
             $('.payChoose').hide();
         }
