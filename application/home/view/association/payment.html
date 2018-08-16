@@ -100,6 +100,15 @@
     </div>
 </div>
 
+<!-- 支付失败的提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>支付失败，请重新支付</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+
 <div id="pay">
     <div class="infoError">
         <div class="payError01"><img src="/home/images/game/icon08.png" alt=""></div>
@@ -120,10 +129,11 @@
         <a href="javascript:;" class="mapBack">取消</a>
     </div>
 </div>
-
+<input type="hidden" id="refreshed" value="no">
 {/block}
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="/home/js/ap.js"></script>
 <script>
 
     var id = {$data.id};
@@ -159,6 +169,18 @@
     * */
     $(".payMoney").on('click', function () {
         if (isWrite == true) {
+            $('.payChoose').show();
+        }else {
+            $('#pay').show();
+        }
+    });
+
+    /**
+     * payChoose
+     * */
+    $('.payChoose a').on('click', function () {
+        if ($(this).hasClass('zhifubao')) {
+            // 调取支付宝接口
             $.ajax({
                 url: '{:Url("association/commit")}',
                 type: 'post',
@@ -171,24 +193,28 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
-                    $('.payChoose').show();
                     id_ = msg.data.id;
+                    // 调取支付宝接口
+                    payPrice1(id_,price);
                 }
             })
-        }else {
-            $('#pay').show();
-        }
-    });
-
-    /**
-     * payChoose
-     * */
-    $('.payChoose a').on('click', function () {
-        if ($(this).hasClass('zhifubao')) {
-            // 调取支付宝接口
-
         }else if ($(this).hasClass('weixin')) {
-            payPrice(msg.data.id,price,'/home/association/paysuccess1/id/'+ id_);
+            $.ajax({
+                url: '{:Url("association/commit")}',
+                type: 'post',
+                data: {
+                    course_id: id,
+                    remark: $('textarea').val()
+                },
+                beforeSend: function(XMLHttpRequest){
+                    $(".showbox").show();
+                },
+                success: function (msg) {
+                    $(".showbox").hide();
+                    id_ = msg.data.id;
+                    payPrice(id_,price,'/home/association/paysuccess1/id/'+ id_);
+                }
+            })
         }else {
             $('.payChoose').hide();
         }
@@ -203,7 +229,7 @@
         $('#pay').hide();
     });
 
-
+    // 微信
     function payPrice(id,price,url) {
         $.post('/home/pay/wxpay', {price: price,pid: id,type:1})
             .then(function (response) {
@@ -225,6 +251,11 @@
                                         setTimeout(function () {
                                             window.location.href = url;
                                         },1500);
+                                    }else {
+                                        $('.chooseTig').show();
+                                        setTimeout(function () {
+                                            $('.chooseTig').hide();
+                                        },3000)
                                     }
                                     // 使用以上方式判断前端返回,微信团队郑重提示：
                                     // res.err_msg将在用户支付成功后返回
@@ -244,6 +275,111 @@
                 }
             })
     }
+
+    // zhifubao
+    function payPrice1(id,price) {
+        $.ajax({
+            url: "/home/pay/alipay",
+            type: 'post',
+            data: {
+                price: price,
+                pid: id,
+                type: 1
+            },
+            success: function (response) {
+                $('.payChoose').hide();
+                response = JSON.parse(response);
+                if (response.success) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    _AP.pay(response.data);
+                }
+            }
+        })
+    }
+
+    $(function(){
+        if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
+            window.onpageshow = function(event) {
+                if (event.persisted) {
+                    setTimeout(function () {
+                        $.ajax({
+                            url: '{:Url("Pay/payStatus")}',
+                            type: 'post',
+                            data: {
+                                pid: id,
+                                type: 1
+                            },
+                            success: function (msg) {
+                                $('.showbox').hide();
+                                if (msg.code == 1) {
+                                    $(".content").hide();
+                                    $(".popUp").show();
+                                }else {
+                                    $('.chooseTig').show();
+                                    setTimeout(function () {
+                                        $('.chooseTig').hide();
+                                    },3000)
+                                }
+                            },
+                            error: function (msg) {
+                                $('.chooseTig').show();
+                                setTimeout(function () {
+                                    $('.chooseTig').hide();
+                                },3000)
+                            }
+                        })
+                    },1000)
+                }
+
+            };
+        }else {
+            var e=$("#refreshed");
+            if(e.val() == "no") {
+                e.val('yes');
+            }else{
+                e.val('no');
+                $(".showbox").show();
+                setTimeout(function () {
+                    $.ajax({
+                        url: '{:Url("Pay/payStatus")}',
+                        type: 'post',
+                        data: {
+                            pid: id,
+                            type: 4
+                        },
+                        success: function (msg) {
+                            $('.showbox').hide();
+                            if (msg.code == 1) {
+                                $(".content").hide();
+                                $(".popUp").show();
+                            }else {
+                                $('.chooseTig').show();
+                                setTimeout(function () {
+                                    $('.chooseTig').hide();
+                                },3000)
+                            }
+                            e.val('yes');
+                        },
+                        error: function (msg) {
+                            $('.chooseTig').show();
+                            setTimeout(function () {
+                                $('.chooseTig').hide();
+                            },3000)
+                        }
+                    })
+                },1000)
+            }
+        }
+    });
+
+    /*
+     * 支付失败提示取消
+     * */
+    $(".chooseTig .shadow, .chooseTig .chooseBtn").on("click", function () {
+        $(".chooseTig").hide();
+    });
 
 </script>
 
