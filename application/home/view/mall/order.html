@@ -118,6 +118,7 @@
     $(function(){
         if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
             window.onpageshow = function(event) {
+                var isOrder = getCookie('isOrder');
                 if (event.persisted) {
                     setTimeout(function () {
                         $.ajax({
@@ -147,6 +148,15 @@
                             }
                         })
                     },1000)
+                }else {
+                    if (isOrder == 'true') {
+                        setCookie('isOrder',false);
+                        $('.chooseTig').show();
+                        setTimeout(function () {
+                            $('.chooseTig').hide();
+                        },3000)
+                    }else {
+                    }
                 }
 
             };
@@ -297,6 +307,7 @@
                     $(".showbox").show();
                 },
                 success: function (msg) {
+                    setCookie('isOrder',true);
                     $(".showbox").hide();
                     // 调取支付宝接口
                     payPrice1(id,price);
@@ -316,6 +327,7 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
+                    setCookie('isOrder',true);
                     payPrice(id,price,1);
                 }
             });

@@ -111,7 +111,6 @@
         $('.content').hide();
     }).on('input', function () {
         var val = $(this).val();
-        $('.searchResult a,.searchResult .noList').remove();
         $.ajax({
             url: "{:Url('Newsletter/search2')}",
             type: 'post',
@@ -120,7 +119,14 @@
                 bmid:id
             },
             success: function (msg) {
-                addMsg(msg);
+                $('.searchResult a,.searchResult .noList').remove();
+                if (msg.code == 0) {
+                    var html = '';
+                    html = '<div class="noList">搜索无内容，请重新搜索</div>';
+                    $('.searchResult').append(html);
+                }else {
+                    addMsg(msg);
+                }
                 lazy();
             }
         })
@@ -132,9 +138,6 @@
     function addMsg(data) {
         var list = data.data;
         var html = '';
-        if (list.length == 0) {
-            html = '<div class="noList">搜索无内容，请重新搜索</div>';
-        }
         for (var i = 0; i < list.length; i++) {
             for (var j in list[i]) {
                 html += '<a href="/home/newsletter/detail/id/'+ j +'" class="list clearfix">';
