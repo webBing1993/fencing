@@ -163,3 +163,23 @@
     background-color: #3A8CFB;
     color: #FFFEFE;
 }
+
+
+.noOrder {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.noOrder img {
+    display: block;
+    width: 3.6rem;
+}
+
+.noOrder p {
+    color: #C5C5C7;
+    font-size: .26rem;
+    text-align: center;
+    margin-top: .69rem;
+}
