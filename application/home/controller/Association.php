@@ -465,6 +465,7 @@ class Association  extends Base
 //        }
         $venue_id = WechatUserTag::getVenueId($userId);
         $representative = Venue::getName($venue_id);
+
         $courseUserModel = CourseUser::where(['userid' => $userId, 'status' => 0, 'start_time' => ['<=', time()], 'end_time' => ['>=', time()]])->find();
         $coach = CourseUser::where(['member_type' => 1, 'status' => 0, 'course_id' => $courseUserModel['course_id']])->value('name');
         $individual_event = competitionEvent::where(['status' => 0, 'competition_id' => $id, 'type' => competitionEvent::INDIVIDUAL_EVENT])->find();
@@ -695,7 +696,14 @@ class Association  extends Base
         }else{
             $flag = true;
         }
+        $res = CourseApply::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId, 'status' => 1])->find();
+        if($res){
+            $registered = true;
+        }else{
+            $registered = false;
+        }
         $this->assign('flag',$flag);
+        $this->assign('registered',$registered);
         $this->assign('venue',$venue);
         $this->assign('data',$data);
 

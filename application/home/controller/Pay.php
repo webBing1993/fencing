@@ -78,6 +78,7 @@ class Pay extends Base
             'price' => $price,
             'original_price' => $original_price,//原价
             'pay_type' => 2,//支付类型 1支付宝 2微信 3银联
+            'create_time' => time(),
         ];
         $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
         if(!$rs){
@@ -139,6 +140,7 @@ class Pay extends Base
                 'price' => $price,
                 'original_price' => $original_price,//原价
                 'pay_type' => 1,//支付类型 1支付宝 2微信 3银联
+                'create_time' => time(),
             ];
             $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
             if(!$rs){
