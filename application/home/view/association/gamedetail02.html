@@ -359,6 +359,7 @@
                     orderId = data.data.id
                     orderPrice = $('.pay02 span').text();
                     $('.payChoose').show();
+                    setCookie('_orderId',orderId);
                     // location.href='/home/association/paysuccess/id/'+data.data.id+'/type/'+data.data.type
                 }
             })
@@ -388,8 +389,8 @@
     if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
         window.onpageshow = function(event) {
             var isOrder = getCookie('isOrder');
+            var orderId = getCookie('_orderId');
             if (event.persisted) {
-                alert(1)
                 $.ajax({
                     url: '{:Url("Pay/payStatus")}',
                     type: 'post',
@@ -398,7 +399,6 @@
                         type: 2
                     },
                     success: function (msg) {
-                        alert(1.1)
                         $('.showbox').hide();
                         if (msg.code == 1) {
                             location.href='/home/association/paysuccess/'+id+'.html'
@@ -411,7 +411,6 @@
                         setCookie('isOrder',false);
                     },
                     error: function (msg) {
-                        alert(1.2)
                         $('.chooseTig').show();
                         setTimeout(function () {
                             $('.chooseTig').hide();
@@ -419,9 +418,7 @@
                     }
                 })
             }else {
-                alert(2)
                 if (isOrder == 'true') {
-                    alert(3)
                     setCookie('isOrder',false);
                     $.ajax({
                         url: '{:Url("Pay/payStatus")}',
@@ -431,7 +428,6 @@
                             type: 2
                         },
                         success: function (msg) {
-                            alert(2.1)
                             $('.showbox').hide();
                             if (msg.code == 1) {
                                 setCookie('isOrder',true);
@@ -458,6 +454,7 @@
         };
     }
     else {
+        var orderId = getCookie('_orderId');
         var e=$("#refreshed");
         if(e.val() == "no") {
             e.val('yes');
@@ -468,14 +465,13 @@
                 url: '{:Url("Pay/payStatus")}',
                 type: 'post',
                 data: {
-                    pid: id,
-                    type: 4
+                    pid: orderId,
+                    type: 2
                 },
                 success: function (msg) {
                     $('.showbox').hide();
                     if (msg.code == 1) {
-                        $(".content").hide();
-                        $(".popUp").show();
+                        location.href='/home/association/paysuccess/'+id+'.html'
                     }else {
                         $('.chooseTig').show();
                         setTimeout(function () {
@@ -544,7 +540,7 @@
             $('.payChoose').hide();
         }
     });
-    $('.payChoose .shadow').on('click', function () {
+    $('.payChoose .shadow ,.mapBack').on('click', function () {
         $('.payChoose').hide();
     });
 
@@ -574,10 +570,11 @@
                             'getBrandWCPayRequest',  JSON.parse(response),
                             function (res) {
                                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                    $(".content").hide();
-                                    $(".popUp").show();
+                                    // $(".content").hide();
+                                    // $(".popUp").show();
                                     setTimeout(function () {
 //                                                window.history.go(-index);
+                                        location.href='/home/association/paysuccess/'+id+'.html'
                                     },1500);
                                 }else {
                                     $('.chooseTig').show();

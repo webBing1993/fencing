@@ -2,6 +2,7 @@
 {block name="style"}
 <title>个人中心</title>
 <link rel="stylesheet" href="/home/css/user/insider.css">
+<link rel="stylesheet" href="/home/css/mall/order.css?v=11">
 {/block}
 {block name="body"}
     <div class="top"><img src="/home/images/insider/icon01.png" alt=""><p>开通击剑协会会员，享专属特权</p></div>
@@ -54,9 +55,30 @@
 <!--<div class="header">比赛报名可享受会员特惠专属价格</div>-->
 <div class="times">会员期限：{$user.viptime}至{$user.vipendtime}</div>
 {/if}
+
+<!-- 支付失败的提示-->
+<div class="chooseTig">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>支付失败，请重新支付</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+<!-- payChoose-->
+<div class="payChoose">
+    <div class="shadow"></div>
+    <div class="chooseList">
+        <a href="javascript:;" class="zhifubao"><i></i> 支付宝</a>
+        <a href="javascript:;" class="weixin"><i></i>微信</a>
+        <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+<input type="hidden" id="refreshed" value="no">
 {/block}
 {block name="script"}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="/home/js/ap.js"></script>
+<script src="/home/js/reset.js"></script>
 <script>
     var rule = localStorage.getItem('rule');
     if(rule == 1){
@@ -79,63 +101,120 @@
     // });
 </script>
 <script>
-    var id = "{$user.id}";
+    var id = {$user.id};
     var price = 120;
     /*
     * 去结算
     * */
     $('.pay').on('click',function(){
-        if(localStorage.getItem('rule') == 1){
-            $.post('/home/pay/wxpay ', {price: price,pid: id,type:3})
-                .then(function (response) {
-                    console.log(response);
-                    if (response) {
-                        if (typeof WeixinJSBridge == "undefined"){
-                            if( document.addEventListener ){
-                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                            }else if (document.attachEvent){
-                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-                            }
-                        } else {
-                            WeixinJSBridge.invoke(
-                                'getBrandWCPayRequest',  JSON.parse(response),
-                                function (res) {
-                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                        $.ajax({
-                                            type: "post",
-                                            url: "{:Url('User/vipapply')}",
-                                            data: '',
-                                            dataType: "json",
-                                            success: function (data) {
-                                                alert(JSON.stringify(data))
-                                            }
-                                        })
-                                        // $(".content").hide();
-                                        // $(".popUp").show();
-                                        // setTimeout(function () {
-                                        //     window.history.go(-index);
-                                        // },1500);
-                                    }
-                                    // 使用以上方式判断前端返回,微信团队郑重提示：
-                                    // res.err_msg将在用户支付成功后返回
-                                    // ok，但并不保证它绝对可靠。
-                                }
-                            );
-                        }
-
-                    } else {
-                        swal({
-                            title: "",
-                            text: response.data.error_msg,
-                            type: "error",
-                            confirmButtonColor: "#ffb45b",
-                            confirmButtonText: "确定"
-                        });
-                    }
-                });
-        }
-
+        $.ajax({
+            type: "post",
+            url: "{:Url('User/vipapply')}",
+            data: '',
+            dataType: "json",
+            success: function (data) {
+                $('.payChoose').show();
+                console.log(data)
+            }
+        })
     })
+    /**
+     * payChoose
+     * */
+    $('.payChoose a').on('click', function () {
+        if ($(this).hasClass('zhifubao')) {
+            setCookie('isOrder',true);
+            payPrice1(orderId,orderPrice);
+        }else if ($(this).hasClass('weixin')) {
+            setCookie('isOrder',true);
+            payPrice(orderId,orderPrice);
+        }else {
+            $('.payChoose').hide();
+        }
+    });
+    $('.payChoose .shadow ,.mapBack').on('click', function () {
+        $('.payChoose').hide();
+    });
+
+    // 取消
+    $(".popUp .cancel,.popUp .shadow").on('click', function () {
+        setTimeout(function () {
+            history.go(-1);
+        },1500)
+    });
+
+
+    // weixin
+    function payPrice(orderId,orderPrice) {
+        $.post('/home/pay/wxpay ', {price: orderPrice,pid: orderId,type:2})
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+                    if (typeof WeixinJSBridge == "undefined"){
+                        if( document.addEventListener ){
+                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                        }else if (document.attachEvent){
+                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                        }
+                    } else {
+                        WeixinJSBridge.invoke(
+                            'getBrandWCPayRequest',  JSON.parse(response),
+                            function (res) {
+                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                    // $(".content").hide();
+                                    // $(".popUp").show();
+                                    setTimeout(function () {
+//                                                window.history.go(-index);
+                                        location.href='/home/association/paysuccess/'+id+'.html'
+                                    },1500);
+                                }else {
+                                    $('.chooseTig').show();
+                                    setTimeout(function () {
+                                        $('.chooseTig').hide();
+                                    },3000)
+                                }
+                                $('.payChoose').hide();
+                                // 使用以上方式判断前端返回,微信团队郑重提示：
+                                // res.err_msg将在用户支付成功后返回
+                                // ok，但并不保证它绝对可靠。
+                            }
+                        );
+                    }
+
+                } else {
+                    swal({
+                        title: "",
+                        text: response.data.error_msg,
+                        type: "error",
+                        confirmButtonColor: "#ffb45b",
+                        confirmButtonText: "确定"
+                    });
+                }
+            });
+    }
+
+    // zhifubao
+    function payPrice1(orderId,orderPrice) {
+        $.ajax({
+            url: "/home/pay/alipay",
+            type: 'post',
+            data: {
+                price: orderPrice,
+                pid: orderId,
+                type:2
+            },
+            success: function (response) {
+                $('.payChoose').hide();
+                response = JSON.parse(response);
+                if (response.success) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    _AP.pay(response.data);
+                }
+            }
+        })
+    }
 </script>
 {/block}
