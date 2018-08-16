@@ -51,6 +51,11 @@ class Wechat extends Controller
             //更新原表支付状态
             Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);
 
+            if ($res['type'] == 3) {
+                $rs = Db::name($res['table'])->where(['id' => $res['pid']])->find();
+                Db::name('wechat_user')->where(['userid' => $rs['userid']])->update(['vip' => 1, 'viptime' => $rs['time']]);
+            }
+
             //返回成功
             $return = ['return_code' => 'SUCCESS', 'return_msg' => 'OK'];
             $xml = '<xml>';
@@ -82,6 +87,11 @@ class Wechat extends Controller
 
                     //更新原表支付状态
                     Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);
+
+                    if ($res['type'] == 3) {
+                        $rs = Db::name($res['table'])->where(['id' => $res['pid']])->find();
+                        Db::name('wechat_user')->where(['userid' => $rs['userid']])->update(['vip' => 1, 'viptime' => $rs['time']]);
+                    }
                 }
             }
         }
