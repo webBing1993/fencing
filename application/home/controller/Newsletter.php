@@ -106,33 +106,44 @@ class Newsletter  extends Base
     // 通讯名录列表页
     public function userlist(){
         $id = input('id');
-        $this->assign('bmid',$id);
-        $user = WechatDepartmentUser::where('departmentid',$id)->select();
-        $charArray = [];
-        foreach($user as $k=>$v){
-            $user[$k]['name'] = WechatUser::where('userid',$v['userid'])->value('name');
-            $img = WechatUser::where('userid',$v['userid'])->find();
-            if(!empty($img['header'])){
-                $user[$k]['img'] = $img['header'];
-            }else{
-                $user[$k]['img'] = $img['avatar'];
-            }
-            $user[$k]['uid'] = $img['id'];
-            $char = $this->getFirstChar($user[$k]['name']);
-            $nameArray = [];
+        $userId = session('userId');
+        $depar = WechatDepartmentUser::where('userid',$userId)->value('departmentid');
+        if($depar == $id or $depar ==2 or $depar == 3) {
+            $this->assign('bmid', $id);
+            $user = WechatDepartmentUser::where('departmentid', $id)->select();
+            $charArray = [];
+            foreach ($user as $k => $v) {
+                $user[$k]['name'] = WechatUser::where('userid', $v['userid'])->value('name');
+                $img = WechatUser::where('userid', $v['userid'])->find();
+                if (!empty($img['header'])) {
+                    $user[$k]['img'] = $img['header'];
+                } else {
+                    $user[$k]['img'] = $img['avatar'];
+                }
+                $user[$k]['uid'] = $img['id'];
+                $char = $this->getFirstChar($user[$k]['name']);
+                $nameArray = [];
 
-            if (isset($charArray[$char]) && count($charArray[$char])!=0) {
-                $nameArray = $charArray[$char];
+                if (isset($charArray[$char]) && count($charArray[$char]) != 0) {
+                    $nameArray = $charArray[$char];
+                }
+                array_push($nameArray, $v);
+                $charArray[$char] = $nameArray;
             }
-            array_push($nameArray,$v);
-            $charArray[$char] = $nameArray;
+
+            ksort($charArray);
+            $this->assign('charArray', $charArray);
+            $k = array_keys($charArray);
+            $this->assign('k', $k);
+            //权限
+            $qx = 1;
+            $this->assign('qx',$qx);
+        }else{
+            $this->assign('bmid', $id);
+            $qx = 0;
+            $this->assign('qx',$qx);
         }
 
-        ksort($charArray);
-        $this->assign('charArray',$charArray);
-        $k = array_keys($charArray);
-        $this->assign('k',$k);
-//        dump($k);exit;
         return $this->fetch();
     }
 
