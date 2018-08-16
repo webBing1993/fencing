@@ -124,10 +124,12 @@ class User extends Base
         $map['userid'] = $userId;
         $map['time'] = time();
         $map['endtime'] = time() + 365*24*60*60;
-        $info = Vipapply::create($map);
+        $vipapplyModel = new Vipapply();
+        $info = $vipapplyModel->save($map);
 
         if($info) {
-            return $this->success("会员申请记录成功");
+            $nid=$vipapplyModel->id;
+            return $this->success("会员申请记录成功",'',$nid);
         }else{
             return $this->error("会员申请记录失败");
         }
