@@ -22,7 +22,7 @@
 <div class="content">
     <!-- 列表开始-->
     {volist name="charArray" id="vo"}
-    <div class="userList" name="A" id="A">
+    <div class="userList" name="{$key}" id="{$key}">
         <span class="letter">{$key}</span>
         <div class="user">
             <!-- 同字母列表开始-->
@@ -43,30 +43,15 @@
     <!-- 列表结束-->
 </div>
 
-<!-- 字母顺序-->
+
+ <!--字母顺序-->
 <div class="letters">
     <ul>
+        {volist name="k" id="cc"}
         <li>
-            <a href="javascript:;" class="active">A</a>
+            <a href="javascript:;" class="active">{$cc}</a>
         </li>
-        <li>
-            <a href="javascript:;">B</a>
-        </li>
-        <li>
-            <a href="javascript:;">C</a>
-        </li>
-        <li>
-            <a href="javascript:;">D</a>
-        </li>
-        <li>
-            <a href="javascript:;">E</a>
-        </li>
-        <li>
-            <a href="javascript:;">F</a>
-        </li>
-        <li>
-            <a href="javascript:;">G</a>
-        </li>
+        {/volist}
     </ul>
 </div>
 
@@ -75,6 +60,7 @@
 
 <script>
     var id = '{$bmid}';
+
     /*
     * 锚点事件
     * */

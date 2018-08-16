@@ -130,9 +130,9 @@ class Newsletter  extends Base
 
         ksort($charArray);
         $this->assign('charArray',$charArray);
-        $key = array_keys($charArray);
-        $this->assign('key',$key);
-
+        $k = array_keys($charArray);
+        $this->assign('k',$k);
+//        dump($k);exit;
         return $this->fetch();
     }
 
