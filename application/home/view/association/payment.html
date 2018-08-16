@@ -134,6 +134,7 @@
 {block name='script'}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="/home/js/ap.js"></script>
+<script src="/home/js/reset.js"></script>
 <script>
 
     var id = {$data.id};
@@ -194,6 +195,7 @@
                 success: function (msg) {
                     $(".showbox").hide();
                     id_ = msg.data.id;
+                    setCookie('isOrder',true);
                     // 调取支付宝接口
                     payPrice1(id_,price);
                 }
@@ -211,6 +213,7 @@
                 },
                 success: function (msg) {
                     $(".showbox").hide();
+                    setCookie('isOrder',true);
                     id_ = msg.data.id;
                     payPrice(id_,price,'/home/association/paysuccess1/id/'+ id_);
                 }
@@ -302,6 +305,7 @@
     $(function(){
         if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
             window.onpageshow = function(event) {
+                var isOrder = getCookie('isOrder');
                 if (event.persisted) {
                     setTimeout(function () {
                         $.ajax({
@@ -330,6 +334,15 @@
                             }
                         })
                     },1000)
+                }else {
+                    if (isOrder == 'true') {
+                        setCookie('isOrder',false);
+                        $('.chooseTig').show();
+                        setTimeout(function () {
+                            $('.chooseTig').hide();
+                        },3000)
+                    }else {
+                    }
                 }
 
             };
