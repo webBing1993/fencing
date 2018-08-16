@@ -114,38 +114,42 @@
                         },
                         dataType: "Json",
                         success: function (data) {
-                            console.log(data)
-                            var data = data.data;
-                            var html = '';
-                            if(data.type == 1){
-                                html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
-                                    +'<div class="sucDetail"><div class="sucDetail03">'
-                                    +'<p><span>姓名</span><span>1</span></p>'
-                                    +'<p><span>性别</span><span>1</span></p>'
-                                    +'<p><span>就读学校</span><span>1</span></p>'
-                                    +'<p><span>剑种</span><span>1</span></p>'
-                                    +'<p><span>训练场馆</span><span>1</span></p>'
-                                    +'</div></div>'
-                            }else if(data.type == 2){
-                                html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
-                                    +'<div class="sucDetail"><div class="sucDetail03">'
-                                    +'<p><span>姓名</span><span>1</span></p>'
-                                    +'<p><span>性别</span><span>1</span></p>'
-                                    +'<p><span>岗位级别</span><span>1</span></p>'
-                                    +'<p><span>剑种</span><span>1</span></p>'
-                                    +'<p><span>训练场馆</span><span>1</span></p>'
-                                    +'</div></div>'
+                            if(data.code == 0){
+                                speckText(data.msg);
+                            }else{
+                                console.log(data)
+                                var data = data.data;
+                                var html = '';
+                                if(data.type == 1){
+                                    html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+                                        +'<div class="sucDetail"><div class="sucDetail03">'
+                                        +'<p><span>姓名</span><span>1</span></p>'
+                                        +'<p><span>性别</span><span>1</span></p>'
+                                        +'<p><span>就读学校</span><span>1</span></p>'
+                                        +'<p><span>剑种</span><span>1</span></p>'
+                                        +'<p><span>训练场馆</span><span>1</span></p>'
+                                        +'</div></div>'
+                                }else if(data.type == 2){
+                                    html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+                                        +'<div class="sucDetail"><div class="sucDetail03">'
+                                        +'<p><span>姓名</span><span>1</span></p>'
+                                        +'<p><span>性别</span><span>1</span></p>'
+                                        +'<p><span>岗位级别</span><span>1</span></p>'
+                                        +'<p><span>剑种</span><span>1</span></p>'
+                                        +'<p><span>训练场馆</span><span>1</span></p>'
+                                        +'</div></div>'
+                                }
+                                else if(data.type == 3){
+                                    html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+                                        +'<div class="sucDetail"><div class="sucDetail03">'
+                                        +'<p><span>姓名</span><span>'+data.name+'</span></p>'
+                                        +'<p><span>性别</span><span>'+data.sex+'</span></p>'
+                                        +'<p><span>岗位</span><span>'+data.comment+'</span></p>'
+                                        +'</div></div>'
+                                }
+                                $('#signNull').hide();
+                                $('#signSucc').show().html(html);
                             }
-                            else if(data.type == 3){
-                                html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
-                                    +'<div class="sucDetail"><div class="sucDetail03">'
-                                    +'<p><span>姓名</span><span>'+data.name+'</span></p>'
-                                    +'<p><span>性别</span><span>'+data.sex+'</span></p>'
-                                    +'<p><span>岗位</span><span>'+data.comment+'</span></p>'
-                                    +'</div></div>'
-                            }
-                            $('#signNull').hide();
-                            $('#signSucc').show().html(html);
                         }
                     })
                 } else {
@@ -235,7 +239,8 @@
     // 播放声音
     function speckText(str) {
 //	var url = "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=7&text=" + encodeURI(str);        // baidu
-        var url = "http://tsn.baidu.com/text2audio?tex=" + encodeURI(str) + "&lan=zh&ctp=1&cuid=$token&tok=$token&per=0&spd=7&pit=5&vol=5";        // baidu
+        var url = "http://tsn.baidu.com/text2audio?tex=" + encodeURI(str) + "&lan=zh&ctp=1&cuid={$token}&tok={$token}&per=0&spd=7&pit=5&vol=5";        // baidu
+        console.log(url)
         var n = new Audio(url);
         n.src = url;
         n.play();
