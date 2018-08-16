@@ -110,8 +110,8 @@ class Newsletter  extends Base
         $user = WechatDepartmentUser::where('departmentid',$id)->select();
         $charArray = [];
         foreach($user as $k=>$v){
-            $user[$k]['name'] = WechatUser::where('mobile',$v['userid'])->value('name');
-            $img = WechatUser::where('mobile',$v['userid'])->find();
+            $user[$k]['name'] = WechatUser::where('userid',$v['userid'])->value('name');
+            $img = WechatUser::where('userid',$v['userid'])->find();
             if(!empty($img['header'])){
                 $user[$k]['img'] = $img['header'];
             }else{
@@ -129,7 +129,6 @@ class Newsletter  extends Base
         }
 
         ksort($charArray);
-//        dump($charArray);exit;
         $this->assign('charArray',$charArray);
         $key = array_keys($charArray);
         $this->assign('key',$key);
