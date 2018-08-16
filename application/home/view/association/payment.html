@@ -101,10 +101,19 @@
 </div>
 
 <!-- 支付失败的提示-->
-<div class="chooseTig">
+<div class="chooseTig chooseTig1">
     <div class="shadow"></div>
     <div class="tig">
         <p>支付失败，请重新支付</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+
+<!-- 已报名-->
+<div class="chooseTig chooseTig2">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>您已报名该课程，报名信息可在个人中心查看，请勿重复报名。</p>
         <a class="chooseBtn" href="javascript:;">我知道了</a>
     </div>
 </div>
@@ -185,7 +194,11 @@
                     id_ = msg.data.id;
                     setCookie('id_',id_);
                     setCookie('isOrder',true);
-                    $('.payChoose').show();
+                    if (msg.code == 1) {
+                        $('.payChoose').show();
+                    }else {
+                        $('.chooseTig2').show();
+                    }
                 }
             })
         }else {
@@ -239,9 +252,9 @@
                                             window.location.href = url;
                                         },1500);
                                     }else {
-                                        $('.chooseTig').show();
+                                        $('.chooseTig1').show();
                                         setTimeout(function () {
-                                            $('.chooseTig').hide();
+                                            $('.chooseTig1').hide();
                                         },3000)
                                     }
                                     // 使用以上方式判断前端返回,微信团队郑重提示：
@@ -303,17 +316,17 @@
                             if (msg.code == 1) {
                                 window.location.href = '/home/association/paysuccess1/id/'+ id_;
                             }else {
-                                $('.chooseTig').show();
+                                $('.chooseTig1').show();
                                 setTimeout(function () {
-                                    $('.chooseTig').hide();
+                                    $('.chooseTig1').hide();
                                 },3000)
                             }
                             setCookie('isOrder',false);
                         },
                         error: function (msg) {
-                            $('.chooseTig').show();
+                            $('.chooseTig1').show();
                             setTimeout(function () {
-                                $('.chooseTig').hide();
+                                $('.chooseTig1').hide();
                             },3000)
                         }
                     })
@@ -333,17 +346,17 @@
                                     setCookie('isOrder',true);
                                     window.location.href = '/home/association/paysuccess1/id/'+ id_;
                                 }else {
-                                    $('.chooseTig').show();
+                                    $('.chooseTig1').show();
                                     setTimeout(function () {
-                                        $('.chooseTig').hide();
+                                        $('.chooseTig1').hide();
                                     },3000)
                                 }
                                 setCookie('isOrder',false);
                             },
                             error: function (msg) {
-                                $('.chooseTig').show();
+                                $('.chooseTig1').show();
                                 setTimeout(function () {
-                                    $('.chooseTig').hide();
+                                    $('.chooseTig1').hide();
                                 },3000)
                             }
                         })
@@ -372,17 +385,17 @@
                             if (msg.code == 1) {
                                 window.location.href = '/home/association/paysuccess1/id/'+ id_;
                             }else {
-                                $('.chooseTig').show();
+                                $('.chooseTig1').show();
                                 setTimeout(function () {
-                                    $('.chooseTig').hide();
+                                    $('.chooseTig1').hide();
                                 },3000)
                             }
                             e.val('yes');
                         },
                         error: function (msg) {
-                            $('.chooseTig').show();
+                            $('.chooseTig1').show();
                             setTimeout(function () {
-                                $('.chooseTig').hide();
+                                $('.chooseTig1').hide();
                             },3000)
                         }
                     })
