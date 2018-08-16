@@ -19,6 +19,7 @@
             <span>至</span>
             <input type="text" value="{$data.endtime}" readonly="readonly" name="time02">
         </div>
+        {if condition="!empty($data['front_cover'])"}
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>相关图片</p>
             <div class="leaveUl">
@@ -27,7 +28,9 @@
                 {/volist}
             </div>
         </div>
+        {/if}
         <!--教练下查看-->
+        {if condition="($user['tag'] != 1)"}
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>审批结果</p>
             <div class="hg" style="position: relative;">
@@ -100,6 +103,7 @@
                 <div id="hr"></div>
             </div>
         </div>
+        {/if}
         <div class="leaveDetail01" style="border-bottom: transparent;">
 
 
@@ -108,7 +112,7 @@
             {else /}
             <p>审批意见</p>
             <div class="opinion">
-                <div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>
+                <div class="lc02"><img  src="{$data.img}" alt=""></div>
                 <div class="opinion01">
                     <div class="opinion02">{$data.leave} <span>{$data.leavetime|time_format='Y-m-d'}</span></div>
                     <div class="opinion03">{$data.leavetext}</div>
@@ -119,7 +123,7 @@
 
             {else /}
             <div class="opinion">
-                <div class="lc02"><img  src="/home/images/1.jpg" alt=""></div>
+                <div class="lc02"><img  src="{$data.img2}" alt=""></div>
                 <div class="opinion01">
                     <div class="opinion02">{$data.leavetwo} <span>{$data.leavetwotime|time_format='Y-m-d'}</span></div>
                     <div class="opinion03">{$data.leavetwotext}</div>
@@ -137,6 +141,7 @@
         {if condition="($user['tag'] != 1)"}
         {if condition="($sp == 1 )"}
         <!--超管权限下 的审批意见-->
+        {if condition="($spk == 1 )"}
         <div class="leaveDetail01" style="border-bottom: transparent;">
             <p>审批意见</p>
             <textarea placeholder="请填写请假原因..." id="content" style="    width: 100%;
@@ -146,11 +151,13 @@
     font-size: .24rem;
     padding: .2rem;"></textarea>
         </div>
+
     </div>
 
 <!--这是超管权限下的显示状态-->
 <div class="success">通过</div>
 <div class="errors">驳回</div>
+{/if}
 {/if}
 {/if}
 {/block}

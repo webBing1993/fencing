@@ -6,7 +6,7 @@
 {/block}
 {block name="body"}
 
-{if condition="($user['tag'] == 1)"}
+{if condition="($type == 1)"}
 <!--这是学员-->
 <div class="leave" style="display: block;">
     {volist name="data" id="co"}
@@ -57,7 +57,7 @@
     {/if}
 </div>
 {/if}
-{if condition="($user['tag'] != 4)"}
+{if condition="($type == 1)"}
 <a href="/home/user/application.html" id="leave">请假申请</a>
 {/if}
 {/block}
