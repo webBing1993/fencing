@@ -138,6 +138,7 @@
                                     $('.chooseTig').hide();
                                 },3000)
                             }
+                            setCookie('isOrder',false);
                         },
                         error: function (msg) {
                             $('.chooseTig').show();
@@ -159,6 +160,7 @@
                             success: function (msg) {
                                 $('.showbox').hide();
                                 if (msg.code == 1) {
+                                    setCookie('isOrder',true);
                                     $(".content").hide();
                                     $(".popUp").show();
                                 }else {
@@ -167,7 +169,6 @@
                                         $('.chooseTig').hide();
                                     },3000)
                                 }
-                                setCookie('isOrder',true);
                             },
                             error: function (msg) {
                                 $('.chooseTig').show();
@@ -183,7 +184,6 @@
             };
         }
         else {
-            alert(5);
             var e=$("#refreshed");
             if(e.val() == "no") {
                 e.val('yes');
@@ -198,14 +198,11 @@
                         type: 4
                     },
                     success: function (msg) {
-                        alert(6);
                         $('.showbox').hide();
                         if (msg.code == 1) {
-                            alert(7);
                             $(".content").hide();
                             $(".popUp").show();
                         }else {
-                            alert(8);
                             $('.chooseTig').show();
                             setTimeout(function () {
                                 $('.chooseTig').hide();
@@ -214,7 +211,6 @@
                         e.val('yes');
                     },
                     error: function (msg) {
-                        alert(9);
                         $('.chooseTig').show();
                         setTimeout(function () {
                             $('.chooseTig').hide();
