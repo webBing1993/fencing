@@ -99,7 +99,7 @@ class User extends Base
     //会员申请页
     public function insider(){
         $userId = session('userId');
-        $user = WechatUser::where('mobile',$userId)->find();
+        $user = WechatUser::where('userid',$userId)->find();
         if($user['gender'] == 2){
             $user['gender'] = '女';
         }elseif($user['gender'] == 1){
@@ -146,7 +146,6 @@ class User extends Base
     public function train(){
         $userId = session('userId');
         $left = CourseApply::where('userid',$userId)->where('status',1)->where('end_time','gt',time())->order('id desc')->limit(6)->select();//未结束
-//dump($left);exit;
         foreach($left as $k=>$v){
 //            $left[$k]['course_name'] = Course::where('id',$v['course_id'])->value('course_name');
             $q = VenueCourse::where('id',$v['course_id'])->value('content');
