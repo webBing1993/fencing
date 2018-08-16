@@ -314,8 +314,7 @@
                             success: function (msg) {
                                 $('.showbox').hide();
                                 if (msg.code == 1) {
-                                    $(".content").hide();
-                                    $(".popUp").show();
+                                    window.location.href = '/home/association/paysuccess1/id/'+ id_;
                                 }else {
                                     $('.chooseTig').show();
                                     setTimeout(function () {
@@ -347,13 +346,12 @@
                         type: 'post',
                         data: {
                             pid: id,
-                            type: 4
+                            type: 1
                         },
                         success: function (msg) {
                             $('.showbox').hide();
                             if (msg.code == 1) {
-                                $(".content").hide();
-                                $(".popUp").show();
+                                window.location.href = '/home/association/paysuccess1/id/'+ id_;
                             }else {
                                 $('.chooseTig').show();
                                 setTimeout(function () {
