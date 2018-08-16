@@ -66,19 +66,43 @@ class Wechat extends Controller
 
     // alipay支付返回
     public function alipayNotify() {
-        $aliConfig = config('alipay');
+        Log::write('---------------------------------支付宝支付回调---------------------------------');
+        if(!empty($_POST)){
+            $data = $_POST;
+            Log::record($data);
+            if (!empty($data['trade_no'])) {
+                $map = [
+                    'status' => 0,
+                    'out_trade_no' => $data['out_trade_no'],
+                ];
+                $res = PayRecord::where($map)->find();
+                if ($res) {
+                    $res->status = 1;
+                    $res->save();
+
+                    //更新原表支付状态
+                    Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);
+                }
+            }
+        }
+        echo 'success';
+        exit;
+
+        /*$aliConfig = config('alipay');
 
         $callback = new Alipay();
         $type = 'ali_charge';// xx_charge
         try {
-//            $retData = Notify::getNotifyData($type, $aliConfig);// 获取第三方的原始数据，未进行签名检查
+            $retData = Notify::getNotifyData($type, $aliConfig);// 获取第三方的原始数据，未进行签名检查
+            Log::record($retData);
             $ret = Notify::run($type, $aliConfig, $callback);// 处理回调，内部进行了签名检查
         } catch (PayException $e) {
             return json_encode(['success' => false,'data' => $e->errorMessage()]);
         }
 
+        Log::record($ret);
         echo $ret;
-        exit;
+        exit;*/
     }
 
     public function returnUrl(){

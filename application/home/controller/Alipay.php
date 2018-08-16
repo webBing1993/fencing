@@ -8,11 +8,7 @@
 
 namespace app\home\controller;
 
-use app\common\model\PayLog;
-use app\common\model\PointsLog;
-use app\common\model\ThirdUser;
 use app\home\model\PayRecord;
-use app\index\model\WechatUser;
 use Payment\Config;
 use Payment\Notify\PayNotifyInterface;
 use think\Db;
@@ -22,12 +18,12 @@ class Alipay implements PayNotifyInterface
 {
     public function notifyProcess(array $data)
     {
-        Log::write('---------------------------------支付宝支付回调---------------------------------');
+        Log::write('---------------------------------支付宝支付回调2---------------------------------');
         Log::record($data);
         $channel = $data['channel'];
         $map = [
             'status' => 0,
-            'order_id' => $data['out_trade_no'],
+            'out_trade_no' => $data['out_trade_no'],
         ];
         $res = PayRecord::where($map)->find();
         if ($res) {
