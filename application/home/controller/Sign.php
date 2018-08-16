@@ -23,6 +23,7 @@ class Sign extends Controller
 //        $venue_id = input('venue_id');
         $venue_id = 98;
         $this->assign('venue_id',$venue_id);
+        $this->assign('token',$this->getToken());
 
         return $this->fetch();
     }
@@ -166,7 +167,7 @@ class Sign extends Controller
                 }
 
                 if (!$class) {
-                    $class = $is_exist;
+                    $class = array_values($is_exist)[0];
                 }
 
                 $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
@@ -219,7 +220,7 @@ class Sign extends Controller
                 $data['date'] = $date;
                 $data['create_time'] = $current_time;
                 if ($model = SignModel::create($data)) {
-                    //TODO 签退时结算课时
+                    // 签退时结算课时
 
                     $response = [
                         'id' => $model->id,
@@ -240,7 +241,57 @@ class Sign extends Controller
 
 
     }
+
+    public function getToken()
+    {
+        define('DEMO_CURL_VERBOSE', false);
+
+        # 填写网页上申请的appkey 如 $apiKey="g8eBUMSokVB1BHGmgxxxxxx"
+        $apiKey = "DMG0S55sDWgy5bwQKK02TpI8";
+        # 填写网页上申请的APP SECRET 如 $secretKey="94dc99566550d87f8fa8ece112xxxxx"
+        $secretKey = "d1ff25db291db83035f2b431b8e1adcf";
+
+        /** 公共模块获取token开始 */
+
+        $auth_url = "https://openapi.baidu.com/oauth/2.0/token?grant_type=client_credentials&client_id=" . $apiKey . "&client_secret=" . $secretKey;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $auth_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //信任任何证书
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 检查证书中是否设置域名,0不验证
+        curl_setopt($ch, CURLOPT_VERBOSE, DEMO_CURL_VERBOSE);
+        $res = curl_exec($ch);
+        if (curl_errno($ch)) {
+            print curl_error($ch);
+        }
+        curl_close($ch);
+
+//        echo "Token URL response is " . $res . "\n";
+        $response = json_decode($res, true);
+
+        if (!isset($response['access_token'])) {
+            echo "ERROR TO OBTAIN TOKEN\n";
+            exit(1);
+        }
+        if (!isset($response['scope'])) {
+            echo "ERROR TO OBTAIN scopes\n";
+            exit(2);
+        }
+
+        if (!in_array('audio_tts_post', explode(" ", $response['scope']))) {
+            echo "DO NOT have tts permission\n";
+            // 请至网页上应用内开通语音合成权限
+            exit(3);
+        }
+
+        $token = $response['access_token'];
+
+        return $token;
+    }
+
     public function signS(){
         return $this->fetch();
     }
+
 }
