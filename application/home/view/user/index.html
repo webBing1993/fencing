@@ -40,7 +40,10 @@
         <a href="/home/user/leave/?type=2"><img src="/home/images/user/user05.png" class="icon">请假审批</a>
         {else /}
         {/if}
+        {if condition="($coach == 1)"}
         <a href="#"><img src="/home/images/user/user06.png" class="icon">所属教练</a>
+        {else /}
+        {/if}
         {if condition="($ts == 1)"}
         <a href="/home/complaint/index.html"><img src="/home/images/user/user07.png" class="icon">教练投诉</a>
         {else /}

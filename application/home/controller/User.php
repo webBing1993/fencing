@@ -34,6 +34,14 @@ class User extends Base
         }else{
             $ts = 0;
         }
+        //所属教练模块显示(在训学员模式下)
+        $venue_id = WechatUserTag::getVenueId($userId);
+        if($venue_id == false){
+            $coach = 0;
+        }else{
+            $coach = 1;
+        }
+        $this->assign('coach',$coach);
         $this->assign('ts',$ts);
 
         return $this->fetch();
