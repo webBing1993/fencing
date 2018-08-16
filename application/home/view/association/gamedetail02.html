@@ -355,11 +355,16 @@
                 data: data,
                 dataType: "json",
                 success: function (data) {
+                    if(data.code == 1){
+                        orderId = data.data.id
+                        orderPrice = $('.pay02 span').text();
+                        $('.payChoose').show();
+                        setCookie('_orderId',orderId);
+                    }else{
+                        alert('您已报名！')
+                    }
                     // console.log(data)
-                    orderId = data.data.id
-                    orderPrice = $('.pay02 span').text();
-                    $('.payChoose').show();
-                    setCookie('_orderId',orderId);
+
                     // location.href='/home/association/paysuccess/id/'+data.data.id+'/type/'+data.data.type
                 }
             })
