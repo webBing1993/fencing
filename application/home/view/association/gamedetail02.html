@@ -133,6 +133,7 @@
 <script src="/home/js/jquery.hdialog.min.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="/home/js/ap.js"></script>
+<script src="/home/js/reset.js"></script>
 <script>
     var orderId = '';//订单ID
     var orderPrice = '';//订单价格
@@ -383,46 +384,162 @@
         $('body').css('position','inherit');
     })
 
+
+    if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
+        window.onpageshow = function(event) {
+            var isOrder = getCookie('isOrder');
+            if (event.persisted) {
+                alert(1)
+                $.ajax({
+                    url: '{:Url("Pay/payStatus")}',
+                    type: 'post',
+                    data: {
+                        pid: orderId,
+                        type: 2
+                    },
+                    success: function (msg) {
+                        alert(1.1)
+                        $('.showbox').hide();
+                        if (msg.code == 1) {
+                            location.href='/home/association/paysuccess/'+id+'.html'
+                        }else {
+                            $('.chooseTig').show();
+                            setTimeout(function () {
+                                $('.chooseTig').hide();
+                            },3000)
+                        }
+                        setCookie('isOrder',false);
+                    },
+                    error: function (msg) {
+                        alert(1.2)
+                        $('.chooseTig').show();
+                        setTimeout(function () {
+                            $('.chooseTig').hide();
+                        },3000)
+                    }
+                })
+            }else {
+                alert(2)
+                if (isOrder == 'true') {
+                    alert(3)
+                    setCookie('isOrder',false);
+                    $.ajax({
+                        url: '{:Url("Pay/payStatus")}',
+                        type: 'post',
+                        data: {
+                            pid: orderId,
+                            type: 2
+                        },
+                        success: function (msg) {
+                            alert(2.1)
+                            $('.showbox').hide();
+                            if (msg.code == 1) {
+                                setCookie('isOrder',true);
+                                location.href='/home/association/paysuccess/'+id+'.html'
+                            }else {
+                                $('.chooseTig').show();
+                                setTimeout(function () {
+                                    $('.chooseTig').hide();
+                                },3000)
+                            }
+                        },
+                        error: function (msg) {
+                            alert(2.2)
+                            $('.chooseTig').show();
+                            setTimeout(function () {
+                                $('.chooseTig').hide();
+                            },3000)
+                        }
+                    })
+                }else {
+                }
+            }
+
+        };
+    }
+    else {
+        var e=$("#refreshed");
+        if(e.val() == "no") {
+            e.val('yes');
+        }else{
+            e.val('no');
+            $(".showbox").show();
+            $.ajax({
+                url: '{:Url("Pay/payStatus")}',
+                type: 'post',
+                data: {
+                    pid: id,
+                    type: 4
+                },
+                success: function (msg) {
+                    $('.showbox').hide();
+                    if (msg.code == 1) {
+                        $(".content").hide();
+                        $(".popUp").show();
+                    }else {
+                        $('.chooseTig').show();
+                        setTimeout(function () {
+                            $('.chooseTig').hide();
+                        },3000)
+                    }
+                    e.val('yes');
+                },
+                error: function (msg) {
+                    $('.chooseTig').show();
+                    setTimeout(function () {
+                        $('.chooseTig').hide();
+                    },3000)
+                }
+            })
+        }
+    }
+
     /**
      * payChoose
      * */
     $('.payChoose a').on('click', function () {
         // setCookie('orderId',id);
         if ($(this).hasClass('zhifubao')) {
-            $.ajax({
-                url: "{:Url('Mall/pay')}",
-                type: 'post',
-                data: {
-                    id: orderId,
-                    text1: $(".size").val(),
-                    text2: $(".list_ textarea").val()
-                },
-                beforeSend: function(XMLHttpRequest){
-                    $(".showbox").show();
-                },
-                success: function (msg) {
-                    $(".showbox").hide();
-                    // 调取支付宝接口
-                    payPrice1(orderId,orderPrice);
-                }
-            })
+            setCookie('isOrder',true);
+            payPrice1(orderId,orderPrice);
+            // $.ajax({
+            //     url: "{:Url('Mall/pay')}",
+            //     type: 'post',
+            //     data: {
+            //         id: orderId,
+            //         text1: $(".size").val(),
+            //         text2: $(".list_ textarea").val()
+            //     },
+            //     beforeSend: function(XMLHttpRequest){
+            //         $(".showbox").show();
+            //     },
+            //     success: function (msg) {
+            //         setCookie('isOrder',true);
+            //         $(".showbox").hide();
+            //         // 调取支付宝接口
+            //         payPrice1(orderId,orderPrice);
+            //     }
+            // })
         }else if ($(this).hasClass('weixin')) {
-            $.ajax({
-                url: "{:Url('Mall/pay')}",
-                type: 'post',
-                data: {
-                    id: id,
-                    text1: $(".size").val(),
-                    text2: $(".list_ textarea").val()
-                },
-                beforeSend: function(XMLHttpRequest){
-                    $(".showbox").show();
-                },
-                success: function (msg) {
-                    $(".showbox").hide();
-                    payPrice(orderId,orderPrice);
-                }
-            });
+            setCookie('isOrder',true);
+            payPrice(orderId,orderPrice);
+            // $.ajax({
+            //     url: "{:Url('Mall/pay')}",
+            //     type: 'post',
+            //     data: {
+            //         id: id,
+            //         text1: $(".size").val(),
+            //         text2: $(".list_ textarea").val()
+            //     },
+            //     beforeSend: function(XMLHttpRequest){
+            //         $(".showbox").show();
+            //     },
+            //     success: function (msg) {
+            //         setCookie('isOrder',true);
+            //         $(".showbox").hide();
+            //         payPrice(orderId,orderPrice);
+            //     }
+            // });
         }else {
             $('.payChoose').hide();
         }
@@ -438,7 +555,6 @@
             history.go(-1);
         },1500)
     });
-
 
     // weixin
     function payPrice(orderId,orderPrice) {
