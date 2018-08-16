@@ -43,7 +43,7 @@
         <div class="userSort active"><span>性别</span><input onfocus="this.blur()" name="sex" type="text" placeholder="暂无" value="{eq name='$model.gender' value='2'}女{else/}男{/eq}"  readonly="readonly"></div>
         <div class="userSort"><span>代表单位</span><input   name="dbdw" type="text" placeholder="请填写" value="{$representative}"></div>
         <div class="userSort"><span>带训教练</span><input   name="dxjl" type="text" placeholder="请填写" value="{$coach}"></div>
-        <div class="userSort active"><span>监护人电话</span><input  name="phone" type="text" placeholder="暂无" value="{$model.guardian_mobile}"  readonly="readonly"></div>
+        <div class="userSort active"><span>监护人电话</span><input onfocus="this.blur()"  name="phone" type="text" placeholder="暂无" value="{$model.guardian_mobile}"  readonly="readonly"></div>
         <div class="userSort"><span>证件类型</span><input onfocus="this.blur()" data-id="" type="text" placeholder="请选择"  readonly="readonly" class="select" name="zj"><img src="/home/images/game/iconxl.png" class="xiala"></div>
         <div class="userSort"><span>证件号</span><input   name="codeNum" type="text" placeholder="请填写" value="{$model.identity}"></div>
         <div class="userSort"><span>家庭住址</span><input onfocus="this.blur()" name="address" type="text" placeholder="暂无" value="{$model.address}" readonly="readonly"></div>
