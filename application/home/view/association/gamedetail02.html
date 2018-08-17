@@ -406,7 +406,7 @@
                     success: function (msg) {
                         $('.showbox').hide();
                         if (msg.code == 1) {
-                            location.href='/home/association/paysuccess/'+id+'.html'
+                            location.href='/home/association/paysuccess/id'+orderId+'.html'
                         }else {
                             $('.chooseTig').show();
                             setTimeout(function () {
@@ -436,7 +436,7 @@
                             $('.showbox').hide();
                             if (msg.code == 1) {
                                 setCookie('isOrder',true);
-                                location.href='/home/association/paysuccess/'+id+'.html'
+                                location.href='/home/association/paysuccess/id'+orderId+'.html'
                             }else {
                                 $('.chooseTig').show();
                                 setTimeout(function () {
