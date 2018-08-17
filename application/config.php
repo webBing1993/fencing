@@ -47,10 +47,11 @@ return [
     ),
 
     //消息通知模块
-    'news' => [
-        'appid' => 'ww361a838e44ae696f',
-        'appsecret' => '05FC2Dycjf421Uhz2_YGb7j_IeArwgCe47u2Ucd1tZE',
-        'agentid' => 1000004
+    'user' => [
+        'appid' => 'wwf507973ebf84282e',
+        'appsecret' => '
+6qO-TYMIVkF93qB8nsQbJjOxi5AW5L8LZOLT192nTNk',
+        'agentid' => 1000003
     ],
 
     //  推送网站域名
