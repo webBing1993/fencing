@@ -77,7 +77,11 @@
                         <td>{$vo.name}</td>
                         <td>{$vo.price}</td>
                         <td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
+                        {eq name="$vo.state" value="0"}
                         <td>{$vo.status_text}</td>
+                        {else/}
+                        <td>申请退赛</td>
+                        {/eq}
                         <td>
                             <a data-toggle="modal" href="#show" onclick="detail(this)" class="btn-sm btn-success"
                                data-detail='{$vo}'

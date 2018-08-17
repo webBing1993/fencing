@@ -74,7 +74,12 @@
     </div>
 </div>
 <!--申请退赛。0：可点击，1不可点击-->
+{if condition="($data['state'] == 0)"}
 <div id="leave" class="success" data-side='0'>申请退赛</div>
+{else /}
+<div id="leave" class="success" data-side='1'>申请退赛</div>
+{/if}
+
 
 <div id="pay">
     <div class="payError">

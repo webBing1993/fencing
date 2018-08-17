@@ -464,6 +464,20 @@ class User extends Base
         return $this->fetch();
     }
 
+    //申请退赛
+    public function retire(){
+        $id = input('id');
+        $map['state'] = 1;
+        $info = CompetitionApply::where('id',$id)->update($map);
+
+        if($info){
+            return $this->success("申请成功");
+        }else{
+            return $this->error("申请失败");
+        }
+    }
+
+
     public function reite01(){
         return $this->fetch();
     }

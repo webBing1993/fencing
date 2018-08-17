@@ -37,7 +37,7 @@ class CourseApply extends Admin {
             $status = null;
         }
         $list = $this->lists('CourseApply',$map);
-        $status_list = array(-1 =>"已退赛",0 =>"未支付",1=>"已支付");
+        $status_list = array(0 =>"未支付",1=>"已支付");
         int_to_string($list,array(
             'type' => array(1 =>"普通课",2 =>"精品课"),
             'status' => $status_list,
@@ -61,20 +61,5 @@ class CourseApply extends Admin {
         return $this->fetch();
     }
 
-    /**
-     * 退课
-     */
-    public function del(){
-        $id = input('id');
-        $data['status'] = '-1';
-        $info = CourseApplyModel::where('id',$id)->update($data);
-        if($info) {
-            //TODO 支付表处理
-            return $this->success("退赛成功");
-        }else{
-            return $this->error("退赛失败");
-        }
-
-    }
 
 }

@@ -42,14 +42,19 @@ class CompetitionApply extends Admin {
         }
         $status = (int)input('status');
         if (input('status') != '') {
-            $map['status'] = $status;
+            if(input('status') == 2){
+                $map['state'] = 1;
+            }else{
+                $map['status'] = $status;
+            }
         }else{
             $status = null;
         }
         $list = $this->lists('CompetitionApply',$map);
         $type_list = CompetitionEventModel::EVENT_TYPE_ARRAY;
         $kinds_list = CompetitionEventModel::EVENT_KINDS_ARRAY;
-        $status_list = array(-1 =>"已退赛",0 =>"未支付",1=>"已支付");
+        $status_list = array(-1 =>"已退赛",0 =>"未支付",1=>"已支付",2=>"申请退赛");
+//        dump($status_list);exit;
         int_to_string($list,array(
             'type' => $type_list,
             'kinds' => $kinds_list,
