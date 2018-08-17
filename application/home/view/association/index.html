@@ -71,7 +71,7 @@
             <img src="{$co.front_cover|get_cover='path'}" class="lazy">
             <div class="newsText">
                 <div class="newsTitle">{$co.title}</div>
-                <div class="newsTime"><span>{$co.publisher}</span><span>{$co.create_time|time_format='Y-m-d'}</span></div>
+                <div class="newsTime"><span>{$co.publisher}</span><span style="color: #D12D2D;">{$co.create_time|time_format='Y-m-d'} 截止</span></div>
             </div>
         </a>
         {/volist}

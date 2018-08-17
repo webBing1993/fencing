@@ -59,8 +59,8 @@
     {else/}
     <div class="pay">
         <div class="pay01"><img src="/home/images/game/icon07.png" class="icon">应付款</div>
-        <div class="pay02">会员价：¥<span>0.00</span></div>
-        <div class="pay03">普通价：¥<span>0.00</span></div>
+        <div class="pay02">普通价：¥<span>0.00</span></div>
+        <div class="pay03">会员价：¥<span>0.00</span></div>
     </div>
 <div class="vip"><a href="{:Url('User/insider')}">加入击剑馆会员，享受会员特权!</a></div>
     {/eq}
@@ -138,6 +138,7 @@
     var orderId = '';//订单ID
     var orderPrice = '';//订单价格
     var id = {$data.id};
+    var VIPS = {$model.vip};//是否会员
     var name = $('input[name=name]').val(); //姓名
     var birthday = $('input[name=birthday]').val(); //出生日期
     var zubie = $('input[name=zb]').val(); //组别
@@ -193,8 +194,13 @@
                     dataType: "json",
                     success: function (data) {
                         console.log(data)
-                        $('.pay02 span').html(data.data.vip_price);
-                        $('.pay03 span').html(data.data.price);
+                        if(VIPS == 1){
+                            $('.pay02 span').html(data.data.vip_price);
+                            $('.pay03 span').html(data.data.price);
+                        }else{
+                            $('.pay02 span').html(data.data.price);
+                            $('.pay03 span').html(data.data.vip_price);
+                        }
                     }
                 })
             }
@@ -234,8 +240,14 @@
         }else if(sort == 'jz'){
             $('input[name=jz]').val($(this).text());
             $('input[name=jz]').data('id',$(this).data('id'));
-            $('.pay02 span').html($(this).data('vipprice'));
-            $('.pay03 span').html($(this).data('price'));
+            if(VIPS == 1){
+                $('.pay02 span').html($(this).data('vipprice'));
+                $('.pay03 span').html($(this).data('price'));
+            }else{
+                $('.pay02 span').html($(this).data('price'));
+                $('.pay03 span').html($(this).data('vipprice'));
+            }
+
         }else if(sort == 'zj'){
             $('input[name=zj]').val($(this).text());
             $('input[name=zj]').data('id',$(this).data('id'));
