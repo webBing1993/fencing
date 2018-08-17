@@ -73,14 +73,15 @@
         <p><span>代表单位</span><span>{$data.representative}</span></p>
     </div>
 </div>
-<div id="leave" class="success" data-side='1'>申请退赛</div>
+<!--申请退赛。0：可点击，1不可点击-->
+<div id="leave" class="success" data-side='0'>申请退赛</div>
 
 <div id="pay">
     <div class="payError">
         <div class="payError01"><img src="/home/images/game/icon08.png" alt=""></div>
         <div class="payError02">
-            <p>请继续完善所有信息</p>
-            <p>才可进行报名付款！</p>
+            <p>您确定进行这次操作吗？</p>
+            <p>将会失去这次参赛资格！</p>
         </div>
         <div class="payError04"><span id="cancel">取消操作</span><span id="ok">确定</span></div>
     </div>
@@ -88,24 +89,36 @@
 {/block}
 {block name="script"}
 <script>
-    var side = localStorage.getItem('reite');
-    if(side == 1){
+    var id = {$data.id};
+    if($('#leave').data('side') == 1){
         $('#leave').css({'background':'#C2C2C2','color':'#fff'});
-    }
-    $('#leave').on('click',function(){
-        if($(this).hasClass('success')){
-            $('#pay').show();
-            $('body').css('position','fixed');
-        }else{
+    }else{
+        $('#leave').on('click',function(){
+            if($(this).hasClass('success')){
+                $('#pay').show();
+                $('body').css('position','fixed');
+            }else{
 
-        }
-    })
+            }
+        })
+    }
     $('.payError03 ,#cancel').on('click',function(){
         $('#pay').hide();
         $('body').css('position','inherit');
     })
     $('#ok').on('click',function(){
-        location.href='/home/user/reite01.html'
+        $.ajax({
+            url: '{:Url("User/retire")}',
+            type: 'post',
+            data: {
+                id: id,
+            },
+            success: function (data) {
+                console.log(data)
+                location.href='/home/user/reite01.html';
+            }
+        })
+        // location.href='/home/user/reite01.html'
     })
 </script>
 {/block}
