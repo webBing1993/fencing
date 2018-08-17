@@ -66,7 +66,13 @@
     <a href="javascript:;" class="apply">立即申请</a>
     {else/}
     <!-- 报名事件-->
+    {if condition="($an == 1)"}
     <a href="javascript:;" class="enroll">立即报名</a>
+    {else /}
+    <a>您已是在训学员,暂时不能报名</a>
+    {/if}
+
+
     {/empty}
     {else/}
     <!-- 已报名-->
