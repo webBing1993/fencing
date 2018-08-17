@@ -237,9 +237,11 @@
         if(sort == 'zb'){
             $('input[name=zb]').val($(this).text());
             $('input[name=zb]').data('id',$(this).data('id'));
+            setCookie('payzb',$(this).data('id'));
         }else if(sort == 'jz'){
             $('input[name=jz]').val($(this).text());
             $('input[name=jz]').data('id',$(this).data('id'));
+            setCookie('payjz',$(this).data('id'));
             if(VIPS == 1){
                 $('.pay02 span').html($(this).data('vipprice'));
                 $('.pay03 span').html($(this).data('price'));
@@ -251,6 +253,7 @@
         }else if(sort == 'zj'){
             $('input[name=zj]').val($(this).text());
             $('input[name=zj]').data('id',$(this).data('id'));
+            setCookie('payzj',$(this).data('id'));
         }
         $('.HBoxSorts').stop().animate({
             bottom:'-100%'
@@ -342,12 +345,12 @@
     $('.goPay').on('click',function(){
         if($(this).data('type')==1){
             var competition_id = id;//比赛表id
-            var group_id = $('input[name=zb]').data('id'); //组别id
+            var group_id = getCookie('payzb'); //组别id
             var type = _getprice;//赛别id
-            var kinds= $('input[name=jz]').data('id');//剑种id
+            var kinds= getCookie('payjz');//剑种id
             var representative = $('input[name=dbdw]').val();//代表单位
             var coach = $('input[name=dxjl]').val();//带训教练
-            var card_type = $('input[name=zj]').data('id');//证件id
+            var card_type = getCookie('payzj');//证件id
             var card_num = $('input[name=codeNum]').val();//证件号
             var remark = $('input[name=bz]').val();//备注
             var data = {
@@ -361,12 +364,15 @@
                 card_num:card_num,
                 remark:remark
             }
+            setCookie('pay02',$('.pay02 span').text());
+            setCookie('pay03',$('.pay03 span').text());
             $.ajax({
                 type: "post",
                 url: "{:Url('Association/submit')}",
                 data: data,
                 dataType: "json",
                 success: function (data) {
+                    console.log(data)
                     if(data.code == 1){
                         orderId = data.data.id
                         orderPrice = $('.pay02 span').text();
@@ -404,6 +410,8 @@
 
 
     if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
+        $('.pay02 span').html(getCookie('pay02'));
+        $('.pay03 span').html(getCookie('pay03'));
         window.onpageshow = function(event) {
             var isOrder = getCookie('isOrder');
             var orderId = getCookie('_orderId');
@@ -457,7 +465,6 @@
                             }
                         },
                         error: function (msg) {
-                            alert(2.2)
                             $('.chooseTig').show();
                             setTimeout(function () {
                                 $('.chooseTig').hide();
@@ -471,6 +478,8 @@
         };
     }
     else {
+        $('.pay02 span').html(getCookie('pay02'));
+        $('.pay03 span').html(getCookie('pay03'));
         var orderId = getCookie('_orderId');
         var e=$("#refreshed");
         if(e.val() == "no") {
