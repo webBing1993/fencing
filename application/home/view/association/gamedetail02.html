@@ -366,6 +366,7 @@
             }
             setCookie('pay02',$('.pay02 span').text());
             setCookie('pay03',$('.pay03 span').text());
+            setCookie('_getprice',_getprice);
             $.ajax({
                 type: "post",
                 url: "{:Url('Association/submit')}",
@@ -415,6 +416,7 @@
         window.onpageshow = function(event) {
             var isOrder = getCookie('isOrder');
             var orderId = getCookie('_orderId');
+            var _type   = getCookie('_getprice');
             if (event.persisted) {
                 $.ajax({
                     url: '{:Url("Pay/payStatus")}',
@@ -426,7 +428,7 @@
                     success: function (msg) {
                         $('.showbox').hide();
                         if (msg.code == 1) {
-                            location.href='/home/association/paysuccess/id/'+orderId+'.html'
+                            location.href='/home/association/paysuccess/id/'+orderId+'/type/'+_type;
                         }else {
                             $('.chooseTig').show();
                             setTimeout(function () {
@@ -456,7 +458,7 @@
                             $('.showbox').hide();
                             if (msg.code == 1) {
                                 setCookie('isOrder',true);
-                                location.href='/home/association/paysuccess/id/'+orderId+'.html'
+                                location.href='/home/association/paysuccess/id/'+orderId+'/type/'+_type;
                             }else {
                                 $('.chooseTig').show();
                                 setTimeout(function () {
@@ -497,7 +499,7 @@
                 success: function (msg) {
                     $('.showbox').hide();
                     if (msg.code == 1) {
-                        location.href='/home/association/paysuccess/id/'+orderId+'.html'
+                        location.href='/home/association/paysuccess/id/'+orderId+'/type/'+getCookie('_getprice');
                     }else {
                         $('.chooseTig').show();
                         setTimeout(function () {
@@ -524,44 +526,9 @@
         if ($(this).hasClass('zhifubao')) {
             setCookie('isOrder',true);
             payPrice1(orderId,orderPrice);
-            // $.ajax({
-            //     url: "{:Url('Mall/pay')}",
-            //     type: 'post',
-            //     data: {
-            //         id: orderId,
-            //         text1: $(".size").val(),
-            //         text2: $(".list_ textarea").val()
-            //     },
-            //     beforeSend: function(XMLHttpRequest){
-            //         $(".showbox").show();
-            //     },
-            //     success: function (msg) {
-            //         setCookie('isOrder',true);
-            //         $(".showbox").hide();
-            //         // 调取支付宝接口
-            //         payPrice1(orderId,orderPrice);
-            //     }
-            // })
         }else if ($(this).hasClass('weixin')) {
             setCookie('isOrder',true);
             payPrice(orderId,orderPrice);
-            // $.ajax({
-            //     url: "{:Url('Mall/pay')}",
-            //     type: 'post',
-            //     data: {
-            //         id: id,
-            //         text1: $(".size").val(),
-            //         text2: $(".list_ textarea").val()
-            //     },
-            //     beforeSend: function(XMLHttpRequest){
-            //         $(".showbox").show();
-            //     },
-            //     success: function (msg) {
-            //         setCookie('isOrder',true);
-            //         $(".showbox").hide();
-            //         payPrice(orderId,orderPrice);
-            //     }
-            // });
         }else {
             $('.payChoose').hide();
         }
@@ -600,7 +567,7 @@
                                     // $(".popUp").show();
                                     setTimeout(function () {
 //                                                window.history.go(-index);
-                                        location.href='/home/association/paysuccess/id/'+orderId+'.html'
+                                        location.href='/home/association/paysuccess/id/'+orderId+'/type/'+getCookie('_getprice');
                                     },1500);
                                 }else {
                                     $('.chooseTig').show();
