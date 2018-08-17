@@ -47,6 +47,11 @@ class Wechat extends Controller
         if ($res) {
             $res->status = 1;
             $res->save();
+            $res2 = PayRecord::where($map)->find();
+            if ($res2) {
+                $res2->status = 1;
+                $res2->save();
+            }
 
             //更新原表支付状态
             Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);
@@ -84,6 +89,11 @@ class Wechat extends Controller
                 if ($res) {
                     $res->status = 1;
                     $res->save();
+                    $res2 = PayRecord::where($map)->find();
+                    if ($res2) {
+                        $res2->status = 1;
+                        $res2->save();
+                    }
 
                     //更新原表支付状态
                     Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);

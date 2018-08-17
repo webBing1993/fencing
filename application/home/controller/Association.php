@@ -649,6 +649,13 @@ class Association  extends Base
             if($model){
                 if ($flag == 1) {
                     $data['type'] = 2;
+                    $competitionEventModel2 = CompetitionEvent::where(['status' => 0, 'competition_id' => $data['competition_id'], 'type' => 2, 'kinds' => $data['kinds']])->find();
+                    $data['event_id'] = $competitionEventModel2['id'];
+                    if ($wechatUserModel['vip']) {
+                        $data['price'] = $competitionEventModel2['vip_price'];
+                    } else {
+                        $data['price'] = $competitionEventModel2['price'];
+                    }
                     $data2 = $data;
                     $competitionApplyModel2 = new CompetitionApply();
                     $competitionApplyModel2->validate('CompetitionApply')->save($data2);

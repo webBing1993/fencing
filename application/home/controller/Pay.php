@@ -56,34 +56,7 @@ class Pay extends Base
         $jsApiParameters = $tools->getJsApiParameters($order);
 
         //生成预支付订单
-        $model = wechatUser::where(['userid' => $uid])->find();
-        if($type == 2){
-            $event_id = competitionApply::where(['id' => $pid])->value('event_id');
-            if($event_id){
-                $original_price = competitionEvent::where(['id' => $event_id])->value('price');
-            }else{
-                $original_price = $price;
-            }
-        }else{
-            $original_price = $price;
-        }
-
-        $info = [
-            'out_trade_no' => $outTradeNo, //唯一订单号
-            'userid' => $uid,
-            'type' => $type,
-            'table' => PayRecord::TYPE_ARRAY[$type],
-            'pid' => $pid,
-            'name' => $model['name'],
-            'price' => $price,
-            'original_price' => $original_price,//原价
-            'pay_type' => 2,//支付类型 1支付宝 2微信 3银联
-            'create_time' => time(),
-        ];
-        $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
-        if(!$rs){
-            PayRecord::create($info);
-        }
+        $this->handle($pid, $type, $price, $outTradeNo, $uid, 2);
 
         return $jsApiParameters;
     }
@@ -118,18 +91,94 @@ class Pay extends Base
         try {
             $str = Charge::run(Config::ALI_CHANNEL_WAP, $aliConfig, $payData);
             //生成预支付订单
-            $model = wechatUser::where(['userid' => $uid])->find();
-            if($type == 2){
+            $this->handle($pid, $type, $price, $outTradeNo, $uid, 1);
+
+        } catch (PayException $e) {
+            return json_encode(['success' => false,'data' => $e->errorMessage()]);
+        }
+
+        return json_encode(['success' => true, 'data' => $str]);
+    }
+
+    //生成预支付订单
+    public function handle($pid, $type, $price, $outTradeNo, $uid, $pay_type) {
+        //生成预支付订单
+        $model = wechatUser::where(['userid' => $uid])->find();
+
+        if($type == 2){
+            $res = competitionApply::where(['id' => $pid])->find();
+            $second = competitionApply::where(['competition_id' => $res['competition_id'], 'userid' => $res['userid'], 'group_id' => $res['group_id'], 'remark' => $res['remark'], 'type' => ['<>', $res['type']], 'kinds' => $res['kinds'], 'status' => 0])->find();
+            if($second){
                 $event_id = competitionApply::where(['id' => $pid])->value('event_id');
                 if($event_id){
                     $original_price = competitionEvent::where(['id' => $event_id])->value('price');
                 }else{
                     $original_price = $price;
                 }
+                $info = [
+                    'out_trade_no' => $outTradeNo, //唯一订单号
+                    'userid' => $uid,
+                    'type' => $type,
+                    'table' => PayRecord::TYPE_ARRAY[$type],
+                    'pid' => $pid,
+                    'name' => $model['name'],
+                    'price' => $price,
+                    'original_price' => $original_price,//原价
+                    'pay_type' => $pay_type,//支付类型 1支付宝 2微信 3银联
+                    'create_time' => time(),
+                ];
+                $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
+                if(!$rs){
+                    PayRecord::create($info);
+                }
+                $event_id2 = competitionApply::where(['id' => $second['id']])->value('event_id');
+                if($event_id2){
+                    $original_price2 = competitionEvent::where(['id' => $event_id2])->value('price');
+                }else{
+                    $original_price2 = $second['price'];
+                }
+                $info2 = [
+                    'out_trade_no' => $outTradeNo, //唯一订单号
+                    'userid' => $uid,
+                    'type' => $type,
+                    'table' => PayRecord::TYPE_ARRAY[$type],
+                    'pid' => $second['id'],
+                    'name' => $model['name'],
+                    'price' => $second['price'],
+                    'original_price' => $original_price2,//原价
+                    'pay_type' => $pay_type,//支付类型 1支付宝 2微信 3银联
+                    'create_time' => time(),
+                ];
+                $rs2 = PayRecord::where(['type' => $type, 'pid' => $second['id'], 'userid' => $uid, 'status' => 0])->find();
+                if(!$rs2){
+                    PayRecord::create($info2);
+                }
             }else{
-                $original_price = $price;
+                $event_id = competitionApply::where(['id' => $pid])->value('event_id');
+                if($event_id){
+                    $original_price = competitionEvent::where(['id' => $event_id])->value('price');
+                }else{
+                    $original_price = $price;
+                }
+                $info = [
+                    'out_trade_no' => $outTradeNo, //唯一订单号
+                    'userid' => $uid,
+                    'type' => $type,
+                    'table' => PayRecord::TYPE_ARRAY[$type],
+                    'pid' => $pid,
+                    'name' => $model['name'],
+                    'price' => $price,
+                    'original_price' => $original_price,//原价
+                    'pay_type' => $pay_type,//支付类型 1支付宝 2微信 3银联
+                    'create_time' => time(),
+                ];
+                $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
+                if(!$rs){
+                    PayRecord::create($info);
+                }
             }
-
+        }else{
+            $original_price = $price;
             $info = [
                 'out_trade_no' => $outTradeNo, //唯一订单号
                 'userid' => $uid,
@@ -139,18 +188,14 @@ class Pay extends Base
                 'name' => $model['name'],
                 'price' => $price,
                 'original_price' => $original_price,//原价
-                'pay_type' => 1,//支付类型 1支付宝 2微信 3银联
+                'pay_type' => $pay_type,//支付类型 1支付宝 2微信 3银联
                 'create_time' => time(),
             ];
             $rs = PayRecord::where(['type' => $type, 'pid' => $pid, 'userid' => $uid, 'status' => 0])->find();
             if(!$rs){
                 PayRecord::create($info);
             }
-        } catch (PayException $e) {
-            return json_encode(['success' => false,'data' => $e->errorMessage()]);
         }
-
-        return json_encode(['success' => true, 'data' => $str]);
     }
 
     // 返回支付状态
