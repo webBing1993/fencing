@@ -47,16 +47,12 @@ class Wechat extends Controller
         if ($res) {
             $res->status = 1;
             $res->save();
-            $res2 = PayRecord::where($map)->find();
-            if ($res2) {
-                $res2->status = 1;
-                $res2->save();
-                //更新原表支付状态
-                Db::name($res['table'])->update(['status' => 1, 'id' => $res2['pid']]);
-            }
 
-            //更新原表支付状态
-            Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);
+            $res2 = PayRecord::where(['out_trade_no' => $data['out_trade_no']])->select();
+            foreach ($res2 as $val) {
+                //更新原表支付状态
+                Db::name($val['table'])->update(['status' => 1, 'id' => $val['pid']]);
+            }
 
             //更改会员状态
             if ($res['type'] == 3) {
@@ -92,16 +88,12 @@ class Wechat extends Controller
                 if ($res) {
                     $res->status = 1;
                     $res->save();
-                    $res2 = PayRecord::where($map)->find();
-                    if ($res2) {
-                        $res2->status = 1;
-                        $res2->save();
-                        //更新原表支付状态
-                        Db::name($res['table'])->update(['status' => 1, 'id' => $res2['pid']]);
-                    }
 
-                    //更新原表支付状态
-                    Db::name($res['table'])->update(['status' => 1, 'id' => $res['pid']]);
+                    $res2 = PayRecord::where(['out_trade_no' => $data['out_trade_no']])->select();
+                    foreach ($res2 as $val) {
+                        //更新原表支付状态
+                        Db::name($val['table'])->update(['status' => 1, 'id' => $val['pid']]);
+                    }
 
                     //更改会员状态
                     if ($res['type'] == 3) {
