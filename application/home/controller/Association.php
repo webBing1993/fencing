@@ -31,7 +31,7 @@ class Association  extends Base
     //击剑风云首页
     public function index(){
         //场馆显示4个
-        $list1 = Venue::where('status',0)->order('id desc')->limit(4)->select();
+        $list1 = Venue::where('status',0)->where('type',1)->order('id desc')->limit(4)->select();
 
         foreach($list1 as $key=>$v){
             $li = json_decode($v['front_cover']);
@@ -208,7 +208,7 @@ class Association  extends Base
     //场馆   上拉加载
     public function more4(){
         $len = input('len');
-        $map = array('status' => 0);
+        $map = array('status' => 0,'type' => 1);
         $info = Venue::where($map)->order('id desc')->limit($len,6)->select();
 
         foreach($info as $key=>$v){
