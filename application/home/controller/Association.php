@@ -707,6 +707,13 @@ class Association  extends Base
         }else{
             $registered = false;
         }
+        $venue_id = WechatUserTag::getVenueId($userId);
+        if($venue_id == false){
+            $an = 1;//可点
+        }else{
+            $an = 0;//不可点
+        }
+        $this->assign('an',$an);
         $this->assign('flag',$flag);
         $this->assign('registered',$registered);
         $this->assign('venue',$venue);
