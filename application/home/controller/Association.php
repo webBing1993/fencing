@@ -23,6 +23,7 @@ use app\home\model\Knowledge;
 use app\home\model\Show;
 use app\admin\model\CourseApply;
 use app\home\model\VenueCourse;
+use app\home\model\WechatDepartmentUser;
 use app\home\model\WechatUser;
 use app\home\model\WechatUserTag;
 
@@ -708,11 +709,20 @@ class Association  extends Base
             $registered = false;
         }
         $venue_id = WechatUserTag::getVenueId($userId);
-        if($venue_id == false){
+        if($venue_id == false){//是否在训学员
             $an = 1;//可点
         }else{
             $an = 0;//不可点
         }
+        //是否是场馆内部人员
+        $wdu = WechatDepartmentUser::where('userid',$userId)->count();
+        if($wdu == 0){
+            $sf = 0;//否
+        }else{
+            $sf = 1;//是
+        }
+
+        $this->assign('sf',$sf);
         $this->assign('an',$an);
         $this->assign('flag',$flag);
         $this->assign('registered',$registered);
