@@ -7,7 +7,7 @@
 <a href="/home/user/information.html">
     <div class="top">
         <div class="topName"><p>{$user.name}</p>
-            {if condition="($user['train'] == 1)"}
+            {if condition="($zx == 1)"}
             <span style="background: #3A8CFB;">在训</span>
             {else /}
             {/if}
@@ -40,7 +40,7 @@
         <a href="/home/user/leave/?type=2"><img src="/home/images/user/user05.png" class="icon">请假审批</a>
         {else /}
         {/if}
-        {if condition="($coach == 1)"}
+        {if condition="($user['tag'] == 1)"}
         <a href="#"><img src="/home/images/user/user06.png" class="icon">所属教练</a>
         {else /}
         {/if}
