@@ -113,7 +113,7 @@ class Pay extends Base
                 if($event_id){
                     $original_price = competitionEvent::where(['id' => $event_id])->value('price');
                 }else{
-                    $original_price = $price;
+                    $original_price = $res['price'];
                 }
                 $info = [
                     'out_trade_no' => $outTradeNo, //唯一订单号
@@ -122,7 +122,7 @@ class Pay extends Base
                     'table' => PayRecord::TYPE_ARRAY[$type],
                     'pid' => $pid,
                     'name' => $model['name'],
-                    'price' => $price,
+                    'price' => $res['price'],
                     'original_price' => $original_price,//原价
                     'pay_type' => $pay_type,//支付类型 1支付宝 2微信 3银联
                     'create_time' => time(),

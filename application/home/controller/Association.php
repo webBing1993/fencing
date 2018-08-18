@@ -683,6 +683,8 @@ class Association  extends Base
 
         if ($type == 3) {
             $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[1].'/'.competitionEvent::EVENT_TYPE_ARRAY[2];
+            $out_trade_no = PayRecord::where(['type' => 2, 'pid' => $data['id']])->value('out_trade_no');
+            $data['price'] = PayRecord::where(['out_trade_no' => $out_trade_no])->sum('price');
         } else {
             $data['type'] = competitionEvent::EVENT_TYPE_ARRAY[$data['type']];
         }
