@@ -8,7 +8,9 @@
 
 namespace app\home\controller;
 use app\admin\model\WechatTag;
+use app\home\model\ClassHour;
 use app\home\model\ClassRecord;
+use app\home\model\CourseUser;
 use app\home\model\Venue;
 use app\home\model\WechatDepartmentUser;
 use app\home\model\WechatUser;
@@ -19,15 +21,18 @@ use think\Controller;
 
 class Sign extends Controller
 {
-    public function index(){
+    public function index()
+    {
 //        $venue_id = input('venue_id');
         $venue_id = 98;
-        $this->assign('venue_id',$venue_id);
-        $this->assign('token',$this->getToken());
+        $this->assign('venue_id', $venue_id);
+        $this->assign('token', $this->getToken());
 
         return $this->fetch();
     }
-    public function sign(){
+
+    public function sign()
+    {
 //        $venue_id = input('venue_id');
 //        $openid = input('openid');
         $venue_id = 98;
@@ -50,198 +55,237 @@ class Sign extends Controller
             return $this->error("您还未录入系统，请联系管理员");
         }
         $userId = $msg['userid'];
-        $user_name = $msg['name'];
+//        $user_name = $msg['name'];
+//        $gender = $msg['gender'];
 
         if (WechatUserTag::issetTag($userId, WechatTag::TAG_7)) {
             //工作人员上下班签到
-            $type = 2;
-            $is_exist = WorkRecord::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'status' => 0])->find();
-            if (!$is_exist) {
-                return $this->error("您今日未排班，请联系管理员");
-            }
-            $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
-
-            if ($sign_num >= 2) {
-                return $this->error($user_name."已签退");
-            } else if ($sign_num == 1) {//签退
-                $data['mold'] = 2;
-                $tip = '签退';
-                $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute')));
-                if ($real_time < $is_exist['start_time']) {
-                    return $this->error($user_name."已签到");
-                }
-            } else {//签到
-                $data['mold'] = 1;
-                $tip = '签到';
-            }
-            //存入签到表
-            $data['type'] = $type;
-            $data['table'] = 'work_record';
-            $data['pid'] = $is_exist['id'];
-            $data['userid'] = $userId;
-            $data['name'] = $user_name;
-            $data['openid'] = $openid;
-            $data['venue_id'] = $venue_id;
-            $data['date'] = $date;
-            $data['create_time'] = $current_time;
-            if ($model = SignModel::create($data)) {
-                $response = [
-                    'id' => $model->id,
-                    'type' => $type,
-                    'name' => $user_name,
-                    'sex' => $msg['gender']==2?'女':'男',
-                    'comment' => '员工',
-                    'tip' => '恭喜'.$tip.'成功！',
-                ];
-                return $this->success($user_name.$tip, '', $response);
-            } else {
-                return $this->error($user_name."请重新扫描二维码");
-            }
+            return $this->workSign($openid, $venue_id, $date, $current_time, $msg, 2);
         } else {
             if (WechatUserTag::issetTag($userId, WechatTag::TAG_3)) {
                 //区域主管巡查签到
-                $type = 3;
-                $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
-
-                if ($sign_num >= 2) {
-                    return $this->error($user_name."已签退");
-                } else if ($sign_num == 1) {//签退
-                    $data['mold'] = 2;
-                    $tip = '签退';
-                } else {//签到
-                    $data['mold'] = 1;
-                    $tip = '签到';
-                }
-                //存入签到表
-                $data['type'] = $type;
-                $data['table'] = '';
-                $data['pid'] = 0;
-                $data['userid'] = $userId;
-                $data['name'] = $user_name;
-                $data['openid'] = $openid;
-                $data['venue_id'] = $venue_id;
-                $data['date'] = $date;
-                $data['create_time'] = $current_time;
-                if ($model = SignModel::create($data)) {
-                    $response = [
-                        'id' => $model->id,
-                        'type' => $type,
-                        'name' => $user_name,
-                        'sex' => $msg['gender']==2?'女':'男',
-                        'comment' => '区域主管',
-                        'tip' => '恭喜'.$tip.'成功！',
-                    ];
-                    return $this->success($user_name.$tip, '', $response);
-                } else {
-                    return $this->error($user_name."请重新扫描二维码");
-                }
+                return $this->moveSign($openid, $venue_id, $date, $current_time, $msg, 3);
             } else {
                 //学员教练上课签到
-                $type = 1;
-                $is_exist = ClassRecord::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'status' => 0])->order('start_time')->select();
-                if (!$is_exist) {
-                    return $this->error("您今日没有课程，请联系管理员");
-                }
-                $t = 0;
-                $class = [];
-                $num = count($is_exist);
-                foreach ($is_exist as $key => $val) {
-                    if ($val['start_time'] <= $current_time && $val['end_time'] >= $current_time) {
-                        $class = $val;//匹配正好在课程时间段内的课程
-                    }
-                    //获取不在课程时间段内的离开始时间最近的课程
-                    $s = $current_time-$val['start_time'];
-                    if ($s < 0) {
-                        $s = -$s;
-                    }
-                    if ($key == 0) {
-                        $t = $s;
-                    } else {
-                        if ($s >= $t) {
-                            unset($is_exist[$key]);
-                        } else {
-                            $t = $s;
-                            unset($is_exist[$key-1]);
-                        }
-                    }
-                }
+                return $this->classSign($openid, $venue_id, $date, $current_time, $msg, 1);
+            }
+        }
 
-                if (!$class) {
-                    $class = array_values($is_exist)[0];
-                }
+    }
 
-                $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
+    //学员教练上课签到
+    public function classSign($openid, $venue_id, $date, $current_time, $msg, $type)
+    {
+        $userId = $msg['userid'];
+        $user_name = $msg['name'];
+        $gender = $msg['gender'];
+        $is_exist = ClassRecord::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'status' => 0])->order('start_time')->select();
+        if (!$is_exist)
+        {
+            return $this->error("您今日没有课程，请联系管理员");
+        }
 
-                if ($sign_num >= 2*$num) {
-                    return $this->error($user_name."已签退");
-                } else if ($sign_num%2!=0) {//奇数=>签退
-                    $data['mold'] = 2;
-                    $tip = '签退';
-                    $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute')));
-                    if ($real_time < $class['start_time']) {
-                        return $this->error($user_name."已签到");
-                    }
-                } else {//偶数=>签到
-                    $data['mold'] = 1;
-                    $tip = '签到';
-                    $real_time = strtotime(date('Y-m-d H:i:s', strtotime('+15 minute')));
-                    if ($real_time < $class['start_time']) {
-                        return $this->error("未到签到时间");
-                    }
-                    if ($real_time > $class['end_time']) {
-                        return $this->error("已过签到时间");
-                    }
-                }
-                //教练签到后学员才能签到
-                if (WechatUserTag::issetTag($userId, WechatTag::TAG_8)) {//在训学员
-                    $member_type = 2;
-                    $member_name = '同学';
-                    $comment = $msg['school'];
-                    $is_coach = SignModel::where(['venue_id' => $venue_id, 'class_id' => $class['class_id'], 'date' => $date, 'type' => $type, 'member_type' => 1, 'mold' => 1])->find();
-                    if (!$is_coach) {
-                        return $this->error("教练还未签到");
-                    }
-                } else {//教练
-                    $member_type = 1;
-                    $member_name = '教练';
-                    $comment = $msg['level'];
-                }
-
-                //存入签到表
-                $data['type'] = $type;
-                $data['table'] = 'class_record';
-                $data['pid'] = $class['id'];
-                $data['userid'] = $userId;
-                $data['name'] = $user_name;
-                $data['openid'] = $openid;
-                $data['venue_id'] = $venue_id;
-                $data['class_id'] = $class['class_id'];
-                $data['member_type'] = $member_type;
-                $data['date'] = $date;
-                $data['create_time'] = $current_time;
-                if ($model = SignModel::create($data)) {
-                    // 签退时结算课时
-
-                    $response = [
-                        'id' => $model->id,
-                        'type' => $type,
-                        'name' => $user_name,
-                        'sex' => $msg['gender']==2?'女':'男',
-                        'comment' => $comment,
-                        'swords' => $msg['swords'],
-                        'venue' => Venue::getName($venue_id),
-                        'tip' => '恭喜'.$member_name.$tip.'成功！',
-                    ];
-                    return $this->success($user_name.$tip, '', $response);
+        $t = 0;
+        $class = [];
+        $num = count($is_exist);
+        foreach ($is_exist as $key => $val) {
+            if ($val['start_time'] <= $current_time && $val['end_time'] >= $current_time) {
+                $class = $val;//匹配正好在课程时间段内的课程
+            }
+            //获取不在课程时间段内的离开始时间最近的课程
+            $s = $current_time - $val['start_time'];
+            if ($s < 0) {
+                $s = -$s;
+            }
+            if ($key == 0) {
+                $t = $s;
+            } else {
+                if ($s >= $t) {
+                    unset($is_exist[$key]);
                 } else {
-                    return $this->error($user_name."请重新扫描二维码");
+                    $t = $s;
+                    unset($is_exist[$key - 1]);
                 }
             }
         }
 
+        if (!$class) {
+            $class = array_values($is_exist)[0];
+        }
+
+        $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
+
+        if ($sign_num >= 2 * $num) {
+            return $this->error($user_name . "已签退");
+        } else if ($sign_num % 2 != 0) {//奇数=>签退
+            $data['mold'] = 2;
+            $tip = '签退';
+            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute')));
+            if ($real_time < $class['start_time']) {
+                return $this->error($user_name . "已签到");
+            }
+        } else {//偶数=>签到
+            $data['mold'] = 1;
+            $tip = '签到';
+            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('+15 minute')));
+            if ($real_time < $class['start_time']) {
+                return $this->error("未到签到时间");
+            }
+            if ($real_time > $class['end_time']) {
+                return $this->error("已过签到时间");
+            }
+        }
+        //教练签到后学员才能签到
+        if (WechatUserTag::issetTag($userId, WechatTag::TAG_8)) {//在训学员
+            $member_type = 2;
+            $member_name = '同学';
+            $comment = $msg['school'];
+            $is_coach = SignModel::where(['venue_id' => $venue_id, 'class_id' => $class['class_id'], 'date' => $date, 'type' => $type, 'member_type' => 1, 'mold' => 1])->find();
+            if (!$is_coach) {
+                return $this->error("教练还未签到");
+            }
+        } else {//教练
+            $member_type = 1;
+            $member_name = '教练';
+            $comment = $msg['level'];
+        }
+
+        //存入签到表
+        $model = SignModel::addSign($type, 'class_record', $class['id'], $userId, $user_name, $openid, $venue_id, $class['class_id'], $member_type, $date, $current_time);
+        if ($model) {
+            // 签退时结算课时
+            if ($sign_num % 2 != 0) {
+                $signModel = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type, 'mold' => 1])->order('create_time desc')->find();
+                $classHourModel = ClassHour::get($class['class_id']);
+                $num = $classHourModel['num'];
+                $time = ($class['end_time'] - $class['start_time'])/$num;
+
+                $j = 0;
+                $k = 0;
+                for ($i = 0; $i < $num; $i++) {
+                    $in_start = $class['start_time'] - 900 + ($time * $i);
+                    $in_end = $in_start + $time;
+                    $out_start = $class['start_time'] + 900 + ($time * $i);
+                    $out_end = $out_start + $time;
+                    if ($signModel['create_time'] >= $in_start && $signModel['create_time'] <= $in_end) {
+                        $j = $i+1;
+                    }
+                    if ($current_time >= $out_start && $current_time <= $out_end) {
+                        $k = $i+1;
+                    }
+                }
+                if ($k - $j >= 0) {
+                    $used_num = $k - $j + 1;
+                } else {
+                    $used_num = 0;
+                }
+                //更新学员课程表的已用课时数
+                CourseUser::where(['userid' => $userId, 'course_id' => $class['course_id']])->update(['used_num' => $used_num, 'update_time' => $current_time]);
+            }
+
+            $response = [
+                'id' => $model->id,
+                'type' => $type,
+                'name' => $user_name,
+                'sex' => $gender == 2 ? '女' : '男',
+                'comment' => $comment,
+                'swords' => $msg['swords'],
+                'venue' => Venue::getName($venue_id),
+                'tip' => '恭喜' . $member_name . $tip . '成功！',
+            ];
+            return $this->success($user_name . $tip, '', $response);
+        } else {
+            return $this->error($user_name . "请重新扫描二维码");
+        }
+    }
+
+    //工作人员上下班签到
+    public function workSign($openid, $venue_id, $date, $current_time, $msg, $type)
+    {
+        $userId = $msg['userid'];
+        $user_name = $msg['name'];
+        $gender = $msg['gender'];
+        $is_exist = WorkRecord::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'status' => 0])->find();
+        if (!$is_exist) {
+            return $this->error("您今日未排班，请联系管理员");
+        }
+        $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
+
+        if ($sign_num >= 2) {
+            return $this->error($user_name . "已签退");
+        } else if ($sign_num == 1) {//签退
+            $data['mold'] = 2;
+            $tip = '签退';
+            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute')));
+            if ($real_time < $is_exist['start_time']) {
+                return $this->error($user_name . "已签到");
+            }
+        } else {//签到
+            $data['mold'] = 1;
+            $tip = '签到';
+        }
+        //存入签到表
+        $model = SignModel::addSign($type, 'work_record', $is_exist['id'], $userId, $user_name, $openid, $venue_id, 0, 0, $date, $current_time);
+        if ($model) {
+            $response = [
+                'id' => $model->id,
+                'type' => $type,
+                'name' => $user_name,
+                'sex' => $gender == 2 ? '女' : '男',
+                'comment' => '员工',
+                'tip' => '恭喜' . $tip . '成功！',
+            ];
+            return $this->success($user_name . $tip, '', $response);
+        } else {
+            return $this->error($user_name . "请重新扫描二维码");
+        }
+    }
+
+    //区域主管巡查签到
+    public function moveSign($openid, $venue_id, $date, $current_time, $msg, $type)
+    {
+        $userId = $msg['userid'];
+        $user_name = $msg['name'];
+        $gender = $msg['gender'];
+        $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
+
+        if ($sign_num >= 2) {
+            return $this->error($user_name . "已签退");
+        } else if ($sign_num == 1) {//签退
+            $data['mold'] = 2;
+            $tip = '签退';
+        } else {//签到
+            $data['mold'] = 1;
+            $tip = '签到';
+        }
+        //存入签到表
+        $model = SignModel::addSign($type, '', 0, $userId, $user_name, $openid, $venue_id, 0, 0, $date, $current_time);
+        if ($model) {
+            $response = [
+                'id' => $model->id,
+                'type' => $type,
+                'name' => $user_name,
+                'sex' => $gender == 2 ? '女' : '男',
+                'comment' => '区域主管',
+                'tip' => '恭喜' . $tip . '成功！',
+            ];
+            return $this->success($user_name . $tip, '', $response);
+        } else {
+            return $this->error($user_name . "请重新扫描二维码");
+        }
+    }
+
+    /**
+     * 定时任务：每天凌晨2点执行一次
+     * 统计学员教练的签到情况
+     */
+    public function setStatus()
+    {
 
     }
 
+
+    //语音播报接口获取token
     public function getToken()
     {
         define('DEMO_CURL_VERBOSE', false);
