@@ -17,11 +17,11 @@ class VenueCourse extends Validate {
         'course_name' =>  'require',
         'start_time'  =>  'require',
         'end_time'  =>  'require',
-        'num'  =>  'require',
+        'num'  =>  'require|number',
         'course_time'  =>  'require',
         'content'  =>  'require',
         'remark'  =>  'require',
-        'price'  =>  'require',
+        'price'  =>  'require|number',
     ];
 
     protected $message = [
@@ -31,10 +31,12 @@ class VenueCourse extends Validate {
         'start_time.require'  =>  '请选择课程开始时间！',
         'end_time.require'  =>  '请选择课程结束时间！',
         'num.require'  =>  '请填写总课时数！',
+        'num.number'  =>  '总课时数必须是数字！',
         'course_time.require'  =>  '请填写上课时间！',
         'content.require'  =>  '请填写课程内容！',
         'remark.require'  =>  '请填写备注！',
         'price.require'  =>  '请填写价格！',
+        'price.number'  =>  '价格必须是数字！',
     ];
 
 }
