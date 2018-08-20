@@ -109,6 +109,7 @@ class User extends Base
     public function sign(){
         $userId = session('userId');
         $user = WechatUser::where('userid',$userId)->value('openid');
+        $user = str_replace('_','/',strip_tags($user));
         $this->assign('user',$user);
 
         return $this->fetch();
