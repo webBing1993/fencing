@@ -60,34 +60,18 @@
 
 
 <div class="btn">
-    {empty name="$registered"}
-    {empty name="$flag"}
-    <!-- 精品课程申请-->
-    {if condition="($sf == 0)"}
-    <a href="javascript:;" class="apply">立即申请</a>
-    {else /}
-    <a>由于您为场馆内部人员，所以当前并无课程报名权限，抱歉。</a>
-    {/if}
-    {else/}
-    <!-- 报名事件-->
-    {if condition="($an == 1)"}
-    {if condition="($sf == 0)"}
-    <a href="javascript:;" class="enroll">立即报名</a>
-    {else /}
-    <a>由于您为场馆内部人员，所以当前并无课程报名权限，抱歉。</a>
-    {/if}
-
-    {else /}
-    <a>您已是在训学员,暂时不能报名</a>
-    {/if}
-
-
-    {/empty}
-    {else/}
+    {if condition="($param == 4)"}
     <!-- 已报名-->
     <a href="javascript:;" class="btnRea">已报名</a>
-    {/empty}
-
+    {else /}
+        {if condition="($param == 5)"}
+        <!-- 精品课程申请-->
+        <a href="javascript:;" class="apply">立即申请</a>
+        {else /}
+        <!-- 报名事件-->
+        <a href="javascript:;" class="enroll">立即报名</a>
+        {/if}
+    {/if}
 </div>
 
 <!-- map-->

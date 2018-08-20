@@ -9,6 +9,7 @@
 namespace app\home\controller;
 
 use app\admin\model\CompetitionApply;
+use app\admin\model\WechatTag;
 use app\home\model\CompetitionEvent;
 use app\home\model\Competition;
 use app\home\model\CompetitionGroup;
@@ -701,40 +702,51 @@ class Association  extends Base
         $userId = session('userId');
         $data = VenueCourse::get($id);
         $venue = venue::get($data['venue_id']);
-        if($data['type'] == 2){
-            $rs = CourseReview::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId, 'status' => 1])->find();
-            if($rs){
-                $flag = true;
-            }else{
-                $flag = false;
-            }
-        }else{
-            $flag = true;
-        }
         $res = CourseApply::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId, 'status' => 1])->find();
         if($res){
             $registered = true;
         }else{
             $registered = false;
         }
-        $venue_id = WechatUserTag::getVenueId($userId);
-        if($venue_id == false){//是否在训学员
-            $an = 1;//可点
-        }else{
-            $an = 0;//不可点
-        }
-        //是否是场馆内部人员
-        $wdu = WechatDepartmentUser::where('userid',$userId)->count();
-        if($wdu == 0){
-            $sf = 0;//否
-        }else{
-            $sf = 1;//是
+
+        $tag = WechatUser::where(['userid' => $userId])->value('tag');
+        if ($tag == 1) {//学员
+            $venue_id = WechatUserTag::getVenueId($userId);
+            if($venue_id){//是否在训学员
+                if ($venue['type'] == 1) {//报公开场馆课程
+                    $param = 2;
+                } else {//报内部场馆课程
+                    if ($registered) {
+                        $param = 4;
+                    } else {
+                        if($data['type'] == 2){
+                            $param = 5;
+                        }else{
+                            $param = 6;
+                        }
+                    }
+                }
+            }else{
+                if ($venue['type'] == 1) {//报公开场馆课程
+                    if ($registered) {
+                        $param = 4;
+                    } else {
+                        if($data['type'] == 2){
+                            $param = 5;
+                        }else{
+                            $param = 6;
+                        }
+                    }
+                } else {//报内部场馆课程
+                    $param = 3;
+                }
+            }
+
+        } else {//非学员
+            $param = 1;
         }
 
-        $this->assign('sf',$sf);
-        $this->assign('an',$an);
-        $this->assign('flag',$flag);
-        $this->assign('registered',$registered);
+        $this->assign('param',$param);
         $this->assign('venue',$venue);
         $this->assign('data',$data);
 
