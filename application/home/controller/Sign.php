@@ -34,9 +34,9 @@ class Sign extends Controller
     public function sign()
     {
 //        $venue_id = input('venue_id');
-//        $openid = input('openid');
+        $openid = input('openid');
         $venue_id = 98;
-        $openid = 'oKYU71ILqw-IVM1CrzkSZ4BOcSfM';
+//        $openid = 'oKYU71ILqw-IVM1CrzkSZ4BOcSfM';
 
 //        var_dump(strlen($openid));die;
 //        $date = date('Y-m-d');
