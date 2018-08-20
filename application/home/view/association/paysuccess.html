@@ -37,4 +37,67 @@
 <a href="/home/association/game.html"><div class="sucDetail06">返回列表</div></a>
 {/block}
 {block name="script"}
+<script>
+    var objNow=1;//退出事件
+    var isAll = true;//是否全部完成
+    isOut();
+    window.confirm = function(name){
+        //隐藏提示框的url,返回按钮结果
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display="none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        var result = window.frames[0].window.confirm(name);
+        iframe.parentNode.removeChild(iframe);
+        return result;
+    };
+    //防止恶意刷新
+    function pushHistory(){
+        var sta = {
+            title: "title"
+        };
+        if( window.history.state === null )
+        {
+            window.history.pushState( sta, "title" );
+        }
+    }
+    //退出提示
+    function isOut(){
+        pushHistory();
+        setTimeout(function(){
+//            swal({
+//                title: ' ',
+//                text: '提交成功',
+//                type: 'success',
+//                confirmButtonText:'确定'
+//            },function(){
+//                console.log(1)
+////                javascript:history.go(-1);
+//            });
+            window.addEventListener("popstate", function(e) {
+                window.history.go(-5);
+                // if(objNow){
+                //     swal({
+                //             title: "您未保存，是否离开当前页面?",
+                //             type: "warning",
+                //             showCancelButton: true,
+                //             closeOnConfirm: false,
+                //             confirmButtonText: '确定',
+                //             cancelButtonText: '取消'
+                //         },
+                //         function (isConfirm) {
+                //             if (isConfirm) {
+                //                 window.history.go(-1);
+                //             } else {
+                //                 pushHistory();
+                //             }
+                //         });
+                // }
+                // else{
+                //     window.history.go(-1);
+                // }
+            }, false);
+        },200)
+    }
+</script>
 {/block}

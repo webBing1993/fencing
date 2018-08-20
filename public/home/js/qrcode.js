@@ -17,7 +17,7 @@
             render: "canvas",
             ecLevel: "H",
             minVersion: 6,
-            fill: "#666",
+            fill: "#333",
             background: "#fff",
             text: "18329199210",
             size: 300,

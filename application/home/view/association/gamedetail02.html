@@ -442,7 +442,7 @@
                                 $('.chooseTig').hide();
                             },3000)
                         }
-                        setCookie('isOrder',false);
+                        setCookie('isOrder',0);
                     },
                     error: function (msg) {
                         $('.chooseTig').show();
@@ -453,8 +453,8 @@
                 })
             }
             else {
-                if (isOrder == true) {
-                    setCookie('isOrder',false);
+                if (isOrder == 1) {
+                    setCookie('isOrder',0);
                     $.ajax({
                         url: '{:Url("Pay/payStatus")}',
                         type: 'post',
@@ -465,7 +465,7 @@
                         success: function (msg) {
                             $('.showbox').hide();
                             if (msg.code == 1) {
-                                setCookie('isOrder',false);
+                                setCookie('isOrder',0);
                                 location.href='/home/association/paysuccess/id/'+orderId+'/type/'+_type;
                             }else {
                                 $('.chooseTig').show();
@@ -530,10 +530,10 @@
     $('.payChoose a').on('click', function () {
         // setCookie('orderId',id);
         if ($(this).hasClass('zhifubao')) {
-            setCookie('isOrder',true);
+            setCookie('isOrder',1);
             payPrice1(orderId,orderPrice);
         }else if ($(this).hasClass('weixin')) {
-            setCookie('isOrder',true);
+            setCookie('isOrder',1);
             payPrice(orderId,orderPrice);
         }else {
             $('.payChoose').hide();
