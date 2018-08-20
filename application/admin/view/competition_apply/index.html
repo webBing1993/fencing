@@ -88,7 +88,7 @@
                                style="color: #fff;"><i class="fa fa-eye"></i> 详情</a>
                             <!--<a href="{:Url('edit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-eye"></i> 详情</a>-->
                             {eq name="$vo.status" value="1"}
-                            <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 退赛</a>
+                            <a href="JavaScript:;" data-id="{$vo.id}" class="confirm btn-sm btn-danger"><i class="fa fa-trash-o"></i> 退赛</a>
                             {else/}
                             <a class="btn-sm btn-default2"><i class="fa fa-trash-o"></i> 退赛</a>
                             {/eq}
@@ -225,5 +225,30 @@
         }
         location.href = url;
     }
+
+    $('.btn-danger').on('click', function () {
+        $.ajax({
+            url: "{:Url('CompetitionApply/del')}",
+            type: 'post',
+            data: {
+                id: $(this).attr('data-id')
+            },
+            success: function (msg) {
+                swal({
+                    title: "",
+                    type: 'warning',
+                    text: '是否确认退赛?',
+                    showCancelButton: true,
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                },
+                function(){
+                    location.reload();
+                });
+            }
+        })
+    });
+
 </script>
 {/block}

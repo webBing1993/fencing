@@ -167,7 +167,7 @@
     }else if($('.gameSort span').eq(0).hasClass('active') && $('.gameSort span').eq(1).hasClass('active')) {
         _getprice = 3;
     }
-    $('.gameSort span').on('click',function(){
+    $(document).on('click','.gameSort span',function(){
         if($('input[name=jz]').val()!==''){
             // console.log($('input[name=zb]').data('id'))
             if(!$(this).hasClass('active')){
@@ -451,8 +451,9 @@
                         },3000)
                     }
                 })
-            }else {
-                if (isOrder == 'true') {
+            }
+            else {
+                if (isOrder == true) {
                     setCookie('isOrder',false);
                     $.ajax({
                         url: '{:Url("Pay/payStatus")}',
@@ -464,7 +465,7 @@
                         success: function (msg) {
                             $('.showbox').hide();
                             if (msg.code == 1) {
-                                setCookie('isOrder',true);
+                                setCookie('isOrder',false);
                                 location.href='/home/association/paysuccess/id/'+orderId+'/type/'+_type;
                             }else {
                                 $('.chooseTig').show();
@@ -480,10 +481,8 @@
                             },3000)
                         }
                     })
-                }else {
                 }
             }
-
         };
     }
     else {

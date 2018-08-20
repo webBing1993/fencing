@@ -53,7 +53,7 @@ class CompetitionEvent extends Admin {
             if(empty($data['id'])){
                 unset($data['id']);
             }
-            $model = CompetitionEventModel::where(['competition_id' => $data['competition_id'], 'type' => $data['type'], 'kinds' => $data['kinds']])->find();
+            $model = CompetitionEventModel::where(['competition_id' => $data['competition_id'], 'type' => $data['type'], 'kinds' => $data['kinds'], 'status' => 0])->find();
             if($model){
                 return $this->error('请不要重复添加！');
             }

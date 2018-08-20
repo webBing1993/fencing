@@ -101,7 +101,7 @@
         $('#leave').on('click',function(){
             if($(this).hasClass('success')){
                 $('#pay').show();
-                $('body').css('position','fixed');
+                // $('body').css('position','fixed');
             }else{
 
             }
@@ -109,7 +109,7 @@
     }
     $('.payError03 ,#cancel').on('click',function(){
         $('#pay').hide();
-        $('body').css('position','inherit');
+        // $('body').css('position','inherit');
     })
     $('#ok').on('click',function(){
         $.ajax({
