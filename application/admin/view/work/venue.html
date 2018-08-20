@@ -1,0 +1,87 @@
+{extend name="base/common"}
+
+{block name="style"}
+
+{/block}
+
+{block name="page-header"}
+
+{/block}
+
+{block name="main"}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="mail-box-header">
+                <div class="pull-right tooltip-demo">
+                    <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
+                </div>
+                <h2>行政人员签到</h2>
+            </div>
+            <div class="mail-box">
+                <table class="table table-hover table-mail">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>{$name}</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td class="check-mail">
+                        </td>
+                        <td>{$vo.name}</td>
+                        <td>
+                            {eq name="$vo.status" value="0"}
+                            <a href="JavaScript:;" data-id="{$userid}" data-date="{$vo.date}" data-status="1" class="edit btn-sm btn-primary"> 上班</a>
+                            {else/}
+                            <a href="JavaScript:;" data-id="{$vo.id}" data-date="{$vo.date}" data-status="0" class="edit btn-sm btn-default2"> 上班</a>
+                            {/eq}
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            <div class="page"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $(".check-all").on("ifChanged",function(){
+            $("tbody").find(".ids").iCheck("toggle");
+        });
+    });
+    $('.edit').on('click', function () {
+        $.ajax({
+            url: "{:Url('work/edit')}",
+            type: 'post',
+            data: {
+                id: $(this).attr('data-id'),
+                status: $(this).attr('data-status'),
+                date: $(this).attr('data-date')
+            },
+            success: function (msg) {
+                location.reload();
+            }
+        })
+    });
+</script>
+{/block}

@@ -777,9 +777,15 @@ class Association  extends Base
                         $param = 4;
                     } else {
                         if($data['type'] == 2){
-                            $rs = CourseReview::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId, 'status' => 1])->find();
+                            $rs = CourseReview::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId])->find();
                             if($rs){
-                                $param = 7;
+                                if($rs['status'] == 0){
+                                    $param = 7;
+                                }elseif($rs['status'] == -1){
+                                    $param = 5;
+                                }else{
+                                    $param = 6;
+                                }
                             }else{
                                 $param = 5;
                             }
@@ -794,9 +800,15 @@ class Association  extends Base
                         $param = 4;
                     } else {
                         if($data['type'] == 2){
-                            $rs = CourseReview::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId, 'status' => 1])->find();
+                            $rs = CourseReview::where(['venue_id' => $data['venue_id'], 'course_id' => $id, 'userid' => $userId])->find();
                             if($rs){
-                                $param = 7;
+                                if($rs['status'] == 0){
+                                    $param = 7;
+                                }elseif($rs['status'] == -1){
+                                    $param = 5;
+                                }else{
+                                    $param = 6;
+                                }
                             }else{
                                 $param = 5;
                             }
