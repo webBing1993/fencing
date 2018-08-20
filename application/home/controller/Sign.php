@@ -35,7 +35,6 @@ class Sign extends Controller
     {
 //        $venue_id = input('venue_id');
         $openid = input('openid');
-        $openid = str_replace('/','_',strip_tags($openid));
         $venue_id = 98;
 //        $openid = 'oKYU71ILqw-IVM1CrzkSZ4BOcSfM';
 
