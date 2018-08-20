@@ -108,7 +108,7 @@
                                 <label>价格:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入价格..." class="form-control form_title" name="price" value="{$msg.price}" onkeyup="onlyNonNegative(this)" >
+                                <input type="text" placeholder="请输入价格..." class="form-control form_title" name="price" value="{$msg.price}" onkeyup="onlyNonNegative(this)" onblur="tofixedTwo(this)">
                             </div>
                         </div>
 
@@ -262,27 +262,35 @@
             return false;
         });
 
-    })
+    });
 
 
     // 价格非负数
     function onlyNonNegative(obj) {
         var inputChar = event.keyCode;
-        //alert(event.keyCode);
 
-        //1.判断是否有多于一个小数点
-        if(inputChar == 190 ) {  //输入的是否为.
-            var index1 = obj.value.indexOf(".") + 1;//取第一次出现.的后一个位置
+        // 1.判断是否有多于一个小数点
+        if(inputChar == 110 ) {  // 输入的是否为.
+
+            var index1 = obj.value.indexOf(".") + 1; // 取第一次出现.的后一个位置
             var index2 = obj.value.indexOf(".",index1);
-            while(index2!=-1) {
-                //alert("有多个.");
-
+            while(index2 != -1) {
                 obj.value = obj.value.substring(0,index2);
                 index2 = obj.value.indexOf(".",index1);
             }
+
         }
-        //2.如果输入的不是.或者不是数字，替换 g:全局替换
+
+        // 2.如果输入的不是.或者不是数字，替换 g:全局替换
         obj.value = obj.value.replace(/[^(\d|.)]/g,"");
+    }
+
+    function tofixedTwo(obj) {
+        // 判断是否为小数点后两位
+        var val = obj.value;
+        if (String(val).indexOf(".") + 1 > 0) {
+            obj.value = Math.floor(val * 100) / 100;
+        }
     }
 
 </script>
