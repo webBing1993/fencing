@@ -85,10 +85,31 @@
 </div>
 
 <!-- 精品课程申请提示-->
-<div class="chooseTig">
+<div class="chooseTig chooseTig0">
     <div class="shadow"></div>
     <div class="tig">
         <p>精品课需先提交管理员审核，审核通过后，才可缴费报名，请您耐心等待。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+<div class="chooseTig chooseTig1">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>由于您为场馆内部人员，所以当前并无课程报名权限，抱歉。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+<div class="chooseTig chooseTig2">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>您已是在训学员,暂时不能报名</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+<div class="chooseTig chooseTig3">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>您是非在训学员,暂时不能报名</p>
         <a class="chooseBtn" href="javascript:;">我知道了</a>
     </div>
 </div>
@@ -106,6 +127,7 @@
 <script>
 
     var id = {$data.id};
+    var param = {$param};
 
     /*
      * 地图跳转
@@ -124,20 +146,19 @@
     * */
 
     $(".enroll").on('click', function () {
-        $.ajax({
-            url: '',
-            data: {
-                id: id
-            },
-            type: 'post',
-            beforeSend: function(XMLHttpRequest){
-                $(".showbox").show();
-            },
-            success: function (data) {
+        if (param == 1) {
+            $('.chooseTig1').show()
+        }else if (param == 2) {
+            $('.chooseTig2').show()
+        }else if (param == 3) {
+            $('.chooseTig3').show()
+        }else {
+            $(".showbox").show();
+            setTimeout(function () {
                 $(".showbox").hide();
                 window.location.href = '/home/association/payment/id/'+ id +'.html'
-            }
-        })
+            },1500);
+        }
     });
 
     /*
@@ -145,7 +166,8 @@
      * */
 
     $(".apply").on("click",function () {
-        $(".chooseTig").show();
+        $(".chooseTig0").show();
+        var that = this;
         $.ajax({
             url: '{:Url("association/payment1")}',
             data: {
@@ -153,7 +175,7 @@
             },
             type: 'post',
             success: function (data) {
-
+                $(that).removeClass('apply').addClass('btnRea');
             }
         })
     });
