@@ -99,6 +99,8 @@
 <script src="/home/js/jqueryqr.js"></script>
 <script src="/home/js/qrcode.js"></script>
 <script>
+    var userid = "{$user}";
+
     var type = localStorage.getItem('qd')==null?1:localStorage.getItem('qd');
     $('.Top div').removeClass('active');
     $('.Top div').eq(type-1).addClass('active');

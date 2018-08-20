@@ -105,7 +105,12 @@ class User extends Base
         }
     }
 
+    //签到二维码
     public function sign(){
+        $userId = session('userId');
+        $user = WechatUser::where('userid',$userId)->value('userid');
+        $this->assign('user',$user);
+
         return $this->fetch();
     }
 
