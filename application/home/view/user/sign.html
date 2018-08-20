@@ -16,7 +16,43 @@
     .los{ color: #333;background: #E5F0FF;width: .8rem;height:.8rem;border-radius: 50%;line-height: .8rem;}
     .los1{ color: #333;background: #FFC0C7;width: .8rem;height:.8rem;border-radius: 50%;line-height: .8rem;}
     .los2{ color: #333;background: #FFE2B9;width: .8rem;height:.8rem;border-radius: 50%;line-height: .8rem;}
+    canvas {width:6rem;height:6rem}
     .weiqian{color: #03A9F4; font-size: 30px;background: red;}
+    .timeBottom {width:94%;color: #999;font-size: .24rem;position: absolute;bottom:.3rem;}
+    .timeBottom div {width:33.33%;float:left;position: relative;text-align: center;}
+    .timeBottom div:before {
+        content: '';
+        width:.2rem;
+        height:.2rem;
+        border-radius: 50%;
+        position: absolute;
+        top:50%;
+        margin-top: -.1rem;
+        left:.1rem;
+    }
+    .timeBottom div:nth-child(1):before {background: #E5F0FF;}
+    .timeBottom div:nth-child(2):before {background: #FFE2B9;}
+    .timeBottom div:nth-child(3):before {background: #FFC0C7;}
+    .timeDate {width:94%;position: relative;}
+    .timeDate div {float:left;position: relative;text-align: center;}
+    .timeDate div:nth-child(1) {float:left;}
+    .timeDate div:nth-child(3) {float:right;}
+    .timeDate div:nth-child(1) ,.timeDate div:nth-child(3) {
+        width:2rem;
+        height:.8rem;
+        text-align: center;
+        line-height: .8rem;
+        border-radius: .4rem;
+        border: 1px solid #3A8CFB;
+        color: #3A8CFB;
+        font-size: .28rem;
+    }
+    .timeDate div:nth-child(2) {color: #333; font-size: .24rem;height:.8rem;
+        text-align: center;
+        line-height: .8rem;
+        position: absolute;
+        width:100%;
+    }
 </style>
 {/block}
 {block name="body"}
@@ -26,10 +62,18 @@
         <div data-side="2">记录<span></span></div>
     </div>
 <!--正文切换-->
-    <div class="news" id="side1" style="display: block;">
-        <div class="code"><img src="/home/images/1.jpg"></div>
+    <div class="news" id="side1">
+        <img id="imgLogo" src="/home/images/qdicon.png" hidden>
+        <div class="code" id="container2">
+            <canvas></canvas>
+        </div>
     </div>
     <div class="news" id="side2">
+        <div class="timeDate">
+            <div>查看上月</div>
+            <div>2018年7月</div>
+            <div>查看下月</div>
+        </div>
         <table  cellspacing="1" cellpadding="1" >
             <thead id="thead">
             <tr>
@@ -44,10 +88,22 @@
             </thead>
             <tbody id="tbody"></tbody>
         </table>
+        <div class="timeBottom">
+            <div>表示正常在训</div>
+            <div>表示迟到早退</div>
+            <div>表示该天缺勤</div>
+        </div>
 </div>
 {/block}
 {block name="script"}
+<script src="/home/js/jqueryqr.js"></script>
+<script src="/home/js/qrcode.js"></script>
 <script>
+    var type = localStorage.getItem('qd')==null?1:localStorage.getItem('qd');
+    $('.Top div').removeClass('active');
+    $('.Top div').eq(type-1).addClass('active');
+    $('.news').hide();
+    $('.news').eq(type-1).show()
     for(var i=0;i<$('.Top div').length;i++){
         $('.Top div')[i].onclick = function(){
             $('.Top div').removeClass('active');
@@ -55,6 +111,7 @@
             var side = $(this).data('side');
             $('.news').hide();
             $('#side'+side).show();
+            localStorage.setItem('qd',side);
         }
     }
     $(function(){
@@ -154,6 +211,14 @@
     })
 </script>
 <script>
+    $(document).ready(function () {
+        //图片logo
+        $('#container2').erweima({
+            mode: 4,
+            mSize:20,
+            image: $("#imgLogo")[0],
+    });
+    });
     $("img.lazy").lazyload({
         placeholder: "/home/images/loading.jpg",
         effect: "fadeIn",

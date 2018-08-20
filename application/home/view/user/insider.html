@@ -251,8 +251,9 @@
                         },3000)
                     }
                 })
-            }else {
-                if (isOrder == 'true') {
+            }
+            else {
+                if (isOrder == true) {
                     setCookie('isOrder',false);
                     $.ajax({
                         url: '{:Url("Pay/payStatus")}',
@@ -264,7 +265,7 @@
                         success: function (msg) {
                             $('.showbox').hide();
                             if (msg.code == 1) {
-                                setCookie('isOrder',true);
+                                setCookie('isOrder',false);
                                 location.href='/home/user/paysuccess/'
                             }else {
                                 $('.chooseTig').show();
