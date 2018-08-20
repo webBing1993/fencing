@@ -52,9 +52,24 @@
         <p class="noMsg">暂无课程</p>
         {else /}
         {volist name="venue" id="vo"}
+        {notempty name='$vo.noChoose'}
+        <!-- 精品课权限-->
+        <a class="list clearfix" href="javascript:;" onclick="noChoose()">
+        {else/}
+        {notempty name='$vo.noClick'}
+        <!-- 课程冲突-->
+        <a class="list clearfix" href="javascript:;" onclick="noClick()">
+        {else/}
+        <!-- 跳转-->
         <a class="list clearfix" href="{:Url('Association/gamedetail1?id='.$vo['id'])}">
+        {/notempty}
+        {/notempty}
             <div class="listImg fl">
-                <img src="{$vo.front_cover|get_cover='path'}" alt="" class="lazy">
+                <img data-original="{$vo.front_cover|get_cover='path'}" alt="" class="lazy">
+                {eq name="$vo.type" value="2"}
+                <!-- 精品课的标示-->
+                <i></i>
+                {/eq}
             </div>
             <div class="listContent fl">
                 <div class="title">{$vo.course_name}</div>
@@ -76,6 +91,23 @@
         <a href="http://api.map.baidu.com/marker?location={$data.lat},{$data.lng}&title={$data.title}&content={$data.title}&output=html">百度地图</a>
         <a href="https://uri.amap.com/marker?position={$data.lng},{$data.lat}&name={$data.title}">高德地图</a>
         <a href="javascript:;" class="mapBack">取消</a>
+    </div>
+</div>
+
+<!-- 精品课权限提示-->
+<div class="chooseTig chooseTig2">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>您当前未报普通课，暂无申请精品课权限，请先报名普通课后再申请，谢谢。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
+    </div>
+</div>
+<!-- 课程冲突提示-->
+<div class="chooseTig chooseTig1">
+    <div class="shadow"></div>
+    <div class="tig">
+        <p>由于您当前已有课程，并与该课程的上课时间冲突，所以无法报名，抱歉。</p>
+        <a class="chooseBtn" href="javascript:;">我知道了</a>
     </div>
 </div>
 
@@ -167,9 +199,19 @@
         var len = lists.length;
         for(var i = 0; i< len;i++) {
             var list = lists[i];
-            html += '<a class="list clearfix" href="/home/association/gamedetail1'+ list.id +'.html">'+
-                        '<div class="listImg fl">'+
-                            '<img src="'+ list.front_cover +'" alt="" class="lazy">'+
+            if (list.noChoose == true) {
+                html += '<a class="list clearfix" href="javascript:;" onclick="noChoose()">';
+            }else if (list.noClick == true) {
+                html += '<a class="list clearfix" href="javascript:;" onclick="noClick()">'
+            }else {
+                html += '<a class="list clearfix" href="/home/association/gamedetail1/id/'+ list.id +'">';
+            }
+            html += '<div class="listImg fl">'+
+                            '<img data-original="'+ list.front_cover +'" alt="" class="lazy">';
+            if (list.type == 2) {
+                html += '<i></i>';
+            }
+            html +=
                         '</div>'+
                         '<div class="listContent fl">'+
                             '<div class="title">'+ list.course_name +'</div>'+
@@ -207,6 +249,29 @@
 
     $(".mapChoose .shadow,.mapChoose .mapBack").on("click", function () {
         $(".mapChoose").hide();
+    });
+
+    /*
+     * 精品课程权限提示
+     * */
+    function noChoose() {
+        $(".chooseTig2").show();
+    }
+
+    $(".chooseTig2 .shadow, .chooseTig2 .chooseBtn").on("click", function () {
+        $(".chooseTig2").hide();
+    });
+
+
+    /*
+     * 课程冲突提示
+     * */
+    function noClick() {
+        $(".chooseTig1").show();
+    }
+
+    $(".chooseTig1 .shadow, .chooseTig1 .chooseBtn").on("click", function () {
+        $(".chooseTig1").hide();
     });
 
 </script>
