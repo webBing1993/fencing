@@ -39,10 +39,10 @@ class Sign extends Controller
 //        $openid = 'oKYU71ILqw-IVM1CrzkSZ4BOcSfM';
 
 //        var_dump(strlen($openid));die;
-//        $date = date('Y-m-d');
-        $date = "2018-08-01";
-//        $current_time = time();
-        $current_time = '1533109500';
+        $date = date('Y-m-d');
+//        $date = "2018-08-01";
+        $current_time = time();
+//        $current_time = '1533109500';
 
         if (empty($openid)) {
             return $this->error("请重新扫描二维码");
