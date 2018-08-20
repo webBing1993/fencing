@@ -165,11 +165,21 @@
         var time01 = $('#demo_date_01').val();
         var time02 = $('#demo_date_02').val();
         var content = $('#content').val();
-        if(time01!==''&& time02!=='') {
+        var newtime01 = new Date(time01).getTime();
+        var newtime02 = new Date(time02).getTime();
+        // console.log(newtime01>newtime02)
+        // return;
+        if(time01 == '' && time02 == ''){
+            swal("时间区间不能为空！");
+            return;
+        }else if(newtime01 > newtime02){
+            swal("开始时间不能结束时间！")
+            return;
+        }else {
             if (content !== '') {
                 var data = {starttime: time01,endtime: time02,content: content, front_cover: arr};
-               // console.log(data)
-               //  return;
+                // console.log(data)
+                //  return;
                 swal({
                     title: "确定提交你的信息吗？",
                     text: "",
@@ -203,8 +213,6 @@
             } else {
                 swal("申请原因不能为空！")
             }
-        }else{
-            swal("时间区间不能为空！")
         }
     })
 </script>
