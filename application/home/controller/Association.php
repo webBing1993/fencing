@@ -56,15 +56,15 @@ class Association  extends Base
     //通知公告 列表页
     public function news(){
         //训练通知
-        $map1 = array('type' => 1, 'status' => 0);
+        $map1 = array('type' => 1, 'status' => ['>=',0]);
         $left = Notice::where($map1)->order('id desc')->limit(10)->select();
         $this->assign('left',$left);
         //赛事通知
-        $map2 = array('type' => 2, 'status' => 0);
+        $map2 = array('type' => 2, 'status' => ['>=',0]);
         $center = Notice::where($map2)->order('id desc')->limit(10)->select();
         $this->assign('center',$center);
         //比赛成绩
-        $map3 = array('type' => 3, 'status' => 0);
+        $map3 = array('type' => 3, 'status' => ['>=',0]);
         $right = Notice::where($map3)->order('id desc')->limit(10)->select();
         $this->assign('right',$right);
 
@@ -75,7 +75,7 @@ class Association  extends Base
     public function more(){
         $type = input('type');
         $len = input('len');
-        $map = array('type' => $type, 'status' => 0);
+        $map = array('type' => $type, 'status' => ['>=',0]);
         $info = Notice::where($map)->order('id desc')->limit($len,6)->select();
 
         foreach($info as $value){
@@ -267,7 +267,7 @@ class Association  extends Base
 
     //新闻动态模块  更多页
     public function newsmore(){
-        $list = News::where('status',0)->order('id desc')->limit(10)->select();
+        $list = News::where('status','>=',0)->order('id desc')->limit(10)->select();
         $this->assign('list',$list);
 
         return $this->fetch();
@@ -276,8 +276,8 @@ class Association  extends Base
     //新闻动态   上拉加载
     public function more5(){
         $len = input('len');
-        $map = array('status' => 0);
-        $info = News::where($map)->order('id desc')->limit($len,6)->select();
+//        $map = array('status' => 0);
+        $info = News::where('status','>=',0)->order('id desc')->limit($len,6)->select();
 
         foreach($info as $value){
             $value['time'] = date("Y-m-d",$value['create_time']);
