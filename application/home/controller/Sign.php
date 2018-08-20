@@ -42,7 +42,7 @@ class Sign extends Controller
 //        $date = date('Y-m-d');
         $date = "2018-08-01";
 //        $current_time = time();
-        $current_time = '1533128460';
+        $current_time = '1533109500';
 
         if (empty($openid)) {
             return $this->error("请重新扫描二维码");
@@ -113,21 +113,23 @@ class Sign extends Controller
             $class = array_values($is_exist)[0];
         }
 
-        $sign_num = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type])->count();
+        $res = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'class_id' => $class['class_id'], 'type' => $type, 'mold' => 2])->find();
 
-        if ($sign_num >= 2 * $num) {
+        $sign_in = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'class_id' => $class['class_id'], 'type' => $type, 'mold' => 1])->find();
+
+        if ($res) {
             return $this->error($user_name . "已签退");
-        } else if ($sign_num % 2 != 0) {//奇数=>签退
-            $data['mold'] = 2;
+        } else if ($sign_in) {//签退
+            $mold = 2;
             $tip = '签退';
-            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute')));
+            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute', $current_time)));
             if ($real_time < $class['start_time']) {
                 return $this->error($user_name . "已签到");
             }
-        } else {//偶数=>签到
-            $data['mold'] = 1;
+        } else {//签到
+            $mold = 1;
             $tip = '签到';
-            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('+15 minute')));
+            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('+15 minute', $current_time)));
             if ($real_time < $class['start_time']) {
                 return $this->error("未到签到时间");
             }
@@ -151,10 +153,10 @@ class Sign extends Controller
         }
 
         //存入签到表
-        $model = SignModel::addSign($type, 'class_record', $class['id'], $userId, $user_name, $openid, $venue_id, $class['class_id'], $member_type, $date, $current_time);
+        $model = SignModel::addSign($type, 'class_record', $class['id'], $userId, $user_name, $openid, $venue_id, $class['class_id'], $member_type, $mold, $date, $current_time);
         if ($model) {
             // 签退时结算课时
-            if ($sign_num % 2 != 0) {
+            if ($sign_in) {
                 $signModel = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type, 'mold' => 1])->order('create_time desc')->find();
                 $classHourModel = ClassHour::get($class['class_id']);
                 $num = $classHourModel['num'];
@@ -180,7 +182,7 @@ class Sign extends Controller
                     $used_num = 0;
                 }
                 //更新学员课程表的已用课时数
-                CourseUser::where(['userid' => $userId, 'course_id' => $class['course_id']])->update(['used_num' => $used_num, 'update_time' => $current_time]);
+                CourseUser::where(['userid' => $userId, 'course_id' => $class['course_id']])->update(['used_num' => ['exp','`used_num`+'.$used_num], 'update_time' => $current_time]);
             }
 
             $response = [
@@ -214,18 +216,18 @@ class Sign extends Controller
         if ($sign_num >= 2) {
             return $this->error($user_name . "已签退");
         } else if ($sign_num == 1) {//签退
-            $data['mold'] = 2;
+            $mold = 2;
             $tip = '签退';
-            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute')));
+            $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute', $current_time)));
             if ($real_time < $is_exist['start_time']) {
                 return $this->error($user_name . "已签到");
             }
         } else {//签到
-            $data['mold'] = 1;
+            $mold = 1;
             $tip = '签到';
         }
         //存入签到表
-        $model = SignModel::addSign($type, 'work_record', $is_exist['id'], $userId, $user_name, $openid, $venue_id, 0, 0, $date, $current_time);
+        $model = SignModel::addSign($type, 'work_record', $is_exist['id'], $userId, $user_name, $openid, $venue_id, 0, 0, $mold, $date, $current_time);
         if ($model) {
             $response = [
                 'id' => $model->id,
@@ -252,14 +254,14 @@ class Sign extends Controller
         if ($sign_num >= 2) {
             return $this->error($user_name . "已签退");
         } else if ($sign_num == 1) {//签退
-            $data['mold'] = 2;
+            $mold = 2;
             $tip = '签退';
         } else {//签到
-            $data['mold'] = 1;
+            $mold = 1;
             $tip = '签到';
         }
         //存入签到表
-        $model = SignModel::addSign($type, '', 0, $userId, $user_name, $openid, $venue_id, 0, 0, $date, $current_time);
+        $model = SignModel::addSign($type, '', 0, $userId, $user_name, $openid, $venue_id, 0, 0, $mold, $date, $current_time);
         if ($model) {
             $response = [
                 'id' => $model->id,

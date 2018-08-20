@@ -11,7 +11,7 @@ use think\Model;
 
 class Sign extends Model {
 
-    public static function addSign($type, $table, $pid, $userId, $user_name, $openid, $venue_id, $class_id, $member_type, $date, $current_time)
+    public static function addSign($type, $table, $pid, $userId, $user_name, $openid, $venue_id, $class_id, $member_type, $mold, $date, $current_time)
     {
         $data['type'] = $type;
         $data['table'] = $table;
@@ -22,6 +22,7 @@ class Sign extends Model {
         $data['venue_id'] = $venue_id;
         $data['class_id'] = $class_id;
         $data['member_type'] = $member_type;
+        $data['mold'] = $mold;
         $data['date'] = $date;
         $data['create_time'] = $current_time;
         $model = Sign::create($data);
