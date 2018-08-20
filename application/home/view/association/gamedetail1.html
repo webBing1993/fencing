@@ -68,8 +68,13 @@
         <!-- 精品课程申请-->
         <a href="javascript:;" class="apply">立即申请</a>
         {else /}
-        <!-- 报名事件-->
-        <a href="javascript:;" class="enroll">立即报名</a>
+            {if condition="($param == 7)"}
+            <!-- 已申请-->
+            <a href="javascript:;" class="btnRea">已申请</a>
+            {else /}
+            <!-- 报名事件-->
+            <a href="javascript:;" class="enroll">立即报名</a>
+            {/if}
         {/if}
     {/if}
 </div>
