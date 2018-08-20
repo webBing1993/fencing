@@ -99,8 +99,6 @@
 <script src="/home/js/jqueryqr.js"></script>
 <script src="/home/js/qrcode.js"></script>
 <script>
-    var userid = "{$user}";
-
     var type = localStorage.getItem('qd')==null?1:localStorage.getItem('qd');
     $('.Top div').removeClass('active');
     $('.Top div').eq(type-1).addClass('active');
@@ -213,13 +211,18 @@
     })
 </script>
 <script>
+    var userid = "{$user}";
     $(document).ready(function () {
-        //图片logo
-        $('#container2').erweima({
-            mode: 4,
-            mSize:20,
-            image: $("#imgLogo")[0],
-    });
+        if(userid == ''){
+            $('#container2').html('<div id="null"><img src="/home/images/null.png" alt=""><p>暂无二维码</p></div>')
+        }else {
+            $('#container2').erweima({
+                mode: 4,
+                mSize:20,
+                image: $("#imgLogo")[0],
+                text:userid
+            });
+        }
     });
     $("img.lazy").lazyload({
         placeholder: "/home/images/loading.jpg",
