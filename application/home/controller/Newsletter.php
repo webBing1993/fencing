@@ -108,7 +108,10 @@ class Newsletter  extends Base
         $id = input('id');
         $userId = session('userId');
         $depar = WechatDepartmentUser::where('userid',$userId)->value('departmentid');
-        if($depar == $id or $depar ==2 or $depar == 3) {
+        //判断是否是同区域管理员,是的话可进入本区域其它部门
+        $wd = WechatDepartment::where('id',$depar)->value('parentid');
+        $wd2 = WechatDepartment::where('id',$id)->value('parentid');
+        if($depar == $id or $depar ==2 or $depar == 3 or $wd == $wd2) {
             $this->assign('bmid', $id);
             $user = WechatDepartmentUser::where('departmentid', $id)->select();
             $charArray = [];
