@@ -1,6 +1,6 @@
 {extend name="public/common"}
 {block name="style"}
-<title>请假申请</title>
+<title></title>
 <link rel="stylesheet" href="/home/css/user/leave.css">
 <link rel="stylesheet" href="/home/css/association/game.css">
 {/block}
@@ -63,6 +63,11 @@
 {/block}
 {block name="script"}
 <script>
+    if({$type} == 1 ){
+        $(document).attr("title","请假申请");
+    }else {
+        $(document).attr("title","请假审批");
+    }
     for(var i=0;i<$('.Top div').length;i++){
         $('.Top div')[i].onclick = function(){
             $('.Top div').removeClass('active');
