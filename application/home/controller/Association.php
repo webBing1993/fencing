@@ -42,7 +42,7 @@ class Association  extends Base
         $this->assign('list1',$list1);
 
         //新闻动态2条
-        $list2 = News::where('status',0)->order('id desc')->limit(2)->select();
+        $list2 = News::where('status',['>=', 0])->order('id desc')->limit(2)->select();
         $this->assign('list2',$list2);
 
         //比赛报名
