@@ -57,13 +57,24 @@
                         <td>{$vo.create_time|time_format='Y-m-d'}</td>
                         <td>{$vo.status_text}</td>
                         <td>
-                            <a href="{:Url('CompetitionGroup/index?pid='.$vo['id'])}" class="confirm btn-sm btn-success">比赛组别</a>
+
+                           <a href="{:Url('CompetitionGroup/index?pid='.$vo['id'])}" class="confirm btn-sm btn-success">比赛组别</a>
                             <a href="{:Url('CompetitionEvent/index?pid='.$vo['id'])}" class="confirm btn-sm btn-info">比赛项目</a>
+                            {if condition="($vo['status'] == 0)"}
 
                             {if condition="($vo['xg'] == 0)"}
                             <a href="{:Url('edit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-pencil"></i> 修改</a>
                             {else /}
                             <a class="btn-sm btn-default2"><i class="fa fa-pencil"></i> 修改</a>
+                            {/if}
+
+                            {if condition="($vo['push'] == 1)"}
+                            <a href="{:Url('push?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-share"></i> 推送</a>
+                            {/if}
+
+                            {else /}
+                            <a class="btn-sm btn-default2"><i class="fa fa-pencil"></i> 修改</a>
+                            <a class="btn-sm btn-default2"><i class="fa fa-share"></i> 推送</a>
                             {/if}
 
                             <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 删除</a>
