@@ -170,7 +170,7 @@
      * 精品课程权限提示
      * */
 
-    $(".apply").on("click",function () {
+    $(".apply").one("click",function () {
         $(".chooseTig0").show();
         var that = this;
         $.ajax({
@@ -181,6 +181,7 @@
             type: 'post',
             success: function (data) {
                 $(that).removeClass('apply').addClass('btnRea');
+                $(that).html('已申请');
             }
         })
     });
