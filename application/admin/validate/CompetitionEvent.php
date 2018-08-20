@@ -14,17 +14,15 @@ class CompetitionEvent extends Validate {
     protected $rule = [
         'type'  =>  'require',
         'kinds' =>  'require',
-        'price'  =>  'require|number',
-        'vip_price'  =>  'require|number',
+        'price'  =>  'require',
+        'vip_price'  =>  'require',
     ];
 
     protected $message = [
         'type.require'  =>  '请添加比赛类型！',
         'kinds.require' =>  '请添加比赛剑种！',
         'price.require'  =>  '请填写普通价！',
-        'price.number'  =>  '普通价必须是数字！',
         'vip_price.require'  =>  '请填写会员价！',
-        'vip_price.number'  =>  '会员价必须是数字！',
     ];
 
 }

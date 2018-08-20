@@ -16,8 +16,8 @@ class Competition extends Validate {
         'title' =>  'require',
         'end_time'  =>  'require',
         'address'  =>  'require',
-        'lng' =>  'require|number',
-        'lat' =>  'require|number',
+        'lng' =>  'require',
+        'lat' =>  'require',
         'content'  =>  'require',
         'publisher'  =>  'require',
     ];
@@ -28,9 +28,7 @@ class Competition extends Validate {
         'end_time.require'  =>  '请选择报名截止时间！',
         'address.require'  =>  '请填写地址！',
         'lng.require' =>  '请添加经度！',
-        'lng.number' =>  '经度必须是数字！',
         'lat.require' =>  '请添加纬度！',
-        'lat.number' =>  '纬度必须是数字！',
         'content.require'  =>  '请填写比赛内容！',
         'publisher.require'  =>  '请填写发布者！',
     ];

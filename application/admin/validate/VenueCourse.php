@@ -21,7 +21,7 @@ class VenueCourse extends Validate {
         'course_time'  =>  'require',
         'content'  =>  'require',
         'remark'  =>  'require',
-        'price'  =>  'require|number',
+        'price'  =>  'require',
     ];
 
     protected $message = [
@@ -36,7 +36,6 @@ class VenueCourse extends Validate {
         'content.require'  =>  '请填写课程内容！',
         'remark.require'  =>  '请填写备注！',
         'price.require'  =>  '请填写价格！',
-        'price.number'  =>  '价格必须是数字！',
     ];
 
 }
