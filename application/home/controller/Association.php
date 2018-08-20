@@ -248,7 +248,7 @@ class Association  extends Base
             $this->assign('right',[]);
         }else{
             $venue = venue::get($venue_id);
-            $map2 = array('venue_id' => $venue_id, 'status' => ['>=', 0]);
+            $map2 = array('venue_id' => $Id, 'status' => ['>=', 0]);
             $right = VenueCourse::where($map2)->order('id desc')->limit(10)->select();
             foreach ($right as $val) {
                 //精品课权限
