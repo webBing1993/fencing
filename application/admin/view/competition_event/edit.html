@@ -107,7 +107,7 @@
                                 <label>普通价:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入普通价" class="form-control form_title" name="price" value="{$msg.price || default=''}">
+                                <input type="text" placeholder="请输入普通价" class="form-control form_title" name="price" value="{$msg.price || default=''}"  onkeyup="onlyNonNegative(this)"  onblur="tofixedTwo(this)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -115,7 +115,7 @@
                                 <label>会员价:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入会员价" class="form-control form_title" name="vip_price" value="{$msg.vip_price || default=''}">
+                                <input type="text" placeholder="请输入会员价" class="form-control form_title" name="vip_price" value="{$msg.vip_price || default=''}"  onkeyup="onlyNonNegative(this)" onblur="tofixedTwo(this)">
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{$msg.id || default=''}">
@@ -258,7 +258,34 @@
             });
             return false;
         });
-    })
+    });
 
+    // 价格非负数
+    function onlyNonNegative(obj) {
+        var inputChar = event.keyCode;
+
+        // 1.判断是否有多于一个小数点
+        if(inputChar == 110 ) {  // 输入的是否为.
+
+            var index1 = obj.value.indexOf(".") + 1; // 取第一次出现.的后一个位置
+            var index2 = obj.value.indexOf(".",index1);
+            while(index2 != -1) {
+                obj.value = obj.value.substring(0,index2);
+                index2 = obj.value.indexOf(".",index1);
+            }
+
+        }
+
+        // 2.如果输入的不是.或者不是数字，替换 g:全局替换
+        obj.value = obj.value.replace(/[^(\d|.)]/g,"");
+    }
+
+    function tofixedTwo(obj) {
+        // 判断是否为小数点后两位
+        var val = obj.value;
+        if (String(val).indexOf(".") + 1 > 0) {
+            obj.value = Math.floor(val * 100) / 100;
+        }
+    }
 </script>
 {/block}

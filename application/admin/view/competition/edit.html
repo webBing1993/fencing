@@ -118,13 +118,13 @@
                                 <label>纬度:</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="请输入纬度" class="form-control form_title" name="lat" value="{$msg.lat || default=''}">
+                                <input type="text" placeholder="请输入纬度" class="form-control form_title" name="lat" value="{$msg.lat || default=''}"  onkeyup="onlyNonNegative(this)">
                             </div>
                             <div class="col-lg-1 text-right control-label">
                                 <label>经度:</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="请输入经度" class="form-control form_title" name="lng" value="{$msg.lng || default=''}">
+                                <input type="text" placeholder="请输入经度" class="form-control form_title" name="lng" value="{$msg.lng || default=''}"  onkeyup="onlyNonNegative(this)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -326,7 +326,27 @@
             });
             return false;
         });
-    })
+    });
+
+    // 经纬度非负数
+    function onlyNonNegative(obj) {
+        var inputChar = event.keyCode;
+
+        // 1.判断是否有多于一个小数点
+        if(inputChar == 110 ) {  // 输入的是否为.
+
+            var index1 = obj.value.indexOf(".") + 1; // 取第一次出现.的后一个位置
+            var index2 = obj.value.indexOf(".",index1);
+            while(index2 != -1) {
+                obj.value = obj.value.substring(0,index2);
+                index2 = obj.value.indexOf(".",index1);
+            }
+
+        }
+
+        // 2.如果输入的不是.或者不是数字，替换 g:全局替换
+        obj.value = obj.value.replace(/[^(\d|.)]/g,"");
+    }
 
 </script>
 {/block}
