@@ -233,13 +233,70 @@ class Association  extends Base
         $data = Venue::where('id',$Id)->find();
         $data['front_cover'] = json_decode($data['front_cover']);
         $this->assign('data',$data);
-        $venue = VenueCourse::where('venue_id',$Id)->where('status',0)->order('id desc')->limit(10)->select();
-        foreach($venue as $val){
-            $val['content'] = str_replace('&nbsp;','',strip_tags($val['content']));
-            $val['content'] = str_replace(" ",'',$val['content']);
-            $val['content'] = str_replace("\n",'',$val['content']);
+//        $venue = VenueCourse::where('venue_id',$Id)->where('status',0)->order('id desc')->limit(10)->select();
+//        foreach($venue as $val){
+//            $val['content'] = str_replace('&nbsp;','',strip_tags($val['content']));
+//            $val['content'] = str_replace(" ",'',$val['content']);
+//            $val['content'] = str_replace("\n",'',$val['content']);
+//        }
+
+        //课程报名
+        $userId = session('userId');
+        $venue_id = WechatUserTag::getVenueId($userId);
+        if(!$venue_id){
+            $this->assign('venue',false);
+            $this->assign('right',[]);
+        }else{
+            $venue = venue::get($venue_id);
+            $map2 = array('venue_id' => $venue_id, 'status' => ['>=', 0]);
+            $right = VenueCourse::where($map2)->order('id desc')->limit(10)->select();
+            foreach ($right as $val) {
+                //精品课权限
+                $val['noChoose'] = false;
+                if($val['type'] == 2){
+                    $rs = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'type' => 1, 'status' => 1, 'start_time' => ['<=', time()], 'end_time' => ['>=', time()]])->find();
+                    if($rs){
+                        $val['noChoose'] = false;
+                    }else{
+                        $val['noChoose'] = true;
+                    }
+                }
+                //课程冲突
+                if($val['type'] == 2){
+                    $val['noClick'] = false;
+                }else{
+                    $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1, 'type' => $val['type']])
+                        ->where(function ($query)use($val) {
+                            $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
+                                ->whereOr(function ($query)use($val) {
+                                    $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
+                                })
+                                ->whereOr(function ($query)use($val) {
+                                    $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
+                                })
+                                ->whereOr(function ($query)use($val) {
+                                    $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
+                                });
+                        });
+//		var_dump($query->fetchSql()->select());die;
+                    $res = $query->find();
+                    if($res){
+                        $val['noClick'] = true;
+                    }else{
+                        $val['noClick'] = false;
+                    }
+                }
+
+
+                $val['content'] = str_replace('&nbsp;','',strip_tags($val['content']));
+                $val['content'] = str_replace(" ",'',$val['desc']);
+                $val['content'] = str_replace("\n",'',$val['desc']);
+            }
+
+            $venue['front_cover'] = json_decode($venue['front_cover']);
+            $this->assign('venue',$venue);
+            $this->assign('right',$right);
         }
-        $this->assign('venue',$venue);
 
         return $this->fetch();
     }
