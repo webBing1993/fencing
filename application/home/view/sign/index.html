@@ -36,7 +36,7 @@
             <!--<p><span>姓名</span><span>1</span></p>-->
             <!--<p><span>组别</span><span>1</span></p>-->
             <!--<p><span>剑种</span><span>1</span></p>-->
-            <!--<p><span>赛别</span><span>1</span></p>-- >
+            <!--<p><span>赛别</span><span>1</span></p>--   >
             <!--<p><span>代表单位</span><span>1</span></p>-->
             <!--<p><span>岗位</span><span>1</span></p>-->
         <!--</div>-->
@@ -213,34 +213,34 @@
                 }
                 else {
                     console.log(data)
-                    var data = data.data;
+                    var _data = data.data;
                     var html = '';
-                    if (data.type == 1) { //学员教练
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
+                    if (_data.type == 1) { //学员教练
+                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>'+data.name+'</span></p>'
-                            + '<p><span>性别</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>'+data.comment_name+'</span><span>'+data.comment+'</span></p>'
-                            + '<p><span>剑种</span><span>'+data.swords+'</span></p>'
-                            + '<p><span>训练场馆</span><span>'+data.venue+'</span></p>'
+                            + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
+                            + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
+                            + '<p><span>'+_data.comment_name+'</span><span>'+_data.comment+'</span></p>'
+                            + '<p><span>剑种</span><span>'+_data.swords+'</span></p>'
+                            + '<p><span>训练场馆</span><span>'+_data.venue+'</span></p>'
                             + '</div></div>'
-                    } else if (data.type == 2) { //工作人员
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
+                    } else if (_data.type == 2) { //工作人员
+                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>'+data.name+'</span></p>'
-                            + '<p><span>性别</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>岗位</span><span>'+data.comment+'</span></p>'
-                            + '</div></div>'
-                    }
-                    else if (data.type == 3) {//主管
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
-                            + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>' + data.name + '</span></p>'
-                            + '<p><span>性别</span><span>' + data.sex + '</span></p>'
-                            + '<p><span>岗位</span><span>' + data.comment + '</span></p>'
+                            + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
+                            + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
+                            + '<p><span>岗位</span><span>'+_data.comment+'</span></p>'
                             + '</div></div>'
                     }
-                    speckText(data.tip);
+                    else if (_data.type == 3) {//主管
+                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                            + '<div class="sucDetail"><div class="sucDetail03">'
+                            + '<p><span>姓名</span><span>' + _data.name + '</span></p>'
+                            + '<p><span>性别</span><span>' + _data.sex + '</span></p>'
+                            + '<p><span>岗位</span><span>' + _data.comment + '</span></p>'
+                            + '</div></div>'
+                    }
+                    speckText(_data.tip);
                     $('#signNull').hide();
                     $('#signSucc').show().html(html);
                     $('.number').focus().val('');
