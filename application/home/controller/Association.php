@@ -320,27 +320,31 @@ class Association  extends Base
                 }
             }
             //课程冲突
-            $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1])
-                ->where(function ($query)use($val) {
-                    $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
-                        ->whereOr(function ($query)use($val) {
-                            $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
-                        })
-                        ->whereOr(function ($query)use($val) {
-                            $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
-                        })
-                        ->whereOr(function ($query)use($val) {
-                            $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
-                        });
-                });
-//		var_dump($query->fetchSql()->select());die;
-            $res = $query->find();
-            if($res){
-                $val['noClick'] = true;
-            }else{
+            if($val['type'] == 2){
                 $val['noClick'] = false;
+            }else {
+                //课程冲突
+                $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1, 'type' => $val['type']])
+                    ->where(function ($query) use ($val) {
+                        $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
+                            ->whereOr(function ($query) use ($val) {
+                                $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
+                            })
+                            ->whereOr(function ($query) use ($val) {
+                                $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
+                            })
+                            ->whereOr(function ($query) use ($val) {
+                                $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
+                            });
+                    });
+//		var_dump($query->fetchSql()->select());die;
+                $res = $query->find();
+                if ($res) {
+                    $val['noClick'] = true;
+                } else {
+                    $val['noClick'] = false;
+                }
             }
-
             $val['desc'] = str_replace('&nbsp;','',strip_tags($val['content']));
             $val['desc'] = str_replace(" ",'',$val['desc']);
             $val['desc'] = str_replace("\n",'',$val['desc']);
@@ -497,27 +501,31 @@ class Association  extends Base
                 }
             }
             //课程冲突
-            $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1])
-                ->where(function ($query)use($val) {
-                    $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
-                        ->whereOr(function ($query)use($val) {
-                            $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
-                        })
-                        ->whereOr(function ($query)use($val) {
-                            $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
-                        })
-                        ->whereOr(function ($query)use($val) {
-                            $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
-                        });
-                });
-//		var_dump($query->fetchSql()->select());die;
-            $res = $query->find();
-            if($res){
-                $val['noClick'] = true;
-            }else{
+            //课程冲突
+            if($val['type'] == 2){
                 $val['noClick'] = false;
+            }else {
+                $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1, 'type' => $val['type']])
+                    ->where(function ($query) use ($val) {
+                        $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
+                            ->whereOr(function ($query) use ($val) {
+                                $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
+                            })
+                            ->whereOr(function ($query) use ($val) {
+                                $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
+                            })
+                            ->whereOr(function ($query) use ($val) {
+                                $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
+                            });
+                    });
+//		var_dump($query->fetchSql()->select());die;
+                $res = $query->find();
+                if ($res) {
+                    $val['noClick'] = true;
+                } else {
+                    $val['noClick'] = false;
+                }
             }
-
             $val['desc'] = str_replace('&nbsp;','',strip_tags($val['content']));
             $val['desc'] = str_replace(" ",'',$val['desc']);
             $val['desc'] = str_replace("\n",'',$val['desc']);
