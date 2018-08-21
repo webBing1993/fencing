@@ -38,7 +38,7 @@ return [
 
     /* 企业配置   新手指南*/
     'party' => array(
-        'login' => 'http://zzxz.0571ztnet.com/home/index/login',
+        'login' => 'http://jjg.0519ztnet.com/home/Verify/login',
         'token' => '',
         'encodingaeskey' => '',
         'appid' => 'wwf507973ebf84282e',
@@ -46,13 +46,21 @@ return [
         'agentid' => 1000002,
     ),
 
-    //消息通知模块
+    //个人中心消息通知模块
     'user' => [
         'appid' => 'wwf507973ebf84282e',
         'appsecret' => '
 6qO-TYMIVkF93qB8nsQbJjOxi5AW5L8LZOLT192nTNk',
         'agentid' => 1000003
     ],
+
+    //通讯录模块
+    'mail' => array(
+        'login' => 'http://jjg.0519ztnet.com/home/Verify/login',
+        'appid' => 'wwf507973ebf84282e',
+        'appsecret' => 'wb6TMsGAwwY0-xg_NRUsg8YBTa44z2c-yFdlXFNkpgQ',
+        'agentid' => 1000002
+    ),
 
     //  推送网站域名
     'http_url' => "http://ben.zt.cn",
