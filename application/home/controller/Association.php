@@ -769,7 +769,7 @@ class Association  extends Base
         $tag = WechatUser::where(['userid' => $userId])->value('tag');
         if ($tag == 1) {//学员
             $venue_id = WechatUserTag::getVenueId($userId);
-            if($venue_id){//是否在训学员
+            if($venue_id){//是否带场馆标记
                 if ($venue['type'] == 1) {//报公开场馆课程
                     $param = 2;
                 } else {//报内部场馆课程
