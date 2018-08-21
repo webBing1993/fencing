@@ -1,0 +1,96 @@
+{extend name="base/common"}
+
+{block name="style"}
+
+{/block}
+
+{block name="page-header"}
+
+{/block}
+
+{block name="main"}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="mail-box-header">
+                <h2>签到课程管理</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <input class="i-checks check-all" type="checkbox">
+                    <button class="btn btn-danger btn-sm m-l ajax-post" url="{:Url('moveToTrash')}" data-toggle="tooltip" data-placement="top" target-form="ids"><i class="fa fa-trash-o"></i> 批量删除</button>
+                    <a href="{:Url('add')}" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> 添加</a>
+                    <form method="get" action="" class="pull-right mail-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="search" placeholder="搜索标题">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="mail-box">
+                <table class="table table-hover table-mail">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>课程名称</th>
+                        <th>场馆</th>
+                        <th>课程类型</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>创建人 </th>
+                        <th>创建时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td class="check-mail">
+                            <input type="checkbox" class="i-checks ids" name="ids[]" value="{$vo.id}">
+                        </td>
+                        <td>{$vo.course_name|msubstr=0,20}</td>
+                        <td>{$vo.venue_id_text}</td>
+                        <td>{$vo.type_text}</td>
+                        <td>{$vo.start_time|time_format='Y-m-d'}</td>
+                        <td>{$vo.end_time|time_format='Y-m-d'}</td>
+                        <td>{$vo->user->nickname}</td>
+                        <td>{$vo.create_time|time_format='Y-m-d'}</td>
+                        <td>{$vo.status_text}</td>
+                        <td>
+                            <a href="{:Url('CourseUser/index?pid='.$vo['id'])}" class="confirm btn-sm btn-info"> 添加课程成员</a>
+                            <a href="{:Url('edit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-pencil"></i> 修改</a>
+                            <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 删除</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            <div class="page">{$_page}</div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $(".check-all").on("ifChanged",function(){
+            $("tbody").find(".ids").iCheck("toggle");
+        });
+    });
+</script>
+{/block}
