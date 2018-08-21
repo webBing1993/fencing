@@ -198,6 +198,7 @@
         clean = false;
         count = 0;
         a = '';
+        var html = '';
         $('#signSucc').html('');
         $.ajax({
             type: "post",
@@ -214,9 +215,8 @@
                 else {
                     console.log(data)
                     var _data = data.data;
-                    var html = '';
                     if (_data.type == 1) { //学员教练
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
@@ -225,7 +225,7 @@
                             + '<p><span>训练场馆</span><span>'+_data.venue+'</span></p>'
                             + '</div></div>'
                     } else if (_data.type == 2) { //工作人员
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
@@ -233,7 +233,7 @@
                             + '</div></div>'
                     }
                     else if (_data.type == 3) {//主管
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>' + _data.name + '</span></p>'
                             + '<p><span>性别</span><span>' + _data.sex + '</span></p>'
@@ -244,7 +244,7 @@
                     $('#signNull').hide();
                     $('#signSucc').show().html(html);
                     $('.number').focus().val('');
-                    qdshow();
+                    // qdshow();
                 }
             }
         })
