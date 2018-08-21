@@ -211,6 +211,8 @@ body {
     color: #666;
     font-size: .26rem;
     line-height: .36rem;
+    display: inline-block;
+    width: auto;
 }
 
 .chooseTig .chooseBtn {
@@ -219,6 +221,7 @@ body {
     padding: .15rem .61rem;
     background-color: #3A8CFB;
     border-radius: .35rem;
+    display: inline-block;
 }
 
 /* mapChoose*/
