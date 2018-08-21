@@ -20,6 +20,8 @@ use app\home\model\VenueCourse;
 use app\home\model\Vipapply;
 use app\home\model\WechatUser;
 use app\home\model\WechatUserTag;
+use com\wechat\QYWechat;
+use think\Config;
 
 class User extends Base
 {
@@ -99,6 +101,29 @@ class User extends Base
         $info = WechatUser::update($data);
 
         if($info){
+            $model = WechatUser::where('id',$data['id'])->find();
+            $param = array(
+                'userid' => $model['userid'],
+                'name' => $model['name'],
+                //'mobile' => $data['mobile'],
+                'gender' => $model['gender'],
+                'extattr' => ['attrs' => array(
+                    ["name" => "剑种", "value" => $model['swords']],
+                    ["name" => "出生日期", "value" => $model['birthday']],
+                    ["name" => "就读学校", "value" => $model['school']],
+                    ["name" => "身份证号", "value" => $model['card']],
+                    ["name" => "监护人", "value" => $model['guardian_mobile']],
+                    ["name" => "家庭地址", "value" => $model['address']],
+                    ["name" => "一级审批", "value" => $model['telephone']],
+                    ["name" => "二级审批", "value" => $model['telephone2']],
+                    ["name" => "抄送人1", "value" => $model['push1']],
+                    ["name" => "抄送人2", "value" => $model['push2']],
+                    ["name" => "抄送人3", "value" => $model['push3']],
+                )]
+            );
+            $Wechat = new QYWechat(Config::get('mail'));
+            $Wechat->updateUser($param);
+
             return $this->success("保存成功");
         }else{
             return $this->error("保存失败");
