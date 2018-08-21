@@ -123,7 +123,7 @@ class Mall  extends Base
         $user = WechatUser::where('userid',$userId)->find();
         $venue_id = WechatUserTag::getVenueId($userId);
 
-        if($venue_id != false AND $user['tag'] == 1 AND $user['vip'] == 1){
+        if($venue_id != false AND $user['train'] == 1 AND $user['tag'] == 1 AND $user['vip'] == 1){
             $an = 1;
         }else{
             $an = 0;

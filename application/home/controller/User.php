@@ -29,13 +29,13 @@ class User extends Base
         $user = WechatUser::where('userid',$userId)->find();
         $this->assign('user',$user);
         $venue_id = WechatUserTag::getVenueId($userId);
-        if($venue_id == false){
+        if($venue_id == false AND $user['train'] == 0){
             $zx = 0;//非在训
         }else{
             $zx = 1;//在训
         }
         $this->assign('zx',$zx);
-        if($venue_id != false AND $user['tag'] == 1){
+        if($venue_id != false AND $user['train'] == 1 AND $user['tag'] == 1){
             $ts = 1;
         }else{
             $ts = 0;
