@@ -42,7 +42,7 @@
         <!--</div>-->
     <!--</div>-->
 </div>
-<input type="text" class="number" maxlength="28" style="background: red;width:100%;padding: 0 .24rem;">
+<input type="text" class="number" maxlength="28" style="background: red;width:100%;padding: 0 .24rem;display: none;">
 <div class="bg"></div>
 <ul class="roster"></ul>
 <!--<div class="sucDetail04">在屏幕下方的扫描器扫描二维码进行签到</div>-->
@@ -192,8 +192,8 @@
                     if (data.type == 1) {
                         html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>1</span></p>'
-                            + '<p><span>性别</span><span>1</span></p>'
+                            + '<p><span>姓名</span><span>'+data.name+'</span></p>'
+                            + '<p><span>性别</span><span>'+data.sex+'</span></p>'
                             + '<p><span>就读学校</span><span>1</span></p>'
                             + '<p><span>剑种</span><span>1</span></p>'
                             + '<p><span>训练场馆</span><span>1</span></p>'
@@ -201,9 +201,9 @@
                     } else if (data.type == 2) {
                         html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>1</span></p>'
-                            + '<p><span>性别</span><span>1</span></p>'
-                            + '<p><span>岗位级别</span><span>1</span></p>'
+                            + '<p><span>姓名</span><span>'+data.name+'</span></p>'
+                            + '<p><span>性别</span><span>'+data.sex+'</span></p>'
+                            + '<p><span>岗位级别</span><span>'+data.comment+'</span></p>'
                             + '<p><span>剑种</span><span>1</span></p>'
                             + '<p><span>训练场馆</span><span>1</span></p>'
                             + '</div></div>'
@@ -216,13 +216,19 @@
                             + '<p><span>岗位</span><span>' + data.comment + '</span></p>'
                             + '</div></div>'
                     }
+                    speckText(data.tip);
                     $('#signNull').hide();
                     $('#signSucc').show().html(html);
+                    qdshow();
                 }
             }
         })
     }
-
+    function qdshow(){
+        setTimeout(function () {
+            $('#signSucc').hide();
+        }, 3000);
+    }
 
     // 播放声音
     function speckText(str) {
