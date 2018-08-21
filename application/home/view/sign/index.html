@@ -191,26 +191,24 @@
                     console.log(data)
                     var data = data.data;
                     var html = '';
-                    if (data.type == 1) {
+                    if (data.type == 1) { //学员教练
                         html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>就读学校</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>剑种</span><span>'+data.comment+'</span></p>'
-                            + '<p><span>训练场馆</span><span>'+data.comment+'</span></p>'
+                            + '<p><span>'+data.comment_name+'</span><span>'+data.comment+'</span></p>'
+                            + '<p><span>剑种</span><span>'+data.swords+'</span></p>'
+                            + '<p><span>训练场馆</span><span>'+data.venue+'</span></p>'
                             + '</div></div>'
-                    } else if (data.type == 2) {
+                    } else if (data.type == 2) { //工作人员
                         html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>岗位级别</span><span>'+data.comment+'</span></p>'
-                            + '<p><span>剑种</span><span>'+data.comment+'</span></p>'
-                            + '<p><span>训练场馆</span><span>'+data.comment+'</span></p>'
+                            + '<p><span>岗位</span><span>'+data.comment+'</span></p>'
                             + '</div></div>'
                     }
-                    else if (data.type == 3) {
+                    else if (data.type == 3) {//主管
                         html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>' + data.name + '</span></p>'
