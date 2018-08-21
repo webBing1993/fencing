@@ -243,11 +243,11 @@ class Association  extends Base
         //课程报名
         $userId = session('userId');
         $venue_id = WechatUserTag::getVenueId($userId);
-        if(!$venue_id){
-            $this->assign('venue',false);
-            $this->assign('right',[]);
-        }else{
-            $venue = venue::get($venue_id);
+//        if(!$venue_id){
+//            $this->assign('venue',false);
+//            $this->assign('right',[]);
+//        }else{
+//            $venue = venue::get($venue_id);
             $map2 = array('venue_id' => $Id, 'status' => ['>=', 0]);
             $right = VenueCourse::where($map2)->order('id desc')->limit(10)->select();
             foreach ($right as $val) {
@@ -293,10 +293,10 @@ class Association  extends Base
                 $val['content'] = str_replace("\n",'',$val['desc']);
             }
 
-            $venue['front_cover'] = json_decode($venue['front_cover']);
-            $this->assign('venue',$venue);
+//            $venue['front_cover'] = json_decode($venue['front_cover']);
+//            $this->assign('venue',$venue);
             $this->assign('right',$right);
-        }
+//        }
 
         return $this->fetch();
     }
