@@ -36,7 +36,7 @@
             <!--<p><span>姓名</span><span>1</span></p>-->
             <!--<p><span>组别</span><span>1</span></p>-->
             <!--<p><span>剑种</span><span>1</span></p>-->
-            <!--<p><span>赛别</span><span>1</span></p>-->
+            <!--<p><span>赛别</span><span>1</span></p>--   >
             <!--<p><span>代表单位</span><span>1</span></p>-->
             <!--<p><span>岗位</span><span>1</span></p>-->
         <!--</div>-->
@@ -63,119 +63,143 @@
     //签到
     var last = '';
     var end = true;
-    //初始化签到
-    $('.sign').on('click', function () {
-        history.go(0)
-    });
-    $('.bg').off('click').on('click', function () {
-        $('.bg,.roster').fadeOut();
-        $('.number').focus();
-    });
-    $('.more').each(function () {
-        var hh = $(this).parents('.content').height();
-        $(this).height(hh).css('padding-top', hh - 18);
-    });
     $(document).on('click','body',function(){
         $('.number').focus().val('');
     })
     $('.number').focus();
-    var clean;
+    var clean = true;
     var str = '';
-    document.onkeyup = function (event) {
-        var e = event.keyCode|| event.which;
-        // var keyCode = String.fromCharCode(e);
-        str = $('.number').val();
-        // var e = event.keyCode || window.event;
-        // var keyCode = String.fromCharCode(e);
-        // if (a.length > 100) {
-        //     a = '';
-        //     return false;
-        // }
-        // if (end == true && a.length < 37) {
-        //     a += keyCode;
-        // }
-        // else {
-        //     if (a.length < 100 && end == true) {
-        //         a += keyCode;
-        //         // var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
-        //         // var nubmer = a;
-        //         console.log(a)
-        //         if (a.length == '') {
-        //             end = false;
-        //             toastr.error('请重新扫描二维码');
-        //             speckText('请重新扫描二维码');
-        //             setTimeout(function () {
-        //                 a = '';
-        //                 end = true;
-        //             }, 1500);
-        //             return false;
-        //         }
-        //
-        //         var num = a;
-        //         if (last != num && end == true) {
-        //             last = num;
-        //             end = false;
-        //             // 签到更新
-        //             $.ajax({
-        //                 type: "post",
-        //                 url: "{:Url('sign/sign')}",
-        //                 data: {
-        //                     venue_id: 98,
-        //                     openid:num
-        //                 },
-        //                 dataType: "Json",
-        //                 success: function (data) {
-        //                     if(data.code == 0){
-        //                         speckText(data.msg);
-        //                     }else{
-        //                         console.log(data)
-        //                         var data = data.data;
-        //                         var html = '';
-        //                         if(data.type == 1){
-        //                             html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
-        //                                 +'<div class="sucDetail"><div class="sucDetail03">'
-        //                                 +'<p><span>姓名</span><span>1</span></p>'
-        //                                 +'<p><span>性别</span><span>1</span></p>'
-        //                                 +'<p><span>就读学校</span><span>1</span></p>'
-        //                                 +'<p><span>剑种</span><span>1</span></p>'
-        //                                 +'<p><span>训练场馆</span><span>1</span></p>'
-        //                                 +'</div></div>'
-        //                         }else if(data.type == 2){
-        //                             html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
-        //                                 +'<div class="sucDetail"><div class="sucDetail03">'
-        //                                 +'<p><span>姓名</span><span>1</span></p>'
-        //                                 +'<p><span>性别</span><span>1</span></p>'
-        //                                 +'<p><span>岗位级别</span><span>1</span></p>'
-        //                                 +'<p><span>剑种</span><span>1</span></p>'
-        //                                 +'<p><span>训练场馆</span><span>1</span></p>'
-        //                                 +'</div></div>'
-        //                         }
-        //                         else if(data.type == 3){
-        //                             html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
-        //                                 +'<div class="sucDetail"><div class="sucDetail03">'
-        //                                 +'<p><span>姓名</span><span>'+data.name+'</span></p>'
-        //                                 +'<p><span>性别</span><span>'+data.sex+'</span></p>'
-        //                                 +'<p><span>岗位</span><span>'+data.comment+'</span></p>'
-        //                                 +'</div></div>'
-        //                         }
-        //                         $('#signNull').hide();
-        //                         $('#signSucc').show().html(html);
-        //                     }
-        //                 }
-        //             })
-        //         } else {
-        //             a = '';
-        //         }
-        //     }
-        // }
-    }
-    var time = setInterval(function(){
-        if(str !== ''){
-            clearInterval(time);
-            Time(str);
+    var count = 0;
+        document.onkeyup = function (event) {
+            var e = event.keyCode|| event.which;
+            var keyCode = String.fromCharCode(e);
+            // var e = event.keyCode || window.event;
+            // var keyCode = String.fromCharCode(e);
+            // if (a.length > 100) {
+            //     a = '';
+            //     return false;
+            // }
+            // if (end == true && a.length < 37) {
+            //     a += keyCode;
+            // }
+            // else {
+            //     if (a.length < 100 && end == true) {
+            //         a += keyCode;
+            //         // var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+            //         // var nubmer = a;
+            //         console.log(a)
+            //         if (a.length == '') {
+            //             end = false;
+            //             toastr.error('请重新扫描二维码');
+            //             speckText('请重新扫描二维码');
+            //             setTimeout(function () {
+            //                 a = '';
+            //                 end = true;
+            //             }, 1500);
+            //             return false;
+            //         }
+            //
+            //         var num = a;
+            //         if (last != num && end == true) {
+            //             last = num;
+            //             end = false;
+            //             // 签到更新
+            //             $.ajax({
+            //                 type: "post",
+            //                 url: "{:Url('sign/sign')}",
+            //                 data: {
+            //                     venue_id: 98,
+            //                     openid:num
+            //                 },
+            //                 dataType: "Json",
+            //                 success: function (data) {
+            //                     if(data.code == 0){
+            //                         speckText(data.msg);
+            //                     }else{
+            //                         console.log(data)
+            //                         var data = data.data;
+            //                         var html = '';
+            //                         if(data.type == 1){
+            //                             html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+            //                                 +'<div class="sucDetail"><div class="sucDetail03">'
+            //                                 +'<p><span>姓名</span><span>1</span></p>'
+            //                                 +'<p><span>性别</span><span>1</span></p>'
+            //                                 +'<p><span>就读学校</span><span>1</span></p>'
+            //                                 +'<p><span>剑种</span><span>1</span></p>'
+            //                                 +'<p><span>训练场馆</span><span>1</span></p>'
+            //                                 +'</div></div>'
+            //                         }else if(data.type == 2){
+            //                             html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+            //                                 +'<div class="sucDetail"><div class="sucDetail03">'
+            //                                 +'<p><span>姓名</span><span>1</span></p>'
+            //                                 +'<p><span>性别</span><span>1</span></p>'
+            //                                 +'<p><span>岗位级别</span><span>1</span></p>'
+            //                                 +'<p><span>剑种</span><span>1</span></p>'
+            //                                 +'<p><span>训练场馆</span><span>1</span></p>'
+            //                                 +'</div></div>'
+            //                         }
+            //                         else if(data.type == 3){
+            //                             html ='<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>'+data.tip+'</p></div>'
+            //                                 +'<div class="sucDetail"><div class="sucDetail03">'
+            //                                 +'<p><span>姓名</span><span>'+data.name+'</span></p>'
+            //                                 +'<p><span>性别</span><span>'+data.sex+'</span></p>'
+            //                                 +'<p><span>岗位</span><span>'+data.comment+'</span></p>'
+            //                                 +'</div></div>'
+            //                         }
+            //                         $('#signNull').hide();
+            //                         $('#signSucc').show().html(html);
+            //                     }
+            //                 }
+            //             })
+            //         } else {
+            //             a = '';
+            //         }
+            //     }
+            // }
+            if (a.length >= 41) {
+                a = '';
+                return false;
+            }
+            if (end == true && a.length < 39) {
+                a += keyCode;
+            } else {
+                // console.log(str = $('.number').val())
+                if (a.length < 40 && end == true) {
+                    str = $('.number').val()
+                    a += keyCode;
+                    var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+                    var nubmer = a;
+
+                    if (nubmer == '') {
+                        end = false;
+                        toastr.error('无效的二维码');
+                        speckText('无效的二维码');
+                        setTimeout(function () {
+                            a = '';
+                            end = true;
+                        }, 1500);
+                        return false;
+                    }
+
+                    Time(str)
+                }
+            }
         }
-    }, 1000);
+
+
+        // var time = setInterval(function(){
+        //     console.log(22222222222)
+        //     if(str !== ''){
+        //         Time(str);
+        //         clearInterval(time);
+        //     }
+        // }, 1000);
     function Time(str){
+        clean = false;
+        count = 0;
+        a = '';
+        var html = '';
+        $('#signSucc').html('');
         $.ajax({
             type: "post",
             url: "{:Url('sign/sign')}",
@@ -187,40 +211,40 @@
             success: function (data) {
                 if (data.code == 0) {
                     speckText(data.msg);
-                } else {
+                }
+                else {
                     console.log(data)
-                    var data = data.data;
-                    var html = '';
-                    if (data.type == 1) { //学员教练
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
+                    var _data = data.data;
+                    if (_data.type == 1) { //学员教练
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>'+data.name+'</span></p>'
-                            + '<p><span>性别</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>'+data.comment_name+'</span><span>'+data.comment+'</span></p>'
-                            + '<p><span>剑种</span><span>'+data.swords+'</span></p>'
-                            + '<p><span>训练场馆</span><span>'+data.venue+'</span></p>'
+                            + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
+                            + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
+                            + '<p><span>'+_data.comment_name+'</span><span>'+_data.comment+'</span></p>'
+                            + '<p><span>剑种</span><span>'+_data.swords+'</span></p>'
+                            + '<p><span>训练场馆</span><span>'+_data.venue+'</span></p>'
                             + '</div></div>'
-                    } else if (data.type == 2) { //工作人员
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
+                    } else if (_data.type == 2) { //工作人员
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>'+data.name+'</span></p>'
-                            + '<p><span>性别</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>岗位</span><span>'+data.comment+'</span></p>'
-                            + '</div></div>'
-                    }
-                    else if (data.type == 3) {//主管
-                        html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
-                            + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>' + data.name + '</span></p>'
-                            + '<p><span>性别</span><span>' + data.sex + '</span></p>'
-                            + '<p><span>岗位</span><span>' + data.comment + '</span></p>'
+                            + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
+                            + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
+                            + '<p><span>岗位</span><span>'+_data.comment+'</span></p>'
                             + '</div></div>'
                     }
-                    speckText(data.tip);
+                    else if (_data.type == 3) {//主管
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                            + '<div class="sucDetail"><div class="sucDetail03">'
+                            + '<p><span>姓名</span><span>' + _data.name + '</span></p>'
+                            + '<p><span>性别</span><span>' + _data.sex + '</span></p>'
+                            + '<p><span>岗位</span><span>' + _data.comment + '</span></p>'
+                            + '</div></div>'
+                    }
+                    speckText(_data.tip);
                     $('#signNull').hide();
                     $('#signSucc').show().html(html);
                     $('.number').focus().val('');
-                    qdshow();
+                    // qdshow();
                 }
             }
         })
