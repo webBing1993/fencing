@@ -98,10 +98,10 @@
     var id = "{$data.id}";
 
     $(function () {
-        var u = navigator.userAgent.toLowerCase();
-        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-        if (isiOS) {
-            $('.buy .popUp .popNum p:last-of-type span').css('marginTop','-2px');
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        if (!isAndroid) {
+            $('.buy .popUp .popNum p:last-of-type span:last-of-type,.buy .popUp .popNum p:last-of-type span:first-of-type').css('lineHeight','.5rem');
         }
     });
 
