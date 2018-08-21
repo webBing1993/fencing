@@ -141,6 +141,7 @@ class Sign extends Controller
         if (WechatUserTag::issetTag($userId, WechatTag::TAG_8)) {//在训学员
             $member_type = 2;
             $member_name = '同学';
+            $comment_name = '就读学校';
             $comment = $msg['school'];
             $is_coach = SignModel::where(['venue_id' => $venue_id, 'class_id' => $class['class_id'], 'date' => $date, 'type' => $type, 'member_type' => 1, 'mold' => 1])->find();
             if (!$is_coach) {
@@ -149,6 +150,7 @@ class Sign extends Controller
         } else {//教练
             $member_type = 1;
             $member_name = '教练';
+            $comment_name = '岗位级别';
             $comment = $msg['level'];
         }
 
@@ -190,6 +192,7 @@ class Sign extends Controller
                 'type' => $type,
                 'name' => $user_name,
                 'sex' => $gender == 2 ? '女' : '男',
+                'comment_name' => $comment_name,
                 'comment' => $comment,
                 'swords' => $msg['swords'],
                 'venue' => Venue::getName($venue_id),
@@ -234,6 +237,7 @@ class Sign extends Controller
                 'type' => $type,
                 'name' => $user_name,
                 'sex' => $gender == 2 ? '女' : '男',
+                'comment_name' => '岗位',
                 'comment' => '员工',
                 'tip' => '恭喜' . $tip . '成功！',
             ];
@@ -268,6 +272,7 @@ class Sign extends Controller
                 'type' => $type,
                 'name' => $user_name,
                 'sex' => $gender == 2 ? '女' : '男',
+                'comment_name' => '岗位',
                 'comment' => '区域主管',
                 'tip' => '恭喜' . $tip . '成功！',
             ];
