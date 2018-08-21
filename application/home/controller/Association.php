@@ -305,16 +305,50 @@ class Association  extends Base
     public function detailmore(){
         $len = input('len');
         $Id = input('id');
+        $userId = session('userId');
+        $venue_id = WechatUserTag::getVenueId($userId);
         $info = VenueCourse::where('venue_id',$Id)->where('status',0)->order('id desc')->limit($len,6)->select();
+        foreach($info as $val){
+            //精品课权限
+            $val['noChoose'] = false;
+            if($val['type'] == 2){
+                $rs = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'type' => 1, 'status' => 1, 'start_time' => ['<=', time()], 'end_time' => ['>=', time()]])->find();
+                if($rs){
+                    $val['noChoose'] = false;
+                }else{
+                    $val['noChoose'] = true;
+                }
+            }
+            //课程冲突
+            $query = CourseApply::where(['venue_id' => $venue_id, 'userid' => $userId, 'status' => 1])
+                ->where(function ($query)use($val) {
+                    $query->where('start_time', ['>=', $val['start_time']], ['<=', $val['end_time']])
+                        ->whereOr(function ($query)use($val) {
+                            $query->where('end_time', ['>=', $val['start_time']], ['<=', $val['end_time']]);
+                        })
+                        ->whereOr(function ($query)use($val) {
+                            $query->where(['start_time' => ['<=', $val['start_time']], 'end_time' => ['>=', $val['start_time']]]);
+                        })
+                        ->whereOr(function ($query)use($val) {
+                            $query->where(['start_time' => ['<=', $val['end_time']], 'end_time' => ['>=', $val['end_time']]]);
+                        });
+                });
+//		var_dump($query->fetchSql()->select());die;
+            $res = $query->find();
+            if($res){
+                $val['noClick'] = true;
+            }else{
+                $val['noClick'] = false;
+            }
 
-        foreach($info as $value){
-            $value['start_time'] = date("Y-m-d",$value['start_time']);
-            $value['end_time'] = date("Y-m-d",$value['end_time']);
-            $img = Picture::get($value['front_cover']);
-            $value['front_cover'] = $img['path'];
-            $value['content'] = str_replace('&nbsp;','',strip_tags($value['content']));
-            $value['content'] = str_replace(" ",'',$value['content']);
-            $value['content'] = str_replace("\n",'',$value['content']);
+            $val['desc'] = str_replace('&nbsp;','',strip_tags($val['content']));
+            $val['desc'] = str_replace(" ",'',$val['desc']);
+            $val['desc'] = str_replace("\n",'',$val['desc']);
+
+            $val['start_time'] = date("Y-m-d",$val['start_time']);
+            $val['end_time'] = date("Y-m-d",$val['end_time']);
+            $img = Picture::get($val['front_cover']);
+            $val['front_cover'] = $img['path'];
         }
         if($info){
             return $this->success("加载成功",'',$info);
