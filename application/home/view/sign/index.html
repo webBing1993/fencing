@@ -75,7 +75,9 @@
         var hh = $(this).parents('.content').height();
         $(this).height(hh).css('padding-top', hh - 18);
     });
-
+    $(document).on('click','body',function(){
+        $('.number').focus().val('');
+    })
     $('.number').focus();
     var clean;
     var str = '';
@@ -194,9 +196,9 @@
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+data.sex+'</span></p>'
-                            + '<p><span>就读学校</span><span>1</span></p>'
-                            + '<p><span>剑种</span><span>1</span></p>'
-                            + '<p><span>训练场馆</span><span>1</span></p>'
+                            + '<p><span>就读学校</span><span>'+data.sex+'</span></p>'
+                            + '<p><span>剑种</span><span>'+data.comment+'</span></p>'
+                            + '<p><span>训练场馆</span><span>'+data.comment+'</span></p>'
                             + '</div></div>'
                     } else if (data.type == 2) {
                         html = '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + data.tip + '</p></div>'
@@ -204,8 +206,8 @@
                             + '<p><span>姓名</span><span>'+data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+data.sex+'</span></p>'
                             + '<p><span>岗位级别</span><span>'+data.comment+'</span></p>'
-                            + '<p><span>剑种</span><span>1</span></p>'
-                            + '<p><span>训练场馆</span><span>1</span></p>'
+                            + '<p><span>剑种</span><span>'+data.comment+'</span></p>'
+                            + '<p><span>训练场馆</span><span>'+data.comment+'</span></p>'
                             + '</div></div>'
                     }
                     else if (data.type == 3) {
@@ -219,6 +221,7 @@
                     speckText(data.tip);
                     $('#signNull').hide();
                     $('#signSucc').show().html(html);
+                    $('.number').focus().val('');
                     qdshow();
                 }
             }
