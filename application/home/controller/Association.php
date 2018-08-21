@@ -812,7 +812,7 @@ class Association  extends Base
         if ($tag == 1) {//学员
             $venue_id = WechatUserTag::getVenueId($userId);
             if($venue_id){//是否带场馆标记
-                if ($venue_id != $data['venue_id']) {//击剑馆入口报公开场馆课程
+                if ($venue['type'] == 1 && $venue_id != $data['venue_id']) {//击剑馆入口报公开场馆课程
                     $param = 2;
                 } else {//我要报名入口报内部场馆课程
                     if ($registered) {
