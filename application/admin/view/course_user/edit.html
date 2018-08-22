@@ -85,10 +85,10 @@
                                 </label>
                                 {else/}
                                 <label class="i-checks">
-                                    <input type="radio" value="1" name="member_type" {eq name="msg.member_type" value="1"}checked{/eq}> 教练
+                                    <input type="radio" value="1" name="member_type" {eq name="msg.member_type" value="1"}checked{/eq} disabled> 教练
                                 </label>
                                 <label class="i-checks">
-                                    <input type="radio" value="2" name="member_type" {eq name="msg.member_type" value="2"}checked{/eq}> 学员
+                                    <input type="radio" value="2" name="member_type" {eq name="msg.member_type" value="2"}checked{/eq} disabled> 学员
                                 </label>
                                 {/eq}
                             </div>
@@ -99,15 +99,22 @@
                             </div>
                             <div class="col-lg-11" id="user_id">
                                 <select name="userid01" id="userid01"  class="form-control user01">
+                                    {notempty name="msg"}
+                                    <option value="{$msg.userid}" >{$msg.name}</option>
+                                    {else/}
                                     {volist name="$coachList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
-
+                                    {/notempty}
                                 </select>
                                 <select name="userid02" id="userid02"  class="form-control user02">
+                                    {notempty name="msg"}
+                                    <option value="{$msg.userid}" >{$msg.name}</option>
+                                    {else/}
                                     {volist name="$userList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
+                                    {/notempty}
                                 </select>
                             </div>
                         </div>
@@ -208,7 +215,7 @@
             radioClass: 'iradio_square-green'
         });
 
-        highlight_subnav("{:Url('competition/index')}");
+        highlight_subnav("{:Url('course/index')}");
         //上传图片
         var plus = $('.plus');
         var imgnum = 1;
