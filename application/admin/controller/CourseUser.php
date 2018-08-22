@@ -60,6 +60,12 @@ class CourseUser extends Admin {
             $data['num'] = $courseModel['num'];
             $data['start_time'] = $courseModel['start_time'];
             $data['end_time'] = $courseModel['end_time'];
+
+            $model = CourseUserModel::where(['course_id' => $data['course_id'], 'userid' => $data['userid'], 'status' => 0])->find();
+            if($model){
+                return $this->error('请不要重复添加！');
+            }
+
             $courseUserModel = new CourseUserModel();
             $info = $courseUserModel->validate('CourseUser')->save($data);
             if($info) {
@@ -69,7 +75,6 @@ class CourseUser extends Admin {
             }
         }else{
             $pid = input('pid');
-            $this->assign('msg','');
             $model = CourseModel::get($pid);
             $userList = WechatUserTag::where('tagid', WechatTag::TAG_8)->field('userid')->select();
             $coachList = WechatUserTag::where('tagid', ['=', WechatTag::TAG_5], ['=', WechatTag::TAG_6], 'or')->field('userid')->select();
@@ -79,6 +84,7 @@ class CourseUser extends Admin {
             foreach ($coachList as $key => $val) {
                 $coachList[$key]['name'] = WechatUser::where(['userid' => $val['userid']])->value('name');
             }
+            $this->assign('msg','');
             $this->assign('pid',$pid);
             $this->assign('model',$model);
             $this->assign('userList',$userList);
@@ -94,15 +100,6 @@ class CourseUser extends Admin {
     public function edit(){
         if(IS_POST) {
             $data = input('post.');
-            if($data['end_time'] < $data['start_time']){
-                return $this->error("结束时间必须大于开始时间");
-            }
-            if($data['start_time']){
-                $data['start_time'] = strtotime($data['start_time']);
-            }
-            if($data['end_time']){
-                $data['end_time'] = strtotime($data['end_time']);
-            }
             $courseUserModel = new CourseUserModel();
             $info = $courseUserModel->validate('CourseUser')->save($data,['id'=>input('id')]);
             if($info){
@@ -111,13 +108,13 @@ class CourseUser extends Admin {
                 return $this->get_update_error_msg($courseUserModel->getError());
             }
         }else{
-            $pid = input('pid');
             $id = input('id');
+            $pid = input('pid');
             $msg = CourseUserModel::get($id);
             $model = CourseModel::get($pid);
+            $this->assign('msg',$msg);
             $this->assign('pid',$pid);
             $this->assign('model',$model);
-            $this->assign('msg',$msg);
 
             return $this->fetch();
         }
@@ -151,7 +148,7 @@ class CourseUser extends Admin {
         $info = CourseUserModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
-            return $this->success('批量删除成功', url('index'));
+            return $this->success('批量删除成功');
         } else {
             return $this->error('批量删除失败');
         }

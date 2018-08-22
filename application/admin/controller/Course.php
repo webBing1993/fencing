@@ -166,7 +166,7 @@ class Course extends Admin {
         $info = CourseModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
-            return $this->success('批量删除成功', url('index'));
+            return $this->success('批量删除成功');
         } else {
             return $this->error('批量删除失败');
         }

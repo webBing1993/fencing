@@ -118,7 +118,7 @@ class Mall extends Admin {
         $info = MallOneModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
-            return $this->success('批量删除成功', url('index'));
+            return $this->success('批量删除成功');
         } else {
             return $this->error('批量删除失败');
         }
@@ -225,7 +225,7 @@ class Mall extends Admin {
         $info = MallTwoModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
-            return $this->success('批量删除成功', url('tp'));
+            return $this->success('批量删除成功');
         } else {
             return $this->error('批量删除失败');
         }
