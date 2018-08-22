@@ -55,15 +55,11 @@ class CourseUser extends Admin {
             if(empty($data['id'])){
                 unset($data['id']);
             }
-            if($data['end_time'] < $data['start_time']){
-                return $this->error("结束时间必须大于开始时间");
-            }
-            if($data['start_time']){
-                $data['start_time'] = strtotime($data['start_time']);
-            }
-            if($data['end_time']){
-                $data['end_time'] = strtotime($data['end_time']);
-            }
+            $courseModel = CourseModel::get($data['course_id']);
+            $data['name'] = WechatUser::where(['userid' => $data['userid']])->value('name');
+            $data['num'] = $courseModel['num'];
+            $data['start_time'] = $courseModel['start_time'];
+            $data['end_time'] = $courseModel['end_time'];
             $courseUserModel = new CourseUserModel();
             $info = $courseUserModel->validate('CourseUser')->save($data);
             if($info) {

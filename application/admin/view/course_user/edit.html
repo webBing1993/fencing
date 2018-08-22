@@ -98,10 +98,23 @@
                             </div>
                             <div class="col-lg-11">
                                 <select name="userid" id="userid"  class="form-control">
+                                    {volist name="$userList" id="vo"}
+                                    <option value="{$vo.userid}" >{$vo.name}</option>
+                                    {/volist}
+                                </select>
+                                <select name="userid" id="userid"  class="form-control">
                                     {volist name="$coachList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>已用课时数:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入已用课时数" class="form-control form_title" name="used_num" value="{$msg.used_num || default=''}">
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{$msg.id || default=''}">
@@ -198,9 +211,9 @@
             var data = {
                 id:$("input[name='id']").val(),
                 course_id:$("select[name='course_id']").val(),
-                group_name:$("input[name='group_name']").val(),
-                start_time:$("input[name='start_time']").val(),
-                end_time:$("input[name='end_time']").val(),
+                member_type:$("input[name='member_type']").val(),
+                userid:$("input[name='userid']").val(),
+                used_num:$("input[name='used_num']").val(),
                 status:0,
             };
             $.ajax({

@@ -18,7 +18,7 @@
                     <input class="i-checks check-all" type="checkbox">
                     <button class="btn btn-danger btn-sm m-l ajax-post" url="{:Url('moveToTrash')}" data-toggle="tooltip" data-placement="top" target-form="ids"><i class="fa fa-trash-o"></i> 批量删除</button>
                     <a href="{:Url('add',array('pid'=>$pid))}" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> 添加</a>
-                    <a href="{:Url('competition/index')}" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="返回"><i class="fa fa-reply"></i> 返回上一级</a>
+                    <a href="{:Url('course/index')}" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="返回"><i class="fa fa-reply"></i> 返回上一级</a>
                 </div>
             </div>
             <div class="mail-box">
@@ -73,7 +73,7 @@
 {block name="script"}
 <script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
 <script>
-    highlight_subnav("{:Url('competition/index')}");
+    highlight_subnav("{:Url('course/index')}");
     $(document).ready(function(){
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
