@@ -99,12 +99,12 @@
                                 <label>成员:</label>
                             </div>
                             <div class="col-lg-11" id="user_id">
-                                <select name="userid" id="userid"  class="form-control user01">
+                                <select name="userid01" id="userid01"  class="form-control user01">
                                     {volist name="$userList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
                                 </select>
-                                <select name="userid" id="userid"  class="form-control user02">
+                                <select name="userid02" id="userid02"  class="form-control user02">
                                     {volist name="$coachList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
@@ -116,7 +116,7 @@
                                 <label>已用课时数:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入已用课时数" class="form-control form_title" name="used_num" value="{$msg.used_num || default=''}">
+                                <input type="text" placeholder="请输入已用课时数" class="form-control form_title" name="used_num" value="{$msg.used_num || default='0'}">
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{$msg.id || default=''}">
@@ -210,11 +210,17 @@
         //发布
         $(".post-put").off('click').on("click",function(){
             var it=$(this);
+            if ($("input[name='member_type']").val() == 1) {
+                var userid = $("select[name='userid02']").val();
+            } else {
+                var userid = $("select[name='userid01']:selected").val();
+            }
+
             var data = {
                 id:$("input[name='id']").val(),
                 course_id:$("select[name='course_id']").val(),
                 member_type:$("input[name='member_type']").val(),
-                userid:$("input[name='userid']").val(),
+                userid:userid,
                 used_num:$("input[name='used_num']").val(),
                 status:0,
             };
