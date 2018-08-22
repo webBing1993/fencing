@@ -76,13 +76,13 @@
                             </div>
                             <div class="col-lg-11">
                                 <select name="type" id="type"  class="form-control">
-                                    {volist name="event_type" id="vo"}
-                                    {eq name="msg" value=""}
-                                    <option value="{$key}" >{$vo}</option>
+                                    {notempty name="msg"}
+                                    <option value="{$msg.type}" >{$event_type[$msg.type]}</option>
                                     {else/}
-                                    <option value="{$key}" {eq name="msg.type" value="$key"}selected{/eq}>{$vo}</option>
-                                    {/eq}
+                                    {volist name="event_type" id="vo"}
+                                    <option value="{$key}" >{$vo}</option>
                                     {/volist}
+                                    {/notempty}
                                 </select>
                             </div>
                         </div>
@@ -92,13 +92,13 @@
                             </div>
                             <div class="col-lg-11">
                                 <select name="kinds" id="kinds"  class="form-control">
-                                    {volist name="event_kinds" id="vo"}
-                                    {eq name="msg" value=""}
-                                    <option value="{$key}" >{$vo}</option>
+                                    {notempty name="msg"}
+                                    <option value="{$msg.kinds}" >{$event_kinds[$msg.kinds]}</option>
                                     {else/}
-                                    <option value="{$key}" {eq name="msg.kinds" value="$key"}selected{/eq}>{$vo}</option>
-                                    {/eq}
+                                    {volist name="event_kinds" id="vo"}
+                                    <option value="{$key}" >{$vo}</option>
                                     {/volist}
+                                    {/notempty}
                                 </select>
                             </div>
                         </div>

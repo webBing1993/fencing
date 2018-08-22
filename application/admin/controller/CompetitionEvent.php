@@ -83,10 +83,10 @@ class CompetitionEvent extends Admin {
     public function edit(){
         if(IS_POST) {
             $data = input('post.');
-            $model = CompetitionEventModel::where(['competition_id' => $data['competition_id'], 'type' => $data['type'], 'kinds' => $data['kinds']])->find();
-            if($model){
-                return $this->error('请不要重复添加！');
-            }
+//            $model = CompetitionEventModel::where(['competition_id' => $data['competition_id'], 'type' => $data['type'], 'kinds' => $data['kinds']])->find();
+//            if($model){
+//                return $this->error('请不要重复添加！');
+//            }
             $CompetitionEventModel = new CompetitionEventModel();
             $info = $CompetitionEventModel->validate('CompetitionEvent')->save($data,['id'=>input('id')]);
             if($info){
