@@ -38,6 +38,7 @@
     .plusimg{
         display: none;
     }
+    input[name="member_type"] {width:20px;height:20px;z-index: 9999;}
 </style>
 {/block}
 
@@ -74,14 +75,15 @@
                             <div class="col-lg-1 text-right control-label">
                                 <label>成员类型:</label>
                             </div>
-                            <div class="col-lg-11">
+                            <div class="col-lg-11" id="_click">
                                 {eq name="msg" value=""}
-                                <label class="i-checks">
+                                    <label class="i-checks">
                                     <input type="radio" checked="" value="2" name="member_type"> 学员
                                 </label>
-                                <label class="i-checks">
-                                    <input type="radio" value="1" name="member_type"> 教练
-                                </label>
+                                    <label class="i-checks">
+                                        <input type="radio" value="1" name="member_type"> 教练
+                                    </label>
+
                                 {else/}
                                 <label class="i-checks">
                                     <input type="radio" value="2" name="member_type" {eq name="msg.member_type" value="2"}checked{/eq}> 学员
@@ -96,13 +98,13 @@
                             <div class="col-lg-1 text-right control-label">
                                 <label>成员:</label>
                             </div>
-                            <div class="col-lg-11">
-                                <select name="userid" id="userid"  class="form-control">
+                            <div class="col-lg-11" id="user_id">
+                                <select name="userid" id="userid"  class="form-control user01">
                                     {volist name="$userList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
                                 </select>
-                                <select name="userid" id="userid"  class="form-control">
+                                <select name="userid" id="userid"  class="form-control user02">
                                     {volist name="$coachList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
@@ -257,6 +259,38 @@
             return false;
         });
     })
+    if($("input[name='member_type']").val() == 1){
+        $('.user02').show();
+        $('.user01').hide();
+    }else{
+        $('.user01').show();
+        $('.user02').hide();
+    }
+    $('#_click label').on('click',function(){
+        var type = $(this).find('input').val() ;
+        if(type == 1){
+            $('.user02').show();
+            $('.user01').hide();
+        }else{
+            $('.user01').show();
+            $('.user02').hide();
+        }
+    });
+    $('#_click input[name="member_type"]').on('click',function(){
+        $('#_click input[name="member_type"]').parent().removeClass('checked')
+        $(this).parent().addClass('checked')
+        if($(this).val() == 1){
+            $('.user02').show();
+            $('.user01').hide();
+        }else{
+            $('.user01').show();
+            $('.user02').hide();
+        }
+    })
 
+    // $(document).on('click','.iradio_square-green',function(){
+    //     console.log(2)
+    // })
+    // $("input[name='member_type']").val()
 </script>
 {/block}
