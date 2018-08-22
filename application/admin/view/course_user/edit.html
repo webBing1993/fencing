@@ -77,19 +77,18 @@
                             </div>
                             <div class="col-lg-11" id="_click">
                                 {eq name="msg" value=""}
-                                    <label class="i-checks">
-                                    <input type="radio" checked="" value="2" name="member_type"> 学员
+                                <label class="i-checks">
+                                    <input type="radio" checked="" value="1" name="member_type"> 教练
                                 </label>
                                     <label class="i-checks">
-                                        <input type="radio" value="1" name="member_type"> 教练
-                                    </label>
-
+                                    <input type="radio" value="2" name="member_type"> 学员
+                                </label>
                                 {else/}
                                 <label class="i-checks">
-                                    <input type="radio" value="2" name="member_type" {eq name="msg.member_type" value="2"}checked{/eq}> 学员
+                                    <input type="radio" value="1" name="member_type" {eq name="msg.member_type" value="1"}checked{/eq}> 教练
                                 </label>
                                 <label class="i-checks">
-                                    <input type="radio" value="1" name="member_type" {eq name="msg.member_type" value="1"}checked{/eq}> 教练
+                                    <input type="radio" value="2" name="member_type" {eq name="msg.member_type" value="2"}checked{/eq}> 学员
                                 </label>
                                 {/eq}
                             </div>
@@ -100,12 +99,13 @@
                             </div>
                             <div class="col-lg-11" id="user_id">
                                 <select name="userid01" id="userid01"  class="form-control user01">
-                                    {volist name="$userList" id="vo"}
+                                    {volist name="$coachList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
+
                                 </select>
                                 <select name="userid02" id="userid02"  class="form-control user02">
-                                    {volist name="$coachList" id="vo"}
+                                    {volist name="$userList" id="vo"}
                                     <option value="{$vo.userid}" >{$vo.name}</option>
                                     {/volist}
                                 </select>
@@ -142,6 +142,53 @@
 <script src="/admin/js/chosen.jquery.js"></script>
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
 <script>
+    var _val = '';
+    var num  = '';
+    if($("input[name='member_type']").val() == 1){
+        $('.user01').show();
+        $('.user02').hide();
+        num = 1;
+    }
+    else{
+        $('.user02').show();
+        $('.user01').hide();
+        num = 2;
+    }
+    _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
+    $('#_click label').on('click',function(){
+        var type = $(this).find('input').val() ;
+        if(type == 1){
+            $('.user01').show();
+            $('.user02').hide();
+            num = 1;
+        }else{
+            $('.user02').show();
+            $('.user01').hide();
+            num = 2;
+        }
+        _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
+    });
+    $('#_click input[name="member_type"]').on('click',function(){
+        $('#_click input[name="member_type"]').parent().removeClass('checked');
+        $(this).parent().addClass('checked')
+        if($(this).val() == 1){
+            num = 1;
+            $('.user01').show();
+            $('.user02').hide();
+        }else{
+            num = 2;
+            $('.user02').show();
+            $('.user01').hide();
+        }
+        _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
+    });
+
+    $("select#userid0"+num).change(function(){
+        // console.log($(this).val());
+        _val = $(this).val();
+        // console.log($(this))
+    });
+
     $(function(){
 
         //    时间日历
@@ -206,21 +253,15 @@
                 return;
             }
         });
-
         //发布
         $(".post-put").off('click').on("click",function(){
             var it=$(this);
-            if ($("input[name='member_type']").val() == 1) {
-                var userid = $("select[name='userid02']").val();
-            } else {
-                var userid = $("select[name='userid01']:selected").val();
-            }
 
             var data = {
                 id:$("input[name='id']").val(),
                 course_id:$("select[name='course_id']").val(),
                 member_type:$("input[name='member_type']").val(),
-                userid:userid,
+                userid:_val,
                 used_num:$("input[name='used_num']").val(),
                 status:0,
             };
@@ -265,38 +306,5 @@
             return false;
         });
     })
-    if($("input[name='member_type']").val() == 1){
-        $('.user02').show();
-        $('.user01').hide();
-    }else{
-        $('.user01').show();
-        $('.user02').hide();
-    }
-    $('#_click label').on('click',function(){
-        var type = $(this).find('input').val() ;
-        if(type == 1){
-            $('.user02').show();
-            $('.user01').hide();
-        }else{
-            $('.user01').show();
-            $('.user02').hide();
-        }
-    });
-    $('#_click input[name="member_type"]').on('click',function(){
-        $('#_click input[name="member_type"]').parent().removeClass('checked')
-        $(this).parent().addClass('checked')
-        if($(this).val() == 1){
-            $('.user02').show();
-            $('.user01').hide();
-        }else{
-            $('.user01').show();
-            $('.user02').hide();
-        }
-    })
-
-    // $(document).on('click','.iradio_square-green',function(){
-    //     console.log(2)
-    // })
-    // $("input[name='member_type']").val()
 </script>
 {/block}
