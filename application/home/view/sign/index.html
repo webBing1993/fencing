@@ -42,7 +42,7 @@
         <!--</div>-->
     <!--</div>-->
 </div>
-<input type="text" class="number" style="background: red;width:100%;padding: 0 .24rem;opacity: 0;">
+<input type="text" class="number" style="background: red;width:100%;padding: 0 .24rem;opacity: 1;">
 <div class="bg"></div>
 <ul class="roster"></ul>
 <!--<div class="sucDetail04">在屏幕下方的扫描器扫描二维码进行签到</div>-->
@@ -160,15 +160,15 @@
             //         }
             //     }
             // }
-            if (a.length >= 16) {
+            if (a.length >= 25) {
                 a = '';
                 return false;
             }
-            if (end == true && a.length < 14) {
+            if (end == true && a.length < 23) {
                 a += keyCode;
             } else {
                 // console.log(str = $('.number').val())
-                if (a.length < 15 && end == true) {
+                if (a.length < 24 && end == true) {
                     str = $('.number').val()
                     a += keyCode;
                     var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
@@ -184,7 +184,7 @@
                         }, 1500);
                         return false;
                     }
-
+                    // console.log(str)
                     Time(str)
                 }
             }
