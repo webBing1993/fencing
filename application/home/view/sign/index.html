@@ -42,8 +42,7 @@
         <!--</div>-->
     <!--</div>-->
 </div>
-<input type="text" class="number" maxlength="28" onclick="cttx=document.getElementById('ln');cttx.disabled = true;cttx.value='结算';
-	 document.getElementById('blab_send_button').click();cttx.disabled = false;" style="background: red;width:100%;padding: 0 .24rem;opacity: 0;">
+<input type="text" class="number" maxlength="28" style="background: red;width:100%;padding: 0 .24rem;opacity: 0;">
 <div class="bg"></div>
 <ul class="roster"></ul>
 <!--<div class="sucDetail04">在屏幕下方的扫描器扫描二维码进行签到</div>-->
@@ -56,6 +55,10 @@
 //         var keyCode = event.keyCode;   //keyCode就是获取到的键码
 // alert(keyCode)
 //     });
+$("input").focus(function(){
+    document.activeElement.blur();
+});
+
     var a = '';
     var wh = $(window).height();
     $('body').height(wh);
