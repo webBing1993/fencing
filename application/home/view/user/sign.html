@@ -53,6 +53,19 @@
         position: absolute;
         width:100%;
     }
+    #imgLogo {
+        position: absolute;
+        top:50%;
+        left:50%;
+        width:1.2rem;
+        height:1.2rem;
+        z-index: 9999999;
+        margin-left: -.6rem;
+        margin-top: -.6rem;
+    }
+    .code {
+        position: relative;
+    }
 </style>
 {/block}
 {block name="body"}
@@ -62,8 +75,8 @@
         <div data-side="2">记录<span></span></div>
     </div>
 <!--正文切换-->
-    <div class="news" id="side1">
-        <img id="imgLogo" src="/home/images/qdicon.png" hidden>
+    <div class="news" id="side1" style="position: relative;">
+        <img id="imgLogo" src="/home/images/qdicon.png" >
         <div class="code" id="container2">
             <canvas></canvas>
         </div>
@@ -211,6 +224,8 @@
     })
 </script>
 <script>
+    // alert($("#imgLogo")[0])
+    $("#imgLogo")[0]
     var userid = "{$user}";
     $(document).ready(function () {
         if(userid == ''){

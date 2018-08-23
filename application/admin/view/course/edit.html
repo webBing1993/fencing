@@ -187,6 +187,26 @@
 <script src="/admin/js/chosen.jquery.js"></script>
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
 <script>
+    $('#venue_id').change(function(){
+        var id = $(this).val();
+        $.ajax({
+            type:"post",
+            url:"{:Url('Course/getCourse')}",
+            data:{id:id},
+            success:function(data){
+                var _data  = data.data;
+                var str = '';
+                if(_data.length == 0){
+                    $('#pid').html('<option value="0">--请选择课程--</option>')
+                }else{
+                    for(var i=0;i<_data.length;i++){
+                        str +='<option value="'+_data[i].id+'">'+_data[i].course_name+'</option>'
+                    }
+                    $('#pid').html(str)
+                }
+            }
+        });
+    })
     $(function(){
 
         //    时间日历
