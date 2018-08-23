@@ -38,7 +38,6 @@
     .plusimg{
         display: none;
     }
-    input[name="member_type"] {width:20px;height:20px;z-index: 9999;}
 </style>
 {/block}
 
@@ -56,74 +55,61 @@
                         <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
                     </div>
                     <h2>
-                        课程成员 - {empty name="msg"}添加{else/}修改{/empty}
+                        签到课时管理 - {empty name="msg"}添加{else/}修改{/empty}
                     </h2>
                 </div>
                 <div class="ibox-content all">
                     <form id="form" class="form-horizontal" method="post">
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>课程名称:</label>
+                                <label>场馆:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <select name="venue_id" id="venue_id"  class="form-control">
+                                    <option value="{$venue.id}" >{$venue.title}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>课程:</label>
                             </div>
                             <div class="col-lg-11">
                                 <select name="course_id" id="course_id"  class="form-control">
-                                    <option value="{$model.id}" >{$model.course_name}</option>
+                                    <option value="{$course.id}" >{$course.course_name}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-lg-1 text-right control-label">
-                                <label>成员类型:</label>
-                            </div>
-                            <div class="col-lg-11" id="_click">
-                                {eq name="msg" value=""}
-                                <label class="i-checks">
-                                    <input type="radio" checked="" value="1" name="member_type"> 教练
-                                </label>
-                                    <label class="i-checks">
-                                    <input type="radio" value="2" name="member_type"> 学员
-                                </label>
-                                {else/}
-                                <label class="i-checks">
-                                    <input type="radio" value="1" name="member_type" {eq name="msg.member_type" value="1"}checked{/eq} disabled> 教练
-                                </label>
-                                <label class="i-checks">
-                                    <input type="radio" value="2" name="member_type" {eq name="msg.member_type" value="2"}checked{/eq} disabled> 学员
-                                </label>
-                                {/eq}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>成员:</label>
-                            </div>
-                            <div class="col-lg-11" id="user_id">
-                                <select name="userid01" id="userid01"  class="form-control user01">
-                                    {notempty name="msg"}
-                                    <option value="{$msg.userid}" >{$msg.name}</option>
-                                    {else/}
-                                    {volist name="$coachList" id="vo"}
-                                    <option value="{$vo.userid}" >{$vo.name}</option>
-                                    {/volist}
-                                    {/notempty}
-                                </select>
-                                <select name="userid02" id="userid02"  class="form-control user02">
-                                    {notempty name="msg"}
-                                    <option value="{$msg.userid}" >{$msg.name}</option>
-                                    {else/}
-                                    {volist name="$userList" id="vo"}
-                                    <option value="{$vo.userid}" >{$vo.name}</option>
-                                    {/volist}
-                                    {/notempty}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-1 text-right control-label">
-                                <label>已用课时数:</label>
+                                <label>课时名称:</label>
                             </div>
                             <div class="col-lg-11">
-                                <input type="text" placeholder="请输入已用课时数" class="form-control form_title" name="used_num" value="{$msg.used_num || default='0'}">
+                                <input type="text" placeholder="请输入课时名称" class="form-control form_title" name="class_name" value="{$msg.class_name || default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>课时开始时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" readonly="readonly" placeholder="请选择课时开始时间" class="form-control form_title datetimepicker" name="start_time" value="{notempty name='msg'}{$msg['start_time']|time_format='Y-m-d H:i'}{else/}{$start}{/notempty}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>课时结束时间:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" readonly="readonly" placeholder="请选择课时结束时间" class="form-control form_title datetimepicker" name="end_time" value="{notempty name='msg'}{$msg['end_time']|time_format='Y-m-d H:i'}{else/}{$end}{/notempty}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-1 text-right control-label">
+                                <label>课时数:</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="text" placeholder="请输入课时数" class="form-control form_title" name="num" value="{$msg.num || default='3'}">
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{$msg.id || default=''}">
@@ -149,77 +135,15 @@
 <script src="/admin/js/chosen.jquery.js"></script>
 <script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
 <script>
-    var _val = '';
-    var num  = '';
-    if($("input[name='member_type']").val() == 1){
-        $('.user01').show();
-        $('.user02').hide();
-        num = 1;
-    }
-    else{
-        $('.user02').show();
-        $('.user01').hide();
-        num = 2;
-    }
-    _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
-    $('#_click label').on('click',function(){
-        var type = $(this).find('input').val() ;
-        if(type == 1){
-            $('.user01').show();
-            $('.user02').hide();
-            num = 1;
-        }else{
-            $('.user02').show();
-            $('.user01').hide();
-            num = 2;
-        }
-        if(num == 1){
-            $("select#userid0"+num).change(function(){
-                _val = $(this).val();
-            });
-        }else{
-            $("select#userid0"+num).change(function(){
-                _val = $(this).val();
-            });
-        }
-        _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
-    });
-    $('#_click input[name="member_type"]').on('click',function(){
-        $('#_click input[name="member_type"]').parent().removeClass('checked');
-        $(this).parent().addClass('checked')
-        if($(this).val() == 1){
-            num = 1;
-            $('.user01').show();
-            $('.user02').hide();
-        }else{
-            num = 2;
-            $('.user02').show();
-            $('.user01').hide();
-        }
-        if(num == 1){
-            $("select#userid0"+num).change(function(){
-                _val = $(this).val();
-            });
-        }else{
-            $("select#userid0"+num).change(function(){
-                _val = $(this).val();
-            });
-        }
-        _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
-    });
-
-    $("select#userid0"+num).change(function(){
-        _val = $(this).val();
-    });
     $(function(){
 
         //    时间日历
         $( ".datetimepicker" ).datetimepicker( {
-            format: 'yyyy-mm-dd',
+            format: 'yyyy-mm-dd hh:ii',
             weekStart: 1,
             autoclose: true,
             startView: 2,
-            minView: 2,
+            minView: 0,
             forceParse: false,
             language: 'cn'
         });
@@ -230,7 +154,7 @@
             radioClass: 'iradio_square-green'
         });
 
-        highlight_subnav("{:Url('course/index')}");
+        highlight_subnav("{:Url('course_sign/index')}");
         //上传图片
         var plus = $('.plus');
         var imgnum = 1;
@@ -275,20 +199,21 @@
                 return;
             }
         });
+
+
         //发布
         $(".post-put").off('click').on("click",function(){
             var it=$(this);
-
             var data = {
                 id:$("input[name='id']").val(),
+                venue_id:$("select[name='venue_id']").val(),
                 course_id:$("select[name='course_id']").val(),
-                member_type:num,
-                userid:_val,
-                used_num:$("input[name='used_num']").val(),
+                class_name:$("input[name='class_name']").val(),
+                start_time:$("input[name='start_time']").val(),
+                end_time:$("input[name='end_time']").val(),
+                num:$("input[name='num']").val(),
                 status:0,
             };
-//             console.log(data)
-//             return;
             $.ajax({
                 type:"post",
                 url:$("#form").attr("action"),
@@ -329,6 +254,35 @@
             });
             return false;
         });
-    })
+    });
+
+    // 价格非负数
+    function onlyNonNegative(obj) {
+        var inputChar = event.keyCode;
+
+        // 1.判断是否有多于一个小数点
+        if(inputChar == 110 ) {  // 输入的是否为.
+
+            var index1 = obj.value.indexOf(".") + 1; // 取第一次出现.的后一个位置
+            var index2 = obj.value.indexOf(".",index1);
+            while(index2 != -1) {
+                obj.value = obj.value.substring(0,index2);
+                index2 = obj.value.indexOf(".",index1);
+            }
+
+        }
+
+        // 2.如果输入的不是.或者不是数字，替换 g:全局替换
+        obj.value = obj.value.replace(/[^(\d|.)]/g,"");
+    }
+
+    function tofixedTwo(obj) {
+        // 判断是否为小数点后两位
+        var val = obj.value;
+        if (String(val).indexOf(".") + 1 > 0) {
+            obj.value = Math.floor(val * 100) / 100;
+        }
+    }
+
 </script>
 {/block}

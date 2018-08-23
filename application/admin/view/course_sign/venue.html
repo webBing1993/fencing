@@ -1,0 +1,70 @@
+{extend name="base/common"}
+
+{block name="style"}
+
+{/block}
+
+{block name="page-header"}
+
+{/block}
+
+{block name="main"}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="mail-box-header">
+                <div class="pull-right tooltip-demo">
+                    <a href="javascript:window.history.go(-1);" class="btn btn-white btn-sm"><i class="fa fa-reply"></i> 返回</a>
+                </div>
+                <h2>课程签到</h2>
+            </div>
+            <div class="mail-box">
+                <table class="table table-hover table-mail">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>场馆</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td class="check-mail">
+                        </td>
+                        <td>{$vo.title}</td>
+                        <td>
+                            <a href="{:Url('course?type='.$type.'&date='.$date.'&venue='.$vo.id)}" class="confirm btn-sm btn-info"> 排班</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            <div class="page"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    highlight_subnav("{:Url('course_sign/index')}");
+    $(document).ready(function(){
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $(".check-all").on("ifChanged",function(){
+            $("tbody").find(".ids").iCheck("toggle");
+        });
+    });
+</script>
+{/block}

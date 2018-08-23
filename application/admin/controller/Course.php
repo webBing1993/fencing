@@ -121,6 +121,8 @@ class Course extends Admin {
             $courseModel = new CourseModel();
             $info = $courseModel->validate('Course')->save($data,['id'=>input('id')]);
             if($info){
+                //自动修改课程下的学员
+                CourseUser::where('course_id',input('id'))->update(['num' => $data['num'], 'start_time' => $data['start_time'], 'end_time' => $data['end_time']]);
                 return $this->success("修改成功",Url("Course/index"));
             }else{
                 return $this->get_update_error_msg($courseModel->getError());
@@ -146,6 +148,7 @@ class Course extends Admin {
         $data['status'] = '-1';
         $info = CourseModel::where('id',$id)->update($data);
         if($info) {
+            CourseUser::where('course_id',$id)->update($data);
             return $this->success("删除成功");
         }else{
             return $this->error("删除失败");
@@ -166,6 +169,7 @@ class Course extends Admin {
         $info = CourseModel::where('id', 'in', $ids)->update($data);
 
         if ($info) {
+            CourseUser::where('course_id', 'in', $ids)->update($data);
             return $this->success('批量删除成功');
         } else {
             return $this->error('批量删除失败');
