@@ -56,7 +56,7 @@ class Sign extends Controller
         if (strpos($openid, '//')) {
             return $this->error("请使用正确的二维码扫描");
         }
-        if (strlen($openid) != 28) {
+        if (strlen($openid) != 15) {
             return $this->error("请重试");
         }
         $msg = WechatUser::where(['openid' => $openid])->find();
@@ -297,10 +297,20 @@ class Sign extends Controller
      */
     public function signOut()
     {
-        $result = SignModel::where(['date' => date('Y-m-d'), 'mold' => 1])->select();
+        $result = ClassHour::where(["FROM_UNIXTIME(end_time, '%Y-%m-%d')" => date('Y-m-d'), 'status' => 0])->select();
+        $time = strtotime(date('Y-m-d H:i'));
         if ($result) {
             foreach ($result as $val) {
+                $end_time = $val['end_time'] + 900;
+                if ($end_time == $time) {
+                    $result = SignModel::where(['date' => date('Y-m-d'), 'mold' => 1])->select();
+                }
 
+
+                $rs = SignModel::where(['class_id' => $val['class_id'], 'openid' => $val['openid'], 'mold' => 2, 'type' => 1])->find();
+                if (!$rs) {
+
+                }
             }
         }
     }
