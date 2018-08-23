@@ -215,6 +215,7 @@
             success: function (data) {
                 if (data.code == 0) {
                     speckText(data.msg);
+                    $('.number').focus().val('');
                 }
                 else {
                     console.log(data)
