@@ -173,6 +173,19 @@
             $('.user01').hide();
             num = 2;
         }
+        if(num == 1){
+            $("select#userid0"+num).change(function(){
+                // console.log(num);
+                _val = $(this).val();
+                // console.log($(this))
+            });
+        }else{
+            $("select#userid0"+num).change(function(){
+                // console.log(num);
+                _val = $(this).val();
+                // console.log($(this))
+            });
+        }
         _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
     });
     $('#_click input[name="member_type"]').on('click',function(){
@@ -187,15 +200,27 @@
             $('.user02').show();
             $('.user01').hide();
         }
+        if(num == 1){
+            $("select#userid0"+num).change(function(){
+                // console.log(num);
+                _val = $(this).val();
+                // console.log($(this))
+            });
+        }else{
+            $("select#userid0"+num).change(function(){
+                // console.log(num);
+                _val = $(this).val();
+                // console.log($(this))
+            });
+        }
         _val = $("select#userid0"+num+" option:first").prop("selected",0).val();
     });
 
     $("select#userid0"+num).change(function(){
-        // console.log($(this).val());
+        // console.log(num);
         _val = $(this).val();
         // console.log($(this))
     });
-
     $(function(){
 
         //    时间日历
@@ -267,11 +292,13 @@
             var data = {
                 id:$("input[name='id']").val(),
                 course_id:$("select[name='course_id']").val(),
-                member_type:$("input[name='member_type']").val(),
+                member_type:num,
                 userid:_val,
                 used_num:$("input[name='used_num']").val(),
                 status:0,
             };
+            // console.log(data)
+            // return;
             $.ajax({
                 type:"post",
                 url:$("#form").attr("action"),
