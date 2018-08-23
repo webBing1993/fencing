@@ -261,7 +261,7 @@
     function speckText(str) {
 //	var url = "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=7&text=" + encodeURI(str);        // baidu
         var url = "http://tsn.baidu.com/text2audio?tex=" + encodeURI(str) + "&lan=zh&ctp=1&cuid={$token}&tok={$token}&per=0&spd=7&pit=5&vol=5";        // baidu
-        console.log(url)
+        alert(url)
         var n = new Audio(url);
         n.src = url;
         n.play();
