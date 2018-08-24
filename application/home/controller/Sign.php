@@ -11,6 +11,7 @@ use app\admin\model\WechatTag;
 use app\home\model\ClassHour;
 use app\home\model\ClassRecord;
 use app\home\model\CourseUser;
+use app\home\model\SignStatistics;
 use app\home\model\Venue;
 use app\home\model\WechatDepartmentUser;
 use app\home\model\WechatUser;
@@ -21,7 +22,7 @@ use think\Controller;
 
 class Sign extends Controller
 {
-    public function index()
+    public function sindex()
     {
         $venue_id = input('venue_id');
 //        $venue_id = 98;
@@ -302,14 +303,16 @@ class Sign extends Controller
         if ($result) {
             foreach ($result as $val) {
                 $end_time = $val['end_time'] + 900;
-                if ($end_time == $time) {
-                    $result = SignModel::where(['date' => date('Y-m-d'), 'mold' => 1])->select();
-                }
-
-
-                $rs = SignModel::where(['class_id' => $val['class_id'], 'openid' => $val['openid'], 'mold' => 2, 'type' => 1])->find();
-                if (!$rs) {
-
+                if ($end_time <= $time) {
+                    $rs = SignModel::where(['class_id' => $val['id'], 'mold' => 1, 'type' => 1])->select();
+                    if ($rs) {
+                        foreach ($rs as $v) {
+                            $res = SignModel::where(['class_id' => $val['id'], 'openid' => $v['openid'], 'mold' => 2, 'type' => 1])->find();
+                            if (!$res) {
+                                SignModel::addSign(1, 'class_record', $v['pid'], $v['userid'], $v['name'], $v['openid'], $v['venue_id'], $val['id'], $v['member_type'], 2, $v['date'], time());
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -318,6 +321,7 @@ class Sign extends Controller
     /**
      * 定时任务：每天下午6点执行一次
      * 前一天上课提醒
+     * 会员过期提醒
      */
     public function setRemind()
     {
@@ -327,13 +331,57 @@ class Sign extends Controller
     /**
      * 定时任务：每天凌晨2点执行一次
      * 统计学员教练的签到情况
-     * 会员过期提醒
      * 会员过期处理
      * 课程过期处理
      */
     public function setStatus()
     {
+        $date = date('Y-m-d', strtotime('-1 days'));
+//        $date = '2018-08-27';
+        //课程签到
+        $rs = ClassRecord::where(['date' => $date, 'status' => 0])->select();
+        if ($rs) {
+            $this->getStatus($rs, $date, 'class_record', 1);
+        }
 
+        //上下班签到
+        $rs2 = WorkRecord::where(['date' => $date, 'status' => 0])->select();
+        if ($rs2) {
+            $this->getStatus($rs2, $date, 'work_record', 2);
+        }
+
+
+    }
+
+    public function getStatus($rs, $date, $table, $type){
+        foreach ($rs as $val) {
+            $res = SignModel::where(['type' => $type, 'pid' => $val['id'], 'date' => $date])->select();
+            if (!$res) {//缺勤
+                $status = 4;
+            } else {
+                $in = SignModel::where(['type' => $type, 'pid' => $val['id'], 'date' => $date, 'mold' => 1])->find();
+                if (!$in) {
+                    $status = 4;
+                } else {
+                    if ($in['create_time'] > $val['start_time']) {//迟到
+                        $status = 2;
+                    } else {
+                        $out = SignModel::where(['type' => $type, 'pid' => $val['id'], 'date' => $date, 'mold' => 2])->find();
+                        if (!$out) {
+                            $status = 3;
+                        } else {
+                            if ($out['create_time'] < $val['end_time']) {//早退
+                                $status = 3;
+                            } else {
+                                $status = 1;
+                            }
+                        }
+                    }
+                }
+            }
+            //存入签到统计表
+            SignStatistics::add($type, $table, $val['id'], $val['userid'], $val['name'], $val['openid'], $val['venue_id'], $val['member_type'], $status, $date);
+        }
     }
 
 
