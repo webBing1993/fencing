@@ -336,6 +336,9 @@ class Sign extends Controller
      */
     public function setStatus()
     {
+        /**
+         *统计学员教练的签到情况
+         */
         $date = date('Y-m-d', strtotime('-1 days'));
 //        $date = '2018-08-27';
         //课程签到
@@ -351,12 +354,13 @@ class Sign extends Controller
         }
 
         //巡查签到
-        $rs3 = SignModel::where(['type' => 3, 'date' => $date])->select();
+        $rs3 = SignModel::where(['type' => 3, 'date' => $date, 'mold' => 1])->select();
         if ($rs3) {
-            //存入签到统计表
-            SignStatistics::add(3, '', 0, $val['userid'], $val['name'], $val['openid'], $val['venue_id'], $val['member_type'], $status, $date);
+            foreach ($rs3 as $val) {
+                //存入签到统计表
+                SignStatistics::add(3, '', 0, $val['userid'], $val['name'], $val['openid'], $val['venue_id'], 0, 1, $date);
+            }
         }
-
 
     }
 
@@ -386,8 +390,13 @@ class Sign extends Controller
                     }
                 }
             }
+            if ($type == 1) {
+                $member_type = $val['member_type'];
+            } else {
+                $member_type = 0;
+            }
             //存入签到统计表
-            SignStatistics::add($type, $table, $val['id'], $val['userid'], $val['name'], $val['openid'], $val['venue_id'], $val['member_type'], $status, $date);
+            SignStatistics::add($type, $table, $val['id'], $val['userid'], $val['name'], $val['openid'], $val['venue_id'], $member_type, $status, $date);
         }
     }
 
