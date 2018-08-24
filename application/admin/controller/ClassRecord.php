@@ -77,6 +77,10 @@ class ClassRecord extends Admin {
             $data['start_time'] = $classHourModel['start_time'];
             $data['end_time'] = $classHourModel['end_time'];
 
+            if(!$data['openid']){
+                return $this->error('该成员还未关注企业号！');
+            }
+
             $model = ClassRecordModel::where(['class_id' => $data['class_id'], 'userid' => $data['userid'], 'status' => 0])->find();
             if($model){
                 return $this->error('请不要重复添加！');

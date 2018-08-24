@@ -97,15 +97,18 @@ class ClassHour extends Admin {
                     $param['openid'] = WechatUser::where(['userid' => $val['userid']])->value('openid');
                     $param['member_type'] = 2;
                     $param['name'] = $val['name'];
-                    $param['date'] = $date;
+                    $param['date'] = date('Y-m-d', $data['start_time']);
                     $param['start_time'] = $data['start_time'];
                     $param['end_time'] = $data['end_time'];
-                    $res = ClassRecord::where($param)->find();
-                    if ($res) {
-                        ClassRecord::where(['id'=>$res['id']])->update(['status'=>0]);
-                    } else {
-                        ClassRecord::create($param);
+                    if ($param['openid']) {
+                        $res = ClassRecord::where($param)->find();
+                        if ($res) {
+                            ClassRecord::where(['id'=>$res['id']])->update(['status'=>0]);
+                        } else {
+                            ClassRecord::create($param);
+                        }
                     }
+
                 }
                 return $this->success("添加成功",Url('ClassHour/index', array('type' => $type, 'date' => $date, 'venue' => $venue_id, 'course' => $course_id)));
             }else{
