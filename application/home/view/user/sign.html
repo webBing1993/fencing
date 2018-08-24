@@ -33,7 +33,7 @@
     .timeBottom div:nth-child(1):before {background: #E5F0FF;}
     .timeBottom div:nth-child(2):before {background: #FFE2B9;}
     .timeBottom div:nth-child(3):before {background: #FFC0C7;}
-    .timeDate {width:94%;position: relative;}
+    .timeDate {width:94%;position: fixed;top:1.5rem;}
     .timeDate div {float:left;position: relative;text-align: center;}
     .timeDate div:nth-child(1) {float:left;}
     .timeDate div:nth-child(3) {float:right;}
@@ -81,11 +81,11 @@
             <canvas></canvas>
         </div>
     </div>
-    <div class="news" id="side2">
+    <div class="news" id="side2" style="padding: 1rem .24rem 0 .24rem;">
         <div class="timeDate">
-            <div>查看上月</div>
-            <div>2018年7月</div>
-            <div>查看下月</div>
+            <div id="last" style="position: relative;z-index: 9999;">查看上月</div>
+            <div id="times" class="">{$date_name}</div>
+            <div id="next" style="position: relative;z-index: 9999;">查看下月</div>
         </div>
         <table  cellspacing="1" cellpadding="1" >
             <thead id="thead">
@@ -127,16 +127,79 @@
             localStorage.setItem('qd',side);
         }
     }
-    $(function(){
-        var sliarrn=[15,16,17,20,31];//正常在训
-        var sliarrn1=[1,10,11];//迟到
-        var sliarrn2=[8,9,18];//早退
+
+
+    var newDate = {$time};
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1);
+        var D = date.getDate() + ' ';
+        var h = date.getHours() + ':';
+        var m = date.getMinutes() + ':';
+        var s = date.getSeconds();
+        return Y+M;
+    }
+    // console.log(timestampToTime(newDate));//
+    // console.log(new Date(newDate * 1000))
+    var normal = {$normal};//正常
+    var late = {$late};//迟到早退
+    var absence = {$absence};//缺勤
+    var getDate = new Date(newDate * 1000);//当前月的时间
+    $('#times').addClass(timestampToTime(newDate));
+    qdTime(normal,late,absence,getDate);
+
+    $('#last').on('click',function(){
+        $.ajax({
+            url: '{:Url("User/getSign")}',
+            type: 'post',
+            data: {
+                time: 1,
+                date: $('#times').attr('class')
+            },
+            success: function (data) {
+                var _data = data.data;
+                $('#times').removeClass().addClass(timestampToTime(_data.time)).text(_data.name);
+                normal = _data.data.normal;
+                late = _data.data.late;
+                absence = _data.data.absence;
+                getDate = new Date(_data.time * 1000);
+                qdTime(normal,late,absence,getDate);
+            }
+        })
+    });
+    $('#next').on('click',function(){
+        $.ajax({
+            url: '{:Url("User/getSign")}',
+            type: 'post',
+            data: {
+                time: 2,
+                date: $('#times').attr('class')
+            },
+            success: function (data) {
+                var _data = data.data;
+                $('#times').removeClass().addClass(timestampToTime(_data.time)).text(_data.name);
+                normal = _data.data.normal;
+                late = _data.data.late;
+                absence = _data.data.absence;
+                getDate = new Date(_data.time * 1000);
+                qdTime(normal,late,absence,getDate);
+            }
+        })
+    })
+
+
+    function qdTime(normal,late,absence,getDate){
+        var sliarrn=normal;//正常在训
+        var sliarrn1=late;//迟到
+        var sliarrn2=absence;//早退
         var $thead=$('#thead'),
             $tbody=$('#tbody'),
             $button=$('#button'),
             $button2=$('#button2'),
             wk=true,
-            slidate=new Date(),
+            // slidate=new Date(),
+            slidate=getDate,
             _nullnei='',
             de=slidate.getDate()+1;
         var monthFirst = new Date(slidate.getFullYear(), parseInt(slidate.getMonth()), 1).getDay();//获取当月的1日等于星期几
@@ -155,73 +218,56 @@
 
         //遍历网格内容
         var $slitd=$tbody.find("td");
-        for(var i=0; i<conter; i++)
+        for(var z=0; z<conter; z++)
         {
-            $slitd.eq(i+monthFirst).html("<p>"+parseInt(i+1)+"</p>")
+            $slitd.eq(z+monthFirst).html("<p>"+parseInt(z+1)+"</p>")
         }
-        // Funback();//给当前日加样式
-        // Funmore();//本月未签到样式
         Funmonth();//查询已签到
         Funmonth1();//查询已签到
         Funmonth2();//查询已签到
-        $button.on("click",function(){
-            if(wk==true)
-            {
-                sliarrn.push(de-1);//把当日传入已签
-                Funmonth();	//再次查询签到
-                alert('已签到');
-            }
-        })
-        $button2.on("click",function(){
-            alert('你本月已签到'+  sliarrn.length  +'次')
-        })
-        function Funback(){
-            $slitd.eq(parseInt(de)).addClass('color')
-        }
-        function Funmore(){
-            for(var i=0; i<de; i++) {
-                if($slitd.eq(i).find('p').length>0){
-                    $slitd.eq(i).addClass('weiqian')
-                }
-            }
-        }
         function Funmonth(){
-            $slitd.each(function(){
-                if($(this).find('p').length>0){
-                    var _this = $(this).find('p').text();
-                    for(var j=0; j<sliarrn.length;j++) {
-                        if(_this == sliarrn[j]) {
-                            $(this).find('p').addClass('los')
+            if(sliarrn.length !==0){
+                $slitd.each(function(){
+                    if($(this).find('p').length>0){
+                        var _this = $(this).find('p').text();
+                        for(var k=0; k<sliarrn.length;k++) {
+                            if(_this == sliarrn[k]) {
+                                $(this).find('p').addClass('los')
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
         }
         function Funmonth1(){
-            $slitd.each(function(){
-                if($(this).find('p').length>0){
-                    var _this = $(this).find('p').text();
-                    for(var j=0; j<sliarrn1.length;j++) {
-                        if(_this == sliarrn1[j]) {
-                            $(this).find('p').addClass('los1')
+            if(sliarrn1.length !==0){
+                $slitd.each(function(){
+                    if($(this).find('p').length>0){
+                        var _this = $(this).find('p').text();
+                        for(var k=0; k<sliarrn1.length;k++) {
+                            if(_this == sliarrn1[k]) {
+                                $(this).find('p').addClass('los1')
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
         }
         function Funmonth2(){
-            $slitd.each(function(){
-                if($(this).find('p').length>0){
-                    var _this = $(this).find('p').text();
-                    for(var j=0; j<sliarrn2.length;j++) {
-                        if(_this == sliarrn2[j]) {
-                            $(this).find('p').addClass('los2')
+            if(sliarrn2.length !==0){
+                $slitd.each(function(){
+                    if($(this).find('p').length>0){
+                        var _this = $(this).find('p').text();
+                        for(var k=0; k<sliarrn2.length;k++) {
+                            if(_this == sliarrn2[k]) {
+                                $(this).find('p').addClass('los2')
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
         }
-    })
+    }
 </script>
 <script>
     // alert($("#imgLogo")[0])
