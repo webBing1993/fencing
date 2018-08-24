@@ -127,8 +127,10 @@
                 }
                 else {
                     var _data = data.data;
+                    // console.log(_data.data ==3);
+                    // console.log(_data.data ===3);
+                    // console.log(_data.data ==3 && _data.data ===3);
                     if (_data.type == 1) { //学员教练
-                        console.log(1)
                         html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
