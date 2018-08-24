@@ -157,17 +157,17 @@
                     console.log($('.signNull').hide());
                     $('#signSucc').show().html(html);
                     $('.number').focus().val('');
-                    qdshow();
+                    setTimeout(function () {
+                        qdshow();
+                    }, 5000);
                 }
             }
         })
     }
     function qdshow(){
-        setTimeout(function () {
-            $('#signSucc').hide();
-            $('#signNull').show();
-            $('.number').focus().val('');
-        }, 5000);
+        $('#signSucc').hide();
+        $('#signNull').show();
+        $('.number').focus().val('');
     }
 
     // 播放声音
