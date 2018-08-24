@@ -141,20 +141,19 @@ class User extends Base
         $date_name = date('Y年m月');
         if (WechatUserTag::issetTag($userId, WechatTag::TAG_7)) {
             //工作人员上下班签到
-            $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 2])->select();
+            $result = SignStatistics::where(["FROM_UNIXTIME(UNIX_TIMESTAMP(`date`), '%Y-%m')" => $date, 'openid' => $user, 'type' => 2])->select();
             $res = $this->statistics($result, 2, $user);
         } else {
             if (WechatUserTag::issetTag($userId, WechatTag::TAG_3)) {
                 //区域主管巡查签到
-                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 3])->select();
+                $result = SignStatistics::where(["FROM_UNIXTIME(UNIX_TIMESTAMP(`date`), '%Y-%m')" => $date, 'openid' => $user, 'type' => 3])->select();
                 $res = $this->statistics($result, 3, $user);
             } else {
                 //学员教练上课签到
-                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 1])->select();
+                $result = SignStatistics::where(["FROM_UNIXTIME(UNIX_TIMESTAMP(`date`), '%Y-%m')" => $date, 'openid' => $user, 'type' => 1])->select();
                 $res = $this->statistics($result, 1, $user);
             }
         }
-
         $this->assign('user',$user);
         $this->assign('date_name',$date_name);
         $this->assign('res',$res);
@@ -180,16 +179,16 @@ class User extends Base
         $date_name = date('Y年m月', strtotime($date));
         if (WechatUserTag::issetTag($userId, WechatTag::TAG_7)) {
             //工作人员上下班签到
-            $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 2])->select();
+            $result = SignStatistics::where(["FROM_UNIXTIME(UNIX_TIMESTAMP(`date`), '%Y-%m')" => $date, 'openid' => $user, 'type' => 2])->select();
             $res = $this->statistics($result, 2, $user);
         } else {
             if (WechatUserTag::issetTag($userId, WechatTag::TAG_3)) {
                 //区域主管巡查签到
-                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 3])->select();
+                $result = SignStatistics::where(["FROM_UNIXTIME(UNIX_TIMESTAMP(`date`), '%Y-%m')" => $date, 'openid' => $user, 'type' => 3])->select();
                 $res = $this->statistics($result, 3, $user);
             } else {
                 //学员教练上课签到
-                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 1])->select();
+                $result = SignStatistics::where(["FROM_UNIXTIME(UNIX_TIMESTAMP(`date`), '%Y-%m')" => $date, 'openid' => $user, 'type' => 1])->select();
                 $res = $this->statistics($result, 1, $user);
             }
         }
