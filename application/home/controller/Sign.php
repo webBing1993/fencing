@@ -42,7 +42,6 @@ class Sign extends Controller
 //        $venue_id = 98;
 //        $openid = 'oKYU71ILqw-IVM1CrzkSZ4BOcSfM';
 
-//        var_dump(strlen($openid));die;
         $date = date('Y-m-d');
 //        $date = "2018-08-01";
         $current_time = time();
@@ -65,8 +64,6 @@ class Sign extends Controller
             return $this->error("您还未录入系统，请联系管理员");
         }
         $userId = $msg['userid'];
-//        $user_name = $msg['name'];
-//        $gender = $msg['gender'];
 
         if (WechatUserTag::issetTag($userId, WechatTag::TAG_7)) {
             //工作人员上下班签到
@@ -127,13 +124,40 @@ class Sign extends Controller
 
         $sign_in = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'class_id' => $class['class_id'], 'type' => $type, 'mold' => 1])->find();
 
+        $used_num = 0;
         if ($res) {
             return $this->error($user_name . "已签退");
         } else if ($sign_in) {//签退
             $mold = 2;
             $tip = '签退';
             $real_time = strtotime(date('Y-m-d H:i:s', strtotime('-15 minute', $current_time)));
-            if ($real_time < $class['start_time']) {
+
+            // 签退时结算课时
+            $classHourModel = ClassHour::get($class['class_id']);
+            $num = $classHourModel['num'];
+            $time = ($class['end_time'] - $class['start_time'])/$num;
+
+            $j = 0;
+            $k = 0;
+            for ($i = 0; $i < $num; $i++) {
+                $in_start = $class['start_time'] - 900 + ($time * $i);
+                $in_end = $in_start + $time;
+                $out_start = $class['start_time'] + 900 + ($time * $i);
+                $out_end = $out_start + $time;
+                if ($sign_in['create_time'] >= $in_start && $sign_in['create_time'] <= $in_end) {
+                    $j = $i+1;
+                }
+                if ($current_time >= $out_start && $current_time <= $out_end) {
+                    $k = $i+1;
+                }
+            }
+            if ($k - $j >= 0) {
+                $used_num = $k - $j + 1;
+            } else {
+                $used_num = 0;
+            }
+
+            if ($real_time < $class['start_time'] || $used_num == 0) {
                 return $this->error($user_name . "已签到");
             }
         } else {//签到
@@ -168,31 +192,7 @@ class Sign extends Controller
         $model = SignModel::addSign($type, 'class_record', $class['id'], $userId, $user_name, $openid, $venue_id, $class['class_id'], $member_type, $mold, $date, $current_time);
         if ($model) {
             // 签退时结算课时
-            if ($sign_in) {
-                $signModel = SignModel::where(['openid' => $openid, 'venue_id' => $venue_id, 'date' => $date, 'type' => $type, 'mold' => 1])->order('create_time desc')->find();
-                $classHourModel = ClassHour::get($class['class_id']);
-                $num = $classHourModel['num'];
-                $time = ($class['end_time'] - $class['start_time'])/$num;
-
-                $j = 0;
-                $k = 0;
-                for ($i = 0; $i < $num; $i++) {
-                    $in_start = $class['start_time'] - 900 + ($time * $i);
-                    $in_end = $in_start + $time;
-                    $out_start = $class['start_time'] + 900 + ($time * $i);
-                    $out_end = $out_start + $time;
-                    if ($signModel['create_time'] >= $in_start && $signModel['create_time'] <= $in_end) {
-                        $j = $i+1;
-                    }
-                    if ($current_time >= $out_start && $current_time <= $out_end) {
-                        $k = $i+1;
-                    }
-                }
-                if ($k - $j >= 0) {
-                    $used_num = $k - $j + 1;
-                } else {
-                    $used_num = 0;
-                }
+            if ($mold == 2) {
                 //更新学员课程表的已用课时数
                 CourseUser::where(['userid' => $userId, 'course_id' => $class['course_id']])->update(['used_num' => ['exp','`used_num`+'.$used_num], 'update_time' => $current_time]);
             }
@@ -348,6 +348,13 @@ class Sign extends Controller
         $rs2 = WorkRecord::where(['date' => $date, 'status' => 0])->select();
         if ($rs2) {
             $this->getStatus($rs2, $date, 'work_record', 2);
+        }
+
+        //巡查签到
+        $rs3 = SignModel::where(['type' => 3, 'date' => $date])->select();
+        if ($rs3) {
+            //存入签到统计表
+            SignStatistics::add(3, '', 0, $val['userid'], $val['name'], $val['openid'], $val['venue_id'], $val['member_type'], $status, $date);
         }
 
 
