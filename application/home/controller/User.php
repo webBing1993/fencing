@@ -9,12 +9,14 @@
 namespace app\home\controller;
 
 
+use app\admin\model\WechatTag;
 use app\home\model\Apply;
 use app\home\model\Competition;
 use app\home\model\CompetitionApply;
 use app\home\model\Course;
 use app\home\model\CourseApply;
 use app\home\model\Picture;
+use app\home\model\SignStatistics;
 use app\home\model\Venue;
 use app\home\model\VenueCourse;
 use app\home\model\Vipapply;
@@ -130,13 +132,98 @@ class User extends Base
         }
     }
 
-    //签到二维码
+    //签到二维码 签到统计
     public function sign(){
         $userId = session('userId');
         $user = WechatUser::where('userid',$userId)->value('openid');
+        //签到记录
+        $date = date('Y-m');
+        $date_name = date('Y年m月');
+        if (WechatUserTag::issetTag($userId, WechatTag::TAG_7)) {
+            //工作人员上下班签到
+            $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 2])->select();
+            $res = $this->statistics($result, 2, $user);
+        } else {
+            if (WechatUserTag::issetTag($userId, WechatTag::TAG_3)) {
+                //区域主管巡查签到
+                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 3])->select();
+                $res = $this->statistics($result, 3, $user);
+            } else {
+                //学员教练上课签到
+                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 1])->select();
+                $res = $this->statistics($result, 1, $user);
+            }
+        }
+
         $this->assign('user',$user);
+        $this->assign('date_name',$date_name);
+        $this->assign('res',$res);
 
         return $this->fetch();
+    }
+
+    //签到统计
+    public function getSign(){
+        $userId = session('userId');
+        $user = WechatUser::where('userid',$userId)->value('openid');
+        //签到记录
+        $time = input('time');//1:前一月 2：后一月
+        $o_date = input('date');//2018年8月
+        if ($time == 1) {
+            $date = date('Y-m', strtotime('-1 month', strtotime($o_date)));
+        } else {
+            $date = date('Y-m', strtotime('+1 month', strtotime($o_date)));
+        }
+        $date_name = date('Y年m月', strtotime($date));
+        if (WechatUserTag::issetTag($userId, WechatTag::TAG_7)) {
+            //工作人员上下班签到
+            $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 2])->select();
+            $res = $this->statistics($result, 2, $user);
+        } else {
+            if (WechatUserTag::issetTag($userId, WechatTag::TAG_3)) {
+                //区域主管巡查签到
+                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 3])->select();
+                $res = $this->statistics($result, 3, $user);
+            } else {
+                //学员教练上课签到
+                $result = SignStatistics::where(["FROM_UNIXTIME(date, '%Y-%m')" => $date, 'openid' => $user, 'type' => 1])->select();
+                $res = $this->statistics($result, 1, $user);
+            }
+        }
+
+        return $this->success("成功",'',['name' => $date_name, 'data' => $res]);
+    }
+
+    //签到统计
+    public function statistics($result, $type, $openid)
+    {
+        $res = array('normal' => [], 'late' => [], 'absence' => []);
+        if ($result) {
+            foreach ($result as $val) {
+                if ($type == 1) {
+                    $rs = SignStatistics::where(['openid' => $openid, 'type' => $type, 'date' => $val['date']])->select();
+                    $temp = [];
+                    foreach ($rs as $v) {
+                        $temp[]=$v['status'];
+                    }
+                    $status = max($temp);
+                } else {
+                    $status = $val['status'];
+                }
+                if ($status == 1) {//正常
+                    $res['normal'][] = intval(date('j', strtotime($val['date'])));
+                }
+                if ($status == 2 || $status == 3) {//迟到+早退
+                    $res['late'][] = intval(date('j', strtotime($val['date'])));
+                }
+                if ($status == 4) {//缺勤
+                    $res['absence'][] = intval(date('j', strtotime($val['date'])));
+                }
+            }
+
+        }
+
+        return $res;
     }
 
     //会员申请页

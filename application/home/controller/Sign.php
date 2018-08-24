@@ -395,8 +395,11 @@ class Sign extends Controller
             } else {
                 $member_type = 0;
             }
-            //存入签到统计表
-            SignStatistics::add($type, $table, $val['id'], $val['userid'], $val['name'], $val['openid'], $val['venue_id'], $member_type, $status, $date);
+            $result = SignStatistics::where(['pid' => $val['id'], 'venue_id' => $val['venue_id'], 'openid' => $val['openid'], 'type' => $type])->find();
+            if (!$result) {
+                //存入签到统计表
+                SignStatistics::add($type, $table, $val['id'], $val['userid'], $val['name'], $val['openid'], $val['venue_id'], $member_type, $status, $date);
+            }
         }
     }
 
