@@ -127,9 +127,10 @@
                 }
                 else {
                     var _data = data.data;
-                    // console.log(_data.data ==3);
-                    // console.log(_data.data ===3);
-                    // console.log(_data.data ==3 && _data.data ===3);
+                    console.log(_data);
+                    console.log(_data.type ==3);
+                    console.log(_data.type ===3);
+                    console.log(_data.type==3 && _data.type ===3);
                     if (_data.type == 1) { //学员教练
                         html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
@@ -140,7 +141,7 @@
                             + '<p><span>训练场馆</span><span>'+_data.venue+'</span></p>'
                             + '</div></div>'
                     }
-                    else if (_data.type == 2) { //工作人员
+                    else { //工作人员//主管
                         html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
@@ -148,14 +149,14 @@
                             + '<p><span>岗位</span><span>'+_data.comment+'</span></p>'
                             + '</div></div>'
                     }
-                    else if (_data.type == 3) {//主管
-                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
-                            + '<div class="sucDetail"><div class="sucDetail03">'
-                            + '<p><span>姓名</span><span>' + _data.name + '</span></p>'
-                            + '<p><span>性别</span><span>' + _data.sex + '</span></p>'
-                            + '<p><span>岗位</span><span>' + _data.comment + '</span></p>'
-                            + '</div></div>'
-                    }
+                    // else if (_data.type == 3) {
+                    //     html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
+                    //         + '<div class="sucDetail"><div class="sucDetail03">'
+                    //         + '<p><span>姓名</span><span>' + _data.name + '</span></p>'
+                    //         + '<p><span>性别</span><span>' + _data.sex + '</span></p>'
+                    //         + '<p><span>岗位</span><span>' + _data.comment + '</span></p>'
+                    //         + '</div></div>'
+                    // }
                     $('.signNull').css('display','none');
                     console.log($('.signNull').hide());
                     $('#signSucc').show().html(html);
