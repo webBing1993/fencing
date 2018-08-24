@@ -158,6 +158,9 @@ class User extends Base
         $this->assign('user',$user);
         $this->assign('date_name',$date_name);
         $this->assign('res',$res);
+        $this->assign('normal',json_encode($res['normal']));
+        $this->assign('late',json_encode($res['late']));
+        $this->assign('absence',json_encode($res['absence']));
 
         return $this->fetch();
     }
