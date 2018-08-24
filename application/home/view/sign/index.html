@@ -20,7 +20,7 @@
 </style>
 {/block}
 {block name="body"}
-<div id="signNull">
+<div id="signNull" class="signNull" style="display: block;">
     <div class="sucTop">
     <img src="/home/images/sign/sign01.png" alt="">
     <!--<p>恭喜您比赛报名成功！</p>-->
@@ -42,7 +42,7 @@
         <!--</div>-->
     <!--</div>-->
 </div>
-<input type="text" class="number" style="background: red;width:100%;padding: 0 .24rem;opacity: 1;">
+<input type="text" class="number" style="background: red;width:100%;padding: 0 .24rem;opacity: 0;">
 <div class="bg"></div>
 <ul class="roster"></ul>
 <!--<div class="sucDetail04">在屏幕下方的扫描器扫描二维码进行签到</div>-->
@@ -77,15 +77,15 @@
         document.onkeyup = function (event) {
             var e = event.keyCode|| event.which;
             var keyCode = String.fromCharCode(e);
-            if (a.length >= 13) {
+            if (a.length >= 14) {
                 a = '';
                 return false;
             }
-            if (end == true && a.length < 11) {
+            if (end == true && a.length < 12) {
                 a += keyCode;
             } else {
                 // console.log(str = $('.number').val())
-                if (a.length < 12 && end == true) {
+                if (a.length < 13 && end == true) {
                     str = $('.number').val()
                     a += keyCode;
                     var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
@@ -101,26 +101,15 @@
                         }, 1500);
                         return false;
                     }
-                    // console.log(str)
                     Time(str)
                 }
             }
         }
-
-
-        // var time = setInterval(function(){
-        //     console.log(22222222222)
-        //     if(str !== ''){
-        //         Time(str);
-        //         clearInterval(time);
-        //     }
-        // }, 1000);
     function Time(str){
         clean = false;
         count = 0;
         a = '';
         var html = '';
-        $('#signSucc').html('');
         $.ajax({
             type: "post",
             url: "{:Url('sign/sign')}",
@@ -138,7 +127,8 @@
                 else {
                     var _data = data.data;
                     if (_data.type == 1) { //学员教练
-                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                        console.log(1)
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
@@ -146,8 +136,9 @@
                             + '<p><span>剑种</span><span>'+_data.swords+'</span></p>'
                             + '<p><span>训练场馆</span><span>'+_data.venue+'</span></p>'
                             + '</div></div>'
-                    } else if (_data.type == 2) { //工作人员
-                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                    }
+                    else if (_data.type == 2) { //工作人员
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>'+_data.name+'</span></p>'
                             + '<p><span>性别</span><span>'+_data.sex+'</span></p>'
@@ -155,14 +146,15 @@
                             + '</div></div>'
                     }
                     else if (_data.type == 3) {//主管
-                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
+                        html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" style="height:3rem;" alt=""><p>' + _data.tip + '</p></div>'
                             + '<div class="sucDetail"><div class="sucDetail03">'
                             + '<p><span>姓名</span><span>' + _data.name + '</span></p>'
                             + '<p><span>性别</span><span>' + _data.sex + '</span></p>'
                             + '<p><span>岗位</span><span>' + _data.comment + '</span></p>'
                             + '</div></div>'
                     }
-                    $('#signNull').hide();
+                    $('.signNull').css('display','none');
+                    console.log($('.signNull').hide());
                     $('#signSucc').show().html(html);
                     $('.number').focus().val('');
                     qdshow();
@@ -175,7 +167,7 @@
             $('#signSucc').hide();
             $('#signNull').show();
             $('.number').focus().val('');
-        }, 3000);
+        }, 5000);
     }
 
     // 播放声音
