@@ -42,7 +42,7 @@
         <!--</div>-->
     <!--</div>-->
 </div>
-<input type="text" class="number" style="background: red;width:100%;padding: 0 .24rem;opacity: 0;">
+<input type="text" class="number" style="background: red;width:100%;padding: 0 .24rem;opacity: 1;">
 <div class="bg"></div>
 <ul class="roster"></ul>
 <!--<div class="sucDetail04">在屏幕下方的扫描器扫描二维码进行签到</div>-->
@@ -77,15 +77,16 @@
         document.onkeyup = function (event) {
             var e = event.keyCode|| event.which;
             var keyCode = String.fromCharCode(e);
-            if (a.length >= 14) {
+            console.log(keyCode)
+            if (a.length >= 10) {
                 a = '';
                 return false;
             }
-            if (end == true && a.length < 12) {
+            if (end == true && a.length < 8) {
                 a += keyCode;
             } else {
                 // console.log(str = $('.number').val())
-                if (a.length < 13 && end == true) {
+                if (a.length < 9 && end == true) {
                     str = $('.number').val()
                     a += keyCode;
                     var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
