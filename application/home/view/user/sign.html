@@ -33,7 +33,7 @@
     .timeBottom div:nth-child(1):before {background: #E5F0FF;}
     .timeBottom div:nth-child(2):before {background: #FFE2B9;}
     .timeBottom div:nth-child(3):before {background: #FFC0C7;}
-    .timeDate {width:94%;position: fixed;top:1.5rem;}
+    .timeDate {width:94%;position: absolute;top:1.5rem;}
     .timeDate div {float:left;position: relative;text-align: center;}
     .timeDate div:nth-child(1) {float:left;}
     .timeDate div:nth-child(3) {float:right;}
@@ -127,8 +127,8 @@
             localStorage.setItem('qd',side);
         }
     }
-
-
+    var T = '{$date_name}';
+    alert(T);
     var newDate = {$time};
     function timestampToTime(timestamp) {
         var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
