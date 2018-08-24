@@ -133,7 +133,7 @@ class User extends Base
     }
 
     //签到二维码 签到统计
-    public function sign(){
+    public function signtime(){
         $userId = session('userId');
         $user = WechatUser::where('userid',$userId)->value('openid');
         //签到记录
