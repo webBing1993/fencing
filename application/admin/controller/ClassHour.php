@@ -97,7 +97,8 @@ class ClassHour extends Admin {
                     $param['openid'] = WechatUser::where(['userid' => $val['userid']])->value('openid');
                     $param['member_type'] = 2;
                     $param['name'] = $val['name'];
-                    $param['date'] = date('Y-m-d', $data['start_time']);
+                    $param['date'] = date('Y-m-d', $data
+                    ['start_time']);
                     $param['start_time'] = $data['start_time'];
                     $param['end_time'] = $data['end_time'];
                     if ($param['openid']) {
@@ -166,7 +167,7 @@ class ClassHour extends Admin {
             $info = $classHourModel->validate('ClassHour')->save($data,['id'=>input('id')]);
             if($info){
                 //自动修改课时下的学员
-                ClassRecord::where('class_id',input('id'))->update(['num' => $data['num'], 'start_time' => $data['start_time'], 'end_time' => $data['end_time']]);
+                ClassRecord::where('class_id',input('id'))->update(['start_time' => $data['start_time'], 'end_time' => $data['end_time']]);
                 return $this->success("修改成功",Url('ClassHour/index', array('type' => $type, 'date' => $date, 'venue' => $venue_id, 'course' => $course_id)));
             }else{
                 return $this->get_update_error_msg($classHourModel->getError());
