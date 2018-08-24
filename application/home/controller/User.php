@@ -156,6 +156,7 @@ class User extends Base
         }
         $this->assign('user',$user);
         $this->assign('date_name',$date_name);
+        $this->assign('time',strtotime($date));
         $this->assign('res',$res);
         $this->assign('normal',json_encode($res['normal']));
         $this->assign('late',json_encode($res['late']));
@@ -170,7 +171,7 @@ class User extends Base
         $user = WechatUser::where('userid',$userId)->value('openid');
         //签到记录
         $time = input('time');//1:前一月 2：后一月
-        $o_date = input('date');//2018年8月
+        $o_date = input('date');//2018-08
         if ($time == 1) {
             $date = date('Y-m', strtotime('-1 month', strtotime($o_date)));
         } else {
@@ -193,7 +194,7 @@ class User extends Base
             }
         }
 
-        return $this->success("成功",'',['name' => $date_name, 'data' => $res]);
+        return $this->success("成功",'',['name' => $date_name, 'time' => strtotime($date), 'data' => $res]);
     }
 
     //签到统计
