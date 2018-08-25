@@ -51,6 +51,9 @@ class Venue extends Admin {
                 return $this->error("请添加场馆图片");
             }
 
+            if ($data['lng'] >=1000 || $data['lat'] >=1000) {
+                return $this->error("请填写正确的经纬度！");
+            }
             $data['create_user'] = $_SESSION['think']['user_auth']['id'];
             if(empty($data['id'])) {
                 unset($data['id']);
@@ -77,6 +80,9 @@ class Venue extends Admin {
     public function edit(){
         if(IS_POST) {
             $data = input('post.');
+            if ($data['lng'] >=1000 || $data['lat'] >=1000) {
+                return $this->error("请填写正确的经纬度！");
+            }
             isset($data["front_cover"]) ? $data["front_cover"] = json_encode($data["front_cover"]) : $data["front_cover"] = "";
             $newModel = new VenueModel();
             $info = $newModel->validate('Venue')->save($data,['id'=>input('id')]);

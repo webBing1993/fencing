@@ -54,6 +54,9 @@ class Competition extends Admin {
             if(empty($data['id'])){
                 unset($data['id']);
             }
+            if ($data['lng'] >=1000 || $data['lat'] >=1000) {
+                return $this->error("请填写正确的经纬度！");
+            }
             if($data['end_time']){
                 $data['end_time'] = strtotime($data['end_time']);
             }
@@ -84,6 +87,9 @@ class Competition extends Admin {
             $data = input('post.');
             if($data['end_time']){
                 $data['end_time'] = strtotime($data['end_time']);
+            }
+            if ($data['lng'] >=1000 || $data['lat'] >=1000) {
+                return $this->error("请填写正确的经纬度！");
             }
             $competitionModel = new CompetitionModel();
             $info = $competitionModel->validate('Competition')->save($data,['id'=>input('id')]);
