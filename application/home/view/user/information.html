@@ -162,13 +162,13 @@
     var ww = up.width();
     image.src = path ;
     up.css({"background-image":'url('+path+')'});
-    // image.onload = function(){
-    //     if(image.width > image.height){
-    //         up.css({"background-size":'auto '+ww +'px'});
-    //     }else{
-    //         up.css({"background-size":ww +'px'+' auto '});
-    //     }
-    // };
+     image.onload = function(){
+         if(image.width > image.height){
+             up.css({"background-size":'auto '+ww +'px'});
+         }else{
+             up.css({"background-size":ww +'px'+' auto '});
+         }
+     };
 
     var u = navigator.userAgent, app = navigator.appVersion;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
@@ -201,6 +201,7 @@
                         var image = new Image();
                         image.src = msg.data.path ;
                         up.css({"background-image":'url('+msg.data.path+')'});
+                        $('.up').attr('data-tab',msg.data.path);
                         image.onload = function(){
                             if(image.width > image.height){
                                 up.css({"background-size":'auto '+ww +'px'});
@@ -261,7 +262,7 @@
     }
     $('.headers').on('click',function(){
         if($('.up').attr('data-tab') == '/home/images/common/vistor.jpg'){
-            alert('请填写真实头像！')
+            alert('请上传真实头像！')
         }
     })
     var tag =  {$user['tag']}; //1:学员 2:教练 3:员工主管
@@ -361,7 +362,7 @@
     // 信息保存提交
     $('.goPay').on('click',function(){
         if(tag == 1){ //学员
-            var header      = $('.up').css('backgroundImage').slice(21,$('.up').css('backgroundImage').length-2);
+            var header      = $('.up').attr('data-tab');
             var name        = $('input[name=name]').val();
             var gender      = $('input[name=gender]').val()=='男'?1:2;
             var birthday    = $('input[name=birthday]').val();
@@ -397,7 +398,7 @@
             })
         }
         else if(tag == 2){
-            var header      = $('.up').css('backgroundImage').slice(21,$('.up').css('backgroundImage').length-2);
+            var header      = $('.up').attr('data-tab');
             var name        = $('input[name=name]').val();
             var gender      = $('input[name=gender]').val()=='男'?1:2;
             var swords      = $('input[name=swords]').val();
@@ -450,7 +451,7 @@
             })
         }
         else if(tag == 3){
-            var header      = $('.up').css('backgroundImage').slice(21,$('.up').css('backgroundImage').length-2);
+            var header      = $('.up').attr('data-tab');
             var name        = $('input[name=name]').val();
             var gender      = $('input[name=gender]').val()=='男'?1:2;
             var email      = $('input[name=email]').val();
@@ -475,8 +476,8 @@
                 familytype:familytype,address:address,school:school,education:education,position:position,worktime:worktime,
                 urgent:urgent,urgenttel:urgenttel
             }
-            // console.log(data)
-            // return;
+//             console.log(data)
+//             return;
             $.ajax({
                 type: "post",
                 url: "{:Url('User/hold')}",
