@@ -129,6 +129,7 @@ function selectFileImage(fileObj) {
                             var image = new Image();
                             image.src = msg.data.path ;
                             up.css({"background-image":'url('+msg.data.path+')'});
+                            up.attr('data-tab',msg.data.path);
                             // image.onload = function(){
                             //     if(image.width > image.height){
                             //         up.css({"background-size":'auto '+ww +'px'});
