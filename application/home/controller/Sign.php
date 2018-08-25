@@ -18,6 +18,8 @@ use app\home\model\WechatUser;
 use app\home\model\WechatUserTag;
 use app\home\model\WorkRecord;
 use app\home\model\Sign as SignModel;
+use com\wechat\TPQYWechat;
+use think\Config;
 use think\Controller;
 
 class Sign extends Controller
@@ -325,7 +327,19 @@ class Sign extends Controller
      */
     public function setRemind()
     {
+        $date = date('Y-m-d', strtotime('+1 days'));
+        $rs = ClassRecord::where(['date' => $date, 'status' => 0])->select();
+        foreach ($rs as $val) {
+            $start_time = date('H:i', $val['start_time']);
+            $end_time = date('H:i', $val['end_time']);
+            $venue_name = Venue::where(['id' => $val['venue_id']])->value('title');
+            if ($val['member_type'] != 2) {
+                $this->push("课时提醒", "您好，您明天".$start_time."-".$end_time."期间在".$venue_name."有一节课程", "请明日及时前往该场馆进行签到授课", $val['userid']);
+            } else {
+                $this->push("课时提醒", "您好，您明天".$start_time."-".$end_time."期间在".$venue_name."有一节课程", "请明日及时前往该场馆进行签到上课", $val['userid']);
+            }
 
+        }
     }
 
     /**
@@ -451,6 +465,32 @@ class Sign extends Controller
         $token = $response['access_token'];
 
         return $token;
+    }
+
+    /**
+     * 文本卡片推送公用方法
+     */
+    public function push($title, $pre, $end, $user){
+        $httpUrl = config('http_url');
+        $date = date("Y年n月j日");
+        //发送给企业号
+        $send = array(
+            "title" => $title,
+            "description" => $date."<br><br>".$pre."<br>".$end,
+            "url" => $httpUrl."/home/user/train",
+        );
+        $Wechat = new TPQYWechat(Config::get('user'));
+        $newsConf = config('user');
+
+        $message = array(
+            "msgtype" => 'textcard',
+            "agentid" => $newsConf['agentid'],
+            "textcard" => $send,
+            "safe" => "0"
+        );
+        $message['touser'] = $user;
+
+        return $Wechat->sendMessage($message);
     }
 
     public function signS(){
