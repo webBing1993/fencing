@@ -25,8 +25,8 @@ class Pay extends Base
     {
         $pid = input('pid');
         $type = input('type');
-//        $price = input('price');
-        $price = 0.01;
+        $price = input('price');
+//        $price = 0.01;
         if (empty($pid) || empty($type) || empty($price)) {
             $this->error('参数错误！');
         }
@@ -66,8 +66,8 @@ class Pay extends Base
     public function alipay() {
         $pid = input('pid');
         $type = input('type');
-//        $price = input('price');
-        $price = 0.01;
+        $price = input('price');
+//        $price = 0.01;
         if (empty($pid) || empty($type) || empty($price)) {
             $this->error('参数错误！');
         }

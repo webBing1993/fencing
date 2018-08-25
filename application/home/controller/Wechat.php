@@ -48,7 +48,7 @@ class Wechat extends Controller
             $res->status = 1;
             $res->save();
 
-            $res2 = PayRecord::where(['out_trade_no' => $data['out_trade_no']])->select();
+            $res2 = PayRecord::where(['out_trade_no' => $arr['out_trade_no']])->select();
             foreach ($res2 as $val) {
                 //更新原表支付状态
                 Db::name($val['table'])->update(['status' => 1, 'id' => $val['pid']]);
