@@ -93,7 +93,6 @@ class User extends Base
             $user['gender'] = '女';
         }
         $this->assign('user',$user);
-
         return $this->fetch();
     }
 
@@ -446,14 +445,14 @@ class User extends Base
             if(!empty($a['header'])){
                 $data['img'] = $a['header'];
             }else{
-                $data['img'] = $a['avatar'];
+                $data['img'] = '/home/images/common/vistor.jpg';
             }
         }
         //二级审核人姓名
         if(!empty($data['leavetwo'])){
             $b = WechatUser::where('userid',$data['leavetwo'])->find();
             $data['leavetwo'] = $b['name'];
-            $data['img2'] = ($b['header']) ? $b['header'] : $b['avatar'];
+            $data['img2'] = ($b['header']) ? $b['header'] : '/home/images/common/vistor.jpg';
         }
         //图片
         if(!empty($data['front_cover'])){
@@ -525,7 +524,7 @@ class User extends Base
         if(!empty($user['telephone'])){
             $name1 = WechatUser::where('userid',$user['telephone'])->find();
             $data['name1'] = $name1['name'];
-            $data['img1'] = ($name1['header']) ? $name1['header'] : $name1['avatar'];
+            $data['img1'] = ($name1['header']) ? $name1['header'] : '/home/images/common/vistor.jpg';
         }else{
             $data['name1'] = '';
             $data['img1'] = '';
@@ -533,7 +532,7 @@ class User extends Base
         if(!empty($user['telephone2'])){
             $name2 = WechatUser::where('userid',$user['telephone2'])->find();
             $data['name2'] = $name2['name'];
-            $data['img2'] = ($name2['header']) ? $name2['header'] : $name2['avatar'];
+            $data['img2'] = ($name2['header']) ? $name2['header'] : '/home/images/common/vistor.jpg';
         }else{
             $data['name2'] = '';
             $data['img2'] = '';

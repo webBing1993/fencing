@@ -48,14 +48,14 @@
 <div style="margin-top: .2rem;padding: 0 .24rem;" id="infoss">
     <div class="error"><img src="/home/images/game/icon10.png" class="gantan">请填写真实个人信息，且只可填写一次。请谨慎填写。</div>
 </div>
-{if condition="($user['tag'] == 1)"}
+{if condition="$user['tag'] == 1"}
 <!--学员状态-->
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">人员信息</p>
     <div class="userSort active headers">
         <span>照片</span>
         {if condition="empty($user['header'])"}
-        <div class="up" data-tab="{$user.avatar}" id="myImage"></div>
+        <div class="up" data-tab="/home/images/common/vistor.jpg" id="myImage"></div>
         {else /}
         <div class="up" data-tab="{$user.header}" id="myImage"></div>
         {/if}
@@ -79,7 +79,7 @@
     <div class="userSort active headers">
         <span>照片</span>
         {if condition="empty($user['header'])"}
-        <div class="up" data-tab="{$user.avatar}" id="myImage"></div>
+        <div class="up" data-tab="/home/images/common/vistor.jpg" id="myImage"></div>
         {else /}
         <div class="up" data-tab="{$user.header}" id="myImage"></div>
         {/if}
@@ -119,7 +119,7 @@
         <div class="userSort active headers">
             <span>照片</span>
             {if condition="empty($user['header'])"}
-            <div class="up" data-tab="{$user.avatar}" id="myImage"></div>
+            <div class="up" data-tab="/home/images/common/vistor.jpg" id="myImage"></div>
             {else /}
             <div class="up" data-tab="{$user.header}" id="myImage"></div>
             {/if}

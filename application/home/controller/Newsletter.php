@@ -121,7 +121,7 @@ class Newsletter  extends Base
                 if (!empty($img['header'])) {
                     $user[$k]['img'] = $img['header'];
                 } else {
-                    $user[$k]['img'] = $img['avatar'];
+                    $user[$k]['img'] = '/home/images/common/vistor.jpg';
                 }
                 $user[$k]['uid'] = $img['id'];
                 $char = $this->getFirstChar($user[$k]['name']);
