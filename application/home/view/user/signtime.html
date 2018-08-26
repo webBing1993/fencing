@@ -273,7 +273,8 @@
     var userid = "{$user}";
     $(document).ready(function () {
         if(userid == ''){
-            $('#container2').html('<div id="null"><img src="/home/images/null.png" alt=""><p>暂无二维码</p></div>')
+            $('#container2').html('<div id="null"><img src="/home/images/null.png" alt=""><p>暂无二维码</p></div>');
+            $('#imgLogo').hide();
         }else {
             $('#container2').erweima({
                 mode: 4,
