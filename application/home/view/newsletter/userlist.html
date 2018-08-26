@@ -69,13 +69,12 @@
 
 <script>
     var id = '{$bmid}';
-
     /*
     * 锚点事件
     * */
     $(".letters a").on('click', function () {
         $(this).addClass('active').parent('li').siblings('li').find('a').removeClass('active');
-        window.location.replace('/home/newsletter/userlist.html#' + $(this).text());
+        window.location.replace(location.href + '#' + $(this).text());
     });
 
     $(function () {
