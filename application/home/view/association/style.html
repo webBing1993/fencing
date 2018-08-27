@@ -194,14 +194,26 @@
                 console.log(data)
                     var html = '';
                 var data = data.data;
-                html ='<div class="close">×</div>'
-                    +'<div class="inImg"><img src="'+data.front_cover+'" class="lazy"></div>'
-                    +'<div class="inName">'+data.name+'</div>'
-                    +'<div class="userSort">'+data.class+'</div>'
-                    +'<div class="inText">'+data.content+'</div>'
-                    +'<ol><span>职业年限</span><span>'+data.year+'</span></ol>'
-                    +'<ol><span>岗位级别</span><span>'+data.level+'</span></ol>'
-                    +'<ol><span>所获奖项</span><span>'+data.prize+'</span></ol>';
+                if(data.type == 1){
+                    html ='<div class="close">×</div>'
+                        +'<div class="inImg"><img src="'+data.front_cover+'" class="lazy"></div>'
+                        +'<div class="inName">'+data.name+'</div>'
+                        +'<div class="userSort">'+data.class+'</div>'
+                        +'<div class="inText">'+data.content+'</div>'
+                        +'<ol><span>职业年限</span><span>'+data.year+'</span></ol>'
+                        +'<ol><span>岗位级别</span><span>'+data.level+'</span></ol>'
+                        +'<ol><span>所获奖项</span><span>'+data.prize+'</span></ol>';
+                }else{
+                    html ='<div class="close">×</div>'
+                        +'<div class="inImg"><img src="'+data.front_cover+'" class="lazy"></div>'
+                        +'<div class="inName">'+data.name+'</div>'
+                        +'<div class="inText"> </div>'
+                        +'<ol><span>性别</span><span>'+data.sex+'</span></ol>'
+                        +'<ol><span>就读学校</span><span>'+data.school+'</span></ol>'
+                        +'<ol><span>剑种</span><span>'+data.class+'</span></ol>'
+                        +'<ol><span>训练场场馆</span><span>'+data.site+'</span></ol>';
+                }
+
                 $('.information').html(html)
             }
         });
