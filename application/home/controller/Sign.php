@@ -21,6 +21,7 @@ use app\home\model\Sign as SignModel;
 use com\wechat\TPQYWechat;
 use think\Config;
 use think\Controller;
+use think\Log;
 
 class Sign extends Controller
 {
@@ -308,6 +309,7 @@ class Sign extends Controller
      */
     public function signOut()
     {
+        Log::write('---------------------------------定时任务：每一分钟执行一次【十五分钟自动签退】start---------------------------------');
         $result = ClassHour::where(["FROM_UNIXTIME(end_time, '%Y-%m-%d')" => date('Y-m-d'), 'status' => 0])->select();
         $time = strtotime(date('Y-m-d H:i'));
         if ($result) {
@@ -326,6 +328,7 @@ class Sign extends Controller
                 }
             }
         }
+        Log::write('---------------------------------定时任务：每一分钟执行一次【十五分钟自动签退】end---------------------------------');
     }
 
     /**
@@ -335,6 +338,7 @@ class Sign extends Controller
      */
     public function setRemind()
     {
+        Log::write('---------------------------------定时任务：每天下午6点执行一次【前一天上课提醒】start---------------------------------');
         $date = date('Y-m-d', strtotime('+1 days'));
         $rs = ClassRecord::where(['date' => $date, 'status' => 0])->select();
         foreach ($rs as $val) {
@@ -348,6 +352,7 @@ class Sign extends Controller
             }
 
         }
+        Log::write('---------------------------------定时任务：每天下午6点执行一次【前一天上课提醒】end---------------------------------');
     }
 
     /**
@@ -358,6 +363,7 @@ class Sign extends Controller
      */
     public function setStatus()
     {
+        Log::write('---------------------------------定时任务：每天凌晨2点执行一次【统计学员教练的签到情况】start---------------------------------');
         /**
          *统计学员教练的签到情况
          */
@@ -383,7 +389,7 @@ class Sign extends Controller
                 SignStatistics::add(3, '', 0, $val['userid'], $val['name'], $val['openid'], $val['venue_id'], 0, 1, $date);
             }
         }
-
+        Log::write('---------------------------------定时任务：每天凌晨2点执行一次【统计学员教练的签到情况】end---------------------------------');
     }
 
     public function getStatus($rs, $date, $table, $type){

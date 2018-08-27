@@ -28,7 +28,7 @@ class CourseSign extends Admin {
     public function index(){
         $num = 7;
         $arr = ['一','二','三','四','五','六','日'];
-        $next_monday = date('Y-m-d', strtotime('+1 monday', time()));
+        $next_monday = date('Y-m-d', strtotime('+1 sunday +1 days', time()));
 
         $list = [];
         for ($i = 0; $i < $num; $i++) {
