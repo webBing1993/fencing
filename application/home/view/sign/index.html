@@ -204,7 +204,7 @@
             type: "post",
             url: "{:Url('sign/sign')}",
             data: {
-                venue_id: 98,
+                venue_id: {$venue_id},
                 openid: str
             },
             dataType: "Json",

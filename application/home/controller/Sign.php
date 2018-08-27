@@ -23,8 +23,11 @@ class Sign extends Controller
 {
     public function index()
     {
-//        $venue_id = input('venue_id');
-        $venue_id = 98;
+        $venue_id = input('venue_id');
+//        $venue_id = 98;
+        if (!$venue_id) {
+            $this->error("参数错误！");
+        }
         $this->assign('venue_id', $venue_id);
         $this->assign('token', $this->getToken());
 
@@ -33,9 +36,9 @@ class Sign extends Controller
 
     public function sign()
     {
-//        $venue_id = input('venue_id');
+        $venue_id = input('venue_id');
         $openid = input('openid');
-        $venue_id = 98;
+//        $venue_id = 98;
 //        $openid = 'oKYU71ILqw-IVM1CrzkSZ4BOcSfM';
 
 //        var_dump(strlen($openid));die;
