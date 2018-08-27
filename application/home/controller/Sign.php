@@ -56,7 +56,7 @@ class Sign extends Controller
         if (strpos($openid, '//')) {
             return $this->error("请使用正确的二维码扫描");
         }
-        if (strlen($openid) != 15) {
+        if (strlen($openid) != 8) {
             return $this->error("请重试");
         }
         $msg = WechatUser::where(['openid' => $openid])->find();
