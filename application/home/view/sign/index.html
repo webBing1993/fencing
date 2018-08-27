@@ -213,12 +213,12 @@
             },
             dataType: "Json",
             success: function (data) {
+                console.log(data)
+                speckText(data.msg);
                 if (data.code == 0) {
-                    speckText(data.msg);
                     $('.number').focus().val('');
                 }
                 else {
-                    console.log(data)
                     var _data = data.data;
                     if (_data.type == 1) { //学员教练
                         html += '<div class="sucTop"><img src="/home/images/sign/sign02.png" alt=""><p>' + _data.tip + '</p></div>'
@@ -245,7 +245,6 @@
                             + '<p><span>岗位</span><span>' + _data.comment + '</span></p>'
                             + '</div></div>'
                     }
-                    speckText(data.msg);
                     $('#signNull').hide();
                     $('#signSucc').show().html(html);
                     $('.number').focus().val('');
