@@ -75,7 +75,9 @@ class Wechat extends Admin
                 $weObj = new TPWechat(config('weixinpay'));
                 $toOpenId = $weObj->convertToOpenId(['userid' => $user['userid']]);
                 if($toOpenId){
-                    $user['openid'] = strtolower(substr($toOpenId['openid'], 20));
+                    $toOpenId['openid'] = str_replace('-' ,'', $toOpenId['openid']);
+                    $toOpenId['openid'] = str_replace('_' ,'', $toOpenId['openid']);
+                    $user['openid'] = strtolower(substr($toOpenId['openid'], -8));
                 }
                 $user['department'] = json_encode($user['department']);
                 $user['order'] = json_encode($user['order']);

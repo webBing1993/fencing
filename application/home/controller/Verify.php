@@ -59,7 +59,9 @@ class Verify extends Controller{
                 $weObj = new TPWechat(config('weixinpay'));
                 $toOpenId = $weObj->convertToOpenId(['userid' => $result['UserId']]);
                 if($toOpenId){
-                    $user['openid'] = strtolower(substr($toOpenId['openid'], 20));
+                    $toOpenId['openid'] = str_replace('-' ,'', $toOpenId['openid']);
+                    $toOpenId['openid'] = str_replace('_' ,'', $toOpenId['openid']);
+                    $user['openid'] = strtolower(substr($toOpenId['openid'], -8));
                 }
             }
 
