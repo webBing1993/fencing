@@ -47,11 +47,14 @@ class Sign extends Controller
         $current_time = time();
 //        $current_time = '1533109500';
 
+        if (empty($venue_id)) {
+            return $this->error("找不到匹配的场馆");
+        }
         if (empty($openid)) {
             return $this->error("请重新扫描二维码");
         }
         if (strlen($openid) != 28) {
-            return $this->error("请使用正确的二维码扫描");
+            return $this->error("请重试");
         }
         $msg = WechatUser::where(['openid' => $openid])->find();
         if (empty($msg)) {
