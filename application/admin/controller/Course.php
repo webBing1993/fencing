@@ -111,7 +111,7 @@ class Course extends Admin {
         $id = input('id');
         $list = VenueCourse::where(['venue_id' => $id, 'status' => ['>=', 0]])->column('id,course_name');
 
-        return json_encode($list);
+        return $this->success("成功",'',$list);
     }
     /**
      * 修改
