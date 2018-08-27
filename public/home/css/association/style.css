@@ -23,7 +23,7 @@
 #side1 a img {width:2.2rem;height:3rem;float:left;border-radius: .1rem;}
 .user {margin-left: 2.2rem;padding: .1rem .2rem;height:3rem;}
 .userName {font-size: .34rem;color: #333;}
-.userSort {margin-top: .26rem;width:100%;height:.4rem;margin-bottom: .26rem;}
+.userSort {margin-top: .26rem;width:100%;height:.4rem;margin-bottom: .26rem;font-size: .24rem;}
 
 .userSort span {
     display: block;
