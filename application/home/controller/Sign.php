@@ -24,6 +24,14 @@ use think\Controller;
 
 class Sign extends Controller
 {
+    public function xindex()
+    {
+        $venue = Venue::where(['status' => ['<>', -1]])->select();
+        $this->assign('venue', $venue);
+
+        return $this->fetch();
+    }
+
     public function sindex()
     {
         $venue_id = input('venue_id');
