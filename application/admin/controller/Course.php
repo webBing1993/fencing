@@ -109,7 +109,7 @@ class Course extends Admin {
      */
     public function getCourse(){
         $id = input('id');
-        $list = VenueCourse::where(['venue_id' => $id, 'status' => ['>=', 0]])->column('id,course_name');
+        $list = VenueCourse::where(['venue_id' => $id, 'status' => ['>=', 0]])->field('id,course_name')->select();
 
         return $this->success("成功",'',$list);
     }
