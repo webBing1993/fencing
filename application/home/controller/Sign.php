@@ -53,6 +53,9 @@ class Sign extends Controller
         if (empty($openid)) {
             return $this->error("请重新扫描二维码");
         }
+        if (strpos($openid, '//')) {
+            return $this->error("请使用正确的二维码扫描");
+        }
         if (strlen($openid) != 28) {
             return $this->error("请重试");
         }
@@ -289,8 +292,34 @@ class Sign extends Controller
     }
 
     /**
+     * 定时任务：每一分钟执行一次
+     * 十五分钟自动签退
+     */
+    public function signOut()
+    {
+        $result = SignModel::where(['date' => date('Y-m-d'), 'mold' => 1])->select();
+        if ($result) {
+            foreach ($result as $val) {
+
+            }
+        }
+    }
+
+    /**
+     * 定时任务：每天下午6点执行一次
+     * 前一天上课提醒
+     */
+    public function setRemind()
+    {
+
+    }
+
+    /**
      * 定时任务：每天凌晨2点执行一次
      * 统计学员教练的签到情况
+     * 会员过期提醒
+     * 会员过期处理
+     * 课程过期处理
      */
     public function setStatus()
     {
