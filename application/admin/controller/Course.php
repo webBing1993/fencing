@@ -103,6 +103,16 @@ class Course extends Admin {
         }
     }
 
+
+    /**
+     * 根据场馆选择课程
+     */
+    public function getCourse(){
+        $id = input('id');
+        $list = VenueCourse::where(['venue_id' => $id, 'status' => ['>=', 0]])->column('id,course_name');
+
+        return json_encode($list);
+    }
     /**
      * 修改
      */

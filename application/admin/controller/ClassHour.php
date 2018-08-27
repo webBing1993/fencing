@@ -113,7 +113,7 @@ class ClassHour extends Admin {
             }
         }else{
             $venue = VenueModel::where(['id' => $venue_id])->field('id,title')->find();
-            $course = VenueCourse::where(['id' => $course_id])->field('id,course_name')->find();
+            $course = Course::where(['id' => $course_id])->field('id,course_name')->find();
             $arr = [
                 1 => [
                     'start' => '09:00',
@@ -172,7 +172,7 @@ class ClassHour extends Admin {
             $id = input('id');
             $msg = ClassHourModel::get($id);
             $venue = VenueModel::where(['id' => $venue_id])->field('id,title')->find();
-            $course = VenueCourse::where(['id' => $course_id])->field('id,course_name')->find();
+            $course = Course::where(['id' => $course_id])->field('id,course_name')->find();
             $arr = [
                 1 => [
                     'start' => '09:00',

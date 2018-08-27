@@ -69,6 +69,7 @@
                                     {notempty name="msg"}
                                     <option value="{$msg.venue_id}" >{$venue[$msg.venue_id]}</option>
                                     {else/}
+                                    <option value="" >--请选择场馆--</option>
                                     {volist name="venue" id="vo"}
                                     <option value="{$key}" >{$vo}</option>
                                     {/volist}
@@ -85,9 +86,10 @@
                                     {notempty name="msg"}
                                     <option value="{$msg.pid}" >{$list[$msg.pid]}</option>
                                     {else/}
-                                    {volist name="list" id="vo"}
+                                    <option value="" >--请选择课程--</option>
+                                    <!--{volist name="list" id="vo"}
                                     <option value="{$key}" >{$vo}</option>
-                                    {/volist}
+                                    {/volist}-->
                                     {/notempty}
                                 </select>
                             </div>
