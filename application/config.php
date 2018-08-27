@@ -48,6 +48,7 @@ return [
 
     //个人中心消息通知模块
     'user' => [
+        'login' => 'http://jjg.0519ztnet.com/home/Verify/login',
         'appid' => 'wwf507973ebf84282e',
         'appsecret' => '
 6qO-TYMIVkF93qB8nsQbJjOxi5AW5L8LZOLT192nTNk',
@@ -66,7 +67,7 @@ return [
     'http_url' => "http://ben.zt.cn",
     // 推送对象 发送给全体 @all  个人测试15700004138
     'touser' => '18767104335',
-    'totestuser' => '15158887880',
+    'totestuser' => '18767104335',
     /* UC用户中心配置 */
     'uc_auth_key' => '(.t!)=JTb_OPCkrD:-i"QEz6KLGq5glnf^[{p;je',
     // 关闭调试模式

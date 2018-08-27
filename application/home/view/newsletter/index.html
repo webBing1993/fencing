@@ -149,10 +149,10 @@
             var html = '';
             for (var i in list) {
                 html += '<a href="/home/newsletter/detail/id/'+ i +'" class="list clearfix">';
-                if (list.header == null) {
-                    html +=  '<img src="/home/images/common/vistor.jpg" alt="" class="fl lazy">';
-                }else {
+                if (list[i].header) {
                     html += '<img src="' + list[i].header + '" alt="" class="fl lazy">';
+                }else {
+                    html +=  '<img src="/home/images/common/vistor.jpg" alt="" class="fl lazy">';
                 }
                 html +=
                         '<span class="fl name">' + list[i].name + '</span>' +
