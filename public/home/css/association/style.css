@@ -112,6 +112,7 @@
     /*overflow: hidden;*/
     padding: .4rem 0;
     border-bottom: 1px solid #f7f7f7;
+    cursor: pointer;
 }
 #side2 a img {width:1.6rem;height:1.6rem;float:left;border-radius: .1rem;}
 #side2 .user {margin-left: 1.6rem;padding: .1rem .2rem;height:1.6rem;position: relative;}
