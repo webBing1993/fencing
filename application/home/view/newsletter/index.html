@@ -33,7 +33,10 @@
                 <a href="{:Url('Newsletter/userlist?id='.$vo['id'])}">
                     {/if}
                     <span>{$vo.name}</span>
+                    {if condition="empty($vo['two'])"}
+                    {else /}
                     <i class="fr"></i>
+                    {/if}
                 </a>
         </div>
 
@@ -51,7 +54,10 @@
                         <a href="{:Url('Newsletter/userlist?id='.$lo['id'])}">
                             {/if}
                             <span>{$lo.name}</span>
+                            {if condition="empty($lo['three'])"}
+                            {else /}
                             <i class="fr"></i>
+                            {/if}
                         </a>
                 </div>
 
@@ -62,7 +68,6 @@
                     <div class="list3">
                         <a href="{:Url('Newsletter/userlist?id='.$co['id'])}">
                             <span>{$co.name}</span>
-                            <i class="fr"></i>
                         </a>
                     </div>
                     {/volist}
@@ -149,10 +154,10 @@
             var html = '';
             for (var i in list) {
                 html += '<a href="/home/newsletter/detail/id/'+ i +'" class="list clearfix">';
-                if (list[i].header) {
-                    html += '<img src="' + list[i].header + '" alt="" class="fl lazy">';
+                if (list.header == null) {
+                    html +=  '<img src="' + list[i].avatar + '" alt="" class="fl lazy">';
                 }else {
-                    html +=  '<img src="/home/images/common/vistor.jpg" alt="" class="fl lazy">';
+                    html += '<img src="' + list[i].header + '" alt="" class="fl lazy">';
                 }
                 html +=
                         '<span class="fl name">' + list[i].name + '</span>' +
