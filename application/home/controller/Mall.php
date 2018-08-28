@@ -156,6 +156,8 @@ class Mall  extends Base
                 $data['name'] = $user['name'];
                 $data['mobile'] = $user['mobile'];
                 $venue_id = WechatUserTag::getVenueId($userId);
+                $data['venue_id'] = $venue_id;
+                $data['venue_name'] = Venue::where(['id' => $venue_id])->value('title');
                 $data['depart'] = $venue_id;
                 $ShopOrderModel = new ShopOrder();
                 $info = $ShopOrderModel->save($data);
