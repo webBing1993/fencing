@@ -51,13 +51,13 @@
     <ul class="clearfix">
         <li class="fl">
             <a href="javascript:;">
-                剑种
+                <span class="limit">剑种</span>
                 <img src="/home/images/mall/down.png" alt="">
             </a>
         </li>
         <li class="fl">
             <a href="javascript:;">
-                类别
+                <span class="limit">类别</span>
                 <img src="/home/images/mall/down.png" alt="">
             </a>
         </li>
@@ -230,6 +230,8 @@
         $(this).parents(".preparationLists").find('.list').removeClass('active');
         $(this).addClass('active');
         var index = $(this).attr('data-id');
+        console.log($(this).parents('.preparationResult').find('.preparationLists').index()-2);
+        $('.preparation li').eq($(this).parents('.preparationLists').index()-2).find('span').html($(this).find('a').html());
         if (fist == 0) {
             session.setItem('type1',index);
         }else {

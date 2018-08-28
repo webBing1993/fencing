@@ -131,6 +131,10 @@
     margin-top: .415rem;
 }
 
+.content i.right_ {
+    transform: rotate(-90deg);
+}
+
 .content .list1.active i,.content .list2.active i {
     transform: rotate(180deg);
 }
