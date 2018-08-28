@@ -149,6 +149,18 @@ body {
     color: #999;
 }
 
+.classTimes .times * {
+    font-size: .24rem;
+    color: #999;
+}
+
+.classTimes .times img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    margin: 2.7vw auto;
+}
+
 /* btn*/
 .btn {
     position: fixed;
