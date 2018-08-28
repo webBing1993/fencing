@@ -3,6 +3,9 @@
 {block name="style"}
 <title>风采展示</title>
 <link rel="stylesheet" href="/home/css/association/style.css?v=1.1.1">
+<style>
+    #side1 a {cursor: pointer;}
+</style>
 {/block}
 {block name="body"}
 <!--顶部分类-->
@@ -183,7 +186,7 @@
     }
     $(document).on('click','.news a',function(){
         $('.fixed').show();
-        var id = $(this).data('id')
+        var id = $(this).data('id');
         $.ajax({
             type:"post",
             url: "{:Url('Association/show')}",
