@@ -8,8 +8,9 @@
     }
     .imgs img {
         display: block;
-        width: 100%;
-        height: 150px;
+        margin: 0 auto 20px;
+        /*width: 200px;*/
+        height: auto;
     }
 </style>
 {/block}
@@ -29,7 +30,7 @@
                         <input class="i-checks check-all" type="checkbox">
                         <form method="get" action="" class="pull-right mail-search">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm" name="search" placeholder="搜索标题">
+                                <input type="text" class="form-control input-sm" name="search" placeholder="搜索教练姓名">
                                 <div class="input-group-btn">
                                     <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
                                 </div>
@@ -73,7 +74,7 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td colspan="10">
+                                <td colspan="20">
                                     <div class="page">{$_page}</div>
                                 </td>
                             </tr>
@@ -85,8 +86,6 @@
         </div>
     </div>
 </div>
-<iframe id="iframe" src="" style="height: 80%;width: 60%;z-index: 99;position: absolute;top: 10%;border: 0;left: 50%;margin-left: -30%;background: #fff;display: none;" scrolling="auto" seamless></iframe>
-<div class="shadow" style="display: none"></div>
 
 <div id="show" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
@@ -100,7 +99,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="col-lg-2 text-right control-label">
-                            <label>被投诉人姓名:</label>
+                            <label>教练姓名:</label>
                         </div>
                         <div class="col-lg-10">
                             <input readonly type="text" class="form-control form_title" name="name">
@@ -114,8 +113,13 @@
                             <textarea readonly name="content"  class="form-control" rows="4"></textarea>
                         </div>
                     </div>
-                    <div class="form-group imgs">
-
+                    <div class="form-group">
+                        <div class="col-lg-2 text-right control-label">
+                            <label>投诉照片:</label>
+                        </div>
+                        <div class="col-lg-10 col-md-10">
+                            <div class="imgs row col-md-12 clo-lg-12"></div>
+                        </div>
                     </div>
 
                 </div>
@@ -164,12 +168,10 @@
         console.log(data);
         $("textarea[name='content']").val(data.content);
         $("input[name='name']").val(data.name);
-        $(".imgs>div").remove();
+        $(".imgs img").remove();
         var html = '';
         for (var i = 0; i < data.front_cover.length; i++) {
-            html += '<div class="col-lg-6">'+
-                    '<img src="'+ data.front_cover[i] +'" alt="">'+
-                    '</div>'
+            html += '<img src="'+ data.front_cover[i] +'" alt="" class="col-md-6 col-lg-6">'
         }
         $('.imgs').append(html);
     }

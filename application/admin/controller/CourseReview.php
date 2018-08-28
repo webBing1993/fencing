@@ -29,7 +29,7 @@ class CourseReview extends Admin {
         );
         $search = input('search');
         if ($search != '') {
-            $map['course_name'] = ['like', '%' . $search . '%'];
+            $map['name|course_name'] = ['like', '%' . $search . '%'];
         }
         $list = $this->lists('CourseReview',$map);
         int_to_string($list,array(

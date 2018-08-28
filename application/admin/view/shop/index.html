@@ -5,84 +5,66 @@
 {/block}
 
 {block name="page-header"}
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>购物商城</h2>
-        <ol class="breadcrumb">
-            <li>
-                商品管理
-            </li>
-            <li class="active">
-                <strong><a href="{:Url('Shop/index')}">列表页</a></strong>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-2">
-    </div>
-</div>
+
 {/block}
 
 {block name="main"}
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="mail-box-header">
-                    <h2>商品管理</h2>
-                    <div class="mail-tools tooltip-demo m-t-md">
-                        <input class="i-checks check-all" type="checkbox">
-                        <button class="btn btn-danger btn-sm m-l ajax-post" url="{:Url('moveToTrash')}" data-toggle="tooltip" data-placement="top" target-form="ids"><i class="fa fa-trash-o"></i> 批量删除</button>
-                        <a href="{:Url('Shop/indexadd')}" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> 添加</a>
-                        <form method="get" action="" class="pull-right mail-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control input-sm" name="search" placeholder="搜索标题">
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
-                                </div>
+            <div class="mail-box-header">
+                <h2>商品管理</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <input class="i-checks check-all" type="checkbox">
+                    <button class="btn btn-danger btn-sm m-l ajax-post" url="{:Url('moveToTrash')}" data-toggle="tooltip" data-placement="top" target-form="ids"><i class="fa fa-trash-o"></i> 批量删除</button>
+                    <a href="{:Url('Shop/indexadd')}" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> 添加</a>
+                    <form method="get" action="" class="pull-right mail-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="search" placeholder="搜索商品名称">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="mail-box">
-                        <table class="table table-hover table-mail">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>标题</th>
-                                <th>创建时间</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {volist name="list" id="vo"}
-                            <tr>
-                                <td class="check-mail">
-                                    <input type="checkbox" class="i-checks ids" name="ids[]" value="{$vo.id}">
-                                </td>
-                                <td>{$vo.title}</td>
-                                <td>{$vo.create_time|time_format='Y-m-d'}</td>
-                                <td>
-                                    <a href="{:Url('Shop/indexedit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-pencil"></i> 修改</a>
-                                    <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 删除</a>
-                                </td>
-                            </tr>
-                            {/volist}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="10">
-                                    <div class="page">{$_page}</div>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                </div>
+            </div>
+            <div class="mail-box">
+                <table class="table table-hover table-mail">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>商品名称</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td class="check-mail">
+                            <input type="checkbox" class="i-checks ids" name="ids[]" value="{$vo.id}">
+                        </td>
+                        <td>{$vo.title}</td>
+                        <td>{$vo.create_time|time_format='Y-m-d'}</td>
+                        <td>
+                            <a href="{:Url('Shop/indexedit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-pencil"></i> 修改</a>
+                            <a href="{:Url('del?id='.$vo['id'])}" class="confirm btn-sm btn-danger ajax-del"><i class="fa fa-trash-o"></i> 删除</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="20">
+                            <div class="page">{$_page}</div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
 </div>
-<iframe id="iframe" src="" style="height: 80%;width: 392px;z-index: 99;position: absolute;top: 10%;border: 0;left: 32%;background: #fff;display: none;" scrolling="auto" seamless></iframe>
-<div class="shadow" style="display: none"></div>
 {/block}
 
 {block name="script"}

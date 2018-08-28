@@ -26,7 +26,7 @@ class Order extends Admin {
         );
         $search = input('search');
         if ($search != '') {
-            $map['depart'] = ['like', '%' . $search . '%'];
+            $map['venue_name|name|mobile'] = ['like', '%' . $search . '%'];
         }
         $list = $this->lists('ShopOrder',$map);
 

@@ -21,7 +21,7 @@
                     <a href="{:Url('courseSign/course?type='.$type.'&date='.$date.'&venue='.$venue)}" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="返回"><i class="fa fa-reply"></i> 返回上一级</a>
                     <form method="get" action="" class="pull-right mail-search">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="search" placeholder="搜索标题">
+                            <input type="text" class="form-control input-sm" name="search" placeholder="搜索课时名称">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
                             </div>
@@ -69,7 +69,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td colspan="10">
+                        <td colspan="20">
                             <div class="page">{$_page}</div>
                         </td>
                     </tr>

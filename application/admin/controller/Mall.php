@@ -53,7 +53,7 @@ class Mall extends Admin {
             }
             $newModel = new MallOneModel();
             $data['create_time']=time();
-            $info = $newModel->save($data);
+            $info = $newModel->validate('MallOne')->save($data);
             if($info) {
                 return $this->success("添加成功",Url('Mall/index'));
             }else{
@@ -76,7 +76,7 @@ class Mall extends Admin {
                 return $this->error("请添加剑种名称");
             }
             $newModel = new MallOneModel();
-            $info = $newModel->save($data,['id'=>input('id')]);
+            $info = $newModel->validate('MallOne')->save($data,['id'=>input('id')]);
             if($info){
                 return $this->success("修改成功",Url("Mall/index"));
             }else{
@@ -160,7 +160,7 @@ class Mall extends Admin {
             }
             $newModel = new MallTwoModel();
             $data['create_time']=time();
-            $info = $newModel->save($data);
+            $info = $newModel->validate('MallTwo')->save($data);
             if($info) {
                 return $this->success("添加成功",Url('Mall/tp'));
             }else{
@@ -183,7 +183,7 @@ class Mall extends Admin {
                 return $this->error("请添加类别名称");
             }
             $newModel = new MallTwoModel();
-            $info = $newModel->save($data,['id'=>input('id')]);
+            $info = $newModel->validate('MallTwo')->save($data,['id'=>input('id')]);
             if($info){
                 return $this->success("修改成功",Url("Mall/tp"));
             }else{

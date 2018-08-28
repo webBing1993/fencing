@@ -21,7 +21,7 @@
                         <a href="{:Url('add')}" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> 添加</a>
                         <form method="get" action="" class="pull-right mail-search">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm" name="search" placeholder="搜索标题">
+                                <input type="text" class="form-control input-sm" name="search" placeholder="搜索剑种名称">
                                 <div class="input-group-btn">
                                     <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
                                 </div>
@@ -34,7 +34,7 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>剑种</th>
+                                <th>剑种名称</th>
                                 <th>创建时间</th>
                                 <th>状态</th>
                                 <th>操作</th>
@@ -58,7 +58,7 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td colspan="10">
+                                <td colspan="20">
                                     <div class="page">{$_page}</div>
                                 </td>
                             </tr>
@@ -69,8 +69,6 @@
         </div>
     </div>
 </div>
-<iframe id="iframe" src="" style="height: 80%;width: 392px;z-index: 99;position: absolute;top: 10%;border: 0;left: 32%;background: #fff;display: none;" scrolling="auto" seamless></iframe>
-<div class="shadow" style="display: none"></div>
 {/block}
 
 {block name="script"}
