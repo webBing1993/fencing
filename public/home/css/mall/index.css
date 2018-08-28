@@ -228,6 +228,11 @@ body {
     width: 100%;
 }
 
+.preparation a span {
+    display: inline-block;
+    width: 8vw;
+}
+
 .preparation a img {
     display: inline-block;
     width: .15rem;
