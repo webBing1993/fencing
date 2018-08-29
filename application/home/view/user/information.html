@@ -3,8 +3,18 @@
 {block name="style"}
 <title>个人信息</title>
 <link rel="stylesheet" href="/home/css/association/game.css">
+<link rel="stylesheet" href="/home/css/association/mobileSelect.css">
 <!--<link rel="stylesheet" href="/home/css/animate.min.css">-->
+<script type="text/javascript" src="/home/js/mobileSelect.js"></script>
+<script type="text/javascript" src="/home/js/selectDate.js"></script>
 <style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
     .up {
         width: .6rem;
         height: .6rem;
@@ -64,13 +74,13 @@
     </div>
     <div class="userSort active"><span>学生姓名</span><input name="name" type="text" placeholder="请填写" value="{$user.name}"   ></div>
     <div class="userSort active"><span>性别</span><input name="gender" type="text" placeholder="请填写" value="{$user.gender}"   ></div>
-    <div class="userSort active"><span>出生日期</span><input name="birthday" type="text" placeholder="例：1994-05-15" value="{$user.birthday}"   ></div>
+    <div class="userSort active"><span>出生日期</span><input  id="select_1" name="birthday" type="text" placeholder="例：1994-05-15" value="{$user.birthday}" onfocus="this.blur()"  ></div>
     <div class="userSort active"><span>就读学校</span><input name="school" type="text" placeholder="请填写" value="{$user.school}"   ></div>
     <div class="userSort active"><span>身份证号</span><input name="card" type="text" placeholder="请填写" value="{$user.card}"></div>
-    <div class="userSort active"><span>监护人电话</span><input name="mobile" type="text" placeholder="请填写" value="{$user.guardian_mobile}"   ></div>
+    <div class="userSort active"><span>监护人姓名</span><input name="parent" type="text" placeholder="请填写" value="{$user.parent}"></div>
+    <div class="userSort active"><span>监护电话</span><input name="mobile" type="number" placeholder="请填写" value="{$user.guardian_mobile}"   ></div>
     <div class="userSort active"><span>邮箱</span><input name="email" type="text" placeholder="请填写" value="{$user.email}"   ></div>
     <div class="userSort active"><span>住址</span><input name="address" type="text" placeholder="请填写" value="{$user.address}"></div>
-    <div class="userSort active"><span>父母</span><input name="parent" type="text" placeholder="请填写" value="{$user.parent}"></div>
 </div>
 {elseif condition="($user['tag'] == 2)" /}
 <!--教练员状态-->
@@ -94,7 +104,7 @@
     <div class="userSort active"><span>自我介绍</span><input name="introduce" type="text" placeholder="请填写" value="{$user.introduce}"></div>
     <div class="userSort active"><span>邮箱</span><input name="email" type="text" placeholder="请填写" value="{$user.email}"   ></div>
     <div class="userSort active"><span>岗位级别</span><input name="level" type="text" placeholder="请填写" value="{$user.level}"   ></div>
-    <div class="userSort active"><span>手机号码</span><input name="mobile" type="text" placeholder="请填写" value="{$user.mobile}"></div>
+    <div class="userSort active"><span>手机号码</span><input name="mobile" type="number" placeholder="请填写" value="{$user.mobile}"></div>
 </div>
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon06.png" class="icon">详细信息</p>
@@ -110,7 +120,7 @@
     <div class="userSort active"><span>专业</span><input name="position" type="text" placeholder="请填写" value="{$user.position}"></div>
     <div class="userSort active"><span>工作时间</span><input name="worktime" type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"></div>
     <div class="userSort active"><span>应急人</span><input name="urgent" type="text" placeholder="请填写" value="{$user.urgent}"></div>
-    <div class="userSort active"><span>应急人号码</span><input name="urgenttel" type="text" placeholder="请填写" value="{$user.urgenttel}"></div>
+    <div class="userSort active"><span>应急人号码</span><input name="urgenttel" type="number" placeholder="请填写" value="{$user.urgenttel}"></div>
 </div>
 {else/}
 <!--员工/主管状态-->
@@ -130,7 +140,7 @@
         <div class="userSort active"><span>性别</span><input name="gender" type="text" placeholder="请填写" value="{$user.gender}"   ></div>
         <div class="userSort active"><span>邮箱</span><input name="email" type="text" placeholder="请填写" value="{$user.email}"   ></div>
         <div class="userSort active"><span>岗位级别</span><input name="level" type="text" placeholder="请填写" value="{$user.level}"   ></div>
-        <div class="userSort active"><span>手机号码</span><input name="mobile" type="text" placeholder="请填写" value="{$user.mobile}"   ></div>
+        <div class="userSort active"><span>手机号码</span><input name="mobile" type="number" placeholder="请填写" value="{$user.mobile}"   ></div>
     </div>
 <div class="user">
     <p class="gameName01"><img src="/home/images/game/icon05.png" class="icon">场馆情况</p>
@@ -146,7 +156,7 @@
     <div class="userSort active"><span>专业</span><input name="position" type="text" placeholder="请填写" value="{$user.position}"   ></div>
     <div class="userSort active"><span>工作时间</span><input name="worktime" type="text" placeholder="请填写" value="{$user.worktime|time_format='Y-m-d'}"   ></div>
     <div class="userSort active"><span>应急人</span><input name="urgent" type="text" placeholder="请填写" value="{$user.urgent}"   ></div>
-    <div class="userSort active"><span>应急人号码</span><input name="urgenttel" type="text" placeholder="请填写" value="{$user.urgenttel}"   ></div>
+    <div class="userSort active"><span>应急人号码</span><input name="urgenttel" type="number" placeholder="请填写" value="{$user.urgenttel}"   ></div>
 </div>
 {/if}
 <div class="goPay" style="margin: 1.2rem auto .28rem">提交</div>
@@ -154,6 +164,17 @@
 {block name="script"}
 <script src="/home/js/exif.js"></script>
 <script src="/home/js/imgupload.js"></script>
+<script>
+    $.selectDate("#select_1",{
+        start:1900,
+        end:2018,
+        select:[1999,1,1],
+        title:'请选择您的出生日期'
+    },function (data) {
+        console.log(data);
+        $('#select_1').val(data.year+"-"+data.month+"-"+data.day);
+    });
+</script>
 <script>
     //头像大小
     var up = $('.up' );
@@ -361,6 +382,16 @@
     }
     // 信息保存提交
     $('.goPay').on('click',function(){
+        var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(!regIdNo.test($('input[name=card]').val())){
+            alert('身份证号填写有误！');
+            return false;
+        }
+        var pattern=/(^[0-9]{3,4}-[0-9]{3,8}$)|(^[0-9]{3,8}$)|(^\([0-9]{3,4}\)[0-9]{3,8}$)|(^0{0,1}1[0-9]{10}$)/;
+        if(!pattern.test($('input[name=mobile]').val())){
+            alert('监护人电话错误！');
+            return false;
+        }
         if(tag == 1){ //学员
             var header      = $('.up').attr('data-tab');
             var name        = $('input[name=name]').val();
