@@ -47,7 +47,7 @@ class Complaint extends Admin {
             }
         }
         int_to_string($list,array(
-            'status' => array(0 =>"已发布"),
+            'status' => array(0 =>"未处理",1 =>"已处理"),
         ));
         $this->assign('list',$list);
 
@@ -65,6 +65,18 @@ class Complaint extends Admin {
         $this->assign('list',$list);
 
         return $this->fetch();
+    }
+
+    //确认处理
+    public function confirm(){
+        $id = input('id');
+        $map['status'] = 1;
+        $info = Comp::where('id',$id)->update($map);
+        if($info) {
+            return $this->success("确认处理成功");
+        }else{
+            return $this->error("确认处理失败");
+        }
     }
 
 
