@@ -63,9 +63,10 @@
                             </div>
                             <div class="col-lg-11">
                                 <select class="form-control" name="type1">
-
-                                    <option>{$msg.type1}</option>
-
+                                    {volist name="tp1" id="vo"}
+                                    <option value="{$vo.id}"
+                                            {eq name="$msg['type1']" value="$vo.id"}selected{/eq}>{$vo.title}</option>
+                                    {/volist}
                                 </select>
                             </div>
                         </div>
@@ -75,9 +76,10 @@
                             </div>
                             <div class="col-lg-11">
                                 <select class="form-control" name="type2">
-
-                                    <option>{$msg.type2}</option>
-
+                                    {volist name="tp2" id="co"}
+                                    <option value="{$co.id}"
+                                            {eq name="$msg['type2']" value="$co.id"}selected{/eq}>{$co.title}</option>
+                                    {/volist}
                                 </select>
                             </div>
                         </div>
@@ -219,7 +221,8 @@
             var it=$(this);
             var data = {
                 id:$("input[name='id']").val(),
-//                type:$("select[name='type']").val(),
+                type1:$("select[name='type1']").val(),
+                type2:$("select[name='type2']").val(),
                 front_cover:$("input[name='front_cover']").val(),
                 title:$("input[name='title']").val(),
                 price:$("input[name='price']").val(),

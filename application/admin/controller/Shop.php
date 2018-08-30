@@ -78,17 +78,22 @@ class Shop extends Admin {
                 return $this->get_update_error_msg($noticeModel->getError());
             }
         }else{
-
+            $tp1 = MallOne::where('status',0)->select();
+            $tp2 = MallTwo::where('status',0)->select();
+            $this->assign('tp1',$tp1);
+            $this->assign('tp2',$tp2);
+//dump($tp1);exit;
             //根据id获取课程
             $id = input('id');
             if(empty($id)){
                 return $this->error("系统错误,不存在该条数据!");
             }else{
                 $msg = ShopModel::get($id);
-                $msg['type1'] = MallOne::where('id',$msg['type1'])->value('title');
-                $msg['type2'] = MallTwo::where('id',$msg['type2'])->value('title');
+//                $msg['type1'] = MallOne::where('id',$msg['type1'])->value('title');
+//                $msg['type2'] = MallTwo::where('id',$msg['type2'])->value('title');
                 $this->assign('msg',$msg);
             }
+//            dump($msg);exit;
             return $this->fetch();
         }
     }
