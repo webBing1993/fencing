@@ -47,6 +47,7 @@ class Mall  extends Base
     public function search(){
         $val = input('val');
         $data = Shop::where('title','like','%'.$val.'%')->where('status',0)->order('id desc')->select();
+
         if($data) {
             return $this->success("搜索成功",'',$data);
         }else{
@@ -66,6 +67,10 @@ class Mall  extends Base
         }
         $map['status'] = 0;
         $data = Shop::where($map)->order('id desc')->limit(12)->select();
+        foreach($data as $value){
+            $img = Picture::get($value['front_cover']);
+            $value['front_cover'] = $img['path'];
+        }
         if($data) {
             return $this->success("筛选成功",'',$data);
         }else{
