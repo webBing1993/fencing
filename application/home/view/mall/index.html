@@ -220,7 +220,18 @@
         $(".preparationResult .preparationLists").eq($(this).length - $(this).index()).hide();
         $(".preparationResult .shadow").eq($(this).index()).toggle();
         $(".preparationResult .preparationLists").eq($(this).index()).toggle();
+        if ($(".preparationResult .shadow").show()) {
+            document.body.addEventListener('touchmove',bodyScroll,false);
+            $('body').css({'position':'fixed',"width":"100%"});
+        }else {
+            document.body.removeEventListener('touchmove',bodyScroll,false);
+            $("body").css({"position":"initial","height":"auto"});
+        }
     });
+
+    function bodyScroll(event){
+        event.preventDefault();
+    }
     
     // 筛选选择
     var session = window.sessionStorage;
@@ -264,6 +275,8 @@
                 }
                 $(".preparationResult").hide();
                 $(".preparationResult>div").hide();
+                document.body.removeEventListener('touchmove',bodyScroll,false);
+                $("body").css({"position":"initial","height":"auto"});
             }
         })
     });
