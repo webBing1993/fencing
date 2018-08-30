@@ -32,12 +32,16 @@ class Competition extends Admin {
             $map['title'] = ['like', '%' . $search . '%'];
         }
         $list = $this->lists('Competition',$map);
-        foreach($list as $k=>$v){
-            $list[$k]['xg'] = CompetitionApply::where('competition_id',$v['id'])->count();
-        }
         int_to_string($list,array(
             'status' => array(0 =>"已发布",1=>"已推送"),
         ));
+
+        foreach($list as $k=>$v){
+            $list[$k]['xg'] = CompetitionApply::where('competition_id',$v['id'])->count();
+            if($v['end_time']<=time()){
+                $list[$k]['status_text'] = '已截止';
+            }
+        }
 
         $this->assign('list',$list);
 
