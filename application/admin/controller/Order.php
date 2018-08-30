@@ -57,5 +57,16 @@ class Order extends Admin {
         return $this->fetch();
     }
 
+    //确认发货
+    public function confirm(){
+        $id = input('id');
+        $map['confirm'] = 1;
+        $info = ShopOrder::where('id',$id)->update($map);
+        if($info) {
+            return $this->success("确认发货成功");
+        }else{
+            return $this->error("确认发货失败");
+        }
+    }
 
 }

@@ -34,6 +34,9 @@
                     <tr>
                         <th></th>
                         <th>商品名称</th>
+                        <th>剑种</th>
+                        <th>类别</th>
+                        <th>价格</th>
                         <th>创建时间</th>
                         <th>操作</th>
                     </tr>
@@ -45,6 +48,9 @@
                             <input type="checkbox" class="i-checks ids" name="ids[]" value="{$vo.id}">
                         </td>
                         <td>{$vo.title}</td>
+                        <td>{$vo.type1}</td>
+                        <td>{$vo.type2}</td>
+                        <td>{$vo.price}</td>
                         <td>{$vo.create_time|time_format='Y-m-d'}</td>
                         <td>
                             <a href="{:Url('Shop/indexedit?id='.$vo['id'])}" class="confirm btn-sm btn-primary"><i class="fa fa-pencil"></i> 修改</a>

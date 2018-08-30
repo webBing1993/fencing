@@ -29,6 +29,10 @@ class Shop extends Admin {
             $map['title'] = ['like', '%' . $search . '%'];
         }
         $list = $this->lists('Shop',$map);
+        foreach($list as $v){
+            $v['type1'] = MallOne::where('id',$v['type1'])->value('title');
+            $v['type2'] = MallTwo::where('id',$v['type2'])->value('title');
+        }
         int_to_string($list,array(
             'status' => array(0=>"已发布"),
         ));
