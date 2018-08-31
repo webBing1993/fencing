@@ -100,6 +100,7 @@ class Wechat extends Admin
                                 break;
                             case "身份证号":
                                 $user['identity'] = $value['value'];
+                                $user['card'] = $value['value'];
                                 break;
                             case "监护人":
                                 $user['guardian_mobile'] = $value['value'];
@@ -121,6 +122,9 @@ class Wechat extends Admin
                                 break;
                             case "抄送人3":
                                 $user['push3'] = $value['value'];
+                                break;
+                            case "会员截止":
+                                $user['viptime'] = strtotime($value['value'])-365*24*3600;
                                 break;
                             default:
                                 break;
