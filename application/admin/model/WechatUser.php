@@ -24,4 +24,17 @@ class WechatUser extends Base
     public function Wechat_tag() {
         return $this->belongsToMany('Wechat_tag','Wechat_user_tag');
     }
+
+    public static function getUserId($mobile){
+        if($mobile){
+            $userid = WechatUser::where(['mobile' => $mobile])->value('userid');
+            if($userid){
+                return $userid;
+            }else {
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
 }

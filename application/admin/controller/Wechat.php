@@ -28,7 +28,7 @@ class Wechat extends Admin
 
     public function user() {
         $name = input('name');
-        $map = ['name' => ['like', "%$name%"]];
+        $map = ['state' => 1, 'name' => ['like', "%$name%"]];
         $list = $this->lists("WechatUser", $map);
         $department = WechatDepartment::column('id, name');
 
@@ -109,22 +109,22 @@ class Wechat extends Admin
                                 $user['address'] = $value['value'];
                                 break;
                             case "一级审批":
-                                $user['telephone'] = $value['value'];
+                                $user['telephone'] = WechatUser::getUserId($value['value']);
                                 break;
                             case "二级审批":
-                                $user['telephone2'] = $value['value'];
+                                $user['telephone2'] = WechatUser::getUserId($value['value']);
                                 break;
                             case "抄送人1":
-                                $user['push1'] = $value['value'];
+                                $user['push1'] = WechatUser::getUserId($value['value']);
                                 break;
                             case "抄送人2":
-                                $user['push2'] = $value['value'];
+                                $user['push2'] = WechatUser::getUserId($value['value']);
                                 break;
                             case "抄送人3":
-                                $user['push3'] = $value['value'];
+                                $user['push3'] = WechatUser::getUserId($value['value']);
                                 break;
                             case "会员截止":
-                                $user['viptime'] = strtotime($value['value'])-365*24*3600;
+                                $user['viptime'] = $value['value'] ? strtotime($value['value'])-365*24*3600 : null;
                                 break;
                             default:
                                 break;
@@ -141,6 +141,15 @@ class Wechat extends Admin
             }
         }
         $data = "用户数:".$num."!";
+        //删除不存在的用户
+        $userLists = WechatUser::where('1=1')->select();
+        foreach ($userLists as $val) {
+            $rs = $Wechat->getUserInfo($val['userid']);
+            if (!$rs) {
+                WechatUser::where(['userid'=>$val['userid']])->update(['state' => -1]);
+            }
+        }
+
         return $this->success("同步成功", '', $data);
     }
 
@@ -172,13 +181,7 @@ class Wechat extends Admin
                 if(empty(WechatDepartmentUser::where($data)->find())){
                     WechatDepartmentUser::create($data);
                 }
-                
-//                if($value['id'] != 1) {
-//                    $data1 = ['departmentid' => 1, 'userid' => $user['userid']];     //当部门补位1时补全用户
-//                    if(empty(WechatDepartmentUser::where($data1)->find())){
-//                        WechatDepartmentUser::create($data1);
-//                    }
-//                }
+
             }
         }
 
