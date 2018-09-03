@@ -11,6 +11,7 @@ namespace app\home\controller;
 
 use app\admin\model\WechatTag;
 use app\home\model\Apply;
+use app\home\model\ClassRecord;
 use app\home\model\Competition;
 use app\home\model\CompetitionApply;
 use app\home\model\Course;
@@ -23,6 +24,7 @@ use app\home\model\Vipapply;
 use app\home\model\WechatUser;
 use app\home\model\WechatUserTag;
 use com\wechat\QYWechat;
+use com\wechat\TPQYWechat;
 use think\Config;
 
 class User extends Base
@@ -500,6 +502,33 @@ class User extends Base
                 }
             }
             $info = Apply::update($da);
+            if($info) {
+                //审核后推送
+                $a = Apply::where('id',$data['id'])->find();
+                if($a['leavezt'] == 1) {
+                    if (!empty($a['leavetwo'])) {
+                        $yh = $a['leavetwo'];
+                        $tsr = $a['create_user'];
+                        $this->push($yh, $tsr);
+                    }else{
+                        //审核成功   抄送推送
+                        $cs = WechatUser::where('userid',$a['create_user'])->field('push1,push2,push3')->find();
+                        $name = WechatUser::where('userid',$a['create_user'])->value('name');
+                        $this->push2($cs,$name);
+                        //审核后通过推送申请人
+                        $zt = '通过';
+                        $yh = $a['create_user'];
+                        $this->push3($zt,$yh);
+                    }
+                }else{
+                    $zt = '否决';
+                    $yh = $a['create_user'];
+                    $this->push3($zt,$yh);
+                }
+                return $this->success("审批成功");
+            }else{
+                return $this->error("审批失败");
+            }
         }elseif($list['leavetwo'] == $userId){
             $da['id'] = $data['id'];
             $da['leavetwotext'] = $data['leavetext'];
@@ -507,13 +536,30 @@ class User extends Base
             $da['leavetwozt'] = $data['status'];
             $da['status'] = $data['status'];
             $info = Apply::update($da);
+            if($info) {
+                //2级审核后推送
+                $aa = Apply::where('id',$data['id'])->find();
+                if($aa['leavetwozt'] == 1) {
+                        //审核成功   抄送推送
+                        $cs = WechatUser::where('userid',$aa['create_user'])->field('push1,push2,push3')->find();
+                        $name = WechatUser::where('userid',$aa['create_user'])->value('name');
+                        $this->push2($cs,$name);
+                       //审核后通过推送申请人
+                        $zt = '通过';
+                        $yh = $aa['create_user'];
+                        $this->push3($zt,$yh);
+                    }else{
+                        $zt = '否决';
+                        $yh = $aa['create_user'];
+                        $this->push3($zt,$yh);
+                }
+
+                return $this->success("审批成功");
+            }else{
+                return $this->error("审批失败");
+            }
         }
 
-        if($info) {
-            return $this->success("审批成功");
-        }else{
-            return $this->error("审批失败");
-        }
     }
 
     //个人中心  请假申请(申请页面)
@@ -562,6 +608,22 @@ class User extends Base
         $info = Apply::create($data);
 
         if($info) {
+            if($user['tag'] == 1){
+                $start = strtotime($data['starttime']);
+                $end = strtotime($data['endtime']);
+                $cr = new ClassRecord();
+                $yh = $cr->getCoach($start,$end,$userId);
+                if(!empty($yh)){
+                    $this->push4($user['name'],$data['starttime'],$data['endtime'],$yh);//抄送课程教练
+                }
+
+            }else{
+                if(!empty($user['telephone'])){
+                $yh = $user['telephone'];
+                $tsr = '';
+                $this->push($yh,$tsr);
+                }//一级审批者非空
+            }
             return $this->success("提交成功");
         }else{
             return $this->error("提交失败");
@@ -606,4 +668,111 @@ class User extends Base
     public function reite01(){
         return $this->fetch();
     }
+
+    //教练.管理员请假推送
+    public function push($yh,$tsr){
+        $httpUrl = config('http_url');
+        $date = date("Y年n月j日");
+
+        $pre1 = "【请假申请】";
+        if(!empty($tsr)){
+            $name = WechatUser::where('userid',$tsr)->value('name');
+        }else{
+            $userId = session('userId');
+            $name = WechatUser::where('userid',$userId)->value('name');
+        }
+        $xx = '您当前有一条来自【'.$name.'】的请假调休申请,请及时审批,谢谢.';
+
+        //发送给企业号
+        $send = array(
+            "title" => $pre1,
+            "description" => $xx,
+            "url" => $httpUrl."/home/user/leave/?type=2",
+        );
+        $Wechat = new TPQYWechat(Config::get('user'));
+        $newsConf = config('user');
+
+        $message = array(
+            "msgtype" => 'textcard',
+            "agentid" => $newsConf['agentid'],
+            "textcard" => $send,
+            "safe" => "0"
+        );
+        $message['touser'] = $yh;
+
+        return $Wechat->sendMessage($message);
+    }
+
+    //教练.管理员请假审核成功后(抄送push1.push2.push3)
+    public function push2($cs,$name){
+        $pre1 = "【请假申请抄送】";
+        $xx = '您当前有一条来自【'.$name.'】的请假调休申请抄送,请您知悉,谢谢.';
+
+        //发送给企业号
+        $send = array(
+            "content" => $pre1.$xx
+        );
+        $Wechat = new TPQYWechat(Config::get('user'));
+        $newsConf = config('user');
+
+        $message = array(
+            "msgtype" => 'text',
+            "agentid" => $newsConf['agentid'],
+            "text" => $send,
+            "safe" => "0"
+        );
+        $ps = join('|', json_decode($cs, true));
+        $message['touser'] = $ps;
+
+        return $Wechat->sendMessage($message);
+    }
+
+    //教练.管理员请假审核成功后(抄送push1.push2.push3)
+    public function push3($zt,$yh){
+        $xx = '您好,您的请假调休申请已被领导'.$zt.',请您知悉.';
+
+        //发送给企业号
+        $send = array(
+            "content" => $xx
+        );
+        $Wechat = new TPQYWechat(Config::get('user'));
+        $newsConf = config('user');
+
+        $message = array(
+            "msgtype" => 'text',
+            "agentid" => $newsConf['agentid'],
+            "text" => $send,
+            "safe" => "0"
+        );
+        $message['touser'] = $yh;
+
+        return $Wechat->sendMessage($message);
+    }
+
+    //学员请假(直接抄送相关课程教练)
+    public function push4($name,$start,$end,$yh){
+        $xx = '您好,'.$name.'小朋友申请于'.$start.' - '.$end.'期间请假,请您知悉.';
+
+        //发送给企业号
+        $send = array(
+            "content" => $xx
+        );
+        $Wechat = new TPQYWechat(Config::get('user'));
+        $newsConf = config('user');
+
+        $message = array(
+            "msgtype" => 'text',
+            "agentid" => $newsConf['agentid'],
+            "text" => $send,
+            "safe" => "0"
+        );
+        $cs = array_unique($yh);
+
+        foreach($cs as $v){
+            $message['touser'] = $v;
+
+            $Wechat->sendMessage($message);
+        }
+    }
+
 }
